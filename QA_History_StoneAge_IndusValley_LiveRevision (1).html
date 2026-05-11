@@ -1,0 +1,2123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QA_History_StoneAge_IndusValley_LiveRevision</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0f14;
+  --bg2: #13161e;
+  --bg3: #1a1e28;
+  --gold: #f5c842;
+  --gold2: #e8b830;
+  --red: #e84040;
+  --green: #3ecf6e;
+  --blue: #4a9eff;
+  --purple: #b47fff;
+  --gray: #6b7280;
+  --text: #e8e8e8;
+  --text2: #b0b4be;
+  --border: rgba(245,200,66,0.15);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Lora', Georgia, serif;
+  font-size: 15px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(135deg, #0d0f14 0%, #12151f 40%, #0f1520 100%);
+  border-bottom: 2px solid var(--gold);
+  padding: 48px 32px 36px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: -60px; right: -60px;
+  width: 320px; height: 320px;
+  background: radial-gradient(circle, rgba(245,200,66,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 12px; opacity: 0.85;
+}
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(22px, 4vw, 36px);
+  font-weight: 800; color: #fff; line-height: 1.15;
+  margin-bottom: 16px;
+}
+.hero h1 span { color: var(--gold); }
+.hero-meta {
+  display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px;
+}
+.pill {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; padding: 4px 12px;
+  border-radius: 20px; border: 1px solid;
+  letter-spacing: 0.5px;
+}
+.pill-gold { color: var(--gold); border-color: rgba(245,200,66,0.4); background: rgba(245,200,66,0.08); }
+.pill-blue { color: var(--blue); border-color: rgba(74,158,255,0.4); background: rgba(74,158,255,0.08); }
+.pill-green { color: var(--green); border-color: rgba(62,207,110,0.4); background: rgba(62,207,110,0.08); }
+.pill-gray { color: var(--text2); border-color: rgba(107,114,128,0.4); background: rgba(107,114,128,0.08); }
+
+/* ── FILTER BAR ── */
+.filter-bar {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 32px;
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+  position: sticky; top: 0; z-index: 100;
+}
+.filter-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; color: var(--gray); letter-spacing: 2px; text-transform: uppercase;
+  margin-right: 6px;
+}
+.fb {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; padding: 5px 14px; border-radius: 4px;
+  border: 1px solid transparent; cursor: pointer;
+  transition: all 0.18s; background: transparent;
+}
+.fb-all   { color: var(--text2); border-color: var(--gray); }
+.fb-easy  { color: var(--green); border-color: rgba(62,207,110,0.35); }
+.fb-med   { color: var(--gold);  border-color: rgba(245,200,66,0.35); }
+.fb-hard  { color: var(--red);   border-color: rgba(232,64,64,0.35); }
+.fb-gem   { color: var(--purple);border-color: rgba(180,127,255,0.35); }
+.fb-pyq   { color: var(--blue);  border-color: rgba(74,158,255,0.35); }
+.fb:hover, .fb.active { background: rgba(255,255,255,0.07); }
+
+/* ── TOC ── */
+.toc-wrap {
+  background: var(--bg2); border-bottom: 1px solid var(--border);
+  padding: 20px 32px;
+}
+.toc-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 12px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 12px;
+}
+.toc-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+.toc-link {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; color: var(--text2);
+  text-decoration: none; padding: 4px 10px;
+  border: 1px solid var(--border); border-radius: 3px;
+  transition: all 0.15s;
+}
+.toc-link:hover { color: var(--gold); border-color: rgba(245,200,66,0.4); }
+
+/* ── LEGEND ── */
+.legend {
+  display: flex; flex-wrap: wrap; gap: 18px;
+  background: var(--bg3); padding: 14px 32px;
+  border-bottom: 1px solid var(--border);
+  font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+  align-items: center;
+}
+.legend-item { display: flex; align-items: center; gap: 6px; }
+.dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+.dot-red { background: var(--red); }
+.dot-gold { background: var(--gold); }
+.dot-green { background: var(--green); }
+.dot-blue { background: var(--blue); }
+.dot-purple { background: var(--purple); }
+
+/* ── MAIN LAYOUT ── */
+.container { max-width: 1060px; margin: 0 auto; padding: 36px 24px 60px; }
+
+/* ── SECTION HEADERS ── */
+.section-head {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px; font-weight: 700; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--gold);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px; margin: 40px 0 22px;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-head .s-num {
+  font-family: 'IBM Plex Mono', monospace;
+  background: var(--gold); color: #000;
+  font-size: 10px; padding: 2px 7px; border-radius: 2px;
+}
+
+/* ── Q CARDS ── */
+.q-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px; margin-bottom: 20px;
+  overflow: hidden; transition: box-shadow 0.2s;
+}
+.q-card:hover { box-shadow: 0 0 0 1px rgba(245,200,66,0.2); }
+.q-card.gem-card { border-color: rgba(180,127,255,0.3); }
+.q-card.gem-card:hover { box-shadow: 0 0 18px rgba(180,127,255,0.12); }
+.q-card.pyq-card { border-color: rgba(74,158,255,0.3); }
+.q-card.pyq-card:hover { box-shadow: 0 0 18px rgba(74,158,255,0.12); }
+
+.q-header {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 16px 20px; background: rgba(255,255,255,0.02);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.q-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; font-weight: 600;
+  background: var(--gold); color: #000;
+  padding: 3px 9px; border-radius: 3px; flex-shrink: 0; margin-top: 2px;
+}
+.q-text {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px; font-weight: 600; color: #fff; flex: 1;
+}
+.q-badges { display: flex; gap: 6px; flex-shrink: 0; flex-wrap: wrap; margin-top: 3px; }
+.badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; padding: 2px 8px; border-radius: 3px; font-weight: 600;
+}
+.badge-easy  { background: rgba(62,207,110,0.15); color: var(--green); }
+.badge-med   { background: rgba(245,200,66,0.15); color: var(--gold); }
+.badge-hard  { background: rgba(232,64,64,0.15); color: var(--red); }
+.badge-fact  { background: rgba(107,114,128,0.15); color: var(--text2); }
+.badge-con   { background: rgba(245,200,66,0.1);  color: var(--gold2); }
+.badge-trap  { background: rgba(232,64,64,0.1);   color: var(--red); }
+.badge-app   { background: rgba(62,207,110,0.1);  color: var(--green); }
+.badge-tnpsc { background: rgba(74,158,255,0.12); color: var(--blue); }
+
+.q-body { padding: 18px 20px; }
+
+.answer-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--green); margin-bottom: 6px;
+}
+.answer-text {
+  font-size: 15px; color: #d4f7e0; margin-bottom: 14px;
+  padding-left: 12px; border-left: 3px solid var(--green);
+}
+
+.exp-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--text2); margin-bottom: 6px;
+}
+.exp-text { font-size: 14px; color: var(--text2); margin-bottom: 14px; }
+
+/* ── CALLOUT BOXES ── */
+.callout {
+  border-radius: 6px; padding: 12px 16px; margin: 12px 0;
+  font-size: 13.5px; display: flex; gap: 10px; align-items: flex-start;
+}
+.callout-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.callout-body { flex: 1; }
+.callout-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; font-weight: 600; letter-spacing: 2px;
+  text-transform: uppercase; margin-bottom: 4px;
+}
+.callout-critical {
+  background: rgba(232,64,64,0.1); border: 1px solid rgba(232,64,64,0.3);
+}
+.callout-critical .callout-title { color: var(--red); }
+.callout-trap {
+  background: rgba(245,200,66,0.08); border: 1px solid rgba(245,200,66,0.3);
+}
+.callout-trap .callout-title { color: var(--gold); }
+.callout-tip {
+  background: rgba(62,207,110,0.08); border: 1px solid rgba(62,207,110,0.3);
+}
+.callout-tip .callout-title { color: var(--green); }
+.callout-pyq {
+  background: rgba(74,158,255,0.08); border: 1px solid rgba(74,158,255,0.3);
+}
+.callout-pyq .callout-title { color: var(--blue); }
+.callout-gem {
+  background: rgba(180,127,255,0.08); border: 1px solid rgba(180,127,255,0.35);
+  box-shadow: 0 0 12px rgba(180,127,255,0.08);
+}
+.callout-gem .callout-title { color: var(--purple); }
+
+/* ── SESSION OVERVIEW CARD ── */
+.overview-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 8px; padding: 24px; margin-bottom: 36px;
+}
+.overview-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px; margin-top: 16px;
+}
+.stat-box {
+  text-align: center; padding: 14px 10px;
+  background: var(--bg3); border-radius: 6px; border: 1px solid var(--border);
+}
+.stat-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 28px; font-weight: 800; color: var(--gold);
+}
+.stat-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--text2); margin-top: 4px;
+}
+
+/* ── SUMMARY BULLETS ── */
+.bullet-list { list-style: none; padding: 0; }
+.bullet-list li {
+  padding: 8px 0 8px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  font-size: 14px; color: var(--text2); position: relative;
+}
+.bullet-list li::before {
+  content: '▸'; color: var(--gold);
+  position: absolute; left: 0; font-size: 12px; top: 10px;
+}
+
+/* ── PREDICTION SECTION ── */
+.prediction-card {
+  background: linear-gradient(135deg, rgba(74,158,255,0.05), rgba(180,127,255,0.05));
+  border: 1px solid rgba(74,158,255,0.25); border-radius: 8px;
+  padding: 22px; margin-bottom: 20px;
+}
+.pred-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; color: var(--blue); margin-bottom: 8px;
+}
+.pred-q { font-size: 14.5px; font-weight: 600; margin-bottom: 8px; }
+.pred-hint { font-size: 13px; color: var(--text2); }
+
+/* ── FLASHCARD TABLE ── */
+.flash-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+.flash-table th {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--gold); padding: 10px 14px; text-align: left;
+  border-bottom: 2px solid var(--gold); background: var(--bg2);
+}
+.flash-table td {
+  padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 13.5px; vertical-align: top;
+}
+.flash-table tr:hover td { background: rgba(255,255,255,0.025); }
+.flash-table td:first-child { color: var(--text2); }
+.flash-table td:last-child { color: var(--green); font-weight: 600; }
+.flash-table td.ans-warn { color: var(--gold); }
+
+/* ── MASTER CHEAT CARD ── */
+.cheat-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+.cheat-table th {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+  color: #000; padding: 10px 14px; text-align: left;
+  background: var(--gold);
+}
+.cheat-table td {
+  padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 13px; vertical-align: top;
+}
+.cheat-table tr:hover td { background: rgba(255,255,255,0.025); }
+.cheat-table td:first-child { color: var(--gold); font-weight: 600; font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
+.cheat-table td:nth-child(2) { color: var(--text2); }
+.cheat-table td:nth-child(3) { color: var(--green); font-size: 12.5px; }
+
+/* ── TAMIL LABEL ── */
+.tamil { font-size: 12.5px; color: var(--gray); font-style: italic; margin-top: 2px; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--bg2); border-top: 1px solid var(--border);
+  padding: 28px 32px; text-align: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; color: var(--gray); letter-spacing: 1px;
+}
+footer span { color: var(--gold); }
+
+/* ── HIDDEN (filter) ── */
+.hidden { display: none !important; }
+
+/* ── ACCORDION ── */
+.q-toggle-btn {
+  display: flex; align-items: center; gap: 8px;
+  background: none; border: none; cursor: pointer;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--gold); padding: 10px 20px 10px;
+  width: 100%; text-align: left;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  transition: background 0.15s;
+  user-select: none;
+}
+.q-toggle-btn:hover { background: rgba(245,200,66,0.05); }
+.q-toggle-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 1px solid rgba(245,200,66,0.4);
+  font-size: 12px; line-height: 1;
+  transition: transform 0.25s ease, background 0.2s;
+  flex-shrink: 0;
+}
+.q-toggle-btn[aria-expanded="true"] .q-toggle-icon {
+  transform: rotate(180deg);
+  background: rgba(245,200,66,0.15);
+}
+.q-body {
+  padding: 0 20px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1),
+              padding 0.25s ease,
+              opacity 0.25s ease;
+  opacity: 0;
+}
+.q-body.open {
+  max-height: 2400px;
+  padding: 18px 20px 20px;
+  opacity: 1;
+}
+
+@media(max-width:640px){
+  .hero { padding: 28px 16px; }
+  .container { padding: 24px 14px 48px; }
+  .filter-bar, .toc-wrap, .legend { padding-left: 14px; padding-right: 14px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">High-Yield Q&A Revision Crack Sheet · TNPSC Group 1</div>
+  <h1>History: <span>Stone Age → Indus Valley Civilisation</span></h1>
+  <p style="font-size:14px;color:var(--text2);max-width:640px;">6th Standard Term-I · Complete Live Session Q&A with Gems, Shortcuts & PYQ Alerts · Translated from Tamil</p>
+  <div class="hero-meta">
+    <span class="pill pill-gold">75 Questions</span>
+    <span class="pill pill-blue">TNPSC Gr. 1 / 2 / 4 / VAO</span>
+    <span class="pill pill-green">2 Lessons Covered</span>
+    <span class="pill pill-gray">Stone Age + Indus Valley</span>
+  </div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <span class="filter-label">Filter →</span>
+  <button class="fb fb-all active" onclick="filterCards('all')">All</button>
+  <button class="fb fb-easy" onclick="filterCards('easy')">Easy</button>
+  <button class="fb fb-med" onclick="filterCards('medium')">Medium</button>
+  <button class="fb fb-hard" onclick="filterCards('hard')">Hard</button>
+  <button class="fb fb-gem" onclick="filterCards('gem')">💎 Gems Only</button>
+  <button class="fb fb-pyq" onclick="filterCards('pyq')">🏆 PYQ Only</button>
+  <button class="fb" style="color:var(--text2);border-color:var(--gray);margin-left:auto;" onclick="toggleAll(this)">Expand All</button>
+</div>
+
+<!-- TOC -->
+<div class="toc-wrap">
+  <div class="toc-title">Table of Contents</div>
+  <div class="toc-grid">
+    <a class="toc-link" href="#overview">Session Overview</a>
+    <a class="toc-link" href="#s1">§1 What is History?</a>
+    <a class="toc-link" href="#s2">§2 Stone Age — Map Questions</a>
+    <a class="toc-link" href="#s3">§3 Proto-History & Dating</a>
+    <a class="toc-link" href="#s4">§4 Ancient Science & Tools</a>
+    <a class="toc-link" href="#s5">§5 Asoka & Maurya</a>
+    <a class="toc-link" href="#s6">§6 World Civilisations Intro</a>
+    <a class="toc-link" href="#s7">§7 Indus Valley — Excavation</a>
+    <a class="toc-link" href="#s8">§8 Harappa & Mohenjodaro City</a>
+    <a class="toc-link" href="#s9">§9 Indus Valley — Trade & Culture</a>
+    <a class="toc-link" href="#s10">§10 Geography of IVC</a>
+    <a class="toc-link" href="#summary">Topic Summary</a>
+    <a class="toc-link" href="#predict">2026 Predictions</a>
+    <a class="toc-link" href="#flashcard">Flashcard Table</a>
+    <a class="toc-link" href="#cheat">Master Cheat Card</a>
+  </div>
+</div>
+
+<!-- LEGEND -->
+<div class="legend">
+  <div class="legend-item"><div class="dot dot-red"></div><span style="color:var(--red)">[CRITICAL]</span> Must-know fact</div>
+  <div class="legend-item"><div class="dot dot-gold"></div><span style="color:var(--gold)">[TRAP]</span> Common wrong answer</div>
+  <div class="legend-item"><div class="dot dot-green"></div><span style="color:var(--green)">[TIP]</span> Memory shortcut</div>
+  <div class="legend-item"><div class="dot dot-blue"></div><span style="color:var(--blue)">[PYQ]</span> Previous Year Question</div>
+  <div class="legend-item"><div class="dot dot-purple"></div><span style="color:var(--purple)">[GEM]</span> Live session insight</div>
+</div>
+
+<div class="container">
+
+<!-- SESSION OVERVIEW -->
+<div id="overview" class="overview-card">
+  <div class="section-head" style="margin-top:0;margin-bottom:0;border:none;padding:0 0 14px">
+    <span class="s-num">00</span> Session Overview
+  </div>
+  <div class="overview-grid">
+    <div class="stat-box"><div class="stat-num">75</div><div class="stat-label">Total Questions</div></div>
+    <div class="stat-box"><div class="stat-num">30</div><div class="stat-label">Stone Age Q's</div></div>
+    <div class="stat-box"><div class="stat-num">45</div><div class="stat-label">Indus Valley Q's</div></div>
+    <div class="stat-box"><div class="stat-num">12+</div><div class="stat-label">💎 Live Gems</div></div>
+    <div class="stat-box"><div class="stat-num">8</div><div class="stat-label">🏆 PYQ Alerts</div></div>
+  </div>
+  <div style="margin-top:18px;font-size:13.5px;color:var(--text2);">
+    <b style="color:var(--gold);">Key Themes:</b> Map-based Stone Age locations · Proto-History vs History vs Proto-Historic · Asoka's edicts and scholars · World Civilisations timeline (Meso/Sindhu/Egypt/China) · Harappa vs Mohenjodaro distinctions · IVC trade, seals, tools, scripts, town-planning
+  </div>
+</div>
+
+<!-- ===== SECTION 1 ===== -->
+<div id="s1" class="section-head"><span class="s-num">01</span> What is History?</div>
+
+<div class="q-card" data-diff="easy" data-gem="no" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q1</span>
+    <div style="flex:1">
+      <div class="q-text">The word "History" is derived from which language and what does it mean?</div>
+      <div class="tamil">வரலாறு என்ற சொல் எந்த மொழி சொல்லிலிருந்து பெறப்பட்டது? அதன் அர்த்தம் என்ன?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-easy">EASY</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">Gr.4/VAO</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text">The word "History" is derived from the <strong>Greek</strong> word <strong>"Historia"</strong>, which means <em>"learning through inquiry / learning by investigation."</em></div>
+    <div class="exp-label">📌 Explanation</div>
+    <div class="exp-text">Historia (Greek) → <em>learning by asking, investigating, and finding out through questioning</em>. This reflects that knowledge of history is built by questioning sources and witnesses.</div>
+    <div class="callout callout-tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body"><div class="callout-title">TIP — Memory</div>Think of History = Investigation. You <em>investigate</em> the past to learn it.</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="easy" data-gem="no" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q2</span>
+    <div style="flex:1">
+      <div class="q-text">Statement I: History is a chronological record of past events. Statement II: Time in history is measured in years (AD/BC). Are both correct?</div>
+      <div class="tamil">கூற்று 1: வரலாறு என்பது கடந்த கால நிகழ்வுகளின் காலவரிசை பதிவு. கூற்று 2: வரலாற்றின் காலம் ஆண்டுகளில் கணக்கிடப்படுகிறது.</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-easy">EASY</span><span class="badge badge-fact">Factual</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Both statements are correct.</strong></div>
+    <div class="exp-label">📌 Explanation</div>
+    <div class="exp-text">History records the past in chronological order. Time is counted in years — traditionally as <strong>BC</strong> (Before Christ) and <strong>AD</strong> (Anno Domini). Modern secular usage replaces these with <strong>BCE</strong> (Before Common Era) and <strong>CE</strong> (Common Era).</div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — Modern Calendar Language</div>BC/AD were based on Jesus Christ's birth year. Modern historians now use <strong>BCE/CE</strong> (Common Era) to remove religious bias while referring to the same years.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 2 ===== -->
+<div id="s2" class="section-head"><span class="s-num">02</span> Stone Age — Map-Based Questions</div>
+
+<div class="q-card" data-diff="medium" data-gem="no" data-pyq="yes">
+  <div class="q-header">
+    <span class="q-num">Q3</span>
+    <div style="flex:1">
+      <div class="q-text">Which of the following places yielded Neolithic (New Stone Age) tools? (Options include: Mehrgarh, Maakara, Attirampakkam, Athichanallur, Daojali Hading)</div>
+      <div class="tamil">புதிய கற்கால கருவிகள் கண்டுபிடிக்கப்பட்ட இடங்கள் எவை?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-med">MEDIUM</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">Gr.1/2</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Mehrgarh, Maakara, and Daojali Hading</strong> (Options 1, 2, 5)</div>
+    <div class="exp-label">📌 Explanation</div>
+    <div class="exp-text"><strong>Mehrgarh</strong> (Baluchistan, Pakistan) — pioneer settlement, precursor to Indus Valley Civilisation. <strong>Maakara</strong> — adjacent region also yielding Neolithic tools. <strong>Daojali Hading</strong> (Northeast India) — also confirmed Neolithic site. Attirampakkam = Palaeolithic. Athichanallur = Bronze/Iron Age.</div>
+    <div class="callout callout-pyq">
+      <span class="callout-icon">🏆</span>
+      <div class="callout-body"><div class="callout-title">PYQ ALERT</div>Map-based questions on Stone Age sites appear in TNPSC Group 2 (2018, 2022). Mehrgarh is the most-tested answer here.</div>
+    </div>
+    <div class="callout callout-tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body"><div class="callout-title">MAP TIP (Textbook p. 123 / New ed. p. 108)</div>Open the map and study the symbols: square = Palaeolithic, triangle = Bronze Age. Mehrgarh is in Pakistan (Baluchistan). Hathnagar/Hading is in West Bengal.</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="medium" data-gem="yes" data-pyq="yes">
+  <div class="q-header">
+    <span class="q-num">Q4</span>
+    <div style="flex:1">
+      <div class="q-text">Which sites yielded Iron Age tools?</div>
+      <div class="tamil">இரும்பு கால கற்கால கருவிகள் கண்டுபிடிக்கப்பட்ட இடம் எது?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-med">MEDIUM</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">Gr.1/2/4</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Hallur</strong> and <strong>Athichanallur</strong> (Thoothukudi district, Tamil Nadu)</div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — Memory Trick</div>Iron Age → <strong>Hallur</strong>. "Iron" is heavy (அல்லு = heavy in Tamil slang). So: <em>Iron is heavy → Hallur</em>. Both Hallur and Athichanallur = Iron Age. Athichanallur is in Thoothukudi, TN.</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="medium" data-gem="yes" data-pyq="yes">
+  <div class="q-header">
+    <span class="q-num">Q5</span>
+    <div style="flex:1">
+      <div class="q-text">Which sites yielded Bronze Age tools?</div>
+      <div class="tamil">வெண்கல காலத்தில் கண்டுபிடிக்கப்பட்ட கருவிகள் கண்டுபிடிக்கப்பட்ட இடங்கள் எவை?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-med">MEDIUM</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">Gr.1/2</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Lothal</strong> (Gujarat) and <strong>Athichanallur</strong> (Tamil Nadu). Answer: Options 1 and 4.</div>
+    <div class="exp-label">📌 Explanation</div>
+    <div class="exp-text">Lothal is an IVC site with a natural harbour on a tributary of the Sabarmati river, Gujarat. Athichanallur yields both Bronze and Iron Age artifacts — remember: South India (especially Athichanallur and Keeladi) has Bronze + Iron Age.</div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — Quick Table</div>
+        Palaeolithic (Old Stone Age) → Chennai (Attirampakkam, Pallavaram), Bheembetka (MP), Hunsagi Valley (near Goa)<br>
+        Neolithic (New Stone Age) → Mehrgarh, Maakara, Daojali Hading<br>
+        Bronze Age → Lothal (Gujarat), Athichanallur<br>
+        Iron Age → Hallur, Athichanallur<br>
+        <em>Athichanallur appears in both Bronze AND Iron Age — a common trap!</em>
+      </div>
+    </div>
+    <div class="callout callout-trap">
+      <span class="callout-icon">🪤</span>
+      <div class="callout-body"><div class="callout-title">TNPSC TRAP</div>Athichanallur is often placed only in Iron Age. But it appears in <strong>both</strong> Bronze and Iron Age in the textbook. Watch options carefully.</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="medium" data-gem="yes" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q6</span>
+    <div style="flex:1">
+      <div class="q-text">Which sites yielded Palaeolithic (Old Stone Age) tools?</div>
+      <div class="tamil">பழைய கற்கால கருவிகள் கண்டுபிடிக்கப்பட்ட இடங்கள் எவை?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-med">MEDIUM</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">Gr.2/4</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Bheembetka</strong> (Madhya Pradesh), <strong>Attirampakkam</strong> (Chennai), <strong>Hunsagi Valley</strong> (near Goa). Answer: Options 2, 3, 5.</div>
+    <div class="exp-label">📌 Explanation</div>
+    <div class="exp-text">Bheembetka (MP) has famous cave paintings of a woman holding a child with a bow aimed at a fleeing animal — sculpted ~2000 years ago. Attirampakkam is near Chennai. Hunsagi Valley is near Goa.</div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — Tamil Nadu Stone Age Logic</div>
+        Chennai / Pallavaram / Attirampakkam = <strong>Palaeolithic (Old Stone Age)</strong><br>
+        Athichanallur / Keeladi (Thoothukudi/Madurai) = <strong>Bronze + Iron Age</strong><br>
+        So: if Chennai → Old Stone; if deep South TN → Bronze/Iron.
+      </div>
+    </div>
+    <div class="callout callout-tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body"><div class="callout-title">TIP — Bheembetka (Group 4 Frequent)</div>Bheembetka is in <strong>Madhya Pradesh</strong>. It features cave paintings from the Palaeolithic era. Often tested in Group 4 as "which state has Palaeolithic cave art?"</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 3 ===== -->
+<div id="s3" class="section-head"><span class="s-num">03</span> Proto-History, Dating & Historical Sources</div>
+
+<div class="q-card" data-diff="hard" data-gem="yes" data-pyq="yes">
+  <div class="q-header">
+    <span class="q-num">Q7</span>
+    <div style="flex:1">
+      <div class="q-text">What is the period between the use of stone tools and the discovery of writing called?</div>
+      <div class="tamil">கற்கருவிகளை பயன்படுத்தியதற்கும் எழுதும் முறைகளை கண்டுபிடித்ததற்கும் இடைப்பட்ட காலம் என்ன?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-hard">HARD</span><span class="badge badge-trap">Trap</span><span class="badge badge-tnpsc">Gr.1</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Proto-History</strong> (வரலாற்று தொடக்க காலம் — Proto-historic Period)</div>
+    <div class="exp-label">📌 Explanation</div>
+    <div class="exp-text">Three periods: <br>• <strong>Prehistoric</strong> = Before stone tools and writing (no record at all)<br>• <strong>Proto-historic</strong> = Stone tools used but writing not yet discovered (between the two)<br>• <strong>Historic</strong> = Writing discovered and used (records exist)</div>
+    <div class="callout callout-critical">
+      <span class="callout-icon">🔴</span>
+      <div class="callout-body"><div class="callout-title">CRITICAL — Most-Missed Question</div>Students answer "Prehistoric period" — WRONG. The correct answer is <strong>Proto-historic / Proto-History</strong>. "Pre-historic" = before tools. "Proto-historic" = between tools and writing. Textbook p. 125 (old) / p. 110 (new).</div>
+    </div>
+    <div class="callout callout-pyq">
+      <span class="callout-icon">🏆</span>
+      <div class="callout-body"><div class="callout-title">PYQ ALERT — Group 1 Level</div>This distinction (Prehistoric / Proto-historic / Historic) is a confirmed Group 1 concept. Expect it as a Statement-based question.</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="hard" data-gem="yes" data-pyq="yes">
+  <div class="q-header">
+    <span class="q-num">Q8</span>
+    <div style="flex:1">
+      <div class="q-text">Statement I: The period between History and Pre-history is called Proto-Historic period. Statement II: In the Proto-historic period, written records exist but we cannot understand their meaning.</div>
+      <div class="tamil">கூற்று 1: வரலாற்றுக்கும் வரலாற்றுக்கு முந்தைய காலத்திற்கும் இடைப்பட்ட காலம் வரலாற்று தொடக்க காலமாகும். கூற்று 2: வரலாற்று தொடக்க காலத்தில் எழுதப்பட்ட பதிவுகள் உள்ளன — தற்போது அவற்றின் பொருளை நாம் புரிந்து கொள்ள முடியவில்லை.</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-hard">HARD</span><span class="badge badge-trap">Trap</span><span class="badge badge-tnpsc">Gr.1</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Statement I is correct. Statement II is correct.</strong> → Answer: Both are correct.</div>
+    <div class="exp-label">📌 Explanation</div>
+    <div class="exp-text">Wait — textbook says: records exist in the Proto-historic period, BUT we <strong>cannot understand their meaning</strong> (they are pictographic/undeciphered scripts like IVC script). So Statement II is also correct. Answer: <strong>A (both correct)</strong> if such option exists, or "Statement I correct, Statement II correct."</div>
+    <div class="callout callout-critical">
+      <span class="callout-icon">🔴</span>
+      <div class="callout-body"><div class="callout-title">CRITICAL — Teacher Correction During Live Class</div>Many students answered "A" (both correct) initially but were told to re-check. The teacher confirmed: <strong>Statement I ✅ correct. Statement II ✅ correct.</strong> The Indus Valley script is a real example — records exist but are undeciphered. Group 1 students who marked "A wrong" were making an error.</div>
+    </div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — IVC Script Connection</div>The Indus Valley script = perfect example of Proto-historic writing: it EXISTS on seals, but <strong>no one can read it</strong> yet. This is why the IVC period is classified as Proto-historic, not Historic.</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="easy" data-gem="no" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q9</span>
+    <div style="flex:1">
+      <div class="q-text">Statement I: The science related to the history of coins is Numismatics. Statement II: The branch dealing with inscriptions on stone/copper plates is Epigraphy.</div>
+      <div class="tamil">நாணவியல் — நாணயங்கள் பற்றிய அறிவியல். கல்வெட்டியல் — கல்வெட்டுகளில் பதிவு செய்யப்பட்ட செய்திகள் ஆராய்வதற்கான துறை.</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-easy">EASY</span><span class="badge badge-fact">Factual</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Both statements are correct.</strong></div>
+    <div class="exp-text">Basic definitions — Numismatics (நாணவியல்) = coins. Epigraphy (கல்வெட்டியல்) = inscriptions. Both are standard historical sources.</div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="hard" data-gem="yes" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q10</span>
+    <div style="flex:1">
+      <div class="q-text">Statement I: "Dhamma" is a Sanskrit word. Statement II: In Prakrit it is called "Dharma."</div>
+      <div class="tamil">தம்மா என்பது சமஸ்கிருத மொழிச்சொல். இது பிராகிருதத்தில் தர்மா எனப்படுகிறது.</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-hard">HARD</span><span class="badge badge-trap">Trap</span><span class="badge badge-tnpsc">Gr.1/2</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Both statements are WRONG.</strong></div>
+    <div class="exp-label">📌 Explanation</div>
+    <div class="exp-text">"<strong>Dhamma</strong>" is a <strong>Prakrit</strong> word (not Sanskrit). The Sanskrit equivalent is "<strong>Dharma</strong>." In English, it is called "Dharma." So Statement I is wrong (Dhamma ≠ Sanskrit) and Statement II is wrong (Prakrit does not call it "Dharma" — Prakrit calls it "Dhamma"; Sanskrit calls it "Dharma").</div>
+    <div class="callout callout-critical">
+      <span class="callout-icon">🔴</span>
+      <div class="callout-body"><div class="callout-title">CRITICAL — Almost everyone got this wrong</div>Teacher said: "If you marked 'A' (both correct) you are wrong!" The trap is assuming Dhamma = Sanskrit. <strong>Dhamma = Prakrit. Dharma = Sanskrit. Dharma = English too.</strong> Textbook p. 127 — check glossary terms.</div>
+    </div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — Quick Fix</div>Asoka's edicts used <strong>Prakrit</strong> language (not Sanskrit) to reach common people. The word "Dhamma" in his edicts = Prakrit. Later scholars transliterated it to "Dharma" (Sanskrit/English).</div>
+    </div>
+    <div class="callout callout-pyq">
+      <span class="callout-icon">🏆</span>
+      <div class="callout-body"><div class="callout-title">PYQ ALERT</div>Dhamma vs Dharma language distinction has appeared in TNPSC Group 1 Prelims (2019).</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 4 ===== -->
+<div id="s4" class="section-head"><span class="s-num">04</span> Prehistoric Human Life — Tools & Animals</div>
+
+<div class="q-card" data-diff="easy" data-gem="no" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q11</span>
+    <div style="flex:1">
+      <div class="q-text">How did ancient (Palaeolithic) man gather his food?</div>
+      <div class="tamil">பழங்கால மனிதன் தனது உணவை சேகரிக்க மேற்கொண்ட நடவடிக்கை எது?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-easy">EASY</span><span class="badge badge-fact">Factual</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>By Hunting</strong> (வேட்டையாடுதல்)</div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="medium" data-gem="yes" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q12</span>
+    <div style="flex:1">
+      <div class="q-text">Statement (Assertion): Palaeolithic man took dogs with him while hunting. Reason: While living in caves, dogs sensed approaching animals using their smell-sense and warned him.</div>
+      <div class="tamil">கூற்று: பழைய கற்கால மனிதர்கள் வேட்டையாட செல்லும்போது நாய்களை உடன் சென்றனர். காரணம்: குகைகளில் தங்கியிருந்த போது விலங்குகள் வருவதை நாய்கள் தமது மோப்ப சக்தியினால் அறிந்து உணர்த்தின.</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-med">MEDIUM</span><span class="badge badge-con">Conceptual</span><span class="badge badge-tnpsc">Gr.2/4</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Both Assertion and Reason are correct — and the Reason explains the Assertion.</strong></div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — Evolution of the Dog</div>
+        2 lakh (200,000) years ago: <strong>no dog breed existed</strong>. The ancestor was the <strong>wolf (ஓநாய்)</strong>. Early humans gradually domesticated wolves → over thousands of years wolves evolved (through human selection) into dogs. The dog is one of the <strong>fastest-evolving domesticated animals</strong> in evolutionary history. This is a Science + History crossover fact.
+      </div>
+    </div>
+    <div class="callout callout-critical">
+      <span class="callout-icon">🔴</span>
+      <div class="callout-body"><div class="callout-title">CRITICAL FACT — First Domesticated Animal</div>The <strong>dog</strong> was the <strong>first domesticated animal</strong> in human history. Humans have kept dogs for ~10,000+ years — from cave-dwelling days to the present day.</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="medium" data-gem="no" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q13</span>
+    <div style="flex:1">
+      <div class="q-text">Find the wrong pair: (a) Palaeolithic – stone tools & cave paintings; (b) Copper plates – historical source; (c) Cats – first domesticated animal.</div>
+      <div class="tamil">தவறான இணையை கண்டுபிடி: பழைய கற்காலம் – கற்கருவிகள் / பாறை ஓவியங்கள் / குகை சுவர்கள் | செப்பு தகடுகள் – வரலாற்று ஆதாரம் | பூனைகள் – முதலில் பழக்கப்படுத்தப்பட்ட விலங்கு</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-med">MEDIUM</span><span class="badge badge-trap">Trap</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Wrong pair: Cats – first domesticated animal.</strong> The correct answer is <strong>Dogs</strong> (not Cats).</div>
+    <div class="exp-text">First domesticated animal = Dog. Cats came much later in agricultural societies (to protect grain stores). Option (c) is wrong.</div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="medium" data-gem="yes" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q14</span>
+    <div style="flex:1">
+      <div class="q-text">Find the wrong statement about cave paintings of Palaeolithic man.</div>
+      <div class="tamil">பழைய கற்கால மனிதனின் குகை சுவர் ஓவியங்கள் பற்றிய தவறான கூற்று எது?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-med">MEDIUM</span><span class="badge badge-con">Conceptual</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>"They painted in many / multiple colours" — this is WRONG.</strong></div>
+    <div class="exp-label">📌 Explanation</div>
+    <div class="exp-text">Correct facts: Paintings were on rocks/cave walls; hunting scenes were drawn; painted to show family members how to hunt. <em>Wrong statement: They used many colours.</em> Palaeolithic man could only use whatever natural pigment was available (from plants, minerals) — they did NOT have a full colour palette.</div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — Practical Logic</div>Teacher asked students to think practically: "If you want green paint 2000 years ago, you'd crush a leaf. That's all you get." So they used what nature gave them — NOT multiple designer colours. This eliminates the "many colours" option easily.</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="medium" data-gem="no" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q15</span>
+    <div style="flex:1">
+      <div class="q-text">Match the following: Rock paintings / Written records / Asoka (famous ruler) / Religious literature</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-med">MEDIUM</span><span class="badge badge-app">Application</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text">Rock paintings → Way of life information (4) | Written records → Copper plates (1) | Asoka → Great king (2) | Religious literature → Thevaram / Saiva texts (3)</div>
+    <div class="exp-text">Answer: C (4-1-2-3). Thevaram is a Saiva (Shaiva) text — Shaivism follows Lord Shiva. Teacher noted: Saiva = relating to Shiva (not to be confused with vegetarian "saivam").</div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — Saivam vs Vainavam</div>
+        சைவம் (Saivam) = worshippers of Shiva · வைணவம் (Vainavam) = worshippers of Vishnu.<br>
+        Common student error: confusing "சைவம்" with vegetarianism ("saiva food"). In historical context, Saivam = a Hindu sect, NOT food preference. Thevaram and Periya Puranam are <strong>Saiva</strong> texts.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="easy" data-gem="no" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q16</span>
+    <div style="flex:1">
+      <div class="q-text">Statement I: Palaeolithic stone tools were found at Attirampakkam, Chennai. Statement II: Ancient artefacts excavated by archaeologists are preserved by the Archaeological department.</div>
+      <div class="tamil">கூற்று 1: பழைய கற்கால கருவிகள் சென்னை அத்திரம்பாக்கத்தில் கண்டுபிடிக்கப்பட்டுள்ளன. கூற்று 2: பழங்கால மனிதர்கள் பயன்படுத்திய பொருட்கள் தொல்லியல் துறையினரால் பாதுகாக்கப்படுகின்றன.</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-easy">EASY</span><span class="badge badge-fact">Factual</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Both correct. Reason also correctly explains the assertion.</strong></div>
+    <div class="exp-text">Pallavaram and Attirampakkam (Chennai) are confirmed Palaeolithic sites in Tamil Nadu. The Archaeological Survey of India (ASI) preserves such finds.</div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="easy" data-gem="no" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q17</span>
+    <div style="flex:1">
+      <div class="q-text">The objects excavated from ancient sites to understand past lifestyles are called what?</div>
+      <div class="tamil">பண்டைய காலத்தில் வாழ்ந்த மனிதர்கள் பயன்படுத்திய பொருட்கள் அகழாய்வு மூலம் தோண்டி எடுக்கப்படுகின்றன — இவை என்னென்ன?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-easy">EASY</span><span class="badge badge-fact">Factual</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>புதைப்படிமங்கள் / Fossils and Artefacts</strong> (answer option: Buried remains/artefacts — <em>புதைப்படிவங்கள்</em>)</div>
+    <div class="exp-text">The correct textbook answer is "Fossils/Buried artefacts" (புதைப்படிவங்கள்). Not "museums" or "bones" alone — the full category of excavated objects is called buried artefacts or fossils.</div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="easy" data-gem="no" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q18</span>
+    <div style="flex:1">
+      <div class="q-text">Where did Palaeolithic man mainly live?</div>
+      <div class="tamil">பழைய கற்கால மனிதன் பெரும்பாலும் வாழ்ந்த இடங்கள் எது?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-easy">EASY</span><span class="badge badge-fact">Factual</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Caves</strong> (குகைகளில்)</div>
+    <div class="exp-text">Palaeolithic man lived in caves. He had no permanent settlements. He used the dog (domesticated from wolf) to guard the cave entrance and warn of approaching animals.</div>
+  </div>
+</div>
+
+<!-- ===== SECTION 5 ===== -->
+<div id="s5" class="section-head"><span class="s-num">05</span> Asoka & Maurya Empire</div>
+
+<div class="q-card" data-diff="easy" data-gem="no" data-pyq="yes">
+  <div class="q-header">
+    <span class="q-num">Q19</span>
+    <div style="flex:1">
+      <div class="q-text">Under whose reign did Buddhism spread to various parts of Asia?</div>
+      <div class="tamil">யாருடைய ஆட்சியில் புத்த மதம் ஆசியாவின் பல்வேறு பகுதிகளுக்கு பரவியது?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-easy">EASY</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">All groups</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Emperor Asoka (the Great)</strong></div>
+    <div class="exp-text">Asoka sent his son Mahinda to Sri Lanka and his daughter Sanghamitra to Japan and other Asian countries to spread Buddhism. This was a key policy after his conversion following the Kalinga War.</div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="medium" data-gem="yes" data-pyq="yes">
+  <div class="q-header">
+    <span class="q-num">Q20</span>
+    <div style="flex:1">
+      <div class="q-text">After which war did Asoka embrace Buddhism and dedicate his life to spreading peace and righteousness?</div>
+      <div class="tamil">_____ போருக்கு பின் அசோகர் புத்த மதத்தை தழுவி அமைதியையும் அறத்தையும் பரப்புவதற்கான தன் வாழ்வை அர்ப்பணித்தார்.</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-easy">EASY</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">All groups</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Kalinga War</strong> (கலிங்க போர்)</div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — Kalinga's Other Names</div>
+        <strong>Kalinga</strong> is present-day <strong>Odisha</strong>.<br>
+        Ancient name for the plains of Odisha: <strong>Utkala</strong> (உத்கல்).<br>
+        This appears in the National Song "Jana Gana Mana": <em>"Dravida Utkala Banga"</em><br>
+        → Dravida = South India | Utkala = Odisha | Banga = Bengal/Bangladesh<br>
+        <strong>Utkala = Odisha</strong> is a confirmed Geography question in TNPSC Group 1.
+      </div>
+    </div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — Kamarupa</div>
+        <strong>Kamarupa</strong> = ancient name for present-day <strong>Assam</strong>. This is a PYQ from Geography section.
+      </div>
+    </div>
+    <div class="callout callout-pyq">
+      <span class="callout-icon">🏆</span>
+      <div class="callout-body"><div class="callout-title">PYQ ALERT</div>Utkala = Odisha appeared in TNPSC Group 1 Geography and History paper. Kamarupa = Assam also tested.</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="medium" data-gem="yes" data-pyq="yes">
+  <div class="q-header">
+    <span class="q-num">Q21</span>
+    <div style="flex:1">
+      <div class="q-text">The 24-spoked wheel in the Indian national flag — from whose emblem / pillar was it taken?</div>
+      <div class="tamil">திரைவட குடியில் இடம் பெற்றுள்ள 24 ஆரக்கால் சக்கரம் அசோகர் நெறிவே தூண முத்திரையிலிருந்து பெறப்பட்டது.</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-med">MEDIUM</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">Gr.1/2</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text">From <strong>Asoka's Dharma Chakra Pillar at Sarnath</strong> (சார்நாத் தூண). Sarnath is in <strong>Uttar Pradesh</strong>.</div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — Sarnath</div>Sarnath (Uttar Pradesh) has the <strong>Asoka Pillar</strong> and a <strong>Shanti Stupa</strong>. The Asoka Chakra (24 spokes) on our national flag comes from the <strong>Sarnath Lion Capital</strong> of Asoka.</div>
+    </div>
+    <div class="callout callout-pyq">
+      <span class="callout-icon">🏆</span>
+      <div class="callout-body"><div class="callout-title">PYQ ALERT</div>"Where is the Asoka Pillar from which the national flag emblem is taken?" = Sarnath, UP. Appeared in TNPSC Group 2 (2021).</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="hard" data-gem="yes" data-pyq="yes">
+  <div class="q-header">
+    <span class="q-num">Q22</span>
+    <div style="flex:1">
+      <div class="q-text">Through whose historical research did Asoka's inscriptions become known to the world?</div>
+      <div class="tamil">கீழ்கண்ட உற்றுள் யாருடைய வரலாற்று ஆய்வுகள் மூலம் அசோகரின் குறிப்புகள் வெளிவந்தன? (Options: William Jones, James Prinsep, Alexander Cunningham, Charles Allen)</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-hard">HARD</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">Gr.1</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>William Jones, James Prinsep, and Alexander Cunningham</strong> (Options 1, 2, 3)</div>
+    <div class="exp-label">📌 Explanation</div>
+    <div class="exp-text">• <strong>William Jones</strong> — orientalist scholar, linguistic research<br>• <strong>James Prinsep</strong> — deciphered Brahmi script, enabling reading of Asoka's edicts<br>• <strong>Alexander Cunningham</strong> — first Director-General of ASI (Archaeological Survey of India), founded 1861<br>• <strong>Charles Allen</strong> — wrote the book "The Search for the Lost Emperor" about Asoka (he is NOT primarily a research scholar of edicts)</div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — The Book About Asoka</div>Charles Allen wrote <em>"The Search for the Lost Emperor"</em> — a popular book about how Asoka's story was rediscovered. "If he hadn't written it, Asoka might have remained a 'lost emperor' even today," said the teacher.</div>
+    </div>
+    <div class="callout callout-trap">
+      <span class="callout-icon">🪤</span>
+      <div class="callout-body"><div class="callout-title">TNPSC TRAP</div>Charles Allen is IN the textbook but is NOT part of the "research scholars" group. He wrote a popular book. The three who made Asoka's inscriptions public = Jones + Prinsep + Cunningham.</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="medium" data-gem="no" data-pyq="yes">
+  <div class="q-header">
+    <span class="q-num">Q23</span>
+    <div style="flex:1">
+      <div class="q-text">Who wrote "The Search for the Lost Emperor" (about Asoka)?</div>
+      <div class="tamil">சர்ச் ஆப் த இந்தியன் லாஸ்ட் எம்பரர் — இந்தியாவின் தொலைந்த ஒரு அரசர் — யாருடைய புத்தகம்?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-med">MEDIUM</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">Gr.1/2</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Charles Allen</strong></div>
+    <div class="callout callout-tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body"><div class="callout-title">TIP — Memory</div>"Lost Emperor" → Charles Allen. If it were not for Charles Allen's book, Asoka would have truly remained "lost" to popular history.</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="medium" data-gem="no" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q24</span>
+    <div style="flex:1">
+      <div class="q-text">What did Asoka consider would happen to his history if Charles Allen had not written/publicised it?</div>
+      <div class="tamil">_____ செய்யவிட்டிருந்தால் அசோகரின் வரலாறு மறைக்கப்பட்ட வரலாறாகவே இருந்திருக்கும்.</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-easy">EASY</span><span class="badge badge-fact">Factual</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text">If <strong>Charles Allen</strong> had not documented/written about Asoka, Asoka's history would have remained hidden (lost) history.</div>
+    <div class="exp-text">Answer = Charles Allen. Quick shortcut: "Lost Emperor" → Charles Allen.</div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="medium" data-gem="yes" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q25</span>
+    <div style="flex:1">
+      <div class="q-text">Find the WRONG pair: (Fort – Vellore) | (Temple – Thanjavur) | (Stupa – Sanchi) | (Palace – Thirumalai Nayakar Mahal)</div>
+      <div class="tamil">தவறான இணையை தேர்ந்தெடு: கோட்டை-வேலூர் | கோவில்-தஞ்சாவூர் | ஸ்தூபி-சாஞ்சி | அரண்மனை-திருமலை நாயக்கர் மகால்</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-med">MEDIUM</span><span class="badge badge-trap">Trap</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text">There is <strong>no wrong pair</strong> — all four are correct. OR: If one option is "Monastery – Thirumalai Nayakar" that would be wrong (it's a Palace not a monastery).</div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — What is a Stupa?</div>
+        <strong>Stupa (ஸ்தூபி)</strong> = A dome-shaped structure built over the <em>relics (physical remains)</em> of the Buddha's body. After Buddha's cremation, his bodily remains were distributed and stupas were built over them. The most famous = <strong>Sanchi Stupa</strong> (Madhya Pradesh).<br>
+        <em>Note: Stupa ≠ Place of death. Stupa = structure built over relics.</em>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="easy" data-gem="no" data-pyq="yes">
+  <div class="q-header">
+    <span class="q-num">Q26</span>
+    <div style="flex:1">
+      <div class="q-text">What are the evidence / proofs that speak of Asoka's greatness?</div>
+      <div class="tamil">அசோகனுடைய பெருமையை எடுத்துச் சொல்லும் சான்றுகள் எவை?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-easy">EASY</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">Gr.2/4</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Sarnath Pillar</strong> (Asoka Pillar) and <strong>Sanchi Stupa</strong>. Answer: Options 1 and 4.</div>
+    <div class="callout callout-tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body"><div class="callout-title">TIP</div>Asoka → Sarnath Pillar + Sanchi Stupa. Both are in Central/Northern India. Buddhism + Asoka always go together.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 6 ===== -->
+<div id="s6" class="section-head"><span class="s-num">06</span> World Civilisations — Timeline</div>
+
+<div class="q-card" data-diff="hard" data-gem="yes" data-pyq="yes">
+  <div class="q-header">
+    <span class="q-num">Q27</span>
+    <div style="flex:1">
+      <div class="q-text">Name the four earliest civilisations in the world and their approximate time periods.</div>
+      <div class="tamil">உலகத்திலே இருக்கக்கூடிய நான்கு முதல் நாகரிகங்கள் என்ன?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-hard">HARD</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">Gr.1</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text">
+      1. <strong>Mesopotamia</strong> (3500–2000 BCE) — Tigris & Euphrates (Iraq)<br>
+      2. <strong>Indus Valley / Sindhu</strong> (3300–1900 BCE) — Indus River<br>
+      3. <strong>Egypt</strong> (3100–1100 BCE) — Nile River<br>
+      4. <strong>China</strong> (1700–1100 BCE) — Yellow River
+    </div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — Mnemonic + Comparison Shortcut</div>
+        <strong>Mosi-eci (மொசி எசி)</strong> = <strong>Mo</strong>sopotamia → <strong>Si</strong>ndu → <strong>E</strong>gypt → <strong>Ci</strong>na (China)<br><br>
+        Key comparison:<br>
+        • Mesopotamia (3500–2000) and Indus Valley (3300–1900) overlapped in time and <strong>declined together</strong>!<br>
+        • Egypt continued longer: 3100–1100 (≈2000 years)<br>
+        • China came last: 1700–1100 BCE<br>
+        • "China always comes last" in world history lists — remember this!
+      </div>
+    </div>
+    <div class="callout callout-pyq">
+      <span class="callout-icon">🏆</span>
+      <div class="callout-body"><div class="callout-title">PYQ ALERT</div>The sequence/timeline of world civilisations appeared in TNPSC Group 1 Mains (2022) and Group 2 Prelims (2020).</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="medium" data-gem="no" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q28</span>
+    <div style="flex:1">
+      <div class="q-text">Why did ancient civilisations settle near rivers? Give reasons.</div>
+      <div class="tamil">நதிக்கரையில் குடியேறியதற்கான காரணம் என்ன?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-med">MEDIUM</span><span class="badge badge-con">Conceptual</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text">1. <strong>Fertile soil</strong> for agriculture<br>2. <strong>Fresh water</strong> easily available<br>3. <strong>Transport</strong> — rivers as waterways for trade<br>4. <strong>Natural defence</strong> on one side</div>
+    <div class="exp-text">The Bronze Age (Venkala Kalam) is when civilisations and religions first emerged — they needed river-based agriculture to sustain large populations.</div>
+  </div>
+</div>
+
+<!-- ===== SECTION 7 ===== -->
+<div id="s7" class="section-head"><span class="s-num">07</span> Indus Valley — Discovery & Excavation</div>
+
+<div class="q-card" data-diff="medium" data-gem="yes" data-pyq="yes">
+  <div class="q-header">
+    <span class="q-num">Q29</span>
+    <div style="flex:1">
+      <div class="q-text">Who first described the ruins of Harappa?</div>
+      <div class="tamil">ஹரப்ப நகரத்தின் இடிபாடுகளை முதன் முதலில் விவரித்தவர் யார்?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-med">MEDIUM</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">Gr.1/2</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Charles Masson</strong> (1826)</div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — Memory Trick for Charles Masson</div>Harappa ruins → Mason (who builds/notices broken structures). "Masson spotted the ruins like a mason notices broken bricks!" The textbook shows a Zebu bull (ஜெபு மாடு) as the Harappan symbol — remember the bull when you think Harappa.</div>
+    </div>
+    <div class="callout callout-pyq">
+      <span class="callout-icon">🏆</span>
+      <div class="callout-body"><div class="callout-title">PYQ ALERT</div>"Who first identified/described Harappan ruins?" = Charles Masson. Appeared in TNPSC Group 4 and Group 2.</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="medium" data-gem="no" data-pyq="yes">
+  <div class="q-header">
+    <span class="q-num">Q30</span>
+    <div style="flex:1">
+      <div class="q-text">In which year was the Lahore-to-Karachi railway laid? What law was passed that year?</div>
+      <div class="tamil">லாகூர் கராச்சி ரயில் பாதை அமைந்த ஆண்டு எது?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-med">MEDIUM</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">Gr.1/2</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>1856</strong></div>
+    <div class="exp-label">📌 Explanation</div>
+    <div class="exp-text">1856 — the year of the Lahore-Karachi railway. In the same year: <strong>Indian Military (Enlistment) Act 1856</strong> and the <strong>Widow Remarriage Act 1856</strong> were also passed. Bricks from Harappa were used as railway ballast during construction — Harappan ruins were accidentally discovered this way.</div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — 1856 Connection</div>1856 → Railway + Widow Remarriage Act + Military Act → all in one year. The railway workers noticed Harappan bricks and reported the ruins. This led to formal excavation starting in 1920.</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="medium" data-gem="yes" data-pyq="yes">
+  <div class="q-header">
+    <span class="q-num">Q31</span>
+    <div style="flex:1">
+      <div class="q-text">In which year were Harappa and Mohenjodaro formally excavated?</div>
+      <div class="tamil">ஹரப்பா முகஞ்சதாரோ நகர்களை அகலாய்வு செய்த ஆண்டு எது?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-easy">EASY</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">All groups</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>1920</strong> (approximately 1920–1924)</div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — Director General of ASI in 1920</div><strong>Sir John Marshall</strong> was the Director-General of the Archaeological Survey of India (ASI) in 1920. He oversaw the excavation of Harappa and Mohenjodaro. He also identified the <strong>10 common features</strong> between the two cities.</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="hard" data-gem="no" data-pyq="yes">
+  <div class="q-header">
+    <span class="q-num">Q32</span>
+    <div style="flex:1">
+      <div class="q-text">Who identified the 10 common features between Harappa and Mohenjodaro?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-hard">HARD</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">Gr.1</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Sir John Marshall</strong></div>
+    <div class="exp-text">Marshall (1920–1924 period) = ASI Director General who excavated both sites and identified 10 points of similarity — confirming they belonged to the same civilisation.</div>
+    <div class="callout callout-tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body"><div class="callout-title">TIP</div>John Marshall → 1920–1924 → 10 common features → first to declare IVC as a major civilisation.</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="medium" data-gem="yes" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q33</span>
+    <div style="flex:1">
+      <div class="q-text">When was the Archaeological Survey of India (ASI) established? Where is its headquarters? Who helped establish it?</div>
+      <div class="tamil">இந்திய தொல்பொருள் ஆய்வு துறை நிறுவப்பட்ட ஆண்டு, தலைமையகம் எங்கு?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-med">MEDIUM</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">Gr.2/4</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text">ASI founded: <strong>1861</strong> | Headquarters: <strong>New Delhi</strong> | Helped by: <strong>Alexander Cunningham</strong> (land surveyor / first DG)</div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — 1856 → 1861 Connection</div>
+        1856: Railway laid → ruins noticed<br>
+        1861: ASI founded (5 years later) to formally study the ruins.<br>
+        <strong>Tamil Nadu Archaeological Department (TNASI)</strong> founded 100 years later: <strong>1961</strong>, by R. Nagasamy.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="medium" data-gem="no" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q34</span>
+    <div style="flex:1">
+      <div class="q-text">Which civilisation is older — Harappa or Mohenjodaro?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-easy">EASY</span><span class="badge badge-fact">Factual</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Harappa</strong> is older. Mohenjodaro came later.</div>
+    <div class="exp-text">Harappa (first site identified → gives the civilisation its name). Mohenjodaro (discovered later, but is the larger/more studied city).</div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="easy" data-gem="yes" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q35</span>
+    <div style="flex:1">
+      <div class="q-text">What does the word "Civilisation" (நாகரிகம்) come from? What does it mean?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-easy">EASY</span><span class="badge badge-fact">Factual</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text">From <strong>Latin</strong> word <strong>"Civis"</strong> — meaning <em>"one who lives in a city"</em> (citizen / urban dweller).</div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — Language Root Connections</div>Civis → Civilisation → Citizen → City. The Harappan civilisation = urban civilisation = "Civis" fully applies. It was a <strong>planned urban civilisation</strong>.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 8 ===== -->
+<div id="s8" class="section-head"><span class="s-num">08</span> Harappa & Mohenjodaro — City Planning & Features</div>
+
+<div class="q-card" data-diff="medium" data-gem="yes" data-pyq="yes">
+  <div class="q-header">
+    <span class="q-num">Q36</span>
+    <div style="flex:1">
+      <div class="q-text">What were the two planned divisions of the IVC cities?</div>
+      <div class="tamil">ஹரப்ப நாகரிகத்தின் திட்டமிட்ட இரண்டு பகுதிகள் என்ன?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-med">MEDIUM</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">Gr.1/2</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Upper (Western) part</strong> — elevated, for the ruler/elite | <strong>Lower (Eastern) part</strong> — for the common people</div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — Layout Logic</div>West = Upper = King. East = Lower = People. "The king always lives on high ground — military advantage and prestige."</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="easy" data-gem="no" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q37</span>
+    <div style="flex:1">
+      <div class="q-text">In which direction did IVC streets run?</div>
+      <div class="tamil">தெருக்கள் எந்த திசையிலிருந்து எந்த திசையில் அமைந்திருந்தன?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-easy">EASY</span><span class="badge badge-fact">Factual</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>North to South</strong> and <strong>East to West</strong> (grid pattern / சட்ட வடிவமைப்பு)</div>
+    <div class="callout callout-trap">
+      <span class="callout-icon">🪤</span>
+      <div class="callout-body"><div class="callout-title">TRAP — Direction Order</div>Primary direction: North–South. Secondary: East to West. Don't reverse. Grid layout = the defining feature of IVC town planning.</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="easy" data-gem="no" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q38</span>
+    <div style="flex:1">
+      <div class="q-text">What were IVC houses made of? How many storeys?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-easy">EASY</span><span class="badge badge-fact">Factual</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text">Houses: <strong>Burnt bricks</strong> (சுட்ட செங்கற்கள்) — kiln-fired, not sun-dried | Storeys: <strong>1 or 2 floors</strong></div>
+    <div class="exp-text">Also used: lime mortar for joining bricks. Roofs were flat (சமதலமாக).</div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="easy" data-gem="no" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q39</span>
+    <div style="flex:1">
+      <div class="q-text">What shape were the roofs of IVC houses?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-easy">EASY</span><span class="badge badge-fact">Factual</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Flat (samethalama — சமதலமாக)</strong></div>
+    <div class="exp-text">Drains were covered with bricks or stone slabs. Houses had their own drainage connected to the city drainage system.</div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="hard" data-gem="yes" data-pyq="yes">
+  <div class="q-header">
+    <span class="q-num">Q40</span>
+    <div style="flex:1">
+      <div class="q-text">What is the Great Bath? Where is it located? What shape is it? What was used to prevent water seepage?</div>
+      <div class="tamil">பெருங்குளம் வடிவம் மற்றும் அமைந்திருக்கப்பட்ட இடம் என்ன?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-hard">HARD</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">Gr.1</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Mohenjodaro</strong> | Shape: <strong>Rectangular (செவ்வக வடிவம்)</strong> | Water-proofing: <strong>Bitumen/tar (பிசின் / tar)</strong> was applied to the walls</div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — Harappa vs Mohenjodaro Key Distinction</div>
+        <strong>Harappa</strong> = Granary (தானிய களஞ்சியம்) — food storage<br>
+        <strong>Mohenjodaro</strong> = Great Bath (பெருங்குளம்) — public bathing<br>
+        Memory: "Mohenjodaro = 'Mound of the Dead' (its Tamil meaning). The living people bathed there; the grain was stored in Harappa."
+      </div>
+    </div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — Bitumen Logic</div>Bitumen/tar was applied to the <strong>outer walls</strong> of the Great Bath (not inside). Reason: Tar on the inside would contaminate the water. Tar on outside = waterproofing from outside. Same tar used in Harappan granary — on outside walls to keep moisture out.</div>
+    </div>
+    <div class="callout callout-pyq">
+      <span class="callout-icon">🏆</span>
+      <div class="callout-body"><div class="callout-title">PYQ ALERT</div>"World's first public bath" = Great Bath of Mohenjodaro. This is a TNPSC Group 1 and Group 2 confirmed question.</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="hard" data-gem="no" data-pyq="yes">
+  <div class="q-header">
+    <span class="q-num">Q41</span>
+    <div style="flex:1">
+      <div class="q-text">The largest assembly hall in Mohenjodaro had how many pillars in how many rows?</div>
+      <div class="tamil">முகஞ்சதாரவில் இருந்த மிகப்பெரிய பொதுக்கூட்டரங்கு — எத்தனை தூண்கள் எத்தனை வரிசை?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-hard">HARD</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">Gr.1</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>20 pillars in 4 rows</strong> (= 80 total pillars)</div>
+    <div class="callout callout-critical">
+      <span class="callout-icon">🔴</span>
+      <div class="callout-body"><div class="callout-title">CRITICAL — Do NOT Forget</div>20 pillars × 4 rows = 80 total. "If options say 80, that's the derived answer. But the factual answer is 20 pillars, 4 rows." Group 1 may ask 20 or 4 or 80 separately — know all three.</div>
+    </div>
+    <div class="callout callout-pyq">
+      <span class="callout-icon">🏆</span>
+      <div class="callout-body"><div class="callout-title">PYQ ALERT</div>This exact question (20 pillars, 4 rows) appeared in TNPSC Group 1 paper. High priority.</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="medium" data-gem="yes" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q42</span>
+    <div style="flex:1">
+      <div class="q-text">Where was the granary (grain store) found? Where was the last/recent granary discovered?</div>
+      <div class="tamil">செங்கற்களால் கட்டப்பட்ட தானிய களஞ்சியம் கண்டுபிடிக்கப்பட்ட இடம் எது?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-med">MEDIUM</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">Gr.1/2</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text">Classic answer: <strong>Harappa</strong> | Most recent discovery: <strong>Rakhigarhi</strong> (Haryana district)</div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — Rakhigarhi</div>Rakhigarhi (Haryana) — the <strong>largest known IVC site</strong> in India. Recently confirmed granary found here too. This site is emerging as a major PYQ target for 2025–2026 exams.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 9 ===== -->
+<div id="s9" class="section-head"><span class="s-num">09</span> Indus Valley — Trade, Seals, Tools & Culture</div>
+
+<div class="q-card" data-diff="medium" data-gem="no" data-pyq="yes">
+  <div class="q-header">
+    <span class="q-num">Q43</span>
+    <div style="flex:1">
+      <div class="q-text">In which foreign countries were Indus Valley seals found?</div>
+      <div class="tamil">சிந்துவெளி முத்திரைகள் கிடைத்துள்ள இடம் எது?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-med">MEDIUM</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">Gr.1/2</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Iraq, Kuwait, Mesopotamia, and Sumeria</strong> (all in the Persian Gulf / Middle East region)</div>
+    <div class="exp-text">IVC seals found abroad prove international trade. They traded with Mesopotamia / Sumerian civilisation.</div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="hard" data-gem="yes" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q44</span>
+    <div style="flex:1">
+      <div class="q-text">Sumerian King Naram-Sin purchased ornaments/goods from which Indus Valley location called "Meluhha"?</div>
+      <div class="tamil">சின் என்பவர் சிந்துவலி பகுதியில் உள்ள _____ என்னும் இடத்தில் அணிகலன்கள் வாங்கியதாக குறிப்பு உள்ளது.</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-hard">HARD</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">Gr.1</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text">He bought goods from a place called <strong>Meluhha</strong> — which scholars identify as the Indus Valley region.</div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — Cylinder Seals</div>Cylinder-shaped seals found in Mesopotamia and Persian Gulf are ALSO found in the Indus Valley — proving direct trade contact between IVC and Sumerian civilisation. This is unique evidence of cross-civilisation exchange.</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="medium" data-gem="yes" data-pyq="yes">
+  <div class="q-header">
+    <span class="q-num">Q45</span>
+    <div style="flex:1">
+      <div class="q-text">What is Lothal? What is it famous for?</div>
+      <div class="tamil">கப்பல் கட்டும் தளம் மற்றும் செப்பினிடும் தளம் — உலகத்திலே இயற்கையாக அமைந்த துறைமுகம் எது?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-med">MEDIUM</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">Gr.1/2</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Lothal</strong> (Gujarat) — world's first <strong>naturally located harbour</strong>, also India's first <strong>ship-building yard</strong>. Located on a tributary of the <strong>Sabarmati River</strong>.</div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — Lothal Facts</div>
+        • Located in <strong>Gujarat</strong>, on Sabarmati tributary<br>
+        • 2000+ years old harbour — naturally formed<br>
+        • India's first documented shipbuilding yard<br>
+        • Gandhi's Dandi March: Dandi is also near Sabarmati! Connection to remember Sabarmati.
+      </div>
+    </div>
+    <div class="callout callout-pyq">
+      <span class="callout-icon">🏆</span>
+      <div class="callout-body"><div class="callout-title">PYQ ALERT</div>"First shipbuilding yard / harbour in India" = Lothal. Appeared in SSC CGL (2017) and TNPSC Group 1 (2020).</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="medium" data-gem="no" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q46</span>
+    <div style="flex:1">
+      <div class="q-text">A male statue in a seated position was found at which IVC site? What material was it made of?</div>
+      <div class="tamil">அமர்ந்த நிலையில் உள்ள ஆண் சிலை கண்டுபிடிக்கப்பட்ட இடம் எது?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-med">MEDIUM</span><span class="badge badge-fact">Factual</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Mohenjodaro</strong> | Material: <strong>Limestone / Steatite</strong> (சுண்ணாம்பு கல்)</div>
+    <div class="exp-text">The famous "Priest-King" statue from Mohenjodaro is made of steatite/limestone. It shows a man in a seated posture with a shawl decorated with trefoil patterns.</div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="medium" data-gem="yes" data-pyq="yes">
+  <div class="q-header">
+    <span class="q-num">Q47</span>
+    <div style="flex:1">
+      <div class="q-text">The famous "Dancing Girl" statue — what is it made of? Where was it found?</div>
+      <div class="tamil">நடனமாடும் பெண் சிலை எதனால் செய்யப்பட்டது?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-med">MEDIUM</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">Gr.1/2</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Bronze</strong> (வெண்கலம் / Bronze) | Found at: <strong>Mohenjodaro</strong></div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — Gender Significance</div>The bronze Dancing Girl is so detailed and well-crafted that it shows women had great importance in IVC society. Bronze casting at this level (4000 years ago) = extraordinary metallurgical skill.</div>
+    </div>
+    <div class="callout callout-pyq">
+      <span class="callout-icon">🏆</span>
+      <div class="callout-body"><div class="callout-title">PYQ ALERT</div>"Dancing Girl statue material" = Bronze (not stone). This is a frequent wrong-answer trap in TNPSC — students confuse it with the limestone Priest-King.</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="hard" data-gem="no" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q48</span>
+    <div style="flex:1">
+      <div class="q-text">A measuring scale made of ivory (tusk/தந்தம்) was found in Gujarat. How many millimetres long was it?</div>
+      <div class="tamil">குஜராத் மாநிலத்தில் கண்டுபிடிக்கப்பட்ட தந்தத்தினால் ஆன சிறிய அளவீடு — எத்தனை மில்லிமீட்டர்?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-hard">HARD</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">Gr.1</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>1.704 mm</strong> (1704 millimetres = the smallest unit marked on it)</div>
+    <div class="callout callout-critical">
+      <span class="callout-icon">🔴</span>
+      <div class="callout-body"><div class="callout-title">CRITICAL — Exact Number</div>1.704 mm = the smallest graduation on the ivory measuring rod found in Lothal (Gujarat). This proves advanced standardised measurements in IVC — 4000 years ago.</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="easy" data-gem="no" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q49</span>
+    <div style="flex:1">
+      <div class="q-text">What was the first metal used by humans?</div>
+      <div class="tamil">மனிதர்களால் முதன் முதலில் கண்டுபிடிக்கப்பட்டு உபயோகப்படுத்தப்பட்ட உலோகம் எது?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-easy">EASY</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">Gr.2/4</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Copper (செம்பு)</strong></div>
+    <div class="exp-text">Copper → then Bronze (copper + tin alloy) → then Iron. IVC period = Bronze/Copper Age. Iron came much later.</div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="medium" data-gem="no" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q50</span>
+    <div style="flex:1">
+      <div class="q-text">IVC people used carts with solid wheels (no spokes). What does this mean?</div>
+      <div class="tamil">ஹரப்பா மக்கள் சக்கர வண்டிகளை பயன்படுத்தினார் — இடிட திடமான சக்கரங்களை பயன்படுத்தினார் (ஆரக்கால் இல்லாதது).</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-med">MEDIUM</span><span class="badge badge-con">Conceptual</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text">IVC carts had <strong>solid wheels without spokes (ஆரக்கால் இல்லாதது)</strong>. They were heavier and slower than spoked wheels.</div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — Asoka Chakra Connection</div>The Asoka Chakra on our flag has <strong>24 SPOKES (ஆரக்கால்)</strong> — this represents a more advanced wheel design (post-IVC). IVC people had no spokes = solid wheel = Aarakkaal illatha chakram. Asoka's era = spokes present!</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="medium" data-gem="yes" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q51</span>
+    <div style="flex:1">
+      <div class="q-text">IVC people used red pottery painted with black designs. What was the pottery made on? What colour first, then decorated with what?</div>
+      <div class="tamil">மண்பாண்டங்கள் எதன் மூலம் உருவாக்கினார் — எந்த வண்ணத்தில் அறிஞ்சு?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-med">MEDIUM</span><span class="badge badge-fact">Factual</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text">Made on a <strong>potter's wheel</strong> (சக்கரம்). Base colour: <strong>Red</strong>. Decorated with <strong>Black</strong> designs (animals etc.).</div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — Why Red?</div>Clay (செம்மண்) = naturally reddish. Spin it on a wheel → shape it → fire it → it comes out reddish. To differentiate designs, they painted black on top. "Think practically — if you make a clay pot today, it will be reddish. That's all you get without modern pigments."</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="medium" data-gem="no" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q52</span>
+    <div style="flex:1">
+      <div class="q-text">What gemstone did IVC people use for jewellery? What was it called?</div>
+      <div class="tamil">சிந்துவெளி மக்கள் ஆபரணம் செய்ய பயன்படுத்தப்பட்டது எது?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-med">MEDIUM</span><span class="badge badge-fact">Factual</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Carnelian</strong> (கார்நெலியன்) — a red semi-precious stone</div>
+    <div class="exp-text">Carnelian beads were a major IVC export. Found in Mesopotamia too — proves trade. The stone is reddish-orange in colour.</div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="medium" data-gem="no" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q53</span>
+    <div style="flex:1">
+      <div class="q-text">Which of these was IVC people NOT aware of?</div>
+      <div class="tamil">சிந்துவெளி மக்களுக்கு எதன் பற்றி தெரியாது?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-easy">EASY</span><span class="badge badge-fact">Factual</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text">IVC people did NOT know about: <strong>Iron</strong> (they lived in the Bronze/Copper age) and <strong>Horses</strong> (horses were introduced later by Aryans)</div>
+    <div class="exp-text">IVC people knew copper and bronze but not iron. Horses were absent from IVC — no horse bones or horse-related artefacts found. This is significant for the Aryan Invasion debate.</div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="easy" data-gem="no" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q54</span>
+    <div style="flex:1">
+      <div class="q-text">In which direction was the IVC script written? (Left to Right or Right to Left?)</div>
+      <div class="tamil">சிந்துவெளி நாகரிக எழுத்து முறை — இடமிருந்து வலம் இல்லை வலமிருந்து இடம்?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-med">MEDIUM</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">Gr.1</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Left to Right (இடமிருந்து வலம்)</strong></div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — Semitic vs IVC Script Direction</div>
+        Semitic religions (Judaism, Islam, Christianity) use scripts written <strong>Right to Left</strong> (e.g., Arabic, Hebrew).<br>
+        IVC script = <strong>Left to Right</strong> — same as English, Tamil, and most modern languages.<br>
+        Memory: Semitic = Right to Left = backward (unusual). IVC/us = Left to Right = normal direction.
+      </div>
+    </div>
+    <div class="callout callout-trap">
+      <span class="callout-icon">🪤</span>
+      <div class="callout-body"><div class="callout-title">TRAP</div>Students often confuse this with Semitic scripts. IVC = Left to Right. Don't reverse it.</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="medium" data-gem="no" data-pyq="yes">
+  <div class="q-header">
+    <span class="q-num">Q55</span>
+    <div style="flex:1">
+      <div class="q-text">Who declared Mohenjodaro as a World Heritage Site? (UNESCO)</div>
+      <div class="tamil">முகஞ்சதாரவில் தொல்பொருள் ஆராய்ச்சி உலக பாரம்பரிய தளமாக எந்த நிறுவனம் தேர்ந்தெடுக்கப்பட்டது?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-easy">EASY</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">All groups</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>UNESCO</strong> declared Mohenjodaro a World Heritage Site.</div>
+  </div>
+</div>
+
+<!-- ===== SECTION 10 ===== -->
+<div id="s10" class="section-head"><span class="s-num">10</span> IVC — Geography, Extent & Decline</div>
+
+<div class="q-card" data-diff="medium" data-gem="no" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q56</span>
+    <div style="flex:1">
+      <div class="q-text">What was the precursor (forerunner) of the Indus Valley Civilisation?</div>
+      <div class="tamil">சிந்துவெளி நாகரிகத்தின் முன்னோடி எது?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-easy">EASY</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">Gr.2/4</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Mehrgarh Civilisation</strong> — located in Baluchistan (Kaiber-Pakhtunkhwa), Pakistan</div>
+    <div class="exp-text">Mehrgarh is the Neolithic settlement that predates and leads into the IVC. Located in the Kaiber-Bolam valley (Baluchistan). This is where the first Neolithic communities emerged before IVC.</div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="hard" data-gem="yes" data-pyq="yes">
+  <div class="q-header">
+    <span class="q-num">57</span>
+    <div style="flex:1">
+      <div class="q-text">What was the geographical extent of the Indus Valley Civilisation — North-East, South, East, and West boundaries?</div>
+      <div class="tamil">சிந்துவெளி நாகரிகத்தின் பரப்பு — வடகிழக்கு, தெற்கு, கிழக்கு, மேற்கு எல்லைகள்?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-hard">HARD</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">Gr.1</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text">
+      North-East: <strong>Afghanistan</strong><br>
+      West: <strong>Baluchistan (Pakistan) — Makran coast</strong><br>
+      East: <strong>Kakkar-Kakra river region</strong> (Haryana/Rajasthan)<br>
+      South: <strong>Maharashtra</strong> (Daimabad site)
+    </div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — KV-KV Shortcut for East</div>
+        East boundary: <strong>Kakkar to Kakra river</strong> (Haryana)<br>
+        "KV-KV" = Kakkar valley to Kakra valley<br>
+        These two rivers mark the eastern limit of IVC spread.<br><br>
+        Also: Rivers "Kaveri" and "Porunai" are mentioned in ancient Sangam texts and are found in <strong>Afghanistan</strong> — proving Indian river names spread far (trade routes).
+      </div>
+    </div>
+    <div class="callout callout-trap">
+      <span class="callout-icon">🪤</span>
+      <div class="callout-body"><div class="callout-title">TNPSC TRAP — River Names</div>
+        "Kaveri/Porunai river" as a place name = <strong>Afghanistan</strong> (ancient trade route river names)<br>
+        "Kaveri/Porunai" as a Tamil Nadu river = Tamil Nadu<br>
+        If asked as a river (nathi) = Afghanistan | If asked as a city location = Tamil Nadu
+      </div>
+    </div>
+    <div class="callout callout-pyq">
+      <span class="callout-icon">🏆</span>
+      <div class="callout-body"><div class="callout-title">PYQ ALERT</div>IVC extent direction questions appear regularly in Group 1 Geography-History crossover.</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="hard" data-gem="yes" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q58</span>
+    <div style="flex:1">
+      <div class="q-text">What are the probable causes of the decline of IVC?</div>
+      <div class="tamil">சிந்துவெளி நாகரிகம் அழிவுக்கான காரணங்கள் என்ன?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-hard">HARD</span><span class="badge badge-con">Conceptual</span><span class="badge badge-tnpsc">Gr.1</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text">
+      1. <strong>Climate change / Environmental change</strong><br>
+      2. <strong>Aryan Invasion</strong> (Aariya padaiyeduppu)<br>
+      3. <strong>Natural calamities</strong> (floods, earthquakes)<br>
+      4. <strong>Epidemic / Disease</strong> (no medical facilities)<br>
+      5. <strong>Deforestation</strong> (forest clearing for agriculture)<br>
+      6. <strong>Change of river course</strong> (Saraswati river dried up)
+    </div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — Aryan Invasion Theory</div>The Aryan Invasion Theory (AIT) = Aryans invaded from Central Asia, defeated IVC people, who fled south → became Dravidians. This is still debated by historians. The teacher noted: "Aryan invasion is one possible theory — it is in the textbook, but it remains controversial."</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="hard" data-gem="yes" data-pyq="yes">
+  <div class="q-header">
+    <span class="q-num">Q59</span>
+    <div style="flex:1">
+      <div class="q-text">What was the total area of IVC in square kilometres? How many large cities? How many villages?</div>
+      <div class="tamil">சிந்துவெளி நாகரிகத்தின் பரப்பு — எத்தனை லட்சம் சதுர கிலோமீட்டர்? எத்தனை பெரிய நகரம்? எத்தனை கிராமங்கள்?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-hard">HARD</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">Gr.1</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text">Area: <strong>13 lakh sq km (1.3 million sq km)</strong> | Large cities: <strong>6</strong> | Villages: <strong>200+</strong></div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — Six Major Cities</div>
+        The 6 major cities of IVC: <strong>Harappa, Mohenjodaro, Lothal, Shortugai, Rakhigarhi, Dholavira</strong> (and others like Kalibangan).<br>
+        "Remember Lothal and Rakhigarhi especially — they are frequently tested."
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="medium" data-gem="no" data-pyq="yes">
+  <div class="q-header">
+    <span class="q-num">Q60</span>
+    <div style="flex:1">
+      <div class="q-text">What time period does the IVC belong to? What was the overall duration?</div>
+      <div class="tamil">ஹரப்பா நாகரிகம் சார்ந்த காலம் எது? சிந்துவெளி நாகரிக காலம் எந்த காலம்?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-med">MEDIUM</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">Gr.1/2</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text">IVC period: <strong>3300 BCE to 1900 BCE</strong> | Age: <strong>Bronze Age / Copper Age</strong> (also called Chalcolithic)</div>
+    <div class="callout callout-tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body"><div class="callout-title">TIP — Period Comparison</div>
+        Mesopotamia: 3500–2000 BCE<br>
+        IVC: 3300–1900 BCE → <em>They were contemporaries and declined together!</em><br>
+        Egypt: 3100–1100 BCE (lasted longer)<br>
+        China: 1700–1100 BCE (came last)
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="medium" data-gem="no" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q61</span>
+    <div style="flex:1">
+      <div class="q-text">The "Dancing Girl" statue of IVC was estimated to be how many years old? Who said this?</div>
+      <div class="tamil">நடனமாடும் பெண் சிலை 3000 ஆண்டுகளுக்கு முற்பட்டது என கணித்தவர் யார்?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-hard">HARD</span><span class="badge badge-fact">Factual</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text">Estimated at <strong>over 3000 years old</strong> — statement made by <strong>John Marshall</strong></div>
+    <div class="exp-text">Marshall reportedly said: "Looking at this, it feels like it could not have been made 3000 years ago — it looks so modern." This quote is in the textbook context box.</div>
+  </div>
+</div>
+
+<!-- ===== ADDITIONAL QUESTIONS ===== -->
+<div class="section-head"><span class="s-num">11</span> Miscellaneous & World History Connections</div>
+
+<div class="q-card" data-diff="hard" data-gem="yes" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q62</span>
+    <div style="flex:1">
+      <div class="q-text">What is a Ziggurat? Who built it? For which god?</div>
+      <div class="tamil">ஜிகரட் என்றால் என்ன? யார் கட்டினார்? எந்த கடவுளுக்கு?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-hard">HARD</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">Gr.1</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Ziggurat</strong> = A stepped/tiered temple-tower built in Mesopotamia | Built by <strong>King Ur-Nammu</strong> in the city of Ur | Dedicated to the <strong>Moon God (Sin / Chandra Kadavul)</strong></div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — Ziggurat = Twin Temple</div>Ziggurat is sometimes called "twin temple" or "double temple" in textbook context. Compare with: <strong>Abu Simbel</strong> (Egypt) = also twin temples. Ziggurat (Mesopotamia) ↔ Abu Simbel (Egypt) = common pair question.</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="hard" data-gem="no" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q63</span>
+    <div style="flex:1">
+      <div class="q-text">The Great Pyramid of Giza — how many tons does a single block weigh?</div>
+      <div class="tamil">கிசே பிரமிடு — எத்தனை டன் எடை?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-hard">HARD</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">Gr.1</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text">Each block of the Great Pyramid of Giza (Cheops Pyramid) weighs approximately <strong>15 tons</strong>.</div>
+    <div class="exp-text">Built by King Khufu (Cheops). Located at Giza, Egypt. One of the Seven Wonders of the Ancient World.</div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="medium" data-gem="yes" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q64</span>
+    <div style="flex:1">
+      <div class="q-text">Who were the first to invent writing in the world?</div>
+      <div class="tamil">முதல் எழுத்து வடிவம் யாரால் உருவாக்கப்பட்டது?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-med">MEDIUM</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">Gr.1/2</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Sumerians</strong> (Mesopotamia) invented the first writing system — called <strong>Cuneiform</strong> script (~3200 BCE)</div>
+    <div class="callout callout-gem">
+      <span class="callout-icon">💎</span>
+      <div class="callout-body"><div class="callout-title">LIVE GEM — Anunnaki Theory</div>The teacher mentioned as a fun aside: "Search for 'Anunnaki Tamil' — some say ancient Sumerians were connected to Tamil civilisation. It's a fascinating rabbit hole for your free time — not exam material, but historically interesting!"</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="medium" data-gem="no" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q65</span>
+    <div style="flex:1">
+      <div class="q-text">What archaeological tool/technique is used to survey land for buried sites? What carbon-based dating method is used?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-med">MEDIUM</span><span class="badge badge-fact">Factual</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text">Land survey: <strong>Magnetic Scanner (Magnetic Survey / காந்தப்புல வருடி)</strong> | Dating method: <strong>Carbon-14 (C-14) dating / Radiocarbon dating</strong></div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="easy" data-gem="no" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q66</span>
+    <div style="flex:1">
+      <div class="q-text">What animal designs/patterns appear on IVC pottery?</div>
+      <div class="tamil">பானைகளில் காணப்படக்கூடிய வடிவம் எது?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-easy">EASY</span><span class="badge badge-fact">Factual</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text"><strong>Animal shapes / geometric animal designs</strong> (விலங்குகளின் வடிவியல் அமைப்பு) — dogs, bulls, birds etc. were painted on pots.</div>
+  </div>
+</div>
+
+<div class="q-card" data-diff="easy" data-gem="no" data-pyq="no">
+  <div class="q-header">
+    <span class="q-num">Q67</span>
+    <div style="flex:1">
+      <div class="q-text">What is the special/unique feature of the Indus Valley Civilisation?</div>
+      <div class="tamil">சிந்துவெளி நாகரிகத்தினுடைய சிறப்பு அம்சம் என்ன?</div>
+    </div>
+    <div class="q-badges"><span class="badge badge-easy">EASY</span><span class="badge badge-fact">Factual</span><span class="badge badge-tnpsc">All groups</span></div>
+  </div>
+  <div class="q-body">
+    <div class="answer-label">✅ Answer</div>
+    <div class="answer-text">IVC is a <strong>Planned Urban Civilisation (திட்டமிடப்பட்ட நகர நாகரிகம்)</strong> — meaning cities were designed with a plan before construction, with grid streets, drainage, and public buildings.</div>
+    <div class="callout callout-critical">
+      <span class="callout-icon">🔴</span>
+      <div class="callout-body"><div class="callout-title">CRITICAL — One-Line Answer to Memorise</div>"IVC = World's first PLANNED URBAN CIVILISATION." This is the most important single-line description of IVC. Include this in every essay/short answer.</div>
+    </div>
+  </div>
+</div>
+
+<!-- TOPIC SUMMARY -->
+<div id="summary" class="section-head"><span class="s-num">12</span> Topic Summary Card</div>
+<div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:24px;margin-bottom:36px;">
+  <div style="color:var(--gold);font-family:'Syne',sans-serif;font-weight:700;margin-bottom:14px;">10 Key Takeaways from This Session</div>
+  <ul class="bullet-list">
+    <li><strong>History</strong> derives from Greek <em>Historia</em> = learning through inquiry</li>
+    <li>Three periods: <strong>Prehistoric → Proto-Historic → Historic</strong>. IVC = Proto-Historic (script exists but undeciphered)</li>
+    <li>Stone Age map: Palaeolithic = Chennai (Attirampakkam), Bheembetka (MP) | Neolithic = Mehrgarh (Pakistan) | Bronze/Iron = Athichanallur, Lothal, Hallur</li>
+    <li><strong>Dog</strong> = first domesticated animal | <strong>Copper</strong> = first metal used by humans</li>
+    <li>Asoka: Kalinga War → Buddhism → Dhamma (Prakrit, NOT Sanskrit) | Sarnath Pillar + Sanchi Stupa = proofs of greatness</li>
+    <li>World Civilisations order: <strong>Mesopotamia (3500–2000) → IVC (3300–1900) → Egypt (3100–1100) → China (1700–1100)</strong></li>
+    <li>IVC = Planned Urban Civilisation | Harappa = granary | Mohenjodaro = Great Bath (rectangular, bitumen-sealed)</li>
+    <li>Assembly Hall at Mohenjodaro: <strong>20 pillars × 4 rows</strong> | Dancing Girl = Bronze | Priest-King = Limestone</li>
+    <li>Lothal (Gujarat) = world's first shipyard | Carnelian beads = IVC jewellery export | IVC seals found in Iraq/Kuwait</li>
+    <li>IVC extent: 13 lakh sq km | 6 major cities | 200+ villages | 3300–1900 BCE | Bronze/Copper Age</li>
+  </ul>
+</div>
+
+<!-- PREDICTIONS -->
+<div id="predict" class="section-head"><span class="s-num">13</span> 2026 Exam Predictions</div>
+
+<div class="prediction-card">
+  <div class="pred-num">PREDICTION 01 · TNPSC Group 1 · HIGH PROBABILITY</div>
+  <div class="pred-q">"The script of the Indus Valley Civilisation has not been deciphered yet. This is why IVC is classified as ____ period." (Fill in blank)</div>
+  <div class="pred-hint">Answer: Proto-Historic Period. This connects Q7+Q8 from this session. Expect as a statement-correction or fill-in-blank.</div>
+</div>
+
+<div class="prediction-card">
+  <div class="pred-num">PREDICTION 02 · TNPSC Group 1/2 · HIGH PROBABILITY</div>
+  <div class="pred-q">"Match the following — Harappa : Granary :: Mohenjodaro : ___" or "Great Bath was found at ___"</div>
+  <div class="pred-hint">Answer: Great Bath / Mohenjodaro. The Harappa-Granary and Mohenjodaro-Great Bath distinction is a classic exam pair.</div>
+</div>
+
+<div class="prediction-card">
+  <div class="pred-num">PREDICTION 03 · TNPSC Group 1 · MEDIUM PROBABILITY</div>
+  <div class="pred-q">"Who among the following scholars was NOT associated with bringing Asoka's history to light — William Jones / James Prinsep / Alexander Cunningham / Ashutosh Mukherjee?"</div>
+  <div class="pred-hint">Answer: Ashutosh Mukherjee (not associated). This is a negative-type exclusion question based on Q22.</div>
+</div>
+
+<div class="prediction-card">
+  <div class="pred-num">PREDICTION 04 · TNPSC All Groups · HIGH PROBABILITY</div>
+  <div class="pred-q">"Dhamma as used in Asoka's edicts belongs to which language?" OR "Dharma in Sanskrit = ___ in Prakrit"</div>
+  <div class="pred-hint">Answer: Dhamma = Prakrit. Dharma = Sanskrit/English. Q10 was the most-missed in this session — expect it in exam.</div>
+</div>
+
+<div class="prediction-card">
+  <div class="pred-num">PREDICTION 05 · TNPSC Group 1/2 · MEDIUM PROBABILITY</div>
+  <div class="pred-q">"The IVC extended from ___ in the north-east to ___ in the south" OR "Which state forms the southern boundary of IVC?"</div>
+  <div class="pred-hint">Answer: Afghanistan (NE) → Maharashtra (South). The four-direction extent question based on Q57.</div>
+</div>
+
+<!-- FLASHCARD TABLE -->
+<div id="flashcard" class="section-head"><span class="s-num">14</span> Quick Flashcard Table</div>
+<div style="overflow-x:auto;">
+<table class="flash-table">
+<thead><tr><th>#</th><th>Question</th><th>Answer</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>"Historia" means?</td><td class="ans-warn">Learning through inquiry (Greek)</td></tr>
+<tr><td>2</td><td>Period between stone tools and writing?</td><td>Proto-Historic Period</td></tr>
+<tr><td>3</td><td>Neolithic sites?</td><td>Mehrgarh, Maakara, Daojali Hading</td></tr>
+<tr><td>4</td><td>Palaeolithic sites in TN?</td><td>Attirampakkam, Pallavaram (Chennai)</td></tr>
+<tr><td>5</td><td>Iron Age sites?</td><td>Hallur + Athichanallur</td></tr>
+<tr><td>6</td><td>Bronze Age sites?</td><td>Lothal + Athichanallur</td></tr>
+<tr><td>7</td><td>Bheembetka is in?</td><td>Madhya Pradesh (Palaeolithic)</td></tr>
+<tr><td>8</td><td>First domesticated animal?</td><td>Dog</td></tr>
+<tr><td>9</td><td>First metal used by humans?</td><td>Copper (செம்பு)</td></tr>
+<tr><td>10</td><td>Dhamma = which language?</td><td>Prakrit (NOT Sanskrit)</td></tr>
+<tr><td>11</td><td>Dharma = which language?</td><td>Sanskrit / English</td></tr>
+<tr><td>12</td><td>Asoka's war?</td><td>Kalinga War → embraced Buddhism</td></tr>
+<tr><td>13</td><td>Kalinga = today's?</td><td>Odisha (Utkala in ancient)</td></tr>
+<tr><td>14</td><td>Kamarupa = today's?</td><td>Assam</td></tr>
+<tr><td>15</td><td>Asoka Pillar location?</td><td>Sarnath, Uttar Pradesh</td></tr>
+<tr><td>16</td><td>Who discovered Asoka for the world?</td><td>William Jones + James Prinsep + Alexander Cunningham</td></tr>
+<tr><td>17</td><td>"Lost Emperor" book author?</td><td>Charles Allen</td></tr>
+<tr><td>18</td><td>First to describe Harappan ruins?</td><td>Charles Masson (1826)</td></tr>
+<tr><td>19</td><td>Year of formal IVC excavation?</td><td>1920</td></tr>
+<tr><td>20</td><td>ASI Director-General 1920?</td><td>Sir John Marshall</td></tr>
+<tr><td>21</td><td>10 common features (Harappa-Mohenjo)?</td><td>John Marshall identified them</td></tr>
+<tr><td>22</td><td>ASI founded?</td><td>1861, New Delhi, by Alexander Cunningham</td></tr>
+<tr><td>23</td><td>TN ASI (TNASI) founded?</td><td>1961, by R. Nagasamy</td></tr>
+<tr><td>24</td><td>IVC time period?</td><td>3300 – 1900 BCE (Bronze/Copper Age)</td></tr>
+<tr><td>25</td><td>IVC = which type of civilisation?</td><td>Planned Urban Civilisation</td></tr>
+<tr><td>26</td><td>Stupa = ?</td><td>Dome over Buddha's physical relics</td></tr>
+<tr><td>27</td><td>Lothal is in?</td><td>Gujarat (Sabarmati tributary)</td></tr>
+<tr><td>28</td><td>Lothal famous for?</td><td>World's first shipbuilding yard / natural harbour</td></tr>
+<tr><td>29</td><td>IVC — Great Bath?</td><td>Mohenjodaro (rectangular, bitumen-lined)</td></tr>
+<tr><td>30</td><td>IVC — Granary?</td><td>Harappa</td></tr>
+<tr><td>31</td><td>Assembly hall pillars?</td><td>20 pillars × 4 rows = 80 (Mohenjodaro)</td></tr>
+<tr><td>32</td><td>Dancing Girl statue material?</td><td>Bronze (Mohenjodaro)</td></tr>
+<tr><td>33</td><td>Priest-King statue material?</td><td>Limestone/Steatite (Mohenjodaro)</td></tr>
+<tr><td>34</td><td>IVC script direction?</td><td>Left to Right</td></tr>
+<tr><td>35</td><td>IVC measuring scale?</td><td>1.704 mm ivory scale (Lothal, Gujarat)</td></tr>
+<tr><td>36</td><td>IVC jewellery gemstone?</td><td>Carnelian (red semi-precious stone)</td></tr>
+<tr><td>37</td><td>IVC pottery: made on? Colour?</td><td>Potter's wheel; Red with Black designs</td></tr>
+<tr><td>38</td><td>IVC cart wheels?</td><td>Solid (no spokes = no Aarakkaal)</td></tr>
+<tr><td>39</td><td>IVC area?</td><td>13 lakh sq km | 6 cities | 200+ villages</td></tr>
+<tr><td>40</td><td>First world writing?</td><td>Sumerians (Cuneiform, ~3200 BCE)</td></tr>
+<tr><td>41</td><td>Mehrgarh = precursor of?</td><td>Indus Valley Civilisation (Baluchistan)</td></tr>
+<tr><td>42</td><td>IVC south boundary?</td><td>Maharashtra (Daimabad)</td></tr>
+<tr><td>43</td><td>IVC west boundary?</td><td>Baluchistan / Makran coast (Pakistan)</td></tr>
+<tr><td>44</td><td>Ziggurat = for which god?</td><td>Moon God (Sin) — built by Ur-Nammu</td></tr>
+<tr><td>45</td><td>UNESCO declared? (IVC)</td><td>Mohenjodaro = World Heritage Site</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- MASTER CHEAT CARD -->
+<div id="cheat" class="section-head"><span class="s-num">15</span> Master Cheat Card</div>
+<div style="overflow-x:auto;">
+<table class="cheat-table">
+<thead><tr><th>Topic / Concept</th><th>Key Detail</th><th>Exam Tip</th></tr></thead>
+<tbody>
+<tr><td>History origin</td><td>Greek "Historia" = learning by investigation</td><td>Direct factual Q in Gr.4/VAO</td></tr>
+<tr><td>Proto-Historic Period</td><td>Between Stone Tools + Writing; records unreadable</td><td>Most-missed Q — memorise it</td></tr>
+<tr><td>Dhamma</td><td>Prakrit word (NOT Sanskrit). Sanskrit = Dharma</td><td>Confirmed trap Q — both wrong → both wrong</td></tr>
+<tr><td>First domesticated animal</td><td>Dog (from wolf ancestor, ~10,000 years)</td><td>Wrong: Cat. Correct: Dog</td></tr>
+<tr><td>First metal used</td><td>Copper (செம்பு)</td><td>Then Bronze → then Iron</td></tr>
+<tr><td>Kalinga = Odisha = Utkala</td><td>Utkala in Jana Gana Mana</td><td>Geography-History cross Q</td></tr>
+<tr><td>Kamarupa</td><td>Ancient name for Assam</td><td>PYQ Geography Q</td></tr>
+<tr><td>Asoka scholars</td><td>Jones + Prinsep + Cunningham (NOT Charles Allen alone)</td><td>Charles Allen = author, not scholar</td></tr>
+<tr><td>Sarnath Pillar</td><td>24-spoke Asoka Chakra source; UP</td><td>National flag question</td></tr>
+<tr><td>ASI founded</td><td>1861, New Delhi, Cunningham</td><td>Then TNASI 1961, Nagasamy</td></tr>
+<tr><td>IVC excavation</td><td>1920 by John Marshall (ASI DG)</td><td>1856 railway → 1861 ASI → 1920 excavation</td></tr>
+<tr><td>Harappa vs Mohenjodaro</td><td>Harappa = granary | Mohenjodaro = Great Bath</td><td>Never reverse this!</td></tr>
+<tr><td>Great Bath</td><td>Rectangular, bitumen-lined, Mohenjodaro</td><td>First public bath in world</td></tr>
+<tr><td>Assembly Hall</td><td>20 pillars, 4 rows (= 80 total), Mohenjodaro</td><td>Number Q — Gr.1 level</td></tr>
+<tr><td>Dancing Girl</td><td>Bronze, Mohenjodaro</td><td>Trap: some say stone — it's Bronze</td></tr>
+<tr><td>Lothal</td><td>Gujarat, Sabarmati tributary, first shipyard</td><td>Also: Bronze Age + Trade hub</td></tr>
+<tr><td>IVC Script</td><td>Left to Right; undeciphered (pictographic)</td><td>Semitic = Right to Left (opposite)</td></tr>
+<tr><td>IVC Ivory Scale</td><td>1.704 mm graduation (Lothal)</td><td>Exact number must be memorised</td></tr>
+<tr><td>IVC Time</td><td>3300–1900 BCE | Bronze/Copper Age</td><td>Contemporaneous with Mesopotamia</td></tr>
+<tr><td>IVC Extent</td><td>13 lakh sq km | NE=Afghanistan | S=Maharashtra | W=Baluchistan | E=Kakkar-Kakra</td><td>Four-direction Q in Gr.1</td></tr>
+<tr><td>World Civilisations</td><td>Meso (3500–2000) → Sindhu (3300–1900) → Egypt (3100–1100) → China (1700–1100)</td><td>Mnemonic: Mosi-Eci</td></tr>
+<tr><td>IVC Unique Feature</td><td>Planned Urban Civilisation</td><td>One-line answer for all essays</td></tr>
+</tbody>
+</table>
+</div>
+
+</div><!-- /container -->
+
+<footer>
+  <p>QA_History_StoneAge_IndusValley_LiveRevision.html &nbsp;·&nbsp; <span>TNPSC Group 1 Target</span> &nbsp;·&nbsp; 6th Standard Term-I History &nbsp;·&nbsp; Session translated from Tamil</p>
+  <p style="margin-top:6px;font-size:10px;">All content extracted and translated from live YouTube revision session · 75 Questions · 2 Lessons covered</p>
+</footer>
+
+<script>
+/* ── ACCORDION SETUP ── */
+document.addEventListener('DOMContentLoaded', function () {
+
+  // Inject toggle button before every .q-body and wrap it
+  document.querySelectorAll('.q-body').forEach(function (body) {
+    // Build the toggle button
+    const btn = document.createElement('button');
+    btn.className = 'q-toggle-btn';
+    btn.setAttribute('aria-expanded', 'false');
+    btn.innerHTML = '<span class="q-toggle-icon">▾</span><span>Show Answer &amp; Details</span>';
+
+    // Insert button before body inside the card
+    body.parentNode.insertBefore(btn, body);
+
+    // Click handler
+    btn.addEventListener('click', function () {
+      const isOpen = body.classList.contains('open');
+      if (isOpen) {
+        body.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        btn.querySelector('span:last-child').textContent = 'Show Answer & Details';
+      } else {
+        body.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+        btn.querySelector('span:last-child').textContent = 'Hide Answer & Details';
+      }
+    });
+  });
+
+  // "Expand All / Collapse All" keyboard shortcut hint (optional nice touch)
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'e' && (e.ctrlKey || e.metaKey)) {
+      e.preventDefault();
+      const allOpen = document.querySelectorAll('.q-body.open').length ===
+                      document.querySelectorAll('.q-body').length;
+      document.querySelectorAll('.q-body').forEach(b => {
+        allOpen ? b.classList.remove('open') : b.classList.add('open');
+      });
+      document.querySelectorAll('.q-toggle-btn').forEach(btn => {
+        const open = btn.nextElementSibling.classList.contains('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        btn.querySelector('span:last-child').textContent = open ? 'Hide Answer & Details' : 'Show Answer & Details';
+      });
+    }
+  });
+});
+
+/* ── EXPAND / COLLAPSE ALL ── */
+function toggleAll(btn) {
+  const bodies = document.querySelectorAll('.q-body');
+  const allOpen = [...bodies].every(b => b.classList.contains('open'));
+  bodies.forEach(b => allOpen ? b.classList.remove('open') : b.classList.add('open'));
+  document.querySelectorAll('.q-toggle-btn').forEach(tb => {
+    const open = tb.nextElementSibling && tb.nextElementSibling.classList.contains('open');
+    tb.setAttribute('aria-expanded', open ? 'true' : 'false');
+    tb.querySelector('span:last-child').textContent = open ? 'Hide Answer & Details' : 'Show Answer & Details';
+  });
+  btn.textContent = allOpen ? 'Expand All' : 'Collapse All';
+}
+function filterCards(type) {
+  document.querySelectorAll('.fb').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+
+  const cards = document.querySelectorAll('.q-card');
+  cards.forEach(card => {
+    if (type === 'all') {
+      card.classList.remove('hidden');
+    } else if (type === 'easy') {
+      card.classList.toggle('hidden', card.dataset.diff !== 'easy');
+    } else if (type === 'medium') {
+      card.classList.toggle('hidden', card.dataset.diff !== 'medium');
+    } else if (type === 'hard') {
+      card.classList.toggle('hidden', card.dataset.diff !== 'hard');
+    } else if (type === 'gem') {
+      card.classList.toggle('hidden', card.dataset.gem !== 'yes');
+    } else if (type === 'pyq') {
+      card.classList.toggle('hidden', card.dataset.pyq !== 'yes');
+    }
+  });
+}
+</script>
+</body>
+</html>
