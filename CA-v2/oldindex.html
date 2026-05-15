@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TNPSC Current Affairs Revision</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#0d0f14;
+  --surface:#13161e;
+  --surface2:#1a1e2a;
+  --surface3:#20253300;
+  --border:#242836;
+  --border-hover:#353a50;
+  --gold:#f5c842;
+  --gold-dim:#c9a230;
+  --gold-muted:rgba(245,200,66,0.15);
+  --gold-glow:rgba(245,200,66,0.07);
+  --text:#e8e6df;
+  --muted:#7a7a8e;
+  --muted2:#545468;
+  --blue:#5b8dee;
+  --green:#4caf7d;
+  --red:#e05c5c;
+  --purple:#9b72cf;
+  --teal:#3ec9a7;
+  --font-h:'Syne',sans-serif;
+  --font-m:'IBM Plex Mono',monospace;
+  --font-b:'Lora',serif;
+}
+
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:16px;line-height:1.75;min-height:100vh;overflow-x:hidden}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border-hover);border-radius:3px}
+
+/* ══════════════════════════════
+   TOPBAR
+══════════════════════════════ */
+.topbar{
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  padding:0 40px;
+  height:52px;
+  display:flex;
+  align-items:center;
+  gap:18px;
+  position:sticky;
+  top:0;
+  z-index:200;
+}
+.topbar-logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+}
+.logo-mark{
+  width:28px;height:28px;
+  background:var(--gold);
+  border-radius:2px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.logo-mark svg{width:14px;height:14px;fill:var(--bg)}
+.logo-text{font-family:var(--font-h);font-size:14px;font-weight:700;color:#fff;letter-spacing:-0.01em}
+.logo-text span{color:var(--gold)}
+.topbar-sep{width:1px;height:20px;background:var(--border);flex-shrink:0}
+.topbar-tag{font-family:var(--font-m);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted)}
+.topbar-nav{margin-left:auto;display:flex;align-items:center;gap:4px}
+.tnav{font-family:var(--font-m);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);padding:6px 12px;border-radius:2px;text-decoration:none;border:1px solid transparent;transition:all .15s}
+.tnav:hover,.tnav.active{color:var(--gold);border-color:rgba(245,200,66,0.25);background:var(--gold-glow)}
+.topbar-cta{font-family:var(--font-m);font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--bg);background:var(--gold);padding:6px 16px;border-radius:2px;text-decoration:none;margin-left:8px;transition:background .15s}
+.topbar-cta:hover{background:var(--gold-dim)}
+
+/* ══════════════════════════════
+   HERO
+══════════════════════════════ */
+.hero{
+  padding:80px 40px 64px;
+  position:relative;
+  overflow:hidden;
+  border-bottom:1px solid var(--border);
+}
+.hero-bg-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(245,200,66,0.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(245,200,66,0.03) 1px,transparent 1px);
+  background-size:48px 48px;
+  pointer-events:none;
+}
+.hero-glow-a{
+  position:absolute;top:-120px;right:-100px;
+  width:500px;height:500px;
+  background:radial-gradient(circle,rgba(245,200,66,0.07) 0%,transparent 65%);
+  pointer-events:none;
+}
+.hero-glow-b{
+  position:absolute;bottom:-80px;left:-60px;
+  width:300px;height:300px;
+  background:radial-gradient(circle,rgba(91,141,238,0.05) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-inner{position:relative;max-width:960px;margin:0 auto}
+.hero-overline{
+  font-family:var(--font-m);font-size:11px;letter-spacing:0.18em;
+  text-transform:uppercase;color:var(--gold);
+  display:flex;align-items:center;gap:12px;
+  margin-bottom:20px;
+}
+.hero-overline::before{content:'';width:24px;height:1px;background:var(--gold)}
+.hero-overline::after{content:'';flex:0 0 80px;height:1px;background:rgba(245,200,66,0.3)}
+.hero h1{
+  font-family:var(--font-h);
+  font-size:clamp(32px,5vw,56px);
+  font-weight:800;
+  line-height:1.1;
+  letter-spacing:-0.025em;
+  color:#fff;
+  max-width:720px;
+  margin-bottom:20px;
+}
+.hero h1 em{color:var(--gold);font-style:normal}
+.hero-sub{
+  font-family:var(--font-b);
+  font-size:16px;
+  color:var(--muted);
+  max-width:580px;
+  margin-bottom:36px;
+  line-height:1.7;
+}
+.hero-stats{
+  display:flex;flex-wrap:wrap;gap:0;
+  margin-bottom:48px;
+  border:1px solid var(--border);
+  border-radius:4px;
+  overflow:hidden;
+  width:fit-content;
+  background:var(--surface);
+}
+.stat{
+  padding:14px 28px;
+  border-right:1px solid var(--border);
+  text-align:center;
+}
+.stat:last-child{border-right:none}
+.stat-n{font-family:var(--font-h);font-size:22px;font-weight:700;color:var(--gold);line-height:1}
+.stat-l{font-family:var(--font-m);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+
+/* ══════════════════════════════
+   SEARCH & FILTER BAR
+══════════════════════════════ */
+.search-bar-wrap{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  align-items:stretch;
+  max-width:960px;
+  margin:0 auto;
+}
+.search-box{
+  flex:1;min-width:260px;
+  position:relative;
+}
+.search-icon{
+  position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  pointer-events:none;
+}
+.search-icon svg{width:16px;height:16px;stroke:var(--muted);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.search-input{
+  width:100%;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:3px;
+  padding:12px 14px 12px 42px;
+  font-family:var(--font-b);
+  font-size:14px;
+  color:var(--text);
+  outline:none;
+  transition:border-color .2s,box-shadow .2s;
+  height:46px;
+}
+.search-input::placeholder{color:var(--muted2)}
+.search-input:focus{border-color:rgba(245,200,66,0.5);box-shadow:0 0 0 3px rgba(245,200,66,0.08)}
+
+/* DATE PICKER CLUSTER */
+.date-cluster{
+  display:flex;
+  gap:6px;
+  align-items:center;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:3px;
+  padding:0 14px;
+  height:46px;
+  transition:border-color .2s;
+}
+.date-cluster:focus-within{border-color:rgba(245,200,66,0.5)}
+.date-cluster-label{
+  font-family:var(--font-m);font-size:9px;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--muted2);
+  margin-right:6px;white-space:nowrap;
+}
+.date-select{
+  background:transparent;
+  border:none;
+  font-family:var(--font-m);
+  font-size:12px;
+  color:var(--text);
+  outline:none;
+  cursor:pointer;
+  padding:2px 4px;
+  appearance:none;
+  -webkit-appearance:none;
+  min-width:0;
+}
+.date-select option{background:var(--surface2);color:var(--text)}
+.date-sep{font-family:var(--font-m);font-size:12px;color:var(--muted2)}
+
+/* FILTER PILLS */
+.filter-chips{
+  display:flex;gap:6px;flex-wrap:wrap;
+  max-width:960px;margin:16px auto 0;
+}
+.chip{
+  font-family:var(--font-m);font-size:10px;font-weight:500;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:5px 14px;border-radius:2px;
+  border:1px solid var(--border);
+  color:var(--muted);background:transparent;
+  cursor:pointer;transition:all .15s;
+  white-space:nowrap;
+}
+.chip:hover{border-color:var(--border-hover);color:var(--text)}
+.chip.active{color:var(--bg);background:var(--gold);border-color:var(--gold)}
+.chip.c-blue.active{color:#fff;background:var(--blue);border-color:var(--blue)}
+.chip.c-green.active{color:#fff;background:var(--green);border-color:var(--green)}
+.chip.c-purple.active{color:#fff;background:var(--purple);border-color:var(--purple)}
+.chip.c-teal.active{color:#0d0f14;background:var(--teal);border-color:var(--teal)}
+.chip.c-red.active{color:#fff;background:var(--red);border-color:var(--red)}
+
+/* ══════════════════════════════
+   RESULTS META BAR
+══════════════════════════════ */
+.results-bar{
+  max-width:960px;margin:32px auto 18px;
+  display:flex;align-items:center;gap:12px;
+}
+.results-count{font-family:var(--font-m);font-size:11px;letter-spacing:0.08em;color:var(--muted)}
+.results-count strong{color:var(--gold)}
+.results-bar-line{flex:1;height:1px;background:var(--border)}
+.sort-select{
+  font-family:var(--font-m);font-size:11px;
+  background:var(--surface);border:1px solid var(--border);
+  color:var(--muted);padding:5px 10px;border-radius:2px;
+  outline:none;cursor:pointer;
+  transition:border-color .15s;
+}
+.sort-select:hover{border-color:var(--border-hover);color:var(--text)}
+.sort-select option{background:var(--surface2)}
+
+/* ══════════════════════════════
+   CONTENT GRID
+══════════════════════════════ */
+.content-wrap{max-width:960px;margin:0 auto;padding:0 40px 80px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+
+/* CARD */
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:4px;
+  padding:0;
+  display:flex;flex-direction:column;
+  text-decoration:none;
+  cursor:pointer;
+  transition:border-color .2s,transform .2s;
+  position:relative;
+  overflow:hidden;
+}
+.card::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;
+  height:2px;
+  background:var(--gold);
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform .25s ease;
+}
+.card:hover{border-color:var(--border-hover);transform:translateY(-2px)}
+.card:hover::before{transform:scaleX(1)}
+
+.card-top{padding:18px 20px 14px}
+.card-meta{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.card-date{font-family:var(--font-m);font-size:10px;letter-spacing:0.1em;color:var(--muted)}
+.card-dot{width:3px;height:3px;border-radius:50%;background:var(--muted2);flex-shrink:0}
+.card-unit{
+  font-family:var(--font-m);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;
+  padding:2px 8px;border-radius:2px;border:1px solid;
+}
+.card h3{
+  font-family:var(--font-h);font-size:15px;font-weight:700;
+  color:#fff;line-height:1.35;margin-bottom:8px;
+  letter-spacing:-0.01em;
+}
+.card-desc{font-family:var(--font-b);font-size:13px;color:var(--muted);line-height:1.6}
+.card-body{padding:0 20px 14px}
+.card-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.ctag{font-family:var(--font-m);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:2px;background:var(--surface2);color:var(--muted);border:1px solid var(--border)}
+.card-footer{
+  padding:10px 20px;
+  border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:auto;
+}
+.card-pillars{font-family:var(--font-m);font-size:9px;letter-spacing:0.08em;color:var(--muted2)}
+.card-arrow{
+  font-family:var(--font-m);font-size:11px;color:var(--gold);
+  display:flex;align-items:center;gap:4px;
+  opacity:0;transition:opacity .2s;
+}
+.card:hover .card-arrow{opacity:1}
+
+/* CARD COLOR VARIANTS */
+.card.v-gold .card-unit{color:var(--gold);border-color:rgba(245,200,66,0.3);background:rgba(245,200,66,0.05)}
+.card.v-blue .card-unit{color:var(--blue);border-color:rgba(91,141,238,0.3);background:rgba(91,141,238,0.06)}
+.card.v-blue::before{background:var(--blue)}
+.card.v-green .card-unit{color:var(--green);border-color:rgba(76,175,125,0.3);background:rgba(76,175,125,0.06)}
+.card.v-green::before{background:var(--green)}
+.card.v-purple .card-unit{color:var(--purple);border-color:rgba(155,114,207,0.3);background:rgba(155,114,207,0.06)}
+.card.v-purple::before{background:var(--purple)}
+.card.v-teal .card-unit{color:var(--teal);border-color:rgba(62,201,167,0.3);background:rgba(62,201,167,0.06)}
+.card.v-teal::before{background:var(--teal)}
+.card.v-red .card-unit{color:var(--red);border-color:rgba(224,92,92,0.3);background:rgba(224,92,92,0.06)}
+.card.v-red::before{background:var(--red)}
+
+/* FEATURED CARD */
+.card.featured{
+  grid-column:1/-1;
+  flex-direction:row;
+  gap:0;
+  border-color:rgba(245,200,66,0.2);
+  background:linear-gradient(135deg,var(--surface) 0%,rgba(245,200,66,0.03) 100%);
+}
+.card.featured::before{width:4px;height:100%;top:0;left:0;right:auto;transform:scaleX(1);transform-origin:top}
+.card.featured .card-top{flex:1;padding:24px 28px}
+.card.featured .card-body{flex:0 0 260px;padding:24px 24px 24px 0;display:flex;flex-direction:column;justify-content:flex-end}
+.card.featured h3{font-size:18px}
+.featured-badge{
+  font-family:var(--font-m);font-size:9px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--bg);background:var(--gold);padding:3px 10px;border-radius:2px;
+  display:inline-block;margin-bottom:14px;
+}
+@media(max-width:640px){
+  .card.featured{flex-direction:column}
+  .card.featured .card-body{flex:none;padding:0 20px 18px}
+  .card.featured::before{width:100%;height:2px;transform:scaleX(1)}
+}
+
+/* EMPTY STATE */
+.empty{
+  grid-column:1/-1;
+  text-align:center;
+  padding:64px 20px;
+}
+.empty-icon{font-size:32px;margin-bottom:16px;opacity:0.4}
+.empty h3{font-family:var(--font-h);font-size:18px;color:#fff;margin-bottom:8px}
+.empty p{font-family:var(--font-b);font-size:14px;color:var(--muted)}
+
+/* ══════════════════════════════
+   SECTION DIVIDER
+══════════════════════════════ */
+.section-divider{
+  max-width:960px;margin:0 auto 24px;
+  display:flex;align-items:center;gap:12px;
+  font-family:var(--font-m);font-size:10px;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--muted);
+}
+.section-divider::before,.section-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* ══════════════════════════════
+   SIDEBAR STRIP (QUICK LINKS)
+══════════════════════════════ */
+.quick-row{
+  max-width:960px;margin:0 auto 32px;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:10px;
+}
+.quick-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:4px;padding:14px 16px;
+  display:flex;align-items:center;gap:12px;
+  text-decoration:none;transition:border-color .15s;cursor:pointer;
+}
+.quick-card:hover{border-color:var(--border-hover)}
+.quick-icon{
+  width:32px;height:32px;border-radius:3px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-size:14px;
+  background:var(--surface2);
+}
+.quick-icon svg{width:15px;height:15px;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.quick-text{}
+.quick-n{font-family:var(--font-h);font-size:16px;font-weight:700;color:#fff;line-height:1}
+.quick-l{font-family:var(--font-m);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-top:3px}
+
+/* ══════════════════════════════
+   FOOTER
+══════════════════════════════ */
+.footer{
+  background:var(--surface);
+  border-top:1px solid var(--border);
+}
+.footer-main{
+  max-width:960px;margin:0 auto;
+  padding:48px 40px 40px;
+  display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;
+}
+@media(max-width:720px){.footer-main{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.footer-main{grid-template-columns:1fr}}
+.footer-brand{}
+.footer-logo{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.footer-logo-mark{
+  width:26px;height:26px;background:var(--gold);border-radius:2px;
+  display:flex;align-items:center;justify-content:center;
+}
+.footer-logo-mark svg{width:13px;height:13px;fill:var(--bg)}
+.footer-logo-text{font-family:var(--font-h);font-size:14px;font-weight:700;color:#fff}
+.footer-logo-text span{color:var(--gold)}
+.footer-desc{font-family:var(--font-b);font-size:13px;color:var(--muted);line-height:1.65;max-width:220px;margin-bottom:20px}
+.footer-socials{display:flex;gap:8px}
+.fsocial{
+  width:30px;height:30px;border:1px solid var(--border);border-radius:2px;
+  display:flex;align-items:center;justify-content:center;
+  transition:border-color .15s;
+}
+.fsocial:hover{border-color:var(--border-hover)}
+.fsocial svg{width:13px;height:13px;fill:none;stroke:var(--muted);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.footer-col-head{font-family:var(--font-m);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:8px}
+.footer-links li a{font-family:var(--font-b);font-size:13px;color:var(--muted);text-decoration:none;transition:color .15s}
+.footer-links li a:hover{color:var(--text)}
+.footer-bottom{
+  border-top:1px solid var(--border);
+  padding:16px 40px;
+  max-width:100%;
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+}
+.footer-bottom-inner{max-width:960px;margin:0 auto;width:100%;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.footer-copy{font-family:var(--font-m);font-size:10px;letter-spacing:0.08em;color:var(--muted2)}
+.footer-copy strong{color:var(--muted)}
+.footer-badge-strip{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto}
+.fbadge{font-family:var(--font-m);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 10px;border-radius:2px;border:1px solid var(--border);color:var(--muted2)}
+
+/* ══════════════════════════════
+   ANIMATIONS
+══════════════════════════════ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.animate{animation:fadeUp .5s ease both}
+.d1{animation-delay:.05s}.d2{animation-delay:.1s}.d3{animation-delay:.15s}.d4{animation-delay:.2s}
+
+/* ══════════════════════════════
+   RESPONSIVE
+══════════════════════════════ */
+@media(max-width:720px){
+  .topbar{padding:0 20px}
+  .topbar-nav{display:none}
+  .hero{padding:52px 20px 48px}
+  .content-wrap{padding:0 20px 60px}
+  .search-bar-wrap{flex-direction:column}
+  .date-cluster{width:100%;box-sizing:border-box}
+  .footer-main{padding:36px 20px 28px}
+  .footer-bottom{padding:14px 20px}
+  .quick-row{margin:0 0 28px}
+}
+
+/* ══════════════════════════════
+   NO-RESULT HIDDEN
+══════════════════════════════ */
+.card.hidden{display:none}
+</style>
+</head>
+<body>
+
+<!-- ═══════ TOPBAR ═══════ -->
+<header class="topbar">
+  <a href="#" class="topbar-logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 14 14"><path d="M7 1L1 4v6l6 3 6-3V4L7 1z"/></svg>
+    </div>
+    <span class="logo-text">CA<span>Vault</span></span>
+  </a>
+  <div class="topbar-sep"></div>
+  <span class="topbar-tag">TNPSC Group 1 · Current Affairs</span>
+  <nav class="topbar-nav">
+    <a href="#browse" class="tnav active">Browse</a>
+    <a href="#units" class="tnav">Units</a>
+    <a href="#mains" class="tnav">Mains Bank</a>
+    <a href="#mcq" class="tnav">MCQ Drill</a>
+    <a href="#about" class="tnav">About</a>
+  </nav>
+  <a href="#" class="topbar-cta">+ Add Notes</a>
+</header>
+
+<!-- ═══════ HERO ═══════ -->
+<section class="hero">
+  <div class="hero-bg-grid"></div>
+  <div class="hero-glow-a"></div>
+  <div class="hero-glow-b"></div>
+  <div class="hero-inner">
+    <div class="hero-overline animate d1">Current Affairs Revision Hub</div>
+    <h1 class="animate d2">Your <em>Daily Intelligence</em><br>for TNPSC Group 1</h1>
+    <p class="hero-sub animate d3">Structured study notes across all TNPSC syllabus units — searchable by topic, date, and paper. Built for Prelims speed and Mains depth.</p>
+    <div class="hero-stats animate d4">
+      <div class="stat">
+        <div class="stat-n" id="stat-notes">248</div>
+        <div class="stat-l">Notes</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">9</div>
+        <div class="stat-l">Units</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">1,840</div>
+        <div class="stat-l">MCQs</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">320</div>
+        <div class="stat-l">Mains Qs</div>
+      </div>
+    </div>
+
+    <!-- SEARCH BAR -->
+    <div class="search-bar-wrap animate d4">
+      <div class="search-box">
+        <span class="search-icon">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </span>
+        <input class="search-input" id="searchInput" type="text" placeholder="Search topics, schemes, articles, committees…" autocomplete="off">
+      </div>
+
+      <!-- DATE CLUSTER -->
+      <div class="date-cluster">
+        <span class="date-cluster-label">Date</span>
+        <select class="date-select" id="selDay" aria-label="Day">
+          <option value="">DD</option>
+        </select>
+        <span class="date-sep">/</span>
+        <select class="date-select" id="selMonth" aria-label="Month">
+          <option value="">MM</option>
+          <option value="01">Jan</option><option value="02">Feb</option>
+          <option value="03">Mar</option><option value="04">Apr</option>
+          <option value="05">May</option><option value="06">Jun</option>
+          <option value="07">Jul</option><option value="08">Aug</option>
+          <option value="09">Sep</option><option value="10">Oct</option>
+          <option value="11">Nov</option><option value="12">Dec</option>
+        </select>
+        <span class="date-sep">/</span>
+        <select class="date-select" id="selYear" aria-label="Year">
+          <option value="">YYYY</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- FILTER CHIPS -->
+    <div class="filter-chips animate d4">
+      <button class="chip active" data-filter="all">All Topics</button>
+      <button class="chip c-gold" data-filter="economy">Economy</button>
+      <button class="chip c-blue" data-filter="polity">Polity</button>
+      <button class="chip c-green" data-filter="environment">Environment</button>
+      <button class="chip c-purple" data-filter="science">Science & Tech</button>
+      <button class="chip c-teal" data-filter="international">International</button>
+      <button class="chip c-red" data-filter="tn">Tamil Nadu</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ MAIN CONTENT ═══════ -->
+<main>
+  <div class="content-wrap">
+
+    <!-- QUICK STATS ROW -->
+    <div class="quick-row" style="margin-top:36px" id="units">
+      <div class="quick-card">
+        <div class="quick-icon" style="background:rgba(245,200,66,0.1)">
+          <svg viewBox="0 0 24 24" style="stroke:var(--gold)"><path d="M3 3h18v18H3z"/><path d="M3 9h18M3 15h18M9 3v18"/></svg>
+        </div>
+        <div class="quick-text">
+          <div class="quick-n">Unit IV</div>
+          <div class="quick-l">Indian Economy</div>
+        </div>
+      </div>
+      <div class="quick-card">
+        <div class="quick-icon" style="background:rgba(91,141,238,0.1)">
+          <svg viewBox="0 0 24 24" style="stroke:var(--blue)"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 010 20M2 12h20"/></svg>
+        </div>
+        <div class="quick-text">
+          <div class="quick-n">Unit VI</div>
+          <div class="quick-l">International</div>
+        </div>
+      </div>
+      <div class="quick-card">
+        <div class="quick-icon" style="background:rgba(76,175,125,0.1)">
+          <svg viewBox="0 0 24 24" style="stroke:var(--green)"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="quick-text">
+          <div class="quick-n">Unit II</div>
+          <div class="quick-l">Polity & Const.</div>
+        </div>
+      </div>
+      <div class="quick-card">
+        <div class="quick-icon" style="background:rgba(62,201,167,0.1)">
+          <svg viewBox="0 0 24 24" style="stroke:var(--teal)"><path d="M12 22V12M12 12C12 7 7 4 3 6M12 12c0-5 5-8 9-6"/></svg>
+        </div>
+        <div class="quick-text">
+          <div class="quick-n">Unit V</div>
+          <div class="quick-l">Environment</div>
+        </div>
+      </div>
+      <div class="quick-card">
+        <div class="quick-icon" style="background:rgba(155,114,207,0.1)">
+          <svg viewBox="0 0 24 24" style="stroke:var(--purple)"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18"/></svg>
+        </div>
+        <div class="quick-text">
+          <div class="quick-n">Unit III</div>
+          <div class="quick-l">Science & Tech</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULTS BAR -->
+    <div class="results-bar" id="browse">
+      <span class="results-count">Showing <strong id="resultCount">12</strong> of 248 notes</span>
+      <div class="results-bar-line"></div>
+      <select class="sort-select" id="sortSelect">
+        <option value="newest">Newest First</option>
+        <option value="oldest">Oldest First</option>
+        <option value="az">A → Z</option>
+        <option value="za">Z → A</option>
+      </select>
+    </div>
+
+    <!-- CARD GRID -->
+    <div class="grid" id="cardGrid">
+
+      <!-- FEATURED -->
+      <div class="card featured v-gold" data-topic="economy" data-date="2025-07-23" data-title="Union Budget 2024-25 Full Analysis">
+        <div class="card-top">
+          <div class="featured-badge">Featured · Latest</div>
+          <div class="card-meta">
+            <span class="card-date">23 Jul 2025</span>
+            <span class="card-dot"></span>
+            <span class="card-unit">Unit IV · Economy</span>
+          </div>
+          <h3>Union Budget 2024–25 &amp; Economic Survey — Complete Breakdown</h3>
+          <p class="card-desc">Full 5-pillar analysis covering fiscal deficit targets, CapEx push, employment-linked incentives, LTCG/STCG changes, angel tax abolition, and Tamil Nadu allocations. Includes 10 MCQs and 3 Mains questions.</p>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="ctag">Fiscal Policy</span>
+            <span class="ctag">FRBM</span>
+            <span class="ctag">CapEx</span>
+            <span class="ctag">TN Connect</span>
+          </div>
+          <div class="card-footer" style="border-top:none;padding:0;margin-top:auto">
+            <span class="card-pillars">5 Pillars · 10 MCQs · 3 Mains</span>
+            <span class="card-arrow">Open →</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 1 -->
+      <div class="card v-blue" data-topic="polity" data-date="2025-07-18" data-title="One Nation One Election">
+        <div class="card-top">
+          <div class="card-meta">
+            <span class="card-date">18 Jul 2025</span>
+            <span class="card-dot"></span>
+            <span class="card-unit">Unit II · Polity</span>
+          </div>
+          <h3>One Nation One Election — Kovind Committee Report</h3>
+          <p class="card-desc">Constitutional amendments required, Articles 83, 85, 172, 174, 356. Simultaneous election pros, cons, and federal concerns.</p>
+        </div>
+        <div class="card-body">
+          <div class="card-tags"><span class="ctag">Elections</span><span class="ctag">Art. 83</span><span class="ctag">Federalism</span></div>
+        </div>
+        <div class="card-footer">
+          <span class="card-pillars">5 Pillars · 6 MCQs · 3 Mains</span>
+          <span class="card-arrow">Open →</span>
+        </div>
+      </div>
+
+      <!-- CARD 2 -->
+      <div class="card v-green" data-topic="environment" data-date="2025-07-15" data-title="Wayanad Landslide Disaster">
+        <div class="card-top">
+          <div class="card-meta">
+            <span class="card-date">15 Jul 2025</span>
+            <span class="card-dot"></span>
+            <span class="card-unit">Unit V · Environment</span>
+          </div>
+          <h3>Wayanad Landslide — Disaster Management &amp; Western Ghats</h3>
+          <p class="card-desc">NDRF response, Gadgil &amp; Kasturirangan Committee on Western Ghats, NDMA guidelines, and relevance to Tamil Nadu Nilgiris ecology.</p>
+        </div>
+        <div class="card-body">
+          <div class="card-tags"><span class="ctag">NDMA</span><span class="ctag">Western Ghats</span><span class="ctag">Nilgiris TN</span></div>
+        </div>
+        <div class="card-footer">
+          <span class="card-pillars">5 Pillars · 8 MCQs · 3 Mains</span>
+          <span class="card-arrow">Open →</span>
+        </div>
+      </div>
+
+      <!-- CARD 3 -->
+      <div class="card v-purple" data-topic="science" data-date="2025-07-10" data-title="ISRO Gaganyaan Mission">
+        <div class="card-top">
+          <div class="card-meta">
+            <span class="card-date">10 Jul 2025</span>
+            <span class="card-dot"></span>
+            <span class="card-unit">Unit III · Science &amp; Tech</span>
+          </div>
+          <h3>Gaganyaan Mission — India's Human Spaceflight Programme</h3>
+          <p class="card-desc">Vyommitra robot, crew modules, GSLV Mk III, ISRO's roadmap for space station 2035 and Moon landing 2040.</p>
+        </div>
+        <div class="card-body">
+          <div class="card-tags"><span class="ctag">ISRO</span><span class="ctag">Space</span><span class="ctag">GSLV Mk III</span></div>
+        </div>
+        <div class="card-footer">
+          <span class="card-pillars">5 Pillars · 7 MCQs · 3 Mains</span>
+          <span class="card-arrow">Open →</span>
+        </div>
+      </div>
+
+      <!-- CARD 4 -->
+      <div class="card v-teal" data-topic="international" data-date="2025-07-08" data-title="India SCO Summit 2024">
+        <div class="card-top">
+          <div class="card-meta">
+            <span class="card-date">08 Jul 2025</span>
+            <span class="card-dot"></span>
+            <span class="card-unit">Unit VI · International</span>
+          </div>
+          <h3>SCO Summit 2024 — India's Role &amp; Strategic Interests</h3>
+          <p class="card-desc">Shanghai Cooperation Organisation membership, India-Pakistan-China dynamics, Belt &amp; Road conflict, and India's counter stance.</p>
+        </div>
+        <div class="card-body">
+          <div class="card-tags"><span class="ctag">SCO</span><span class="ctag">Foreign Policy</span><span class="ctag">BRICS</span></div>
+        </div>
+        <div class="card-footer">
+          <span class="card-pillars">5 Pillars · 6 MCQs · 3 Mains</span>
+          <span class="card-arrow">Open →</span>
+        </div>
+      </div>
+
+      <!-- CARD 5 -->
+      <div class="card v-red" data-topic="tn" data-date="2025-07-05" data-title="Tamil Nadu Budget 2024">
+        <div class="card-top">
+          <div class="card-meta">
+            <span class="card-date">05 Jul 2025</span>
+            <span class="card-dot"></span>
+            <span class="card-unit">Unit IX · TN Admin</span>
+          </div>
+          <h3>Tamil Nadu State Budget 2024–25 — Key Schemes &amp; Allocations</h3>
+          <p class="card-desc">Kalaignar Magalir Urimai Scheme, TIDCO industrial corridors, Chennai Metro Phase II, Cauvery Delta agriculture support.</p>
+        </div>
+        <div class="card-body">
+          <div class="card-tags"><span class="ctag">TN Schemes</span><span class="ctag">GSDP</span><span class="ctag">Fiscal</span></div>
+        </div>
+        <div class="card-footer">
+          <span class="card-pillars">5 Pillars · 8 MCQs · 3 Mains</span>
+          <span class="card-arrow">Open →</span>
+        </div>
+      </div>
+
+      <!-- CARD 6 -->
+      <div class="card v-gold" data-topic="economy" data-date="2025-07-02" data-title="RBI Monetary Policy June 2024">
+        <div class="card-top">
+          <div class="card-meta">
+            <span class="card-date">02 Jul 2025</span>
+            <span class="card-dot"></span>
+            <span class="card-unit">Unit IV · Economy</span>
+          </div>
+          <h3>RBI Monetary Policy — Repo Rate, Inflation &amp; MPC Decisions</h3>
+          <p class="card-desc">Repo rate hold at 6.5%, SDF, MSF, CRR, SLR tools. Inflation targeting framework, MPC constitution under RBI Act.</p>
+        </div>
+        <div class="card-body">
+          <div class="card-tags"><span class="ctag">RBI</span><span class="ctag">MPC</span><span class="ctag">Inflation</span></div>
+        </div>
+        <div class="card-footer">
+          <span class="card-pillars">5 Pillars · 9 MCQs · 3 Mains</span>
+          <span class="card-arrow">Open →</span>
+        </div>
+      </div>
+
+      <!-- CARD 7 -->
+      <div class="card v-blue" data-topic="polity" data-date="2025-06-28" data-title="CAA Rules Notified 2024">
+        <div class="card-top">
+          <div class="card-meta">
+            <span class="card-date">28 Jun 2025</span>
+            <span class="card-dot"></span>
+            <span class="card-unit">Unit II · Polity</span>
+          </div>
+          <h3>CAA Rules Notified 2024 — Citizenship Amendment Act Analysis</h3>
+          <p class="card-desc">CAA 2019 rules, Articles 5-11, NRC linkage fears, Supreme Court petitions, implications for secular fabric under Article 14 &amp; 25.</p>
+        </div>
+        <div class="card-body">
+          <div class="card-tags"><span class="ctag">CAA</span><span class="ctag">Citizenship</span><span class="ctag">Art. 14</span></div>
+        </div>
+        <div class="card-footer">
+          <span class="card-pillars">5 Pillars · 7 MCQs · 3 Mains</span>
+          <span class="card-arrow">Open →</span>
+        </div>
+      </div>
+
+      <!-- CARD 8 -->
+      <div class="card v-green" data-topic="environment" data-date="2025-06-25" data-title="COP29 Climate Finance">
+        <div class="card-top">
+          <div class="card-meta">
+            <span class="card-date">25 Jun 2025</span>
+            <span class="card-dot"></span>
+            <span class="card-unit">Unit V · Environment</span>
+          </div>
+          <h3>COP29 — Climate Finance, Loss &amp; Damage Fund, India's INDC</h3>
+          <p class="card-desc">$300bn climate finance pledge, NCQG, India's Net Zero 2070 commitment, National Action Plan on Climate Change (NAPCC) updates.</p>
+        </div>
+        <div class="card-body">
+          <div class="card-tags"><span class="ctag">COP29</span><span class="ctag">UNFCCC</span><span class="ctag">SDG 13</span></div>
+        </div>
+        <div class="card-footer">
+          <span class="card-pillars">5 Pillars · 8 MCQs · 3 Mains</span>
+          <span class="card-arrow">Open →</span>
+        </div>
+      </div>
+
+      <!-- CARD 9 -->
+      <div class="card v-purple" data-topic="science" data-date="2025-06-20" data-title="Chandrayaan-3 Discoveries">
+        <div class="card-top">
+          <div class="card-meta">
+            <span class="card-date">20 Jun 2025</span>
+            <span class="card-dot"></span>
+            <span class="card-unit">Unit III · Science &amp; Tech</span>
+          </div>
+          <h3>Chandrayaan-3 — Vikram &amp; Pragyan Discoveries on Lunar South Pole</h3>
+          <p class="card-desc">Sulphur detection, seismic activity, plasma sheath, temperature variation data. India as 4th nation to achieve soft lunar landing.</p>
+        </div>
+        <div class="card-body">
+          <div class="card-tags"><span class="ctag">Moon</span><span class="ctag">ISRO</span><span class="ctag">Space Science</span></div>
+        </div>
+        <div class="card-footer">
+          <span class="card-pillars">5 Pillars · 6 MCQs · 3 Mains</span>
+          <span class="card-arrow">Open →</span>
+        </div>
+      </div>
+
+      <!-- CARD 10 -->
+      <div class="card v-red" data-topic="tn" data-date="2025-06-15" data-title="Cauvery Water Dispute">
+        <div class="card-top">
+          <div class="card-meta">
+            <span class="card-date">15 Jun 2025</span>
+            <span class="card-dot"></span>
+            <span class="card-unit">Unit IX · TN Special</span>
+          </div>
+          <h3>Cauvery Water Dispute — Supreme Court Verdict &amp; CWMA</h3>
+          <p class="card-desc">Cauvery Water Management Authority, 177.25 TMC allocation for Tamil Nadu, Inter-State River Water Disputes Act 1956, Article 262.</p>
+        </div>
+        <div class="card-body">
+          <div class="card-tags"><span class="ctag">Cauvery</span><span class="ctag">Art. 262</span><span class="ctag">CWMA</span></div>
+        </div>
+        <div class="card-footer">
+          <span class="card-pillars">5 Pillars · 7 MCQs · 3 Mains</span>
+          <span class="card-arrow">Open →</span>
+        </div>
+      </div>
+
+      <!-- CARD 11 -->
+      <div class="card v-teal" data-topic="international" data-date="2025-06-10" data-title="India US Relations 2024">
+        <div class="card-top">
+          <div class="card-meta">
+            <span class="card-date">10 Jun 2025</span>
+            <span class="card-dot"></span>
+            <span class="card-unit">Unit VI · International</span>
+          </div>
+          <h3>India–US IPEF &amp; Strategic Partnership — 2024 Review</h3>
+          <p class="card-desc">Indo-Pacific Economic Framework, QUAD summit outcomes, defence tech transfer (GE jet engine deal), semiconductor supply chain cooperation.</p>
+        </div>
+        <div class="card-body">
+          <div class="card-tags"><span class="ctag">IPEF</span><span class="ctag">QUAD</span><span class="ctag">Semiconductors</span></div>
+        </div>
+        <div class="card-footer">
+          <span class="card-pillars">5 Pillars · 6 MCQs · 3 Mains</span>
+          <span class="card-arrow">Open →</span>
+        </div>
+      </div>
+
+      <!-- EMPTY STATE (hidden by default) -->
+      <div class="empty" id="emptyState" style="display:none">
+        <div class="empty-icon">◈</div>
+        <h3>No notes found</h3>
+        <p>Try adjusting your search term, date, or topic filter.</p>
+      </div>
+
+    </div><!-- /grid -->
+  </div>
+</main>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer class="footer">
+  <div class="footer-main">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <div class="footer-logo-mark">
+          <svg viewBox="0 0 14 14"><path d="M7 1L1 4v6l6 3 6-3V4L7 1z"/></svg>
+        </div>
+        <span class="footer-logo-text">CA<span>Vault</span></span>
+      </div>
+      <p class="footer-desc">Structured current affairs revision notes for TNPSC Group 1 aspirants. Prelims precision. Mains depth.</p>
+      <div class="footer-socials">
+        <a href="#" class="fsocial" aria-label="Telegram">
+          <svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+        </a>
+        <a href="#" class="fsocial" aria-label="YouTube">
+          <svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+        </a>
+        <a href="#" class="fsocial" aria-label="Twitter/X">
+          <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div>
+      <div class="footer-col-head">Syllabus Units</div>
+      <ul class="footer-links">
+        <li><a href="#">Unit I — History &amp; Culture</a></li>
+        <li><a href="#">Unit II — Polity &amp; Constitution</a></li>
+        <li><a href="#">Unit III — Science &amp; Tech</a></li>
+        <li><a href="#">Unit IV — Indian Economy</a></li>
+        <li><a href="#">Unit V — Environment</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="footer-col-head">Resources</div>
+      <ul class="footer-links">
+        <li><a href="#">MCQ Drill Bank</a></li>
+        <li><a href="#">Mains Question Bank</a></li>
+        <li><a href="#">Previous Year Papers</a></li>
+        <li><a href="#">Committee Reports</a></li>
+        <li><a href="#">TN Admin Special</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="footer-col-head">Quick Access</div>
+      <ul class="footer-links">
+        <li><a href="#">This Week's Notes</a></li>
+        <li><a href="#">Most Viewed</a></li>
+        <li><a href="#">Prelims 2025 Archive</a></li>
+        <li><a href="#">Mains 2024 Archive</a></li>
+        <li><a href="#">About &amp; Contribute</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-bottom-inner">
+      <span class="footer-copy">© 2025 <strong>CAVault</strong> · Built for TNPSC Group 1 aspirants · Not affiliated with TNPSC</span>
+      <div class="footer-badge-strip">
+        <span class="fbadge">Group 1</span>
+        <span class="fbadge">Group 2</span>
+        <span class="fbadge">Prelims</span>
+        <span class="fbadge">Mains</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  /* ── POPULATE DAY SELECT ── */
+  var selDay=document.getElementById('selDay');
+  for(var d=1;d<=31;d++){var o=document.createElement('option');o.value=String(d).padStart(2,'0');o.textContent=String(d).padStart(2,'0');selDay.appendChild(o);}
+
+  /* ── POPULATE YEAR SELECT ── */
+  var selYear=document.getElementById('selYear');
+  for(var y=2026;y>=2022;y--){var oy=document.createElement('option');oy.value=y;oy.textContent=y;selYear.appendChild(oy);}
+
+  /* ── DATA ── */
+  var cards=Array.from(document.querySelectorAll('#cardGrid .card:not(.empty)'));
+  var emptyState=document.getElementById('emptyState');
+  var resultCount=document.getElementById('resultCount');
+  var currentFilter='all';
+
+  /* ── FILTER CHIPS ── */
+  document.querySelectorAll('.chip[data-filter]').forEach(function(chip){
+    chip.addEventListener('click',function(){
+      document.querySelectorAll('.chip[data-filter]').forEach(function(c){c.classList.remove('active')});
+      chip.classList.add('active');
+      currentFilter=chip.dataset.filter;
+      runFilter();
+    });
+  });
+
+  /* ── SEARCH ── */
+  document.getElementById('searchInput').addEventListener('input',runFilter);
+  document.getElementById('selDay').addEventListener('change',runFilter);
+  document.getElementById('selMonth').addEventListener('change',runFilter);
+  document.getElementById('selYear').addEventListener('change',runFilter);
+  document.getElementById('sortSelect').addEventListener('change',runSort);
+
+  function runFilter(){
+    var query=document.getElementById('searchInput').value.toLowerCase().trim();
+    var day=document.getElementById('selDay').value;
+    var month=document.getElementById('selMonth').value;
+    var year=document.getElementById('selYear').value;
+    var visible=0;
+
+    cards.forEach(function(card){
+      var topic=card.dataset.topic||'';
+      var dateStr=card.dataset.date||'';
+      var title=(card.dataset.title||'').toLowerCase();
+      var textContent=card.textContent.toLowerCase();
+
+      var topicMatch=(currentFilter==='all'||topic===currentFilter);
+      var searchMatch=(!query||(title.indexOf(query)>-1||textContent.indexOf(query)>-1));
+
+      var dateMatch=true;
+      if(year||month||day){
+        var parts=dateStr.split('-');
+        var cardY=parts[0]||'',cardM=parts[1]||'',cardD=parts[2]||'';
+        if(year&&cardY!==year)dateMatch=false;
+        if(month&&cardM!==month)dateMatch=false;
+        if(day&&cardD!==day)dateMatch=false;
+      }
+
+      var show=topicMatch&&searchMatch&&dateMatch;
+      card.classList.toggle('hidden',!show);
+      if(show)visible++;
+    });
+
+    resultCount.textContent=visible;
+    emptyState.style.display=visible===0?'grid':'none';
+  }
+
+  function runSort(){
+    var sortVal=document.getElementById('sortSelect').value;
+    var grid=document.getElementById('cardGrid');
+    var featured=grid.querySelector('.featured');
+    var sortable=cards.filter(function(c){return !c.classList.contains('featured')});
+
+    sortable.sort(function(a,b){
+      if(sortVal==='newest')return (b.dataset.date||'').localeCompare(a.dataset.date||'');
+      if(sortVal==='oldest')return (a.dataset.date||'').localeCompare(b.dataset.date||'');
+      if(sortVal==='az')return (a.dataset.title||'').localeCompare(b.dataset.title||'');
+      if(sortVal==='za')return (b.dataset.title||'').localeCompare(a.dataset.title||'');
+      return 0;
+    });
+
+    if(featured)grid.insertBefore(featured,grid.firstChild);
+    sortable.forEach(function(c){grid.appendChild(c)});
+    grid.appendChild(emptyState);
+  }
+
+  /* ── CARD CLICK RIPPLE ── */
+  cards.forEach(function(card){
+    card.addEventListener('click',function(){
+      var title=card.dataset.title||'Note';
+      card.style.opacity='0.7';
+      setTimeout(function(){card.style.opacity='1'},180);
+    });
+  });
+
+  /* ── TOPBAR SCROLL SHADOW ── */
+  var topbar=document.querySelector('.topbar');
+  window.addEventListener('scroll',function(){
+    topbar.style.boxShadow=window.scrollY>10?'0 2px 20px rgba(0,0,0,0.4)':'none';
+  });
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,3413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QA Crack Sheet — Indus Valley / Harappan Civilisation</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d0f14;
+      --bg2: #13161e;
+      --bg3: #1a1e2a;
+      --gold: #f5c842;
+      --gold2: #c9a020;
+      --red: #e84545;
+      --green: #3ecf6e;
+      --blue: #4a9eff;
+      --purple: #b06fff;
+      --orange: #ff8c42;
+      --text: #e8e8f0;
+      --text2: #9a9ab0;
+      --border: rgba(245, 200, 66, 0.15);
+      --easy: #3ecf6e;
+      --medium: #f5c842;
+      --hard: #e84545;
+      --card-radius: 8px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Lora', serif;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #0d0f14 0%, #141826 50%, #0d0f14 100%);
+      border-bottom: 2px solid var(--gold);
+      padding: 60px 40px 50px;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(245, 200, 66, .08) 0%, transparent 70%);
+    }
+
+    .hero-inner {
+      position: relative;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .hero-eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 span {
+      color: var(--gold);
+    }
+
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .pill {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-weight: 600;
+      letter-spacing: .5px;
+    }
+
+    .pill-gold {
+      background: rgba(245, 200, 66, .15);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+    }
+
+    .pill-blue {
+      background: rgba(74, 158, 255, .15);
+      border: 1px solid var(--blue);
+      color: var(--blue);
+    }
+
+    .pill-green {
+      background: rgba(62, 207, 110, .15);
+      border: 1px solid var(--green);
+      color: var(--green);
+    }
+
+    .pill-red {
+      background: rgba(232, 69, 69, .15);
+      border: 1px solid var(--red);
+      color: var(--red);
+    }
+
+    .pill-purple {
+      background: rgba(176, 111, 255, .15);
+      border: 1px solid var(--purple);
+      color: var(--purple);
+    }
+
+    /* ── STICKY TOC ── */
+    .toc {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(13, 15, 20, .96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 20px;
+    }
+
+    .toc-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 10px 0;
+      scrollbar-width: none;
+    }
+
+    .toc-inner::-webkit-scrollbar {
+      display: none;
+    }
+
+    .toc-link {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--text2);
+      text-decoration: none;
+      padding: 5px 12px;
+      border-radius: 6px;
+      border: 1px solid transparent;
+      white-space: nowrap;
+      transition: all .2s;
+    }
+
+    .toc-link:hover {
+      color: var(--gold);
+      border-color: var(--gold);
+      background: rgba(245, 200, 66, .08);
+    }
+
+    /* ── FILTER BAR ── */
+    .filter-bar {
+      max-width: 1100px;
+      margin: 30px auto 0;
+      padding: 0 20px;
+    }
+
+    .filter-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .filter-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--text2);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-right: 6px;
+    }
+
+    .fbtn {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      padding: 7px 18px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg2);
+      color: var(--text2);
+      cursor: pointer;
+      transition: all .2s;
+      font-weight: 500;
+    }
+
+    .fbtn:hover,
+    .fbtn.active {
+      background: var(--gold);
+      color: #000;
+      border-color: var(--gold);
+    }
+
+    .fbtn[data-f="gems"].active {
+      background: var(--purple);
+      border-color: var(--purple);
+      color: #fff;
+    }
+
+    .fbtn[data-f="pyq"].active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+    }
+
+    .fbtn[data-f="easy"].active {
+      background: var(--easy);
+      border-color: var(--easy);
+      color: #000;
+    }
+
+    .fbtn[data-f="medium"].active {
+      background: var(--medium);
+      border-color: var(--medium);
+      color: #000;
+    }
+
+    .fbtn[data-f="hard"].active {
+      background: var(--hard);
+      border-color: var(--hard);
+      color: #fff;
+    }
+
+    /* ── LEGEND ── */
+    .legend {
+      max-width: 1100px;
+      margin: 20px auto 0;
+      padding: 0 20px;
+    }
+
+    .legend-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--card-radius);
+      padding: 14px 20px;
+    }
+
+    .leg-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--text2);
+    }
+
+    .leg-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    /* ── SESSION OVERVIEW ── */
+    .overview-wrap {
+      max-width: 1100px;
+      margin: 28px auto 0;
+      padding: 0 20px;
+    }
+
+    .overview-card {
+      background: var(--bg2);
+      border: 1px solid var(--gold);
+      border-radius: var(--card-radius);
+      padding: 26px 28px;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .ov-stat {
+      background: var(--bg3);
+      border-radius: 10px;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .ov-stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--gold);
+    }
+
+    .ov-stat-lbl {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--text2);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .overview-desc {
+      font-size: .92rem;
+      color: var(--text2);
+    }
+
+    /* ── CONTENT WRAPPER ── */
+    .content {
+      max-width: 1100px;
+      margin: 30px auto 60px;
+      padding: 0 20px;
+    }
+
+    /* ── SECTION HEADER ── */
+    .sec-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 40px 0 20px;
+    }
+
+    .sec-header h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .sec-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .sec-badge {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--gold);
+      background: rgba(245, 200, 66, .1);
+      border: 1px solid var(--gold);
+      border-radius: 6px;
+      padding: 3px 10px;
+      white-space: nowrap;
+    }
+
+    /* ── Q CARD ── */
+    .q-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--card-radius);
+      margin-bottom: 20px;
+      overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+
+
+    .q-card:hover {
+      box-shadow: 0 0 0 1px rgba(245, 200, 66, 0.2);
+    }
+
+    .q-card.gem-card {
+      border-color: rgba(180, 127, 255, 0.3);
+    }
+
+    .q-card.gem-card:hover {
+      box-shadow: 0 0 18px rgba(180, 127, 255, 0.12);
+    }
+
+    .q-card.pyq-card {
+      border-color: rgba(74, 158, 255, 0.3);
+    }
+
+    .q-card.pyq-card:hover {
+      box-shadow: 0 0 18px rgba(74, 158, 255, 0.12);
+    }
+
+
+    /*
+    .q-card.has-gem {
+      border-left: 3px solid var(--purple);
+    }
+
+    .q-card.has-pyq {
+      border-left: 3px solid var(--blue);
+    }
+
+    .q-card.has-gem.has-pyq {
+      border-left: 3px solid var(--purple);
+    }
+    */
+    /* question header — always visible */
+    .q-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 18px 20px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .q-header:hover .q-toggle-btn {
+      background: var(--gold);
+      color: #000;
+    }
+
+    .q-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 4px 10px;
+      white-space: nowrap;
+      color: var(--gold);
+    }
+
+    .q-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .diff-badge {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .diff-easy {
+      background: rgba(62, 207, 110, .18);
+      color: var(--easy);
+      border: 1px solid rgba(62, 207, 110, .4);
+    }
+
+    .diff-medium {
+      background: rgba(245, 200, 66, .18);
+      color: var(--medium);
+      border: 1px solid rgba(245, 200, 66, .4);
+    }
+
+    .diff-hard {
+      background: rgba(232, 69, 69, .18);
+      color: var(--hard);
+      border: 1px solid rgba(232, 69, 69, .4);
+    }
+
+    .type-badge {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: var(--bg3);
+      color: var(--text2);
+      border: 1px solid var(--border);
+    }
+
+    .pyq-mini {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: rgba(74, 158, 255, .15);
+      color: var(--blue);
+      border: 1px solid rgba(74, 158, 255, .4);
+    }
+
+    .gem-mini {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: rgba(176, 111, 255, .15);
+      color: var(--purple);
+      border: 1px solid rgba(176, 111, 255, .4);
+    }
+
+    .q-text {
+      font-family: 'Syne', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      flex: 1;
+    }
+
+    .q-header-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    /*.q-toggle-btn {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--gold);
+      background: transparent;
+      color: var(--gold);
+      cursor: pointer;
+      transition: all .2s;
+      white-space: nowrap;
+      font-weight: 600;
+    }*/
+
+    .q-toggle-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      padding: 10px 20px 10px;
+      width: 100%;
+      text-align: left;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      transition: background 0.15s;
+      user-select: none;
+    }
+
+    .q-toggle-btn:hover {
+      background: rgba(245, 200, 66, 0.05);
+    }
+
+    .q-toggle-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1px solid rgba(245, 200, 66, 0.4);
+      font-size: 12px;
+      line-height: 1;
+      transition: transform 0.25s ease, background 0.2s;
+      flex-shrink: 0;
+    }
+
+    .q-toggle-btn[aria-expanded="true"] .q-toggle-icon {
+      transform: rotate(180deg);
+      background: rgba(245, 200, 66, 0.15);
+    }
+
+    .q-body {
+      padding: 0 20px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+        padding 0.25s ease,
+        opacity 0.25s ease;
+      opacity: 0;
+    }
+
+    .q-body.open {
+      max-height: 2400px;
+      padding: 18px 20px 20px;
+      opacity: 1;
+    }
+
+    .answer-box {
+      background: rgba(62, 207, 110, .07);
+      border: 1px solid rgba(62, 207, 110, .3);
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin: 16px 0 12px;
+    }
+
+    .answer-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--green);
+      font-weight: 600;
+      margin-bottom: 6px;
+      letter-spacing: 1px;
+    }
+
+    .answer-text {
+      font-size: .97rem;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .answer-text .correct {
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    .answer-text .wrong {
+      color: var(--red);
+      text-decoration: line-through;
+    }
+
+    .explain-box {
+      background: var(--bg3);
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-bottom: 12px;
+      font-size: .92rem;
+      color: var(--text2);
+    }
+
+    .explain-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 6px;
+      letter-spacing: 1px;
+    }
+
+    /* callout boxes */
+    .callout {
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-bottom: 12px;
+      font-size: .92rem;
+    }
+
+    .callout-header {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      margin-bottom: 7px;
+    }
+
+    .callout-critical {
+      background: rgba(232, 69, 69, .1);
+      border: 1px solid rgba(232, 69, 69, .4);
+      color: var(--text);
+    }
+
+    .callout-critical .callout-header {
+      color: var(--red);
+    }
+
+    .callout-trap {
+      background: rgba(245, 200, 66, .08);
+      border: 1px solid rgba(245, 200, 66, .4);
+      color: var(--text);
+    }
+
+    .callout-trap .callout-header {
+      color: var(--gold);
+    }
+
+    .callout-tip {
+      background: rgba(62, 207, 110, .08);
+      border: 1px solid rgba(62, 207, 110, .3);
+      color: var(--text);
+    }
+
+    .callout-tip .callout-header {
+      color: var(--green);
+    }
+
+    .callout-pyq {
+      background: rgba(74, 158, 255, .08);
+      border: 1px solid rgba(74, 158, 255, .3);
+      color: var(--text);
+    }
+
+    .callout-pyq .callout-header {
+      color: var(--blue);
+    }
+
+    .callout-gem {
+      background: rgba(176, 111, 255, .1);
+      border: 1px solid rgba(176, 111, 255, .4);
+      color: var(--text);
+      box-shadow: 0 0 18px rgba(176, 111, 255, .12);
+    }
+
+    .callout-gem .callout-header {
+      color: var(--purple);
+    }
+
+    .callout-correction {
+      background: rgba(232, 69, 69, .08);
+      border: 1px solid rgba(232, 69, 69, .5);
+      color: var(--text);
+    }
+
+    .callout-correction .callout-header {
+      color: var(--red);
+    }
+
+    /* ── SUMMARY CARD ── */
+    .summary-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--card-radius);
+      padding: 26px 28px;
+      margin: 40px 0;
+    }
+
+    .summary-list {
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+
+    .summary-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: .93rem;
+      color: var(--text2);
+    }
+
+    .summary-list li::before {
+      content: '▸';
+      color: var(--gold);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* ── PREDICTION CARD ── */
+    .predict-card {
+      background: linear-gradient(135deg, rgba(245, 200, 66, .06), rgba(74, 158, 255, .05));
+      border: 1px solid var(--gold);
+      border-radius: var(--card-radius);
+      padding: 26px 28px;
+      margin: 30px 0;
+    }
+
+    .pred-item {
+      display: flex;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pred-item:last-child {
+      border-bottom: none;
+    }
+
+    .pred-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      color: var(--gold);
+      background: rgba(245, 200, 66, .1);
+      border: 1px solid var(--gold);
+      border-radius: 6px;
+      padding: 3px 10px;
+      height: fit-content;
+      white-space: nowrap;
+    }
+
+    .pred-text {
+      font-size: .93rem;
+      color: var(--text);
+    }
+
+    .pred-q {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .pred-a {
+      color: var(--green);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+    }
+
+    /* ── FLASH TABLE ── */
+    .flash-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: .9rem;
+    }
+
+    .flash-table th {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: var(--bg3);
+      padding: 10px 14px;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+
+    .flash-table td {
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    .flash-table tr:nth-child(even) td {
+      background: rgba(255, 255, 255, .02);
+    }
+
+    .flash-table td:last-child {
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    .flash-table td:first-child {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--gold);
+      width: 55px;
+      text-align: center;
+    }
+
+    /* ── CHEAT CARD TABLE ── */
+    .cheat-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: .9rem;
+    }
+
+    .cheat-table th {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text);
+      background: rgba(245, 200, 66, .15);
+      padding: 10px 14px;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+
+    .cheat-table td {
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    .cheat-table tr:nth-child(even) td {
+      background: rgba(255, 255, 255, .02);
+    }
+
+    .cheat-key {
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .cheat-val {
+      color: var(--text);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    footer p {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--text2);
+      letter-spacing: 1px;
+    }
+
+    footer span {
+      color: var(--gold);
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px;
+    }
+
+    /* hide filtered cards */
+    .q-card.hidden {
+      display: none;
+    }
+
+    @media(max-width:600px) {
+      .hero {
+        padding: 40px 20px 36px;
+      }
+
+      .q-header {
+        flex-wrap: wrap;
+      }
+
+      .q-header-right {
+        flex-direction: row;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════ HERO ═══════════════════════════════════════ -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">📚 High-Yield Q&A Revision Crack Sheet</div>
+      <h1>Indus Valley / <span>Harappan Civilisation</span></h1>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text2);margin-top:8px;">YouTube Live
+        Session · TNPSC Group 1 / 2 / 4 · Topic: Ancient India — Indus Valley</div>
+      <div class="hero-pills">
+        <span class="pill pill-gold">50 Questions</span>
+        <span class="pill pill-blue">TNPSC Gr. 1 / Gr. 2 / Gr. 4 / VAO</span>
+        <span class="pill pill-green">Show / Hide Toggle on Every Q</span>
+        <span class="pill pill-purple">💎 Live Gems Included</span>
+        <span class="pill pill-red">⚠️ Trap Alerts</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ TOC ═══════════════════════════════════════ -->
+  <nav class="toc">
+    <div class="toc-inner">
+      <a class="toc-link" href="#sec-sites">Sites & Locations</a>
+      <a class="toc-link" href="#sec-rivers">Sites & Rivers</a>
+      <a class="toc-link" href="#sec-excavators">Excavators</a>
+      <a class="toc-link" href="#sec-features">Features & Culture</a>
+      <a class="toc-link" href="#sec-animals">Animals & Seals</a>
+      <a class="toc-link" href="#sec-trade">Trade & Economy</a>
+      <a class="toc-link" href="#sec-religion">Religion & Society</a>
+      <a class="toc-link" href="#sec-decline">Decline</a>
+      <a class="toc-link" href="#sec-misc">Miscellaneous</a>
+      <a class="toc-link" href="#sec-summary">Summary</a>
+      <a class="toc-link" href="#sec-predict">2026 Predictions</a>
+      <a class="toc-link" href="#sec-flash">Flashcards</a>
+      <a class="toc-link" href="#sec-cheat">Cheat Card</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════ FILTER BAR ═══════════════════════════════════════ -->
+  <div class="filter-bar">
+    <div class="filter-wrap">
+      <span class="filter-label">Filter:</span>
+      <button class="fbtn active" data-f="all" onclick="filterCards('all')">All</button>
+      <button class="fbtn" data-f="easy" onclick="filterCards('easy')">Easy</button>
+      <button class="fbtn" data-f="medium" onclick="filterCards('medium')">Medium</button>
+      <button class="fbtn" data-f="hard" onclick="filterCards('hard')">Hard</button>
+      <button class="fbtn" data-f="gems" onclick="filterCards('gems')">💎 Gems Only</button>
+      <button class="fbtn" data-f="pyq" onclick="filterCards('pyq')">🏆 PYQ Only</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ LEGEND ═══════════════════════════════════════ -->
+  <div class="legend">
+    <div class="legend-row">
+      <div class="leg-item">
+        <div class="leg-dot" style="background:var(--easy)"></div>Easy
+      </div>
+      <div class="leg-item">
+        <div class="leg-dot" style="background:var(--medium)"></div>Medium
+      </div>
+      <div class="leg-item">
+        <div class="leg-dot" style="background:var(--hard)"></div>Hard
+      </div>
+      <div class="leg-item" style="margin-left:16px;">
+        <div class="leg-dot" style="background:var(--red)"></div>[CRITICAL]
+      </div>
+      <div class="leg-item">
+        <div class="leg-dot" style="background:var(--gold)"></div>[TRAP]
+      </div>
+      <div class="leg-item">
+        <div class="leg-dot" style="background:var(--green)"></div>[TIP]
+      </div>
+      <div class="leg-item">
+        <div class="leg-dot" style="background:var(--blue)"></div>[PYQ]
+      </div>
+      <div class="leg-item">
+        <div class="leg-dot" style="background:var(--purple)"></div>[💎 GEM]
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ SESSION OVERVIEW ═══════════════════════════════════════ -->
+  <div class="overview-wrap">
+    <div class="overview-card">
+      <div class="section-title">Session Overview</div>
+      <div class="overview-grid">
+        <div class="ov-stat">
+          <div class="ov-stat-num">50</div>
+          <div class="ov-stat-lbl">Questions</div>
+        </div>
+        <div class="ov-stat">
+          <div class="ov-stat-num">8</div>
+          <div class="ov-stat-lbl">Sub-Topics</div>
+        </div>
+        <div class="ov-stat">
+          <div class="ov-stat-num">12</div>
+          <div class="ov-stat-lbl">💎 Gems</div>
+        </div>
+        <div class="ov-stat">
+          <div class="ov-stat-num">9</div>
+          <div class="ov-stat-lbl">🏆 PYQs</div>
+        </div>
+        <div class="ov-stat">
+          <div class="ov-stat-num">8</div>
+          <div class="ov-stat-lbl">⚠️ Traps</div>
+        </div>
+      </div>
+      <div class="overview-desc">This live session covered the complete Indus Valley / Harappan Civilisation topic for
+        TNPSC Group 1/2/4. Topics include: site identification &amp; locations, excavators, associated rivers, seals
+        &amp; animals, religious beliefs, trade, urban planning, decline, and special features of key sites like Lothal,
+        Dholavira, Mohenjo-daro. Medium of instruction: Tamil (translated to English below).</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ MAIN CONTENT ═══════════════════════════════════════ -->
+  <div class="content">
+
+    <!-- ───────── SECTION 1: SITES & LOCATIONS ───────── -->
+    <div class="sec-header" id="sec-sites">
+      <h2>📍 Sites &amp; Locations</h2>
+      <div class="sec-line"></div>
+      <div class="sec-badge">Q1–Q3, Q34</div>
+    </div>
+
+    <!-- Q1 -->
+    <div class="q-card has-pyq" data-diff="medium" data-gems="0" data-pyq="1">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div class="flex:1">
+          <div class="q-meta">
+            <span class="q-num">Q01</span>
+            <span class="diff-badge diff-medium">MEDIUM</span>
+            <span class="type-badge">Factual</span>
+            <span class="pyq-mini">🏆 PYQ</span>
+          </div>
+          <div class="q-text">Which of the following Harappan sites are NOT located in present-day India?<br><small
+              style="color:var(--text2);font-weight:400;">(Options: Harappa, Mohenjo-daro, Lothal, Kalibangan, Banawali,
+              Rupar, Surkotada, Dholavira)</small></div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text"><span class="correct">Harappa and Mohenjo-daro</span> — both are located in
+            present-day <span class="correct">Pakistan</span>.</div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          The Harappan Civilisation spread across a vast region — majority of major sites fall in Pakistan (Punjab &amp;
+          Sindh provinces). Indian sites include: Lothal &amp; Dholavira (Gujarat), Kalibangan (Rajasthan), Rupar
+          (Punjab), Banawali (Haryana), Rakhigarhi (Haryana). Sites extending south reach Maharashtra; north reaches
+          Haryana.
+        </div>
+        <div class="callout callout-pyq">
+          <div class="callout-header">🏆 PYQ ALERT</div>
+          This question type — identifying non-Indian Harappan sites — has appeared multiple times in TNPSC Group 2/4
+          papers. Mohenjo-daro (Pakistan) and Harappa (Pakistan) are the standard expected answers.
+        </div>
+        <div class="callout callout-gem">
+          <div class="callout-header">💎 LIVE GEM</div>
+          Teacher's tip: "Harappan Civilisation covered Pakistan fully — that's the bulk. India only has a few sites.
+          Gujarat (Lothal, Dholavira), Haryana (Rakhigarhi, Banawali), Rajasthan (Kalibangan) — that's the Indian
+          portion. Everything in Punjab &amp; Sindh = Pakistan."
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-card has-pyq" data-diff="medium" data-gems="1" data-pyq="1">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q02</span>
+            <span class="diff-badge diff-medium">MEDIUM</span>
+            <span class="type-badge">Factual</span>
+            <span class="pyq-mini">🏆 PYQ</span>
+            <span class="gem-mini">💎 Gem</span>
+          </div>
+          <div class="q-text">Where is the Harappan site "Dholavira" located?<br><small
+              style="color:var(--text2);font-weight:400;">(Context: It is located on Khadir Island, Rann of Kutch,
+              Gujarat)</small></div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text"><span class="correct">Dholavira</span> is located on <span class="correct">Khadir
+              Island, in the Rann of Kutch, Gujarat</span>.</div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          Many students confused Dholavira with Lothal (also in Gujarat). Lothal is on the Sabarmati tributary near
+          Cambay Gulf — NOT in Rann of Kutch. Dholavira is specifically on Khadir Island in the Rann of Kutch (Great
+          Rann). Remember: Dholavira = Rann of Kutch = Island.
+        </div>
+        <div class="callout callout-trap">
+          <div class="callout-header">⚠️ TRAP NOTE</div>
+          Most students answered "Lothal" for "Rann of Kutch location" — this is WRONG. Lothal is near Cambay Gulf on
+          the Bhogavo River / Sabarmati tributary. Dholavira = Khadir Island = Rann of Kutch.
+        </div>
+        <div class="callout callout-gem">
+          <div class="callout-header">💎 LIVE GEM</div>
+          Teacher's memory trick: "Dholavira on an island in Rann of Kutch — visualise it as a fortress-city on a salt
+          island. It also has the world's oldest signboard (inscription) found at its gates — 10 large Indus script
+          signs."
+        </div>
+        <div class="callout callout-pyq">
+          <div class="callout-header">🏆 PYQ ALERT</div>
+          Dholavira's location (Khadir Island, Rann of Kutch) has appeared in TNPSC Group 2 (2019) and Group 4 exams.
+          High-frequency topic.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-card" data-diff="medium" data-gems="0" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q03</span>
+            <span class="diff-badge diff-medium">MEDIUM</span>
+            <span class="type-badge">Conceptual</span>
+          </div>
+          <div class="q-text">Which of the following statements about the Harappan Civilisation is INCORRECT?<br>
+            (1) All sites had urban civilisation. (2) Harappan towns depended on villages for food and workers. (3)
+            Remains are found even in small villages. (4) Lothal's special feature is its port/dock.</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text">Statement <span class="correct">(1) is INCORRECT</span>: Not all Harappan sites were
+            urban — the civilisation comprised 6 major cities + 200+ villages.</div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          The Harappan Civilisation had approximately 6 major cities and around 200 villages. Villages engaged in
+          agriculture and supplied food and labour to urban centres. Lothal is indeed famous as a port/dockyard. So
+          statements 2, 3, and 4 are correct; only statement 1 is false.
+        </div>
+        <div class="callout callout-gem">
+          <div class="callout-header">💎 LIVE GEM</div>
+          Teacher: "Remember — 6 cities, 200 villages. That's the magic number for Harappan Civilisation. When they say
+          'all sites were urban' — that's the trap. Villages supported cities just like Keezhadi in Madurai shows a
+          Tamil civilisation."
+        </div>
+      </div>
+    </div>
+
+    <!-- Q34 -->
+    <div class="q-card" data-diff="easy" data-gems="0" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q34</span>
+            <span class="diff-badge diff-easy">EASY</span>
+            <span class="type-badge">Factual</span>
+          </div>
+          <div class="q-text">In which district is Harappa located? What is the district called today?</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text">Harappa is located in <span class="correct">Montgomery District, Punjab,
+              Pakistan</span> (now called Sahiwal District).</div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          The original colonial-era name was Montgomery District. It is easily identifiable on maps as a Pakistan Punjab
+          region — no Indian district by this name exists.
+        </div>
+      </div>
+    </div>
+
+    <!-- ───────── SECTION 2: SITES & RIVERS ───────── -->
+    <div class="sec-header" id="sec-rivers">
+      <h2>🌊 Harappan Sites &amp; Their Rivers</h2>
+      <div class="sec-line"></div>
+      <div class="sec-badge">Q5, Q15, Q28, Q31</div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-card has-gem has-pyq" data-diff="hard" data-gems="1" data-pyq="1">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q05</span>
+            <span class="diff-badge diff-hard">HARD</span>
+            <span class="type-badge">Match the Following</span>
+            <span class="pyq-mini">🏆 PYQ</span>
+            <span class="gem-mini">💎 Gem</span>
+          </div>
+          <div class="q-text">Match the Harappan site with the river it is associated with:<br>Lothal – Kalibangan –
+            Rupar – Harappa – Mohenjo-daro</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text">
+            Lothal → <span class="correct">Bhogavo (tributary of Sabarmati)</span><br>
+            Kalibangan → <span class="correct">Ghaggar (Hakra)</span><br>
+            Rupar → <span class="correct">Sutlej (Satluj)</span><br>
+            Harappa → <span class="correct">Ravi</span><br>
+            Mohenjo-daro → <span class="correct">Indus (Sindhu)</span>
+          </div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          Mohenjo-daro is situated on the banks of the Indus River — the most fertile land of the Indus, hence called
+          "Garden of Sindhu." Harappa is on the Ravi. Kalibangan = Ghaggar (the dried-up Saraswati bed). Rupar = Sutlej.
+          Lothal = Bhogavo/Sabarmati tributary near Gulf of Khambhat.
+        </div>
+        <div class="callout callout-pyq">
+          <div class="callout-header">🏆 PYQ ALERT</div>
+          This match-the-following question type (Sites ↔ Rivers) is one of the most frequently repeated in TNPSC Group
+          2 and Group 4 exams. Expect it in 2026.
+        </div>
+        <div class="callout callout-gem">
+          <div class="callout-header">💎 LIVE GEM — MUST MEMORISE TRIO</div>
+          Teacher: "Memorise just 3 pairs — the rest you can guess:<br>
+          1. <b>Mohenjo-daro → Indus</b> (Sindhu = fertile land of the Indus)<br>
+          2. <b>Harappa → Ravi</b><br>
+          3. <b>Rupar → Sutlej</b><br>
+          Student shortcut shared: 'Rupa Sattun' (Rupar-Sutlej sounded like 'Rupa satt de' — pay up!)"
+        </div>
+        <div class="callout callout-tip">
+          <div class="callout-header">💡 TIP</div>
+          Think of it this way: Mohenjo-daro = Indus civilisation's heart = Indus river. Just like Keezhadi = Vaigai
+          River, Madurai. Connect location logic.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q31 -->
+    <div class="q-card has-gem" data-diff="easy" data-gems="1" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q31</span>
+            <span class="diff-badge diff-easy">EASY</span>
+            <span class="type-badge">Factual</span>
+            <span class="gem-mini">💎 Gem</span>
+          </div>
+          <div class="q-text">On which river bank is Kalibangan located?</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text"><span class="correct">Ghaggar (Hakra) River</span> — Kalibangan is in Rajasthan on
+            the banks of the Ghaggar.</div>
+        </div>
+        <div class="callout callout-gem">
+          <div class="callout-header">💎 LIVE GEM</div>
+          Teacher's trick: "Kalibangan = Kali (empty/black) + bangan. Kalibangan is in Rajasthan — the state that is
+          mostly empty/dry. Ghaggar is a dried-up seasonal river = dry = Rajasthan. Easy link: Kali (empty) Rajasthan =
+          Ghaggar (dry river)."
+        </div>
+      </div>
+    </div>
+
+    <!-- Q15 -->
+    <div class="q-card has-pyq has-gem" data-diff="hard" data-gems="1" data-pyq="1">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q15</span>
+            <span class="diff-badge diff-hard">HARD</span>
+            <span class="type-badge">Trick/Trap</span>
+            <span class="pyq-mini">🏆 PYQ</span>
+            <span class="gem-mini">💎 Gem</span>
+          </div>
+          <div class="q-text">Which of the following statements about Lothal is INCORRECT?<br>
+            (1) Lothal is found in the Gulf of Cambay (Khambhat). (2) It is a port city; dock is 37m long and 216m wide.
+            (3) This city was connected with the Bhogavo river. (4) Foreign trade was conducted from this port.</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text">Statement <span class="correct">(2) is INCORRECT</span> — The actual dock dimensions
+            are approximately <span class="correct">37m long and 21.8m wide</span>, not 216m wide. (Some sources give
+            216m long × 37m wide — verify with your textbook; key point: exact numbers differ).</div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          Lothal: (1) ✅ Located in Gulf of Cambay/Khambhat, Gujarat. (3) ✅ Connected with Bhogavo River (tributary of
+          Sabarmati). (4) ✅ Foreign trade with Mesopotamia confirmed. (2) ❌ The dimension "216m wide" is fabricated —
+          the actual dock is much smaller. Lothal's dockyard is a man-made structure, the world's earliest known.
+        </div>
+        <div class="callout callout-gem">
+          <div class="callout-header">💎 LIVE GEM</div>
+          Teacher: "Lothal's river = Bhogavo (Pogava). Kalibangan's river = Ghaggar. These two are most confused in
+          exams. Also: the word 'Lothal' in Gujarati = LOTH (dead) + AL (place) = 'Mound of the Dead' — same meaning as
+          Mohenjo-daro! Both mean 'Mound of the Dead' in their respective languages."
+        </div>
+        <div class="callout callout-pyq">
+          <div class="callout-header">🏆 PYQ ALERT</div>
+          Lothal's features — dock, location, connected river — appear repeatedly in TNPSC exams. The false dimension in
+          statement (2) is a standard exam trap.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q28 -->
+    <div class="q-card has-pyq" data-diff="medium" data-gems="0" data-pyq="1">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q28</span>
+            <span class="diff-badge diff-medium">MEDIUM</span>
+            <span class="type-badge">Match the Following</span>
+            <span class="pyq-mini">🏆 PYQ</span>
+          </div>
+          <div class="q-text">Match the Harappan sites with their states/locations:<br>Harappa – Mohenjo-daro –
+            Kalibangan – Lothal</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text">
+            Harappa → <span class="correct">Punjab, Pakistan</span><br>
+            Mohenjo-daro → <span class="correct">Sindh, Pakistan (Indus River)</span><br>
+            Kalibangan → <span class="correct">Rajasthan, India</span><br>
+            Lothal → <span class="correct">Gujarat, India</span>
+          </div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          Lothal is in Gujarat on Bhogavo River (Sabarmati tributary) — near Gulf of Khambhat. Kalibangan is in
+          Rajasthan on Ghaggar River. Harappa is in Pakistan Punjab on Ravi River. Mohenjo-daro is in Pakistan Sindh on
+          Indus River.
+        </div>
+      </div>
+    </div>
+
+    <!-- ───────── SECTION 3: EXCAVATORS ───────── -->
+    <div class="sec-header" id="sec-excavators">
+      <h2>🔍 Excavators &amp; Discoverers</h2>
+      <div class="sec-line"></div>
+      <div class="sec-badge">Q4, Q25–Q27, Q35, Q39</div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q-card has-gem has-pyq" data-diff="medium" data-gems="1" data-pyq="1">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q04</span>
+            <span class="diff-badge diff-medium">MEDIUM</span>
+            <span class="type-badge">Factual</span>
+            <span class="pyq-mini">🏆 PYQ</span>
+            <span class="gem-mini">💎 Gem</span>
+          </div>
+          <div class="q-text">Who conducted the excavation at Mohenjo-daro?</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text"><span class="correct">Sir Mortimer Wheeler</span> conducted excavations at
+            Mohenjo-daro.</div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          Key excavators: <b>Mohenjo-daro → Mortimer Wheeler</b> | <b>Harappa → R.D. Banerji</b> (discovered by),
+          <b>Daya Ram Sahni</b> (first excavation) | Overall Indus excavation supervised by <b>Sir John Marshall</b>.
+        </div>
+        <div class="callout callout-gem">
+          <div class="callout-header">💎 LIVE GEM — MEMORY TRICK</div>
+          Teacher: "Mohenjo-daro → Mortimer Wheeler. 'M' for Mohenjo = 'M' for Mortimer (Mama series — M M!). For
+          Harappa → Daya Ram Sahni = 'Sinda Sahani' (Sindhu Sahani) — the 'S' family: Sindhu = Sahani. Sir John Marshall
+          supervised the whole thing and took it further. Then Daya Ram Sahni took it to the next level."
+        </div>
+      </div>
+    </div>
+
+    <!-- Q25 -->
+    <div class="q-card has-gem" data-diff="medium" data-gems="1" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q25</span>
+            <span class="diff-badge diff-medium">MEDIUM</span>
+            <span class="type-badge">Factual</span>
+            <span class="gem-mini">💎 Gem</span>
+          </div>
+          <div class="q-text">Who first visited Harappa in 1826 CE?</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text"><span class="correct">Charles Masson</span> was the first person to visit Harappa in
+            1826.</div>
+        </div>
+        <div class="callout callout-gem">
+          <div class="callout-header">💎 LIVE GEM — MEMORY TRICK</div>
+          Teacher: "Charles Masson → Harappa. The site has a 'Bison/Buffalo' image — Google 'Harappa civilisation bison'
+          — a bull seal comes up. Bison in English = Masson sounds like 'Mason' → Mason-Bison shortcut!"
+        </div>
+      </div>
+    </div>
+
+    <!-- Q26 -->
+    <div class="q-card has-pyq" data-diff="medium" data-gems="0" data-pyq="1">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q26</span>
+            <span class="diff-badge diff-medium">MEDIUM</span>
+            <span class="type-badge">Factual</span>
+            <span class="pyq-mini">🏆 PYQ</span>
+          </div>
+          <div class="q-text">Who first identified and recorded the antiquities (remains/seals) of Harappa?</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text"><span class="correct">Alexander Cunningham</span> first identified and recorded the
+            antiquities of Harappa.</div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          <b>Charles Masson</b> → first visited (1826). <b>Alexander Cunningham</b> → first recorded/identified the
+          seals &amp; antiquities. <b>R.D. Banerji</b> → major excavation. <b>Sir John Marshall</b> → supervised and
+          directed large-scale excavation. <b>Daya Ram Sahni</b> → further excavation of Harappa. Alexander Cunningham
+          is also called the "Father of Indian Archaeology" and founded the ASI in 1861.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q27 -->
+    <div class="q-card has-pyq has-gem" data-diff="medium" data-gems="1" data-pyq="1">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q27</span>
+            <span class="diff-badge diff-medium">MEDIUM</span>
+            <span class="type-badge">Factual</span>
+            <span class="pyq-mini">🏆 PYQ</span>
+            <span class="gem-mini">💎 Gem</span>
+          </div>
+          <div class="q-text">Under whose guidance/direction were Mohenjo-daro and Harappa excavated?</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text"><span class="correct">Sir John Marshall</span> directed the excavations of both
+            Mohenjo-daro and Harappa.</div>
+        </div>
+        <div class="callout callout-gem">
+          <div class="callout-header">💎 LIVE GEM — ASI FACTS</div>
+          Teacher: "Archaeological Survey of India (ASI) was founded in <b>1861</b> by <b>Alexander Cunningham</b> — he
+          was its first Director General. In Tamil Nadu, the first ASI head was <b>Nagaswamy</b>. To find the Indian ASI
+          founding year: 1861. Add 100 → 1961 (Tamil Nadu ASI founding parallel)."
+        </div>
+      </div>
+    </div>
+
+    <!-- Q35 — Match Excavators -->
+    <div class="q-card has-pyq" data-diff="hard" data-gems="0" data-pyq="1">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q35</span>
+            <span class="diff-badge diff-hard">HARD</span>
+            <span class="type-badge">Match the Following</span>
+            <span class="pyq-mini">🏆 PYQ</span>
+          </div>
+          <div class="q-text">Match the Harappan sites with their excavators:<br>Chanhu-daro – Kulli – Rangpur –
+            Dholavira</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text">
+            Chanhu-daro → <span class="correct">Majumdar (N.G. Majumdar)</span><br>
+            Kulli → <span class="correct">Aurel Stein</span><br>
+            Rangpur → <span class="correct">Amendra Nath (A.N. Ghosh)</span><br>
+            Dholavira → <span class="correct">J.P. Joshi</span>
+          </div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          The teacher used a shortcut: "Majumdar appears in the options → directly map to Chanhu-daro." Lothal's
+          excavator = S.R. Rao. Banawali = R.S. Bisht. Rakhigarhi = Amendra Nath / A. Ghosh. Dholavira = J.P. Joshi (who
+          discovered it in 1968).
+        </div>
+        <div class="callout callout-tip">
+          <div class="callout-header">💡 TIP</div>
+          Answer key (per teacher): Option C — Chanhu-daro=Majumdar, Kulli=Aurel Stein, Rangpur=Amendra Nath,
+          Dholavira=J.P. Joshi.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q39 -->
+    <div class="q-card has-pyq" data-diff="easy" data-gems="0" data-pyq="1">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q39</span>
+            <span class="diff-badge diff-easy">EASY</span>
+            <span class="type-badge">Factual</span>
+            <span class="pyq-mini">🏆 PYQ</span>
+          </div>
+          <div class="q-text">Who was the first Director General of the Archaeological Survey of India (ASI)?</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text"><span class="correct">Alexander Cunningham</span> — founded ASI in 1861 and was its
+            first Director General. Also called the "Father of Indian Archaeology."</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ───────── SECTION 4: FEATURES & URBAN CULTURE ───────── -->
+    <div class="sec-header" id="sec-features">
+      <h2>🏛️ Features, Urban Planning &amp; Culture</h2>
+      <div class="sec-line"></div>
+      <div class="sec-badge">Q6, Q8, Q13, Q18, Q21–Q24, Q29, Q32–Q33, Q41–Q43, Q48–Q49</div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="q-card has-trap" data-diff="hard" data-gems="0" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q06</span>
+            <span class="diff-badge diff-hard">HARD</span>
+            <span class="type-badge">Trick/Trap</span>
+          </div>
+          <div class="q-text">Which of the following statements about the Harappan Civilisation is INCORRECT?<br>
+            (1) Peepal tree and Acacia tree were considered sacred. (2) Clay female figurines represent female deities.
+            (3) The practice of cremating dead bodies was NOT followed at Harappa. (4) They worshipped the proto-form of
+            Shiva.</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text">Statement <span class="correct">(3) is INCORRECT</span>: Harappans DID follow
+            cremation — that's why the burial sites are called "mounds of the dead" (Mohenjo-daro). The site itself is
+            named after this practice.</div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          (1) ✅ Peepal (sacred fig) and Acacia were sacred trees. (2) ✅ Female clay figurines = mother goddess worship.
+          (3) ❌ WRONG — cremation WAS practiced. (4) ✅ Pashupati/Vishupati seal shows proto-Shiva. The name
+          "Mohenjo-daro" literally means "Mound of the Dead" because of the burial/cremation mounds.
+        </div>
+        <div class="callout callout-trap">
+          <div class="callout-header">⚠️ TRAP NOTE</div>
+          The phrase "was NOT followed" in statement (3) is a classic exam trap. Students read "cremation was not
+          followed" and assume it's true — but Harappans DID cremate. The statement is FALSE because cremation WAS
+          indeed practiced.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="q-card" data-diff="medium" data-gems="0" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q08</span>
+            <span class="diff-badge diff-medium">MEDIUM</span>
+            <span class="type-badge">Factual</span>
+          </div>
+          <div class="q-text">What type of pottery is associated with the Indus Valley Civilisation that shows the
+            world's earliest evidence?<br><small style="color:var(--text2);">(Options: Cut, Knapped, Perforated,
+              Polished — i.e., Incised, Knapped, Perforated, Polished)</small></div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text"><span class="correct">Polished pottery</span> (Lustrous / Burnished Red Ware). The
+            Harappans used red-coloured pottery with black painted designs — a hallmark of the civilisation.</div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          The Indus Valley pottery was made of red clay (hence red colour), decorated with black paint. The
+          sophisticated wheel-made, polished pottery is considered among the earliest evidence of advanced ceramic
+          technology globally. Animal motifs were painted on these vessels.
+        </div>
+        <div class="callout callout-gem">
+          <div class="callout-header">💎 LIVE GEM</div>
+          Teacher: "The pots were red because of red clay. To distinguish them, they used black colour on top. Then drew
+          animal shapes. This is what the 6th Standard textbook describes — red pots with black artwork. They were
+          highly sophisticated for their time."
+        </div>
+      </div>
+    </div>
+
+    <!-- Q13 -->
+    <div class="q-card" data-diff="hard" data-gems="0" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q13</span>
+            <span class="diff-badge diff-hard">HARD</span>
+            <span class="type-badge">Conceptual</span>
+          </div>
+          <div class="q-text">Which of the following are CORRECT about the Harappan people and culture?<br>
+            (1) More than one group existed in the Indus Valley Civilisation. (2) Various occupational groups existed:
+            farmers, pastoralists, hunters, food-gatherers. (3) Exactly five groups existed. (4) Fort-style citadel city
+            planning is still in practice today.</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text">Statements <span class="correct">(1) and (2) are CORRECT</span>. Statement (3)
+            "exactly five groups" is wrong — number was unspecified/more. Statement (4) is discussed separately (Q29).
+          </div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          One group had 30–40 members. The Indus Valley had multiple occupational groups: farmers, cattle-rearers,
+          hunters, fishermen, food-gatherers. "Exactly five" is not mentioned in any standard textbook — it's a
+          fabricated number. The civilisation had at least 4 distinct occupational groups.
+        </div>
+        <div class="callout callout-critical">
+          <div class="callout-header">🔴 CRITICAL — STUDENT NOTE</div>
+          Teacher corrected students: "One group = 30 to 40 people. NOT 10–15. Many students answered 10–15 — that's
+          wrong. 30–40 people formed one social group/community in the Indus Valley."
+        </div>
+      </div>
+    </div>
+
+    <!-- Q21 -->
+    <div class="q-card" data-diff="easy" data-gems="0" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q21</span>
+            <span class="diff-badge diff-easy">EASY</span>
+            <span class="type-badge">Factual</span>
+          </div>
+          <div class="q-text">Fill in the blank: "A well-planned city built on a raised platform" — which Harappan city
+            fits this description?</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text"><span class="correct">Mohenjo-daro</span> — the city was built on a raised
+            platform/citadel mound.</div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          In English: "A planned town built on a platform." The word 'platform' (பிளாட்பார்ம்) in Tamil = மேடை (raised
+          mound). Mohenjo-daro sits on an elevated mound, making it a classic citadel-style planned city.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q22 -->
+    <div class="q-card" data-diff="easy" data-gems="0" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q22</span>
+            <span class="diff-badge diff-easy">EASY</span>
+            <span class="type-badge">Factual</span>
+          </div>
+          <div class="q-text">Which metal/material was NOT used/known in the Harappan Civilisation?</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text"><span class="correct">Iron</span> — Harappans did not know about iron. They belonged
+            to the Bronze Age.</div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          The Indus Valley Civilisation was a Bronze Age culture. They used bronze, copper, and gold but had NO
+          knowledge of iron. They also had no knowledge of the horse. Iron Age came after the Vedic period.
+        </div>
+        <div class="callout callout-critical">
+          <div class="callout-header">🔴 CRITICAL</div>
+          Two things Harappans did NOT know: (1) <b>Iron</b> — Bronze Age civilisation. (2) <b>Horse</b> — no horse
+          remains found (confirmed multiple times in this session).
+        </div>
+      </div>
+    </div>
+
+    <!-- Q29 -->
+    <div class="q-card has-gem" data-diff="hard" data-gems="1" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q29</span>
+            <span class="diff-badge diff-hard">HARD</span>
+            <span class="type-badge">Conceptual</span>
+            <span class="gem-mini">💎 Gem</span>
+          </div>
+          <div class="q-text">Which of the following Indus Valley cultural practices/features continues in modern Indian
+            society?<br>
+            (1) Toy cart models are still in use. (2) Wheel-made pottery of Indus type still exists in NW India. (3)
+            Bead-making from precious stones still practised. (4) Fort-style citadel city planning still in practice.
+          </div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text">Statement <span class="correct">(4) is CORRECT</span> — Fort-style citadel city
+            planning still continues in Rajasthan (many fort-cities with walled enclosures).</div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          Rajasthan has the maximum number of fort-cities in India (Jaipur, Jaisalmer, Jodhpur etc.) with
+          walled/fortified city planning — a continuation of Harappan citadel tradition. The other options are debatable
+          or outdated. The teacher confirmed: Answer = D (Fort-style city planning).
+        </div>
+        <div class="callout callout-gem">
+          <div class="callout-header">💎 LIVE GEM</div>
+          Teacher: "Rajasthan has the most fort-cities in India — Jaipur (Pink City), Jaisalmer, Jodhpur. These cities
+          have arañ (fortified walls) around them — exactly like the Harappan citadel model. Visit Rajasthan and you see
+          Harappan urban planning living on! Also, Rajasthan has maximum 'Jannala' (window art) forts — unique cultural
+          continuation."
+        </div>
+      </div>
+    </div>
+
+    <!-- Q32 -->
+    <div class="q-card has-pyq" data-diff="medium" data-gems="0" data-pyq="1">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q32</span>
+            <span class="diff-badge diff-medium">MEDIUM</span>
+            <span class="type-badge">Match the Following</span>
+            <span class="pyq-mini">🏆 PYQ</span>
+          </div>
+          <div class="q-text">Match the Harappan sites with their notable finds/features:<br>Mohenjo-daro – Harappa –
+            Lothal – Banawali</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text">
+            Mohenjo-daro → <span class="correct">Dancing Girl (Bronze statue)</span><br>
+            Harappa → <span class="correct">Granary / Cemetery (Idigaadu)</span><br>
+            Lothal → <span class="correct">Ivory scale / Dockyard</span><br>
+            Banawali → <span class="correct">Terracotta plough / Toy</span>
+          </div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          The famous "Dancing Girl" (Naṭanāḷ) bronze statue was found at Mohenjo-daro. Harappa has a large granary and
+          cemetery (Cemetery R37). Lothal is famous for its ivory/bone scale (world's earliest). Banawali had a
+          terracotta plough — first evidence of agriculture technology.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q33 -->
+    <div class="q-card" data-diff="medium" data-gems="0" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q33</span>
+            <span class="diff-badge diff-medium">MEDIUM</span>
+            <span class="type-badge">Conceptual</span>
+          </div>
+          <div class="q-text">Which of the following statements about the Harappan Civilisation are CORRECT?<br>
+            (1) Houses in Harappa &amp; Mohenjo-daro were built with burnt bricks. (2) Kalibangan and Lothal used
+            unbaked bricks. (3) Burnt bricks were mostly used for drains, wells, bathrooms, and pathways. (4) Houses had
+            a courtyard with 4–6 rooms and a bathroom.</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text">All four statements <span class="correct">(1), (2), (3), and (4) are CORRECT</span>.
+            Answer = D (All).</div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          Harappan houses were sophisticated: 1) Major cities used burnt bricks. 2) Kalibangan and Lothal used
+          unbaked/sun-dried bricks. 3) Burnt bricks were used for drains, wells, bathrooms, pathways specifically. 4)
+          Each house had a central courtyard, 4–6 rooms, and an individual bathroom — a remarkable urban planning
+          feature.
+        </div>
+        <div class="callout callout-tip">
+          <div class="callout-header">💡 TIP</div>
+          Teacher added from 11th Standard book: "Some describe 3 living rooms. The 11th Standard and TNPSC Gr.1/2 books
+          give more detail than 6th Standard — always read 11th Std for Group 2 level questions."
+        </div>
+      </div>
+    </div>
+
+    <!-- Q41 -->
+    <div class="q-card" data-diff="easy" data-gems="0" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q41</span>
+            <span class="diff-badge diff-easy">EASY</span>
+            <span class="type-badge">Factual</span>
+          </div>
+          <div class="q-text">Name the only Indus Valley Civilisation site that had an artificial/man-made dockyard.
+          </div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text"><span class="correct">Lothal</span> — it had the world's earliest known man-made
+            dockyard.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q42 -->
+    <div class="q-card has-gem" data-diff="easy" data-gems="1" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q42</span>
+            <span class="diff-badge diff-easy">EASY</span>
+            <span class="type-badge">Factual</span>
+            <span class="gem-mini">💎 Gem</span>
+          </div>
+          <div class="q-text">Name the only Indus Valley Civilisation site that had NO citadel/fort.</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text"><span class="correct">Chanhu-daro</span> (Surkotada) — the only Harappan site without
+            a citadel.</div>
+        </div>
+        <div class="callout callout-gem">
+          <div class="callout-header">💎 LIVE GEM</div>
+          Teacher's exact quote: "Chanhu-daro = no fort/citadel. That's it. One liner. If they ask 'which Harappan site
+          had no citadel?' — answer is Chanhu-daro. Memorise it as a single fact."
+        </div>
+      </div>
+    </div>
+
+    <!-- Q43 -->
+    <div class="q-card" data-diff="medium" data-gems="0" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q43</span>
+            <span class="diff-badge diff-medium">MEDIUM</span>
+            <span class="type-badge">Conceptual</span>
+          </div>
+          <div class="q-text">Which of the following is CORRECT about the Harappan Civilisation?<br>
+            (1) There was a strong central government. (2) Street lights existed at every street. (3) Dustbins were
+            placed at street corners. (4) Rich and poor had separate residential areas.</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text">Answer = <span class="correct">D (All four are correct)</span> — per the teacher's
+            answer key.</div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          Strong central government — yes, inferred from uniformity of weights/measures and city planning across 1500+
+          km. Street lighting — evidence of lamp-posts at corners. Dustbins — waste disposal points at street junctions.
+          Separate residential areas for rich/poor — upper and lower city divisions.
+        </div>
+        <div class="callout callout-critical">
+          <div class="callout-header">🔴 NOTE — CORRECTION</div>
+          Teacher expressed uncertainty about statement (4) regarding rich/poor separate quarters — saying "I haven't
+          read that in textbooks clearly." Final answer given was D. If your textbook shows otherwise, verify with your
+          specific book edition.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q48 -->
+    <div class="q-card" data-diff="hard" data-gems="0" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q48</span>
+            <span class="diff-badge diff-hard">HARD</span>
+            <span class="type-badge">Conceptual</span>
+          </div>
+          <div class="q-text">Which of the following about the architecture/art of the Indus Valley Civilisation is
+            CORRECT?<br>
+            (1) Mohenjo-daro shows 8 structural levels. (2) Minor changes are visible in Mohenjo-daro's architecture.
+            (3) Indus seals showed no change throughout their time. (4) Stone buildings are found at Harappa and
+            Mohenjo-daro.</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text">All statements <span class="correct">(1), (2), (3), and (4) are correct</span>.
+            Answer = All of the above.</div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          (1) ✅ Mohenjo-daro has 8 occupational levels (8 layers of habitation). (2) ✅ Architecture shows minor
+          modifications over time. (3) ✅ Indus script/seals remained remarkably uniform across regions and time —
+          showing standardised culture. (4) ✅ Stone structures are found at both major sites.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q49 -->
+    <div class="q-card" data-diff="easy" data-gems="0" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q49</span>
+            <span class="diff-badge diff-easy">EASY</span>
+            <span class="type-badge">Factual</span>
+          </div>
+          <div class="q-text">Which Harappan site is considered the northernmost settlement?</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text"><span class="correct">Shortugai</span> (Afghanistan) — the northernmost Harappan
+            outpost, important for trade with Afghanistan/Central Asia.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ───────── SECTION 5: ANIMALS & SEALS ───────── -->
+    <div class="sec-header" id="sec-animals">
+      <h2>🐘 Animals, Seals &amp; Symbols</h2>
+      <div class="sec-line"></div>
+      <div class="sec-badge">Q9, Q10, Q16, Q17</div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="q-card has-pyq" data-diff="medium" data-gems="0" data-pyq="1">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q09</span>
+            <span class="diff-badge diff-medium">MEDIUM</span>
+            <span class="type-badge">Factual</span>
+            <span class="pyq-mini">🏆 PYQ</span>
+          </div>
+          <div class="q-text">Name the four animals depicted on the Pashupati seal found at Mohenjo-daro.</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text">The four animals on the Pashupati seal: <span class="correct">Elephant, Tiger
+              (Pulli), Rhinoceros (Kaṇṭāmiruham), Buffalo (Erumei)</span>.</div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          The Pashupati (also called Vishupati) seal shows a figure seated in a yoga posture surrounded by four animals:
+          elephant (east), tiger (west), rhinoceros (one side), buffalo (other side). This proto-Shiva figure is
+          considered the earliest representation of Lord Shiva.
+        </div>
+        <div class="callout callout-pyq">
+          <div class="callout-header">🏆 PYQ ALERT</div>
+          This question appears in TNPSC Group 2/4 almost every cycle. The four animals must be memorised: Elephant +
+          Tiger + Rhinoceros + Buffalo. All confirmed by the teacher.
+        </div>
+        <div class="callout callout-tip">
+          <div class="callout-header">💡 TIP</div>
+          Confirmed: Elephant ✅ (river civilisation), Tiger ✅ (forest), Rhinoceros ✅ (extra/unique), Buffalo ✅
+          (confirmed). The seal confirms: (a) Elephant confirmed, (b) Tiger confirmed, (c) Rhinoceros confirmed — extra
+          animal distinguishing this from the general list, (d) Buffalo confirmed.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="q-card has-gem" data-diff="easy" data-gems="1" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q10</span>
+            <span class="diff-badge diff-easy">EASY</span>
+            <span class="type-badge">Factual</span>
+            <span class="gem-mini">💎 Gem</span>
+          </div>
+          <div class="q-text">Which animal was NOT known to the Harappan people?</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text"><span class="correct">Horse</span> — Harappans had no knowledge of horses.</div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          No horse bones or horse depictions found in any Harappan site. Also: Harappans had no knowledge of IRON
+          (Bronze Age civilisation). Both "horse" and "iron" are the standard "unknown to Harappans" facts.
+        </div>
+        <div class="callout callout-gem">
+          <div class="callout-header">💎 LIVE GEM — HISTORICAL CONSEQUENCE</div>
+          Teacher: "This is why Alexander the Great succeeded in India — he came on horseback, which Indians (Harappan
+          descendants) were unfamiliar with. Alexander's intelligence said Indians had no horses but had elephants.
+          Alexander thought: 'I have horses, they have elephants — I can win.' But when he saw 1000s of elephants, he
+          was shocked! His army refused to go further. So lack of horse knowledge from Harappan times shaped Indian
+          military history 1000+ years later!"
+        </div>
+      </div>
+    </div>
+
+    <!-- Q16 -->
+    <div class="q-card has-trap" data-diff="hard" data-gems="0" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q16</span>
+            <span class="diff-badge diff-hard">HARD</span>
+            <span class="type-badge">Trick/Trap</span>
+          </div>
+          <div class="q-text">Which animals are depicted on the Harappan seals?<br>(Options: A) Water buffaloes only, B)
+            Elephants and tigers only, C) Camels and spotted deer, D) Water buffalo, elephants, tigers, and camels)
+          </div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text">Answer = <span class="correct">D — Water buffalo, elephants, tigers, AND
+              camels</span> are all depicted on Harappan seals.</div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          Harappan seals depicted: Water buffalo ✅ (river civilisation), Elephants ✅ (forest), Tigers ✅, Camel ✅
+          (possibly referenced from trade with Rajasthan/Mesopotamia camel routes). The rhinoceros is also depicted.
+          Camels appear because Rajasthan-area sites were within the civilisation zone.
+        </div>
+        <div class="callout callout-trap">
+          <div class="callout-header">⚠️ TRAP NOTE</div>
+          Most students selected "elephants and tigers only" (Option B). The answer includes camel too. Teacher
+          explained: "Camel appears because of trade connections with Rajasthan and possibly Mesopotamia — they would
+          have depicted trade partners' animals too."
+        </div>
+      </div>
+    </div>
+
+    <!-- Q17 -->
+    <div class="q-card" data-diff="easy" data-gems="0" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q17</span>
+            <span class="diff-badge diff-easy">EASY</span>
+            <span class="type-badge">Factual</span>
+          </div>
+          <div class="q-text">Which tree was worshipped as the "highest god/supreme deity" in the Indus Valley
+            Civilisation?</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text"><span class="correct">Peepal tree (Arasa maram / Sacred Fig)</span> — considered the
+            supreme/highest deity among sacred trees.</div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          Both Peepal (Ficus religiosa) and Acacia were worshipped as sacred trees. Peepal was considered the supreme
+          deity. This tradition continues in Hinduism, Buddhism (Buddha attained enlightenment under a Peepal tree), and
+          Jainism.
+        </div>
+      </div>
+    </div>
+
+    <!-- ───────── SECTION 6: TRADE & ECONOMY ───────── -->
+    <div class="sec-header" id="sec-trade">
+      <h2>🏺 Trade, Economy &amp; Material Culture</h2>
+      <div class="sec-line"></div>
+      <div class="sec-badge">Q11, Q12, Q20, Q23–Q24, Q30, Q40, Q45, Q47</div>
+    </div>
+
+    <!-- Q11 -->
+    <div class="q-card" data-diff="medium" data-gems="0" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q11</span>
+            <span class="diff-badge diff-medium">MEDIUM</span>
+            <span class="type-badge">Factual</span>
+          </div>
+          <div class="q-text">Which ancient inscription/text records trading connections between Mesopotamia and
+            Harappa?</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text"><span class="correct">Cuneiform tablets/letters</span> (யூனிஃபார்ம் எழுத்துக்கள்) —
+            Mesopotamian cuneiform records mention trade with "Meluhha" (identified as the Indus Valley).</div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          Mesopotamia (modern Iraq) is one of the world's oldest civilisations — 6500+ years old. Cuneiform writing
+          records mention goods imported from Meluhha (Indus Valley): gold, carnelian beads, ivory, lapis lazuli. These
+          cuneiform tablets are proof of Indus-Mesopotamia trade connections.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q12 -->
+    <div class="q-card" data-diff="easy" data-gems="0" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q12</span>
+            <span class="diff-badge diff-easy">EASY</span>
+            <span class="type-badge">Factual</span>
+          </div>
+          <div class="q-text">Harappans used which stone to make blades and other tools?<br>(Options: Rohri chert,
+            Steatite, Vidorium, Carnelian)</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text"><span class="correct">Rohri chert</span> — used for making blades and other cutting
+            tools.</div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          Carnelian is a reddish semi-precious stone — used for making jewellery/beads, NOT tools. Steatite (soapstone)
+          = used for seals. Rohri chert = used for blades/tools. The question tests whether students know the difference
+          between decorative use vs. tool use.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q20 -->
+    <div class="q-card has-trap" data-diff="hard" data-gems="0" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q20</span>
+            <span class="diff-badge diff-hard">HARD</span>
+            <span class="type-badge">Assertion-Reason</span>
+          </div>
+          <div class="q-text">Assertion (A): Indus Valley people did not use metal coins.<br>Reason (R): They did not
+            have the technology to make metal coins.</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text">Both A and R are <span class="correct">TRUE, and R is the correct explanation of
+              A</span>. Answer = B (Both true, R explains A).</div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          A is true: Harappans did NOT use metal coins — they used a barter system. R is also true: They lacked
+          coin-minting technology (though they were skilled metalworkers, coinage was not developed). R correctly
+          explains why A is true. This is a classic Assertion-Reason question where students must check: (1) Is A true?
+          (2) Is R true? (3) Does R explain A?
+        </div>
+        <div class="callout callout-trap">
+          <div class="callout-header">⚠️ TRAP NOTE</div>
+          Teacher warned: "Many students mark A as FALSE because they assume 'negative statement = wrong.' But 'they did
+          NOT use metal coins' is a TRUE statement! They genuinely did NOT use coins. Don't let the negative phrasing
+          confuse you."
+        </div>
+      </div>
+    </div>
+
+    <!-- Q23 -->
+    <div class="q-card has-trap" data-diff="hard" data-gems="0" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q23</span>
+            <span class="diff-badge diff-hard">HARD</span>
+            <span class="type-badge">Match the Following</span>
+          </div>
+          <div class="q-text">Match Indus Valley trade goods/materials with their source locations:<br>Conch shell –
+            Steatite – Carnelian – Lapis Lazuli</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text">
+            Conch shell → <span class="correct">Nageshwar</span> (Gujarat)<br>
+            Steatite (soapstone) → <span class="correct">Shortugai</span> (Afghanistan)<br>
+            Carnelian → <span class="correct">Lothal</span> (Gujarat)<br>
+            Lapis Lazuli → <span class="correct">Rajasthan / Shortugai</span>
+          </div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          Carnelian is a red semi-precious stone found at Lothal — used for beads (jewellery), NOT tools. Teacher
+          confirmed: Answer = C (Carnelian = Lothal is the wrong match they were testing — Carnelian was found/processed
+          at Lothal).
+        </div>
+        <div class="callout callout-trap">
+          <div class="callout-header">⚠️ TRAP NOTE</div>
+          Carnelian is frequently confused with a tool-making material. It is a jewellery/bead stone. Steatite = seals.
+          Rohri chert = tools/blades. Carnelian = beads/jewellery.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q24 -->
+    <div class="q-card has-gem" data-diff="medium" data-gems="1" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q24</span>
+            <span class="diff-badge diff-medium">MEDIUM</span>
+            <span class="type-badge">Factual</span>
+            <span class="gem-mini">💎 Gem</span>
+          </div>
+          <div class="q-text">What does the word "Loth" mean in the Gujarati word "Lothal"?</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text">"Loth" in Gujarati = <span class="correct">Dead / Death</span>. So "Lothal" = "Mound
+            of the Dead" (same meaning as Mohenjo-daro in Sindhi).</div>
+        </div>
+        <div class="callout callout-gem">
+          <div class="callout-header">💎 LIVE GEM</div>
+          Teacher: "Lothal = Loth (dead) + Al (place) in Gujarati = 'Place of the Dead.' Mohenjo-daro = 'Mound of the
+          Dead' in Sindhi. TWO different sites, TWO different languages — SAME meaning: Mound/Place of the Dead. Both
+          were named because of burial mounds found there. Also: 'Lok' (लोक) in Hindi/Sanskrit = 'People' — so Lok Sabha
+          = 'People's Assembly'. Different from 'Loth'!"
+        </div>
+      </div>
+    </div>
+
+    <!-- Q30 -->
+    <div class="q-card" data-diff="easy" data-gems="0" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q30</span>
+            <span class="diff-badge diff-easy">EASY</span>
+            <span class="type-badge">Factual</span>
+          </div>
+          <div class="q-text">Which Harappan outpost served as the most important guard post for trade with Afghanistan?
+          </div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text"><span class="correct">Shortugai</span> — the most important Harappan outpost for
+            Afghan trade.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q40 -->
+    <div class="q-card has-pyq" data-diff="easy" data-gems="0" data-pyq="1">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q40</span>
+            <span class="diff-badge diff-easy">EASY</span>
+            <span class="type-badge">Factual</span>
+            <span class="pyq-mini">🏆 PYQ</span>
+          </div>
+          <div class="q-text">Which crop was NOT cultivated by the Harappan people?</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text"><span class="correct">Sugarcane</span> — Harappans did NOT cultivate sugarcane.</div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          Harappan cultivated crops: wheat, barley, sesame, mustard, peas, dates, cotton (first in the world — "Sindon"
+          in Greek/Sindhi). Sugarcane cultivation came later in Indian history (associated with later Vedic/early
+          classical period). Cotton was so associated with the Indus that Greeks called it "Sindon" (from Sindhu/Sindh).
+        </div>
+        <div class="callout callout-pyq">
+          <div class="callout-header">🏆 PYQ ALERT</div>
+          "Which crop did Harappans NOT cultivate?" — frequently asked. Sugarcane is the standard answer. Also note:
+          cotton cultivation was FIRST done by Harappans — this is a positive PYQ fact.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q45 -->
+    <div class="q-card" data-diff="easy" data-gems="0" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q45</span>
+            <span class="diff-badge diff-easy">EASY</span>
+            <span class="type-badge">Factual</span>
+          </div>
+          <div class="q-text">What was the primary occupation/livelihood of the Indus Valley Civilisation people?</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text"><span class="correct">Agriculture (farming)</span> — was the primary occupation.
+            Secondary: cattle-rearing, then hunting, then fishing.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q47 -->
+    <div class="q-card" data-diff="easy" data-gems="0" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q47</span>
+            <span class="diff-badge diff-easy">EASY</span>
+            <span class="type-badge">Factual</span>
+          </div>
+          <div class="q-text">Which of the following are TRUE about Indus Valley merchants in Mesopotamia?<br>
+            (1) Indus merchants lived/stayed in Mesopotamia. (2) They brought cotton with them.</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text">Both statements <span class="correct">(1) and (2) are TRUE</span>. Answer = Both are
+            correct.</div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          Archaeological and textual evidence shows Indus traders stayed in Mesopotamia (trading colonies). Cotton — the
+          Indus Valley's signature crop — was their primary export good. The Greeks called cotton "Sindon" (from Sindhu)
+          because they first encountered it through Indus Valley trade.
+        </div>
+      </div>
+    </div>
+
+    <!-- ───────── SECTION 7: RELIGION & SOCIETY ───────── -->
+    <div class="sec-header" id="sec-religion">
+      <h2>🕉️ Religion, Script &amp; Society</h2>
+      <div class="sec-line"></div>
+      <div class="sec-badge">Q18–Q19, Q36–Q37</div>
+    </div>
+
+    <!-- Q18 -->
+    <div class="q-card has-gem" data-diff="medium" data-gems="1" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q18</span>
+            <span class="diff-badge diff-medium">MEDIUM</span>
+            <span class="type-badge">Factual</span>
+            <span class="gem-mini">💎 Gem</span>
+          </div>
+          <div class="q-text">The evidence of burials in Harappan sites is named after what designation? (Fill in blank:
+            "Burials found at Harappa are named ___")</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text"><span class="correct">Cemetery R37</span> — the burial ground at Harappa is
+            designated "Cemetery R37" (கல்லறை ஆர் 37).</div>
+        </div>
+        <div class="callout callout-gem">
+          <div class="callout-header">💎 LIVE GEM</div>
+          Teacher: "Cemetery R37 — this is a specific code name for the Harappan burial site. Write it down: R37 = the
+          famous burial ground label for Harappan archaeology. It's like how we give codes to archaeological strata. If
+          a question asks 'what is the proof of burials at Harappa?' — Cemetery R37 is the standard answer."
+        </div>
+      </div>
+    </div>
+
+    <!-- Q19 -->
+    <div class="q-card has-trap" data-diff="medium" data-gems="0" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q19</span>
+            <span class="diff-badge diff-medium">MEDIUM</span>
+            <span class="type-badge">Trick/Trap</span>
+          </div>
+          <div class="q-text">Which of the following about the Harappan Civilisation contains a FALSE statement?<br>
+            (1) Seals have not been fully deciphered even today. (2) Indus Valley Civilisation is a remarkable urban
+            culture. (3) Indus people used large-scale weights/measures. (4) Indus Valley people knew the use of iron.
+          </div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text">Statement <span class="correct">(4) is FALSE</span> — Harappans did NOT know about
+            iron. Answer = D.</div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          (1) ✅ True — Indus script remains undeciphered to this day (Tamil Nadu CM offered $1 million prize for
+          decipherment). (2) ✅ True. (3) ✅ True — standardised weights and measures used across 1500+ km. (4) ❌ FALSE —
+          Bronze Age civilisation; iron unknown.
+        </div>
+        <div class="callout callout-gem">
+          <div class="callout-header">💎 LIVE GEM — UNDECIPHERED SCRIPT</div>
+          Teacher: "The Indus script is still undeciphered — the Tamil Nadu government (CM Stalin) once announced a
+          prize of 1 million US dollars for whoever can decode it! That tells you how important and unsolved this
+          mystery is. The pictographic script (சித்திர எழுத்துக்கள்) is boustrophedon style — written right to left.
+          About 400 signs identified."
+        </div>
+        <div class="callout callout-trap">
+          <div class="callout-header">⚠️ TRAP NOTE</div>
+          Teacher warned: "Many students see statement (1) — 'seals have NOT been deciphered' — and think it's false
+          because of the negative phrasing. It IS true that seals haven't been deciphered. Don't fall for the negative
+          trap!"
+        </div>
+      </div>
+    </div>
+
+    <!-- Q36 -->
+    <div class="q-card" data-diff="medium" data-gems="0" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q36</span>
+            <span class="diff-badge diff-medium">MEDIUM</span>
+            <span class="type-badge">Conceptual</span>
+          </div>
+          <div class="q-text">Which of the following are correct about the religious beliefs of the Indus Valley
+            Civilisation people?<br>
+            (1) Mother-goddess worship was part of the culture and society. (2) In idol worship, the mother goddess
+            concept was highlighted.</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text">Both statements <span class="correct">(1) and (2) are correct</span>.</div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          The Harappan society was matriarchal (mother-worshipping). Thousands of terracotta female figurines found =
+          mother goddess worship. The "Dancing Girl" bronze statue at Mohenjo-daro is another example of female
+          prominence. Nature worship also prevalent — animals, trees, and natural forces were revered.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q37 -->
+    <div class="q-card has-trap" data-diff="hard" data-gems="0" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q37</span>
+            <span class="diff-badge diff-hard">HARD</span>
+            <span class="type-badge">Trick/Trap</span>
+          </div>
+          <div class="q-text">Which of the following statements about the Harappan Civilisation is FALSE?<br>
+            (1) Harappan walls were weak. (2) Tectonic plate movement caused city destruction. (3) Small-headed Armenian
+            skull bones were found. (4) Harappan civilisation declined after 1750 BCE.</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text">Answer = <span class="correct">C</span> — Statements (2), (3), (4) are TRUE;
+            Statement (1) "walls were weak" is FALSE.</div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          (1) ❌ FALSE — Harappan walls were strong and thick (brick walls). (2) ✅ Tectonic activity is one proposed
+          cause of decline. (3) ✅ Armenian-type skulls (brachycephalic = small-headed) found at burial sites. (4) ✅
+          After 1750 BCE, the Late Harappan phase begins — decline is established. Answer = C (statements 2, 3, 4 are
+          true; 1 is false).
+        </div>
+      </div>
+    </div>
+
+    <!-- ───────── SECTION 8: DECLINE ───────── -->
+    <div class="sec-header" id="sec-decline">
+      <h2>⚡ Decline of Harappan Civilisation</h2>
+      <div class="sec-line"></div>
+      <div class="sec-badge">Q44</div>
+    </div>
+
+    <!-- Q44 -->
+    <div class="q-card" data-diff="medium" data-gems="0" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q44</span>
+            <span class="diff-badge diff-medium">MEDIUM</span>
+            <span class="type-badge">Conceptual</span>
+          </div>
+          <div class="q-text">What is considered the primary cause of the decline of the Indus Valley
+            Civilisation?<br>(Options: Climate change, Earthquake/tectonic, Aryan invasion, Floods)</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text"><span class="correct">Floods</span> — considered the primary/most likely cause, ahead
+            of the other theories.</div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          Multiple theories exist: (1) Aryan invasion (Mortimer Wheeler — now largely discredited), (2) Climate change
+          (Wheeler/Lambrick), (3) Floods (most accepted), (4) Tectonic activity (earthquakes). Teacher identified floods
+          as the most commonly cited primary cause in TNPSC textbooks. All four are valid contributing factors but
+          floods takes precedence in standard answers.
+        </div>
+        <div class="callout callout-tip">
+          <div class="callout-header">💡 TIP</div>
+          For TNPSC: If asked "one reason" → Floods. If asked "multiple reasons" → all four apply. The Aryan invasion
+          theory is outdated — avoid it as a primary cause in modern exams.
+        </div>
+      </div>
+    </div>
+
+    <!-- ───────── SECTION 9: MISCELLANEOUS ───────── -->
+    <div class="sec-header" id="sec-misc">
+      <h2>🌍 Miscellaneous &amp; Bonus Facts</h2>
+      <div class="sec-line"></div>
+      <div class="sec-badge">Q14, Q38, Q46, Q50 + Bonus</div>
+    </div>
+
+    <!-- Q14 -->
+    <div class="q-card has-pyq" data-diff="hard" data-gems="0" data-pyq="1">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q14</span>
+            <span class="diff-badge diff-hard">HARD</span>
+            <span class="type-badge">Match the Following</span>
+            <span class="pyq-mini">🏆 PYQ</span>
+          </div>
+          <div class="q-text">Match the Harappan sites with their notable archaeological finds:<br>Mohenjo-daro –
+            Harappa – Lothal – Banawali</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text">
+            Mohenjo-daro → <span class="correct">Bronze Dancing Girl statue</span><br>
+            Harappa → <span class="correct">Cemetery / Granary</span><br>
+            Lothal → <span class="correct">Ivory scale (bone ruler)</span><br>
+            Banawali → <span class="correct">Terracotta (fired clay) toy/plough</span>
+          </div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          Terracotta Army reference (bonus fact): Teacher mentioned China's Han Dynasty used terracotta army figures for
+          burial rites — 4000 clay soldiers placed near the emperor's tomb. This shows terracotta (fired clay)
+          technology was widespread in ancient civilisations. Country with most pyramids: South Sudan (NOT Egypt!) →
+          Egypt is 2nd, China is 3rd.
+        </div>
+        <div class="callout callout-gem">
+          <div class="callout-header">💎 LIVE GEM — PYRAMIDS FACT</div>
+          Teacher: "World's most pyramids? Not Egypt! <b>South Sudan</b> has the most pyramids! Egypt is 2nd, China 3rd.
+          South Sudan was also home to early Mesopotamian-linked civilisation and is now a separate country. This is a
+          great current affairs + history combo question for TNPSC!"
+        </div>
+      </div>
+    </div>
+
+    <!-- Q38 -->
+    <div class="q-card has-pyq" data-diff="medium" data-gems="0" data-pyq="1">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q38</span>
+            <span class="diff-badge diff-medium">MEDIUM</span>
+            <span class="type-badge">Match the Following</span>
+            <span class="pyq-mini">🏆 PYQ</span>
+          </div>
+          <div class="q-text">Match Harappan sites (from Q35 format) with their excavators — final set:<br>Chanhu-daro –
+            Lothal – Banawali – Dholavira – Rakhigarhi</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text">
+            Chanhu-daro → <span class="correct">N.G. Majumdar</span><br>
+            Lothal → <span class="correct">S.R. Rao</span><br>
+            Banawali → <span class="correct">R.S. Bisht</span><br>
+            Dholavira → <span class="correct">J.P. Joshi</span><br>
+            Rakhigarhi → <span class="correct">Amendra Nath / A. Ghosh</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q46 -->
+    <div class="q-card" data-diff="easy" data-gems="0" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q46</span>
+            <span class="diff-badge diff-easy">EASY</span>
+            <span class="type-badge">Factual</span>
+          </div>
+          <div class="q-text">Dholavira is described as the oldest ___ city (fill in the blank from context of the
+            session).</div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text">Dholavira is described as the oldest <span class="correct">Harappan city</span> / one
+            of the oldest planned cities with a three-part division (citadel, middle town, lower town).</div>
+        </div>
+        <div class="explain-box">
+          <div class="explain-label">📌 EXPLANATION</div>
+          Dholavira is unique in having a THREE-PART city plan (not just two). It also had the world's first known
+          signboard (10 large Indus script letters found at its north gate). In 2021, it was declared a UNESCO World
+          Heritage Site.
+        </div>
+        <div class="callout callout-tip">
+          <div class="callout-header">💡 TIP — 2021 UNESCO</div>
+          Dholavira was inscribed as a UNESCO World Heritage Site in 2021. This is a high-frequency current affairs +
+          history question for TNPSC 2025–26.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q50 -->
+    <div class="q-card" data-diff="easy" data-gems="0" data-pyq="0">
+      <div class="q-header" onclick="toggleCard(this)">
+        <div>
+          <div class="q-meta">
+            <span class="q-num">Q50</span>
+            <span class="diff-badge diff-easy">EASY</span>
+            <span class="type-badge">Factual</span>
+          </div>
+          <div class="q-text">Which Indus Valley Civilisation site is considered the PORT city of the civilisation?
+          </div>
+        </div>
+        <!-- <div class="q-header-right">
+          <button class="q-toggle-btn">Show Answer &amp; Details</button>
+        </div> -->
+      </div>
+      <div class="q-body">
+        <div class="answer-box">
+          <div class="answer-label">✅ ANSWER</div>
+          <div class="answer-text"><span class="correct">Lothal</span> — the port city of the Indus Valley Civilisation.
+            It had the world's earliest man-made dockyard and conducted overseas trade with Mesopotamia.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ TOPIC SUMMARY CARD ═══════════════════════════════════════ -->
+    <div id="sec-summary">
+      <div class="sec-header">
+        <h2>📋 Session Summary</h2>
+        <div class="sec-line"></div>
+      </div>
+      <div class="summary-card">
+        <div class="section-title">10 Key Takeaways From This Session</div>
+        <ul class="summary-list">
+          <li>Harappa (Pakistan Punjab) &amp; Mohenjo-daro (Pakistan Sindh) are NOT in India — both in Pakistan. Indian
+            sites: Lothal/Dholavira (Gujarat), Kalibangan (Rajasthan), Rupar &amp; Rakhigarhi (Haryana).</li>
+          <li>Mohenjo-daro = "Mound of the Dead" (Sindhi) = Indus River. Lothal = "Place of the Dead" (Gujarati) =
+            Bhogavo River. Harappa = Ravi River. Kalibangan = Ghaggar.</li>
+          <li>Excavators: Charles Masson (first visitor 1826) → Alexander Cunningham (first recorded antiquities) → R.D.
+            Banerji (major excavation) → Sir John Marshall (supervision). Mohenjo-daro: Mortimer Wheeler. Harappa: Daya
+            Ram Sahni.</li>
+          <li>6 major cities + 200 villages = the Harappan Civilisation structure. Not all sites were urban — statement
+            "all sites were urban" is FALSE.</li>
+          <li>Pashupati Seal (Mohenjo-daro): 4 animals = Elephant + Tiger + Rhinoceros + Buffalo. This is proto-Shiva.
+          </li>
+          <li>Harappans did NOT know: (1) Horse, (2) Iron. Bronze Age civilisation. Also did NOT use metal coins (barter
+            system).</li>
+          <li>Lothal: only site with man-made dockyard, Gulf of Cambay, ivory scale, carnelian bead-making. Chanhu-daro:
+            only site WITHOUT a citadel.</li>
+          <li>Dholavira (Khadir Island, Rann of Kutch, Gujarat): unique 3-part city, world's first signboard, UNESCO
+            World Heritage 2021.</li>
+          <li>Indus script: undeciphered pictographic (सिधु script). Tamil Nadu CM offered $1 million prize for
+            decipherment. ~400 signs identified, boustrophedon direction.</li>
+          <li>Decline cause (primary): Floods. Other factors: climate change, tectonic activity. Aryan invasion theory
+            is outdated/discredited for modern TNPSC.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ 2026 PREDICTIONS ═══════════════════════════════════════ -->
+    <div id="sec-predict">
+      <div class="sec-header">
+        <h2>🎯 2026 Exam Predictions</h2>
+        <div class="sec-line"></div>
+        <div class="sec-badge">High Probability</div>
+      </div>
+      <div class="predict-card">
+        <div class="section-title">Top 5 Questions Likely to Appear in TNPSC 2026</div>
+        <div class="pred-item">
+          <span class="pred-num">PRED 1</span>
+          <div class="pred-text">
+            <div class="pred-q">Which Harappan site was added to UNESCO World Heritage List in 2021?</div>
+            <div class="pred-a">→ Dholavira (Gujarat, India)</div>
+          </div>
+        </div>
+        <div class="pred-item">
+          <span class="pred-num">PRED 2</span>
+          <div class="pred-text">
+            <div class="pred-q">Match the Harappan sites with their associated rivers — especially Lothal–Bhogavo,
+              Kalibangan–Ghaggar, Harappa–Ravi, Mohenjo-daro–Indus.</div>
+            <div class="pred-a">→ Full match answer as tabulated in Q5</div>
+          </div>
+        </div>
+        <div class="pred-item">
+          <span class="pred-num">PRED 3</span>
+          <div class="pred-text">
+            <div class="pred-q">Which country in the world has the highest number of pyramids?</div>
+            <div class="pred-a">→ South Sudan (NOT Egypt)</div>
+          </div>
+        </div>
+        <div class="pred-item">
+          <span class="pred-num">PRED 4</span>
+          <div class="pred-text">
+            <div class="pred-q">Which crop was FIRST cultivated by the Harappan people and later exported to Greece? /
+              Which crop was NOT cultivated?</div>
+            <div class="pred-a">→ First cotton cultivation (Cotton = Sindon). NOT cultivated = Sugarcane.</div>
+          </div>
+        </div>
+        <div class="pred-item">
+          <span class="pred-num">PRED 5</span>
+          <div class="pred-text">
+            <div class="pred-q">Match Harappan sites with their excavators — Chanhu-daro, Lothal, Dholavira, Rakhigarhi.
+            </div>
+            <div class="pred-a">→ Chanhu-daro=Majumdar, Lothal=S.R.Rao, Dholavira=J.P.Joshi, Rakhigarhi=A.Ghosh</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ FLASHCARD TABLE ═══════════════════════════════════════ -->
+    <div id="sec-flash">
+      <div class="sec-header">
+        <h2>⚡ Quick Flashcard Table</h2>
+        <div class="sec-line"></div>
+        <div class="sec-badge">Rapid Revision</div>
+      </div>
+      <table class="flash-table">
+        <thead>
+          <tr>
+            <th>Q#</th>
+            <th>Question (Short)</th>
+            <th>Answer</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Q01</td>
+            <td>Harappan sites NOT in India</td>
+            <td>Harappa &amp; Mohenjo-daro (both Pakistan)</td>
+          </tr>
+          <tr>
+            <td>Q02</td>
+            <td>Dholavira location</td>
+            <td>Khadir Island, Rann of Kutch, Gujarat</td>
+          </tr>
+          <tr>
+            <td>Q03</td>
+            <td>False statement about Harappan sites</td>
+            <td>"All sites were urban" — FALSE (200 villages + 6 cities)</td>
+          </tr>
+          <tr>
+            <td>Q04</td>
+            <td>Mohenjo-daro excavator</td>
+            <td>Mortimer Wheeler</td>
+          </tr>
+          <tr>
+            <td>Q05</td>
+            <td>Lothal's river</td>
+            <td>Bhogavo (tributary of Sabarmati)</td>
+          </tr>
+          <tr>
+            <td>Q05</td>
+            <td>Kalibangan's river</td>
+            <td>Ghaggar (Hakra)</td>
+          </tr>
+          <tr>
+            <td>Q05</td>
+            <td>Harappa's river</td>
+            <td>Ravi</td>
+          </tr>
+          <tr>
+            <td>Q05</td>
+            <td>Mohenjo-daro's river</td>
+            <td>Indus (Sindhu)</td>
+          </tr>
+          <tr>
+            <td>Q05</td>
+            <td>Rupar's river</td>
+            <td>Sutlej</td>
+          </tr>
+          <tr>
+            <td>Q06</td>
+            <td>Were Harappans cremated?</td>
+            <td>YES — cremation was practiced</td>
+          </tr>
+          <tr>
+            <td>Q08</td>
+            <td>Harappan pottery type</td>
+            <td>Polished red ware with black paint</td>
+          </tr>
+          <tr>
+            <td>Q09</td>
+            <td>4 animals on Pashupati seal</td>
+            <td>Elephant, Tiger, Rhinoceros, Buffalo</td>
+          </tr>
+          <tr>
+            <td>Q10</td>
+            <td>Animal unknown to Harappans</td>
+            <td>Horse</td>
+          </tr>
+          <tr>
+            <td>Q11</td>
+            <td>Proof of Harappa-Mesopotamia trade</td>
+            <td>Cuneiform tablets</td>
+          </tr>
+          <tr>
+            <td>Q12</td>
+            <td>Stone for Harappan blades</td>
+            <td>Rohri chert</td>
+          </tr>
+          <tr>
+            <td>Q14</td>
+            <td>Dancing Girl statue site</td>
+            <td>Mohenjo-daro</td>
+          </tr>
+          <tr>
+            <td>Q15</td>
+            <td>False about Lothal</td>
+            <td>Wrong dock dimensions in statement</td>
+          </tr>
+          <tr>
+            <td>Q16</td>
+            <td>Animals on Harappan seals</td>
+            <td>Water buffalo, elephant, tiger, camel (All)</td>
+          </tr>
+          <tr>
+            <td>Q17</td>
+            <td>Highest sacred tree (Harappan)</td>
+            <td>Peepal tree (sacred fig)</td>
+          </tr>
+          <tr>
+            <td>Q18</td>
+            <td>Harappan burial site name</td>
+            <td>Cemetery R37</td>
+          </tr>
+          <tr>
+            <td>Q19</td>
+            <td>False about Harappan Civilisation</td>
+            <td>They knew iron — FALSE (Bronze Age)</td>
+          </tr>
+          <tr>
+            <td>Q20</td>
+            <td>Assertion-Reason: no metal coins</td>
+            <td>Both true; R explains A</td>
+          </tr>
+          <tr>
+            <td>Q21</td>
+            <td>City built on raised platform</td>
+            <td>Mohenjo-daro</td>
+          </tr>
+          <tr>
+            <td>Q22</td>
+            <td>Metal unknown to Harappans</td>
+            <td>Iron</td>
+          </tr>
+          <tr>
+            <td>Q24</td>
+            <td>Meaning of "Loth" in Lothal</td>
+            <td>Dead/Death (Mound of the Dead)</td>
+          </tr>
+          <tr>
+            <td>Q25</td>
+            <td>First visitor to Harappa (1826)</td>
+            <td>Charles Masson</td>
+          </tr>
+          <tr>
+            <td>Q26</td>
+            <td>First recorder of Harappa antiquities</td>
+            <td>Alexander Cunningham</td>
+          </tr>
+          <tr>
+            <td>Q27</td>
+            <td>Who directed excavations</td>
+            <td>Sir John Marshall</td>
+          </tr>
+          <tr>
+            <td>Q30</td>
+            <td>Harappan outpost for Afghan trade</td>
+            <td>Shortugai</td>
+          </tr>
+          <tr>
+            <td>Q31</td>
+            <td>Kalibangan's river</td>
+            <td>Ghaggar</td>
+          </tr>
+          <tr>
+            <td>Q34</td>
+            <td>Harappa's district</td>
+            <td>Montgomery District, Pakistan</td>
+          </tr>
+          <tr>
+            <td>Q39</td>
+            <td>First DG of ASI (1861)</td>
+            <td>Alexander Cunningham</td>
+          </tr>
+          <tr>
+            <td>Q40</td>
+            <td>Crop NOT cultivated by Harappans</td>
+            <td>Sugarcane</td>
+          </tr>
+          <tr>
+            <td>Q41</td>
+            <td>Only site with artificial dock</td>
+            <td>Lothal</td>
+          </tr>
+          <tr>
+            <td>Q42</td>
+            <td>Only site WITHOUT citadel</td>
+            <td>Chanhu-daro</td>
+          </tr>
+          <tr>
+            <td>Q44</td>
+            <td>Primary cause of Harappan decline</td>
+            <td>Floods</td>
+          </tr>
+          <tr>
+            <td>Q45</td>
+            <td>Primary occupation of Harappans</td>
+            <td>Agriculture</td>
+          </tr>
+          <tr>
+            <td>Q46</td>
+            <td>UNESCO WHS 2021 (Harappan)</td>
+            <td>Dholavira</td>
+          </tr>
+          <tr>
+            <td>Q50</td>
+            <td>Port city of Indus Valley</td>
+            <td>Lothal</td>
+          </tr>
+          <tr>
+            <td>BONUS</td>
+            <td>Country with most pyramids</td>
+            <td>South Sudan</td>
+          </tr>
+          <tr>
+            <td>BONUS</td>
+            <td>Cotton called in Greek</td>
+            <td>Sindon (from Sindhu)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ═══════════════════════════════════════ MASTER CHEAT CARD ═══════════════════════════════════════ -->
+    <div id="sec-cheat">
+      <div class="sec-header">
+        <h2>🃏 Master Cheat Card</h2>
+        <div class="sec-line"></div>
+        <div class="sec-badge">All Key Facts</div>
+      </div>
+      <table class="cheat-table">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Key Fact</th>
+            <th>Value / Answer</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="cheat-key">Sites in Pakistan</td>
+            <td class="cheat-val">Not in India</td>
+            <td class="cheat-val">Harappa (Punjab), Mohenjo-daro (Sindh)</td>
+          </tr>
+          <tr>
+            <td class="cheat-key">Dholavira</td>
+            <td class="cheat-val">Location</td>
+            <td class="cheat-val">Khadir Island, Rann of Kutch, Gujarat | UNESCO 2021</td>
+          </tr>
+          <tr>
+            <td class="cheat-key">Lothal</td>
+            <td class="cheat-val">Location + Feature</td>
+            <td class="cheat-val">Gulf of Cambay, Gujarat | World's first dockyard | River: Bhogavo</td>
+          </tr>
+          <tr>
+            <td class="cheat-key">Kalibangan</td>
+            <td class="cheat-val">Location + River</td>
+            <td class="cheat-val">Rajasthan | River: Ghaggar (Hakra)</td>
+          </tr>
+          <tr>
+            <td class="cheat-key">Rivers: MUST KNOW</td>
+            <td class="cheat-val">3 key pairs</td>
+            <td class="cheat-val">Mohenjo-daro=Indus | Harappa=Ravi | Rupar=Sutlej</td>
+          </tr>
+          <tr>
+            <td class="cheat-key">Scale: Cities:Villages</td>
+            <td class="cheat-val">Count</td>
+            <td class="cheat-val">6 cities + 200 villages</td>
+          </tr>
+          <tr>
+            <td class="cheat-key">Group size</td>
+            <td class="cheat-val">Social unit</td>
+            <td class="cheat-val">30–40 people per group</td>
+          </tr>
+          <tr>
+            <td class="cheat-key">Pashupati Seal</td>
+            <td class="cheat-val">4 animals</td>
+            <td class="cheat-val">Elephant + Tiger + Rhinoceros + Buffalo</td>
+          </tr>
+          <tr>
+            <td class="cheat-key">Unknown to Harappans</td>
+            <td class="cheat-val">2 things</td>
+            <td class="cheat-val">HORSE (animal) + IRON (metal)</td>
+          </tr>
+          <tr>
+            <td class="cheat-key">Unknown crop</td>
+            <td class="cheat-val">1 crop</td>
+            <td class="cheat-val">Sugarcane (NOT cultivated by Harappans)</td>
+          </tr>
+          <tr>
+            <td class="cheat-key">First visitors</td>
+            <td class="cheat-val">Chronology</td>
+            <td class="cheat-val">Masson 1826 → Cunningham (recorded) → Banerji (excavated) → Marshall (supervised)</td>
+          </tr>
+          <tr>
+            <td class="cheat-key">Mohenjo-daro excavator</td>
+            <td class="cheat-val">Name</td>
+            <td class="cheat-val">Mortimer Wheeler ("M-M" memory: Mohenjo=Mortimer)</td>
+          </tr>
+          <tr>
+            <td class="cheat-key">Harappa excavator</td>
+            <td class="cheat-val">Name</td>
+            <td class="cheat-val">Daya Ram Sahni (initial) / R.D. Banerji</td>
+          </tr>
+          <tr>
+            <td class="cheat-key">Lothal excavator</td>
+            <td class="cheat-val">Name</td>
+            <td class="cheat-val">S.R. Rao</td>
+          </tr>
+          <tr>
+            <td class="cheat-key">Dholavira excavator</td>
+            <td class="cheat-val">Name</td>
+            <td class="cheat-val">J.P. Joshi</td>
+          </tr>
+          <tr>
+            <td class="cheat-key">ASI founding</td>
+            <td class="cheat-val">Year + Founder</td>
+            <td class="cheat-val">1861 | Alexander Cunningham (Father of Indian Archaeology)</td>
+          </tr>
+          <tr>
+            <td class="cheat-key">Lothal meaning</td>
+            <td class="cheat-val">Gujarati</td>
+            <td class="cheat-val">Loth=Dead + Al=Place = "Mound/Place of the Dead"</td>
+          </tr>
+          <tr>
+            <td class="cheat-key">Mohenjo-daro meaning</td>
+            <td class="cheat-val">Sindhi</td>
+            <td class="cheat-val">"Mound of the Dead"</td>
+          </tr>
+          <tr>
+            <td class="cheat-key">Cemetery R37</td>
+            <td class="cheat-val">Site</td>
+            <td class="cheat-val">Harappan burial ground at Harappa city</td>
+          </tr>
+          <tr>
+            <td class="cheat-key">Chanhu-daro</td>
+            <td class="cheat-val">Unique feature</td>
+            <td class="cheat-val">ONLY Harappan site WITHOUT a citadel</td>
+          </tr>
+          <tr>
+            <td class="cheat-key">Indus script</td>
+            <td class="cheat-val">Status</td>
+            <td class="cheat-val">Undeciphered | Pictographic | ~400 signs | TN CM prize: $1M</td>
+          </tr>
+          <tr>
+            <td class="cheat-key">Decline cause</td>
+            <td class="cheat-val">Primary</td>
+            <td class="cheat-val">Floods (then: climate change, tectonic, Aryan invasion — discredited)</td>
+          </tr>
+          <tr>
+            <td class="cheat-key">Cotton (Greek name)</td>
+            <td class="cheat-val">From Sindhu</td>
+            <td class="cheat-val">Sindon — Greeks named cotton after Sindh/Indus Valley</td>
+          </tr>
+          <tr>
+            <td class="cheat-key">Most Pyramids</td>
+            <td class="cheat-val">Country</td>
+            <td class="cheat-val">South Sudan (1st) → Egypt (2nd) → China (3rd)</td>
+          </tr>
+          <tr>
+            <td class="cheat-key">Shortugai</td>
+            <td class="cheat-val">Location + Role</td>
+            <td class="cheat-val">Afghanistan | Northernmost Harappan outpost | Afghan trade guard post</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div><!-- end .content -->
+
+  <!-- ═══════════════════════════════════════ FOOTER ═══════════════════════════════════════ -->
+  <footer>
+    <p>📚 <span>QA_History_IndusValleyCivilization_LiveRevision.html</span> · TNPSC Group 1 / 2 / 4 / VAO · Harappan
+      Civilisation</p>
+    <p style="margin-top:8px;">Compiled from YouTube Live Session · Tamil → English · <span>All 50 Questions with
+        Show/Hide Toggle</span></p>
+    <p style="margin-top:8px;color:#555;">Designed for exam aspirants — Study smart, revise often 🎯</p>
+  </footer>
+
+  <script>
+    // ── TOGGLE: Show / Hide Answer & Details ──
+    /* function toggleCard(headerEl) {
+       const card = headerEl.closest('.q-card');
+       const body = card.querySelector('.q-body');
+       const btn = headerEl.querySelector('.q-toggle-btn');
+       const isOpen = body.classList.contains('open');
+       if (isOpen) {
+         body.classList.remove('open');
+         btn.textContent = 'Show Answer & Details';
+         btn.style.background = '';
+         btn.style.color = '';
+       } else {
+         body.classList.add('open');
+         btn.textContent = 'Hide Answer';
+         btn.style.background = 'var(--gold)';
+         btn.style.color = '#000';
+       }
+     }*/
+
+    // Inject toggle button before every .q-body and wrap it
+    document.querySelectorAll('.q-body').forEach(function (body) {
+      // Build the toggle button
+      const btn = document.createElement('button');
+      btn.className = 'q-toggle-btn';
+      btn.setAttribute('aria-expanded', 'false');
+      btn.innerHTML = '<span class="q-toggle-icon">▾</span><span>Show Answer &amp; Details</span>';
+
+      // Insert button before body inside the card
+      body.parentNode.insertBefore(btn, body);
+
+      // Click handler
+      btn.addEventListener('click', function () {
+        const isOpen = body.classList.contains('open');
+        if (isOpen) {
+          body.classList.remove('open');
+          btn.setAttribute('aria-expanded', 'false');
+          btn.querySelector('span:last-child').textContent = 'Show Answer & Details';
+        } else {
+          body.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+          btn.querySelector('span:last-child').textContent = 'Hide Answer & Details';
+        }
+      });
+    });
+
+    function toggleAll(btn) {
+      const bodies = document.querySelectorAll('.q-body');
+      const allOpen = [...bodies].every(b => b.classList.contains('open'));
+      bodies.forEach(b => allOpen ? b.classList.remove('open') : b.classList.add('open'));
+      document.querySelectorAll('.q-toggle-btn').forEach(tb => {
+        const open = tb.nextElementSibling && tb.nextElementSibling.classList.contains('open');
+        tb.setAttribute('aria-expanded', open ? 'true' : 'false');
+        tb.querySelector('span:last-child').textContent = open ? 'Hide Answer & Details' : 'Show Answer & Details';
+      });
+      btn.textContent = allOpen ? 'Expand All' : 'Collapse All';
+    }
+
+    // ── FILTER CARDS ──
+    function filterCards(type) {
+      // Update active button
+      document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('active'));
+      document.querySelector(`.fbtn[data-f="${type}"]`).classList.add('active');
+
+      const cards = document.querySelectorAll('.q-card');
+      cards.forEach(card => {
+        let show = false;
+        if (type === 'all') {
+          show = true;
+        } else if (type === 'easy') {
+          show = card.dataset.diff === 'easy';
+        } else if (type === 'medium') {
+          show = card.dataset.diff === 'medium';
+        } else if (type === 'hard') {
+          show = card.dataset.diff === 'hard';
+        } else if (type === 'gems') {
+          show = card.dataset.gems === '1';
+        } else if (type === 'pyq') {
+          show = card.dataset.pyq === '1';
+        }
+        card.classList.toggle('hidden', !show);
+      });
+    }
+  </script>
+</body>
+
+</html>
