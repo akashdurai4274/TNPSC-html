@@ -1,0 +1,3403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indus Valley Civilization — 150Q Master Practice Test | Arivoam TNPSC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0f14;
+  --surface: #12151e;
+  --surface2: #181c28;
+  --border: #21263a;
+  --border2: #2d3450;
+  --gold: #f5c842;
+  --gold-dim: #c9a52e;
+  --red: #e85555;
+  --green: #4ecb7a;
+  --blue: #5b9cf6;
+  --purple: #a78bfa;
+  --cyan: #22d3ee;
+  --orange: #fb923c;
+  --text: #e8eaf0;
+  --text-dim: #8892aa;
+  --font-head: 'Syne', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --font-body: 'Lora', serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Animated grid background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(245,200,66,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245,200,66,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: gridShift 20s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes gridShift {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 60px; }
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+@keyframes barGrow {
+  from { width: 0; }
+  to { width: var(--target-w); }
+}
+
+/* Layout */
+.app-shell {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* SIDEBAR */
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 24px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border2) transparent;
+}
+
+.sidebar-logo {
+  padding: 0 20px 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+
+.sidebar-logo .brand {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--gold);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.sidebar-logo .sub {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+
+.toc-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-dim);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0 20px 8px;
+}
+
+.toc-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-left: 2px solid transparent;
+  text-decoration: none;
+}
+
+.toc-item:hover, .toc-item.active {
+  background: rgba(245,200,66,0.06);
+  border-left-color: var(--gold);
+}
+
+.toc-item .sec-num {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--gold);
+  min-width: 22px;
+}
+
+.toc-item .sec-name {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text);
+  line-height: 1.4;
+  flex: 1;
+}
+
+.toc-item .sec-badge {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  background: var(--border2);
+  color: var(--text-dim);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.toc-item .sec-badge.done {
+  background: rgba(78,203,122,0.2);
+  color: var(--green);
+}
+
+.sidebar-actions {
+  padding: 16px 20px 0;
+  border-top: 1px solid var(--border);
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.btn-sidebar {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.btn-sidebar:hover { border-color: var(--gold); color: var(--gold); }
+.btn-sidebar.primary { background: var(--gold); color: #0d0f14; border-color: var(--gold); font-weight: 600; }
+.btn-sidebar.primary:hover { background: var(--gold-dim); }
+
+/* MAIN CONTENT */
+.main {
+  overflow: auto;
+  padding: 0;
+}
+
+/* HERO */
+.hero {
+  padding: 60px 48px 48px;
+  border-bottom: 1px solid var(--border);
+  animation: fadeDown 0.8s ease both;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(245,200,66,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--green);
+  border-radius: 50%;
+  animation: pulse 2s ease infinite;
+}
+
+.live-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--green);
+  letter-spacing: 0.1em;
+}
+
+.hero-title {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: clamp(24px, 3vw, 42px);
+  line-height: 1.1;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.hero-subtitle {
+  font-family: var(--font-head);
+  font-size: clamp(14px, 1.5vw, 18px);
+  font-weight: 600;
+  background: linear-gradient(120deg, var(--gold), #fff8dc, var(--gold), var(--orange), var(--gold));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+  margin-bottom: 28px;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-num {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 28px;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* PROGRESS BAR */
+.progress-bar-wrap {
+  padding: 16px 48px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.progress-track {
+  flex: 1;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--gold);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+.progress-text {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.progress-text span { color: var(--gold); }
+
+/* QUESTION PALETTE */
+.palette-wrap {
+  padding: 4px 16px 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.palette-q {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  background: var(--border);
+  border: 1px solid var(--border2);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.palette-q.answered { background: var(--gold); color: #0d0f14; border-color: var(--gold); }
+.palette-q.flagged { border-color: var(--orange); color: var(--orange); }
+.palette-q.correct { background: var(--green); color: #0d0f14; border-color: var(--green); }
+.palette-q.wrong { background: var(--red); color: #fff; border-color: var(--red); }
+
+/* SECTION HEADERS */
+.section-header {
+  padding: 40px 48px 24px;
+  animation: fadeUp 0.5s ease both;
+}
+
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.section-tag .tag-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--card-accent, var(--gold));
+}
+
+.section-title {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--text);
+}
+
+.section-title span {
+  color: var(--card-accent, var(--gold));
+}
+
+/* QUESTION CARDS */
+.questions-grid {
+  padding: 0 48px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.q-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  animation: fadeUp 0.4s ease both;
+  transition: border-color 0.2s;
+  position: relative;
+}
+
+.q-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--card-accent, var(--gold));
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.q-card:hover::before { opacity: 1; }
+.q-card:hover { border-color: var(--border2); }
+
+.q-card-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface2);
+  flex-wrap: wrap;
+}
+
+.q-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.q-type-badge {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--border2);
+  color: var(--text-dim);
+  letter-spacing: 0.05em;
+}
+
+.callout-badge {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.callout-badge.critical { background: rgba(232,85,85,0.25); color: var(--red); }
+.callout-badge.trap { background: rgba(245,200,66,0.25); color: var(--gold); }
+.callout-badge.tip { background: rgba(78,203,122,0.25); color: var(--green); }
+.callout-badge.pyq { background: rgba(91,156,246,0.25); color: var(--blue); }
+.callout-badge.gem { background: rgba(167,139,250,0.25); color: var(--purple); }
+.callout-badge.expected { background: rgba(34,211,238,0.25); color: var(--cyan); }
+
+.flag-btn {
+  margin-left: auto;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-dim);
+  font-size: 14px;
+  transition: color 0.2s;
+  padding: 4px;
+}
+
+.flag-btn:hover, .flag-btn.flagged { color: var(--orange); }
+
+.q-body {
+  padding: 20px;
+}
+
+.q-stem {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.q-stem .stmt-list {
+  margin: 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.q-stem .stmt-item {
+  padding: 8px 12px;
+  background: var(--surface2);
+  border-radius: 6px;
+  border-left: 2px solid var(--border2);
+  font-size: 14px;
+}
+
+.q-stem .assert-box {
+  margin: 8px 0;
+  padding: 10px 14px;
+  background: var(--surface2);
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.q-stem .assert-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+}
+
+.match-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 12px 0;
+}
+
+.match-col-head {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 4px;
+}
+
+.match-item {
+  padding: 8px 10px;
+  background: var(--surface2);
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  border: 1px solid var(--border);
+}
+
+/* Options */
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.option-btn {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+  width: 100%;
+  color: var(--text);
+}
+
+.option-btn:hover {
+  border-color: var(--gold);
+  background: rgba(245,200,66,0.05);
+}
+
+.option-btn.selected {
+  border-color: var(--gold);
+  background: rgba(245,200,66,0.1);
+}
+
+.option-btn.correct-ans {
+  border-color: var(--green);
+  background: rgba(78,203,122,0.1);
+}
+
+.option-btn.wrong-ans {
+  border-color: var(--red);
+  background: rgba(232,85,85,0.1);
+}
+
+.opt-letter {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--gold);
+  font-weight: 600;
+  min-width: 20px;
+  padding-top: 2px;
+}
+
+.opt-text {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+  flex: 1;
+}
+
+/* Explanation box */
+.explanation-box {
+  margin-top: 16px;
+  padding: 16px;
+  background: var(--bg);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  display: none;
+}
+
+.explanation-box.show { display: block; animation: fadeUp 0.3s ease; }
+
+.expl-text {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.callout-box {
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.callout-box.trap { background: rgba(245,200,66,0.08); border: 1px solid rgba(245,200,66,0.2); }
+.callout-box.gem { background: rgba(167,139,250,0.08); border: 1px solid rgba(167,139,250,0.2); }
+.callout-box.pyq { background: rgba(91,156,246,0.08); border: 1px solid rgba(91,156,246,0.2); }
+.callout-box.expected { background: rgba(34,211,238,0.08); border: 1px solid rgba(34,211,238,0.2); }
+
+.callout-box-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  margin-bottom: 4px;
+}
+
+.callout-box.trap .callout-box-label { color: var(--gold); }
+.callout-box.gem .callout-box-label { color: var(--purple); }
+.callout-box.pyq .callout-box-label { color: var(--blue); }
+.callout-box.expected .callout-box-label { color: var(--cyan); }
+
+/* SUBMIT AREA */
+.submit-area {
+  padding: 40px 48px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn-submit {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 16px;
+  padding: 16px 40px;
+  background: var(--gold);
+  color: #0d0f14;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.02em;
+}
+
+.btn-submit:hover { background: var(--gold-dim); transform: translateY(-1px); }
+
+.btn-secondary {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  padding: 16px 24px;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+/* MODAL */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  backdrop-filter: blur(4px);
+}
+
+.modal-overlay.hidden { display: none; }
+
+.modal-box {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  padding: 36px;
+  max-width: 480px;
+  width: 100%;
+  animation: fadeUp 0.3s ease;
+}
+
+.modal-title {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.modal-body {
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--text-dim);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* RESULTS DASHBOARD */
+#results-view {
+  padding: 48px;
+  display: none;
+}
+
+#results-view.show { display: block; animation: fadeUp 0.5s ease; }
+
+.score-card {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  padding: 40px;
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.score-num {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 72px;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.score-denom {
+  font-size: 40px;
+  color: var(--text-dim);
+}
+
+.score-pct {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  color: var(--text-dim);
+  margin-bottom: 16px;
+}
+
+.grade-badge {
+  display: inline-block;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 16px;
+  padding: 8px 24px;
+  border-radius: 30px;
+  margin-bottom: 12px;
+}
+
+.grade-badge.excellent { background: rgba(78,203,122,0.2); color: var(--green); border: 1px solid var(--green); }
+.grade-badge.good { background: rgba(91,156,246,0.2); color: var(--blue); border: 1px solid var(--blue); }
+.grade-badge.average { background: rgba(245,200,66,0.2); color: var(--gold); border: 1px solid var(--gold); }
+.grade-badge.needs-work { background: rgba(232,85,85,0.2); color: var(--red); border: 1px solid var(--red); }
+
+.results-section-title {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--text);
+  margin-bottom: 16px;
+  margin-top: 32px;
+}
+
+.section-bar-item {
+  margin-bottom: 16px;
+}
+
+.section-bar-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.section-bar-name {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text);
+}
+
+.section-bar-score {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.section-bar-track {
+  height: 8px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.section-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  animation: barGrow 1s ease both;
+}
+
+.weak-areas {
+  background: rgba(232,85,85,0.06);
+  border: 1px solid rgba(232,85,85,0.2);
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 16px;
+}
+
+.weak-title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--red);
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+}
+
+.weak-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-body);
+  font-size: 14px;
+}
+
+.weak-item:last-child { border-bottom: none; }
+
+/* REVIEW MODE */
+.review-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 20px 48px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.filter-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-btn:hover, .filter-btn.active {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(245,200,66,0.08);
+}
+
+/* FOOTER */
+footer {
+  padding: 32px 48px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.footer-text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 0.08em;
+}
+
+.footer-text span { color: var(--gold); }
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .app-shell { grid-template-columns: 1fr; }
+  .sidebar { position: fixed; left: -260px; z-index: 50; transition: left 0.3s; }
+  .sidebar.open { left: 0; }
+  .hero, .questions-grid, .section-header, .submit-area { padding-left: 20px; padding-right: 20px; }
+  .progress-bar-wrap, .review-filters { padding-left: 20px; padding-right: 20px; }
+  #results-view { padding: 20px; }
+  footer { padding: 24px 20px; }
+  .hero-stats { gap: 20px; }
+  .stat-num { font-size: 22px; }
+  .mobile-menu-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 60;
+    background: var(--gold);
+    color: #0d0f14;
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-menu-btn { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="app-shell">
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="brand">Arivoam</div>
+    <div class="sub">TNPSC Group 1 · 2026 Series</div>
+  </div>
+  <div class="toc-label">Sections</div>
+  <a class="toc-item active" onclick="jumpSection(0)" href="#sec-0" style="--card-accent:#f5c842">
+    <span class="sec-num">§1</span>
+    <span class="sec-name">Discovery & Chronology</span>
+    <span class="sec-badge" id="badge-0">15Q</span>
+  </a>
+  <a class="toc-item" onclick="jumpSection(1)" href="#sec-1" style="--card-accent:#5b9cf6">
+    <span class="sec-num">§2</span>
+    <span class="sec-name">Major Sites</span>
+    <span class="sec-badge" id="badge-1">20Q</span>
+  </a>
+  <a class="toc-item" onclick="jumpSection(2)" href="#sec-2" style="--card-accent:#4ecb7a">
+    <span class="sec-num">§3</span>
+    <span class="sec-name">Urban Planning</span>
+    <span class="sec-badge" id="badge-2">15Q</span>
+  </a>
+  <a class="toc-item" onclick="jumpSection(3)" href="#sec-3" style="--card-accent:#fb923c">
+    <span class="sec-num">§4</span>
+    <span class="sec-name">Economy & Trade</span>
+    <span class="sec-badge" id="badge-3">20Q</span>
+  </a>
+  <a class="toc-item" onclick="jumpSection(4)" href="#sec-4" style="--card-accent:#a78bfa">
+    <span class="sec-num">§5</span>
+    <span class="sec-name">Social Life & Religion</span>
+    <span class="sec-badge" id="badge-4">20Q</span>
+  </a>
+  <a class="toc-item" onclick="jumpSection(5)" href="#sec-5" style="--card-accent:#22d3ee">
+    <span class="sec-num">§6</span>
+    <span class="sec-name">Script, Seals & Weights</span>
+    <span class="sec-badge" id="badge-5">15Q</span>
+  </a>
+  <a class="toc-item" onclick="jumpSection(6)" href="#sec-6" style="--card-accent:#e85555">
+    <span class="sec-num">§7</span>
+    <span class="sec-name">Decline & Theories</span>
+    <span class="sec-badge" id="badge-6">15Q</span>
+  </a>
+  <a class="toc-item" onclick="jumpSection(7)" href="#sec-7" style="--card-accent:#fb923c">
+    <span class="sec-num">§8</span>
+    <span class="sec-name">Connections & Comparisons</span>
+    <span class="sec-badge" id="badge-7">30Q</span>
+  </a>
+  <div id="palette-section">
+    <div class="toc-label" style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border)">Palette</div>
+    <div class="palette-wrap" id="palette-wrap"></div>
+  </div>
+  <div class="sidebar-actions">
+    <button class="btn-sidebar primary" onclick="submitTest()">Submit Test</button>
+    <button class="btn-sidebar" onclick="resetTest()">⟳ Retake Test</button>
+    <button class="btn-sidebar" onclick="exportResults()">↓ Export Results</button>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main" id="main-content">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow">
+      <div class="live-dot"></div>
+      <span class="live-badge">LIVE PRACTICE TEST</span>
+    </div>
+    <h1 class="hero-title">Indus Valley Civilization<br>150Q Master Practice Test</h1>
+    <p class="hero-subtitle">TNPSC Group 1 / 2 / 4 · 2026 Crack Sheet Series · Arivoam</p>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">150</div>
+        <div class="stat-label">Questions</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">8</div>
+        <div class="stat-label">Sections</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">45+</div>
+        <div class="stat-label">PYQ 2015–2025</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">35+</div>
+        <div class="stat-label">Expected 2026</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Sources: SCERT+NCERT+Ref</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRESS BAR -->
+  <div class="progress-bar-wrap">
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+    <div class="progress-text"><span id="answered-count">0</span> / 150 Answered</div>
+  </div>
+
+  <!-- TEST VIEW -->
+  <div id="test-view">
+    <!-- Questions rendered by JS -->
+  </div>
+
+  <!-- SUBMIT AREA -->
+  <div class="submit-area" id="submit-area">
+    <button class="btn-submit" onclick="submitTest()">Submit Test →</button>
+    <button class="btn-secondary" onclick="resetTest()">⟳ Retake</button>
+    <button class="btn-secondary" onclick="exportResults()">↓ Export</button>
+  </div>
+
+  <!-- RESULTS VIEW -->
+  <div id="results-view">
+    <h2 style="font-family:var(--font-head);font-weight:800;font-size:28px;margin-bottom:32px;color:var(--text)">Results Dashboard</h2>
+    <div class="score-card">
+      <div class="score-num" id="final-score">0<span class="score-denom">/150</span></div>
+      <div class="score-pct" id="final-pct">0%</div>
+      <div class="grade-badge" id="grade-badge">Needs Work</div>
+      <div style="font-family:var(--font-mono);font-size:12px;color:var(--text-dim);margin-top:8px" id="time-taken"></div>
+    </div>
+    <div class="results-section-title">Section-wise Breakdown</div>
+    <div id="section-bars"></div>
+    <div class="results-section-title">Weak Areas</div>
+    <div class="weak-areas" id="weak-areas"></div>
+    <div style="display:flex;gap:12px;margin-top:32px;flex-wrap:wrap">
+      <button class="btn-submit" onclick="showReview()">Review Answers</button>
+      <button class="btn-secondary" onclick="resetTest()">Retake Test</button>
+      <button class="btn-secondary" onclick="practiceWeak()">Practice Weak Areas</button>
+    </div>
+  </div>
+
+  <!-- REVIEW VIEW -->
+  <div id="review-view" style="display:none">
+    <div class="review-filters">
+      <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-dim);align-self:center">FILTER:</span>
+      <button class="filter-btn active" onclick="filterReview('all',this)">All</button>
+      <button class="filter-btn" onclick="filterReview('correct',this)">✓ Correct</button>
+      <button class="filter-btn" onclick="filterReview('wrong',this)">✗ Wrong</button>
+      <button class="filter-btn" onclick="filterReview('flagged',this)">⚑ Flagged</button>
+      <button class="filter-btn" onclick="filterReview('pyq',this)">[PYQ]</button>
+      <button class="filter-btn" onclick="filterReview('expected',this)">[EXPECTED]</button>
+    </div>
+    <div id="review-questions" style="padding:24px 48px;display:flex;flex-direction:column;gap:20px"></div>
+    <div style="padding:24px 48px">
+      <button class="btn-submit" onclick="resetTest()">⟳ Retake Test</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p class="footer-text"><span>Arivoam</span> · Indus Valley Civilization · <span>TNPSC Group 1 / 2 / 4</span> · 2026 Crack Sheet Series</p>
+  </footer>
+
+</main>
+</div>
+
+<!-- SUBMIT MODAL -->
+<div class="modal-overlay hidden" id="submit-modal">
+  <div class="modal-box">
+    <div class="modal-title">Submit Test?</div>
+    <div class="modal-body" id="submit-modal-body">You have answered <strong id="modal-answered">0</strong> of 150 questions. Are you sure you want to submit?</div>
+    <div class="modal-actions">
+      <button class="btn-submit" onclick="confirmSubmit()">Yes, Submit</button>
+      <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- MOBILE MENU -->
+<button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
+
+<script>
+// ============================================================
+// DATA: 150 Questions
+// ============================================================
+const SECTIONS = [
+  { id: 0, name: "Discovery, Excavation & Chronology", color: "#f5c842", count: 15 },
+  { id: 1, name: "Major Sites & Their Unique Features", color: "#5b9cf6", count: 20 },
+  { id: 2, name: "Urban Planning & Architecture", color: "#4ecb7a", count: 15 },
+  { id: 3, name: "Economy, Trade & Crafts", color: "#fb923c", count: 20 },
+  { id: 4, name: "Social Life, Religion & Culture", color: "#a78bfa", count: 20 },
+  { id: 5, name: "Script, Seals & Weights", color: "#22d3ee", count: 15 },
+  { id: 6, name: "Decline & Theories", color: "#e85555", count: 15 },
+  { id: 7, name: "Connections, Comparisons & Revision", color: "#fb923c", count: 30 }
+];
+
+const QUESTIONS = [
+// ============================================================
+// SECTION 1: Discovery, Excavation & Chronology (Q1-Q15)
+// ============================================================
+{
+  id:1, sec:0, type:"MCQ",
+  badges:["trap","pyq"],
+  stem:"Who discovered Mohenjo-daro in 1922?",
+  opts:["Daya Ram Sahni","John Marshall","R.D. Banerji","Mortimer Wheeler"],
+  ans:2,
+  expl:"Mohenjo-daro was discovered by R.D. Banerji in 1922 while investigating a Buddhist stupa in Sindh. Harappa was separately discovered by Daya Ram Sahni in 1921. John Marshall was the Director-General of ASI who published the findings in 1924.",
+  trap:"Daya Ram Sahni → Harappa; R.D. Banerji → Mohenjo-daro — this pair is reversed in ~40% of student answers.",
+  pyq:"TNPSC Group 2 2019"
+},
+{
+  id:2, sec:0, type:"MCQ",
+  badges:["pyq"],
+  stem:"Harappa was first excavated in 1921 by:",
+  opts:["R.D. Banerji","Daya Ram Sahni","Ernest Mackay","John Marshall"],
+  ans:1,
+  expl:"Daya Ram Sahni excavated Harappa in 1921 under the direction of John Marshall, the then Director-General of the Archaeological Survey of India. This discovery, along with Mohenjo-daro in 1922, revealed the existence of the Indus Valley Civilization.",
+  pyq:"TNPSC Group 4 2018"
+},
+{
+  id:3, sec:0, type:"Statement",
+  badges:["expected"],
+  stem:"Which of the following statements about the Indus Valley Civilization are correct?\n(i) The civilization covered an area of approximately 1.5 million square kilometres.\n(ii) It was larger in extent than the contemporary civilizations of Mesopotamia and Egypt combined.\n(iii) Over 1500 Harappan sites have been discovered so far.\n(iv) All major sites are located only in present-day Pakistan.",
+  opts:["(i) and (ii) only","(i), (ii) and (iii) only","(ii) and (iv) only","All of the above"],
+  ans:1,
+  expl:"Statements (i), (ii), and (iii) are correct. The IVC covered ~1.5 million sq. km, surpassing Mesopotamia and Egypt combined, with over 1500 known sites. Statement (iv) is false — many major sites are in India (Lothal, Kalibangan, Dholavira, Rakhigarhi, Banawali).",
+  expected:true
+},
+{
+  id:4, sec:0, type:"Chronological",
+  badges:["pyq","trap"],
+  stem:"Arrange the following phases of the Harappan Civilization in correct chronological order:\n1. Early Harappan Phase\n2. Mature Harappan Phase\n3. Late Harappan Phase\n4. Post-Urban Phase",
+  opts:["1-2-3-4","2-1-3-4","1-3-2-4","2-3-1-4"],
+  ans:0,
+  expl:"The Harappan Civilization evolved through four phases: Early Harappan (3500–2600 BCE), Mature Harappan (2600–1900 BCE), Late Harappan (1900–1300 BCE), and Post-Urban phase. The Mature phase represents the peak of urban planning and trade.",
+  trap:"Many students confuse the Late and Post-Urban phases — Post-Urban follows Late Harappan as a decline/transitional period.",
+  pyq:"TNPSC Group 1 Prelims 2021"
+},
+{
+  id:5, sec:0, type:"MCQ",
+  badges:["gem"],
+  stem:"Who was the Director-General of the Archaeological Survey of India (ASI) when the Harappan civilization was officially announced to the world in 1924?",
+  opts:["Ernest Mackay","Mortimer Wheeler","John Marshall","R.D. Banerji"],
+  ans:2,
+  expl:"John Marshall was the Director-General of ASI (1902–1928) when the Harappan civilization was formally announced to the world in September 1924 through the 'Illustrated London News.' He co-ordinated both the Harappa and Mohenjo-daro excavations.",
+  gem:"Marshall's 1931 three-volume work 'Mohenjo-daro and the Indus Civilization' remains a foundational reference. He controversially identified the Pashupati Seal as a proto-Shiva, a claim still debated today."
+},
+{
+  id:6, sec:0, type:"MCQ",
+  badges:["pyq"],
+  stem:"The Mature Harappan phase is dated approximately to:",
+  opts:["4000–3500 BCE","3500–2600 BCE","2600–1900 BCE","1900–1300 BCE"],
+  ans:2,
+  expl:"The Mature Harappan phase (2600–1900 BCE) represents the zenith of the civilization, characterized by fully developed urban planning, standardized bricks, a functioning script, extensive trade networks, and the great cities of Mohenjo-daro and Harappa.",
+  pyq:"TNPSC Group 2 2020"
+},
+{
+  id:7, sec:0, type:"Assertion",
+  badges:["expected"],
+  stem:"Assertion (A): Radiocarbon dating has helped establish the chronology of the Harappan Civilization with greater precision.\nReason (R): Radiocarbon dating measures the decay of Carbon-14 in organic materials and gives absolute dates.",
+  opts:[
+    "Both A and R are true and R is the correct explanation of A",
+    "Both A and R are true but R is not the correct explanation of A",
+    "A is true but R is false",
+    "A is false but R is true"
+  ],
+  ans:0,
+  expl:"Both the assertion and reason are correct, and R explains A. Radiocarbon (C-14) dating of organic material like wood, charcoal, and seeds from Harappan sites has provided absolute dates, establishing the 2600–1900 BCE framework for the Mature phase, overriding earlier speculative chronologies.",
+  expected:true
+},
+{
+  id:8, sec:0, type:"MCQ",
+  badges:["gem","expected"],
+  stem:"The DNA study conducted at Rakhigarhi in 2019, led by Vasant Shinde, revealed that IVC people:",
+  opts:[
+    "Had significant steppe pastoralist ancestry similar to Vedic people",
+    "Were genetically identical to later Vedic populations",
+    "Had no steppe pastoralist ancestry and were genetically distinct",
+    "Migrated from Central Asia around 2500 BCE"
+  ],
+  ans:2,
+  expl:"The 2019 Rakhigarhi DNA study (Shinde et al., published in Cell) found that IVC individuals showed no steppe pastoralist ancestry, strongly suggesting that the Vedic people and Harappans were genetically distinct populations. This supports the theory that Indo-Aryan migration was separate from IVC.",
+  gem:"This study has major implications for the Aryan Migration debate — it suggests that the IVC was not ancestral to Vedic culture genetically, while cultural continuities (yoga posture, weights, pipal worship) may still exist through other channels.",
+  expected:true
+},
+{
+  id:9, sec:0, type:"Match",
+  badges:["pyq"],
+  stem:"Match the following archaeologists with their key contribution to Harappan studies:\nColumn I ↔ Column II\n1. Mortimer Wheeler\n2. B.B. Lal\n3. S.R. Rao\n4. J.P. Joshi\na. Excavation of Lothal\nb. Aryan Invasion Theory applied to IVC decline\nc. Discovery of Dholavira\nd. Post-IVC excavations at Hastinapura and Sisupalgarh",
+  opts:["1-b, 2-d, 3-a, 4-c","1-a, 2-b, 3-c, 4-d","1-b, 2-a, 3-d, 4-c","1-d, 2-c, 3-b, 4-a"],
+  ans:0,
+  expl:"Mortimer Wheeler proposed the Aryan Invasion Theory ('Indra stands accused'). B.B. Lal excavated post-IVC sites like Hastinapura. S.R. Rao excavated Lothal (1955 onwards). J.P. Joshi first identified Dholavira in 1967–68.",
+  pyq:"TNPSC Group 1 Prelims 2017"
+},
+{
+  id:10, sec:0, type:"NotCorrect",
+  badges:["trap"],
+  stem:"Which of the following statements about the discovery and excavation of Harappan sites is NOT correct?",
+  opts:[
+    "Mohenjo-daro was discovered while investigating a Buddhist stupa",
+    "Daya Ram Sahni excavated Harappa in 1921",
+    "Ernest Mackay succeeded John Marshall as the excavator of Mohenjo-daro",
+    "The Harappan civilization was first reported to the world in 1935"
+  ],
+  ans:3,
+  expl:"The civilization was officially announced to the world in 1924, not 1935, through the Illustrated London News by John Marshall. All other statements are correct: Mohenjo-daro was found during stupa investigation, Sahni excavated Harappa in 1921, and Ernest Mackay succeeded Marshall at Mohenjo-daro.",
+  trap:"The date 1935 is a trap — students sometimes confuse the 1924 announcement with later publication dates of major reports."
+},
+{
+  id:11, sec:0, type:"Numerical",
+  badges:["expected"],
+  stem:"Approximately how many Harappan/IVC sites have been discovered across India, Pakistan, and Afghanistan as of recent surveys?",
+  opts:["Around 500","Around 800","Around 1500 or more","Around 3000"],
+  ans:2,
+  expl:"Archaeological surveys have identified over 1500 Harappan-related sites, with estimates ranging up to 2000 when including small settlements and outposts. About two-thirds of these sites are located in India, particularly in Gujarat, Rajasthan, Haryana, and Punjab.",
+  expected:true
+},
+{
+  id:12, sec:0, type:"MCQ",
+  badges:["pyq","gem"],
+  stem:"The term 'Harappan Civilization' is preferred over 'Indus Valley Civilization' by many modern scholars because:",
+  opts:[
+    "Harappa is larger than Mohenjo-daro",
+    "The civilization extended well beyond the Indus valley into Gujarat, Haryana, and Rajasthan",
+    "Harappa was excavated first",
+    "Indus Valley has no major sites"
+  ],
+  ans:1,
+  expl:"The term 'Indus Valley Civilization' is geographically limiting because the civilization extended far beyond the Indus river system — into Gujarat (Lothal, Dholavira), Rajasthan (Kalibangan), Haryana (Rakhigarhi, Banawali), and even Afghanistan (Shortugai). 'Harappan Civilization' is more inclusive.",
+  gem:"Some scholars use 'Sarasvati-Sindhu Civilization' to include the Ghaggar-Hakra river basin, where many sites cluster — a politically charged but archaeologically valid term.",
+  pyq:"TNPSC Group 1 2016"
+},
+{
+  id:13, sec:0, type:"Statement",
+  badges:["expected","trap"],
+  stem:"Which of the following statements about Mehrgarh are correct?\n(i) Mehrgarh is located in present-day Balochistan, Pakistan.\n(ii) It is considered a pre-Harappan Neolithic site.\n(iii) The earliest evidence of cotton cultivation in the world comes from Mehrgarh.\n(iv) Mehrgarh shows evidence of early dentistry practices.",
+  opts:["(i) and (ii) only","(i), (ii) and (iv) only","(i), (ii), (iii) and (iv)","(ii) and (iii) only"],
+  ans:2,
+  expl:"All four statements are correct. Mehrgarh (Balochistan) is a Neolithic site (7000–3200 BCE) that predates the Harappan civilization and is considered its forerunner. It shows evidence of barley/wheat cultivation, animal domestication, cotton use, and remarkably, proto-dentistry (drilled molar teeth).",
+  trap:"Students often place cotton's earliest evidence only at Mohenjo-daro — but Mehrgarh has evidence of cotton from as early as 5000 BCE, predating the Mature phase.",
+  expected:true
+},
+{
+  id:14, sec:0, type:"MCQ",
+  badges:["pyq"],
+  stem:"Which site provided the evidence that the Harappan Civilization existed in Afghanistan?",
+  opts:["Surkotada","Shortugai","Kot Diji","Chanhu-daro"],
+  ans:1,
+  expl:"Shortugai (in present-day northeastern Afghanistan) is the northwesternmost major Harappan site and shows clear Harappan pottery, seals, and trade goods. It is located near lapis lazuli mines in Badakhshan, explaining its existence as a Harappan trading outpost.",
+  pyq:"TNPSC Group 2 2022"
+},
+{
+  id:15, sec:0, type:"Assertion",
+  badges:["gem","expected"],
+  stem:"Assertion (A): The Harappan Civilization is classified as a Bronze Age civilization.\nReason (R): Harappan people used copper and bronze tools but had no knowledge of iron.",
+  opts:[
+    "Both A and R are true and R is the correct explanation of A",
+    "Both A and R are true but R is not the correct explanation of A",
+    "A is true but R is false",
+    "A is false but R is true"
+  ],
+  ans:0,
+  expl:"Both A and R are true and R correctly explains A. The Bronze Age is defined by the use of copper/bronze without iron. Harappans used copper extensively (from Khetri mines, Rajasthan) and created bronze alloys, but iron was entirely absent from Harappan sites — iron appears only with the later Vedic cultures.",
+  gem:"The absence of iron and war weapons suggests a peaceful, trade-oriented society. No arrowheads, swords, or battlefield evidence has been found at Harappan sites — a stark contrast to Mesopotamia.",
+  expected:true
+},
+
+// ============================================================
+// SECTION 2: Major Sites & Their Unique Features (Q16-Q35)
+// ============================================================
+{
+  id:16, sec:1, type:"Match",
+  badges:["pyq","trap"],
+  stem:"Match the Harappan sites with their unique features:\nColumn I ↔ Column II\n1. Kalibangan\n2. Dholavira\n3. Lothal\n4. Surkotada\na. Dockyard\nb. Fire altars and ploughed field\nc. UNESCO World Heritage Site (2021)\nd. First horse bone evidence in Harappan context",
+  opts:["1-b, 2-c, 3-a, 4-d","1-a, 2-b, 3-c, 4-d","1-c, 2-b, 3-d, 4-a","1-d, 2-a, 3-b, 4-c"],
+  ans:0,
+  expl:"Kalibangan (Rajasthan) has the world's earliest ploughed field and fire altars. Dholavira (Gujarat) was inscribed as UNESCO World Heritage Site in 2021. Lothal has the only identified Harappan dockyard. Surkotada provided the first horse bone evidence in a Harappan context.",
+  trap:"Dholavira and Lothal are both in Gujarat — students often mix their unique features.",
+  pyq:"TNPSC Group 1 Prelims 2023"
+},
+{
+  id:17, sec:1, type:"MCQ",
+  badges:["pyq","gem"],
+  stem:"The Great Bath at Mohenjo-daro was most likely used for:",
+  opts:["Municipal water supply","Ritual bathing and purification","Swimming recreation","Irrigation of crops"],
+  ans:1,
+  expl:"The Great Bath (12m × 7m × 2.4m deep) at Mohenjo-daro is considered a public ritual bathing tank. Its elaborate construction with gypsum mortar and bitumen waterproofing, surrounded by a colonnade and changing rooms, suggests a sacred rather than utilitarian purpose.",
+  gem:"The Great Bath tradition is believed to be the precursor to modern temple tank (pushkarani) culture found in South India and later temple complexes like those at Madurai and Tiruvannamalai — a remarkable cultural continuity across 4000 years.",
+  pyq:"TNPSC Group 1 2015"
+},
+{
+  id:18, sec:1, type:"Statement",
+  badges:["expected"],
+  stem:"Which of the following statements about Rakhigarhi are correct?\n(i) Rakhigarhi is located in Haryana, India.\n(ii) It is now considered the largest Harappan site, overtaking Mohenjo-daro.\n(iii) DNA studies at Rakhigarhi were published in 2019 in the journal Cell.\n(iv) Rakhigarhi was excavated by S.R. Rao in the 1950s.",
+  opts:["(i) and (ii) only","(i), (ii) and (iii) only","(ii), (iii) and (iv) only","All of the above"],
+  ans:1,
+  expl:"Statements (i), (ii), and (iii) are correct. Rakhigarhi in Haryana is now the largest known Harappan site. The 2019 DNA study was published in Cell journal by Vasant Shinde and colleagues. Statement (iv) is false — Rakhigarhi was excavated much later (1997 onwards by Amarendra Nath; later by Vasant Shinde).",
+  expected:true
+},
+{
+  id:19, sec:1, type:"MCQ",
+  badges:["pyq","trap"],
+  stem:"Which Harappan site is famous for a 10-letter signboard inscription — the longest Harappan inscription found?",
+  opts:["Mohenjo-daro","Harappa","Lothal","Dholavira"],
+  ans:3,
+  expl:"Dholavira (Gujarat) has a remarkable 10-sign inscription made of white gypsum inlaid in wood, discovered near the northern gate. It is the longest Harappan inscription found anywhere and is unique in being a large public display, unlike the tiny seal inscriptions found elsewhere.",
+  trap:"Students confuse 'longest inscription' with 'most inscriptions found' — Mohenjo-daro has the most seals but Dholavira has the single longest inscription.",
+  pyq:"TNPSC Group 1 2022"
+},
+{
+  id:20, sec:1, type:"MCQ",
+  badges:["gem"],
+  stem:"The 'Dancing Girl' bronze figurine found at Mohenjo-daro represents which cultural achievement?",
+  opts:[
+    "Evidence of a temple dancer class",
+    "Mastery of lost-wax (cire perdue) bronze casting technique",
+    "Proof of Mesopotamian artistic influence",
+    "A royal concubine of the Harappan king"
+  ],
+  ans:1,
+  expl:"The 'Dancing Girl' (10.5 cm tall, now in National Museum, Delhi) demonstrates the Harappans' mastery of the lost-wax (cire perdue) casting technique. She has bangles on her left arm, a necklace, and a casual hip-forward pose suggesting movement — a remarkable artistic achievement for 2500 BCE.",
+  gem:"The figurine wears bangles that archaeologists believe were made of shell — the same type of shell bangles manufactured at Harappan workshops and exported to sites as far as Mesopotamia. This is a case where art and trade archaeology intersect."
+},
+{
+  id:21, sec:1, type:"Assertion",
+  badges:["pyq","trap"],
+  stem:"Assertion (A): Lothal is considered the most important Harappan site in India.\nReason (R): It is the only Harappan site with a dockyard, indicating maritime trade.",
+  opts:[
+    "Both A and R are true and R is the correct explanation of A",
+    "Both A and R are true but R is not the correct explanation of A",
+    "A is true but R is false",
+    "A is false but R is true"
+  ],
+  ans:1,
+  expl:"Lothal (Gujarat) is highly significant and does possess the only identified dockyard confirming sea trade. However, Rakhigarhi (Haryana) is now considered the largest Harappan site overall, making 'most important' debatable — hence A is broadly true but R alone doesn't fully explain that distinction.",
+  gem:"Lothal also yielded evidence of rice husk, a double burial (possibly indicating pair burial custom), and a bead factory — making it multi-layered in importance.",
+  pyq:"TNPSC Group 2 2021"
+},
+{
+  id:22, sec:1, type:"MCQ",
+  badges:["pyq"],
+  stem:"Which Harappan site provided the earliest evidence of a ploughed field in the world?",
+  opts:["Mohenjo-daro","Lothal","Kalibangan","Harappa"],
+  ans:2,
+  expl:"Kalibangan (Rajasthan) has yielded evidence of a pre-Harappan ploughed field — the earliest such evidence in the world. The field shows furrows in two directions, suggesting inter-cropping, and predates the Mature Harappan phase. Fire altars were also found here.",
+  pyq:"TNPSC Group 4 2019"
+},
+{
+  id:23, sec:1, type:"NotCorrect",
+  badges:["trap"],
+  stem:"Which of the following statements about Chanhu-daro is NOT correct?",
+  opts:[
+    "Chanhu-daro is located in Sindh, present-day Pakistan",
+    "It is the only major Harappan site without a citadel",
+    "Evidence of an inkpot was found at Chanhu-daro",
+    "The Bronze Dancing Girl was found at Chanhu-daro"
+  ],
+  ans:3,
+  expl:"The Bronze Dancing Girl was found at Mohenjo-daro, not Chanhu-daro. All other statements about Chanhu-daro are correct: it is in Sindh, it is the only major Harappan town without a citadel, and it yielded unique artifacts including an inkpot and evidence of a dog chasing a cat (footprints in mud).",
+  trap:"The Dancing Girl is one of the most famous Harappan artifacts and is almost always associated with Mohenjo-daro — never Chanhu-daro."
+},
+{
+  id:24, sec:1, type:"Match",
+  badges:["expected","pyq"],
+  stem:"Match the Harappan sites with their geographical locations:\nColumn I (Site) ↔ Column II (Location/State)\n1. Banawali\n2. Surkotada\n3. Daimabad\n4. Manda\na. Gujarat\nb. Maharashtra\nc. Haryana\nd. Jammu & Kashmir",
+  opts:["1-c, 2-a, 3-b, 4-d","1-a, 2-b, 3-c, 4-d","1-d, 2-c, 3-a, 4-b","1-b, 2-d, 3-c, 4-a"],
+  ans:0,
+  expl:"Banawali is in Haryana (also known for lapis lazuli and toy plough). Surkotada is in Gujarat (horse bones). Daimabad is in Maharashtra (southernmost site, bronze chariot). Manda is in Jammu & Kashmir (northernmost site).",
+  pyq:"TNPSC Group 1 Prelims 2023"
+},
+{
+  id:25, sec:1, type:"MCQ",
+  badges:["pyq","gem"],
+  stem:"Which of the following Harappan sites is the WESTERNMOST?",
+  opts:["Surkotada","Dholavira","Sutkagendor","Manda"],
+  ans:2,
+  expl:"Sutkagendor (Balochistan, Pakistan, near the Iranian border) is the westernmost known Harappan site. It served as a trading post for sea trade along the Makran coast. Alamgirpur (UP) is the easternmost, Manda (J&K) is the northernmost, and Daimabad (Maharashtra) is the southernmost.",
+  gem:"Sutkagendor's location on the Makran coast confirms the Harappans engaged in coastal trade reaching all the way to present-day Iran and beyond toward the Persian Gulf and Mesopotamia.",
+  pyq:"TNPSC Group 2 2020"
+},
+{
+  id:26, sec:1, type:"Statement",
+  badges:["expected","trap"],
+  stem:"Which of the following statements about Harappa (the site) are correct?\n(i) Harappa is located in the Punjab province of present-day Pakistan.\n(ii) Cemetery R-37 and Cemetery H are both associated with Harappa.\n(iii) Stone symbols of Lingam and Yoni were found at Harappa.\n(iv) The Great Bath of Harappa is larger than that of Mohenjo-daro.",
+  opts:["(i) and (ii) only","(i), (ii) and (iii) only","(ii), (iii) and (iv) only","All of the above"],
+  ans:1,
+  expl:"Statements (i), (ii), and (iii) are correct. Harappa is in Punjab, Pakistan; it has two burial sites (R-37 early, Cemetery H late phase); stone Lingam and Yoni symbols were found there. Statement (iv) is false — Harappa does not have a Great Bath; the famous Great Bath is at Mohenjo-daro.",
+  trap:"Students sometimes confuse features between the two big sites — the Great Bath is exclusively at Mohenjo-daro.",
+  expected:true
+},
+{
+  id:27, sec:1, type:"MCQ",
+  badges:["pyq"],
+  stem:"Dholavira was declared a UNESCO World Heritage Site in which year?",
+  opts:["2017","2019","2021","2023"],
+  ans:2,
+  expl:"Dholavira (Gujarat) was inscribed as a UNESCO World Heritage Site in July 2021 during the 44th session of the World Heritage Committee. It is located on the Khadir Island in the Rann of Kutch and is the largest Harappan site in India, known for its unique three-part city plan and water conservation system.",
+  pyq:"TNPSC Group 4 2022"
+},
+{
+  id:28, sec:1, type:"Assertion",
+  badges:["expected"],
+  stem:"Assertion (A): Surkotada is significant in the Aryan debate.\nReason (R): Horse bones were found at Surkotada, suggesting horses were known to the Harappans.",
+  opts:[
+    "Both A and R are true and R is the correct explanation of A",
+    "Both A and R are true but R is not the correct explanation of A",
+    "A is true but R is false",
+    "A is false but R is true"
+  ],
+  ans:0,
+  expl:"Both A and R are true and R explains A. The Aryan Migration Theory posits that horses were introduced by Indo-Aryans. If the Harappans already knew horses (as suggested by Surkotada finds, confirmed by paleontologist A.K. Sharma), it weakens the horse-as-Aryan-marker argument, making Surkotada central to this debate.",
+  expected:true
+},
+{
+  id:29, sec:1, type:"MCQ",
+  badges:["gem","expected"],
+  stem:"The Priest-King sculpture found at Mohenjo-daro is made of:",
+  opts:["Bronze","Terracotta","Steatite","Limestone"],
+  ans:3,
+  expl:"The famous 'Priest-King' sculpture from Mohenjo-daro is a 17.5 cm limestone figure with a trefoil-patterned shawl, a fillet around the head, and half-closed eyes suggesting meditation. The term 'Priest-King' is a modern scholarly interpretation — we don't know his actual identity or role.",
+  gem:"The trefoil pattern on the shawl may represent a religious or priestly symbol. Similar trefoil patterns appear on ancient Mesopotamian artefacts, possibly indicating shared artistic traditions through trade contact."
+},
+{
+  id:30, sec:1, type:"Match",
+  badges:["pyq"],
+  stem:"Match the Harappan sites with their notable findings:\nColumn I ↔ Column II\n1. Daimabad\n2. Lothal\n3. Chanhu-daro\n4. Mohenjo-daro\na. Bronze chariot and charioteer\nb. Double burial (man and woman)\nc. Footprint of dog chasing cat\nd. Priest-King limestone sculpture",
+  opts:["1-a, 2-b, 3-c, 4-d","1-b, 2-c, 3-a, 4-d","1-a, 2-d, 3-b, 4-c","1-c, 2-a, 3-d, 4-b"],
+  ans:0,
+  expl:"Daimabad (Maharashtra) has the famous bronze chariot with charioteer (also buffalo and rhinoceros). Lothal has a double burial in a single grave. Chanhu-daro uniquely has footprints of a dog chasing a cat preserved in dried mud. Mohenjo-daro has the Priest-King limestone figure.",
+  pyq:"TNPSC Group 1 2018"
+},
+{
+  id:31, sec:1, type:"NotCorrect",
+  badges:["trap"],
+  stem:"Which of the following about Banawali (Haryana) is NOT correct?",
+  opts:[
+    "Banawali is the only Harappan site with radial roads",
+    "A toy plough was found at Banawali",
+    "Lapis lazuli was found at Banawali",
+    "The Great Granary of the Harappan civilization was found at Banawali"
+  ],
+  ans:3,
+  expl:"The Great Granary is associated with Mohenjo-daro, not Banawali. Harappa also has granaries. Banawali is notable for radial roads (the only Harappan site with this feature), a toy plough (supporting knowledge of ploughing), and lapis lazuli finds indicating long-distance trade.",
+  trap:"Granary location is a frequent confusion — Harappa has granaries on the citadel mound; Mohenjo-daro has the 'Great Granary'; neither is Banawali."
+},
+{
+  id:32, sec:1, type:"MCQ",
+  badges:["pyq","gem"],
+  stem:"Which animal's representation is MOST frequently found on Harappan seals?",
+  opts:["Humped Bull","Tiger","Unicorn (one-horned animal)","Elephant"],
+  ans:2,
+  expl:"The Unicorn (a one-horned animal often depicted in front of a standard or manger) is the most commonly found animal motif on Harappan seals. Its identity is debated — some think it is a profile view of a two-horned bull, others see it as a mythological creature.",
+  gem:"The Unicorn seal is always depicted with a mysterious object in front of it — scholars call it a 'standard' or 'cult object' with a possible filter or incense burner. Its function remains unknown, adding to the mystery of Harappan religion.",
+  pyq:"TNPSC Group 2 2016"
+},
+{
+  id:33, sec:1, type:"Chronological",
+  badges:["pyq"],
+  stem:"Arrange the following Harappan sites in the order they were excavated/discovered:\n1. Dholavira\n2. Harappa\n3. Lothal\n4. Mohenjo-daro",
+  opts:["2-4-3-1","4-2-3-1","2-3-4-1","1-2-3-4"],
+  ans:0,
+  expl:"Harappa was discovered in 1921, Mohenjo-daro in 1922, Lothal excavations began in 1955 (S.R. Rao), and Dholavira was discovered in 1967–68 by J.P. Joshi and systematically excavated from 1990 by R.S. Bisht.",
+  trap:"Many students place Lothal before Mohenjo-daro — remember S.R. Rao's Lothal work was 1955 onwards, three decades after Marshall's publications.",
+  pyq:"TNPSC Group 4 2022"
+},
+{
+  id:34, sec:1, type:"MCQ",
+  badges:["expected"],
+  stem:"Which Harappan site showed a unique three-part city division (Citadel, Middle Town, and Lower Town) instead of the usual two-part layout?",
+  opts:["Harappa","Mohenjo-daro","Dholavira","Kalibangan"],
+  ans:2,
+  expl:"Dholavira is unique among Harappan cities in having a three-tiered city plan — a fortified Citadel at the top, a Middle Town, and a Lower Town. Most Harappan cities follow a two-part plan (Citadel + Lower Town). Dholavira also has a remarkable water harvesting and storage system.",
+  expected:true
+},
+{
+  id:35, sec:1, type:"Statement",
+  badges:["gem"],
+  stem:"Which of the following statements about Lothal are correct?\n(i) Lothal is located in Gujarat, India.\n(ii) It is the only Harappan site with a dockyard.\n(iii) Evidence of rice husk was found at Lothal.\n(iv) Lothal has a double burial in a single grave.",
+  opts:["(i) and (ii) only","(i), (ii) and (iii) only","(i), (ii), (iii) and (iv)","(ii), (iii) and (iv) only"],
+  ans:2,
+  expl:"All four statements are correct. Lothal (Gujarat) has the only known dockyard (suggesting seaborne trade with Mesopotamia via the Persian Gulf), evidence of rice husk (one of the early cultivation sites), and a remarkable double burial where a man and woman were interred together — possibly suggesting pair burial customs or marital burial practices.",
+  gem:"Lothal's dockyard (216m × 37m) connected to an estuary of the Sabarmati river. Its orientation and tidal lock suggest sophisticated understanding of tidal patterns — remarkable maritime engineering for 2400 BCE."
+},
+
+// ============================================================
+// SECTION 3: Urban Planning & Architecture (Q36-Q50)
+// ============================================================
+{
+  id:36, sec:2, type:"MCQ",
+  badges:["pyq"],
+  stem:"The standard brick ratio used in Harappan construction was:",
+  opts:["1:1:2","1:2:4","2:3:6","1:3:6"],
+  ans:1,
+  expl:"Harappan bricks followed a standardized ratio of 1:2:4 (thickness:width:length). This standardization across thousands of sites separated by hundreds of kilometers is remarkable evidence of a centralized authority or shared cultural norms governing construction.",
+  pyq:"TNPSC Group 1 2019"
+},
+{
+  id:37, sec:2, type:"Assertion",
+  badges:["expected","gem"],
+  stem:"Assertion (A): The Harappan drainage system is considered the world's first planned underground sewage system.\nReason (R): Drains were covered with bricks or stone slabs and connected individual house drains to main street drains.",
+  opts:[
+    "Both A and R are true and R is the correct explanation of A",
+    "Both A and R are true but R is not the correct explanation of A",
+    "A is true but R is false",
+    "A is false but R is true"
+  ],
+  ans:0,
+  expl:"Both A and R are true and R explains A. The Harappan drainage system is indeed the world's first planned underground municipal drainage, with brick-lined covered drains running beneath streets, connecting to main drains with inspection holes. This shows advanced civic planning far ahead of contemporary civilizations.",
+  gem:"Even ancient Rome's famous Cloaca Maxima (6th century BCE) came 2000 years after the Harappan drains. Many modern cities still lack the comprehensive drainage coverage that Mohenjo-daro had 4500 years ago.",
+  expected:true
+},
+{
+  id:38, sec:2, type:"Statement",
+  badges:["pyq","trap"],
+  stem:"Which of the following statements about Harappan town planning are correct?\n(i) Cities were divided into a Citadel (upper town) and a Lower Town.\n(ii) Streets were laid in a grid pattern, intersecting at right angles.\n(iii) Temples were the most prominent buildings in every Harappan city.\n(iv) Wells were found inside individual houses.",
+  opts:["(i) and (ii) only","(i), (ii) and (iv) only","(i), (ii), (iii) and (iv)","(ii), (iii) and (iv) only"],
+  ans:1,
+  expl:"Statements (i), (ii), and (iv) are correct. Harappan cities had a two-part layout (citadel + lower town), grid streets, and private wells. Statement (iii) is false — no conclusive temple structure has been identified in any Harappan city. This absence of temples is one of the most puzzling features of Harappan civilization.",
+  trap:"The absence of identifiable temples is a critical exam point — do NOT assume temples existed just because there was religious activity (fire altars, seals with deities are found, but no temple buildings).",
+  pyq:"TNPSC Group 1 2020"
+},
+{
+  id:39, sec:2, type:"MCQ",
+  badges:["expected"],
+  stem:"The Great Bath at Mohenjo-daro was made watertight by the use of:",
+  opts:[
+    "Lime mortar and fired clay",
+    "Gypsum mortar and bitumen (tar) coating",
+    "Mud plaster and river sand",
+    "Concrete and fired bricks only"
+  ],
+  ans:1,
+  expl:"The Great Bath was constructed with great care: the bottom and sides were made of sawn bricks set in gypsum mortar, and the outer surface was sealed with natural bitumen (tar) to prevent water seepage. This shows sophisticated waterproofing technology 4500 years ago.",
+  expected:true
+},
+{
+  id:40, sec:2, type:"NotCorrect",
+  badges:["trap","pyq"],
+  stem:"Which of the following statements about Harappan urban planning is NOT correct?",
+  opts:[
+    "Streets in Harappan cities ran at right angles to each other",
+    "Harappan cities had no underground drainage system",
+    "Multi-storeyed houses existed in Harappan cities",
+    "Citadel mounds were typically on the western side of the city"
+  ],
+  ans:1,
+  expl:"Statement (B) is false — Harappan cities did have an extensive and sophisticated underground drainage system. All other statements are correct: grid streets, multi-storied houses (staircases found), and the citadel on the western/higher ground are all features of Harappan urban planning.",
+  trap:"The drainage system is one of the most celebrated achievements of the Harappans — never say they lacked one.",
+  pyq:"TNPSC Group 4 2017"
+},
+{
+  id:41, sec:2, type:"Numerical",
+  badges:["expected"],
+  stem:"What were the approximate dimensions (Length × Width × Depth) of the Great Bath at Mohenjo-daro?",
+  opts:["20m × 10m × 3m","12m × 7m × 2.4m","8m × 5m × 1.5m","15m × 8m × 3m"],
+  ans:1,
+  expl:"The Great Bath at Mohenjo-daro measured approximately 12 metres long, 7 metres wide, and 2.4 metres deep. It had steps descending into the bath at both ends and was surrounded by a colonnade with rooms on three sides, suggesting it was a carefully planned civic/religious structure.",
+  expected:true
+},
+{
+  id:42, sec:2, type:"MCQ",
+  badges:["gem","pyq"],
+  stem:"Which of the following was NOT found in Harappan cities, making them unique compared to Mesopotamian cities?",
+  opts:[
+    "Granaries for storing grain",
+    "Monumental temples or ziggurats",
+    "Underground drainage systems",
+    "Standardized weights and measures"
+  ],
+  ans:1,
+  expl:"Unlike Mesopotamian cities which had massive ziggurat temple towers as their most prominent feature, no monumental temples have been identified in any Harappan city. This is one of the most striking architectural differences, suggesting Harappan society may have been organized differently from temple-centred Mesopotamian city-states.",
+  gem:"The absence of both monumental temples AND clearly identifiable royal palaces in Harappan cities challenges conventional models of ancient state formation — suggesting the Harappans may have had a very different form of governance, possibly merchant oligarchy or priestly council.",
+  pyq:"TNPSC Group 1 2021"
+},
+{
+  id:43, sec:2, type:"Assertion",
+  badges:["expected"],
+  stem:"Assertion (A): No iron tools or weapons have been found at Harappan sites.\nReason (R): Iron smelting technology had not yet developed during the Harappan period.",
+  opts:[
+    "Both A and R are true and R is the correct explanation of A",
+    "Both A and R are true but R is not the correct explanation of A",
+    "A is true but R is false",
+    "A is false but R is true"
+  ],
+  ans:0,
+  expl:"Both A and R are correct. Iron technology (Iron Age) began in India around 1000–800 BCE, centuries after the decline of the Harappan civilization. Harappans used copper and bronze tools (the Bronze Age). The complete absence of iron confirms the chronological boundaries of the civilization.",
+  expected:true
+},
+{
+  id:44, sec:2, type:"Statement",
+  badges:["gem"],
+  stem:"Which of the following statements about Harappan houses are correct?\n(i) Most houses were built facing inward with windows and doors opening onto interior courtyards.\n(ii) Bathrooms were connected to the city's drainage system.\n(iii) Every house had its own private well.\n(iv) Houses were built entirely of mud bricks without any burnt bricks.",
+  opts:["(i) and (ii) only","(i), (ii) and (iii) only","(i) and (iv) only","All of the above"],
+  ans:1,
+  expl:"Statements (i), (ii), and (iii) are correct. Harappan houses opened onto inner courtyards rather than the street (privacy), had bathrooms draining into the city sewage, and many had private wells. Statement (iv) is false — burnt (kiln-fired) bricks were the primary building material, not mud bricks.",
+  gem:"The privacy-focused design of Harappan houses — with blank walls facing streets and activity focused on inner courtyards — is strikingly similar to traditional Indian house design (still seen in old quarters of Ahmedabad and Rajasthan), suggesting a cultural continuity in domestic architecture across millennia."
+},
+{
+  id:45, sec:2, type:"MCQ",
+  badges:["pyq","expected"],
+  stem:"Which of the following statements is correct about Harappan weights and measures?",
+  opts:[
+    "Weights were only used in Mesopotamia; Harappans relied on barter",
+    "Weights followed a binary system in lower denominations (1,2,4,8,16,32...)",
+    "Only gold weights have been found at Harappan sites",
+    "Harappan weights were irregular and site-specific"
+  ],
+  ans:1,
+  expl:"Harappan weights (cubical chert stones) followed a binary system in lower denominations (1, 2, 4, 8, 16, 32...) and a decimal system in higher denominations. The remarkable uniformity of these weights across the entire civilization (from Harappa to Lothal) indicates standardized trade practices.",
+  pyq:"TNPSC Group 2 2018"
+},
+{
+  id:46, sec:2, type:"Match",
+  badges:["expected"],
+  stem:"Match the Harappan architectural features with their significance:\nColumn I ↔ Column II\n1. Citadel\n2. Grid street pattern\n3. Underground drainage\n4. Standardized bricks\na. Evidence of planned urban design\nb. World's first municipal sewage system\nc. Administrative/ritual upper town\nd. Indicates centralized production or shared norms",
+  opts:["1-c, 2-a, 3-b, 4-d","1-a, 2-c, 3-d, 4-b","1-b, 2-d, 3-a, 4-c","1-d, 2-b, 3-c, 4-a"],
+  ans:0,
+  expl:"The Citadel served as the administrative/ritual upper town. Grid streets are evidence of deliberate planned urban design. Underground drainage is the world's earliest known municipal sewage system. Standardized bricks across vast distances indicate either centralized production or powerful shared cultural norms.",
+  expected:true
+},
+{
+  id:47, sec:2, type:"MCQ",
+  badges:["pyq"],
+  stem:"The Harappan Citadel mound was typically located on which side of the city?",
+  opts:["Eastern","Northern","Western","Southern"],
+  ans:2,
+  expl:"In most Harappan cities, the Citadel (upper town with public buildings like granaries and large structures) was located on the western side on an artificially elevated platform, while the Lower Town (residential area) was on the eastern side. This pattern is seen at both Harappa and Mohenjo-daro.",
+  pyq:"TNPSC Group 4 2021"
+},
+{
+  id:48, sec:2, type:"Assertion",
+  badges:["trap"],
+  stem:"Assertion (A): No royal palace has been conclusively identified at any Harappan site.\nReason (R): Harappan rulers preferred modest residences similar to ordinary citizens.",
+  opts:[
+    "Both A and R are true and R is the correct explanation of A",
+    "Both A and R are true but R is not the correct explanation of A",
+    "A is true but R is false",
+    "A is false but R is true"
+  ],
+  ans:2,
+  expl:"A is true — no royal palace has been identified at any Harappan site. However, R is false — we cannot claim to know why. The absence of a palace may indicate the Harappans had no kings, or that governance was collective (merchant oligarchy, priestly council), or that palaces were made of perishable materials, or that identification has been difficult.",
+  trap:"Don't assume a reason just because a fact is established. The absence of palaces is a fact; the reason is unknown and debated."
+},
+{
+  id:49, sec:2, type:"Statement",
+  badges:["expected","pyq"],
+  stem:"Which of the following statements comparing Harappan and Mesopotamian urban planning are correct?\n(i) Both civilizations had planned cities with streets.\n(ii) Mesopotamian cities had grand temples (ziggurats); Harappan cities had none identified.\n(iii) Harappan drainage was more advanced than Mesopotamian drainage.\n(iv) Mesopotamian cities were larger in area than Harappan cities.",
+  opts:["(i) and (ii) only","(i), (ii) and (iii) only","(ii), (iii) and (iv) only","All of the above"],
+  ans:1,
+  expl:"Statements (i), (ii), and (iii) are correct. Both had planned cities; Mesopotamia had massive temple ziggurats while Harappans had no identifiable temples; and Harappan drainage networks were far more sophisticated. Statement (iv) is incorrect — Harappan cities were comparable in size to Mesopotamian ones, and the overall civilization area was larger.",
+  pyq:"TNPSC Group 1 2022",
+  expected:true
+},
+{
+  id:50, sec:2, type:"MCQ",
+  badges:["gem"],
+  stem:"The use of burnt bricks (instead of sun-dried mud bricks) in Harappan construction indicates:",
+  opts:[
+    "Harappans had no access to sun and relied on kilns",
+    "Greater durability requirements and advanced kiln technology",
+    "Direct import of brick technology from Egypt",
+    "Harappans feared floods and needed stronger bricks"
+  ],
+  ans:1,
+  expl:"The extensive use of kiln-fired (burnt) bricks shows Harappans valued durable construction and had advanced kiln technology. While sun-dried mud bricks were used in Mesopotamia and Egypt, the Harappan preference for fired bricks — uniform in ratio — represents a higher technological and economic investment in infrastructure.",
+  gem:"The sheer quantity of burnt bricks used in Harappan construction was enormous. British railway builders in the 19th century actually extracted Harappan bricks from Harappa to use as ballast for the Lahore-Multan railway line — inadvertently destroying much of the archaeological record before formal excavation began."
+},
+
+// ============================================================
+// SECTION 4: Economy, Trade & Crafts (Q51-Q70)
+// ============================================================
+{
+  id:51, sec:3, type:"MCQ",
+  badges:["pyq"],
+  stem:"What were the two main staple crops of the Harappan Civilization?",
+  opts:["Rice and Barley","Wheat and Barley","Millet and Wheat","Rice and Cotton"],
+  ans:1,
+  expl:"Wheat and Barley were the primary staple crops of the Harappan civilization, found at most sites. Rice was cultivated at Lothal and Rangpur (Gujarat), but it was not the primary crop. Cotton was cultivated (world's first) primarily for textiles, not as food.",
+  pyq:"TNPSC Group 4 2018"
+},
+{
+  id:52, sec:3, type:"Statement",
+  badges:["expected","gem"],
+  stem:"Which of the following statements about Harappan agriculture are correct?\n(i) Cotton was cultivated for the first time in the world by the Harappans.\n(ii) The Harappans cultivated sesame and dates in addition to grains.\n(iii) Rice was the primary staple crop of the Harappan civilization.\n(iv) Evidence of a ploughed field was found at Kalibangan.",
+  opts:["(i) and (iv) only","(i), (ii) and (iv) only","(i), (ii), (iii) and (iv)","(ii) and (iii) only"],
+  ans:1,
+  expl:"Statements (i), (ii), and (iv) are correct. Cotton cultivation was first done by the Harappans (evidence from Mohenjo-daro and Mehrgarh). They grew sesame, dates, peas, and other crops. The Kalibangan ploughed field is the earliest in the world. Statement (iii) is false — wheat and barley were the primary staples, not rice.",
+  gem:"The Greek word for cotton, 'sindon', may derive from 'Sind' (Sindh) — the region where Harappan cotton fabrics were first encountered by the ancient world. The Harappans essentially introduced cotton textiles to global trade.",
+  expected:true
+},
+{
+  id:53, sec:3, type:"MCQ",
+  badges:["pyq","trap"],
+  stem:"The Harappans traded with Mesopotamia which referred to the Harappan region as:",
+  opts:["Dilmun","Magan","Meluhha","Aratta"],
+  ans:2,
+  expl:"Sumerian texts from Mesopotamia refer to 'Meluhha' as a distant eastern trading partner from whom they received copper, gold, lapis lazuli, carnelian, and timber. Scholars identify Meluhha with the Harappan civilization. Dilmun is identified with Bahrain and Magan with Oman — both were intermediate trading stops.",
+  trap:"The three names Dilmun, Magan, and Meluhha appear in Sumerian texts — students must know which maps to which region.",
+  pyq:"TNPSC Group 1 2017"
+},
+{
+  id:54, sec:3, type:"Match",
+  badges:["expected","pyq"],
+  stem:"Match the raw materials with their source regions for the Harappan civilization:\nColumn I (Material) ↔ Column II (Source Region)\n1. Copper\n2. Lapis Lazuli\n3. Tin\n4. Gold\na. Badakhshan (Afghanistan)\nb. Afghanistan / Central Asia\nc. Khetri mines, Rajasthan\nd. Karnataka / Afghanistan",
+  opts:["1-c, 2-a, 3-b, 4-d","1-a, 2-b, 3-c, 4-d","1-b, 2-d, 3-a, 4-c","1-d, 2-c, 3-b, 4-a"],
+  ans:0,
+  expl:"Harappans sourced copper primarily from Khetri mines in Rajasthan. Lapis lazuli came from Badakhshan, Afghanistan. Tin (for bronze) came from Afghanistan/Central Asia. Gold came from the Kolar gold fields in Karnataka or from Afghanistan. These long-distance trade networks are evidenced by the materials found far from their sources.",
+  pyq:"TNPSC Group 2 2019",
+  expected:true
+},
+{
+  id:55, sec:3, type:"MCQ",
+  badges:["gem","expected"],
+  stem:"The technique used by Harappan craftsmen to make bronze objects like the Dancing Girl is called:",
+  opts:["Sand casting","Lost-wax (cire perdue) method","Open casting","Wrought metal technique"],
+  ans:1,
+  expl:"The lost-wax (cire perdue) casting technique involves making a wax model, coating it with clay, melting out the wax to create a mold, and pouring molten metal in. The Dancing Girl from Mohenjo-daro is the finest example of this technique from the Harappan period.",
+  gem:"The lost-wax technique is still used today by traditional bronze casters in South India (Swamimalai near Kumbakonam, Tamil Nadu) to make Chola-style bronze idols — a living craft tradition with roots potentially tracing back to Harappan metallurgy.",
+  expected:true
+},
+{
+  id:56, sec:3, type:"Assertion",
+  badges:["pyq"],
+  stem:"Assertion (A): Harappan pottery was primarily wheel-made.\nReason (R): A potter's wheel has been found at several Harappan sites.",
+  opts:[
+    "Both A and R are true and R is the correct explanation of A",
+    "Both A and R are true but R is not the correct explanation of A",
+    "A is true but R is false",
+    "A is false but R is true"
+  ],
+  ans:0,
+  expl:"Both A and R are true and R explains A. Harappan pottery was predominantly wheel-made, with red/pink ware decorated with black paintings of geometric patterns, birds, fish, and occasional animals. Potters' wheels have been found at Harappa and other sites, confirming the technology was in use.",
+  pyq:"TNPSC Group 4 2020"
+},
+{
+  id:57, sec:3, type:"Statement",
+  badges:["expected"],
+  stem:"Which of the following statements about Harappan external trade are correct?\n(i) Harappans traded with Mesopotamia through the Persian Gulf route.\n(ii) Dilmun (Bahrain) and Magan (Oman) were intermediate trading stops.\n(iii) Lothal served as the main port for overseas trade.\n(iv) Cylinder seals of Mesopotamian type found in Harappan sites indicate trade contact.",
+  opts:["(i) and (iii) only","(i), (ii) and (iii) only","(i), (ii), (iii) and (iv)","(ii) and (iv) only"],
+  ans:2,
+  expl:"All four statements are correct. Harappans traded with Mesopotamia via the Persian Gulf. Dilmun (Bahrain) and Magan (Oman) served as intermediate ports. Lothal's dockyard facilitated sea trade. Cylinder seals of Mesopotamian type found at Harappan sites and Harappan goods (carnelian beads, lapis lazuli, cotton) found in Mesopotamia confirm bilateral trade.",
+  expected:true
+},
+{
+  id:58, sec:3, type:"MCQ",
+  badges:["pyq","gem"],
+  stem:"Faience, found extensively in Harappan sites, is best described as:",
+  opts:[
+    "A type of clay pottery glazed with cobalt",
+    "A glass-like material made from quartz paste, glazed and fired",
+    "A bronze alloy used for ornaments",
+    "A type of stone imported from Mesopotamia"
+  ],
+  ans:1,
+  expl:"Faience is a non-clay ceramic material made from crushed quartz or sand, coated with a glazed surface (often turquoise or blue-green) and fired at high temperatures. Harappans used faience for beads, bangles, and small figurines. It is an important Harappan technological innovation.",
+  gem:"Harappan faience technology eventually influenced Egyptian and Mediterranean blue faience traditions. Scholars debate whether faience was independently invented in multiple places or whether knowledge spread through trade networks — the Harappan version is among the earliest.",
+  pyq:"TNPSC Group 2 2017"
+},
+{
+  id:59, sec:3, type:"NotCorrect",
+  badges:["trap"],
+  stem:"Which of the following about Harappan craft production is NOT correct?",
+  opts:[
+    "Bead-making using carnelian was an important craft industry",
+    "Harappans used lapis lazuli for making beads and ornaments",
+    "Iron tools were used by Harappan craftsmen for precision work",
+    "Shell objects were made using Turbinella pyrum shells from the Gulf of Kutch"
+  ],
+  ans:2,
+  expl:"Iron tools were NOT used by Harappan craftsmen — the Harappan civilization belongs to the Bronze/Copper Age, and iron was entirely unknown to them. All other statements are correct: carnelian bead-making (with barrel-shaped beads requiring advanced drilling), lapis lazuli ornaments, and shell bangles from Kutch Gulf were all major Harappan craft industries.",
+  trap:"A very common error — Harappans had copper and bronze tools, never iron. Iron comes with the later Vedic/Megalithic cultures."
+},
+{
+  id:60, sec:3, type:"Match",
+  badges:["expected"],
+  stem:"Match the Harappan crafts/trades with their evidence:\nColumn I (Craft/Product) ↔ Column II (Evidence/Site)\n1. Bead factory\n2. Dockyard for sea trade\n3. Cotton textile\n4. Shell bangle workshops\na. Lothal\nb. Mohenjo-daro (cotton impression on pottery)\nc. Lothal and Chanhudaro\nd. Mohenjo-daro and coastal sites",
+  opts:["1-c, 2-a, 3-b, 4-d","1-a, 2-b, 3-d, 4-c","1-b, 2-c, 3-a, 4-d","1-d, 2-c, 3-b, 4-a"],
+  ans:0,
+  expl:"Bead factories were found at Lothal and Chanhudaro. The dockyard is at Lothal. Cotton textile evidence (from impressions on pottery and direct cotton fiber traces) comes from Mohenjo-daro. Shell bangle workshops are found at Mohenjo-daro and coastal Harappan sites near the Gulf of Kutch.",
+  expected:true
+},
+{
+  id:61, sec:3, type:"MCQ",
+  badges:["pyq"],
+  stem:"Which animal was most commonly depicted on Harappan pottery and terracotta figurines, suggesting its central role in the economy?",
+  opts:["Horse","Unicorn","Humped bull (Zebu)","Elephant"],
+  ans:2,
+  expl:"The humped bull (Zebu/Bos indicus) is the most commonly depicted animal in Harappan terracotta figurines and pottery motifs, indicating its central importance in the agricultural economy for plowing and as a draft animal. The unicorn is most common on seals, not terracotta.",
+  pyq:"TNPSC Group 4 2019"
+},
+{
+  id:62, sec:3, type:"Assertion",
+  badges:["expected","gem"],
+  stem:"Assertion (A): The horse is not considered a domesticated animal by the Harappan civilization.\nReason (R): No definitive horse remains have been found at major Harappan sites like Mohenjo-daro and Harappa.",
+  opts:[
+    "Both A and R are true and R is the correct explanation of A",
+    "Both A and R are true but R is not the correct explanation of A",
+    "A is true but R is false",
+    "A is false but R is true"
+  ],
+  ans:0,
+  expl:"Both A and R are true and R explains A. The absence of horse bones at core sites is a key reason why the horse is not considered domesticated by the Harappans. The Surkotada find is debated (A.K. Sharma says horse; Sandor Bökönyi disputes it). The horse is central to Aryan/Vedic identity (Ashvamedha, Rigveda references), hence its absence from Harappan sites is significant.",
+  gem:"If the Harappans had domesticated horses widely, they would likely have depicted them on seals (like they depicted bulls, elephants, tigers, and unicorns). The absence of horse imagery on thousands of Harappan seals is almost as compelling as the absence of bones.",
+  expected:true
+},
+{
+  id:63, sec:3, type:"Numerical",
+  badges:["expected"],
+  stem:"The ivory scale found at Lothal had a smallest division of approximately:",
+  opts:["0.5 mm","1.704 mm","3.5 mm","5 mm"],
+  ans:1,
+  expl:"The ivory scale found at Lothal had the smallest division of approximately 1.704 mm — a remarkably precise measurement unit. A bronze rod found at Mohenjo-daro is also a measuring instrument. These confirm the Harappans had a standardized measurement system enabling consistent construction and trade.",
+  expected:true
+},
+{
+  id:64, sec:3, type:"Statement",
+  badges:["pyq"],
+  stem:"Which of the following statements about Harappan internal trade are correct?\n(i) Standardized weights and measures facilitated internal trade.\n(ii) The Harappan trade network connected Gujarat, Rajasthan, Punjab, and the Indus plain.\n(iii) There is no evidence of any market or exchange in Harappan civilization.\n(iv) Carnelian beads were traded from Gujarat to sites in the north.",
+  opts:["(i) and (iv) only","(i), (ii) and (iv) only","All of the above","(ii) and (iii) only"],
+  ans:1,
+  expl:"Statements (i), (ii), and (iv) are correct. Standardized weights, vast distribution networks from Gujarat to Punjab, and carnelian bead trade are all well-evidenced. Statement (iii) is false — there is ample evidence of exchange: standardized goods found far from their production sites, dockyard at Lothal, and uniform weights all indicate a market economy.",
+  pyq:"TNPSC Group 2 2023"
+},
+{
+  id:65, sec:3, type:"MCQ",
+  badges:["gem"],
+  stem:"Turbinella pyrum, the type of shell used extensively by Harappan craftsmen for bangles and ornaments, was sourced primarily from:",
+  opts:["Bay of Bengal","Arabian Sea / Gulf of Kutch","Red Sea","Gulf of Mannar"],
+  ans:1,
+  expl:"Turbinella pyrum (the sacred chank shell) was sourced from the Arabian Sea and particularly the Gulf of Kutch/Cambay, close to Harappan sites in Gujarat. Shell bangle workshops have been found at Mohenjo-daro, Harappa, and coastal Gujarat sites.",
+  gem:"The chank shell (Turbinella pyrum, called 'shankh' in Sanskrit) continues to be sacred in Hindu and Buddhist traditions today. The shell bangle tradition survived from Harappan times through to the present in parts of West Bengal and Bangladesh — another remarkable cultural continuity."
+},
+{
+  id:66, sec:3, type:"Chronological",
+  badges:["expected"],
+  stem:"Arrange the following developments in Harappan economic history in probable chronological order:\n1. Maritime trade with Mesopotamia at its peak\n2. Establishment of Mehrgarh as a pre-Harappan settlement\n3. Decline of trade with Mesopotamia post-2000 BCE\n4. Early Harappan craft production in copper tools",
+  opts:["2-4-1-3","1-2-3-4","2-1-4-3","4-1-2-3"],
+  ans:0,
+  expl:"Mehrgarh was established first (~7000 BCE). Early Harappan copper craft developed by 3500–2600 BCE. Maritime trade with Mesopotamia peaked during the Mature Harappan phase (2600–1900 BCE). Trade declined post-2000 BCE as the civilization entered its Late Harappan phase.",
+  expected:true
+},
+{
+  id:67, sec:3, type:"MCQ",
+  badges:["pyq","expected"],
+  stem:"The Harappan civilisation had trade connections with which of the following contemporary civilizations?",
+  opts:[
+    "Only Mesopotamia",
+    "Mesopotamia and Egypt",
+    "Mesopotamia, and possibly Oman and Bahrain as intermediaries",
+    "China, Egypt, and Mesopotamia"
+  ],
+  ans:2,
+  expl:"The Harappan civilization had documented trade with Mesopotamia (referenced in cuneiform texts as 'Meluhha'), with Dilmun (Bahrain) and Magan (Oman) as intermediate trading stops. Direct evidence of trade with Egypt or China has not been established.",
+  pyq:"TNPSC Group 1 2020"
+},
+{
+  id:68, sec:3, type:"Assertion",
+  badges:["trap"],
+  stem:"Assertion (A): Harappan civilization was primarily a rural agricultural society.\nReason (R): Most of the 1500+ Harappan sites are small villages and towns rather than large cities.",
+  opts:[
+    "Both A and R are true and R is the correct explanation of A",
+    "Both A and R are true but R is not the correct explanation of A",
+    "A is true but R is false",
+    "A is false but R is true"
+  ],
+  ans:1,
+  expl:"R is true — most Harappan sites were small settlements. However, A is misleading. The Harappan civilization was distinctly URBAN in character, with large cities (Mohenjo-daro, Harappa, Dholavira, Rakhigarhi, Lothal) serving as planned urban centers. The few major cities organized the civilization's economic, administrative, and cultural life.",
+  trap:"Don't let the number of small sites make you characterize the Harappan civilization as rural — it is fundamentally defined by its urban character."
+},
+{
+  id:69, sec:3, type:"Statement",
+  badges:["gem","expected"],
+  stem:"Which of the following are correctly matched as evidence for Harappan trade with Mesopotamia?\n(i) Harappan carnelian beads found at Ur (Mesopotamia)\n(ii) Sumerian texts mentioning 'Meluhha' as a trading partner\n(iii) Cylinder seals of Mesopotamian type found at Harappan sites\n(iv) Harappan script tablets found at Babylon",
+  opts:["(i) and (ii) only","(i), (ii) and (iii) only","All of the above","(ii) and (iv) only"],
+  ans:1,
+  expl:"Statements (i), (ii), and (iii) are correct trade evidence. Carnelian beads from India found at Ur's royal cemetery, Sumerian 'Meluhha' references, and Mesopotamian cylinder seals at Harappan sites all confirm bilateral contact. Statement (iv) is false — no Harappan script tablets have been found in Babylon or anywhere in Mesopotamia.",
+  gem:"Sir Leonard Woolley found barrel-shaped carnelian beads at the Royal Cemetery of Ur (2600 BCE). These are now identified as Harappan-made beads — the same type manufactured in Gujarat and sold through the Persian Gulf trade network. A 4500-year-old supply chain!",
+  expected:true
+},
+{
+  id:70, sec:3, type:"MCQ",
+  badges:["pyq"],
+  stem:"Which of the following is NOT a crop cultivated by the Harappan civilization?",
+  opts:["Barley","Cotton","Sugarcane","Wheat"],
+  ans:2,
+  expl:"Sugarcane was not cultivated by the Harappan civilization. Their crops included wheat, barley (staples), cotton (world's first), rice (at Lothal and Rangpur), sesame, dates, lentils, and peas. Sugarcane cultivation in India developed later, primarily in the Gangetic plains.",
+  pyq:"TNPSC Group 4 2016"
+},
+
+// ============================================================
+// SECTION 5: Social Life, Religion & Culture (Q71-Q90)
+// ============================================================
+{
+  id:71, sec:4, type:"MCQ",
+  badges:["pyq","gem"],
+  stem:"The Pashupati Seal from Mohenjo-daro shows a figure seated in a yogic posture, surrounded by which four animals?",
+  opts:[
+    "Lion, Elephant, Bull, Rhinoceros",
+    "Tiger, Elephant, Rhinoceros, Buffalo",
+    "Unicorn, Tiger, Bull, Elephant",
+    "Buffalo, Rhinoceros, Unicorn, Tiger"
+  ],
+  ans:1,
+  expl:"The Pashupati Seal depicts a figure (interpreted as proto-Shiva or a shaman) surrounded by four animals: an elephant (upper right), a tiger (upper left), a rhinoceros (lower right), and a buffalo (lower left). Two deer or antelopes appear at his feet. The unicorn is not among the surrounding animals.",
+  gem:"John Marshall called this figure 'proto-Shiva' in 1931 — a reading still used in textbooks. However, scholars like Asko Parpola and Doris Srinivasan have challenged this interpretation. The yogic posture and surrounded-by-animals motif may indicate a master-of-animals deity common to many ancient religions.",
+  pyq:"TNPSC Group 1 2018"
+},
+{
+  id:72, sec:4, type:"Statement",
+  badges:["expected","trap"],
+  stem:"Which of the following statements about Harappan religion are correct?\n(i) Mother Goddess terracotta figurines indicate a fertility cult was practiced.\n(ii) Fire altars at Kalibangan and Lothal suggest sacrificial fire rituals.\n(iii) A fully developed temple with priests has been found at Mohenjo-daro.\n(iv) The pipal tree was considered sacred and depicted on Harappan seals.",
+  opts:["(i), (ii) and (iv) only","(i) and (iv) only","(i), (ii), (iii) and (iv)","(ii), (iii) and (iv) only"],
+  ans:0,
+  expl:"Statements (i), (ii), and (iv) are correct. Mother Goddess figurines, fire altars, and pipal tree worship are all evidenced. Statement (iii) is false — no conclusive temple building with priests has been identified at Mohenjo-daro or any other Harappan site. This is one of the most debated aspects of Harappan archaeology.",
+  trap:"Never assert a temple was found at any Harappan site in an exam — no conclusive temple structure has been identified anywhere in the entire civilization.",
+  expected:true
+},
+{
+  id:73, sec:4, type:"MCQ",
+  badges:["pyq"],
+  stem:"The burial practice most common in the Mature Harappan phase was:",
+  opts:[
+    "Cremation and scattering of ashes",
+    "Extended burial with head oriented to the north",
+    "Burial in large urns (fractional/pot burial)",
+    "Exposure of the dead (sky burial)"
+  ],
+  ans:1,
+  expl:"During the Mature Harappan phase, the most common burial practice was extended burial (laying the body flat) with the head oriented to the north. The body was often placed with pottery and personal ornaments. Pot/fractional burial became more common in the Late Harappan (Cemetery H) phase.",
+  pyq:"TNPSC Group 2 2022"
+},
+{
+  id:74, sec:4, type:"Assertion",
+  badges:["gem","expected"],
+  stem:"Assertion (A): The swastika symbol found on Harappan seals predates its use in any other known culture.\nReason (R): The swastika is an auspicious symbol found on Harappan seals from circa 2500 BCE.",
+  opts:[
+    "Both A and R are true and R is the correct explanation of A",
+    "Both A and R are true but R is not the correct explanation of A",
+    "A is true but R is false",
+    "A is false but R is true"
+  ],
+  ans:1,
+  expl:"R is true — swastika symbols have been found on Harappan seals (~2500 BCE). However, A is an overstatement — swastika symbols appear in multiple ancient cultures (including Bronze Age Europe and Anatolia) at similar periods, making Harappan origin precedence unproven. Both are true but R doesn't prove A.",
+  gem:"The swastika (from Sanskrit 'svastika' meaning 'conducive to well-being') continues to be an auspicious symbol in Hindu, Buddhist, and Jain traditions. Its later misappropriation by Nazi Germany makes its ancient sacred origins an important cultural education point.",
+  expected:true
+},
+{
+  id:75, sec:4, type:"Match",
+  badges:["pyq"],
+  stem:"Match the Harappan cultural artifacts with their significance:\nColumn I ↔ Column II\n1. Mother Goddess figurines\n2. Dice found at Mohenjo-daro\n3. Terracotta bullock carts\n4. Cubical chert weights\na. Evidence of gaming culture\nb. Fertility worship / religion\nc. Transport technology\nd. Standardized economic system",
+  opts:["1-b, 2-a, 3-c, 4-d","1-a, 2-b, 3-d, 4-c","1-c, 2-d, 3-b, 4-a","1-d, 2-c, 3-a, 4-b"],
+  ans:0,
+  expl:"Mother Goddess figurines are evidence of fertility worship. Cubical dice at Mohenjo-daro show a gaming/leisure culture. Terracotta bullock carts confirm wheeled transport. Cubical chert weights with standardized ratios confirm a regulated economic system — all remarkable for a 4500-year-old civilization.",
+  pyq:"TNPSC Group 1 2019"
+},
+{
+  id:76, sec:4, type:"NotCorrect",
+  badges:["trap"],
+  stem:"Which of the following statements about Harappan social structure is NOT correct?",
+  opts:[
+    "There is no conclusive evidence of a king or monarchy in the Harappan civilization",
+    "Both men and women in Harappan society wore ornaments including girdles, necklaces, and armlets",
+    "Harappan society was divided into strict social classes based on the four-fold varna system",
+    "Some scholars suggest the civilization may have been governed by a merchant oligarchy or priests"
+  ],
+  ans:2,
+  expl:"Statement (C) is false — there is NO evidence of a varna (caste) system in the Harappan civilization. The varna system is associated with the later Vedic civilization. Harappan social organization remains unclear but possibilities discussed include theocracy, merchant oligarchy, or city-state governance.",
+  trap:"Students sometimes project later Vedic social structures onto the Harappans — the varna system, Sanskrit language, and Vedic rituals have NO Harappan evidence."
+},
+{
+  id:77, sec:4, type:"Statement",
+  badges:["expected"],
+  stem:"Which of the following statements about Harappan ornaments and personal appearance are correct?\n(i) Both men and women wore ornaments in Harappan society.\n(ii) Ornaments included girdles, necklaces, fillets, and armlets.\n(iii) Only wealthy citizens in Harappan cities wore ornaments.\n(iv) Evidence of lipstick-like cosmetics was found at Chanhu-daro.",
+  opts:["(i) and (ii) only","(i), (ii) and (iv) only","All of the above","(ii), (iii) and (iv) only"],
+  ans:1,
+  expl:"Statements (i), (ii), and (iv) are correct. Figurines show both male and female forms adorned with necklaces, girdles, and headbands. Chanhu-daro yielded evidence of a lipstick-like cosmetic container. Statement (iii) is false — terracotta figurines of various apparent social statuses show ornament use, suggesting it wasn't exclusively elite.",
+  expected:true
+},
+{
+  id:78, sec:4, type:"MCQ",
+  badges:["pyq","gem"],
+  stem:"The 'Cemetery H' culture associated with Harappa represents which phase of the civilization?",
+  opts:["Early Harappan phase","Mature Harappan phase","Late Harappan / decline phase","Post-Vedic phase"],
+  ans:2,
+  expl:"Cemetery H culture at Harappa represents the Late Harappan/Post-Urban phase (after 1900 BCE). It shows fractional burial (bones collected after decomposition and placed in pots), different pottery styles, and a departure from Mature Harappan norms, indicating cultural change and possible population movement.",
+  gem:"Cemetery H pottery shows painted motifs of peacocks, deer, and 'departing souls' imagery — suggesting a shift in religious/cosmological beliefs from the Mature phase. This is some of the earliest evidence of the cultural transformation that marked the end of the Harappan urban world.",
+  pyq:"TNPSC Group 2 2021"
+},
+{
+  id:79, sec:4, type:"Assertion",
+  badges:["expected","trap"],
+  stem:"Assertion (A): Harappan civilization showed no evidence of warfare or organized military conflict.\nReason (R): No weapons of mass destruction, battle scenes, or fortifications for military purposes have been found.",
+  opts:[
+    "Both A and R are true and R is the correct explanation of A",
+    "Both A and R are true but R is not the correct explanation of A",
+    "A is true but R is false",
+    "A is false but R is true"
+  ],
+  ans:1,
+  expl:"Both A and R are broadly true, but R requires nuance. While no offensive weapons or battle art has been found, the city walls and citadel may have had defensive purposes. The absence of military evidence is striking but the citadel fortifications could be interpreted as protective. Hence R partially but not completely explains A.",
+  trap:"The 'peaceful Harappan' narrative is widely accepted but shouldn't be stated as absolute — the citadel walls indicate at least some concern for protection, even if full military organization is absent.",
+  expected:true
+},
+{
+  id:80, sec:4, type:"MCQ",
+  badges:["pyq"],
+  stem:"Terracotta toys found at Harappan sites include:",
+  opts:[
+    "Only animal figurines",
+    "Bullock carts, bird whistles, and rattles",
+    "Only Mother Goddess figurines",
+    "Iron toy weapons"
+  ],
+  ans:1,
+  expl:"Harappan toys include terracotta bullock carts (showing wheeled transport knowledge), bird whistles (shaped like birds, generating sound), rattles, and wheeled toys. These show not only craft skill but also childhood leisure culture — a remarkably humanizing aspect of Harappan life.",
+  pyq:"TNPSC Group 4 2018"
+},
+{
+  id:81, sec:4, type:"Statement",
+  badges:["gem","expected"],
+  stem:"Which of the following elements of Harappan culture show continuity into later Hindu traditions?\n(i) Pipal (Ficus religiosa) tree worship\n(ii) Mother Goddess veneration\n(iii) Yoga posture (suggested by Pashupati Seal)\n(iv) Use of the swastika symbol",
+  opts:["(i) and (ii) only","(i), (ii) and (iii) only","(i), (ii), (iii) and (iv)","(iii) and (iv) only"],
+  ans:2,
+  expl:"All four statements reflect elements of Harappan culture that have potential continuities into later Hindu traditions. Pipal tree worship, Mother Goddess cults (Shakti), yoga postures (associated with Shiva in the Pashupati Seal), and the swastika (auspicious symbol) all appear in both Harappan archaeology and later Hinduism.",
+  gem:"The debate over Harappan-Hindu continuity is central to Indian cultural history. Scholars like Romila Thapar caution against projecting back later traditions, while others like B.B. Lal see direct continuities. The TNPSC exam generally takes the continuity view as mainstream.",
+  expected:true
+},
+{
+  id:82, sec:4, type:"MCQ",
+  badges:["pyq"],
+  stem:"Which of the following is correct about gender roles and equality in Harappan society?",
+  opts:[
+    "Men alone wore ornaments; women had no jewelry",
+    "Both men and women wore ornaments, suggesting some degree of social equality",
+    "Only the priest class wore ornaments",
+    "Evidence shows men were exclusively in positions of power"
+  ],
+  ans:1,
+  expl:"Archaeological evidence (figurines, burial goods) shows both men and women in Harappan society wore ornaments including necklaces, bangles, armlets, and girdles. The double burial at Lothal (man and woman together) also suggests gender companionship. No clear evidence of strict male dominance exists.",
+  pyq:"TNPSC Group 2 2020"
+},
+{
+  id:83, sec:4, type:"Match",
+  badges:["expected","pyq"],
+  stem:"Match the Harappan religious features with their evidence:\nColumn I ↔ Column II\n1. Pipal tree worship\n2. Proto-Shiva concept\n3. Fire worship / Yajna precursor\n4. Fertility cult\na. Mother Goddess terracotta figurines\nb. Fire altars at Kalibangan and Lothal\nc. Pashupati Seal — yogic figure surrounded by animals\nd. Depicted on seals with a figure inside the tree",
+  opts:["1-d, 2-c, 3-b, 4-a","1-a, 2-d, 3-c, 4-b","1-c, 2-b, 3-d, 4-a","1-b, 2-a, 3-c, 4-d"],
+  ans:0,
+  expl:"Pipal tree worship is evidenced by seals showing a divine figure emerging from or worshipped within a pipal tree. Proto-Shiva is the interpretation of the Pashupati Seal. Fire worship is evidenced by fire altars at Kalibangan and Lothal. Fertility cult is attested by numerous Mother Goddess terracotta figurines.",
+  pyq:"TNPSC Group 1 2021"
+},
+{
+  id:84, sec:4, type:"Assertion",
+  badges:["gem"],
+  stem:"Assertion (A): Dice found at Mohenjo-daro are cubical with opposing faces adding up to seven.\nReason (R): This is the same convention used in modern dice, suggesting a common origin.",
+  opts:[
+    "Both A and R are true and R is the correct explanation of A",
+    "Both A and R are true but R is not the correct explanation of A",
+    "A is true but R is false",
+    "A is false but R is true"
+  ],
+  ans:1,
+  expl:"Both A and R are true. Harappan dice from Mohenjo-daro are indeed cubical with opposing faces summing to seven (1-6, 2-5, 3-4). Modern dice follow the same convention. However, while intriguing, we cannot definitively prove a direct continuous tradition from Harappan dice to modern dice — other cultures independently developed similar dice.",
+  gem:"The game of dice (aksha) is mentioned in the Rigveda and Mahabharata (the famous dice game that leads to the war). Whether these texts preserve a cultural memory of the Harappan gaming tradition is an open and fascinating question."
+},
+{
+  id:85, sec:4, type:"MCQ",
+  badges:["expected","pyq"],
+  stem:"What is the significance of the double burial found at Lothal?",
+  opts:[
+    "It shows human sacrifice was practiced",
+    "It may indicate pair burial custom or gender equality in death rites",
+    "It proves the existence of a royal couple",
+    "It confirms war casualties were buried together"
+  ],
+  ans:1,
+  expl:"The double burial at Lothal (a man and a woman interred together in the same grave) is interpreted as either a pair burial custom (spouses buried together) or an indicator of gender equality in death rites. It could also reflect a specific social practice of the Lothal community. No evidence of violence on the skeletons rules out sacrifice.",
+  pyq:"TNPSC Group 2 2023",
+  expected:true
+},
+{
+  id:86, sec:4, type:"NotCorrect",
+  badges:["trap","pyq"],
+  stem:"Which of the following about Harappan burial practices is NOT correct?",
+  opts:[
+    "The most common burial in Mature Harappan phase was extended burial",
+    "Bodies were often buried with pottery vessels and personal ornaments",
+    "Cemetery H represents an earlier burial tradition than Cemetery R-37",
+    "Fractional burial became more common in the Late Harappan phase"
+  ],
+  ans:2,
+  expl:"Statement (C) is false. Cemetery R-37 at Harappa belongs to the Mature Harappan phase, while Cemetery H belongs to the later Post-Urban/Late Harappan phase. So Cemetery H is MORE RECENT (later) than R-37, not earlier. The other statements about extended burial, grave goods, and Late Harappan fractional burial are all correct.",
+  trap:"R-37 = Mature phase (earlier); Cemetery H = Late/Post-Urban phase (later). This chronological order is frequently confused.",
+  pyq:"TNPSC Group 4 2022"
+},
+{
+  id:87, sec:4, type:"Statement",
+  badges:["expected"],
+  stem:"Which of the following correctly describe the Harappan script's direction and nature?\n(i) Harappan script is generally written from right to left.\n(ii) In some long inscriptions, boustrophedon (alternating direction) was used.\n(iii) Harappan script is an alphabetical script like modern Hindi or Tamil.\n(iv) The script consists of approximately 400 signs.",
+  opts:["(i) and (iv) only","(i), (ii) and (iv) only","All of the above","(ii) and (iii) only"],
+  ans:1,
+  expl:"Statements (i), (ii), and (iv) are correct. Harappan script is predominantly right-to-left, occasionally boustrophedon (right-to-left then left-to-right on next line), and has ~400 identified signs. Statement (iii) is false — Harappan script is pictographic/logo-syllabic (like Egyptian hieroglyphics), not alphabetical.",
+  expected:true
+},
+{
+  id:88, sec:4, type:"MCQ",
+  badges:["pyq","gem"],
+  stem:"The Harappan terracotta figurines most commonly represent:",
+  opts:[
+    "Male warrior figures","Mother Goddess (female figurines)","Children and animals","Male rulers with crowns"
+  ],
+  ans:1,
+  expl:"Female figurines (identified as Mother Goddess representations) are the most common terracotta figurines found across Harappan sites. They often have elaborate headdresses, necklaces, and prominent breasts — associated with fertility, childbirth, and a female deity cult.",
+  gem:"The Mother Goddess tradition of the Harappans may be the ancestor of later Indian goddess worship — Durga, Kali, and village goddess (gramadevata) cults. Some scholars see an unbroken 5000-year tradition of goddess veneration from Harappan times to the present.",
+  pyq:"TNPSC Group 4 2017"
+},
+{
+  id:89, sec:4, type:"Assertion",
+  badges:["expected"],
+  stem:"Assertion (A): The Harappan civilization may have been governed by a priestly class or merchant oligarchy rather than a king.\nReason (R): No royal palace, crown, throne, or clear symbol of kingship has been found at any Harappan site.",
+  opts:[
+    "Both A and R are true and R is the correct explanation of A",
+    "Both A and R are true but R is not the correct explanation of A",
+    "A is true but R is false",
+    "A is false but R is true"
+  ],
+  ans:0,
+  expl:"Both A and R are true and R explains A. The absence of palaces, royal regalia, battle scenes celebrating a king, and dedicatory inscriptions to rulers (all present in contemporary Mesopotamia and Egypt) is the key evidence for alternative governance models in the Harappan civilization.",
+  expected:true
+},
+{
+  id:90, sec:4, type:"MCQ",
+  badges:["pyq"],
+  stem:"The game of chess is believed by some scholars to have origins traceable to which Harappan finding?",
+  opts:[
+    "Terracotta dice","Chessboard-like game boards and pieces","Ivory figurines","Terracotta board with pieces"],
+  ans:1,
+  expl:"While speculative, some scholars have linked early chess-like game pieces and boards found at Harappan sites to the eventual development of chess (chaturanga) in India. Dice, terracotta game pieces, and board-like objects have been found at Mohenjo-daro, suggesting sophisticated gaming culture.",
+  pyq:"TNPSC Group 2 2019"
+},
+
+// ============================================================
+// SECTION 6: Script, Seals & Weights (Q91-Q105)
+// ============================================================
+{
+  id:91, sec:5, type:"Statement",
+  badges:["pyq","expected"],
+  stem:"Which of the following statements about the Harappan script are correct?\n(i) The script has been fully deciphered by Indian scholars.\n(ii) The script is written from right to left.\n(iii) Approximately 400 signs have been identified.\n(iv) The script is found primarily on seals and sealings.",
+  opts:["(ii) and (iii) only","(ii), (iii) and (iv) only","(i) and (iv) only","All of the above"],
+  ans:1,
+  expl:"The Harappan script remains undeciphered to date — Statement (i) is false. Statements (ii), (iii), and (iv) are all correct: it is generally written right to left, has around 400 identified signs (some estimates go up to 600), and appears predominantly on steatite seals and sealings.",
+  pyq:"TNPSC Group 1 2023",
+  expected:true
+},
+{
+  id:92, sec:5, type:"MCQ",
+  badges:["gem","expected"],
+  stem:"Why has the Harappan script remained undeciphered till today?",
+  opts:[
+    "The script tablets were all destroyed by the British",
+    "No bilingual inscription equivalent to the Rosetta Stone has been found",
+    "Indian scholars have not tried to decipher it",
+    "The script is too simple and not worth deciphering"
+  ],
+  ans:1,
+  expl:"The main obstacle to deciphering the Harappan script is the absence of a bilingual text (like Egypt's Rosetta Stone which had the same text in three scripts, enabling decipherment). Additionally, we don't know what language the script represents, most inscriptions are very short (average 5 signs), and there are no living speakers of the language.",
+  gem:"Over 100 researchers have claimed decipherment of the Harappan script, but none has achieved scholarly consensus. If deciphered, it would be the most significant linguistic discovery of modern times — potentially revealing the political, religious, and commercial records of the world's largest Bronze Age civilization.",
+  expected:true
+},
+{
+  id:93, sec:5, type:"MCQ",
+  badges:["pyq","trap"],
+  stem:"The Dholavira signboard inscription is unique because:",
+  opts:[
+    "It is written in Sanskrit",
+    "It is the only bilingual inscription of the Harappan civilization",
+    "It has 10 large signs and appears to be a public display inscription",
+    "It was found on a steatite seal like other inscriptions"
+  ],
+  ans:2,
+  expl:"The Dholavira signboard is unique because it consists of 10 large signs made of white gypsum/crystal inlaid in wood, placed prominently near the northern gate — suggesting it was a public display inscription (possibly a name board or title). Unlike the tiny seal inscriptions (average 5 signs), this was meant to be read from a distance.",
+  trap:"The Dholavira inscription is NOT bilingual — there is still no bilingual Harappan inscription. Its uniqueness is in its public/display nature, not its language.",
+  pyq:"TNPSC Group 1 2022"
+},
+{
+  id:94, sec:5, type:"Assertion",
+  badges:["expected"],
+  stem:"Assertion (A): The Harappan seals are mostly made of steatite.\nReason (R): Steatite is a soft stone that can be easily carved and then hardened by firing.",
+  opts:[
+    "Both A and R are true and R is the correct explanation of A",
+    "Both A and R are true but R is not the correct explanation of A",
+    "A is true but R is false",
+    "A is false but R is true"
+  ],
+  ans:0,
+  expl:"Both A and R are true and R explains A. Steatite (soapstone) is soft enough to carve intricate designs and text, and when fired it hardens into a durable material. This combination of workability and final hardness made steatite the preferred material for the ~2000+ seals found in the Harappan civilization.",
+  expected:true
+},
+{
+  id:95, sec:5, type:"Match",
+  badges:["pyq"],
+  stem:"Match the Harappan seals with their significance:\nColumn I ↔ Column II\n1. Unicorn seal\n2. Pashupati seal\n3. Cylinder seal (Mesopotamian type)\n4. Dholavira signboard\na. Evidence of trade contact with Mesopotamia\nb. Most frequently found animal motif\nc. Longest Harappan inscription (10 signs)\nd. Proto-Shiva / master-of-animals deity",
+  opts:["1-b, 2-d, 3-a, 4-c","1-a, 2-b, 3-d, 4-c","1-c, 2-a, 3-b, 4-d","1-d, 2-c, 3-a, 4-b"],
+  ans:0,
+  expl:"The Unicorn seal is the most common motif. The Pashupati seal depicts a proto-Shiva/master-of-animals figure. Cylinder seals (Mesopotamian type found at Harappan sites) indicate trade contact. The Dholavira signboard has 10 signs, the longest single Harappan inscription.",
+  pyq:"TNPSC Group 2 2023"
+},
+{
+  id:96, sec:5, type:"Numerical",
+  badges:["expected"],
+  stem:"Approximately how many seals have been discovered from Harappan sites in total?",
+  opts:["Around 200","Around 500","Around 2000 or more","Around 10,000"],
+  ans:2,
+  expl:"Over 2000 seals have been discovered from Harappan sites, with Mohenjo-daro yielding the largest number. Most are square steatite seals measuring about 2×2 cm, with an animal motif and a short inscription (average 5 signs) above. They were likely used for trade and identification purposes.",
+  expected:true
+},
+{
+  id:97, sec:5, type:"Statement",
+  badges:["gem","pyq"],
+  stem:"Which of the following statements about Harappan weights are correct?\n(i) Harappan weights used a binary system in lower denominations.\n(ii) Weights were made from cubical chert (a type of flint) stone.\n(iii) The weights were site-specific and varied across different cities.\n(iv) The same weight system was used across the entire civilization's extent.",
+  opts:["(i) and (ii) only","(i), (ii) and (iv) only","(ii), (iii) and (iv) only","All of the above"],
+  ans:1,
+  expl:"Statements (i), (ii), and (iv) are correct. Binary system (1,2,4,8,16,32...) for lower weights, cubical chert material, and remarkable uniformity across all sites are all confirmed. Statement (iii) is the opposite of the truth — the weights were UNIFORM across the civilization, not site-specific, which is one of the most impressive organizational achievements of the Harappans.",
+  gem:"The uniformity of Harappan weights from Balochistan to Gujarat suggests either a powerful central authority standardizing measurement OR an incredibly unified cultural norm — both explanations point to a highly organized society well before the concept of nation-states.",
+  pyq:"TNPSC Group 1 2019"
+},
+{
+  id:98, sec:5, type:"MCQ",
+  badges:["expected","trap"],
+  stem:"What is the significance of NOT finding a Rosetta Stone equivalent for the Harappan script?",
+  opts:[
+    "It proves the Harappans were illiterate",
+    "Without a bilingual text, decipherment of the Harappan script remains impossible in principle",
+    "It shows that the Harappans deliberately hid their script",
+    "It means the Harappan 'script' is just decorative and not actual writing"
+  ],
+  ans:1,
+  expl:"A bilingual inscription (same text in a known and unknown script) is the most powerful tool for decipherment. Without one, scholars must rely on internal pattern analysis, cultural context, and comparison with other scripts — making decipherment extremely difficult. It is not technically impossible but remains unachieved after a century of attempts.",
+  trap:"Option D is a real academic debate — some scholars argue the Harappan signs are logos or emblems, not a full script. However, the mainstream view (and TNPSC exam position) treats them as an undeciphered script.",
+  expected:true
+},
+{
+  id:99, sec:5, type:"Assertion",
+  badges:["gem"],
+  stem:"Assertion (A): The Harappan script is considered a logo-syllabic or pictographic script.\nReason (R): The signs appear to represent both objects (pictograms) and sounds (syllables), similar to early Sumerian and Egyptian writing.",
+  opts:[
+    "Both A and R are true and R is the correct explanation of A",
+    "Both A and R are true but R is not the correct explanation of A",
+    "A is true but R is false",
+    "A is false but R is true"
+  ],
+  ans:0,
+  expl:"Both A and R are true and R explains A. Logo-syllabic scripts (like early Sumerian cuneiform and Egyptian hieroglyphics) combine signs that represent whole words/objects with signs representing syllable sounds. Harappan script analysis suggests a similar mixed system, though this interpretation cannot be verified without decipherment.",
+  gem:"Asko Parpola (Finnish scholar) has spent 50+ years attempting to decipher the Harappan script, proposing it represents an early Dravidian language. Bryan Wells and other scholars have made different proposals. The script remains one of the great unsolved linguistic mysteries."
+},
+{
+  id:100, sec:5, type:"Match",
+  badges:["expected"],
+  stem:"Match the measuring instruments found at Harappan sites:\nColumn I (Instrument) ↔ Column II (Site Found)\n1. Ivory measuring scale\n2. Bronze measuring rod\n3. Cubical chert weights\n4. Shell measuring scale\na. Mohenjo-daro\nb. Harappa and most sites\nc. Lothal\nd. Mohenjo-daro (another scale)",
+  opts:["1-c, 2-a, 3-b, 4-d","1-a, 2-c, 3-d, 4-b","1-b, 2-d, 3-c, 4-a","1-d, 2-b, 3-a, 4-c"],
+  ans:0,
+  expl:"The ivory measuring scale (smallest division ~1.704 mm) was found at Lothal. The bronze measuring rod was found at Mohenjo-daro. Cubical chert weights are found at Harappa and most major sites. Multiple measuring instruments from different materials confirm the Harappans had a highly developed measurement culture.",
+  expected:true
+},
+{
+  id:101, sec:5, type:"MCQ",
+  badges:["pyq"],
+  stem:"The function of Harappan seals was most likely:",
+  opts:[
+    "Religious amulets worn around the neck",
+    "Marking ownership and for trade/commerce purposes",
+    "Royal decrees of Harappan kings",
+    "Religious scriptures of the Harappan faith"
+  ],
+  ans:1,
+  expl:"Harappan seals were primarily used for marking ownership of goods and for trade/commerce. They would be pressed into wet clay on bundles of goods to create a sealing that identified the owner/trader. The fact that they have knobs on the back (for gripping when stamping) confirms their use as stamps.",
+  pyq:"TNPSC Group 4 2020"
+},
+{
+  id:102, sec:5, type:"NotCorrect",
+  badges:["trap","expected"],
+  stem:"Which of the following about the Harappan script is NOT correct?",
+  opts:[
+    "The script remains undeciphered",
+    "Signs are found on steatite seals, pottery, and copper tablets",
+    "The script has been identified as an early form of Sanskrit",
+    "The direction of writing is generally right to left"
+  ],
+  ans:2,
+  expl:"Statement (C) is false — the Harappan script has NOT been identified as an early form of Sanskrit. Sanskrit is an Indo-European language associated with the later Vedic culture, while many linguists believe Harappan may represent a proto-Dravidian language. This is debated but the Sanskrit claim is the clearly false option.",
+  trap:"Some nationalist scholars claim the script is Vedic Sanskrit — this is not accepted by mainstream archaeology. TNPSC follows the mainstream position.",
+  expected:true
+},
+{
+  id:103, sec:5, type:"MCQ",
+  badges:["pyq","gem"],
+  stem:"Cylinder seals of Mesopotamian type found at Harappan sites prove:",
+  opts:[
+    "Harappans copied Mesopotamian seal technology without trade",
+    "Trade and cultural contact between the Harappan and Mesopotamian civilizations",
+    "Mesopotamian merchants settled permanently in Harappan cities",
+    "The Harappan script is derived from Mesopotamian cuneiform"
+  ],
+  ans:1,
+  expl:"Cylinder seals (rolled across clay to leave an impression) are distinctively Mesopotamian in design and technique. Their presence at Harappan sites, along with Harappan goods found in Mesopotamia, is bilateral evidence of trade and cultural contact between the two civilizations.",
+  gem:"Interestingly, Harappan traders seem to have adopted Mesopotamian cylinder seals for use in Mesopotamian trade contexts (where cylinder seals were the standard), while using their own square stamp seals domestically. This bilingual 'seal' practice shows sophisticated trade adaptation.",
+  pyq:"TNPSC Group 2 2022"
+},
+{
+  id:104, sec:5, type:"Assertion",
+  badges:["expected"],
+  stem:"Assertion (A): Harappan seals typically have an animal motif with a short inscription above.\nReason (R): The inscription likely records the owner's name, title, or the commodity being traded.",
+  opts:[
+    "Both A and R are true and R is the correct explanation of A",
+    "Both A and R are true but R is not the correct explanation of A",
+    "A is true but R is false",
+    "A is false but R is true"
+  ],
+  ans:1,
+  expl:"A is true — most Harappan seals do have an animal motif with a short script inscription above. R is also a reasonable hypothesis about the function of the inscription, but since the script is undeciphered, we cannot confirm R. Both are true, but R is speculative, not proven, so it doesn't fully explain A.",
+  expected:true
+},
+{
+  id:105, sec:5, type:"MCQ",
+  badges:["pyq"],
+  stem:"What is the maximum number of signs seen in a single Harappan seal inscription (excluding the Dholavira signboard)?",
+  opts:["Around 3-5","Around 10-15","Around 25-30","Around 50"],
+  ans:1,
+  expl:"Most Harappan seal inscriptions have only 4-5 signs, with the maximum on individual seals being around 10-15 signs. The average is about 5 signs. This brevity makes decipherment very challenging. The Dholavira signboard, with 10 large public signs, is exceptional in its size and display context.",
+  pyq:"TNPSC Group 1 2023"
+},
+
+// ============================================================
+// SECTION 7: Decline & Theories (Q106-Q120)
+// ============================================================
+{
+  id:106, sec:6, type:"MCQ",
+  badges:["pyq","gem"],
+  stem:"Mortimer Wheeler's theory about the decline of the Harappan civilization famously stated:",
+  opts:[
+    "Climate change caused rivers to dry up",
+    "'Indra stands accused' — Aryan invasion destroyed the civilization",
+    "Trade breakdown with Mesopotamia caused economic collapse",
+    "A great flood destroyed Mohenjo-daro"
+  ],
+  ans:1,
+  expl:"Mortimer Wheeler, based on skeletal remains at Mohenjo-daro and the character of the Late phase, famously blamed 'Indra' (the Aryan war god) for destroying the Harappan civilization — 'Indra stands accused.' This Aryan Invasion Theory (AIT) has been largely discredited by modern archaeology and DNA evidence.",
+  gem:"Wheeler's 'massacre' skeletons at Mohenjo-daro have since been re-analyzed. The bodies were found in different strata (not a single massacre event), with no evidence of battle wounds. The Aryan Invasion narrative, while influential for decades, is now considered an overreach.",
+  pyq:"TNPSC Group 1 2017"
+},
+{
+  id:107, sec:6, type:"Statement",
+  badges:["expected"],
+  stem:"Which of the following are considered credible theories for the decline of the Harappan civilization?\n(i) Climate change and weakening of monsoon rainfall.\n(ii) Drying up of the Ghaggar-Hakra (Sarasvati) river.\n(iii) Aryan Invasion destroyed all Harappan cities simultaneously.\n(iv) Trade breakdown with Mesopotamia after 2000 BCE.",
+  opts:["(i), (ii) and (iv) only","(i) and (iv) only","All of the above","(ii), (iii) and (iv) only"],
+  ans:0,
+  expl:"Statements (i), (ii), and (iv) are considered credible contributing factors. Climate change (Giosan et al., 2012 — monsoon weakening), drying of the Ghaggar-Hakra river (causing eastward migration), and trade breakdown with Mesopotamia are all supported by evidence. Statement (iii) — Aryan Invasion destroying all cities simultaneously — is discredited as archaeological evidence shows a gradual, multi-century decline.",
+  expected:true
+},
+{
+  id:108, sec:6, type:"Assertion",
+  badges:["gem","expected"],
+  stem:"Assertion (A): The Ghaggar-Hakra river (identified by some as the ancient Sarasvati) played a significant role in the distribution of Harappan sites.\nReason (R): A large number of Harappan sites cluster along the dried Ghaggar-Hakra river bed in Rajasthan and Haryana.",
+  opts:[
+    "Both A and R are true and R is the correct explanation of A",
+    "Both A and R are true but R is not the correct explanation of A",
+    "A is true but R is false",
+    "A is false but R is true"
+  ],
+  ans:0,
+  expl:"Both A and R are true and R explains A. Archaeological surveys have revealed that the highest density of Harappan sites clusters along the dried bed of the Ghaggar-Hakra river — more sites than along the Indus itself. The drying of this river due to tectonic shifts and glacial retreat is a leading theory for why Harappan population centres shifted eastward.",
+  gem:"Some scholars (notably Shereen Ratnagar and Romila Thapar) question the Sarasvati-Ghaggar-Hakra equation. Others (Yashpal, B.B. Lal) strongly support it based on satellite imagery and site density data. This is both an archaeological and politically charged debate in India.",
+  expected:true
+},
+{
+  id:109, sec:6, type:"MCQ",
+  badges:["pyq"],
+  stem:"The Rakhigarhi DNA study (2019) challenged which theory about the decline/transformation of Harappan civilization?",
+  opts:[
+    "Climate change theory","Trade breakdown theory","Aryan Invasion/Migration as the major cause","Flood theory"],
+  ans:2,
+  expl:"The 2019 Rakhigarhi DNA study found that IVC individuals had no steppe pastoralist ancestry (the genetic signature of Indo-Aryan migrants). This challenges the Aryan Migration/Invasion Theory as the primary explanation for cultural transformation — it suggests that the people who replaced/succeeded Harappan culture were not recently arrived Indo-Aryans.",
+  pyq:"TNPSC Group 1 2022"
+},
+{
+  id:110, sec:6, type:"Statement",
+  badges:["expected","trap"],
+  stem:"Which of the following statements about the Late Harappan / Post-Urban phase are correct?\n(i) The Cemetery H culture at Harappa belongs to this phase.\n(ii) Jhukar culture (in Sindh) and Rangpur culture (in Gujarat) are Late Harappan cultures.\n(iii) The Post-Urban phase shows complete abandonment of all urban features.\n(iv) Writing (script) disappeared in the Post-Urban phase.",
+  opts:["(i), (ii) and (iv) only","(i) and (ii) only","All of the above","(ii), (iii) and (iv) only"],
+  ans:0,
+  expl:"Statements (i), (ii), and (iv) are correct. Cemetery H, Jhukar, and Rangpur are Late/Post-Urban cultures. Writing did disappear in this phase — no Post-Urban Harappan inscriptions are known. Statement (iii) is false — the post-urban phase shows a decline and simplification of urban features, not complete abandonment. Some settlements continued with reduced complexity.",
+  trap:"'Complete abandonment' is always a suspect statement in history — gradual decline and cultural transformation are more typical than total overnight abandonment.",
+  expected:true
+},
+{
+  id:111, sec:6, type:"MCQ",
+  badges:["gem","expected"],
+  stem:"Which research paper/study is associated with the climate change theory of Harappan decline?",
+  opts:[
+    "Wheeler (1947) — Harappa Excavations Report",
+    "Giosan et al. (2012) — Fluvial landscapes of the Harappan civilization",
+    "Shinde et al. (2019) — An Ancient Harappan Genome (Rakhigarhi)",
+    "Lal (1954) — Excavations at Hastinapura"
+  ],
+  ans:1,
+  expl:"Liviu Giosan and colleagues (2012, published in PNAS) studied fluvial landscapes and proposed that weakening of the monsoon rainfall and resulting river changes (particularly of the Ghaggar-Hakra system) drove agricultural failure and eastward population migration, contributing to the decline of the Harappan civilization.",
+  gem:"Giosan's study used satellite imagery, sediment analysis, and climate modeling to reconstruct what ancient river systems looked like — a remarkable convergence of earth science and archaeology. This interdisciplinary approach has become the norm in IVC studies.",
+  expected:true
+},
+{
+  id:112, sec:6, type:"Assertion",
+  badges:["pyq"],
+  stem:"Assertion (A): The Aryan Invasion Theory of Harappan decline is now largely discredited.\nReason (R): Archaeological evidence shows a gradual decline over centuries rather than a sudden violent destruction.",
+  opts:[
+    "Both A and R are true and R is the correct explanation of A",
+    "Both A and R are true but R is not the correct explanation of A",
+    "A is true but R is false",
+    "A is false but R is true"
+  ],
+  ans:1,
+  expl:"Both A and R are true, but R is not the sole explanation for A. The AIT is discredited not just because of the gradual decline (R), but also because: (1) the 'massacre' skeletons are from different periods, (2) the DNA evidence (Rakhigarhi 2019) shows no steppe ancestry in IVC people at their peak, and (3) other factors (climate, river change) better explain the evidence.",
+  pyq:"TNPSC Group 1 2018"
+},
+{
+  id:113, sec:6, type:"Match",
+  badges:["expected"],
+  stem:"Match the theories of Harappan decline with their main proponents:\nColumn I (Theory) ↔ Column II (Proponent/Study)\n1. Aryan Invasion Theory\n2. Climate Change / Monsoon failure\n3. Sarasvati River drying up\n4. Trade breakdown with Mesopotamia\na. Giosan et al. (2012 PNAS study)\nb. Various scholars — based on Mesopotamian record gap\nc. Mortimer Wheeler\nd. Satellite archaeology and site density data",
+  opts:["1-c, 2-a, 3-d, 4-b","1-a, 2-c, 3-b, 4-d","1-b, 2-d, 3-a, 4-c","1-d, 2-b, 3-c, 4-a"],
+  ans:0,
+  expl:"Mortimer Wheeler proposed the Aryan Invasion Theory. Giosan et al.'s 2012 PNAS paper is the landmark climate change study. The Sarasvati drying theory is supported by satellite imagery and site density mapping. Trade breakdown is inferred from the cessation of Mesopotamian references to 'Meluhha' after ~1900 BCE.",
+  expected:true
+},
+{
+  id:114, sec:6, type:"MCQ",
+  badges:["pyq","gem"],
+  stem:"Which of the following cultural elements from Harappan civilization survived into later Indian culture, showing civilisational continuity?",
+  opts:[
+    "Sanskrit language and Vedic mantras",
+    "Weights and measures, stepwell tradition, and pipal worship",
+    "Iron technology and chariot warfare",
+    "Four-fold varna system and Ashvamedha sacrifice"
+  ],
+  ans:1,
+  expl:"Weights and measures (decimal/binary system echoes in later Indian metrology), the stepwell (vav) tradition (from Harappan wells to Gujarat's elaborate medieval stepwells), and pipal (Bodhi tree) worship are all potential Harappan continuities into later Indian culture. Sanskrit, iron, varnas, and Ashvamedha are Vedic, not Harappan.",
+  gem:"Gujarat's famous Rani Ki Vav stepwell (UNESCO World Heritage) and thousands of traditional stepwells across India may trace their conceptual ancestry to Harappan wells and the Great Bath — a 4000-year architectural tradition.",
+  pyq:"TNPSC Group 1 2016"
+},
+{
+  id:115, sec:6, type:"Statement",
+  badges:["expected"],
+  stem:"Which of the following statements about the Rakhigarhi 2019 DNA study are correct?\n(i) It was led by Vasant Shinde and published in the journal Cell.\n(ii) The study found IVC people had significant steppe pastoralist (R1a) ancestry.\n(iii) The results suggest IVC people were genetically distinct from later Vedic populations.\n(iv) The study found IVC people were ancestrally related to Iranian farmers and South Asian hunter-gatherers.",
+  opts:["(i), (iii) and (iv) only","(i) and (iv) only","(ii) and (iii) only","All of the above"],
+  ans:0,
+  expl:"Statements (i), (iii), and (iv) are correct. The study was published in Cell by Shinde et al. (2019). IVC people showed NO steppe ancestry (ruling out ii), but were related to Iranian-related farmers and Ancestral South Indians. This makes them genetically distinct from later populations who carry steppe DNA (associated with Indo-Aryan migration).",
+  expected:true
+},
+{
+  id:116, sec:6, type:"MCQ",
+  badges:["trap","pyq"],
+  stem:"The Jhukar culture (in Sindh) is associated with which phase of Harappan civilization?",
+  opts:["Early Harappan","Mature Harappan","Late Harappan / Post-Urban phase","Pre-Harappan Neolithic"],
+  ans:2,
+  expl:"The Jhukar culture is a regional Post-Urban (Late Harappan) culture in Sindh that succeeded the Mature Harappan phase after 1900 BCE. It shows Harappan cultural elements mixed with new traits, representing the transformation rather than complete disappearance of Harappan traditions.",
+  trap:"Students sometimes confuse Jhukar with Kot Diji — Kot Diji is a Pre-Harappan/Early Harappan site, while Jhukar is Post-Mature Harappan.",
+  pyq:"TNPSC Group 2 2021"
+},
+{
+  id:117, sec:6, type:"Assertion",
+  badges:["gem"],
+  stem:"Assertion (A): The decline of the Harappan civilization was likely multicausal rather than due to a single factor.\nReason (R): Evidence points to climate change, river changes, trade decline, and population migration all occurring roughly simultaneously around 1900 BCE.",
+  opts:[
+    "Both A and R are true and R is the correct explanation of A",
+    "Both A and R are true but R is not the correct explanation of A",
+    "A is true but R is false",
+    "A is false but R is true"
+  ],
+  ans:0,
+  expl:"Both A and R are true and R explains A. Modern scholarship strongly favors a multicausal model — climate change reduced rainfall, the Ghaggar-Hakra river dried up disrupting agriculture, trade with Mesopotamia declined, and population migrated eastward and southward. No single cause adequately explains the full pattern of decline.",
+  gem:"The multicausal model of civilizational collapse has parallels with other Bronze Age Collapse events — the collapse of Mycenaean Greece, the Hittite Empire, and Egyptian New Kingdom around 1200 BCE is also attributed to multicausal factors including climate, migration, and trade disruption."
+},
+{
+  id:118, sec:6, type:"MCQ",
+  badges:["expected"],
+  stem:"The eastward migration of Harappan people during the decline phase is evidenced by:",
+  opts:[
+    "Harappan pottery found in South India dated to 1500 BCE",
+    "Increase in Late Harappan sites in Haryana, Uttar Pradesh, and Rajasthan",
+    "Discovery of Harappan cities along the Ganga-Yamuna Doab",
+    "Harappan DNA found in populations of Bengal and Assam"
+  ],
+  ans:1,
+  expl:"During the decline phase, there is a notable increase in the number of Late Harappan sites in Haryana, Rajasthan, and western UP — suggesting populations moved eastward as the Ghaggar-Hakra river dried up and western Harappan cities declined. Sites like Bhagwanpura and Daulatpur in Haryana represent this eastward shift.",
+  expected:true
+},
+{
+  id:119, sec:6, type:"NotCorrect",
+  badges:["trap"],
+  stem:"Which of the following statements about the Aryan Invasion Theory is NOT correct?",
+  opts:[
+    "The theory was proposed by Mortimer Wheeler",
+    "Wheeler argued that 'Indra stands accused' of destroying the Harappan cities",
+    "The theory has been confirmed by modern genetic studies",
+    "The theory is now largely discredited by mainstream archaeology"
+  ],
+  ans:2,
+  expl:"Statement (C) is false. Modern genetic studies (particularly the Rakhigarhi 2019 DNA study) have actually CHALLENGED the Aryan Invasion Theory, not confirmed it. The study found no steppe ancestry in peak-IVC individuals, supporting migration at a different period and context from the old AIT narrative.",
+  trap:"The genetic evidence is often misread — genetics confirms some steppe ancestry in later Indian populations (Vedic connection) but does NOT confirm an 'invasion' that destroyed the Harappans."
+},
+{
+  id:120, sec:6, type:"MCQ",
+  badges:["pyq","gem"],
+  stem:"John Marshall's theory about the cause of Mohenjo-daro's decline was:",
+  opts:[
+    "Aryan invasion","Repeated flooding by the Indus river","Trade breakdown","Earthquake"],
+  ans:1,
+  expl:"John Marshall proposed that Mohenjo-daro declined due to repeated flooding by the Indus river — he noted thick silt deposits and evidence of reconstruction after floods. Later scholars including Ernest Mackay and Robert Raikes developed more sophisticated flood theories. However, this single-cause flood theory also doesn't explain the wider civilization's decline.",
+  gem:"The flood theory has partial merit — Mohenjo-daro does show evidence of at least 7 rebuilding phases, each on top of flood deposits. But the city's remarkable resilience in rebuilding after floods argues against floods alone causing the final decline.",
+  pyq:"TNPSC Group 2 2020"
+},
+
+// ============================================================
+// SECTION 8: Connections, Comparisons & Revision (Q121-Q150)
+// ============================================================
+{
+  id:121, sec:7, type:"Match",
+  badges:["pyq","expected"],
+  stem:"Match the contemporary ancient civilizations with their approximate time periods:\nColumn I ↔ Column II\n1. Harappan (Mature phase)\n2. Mesopotamian (Sumerian)\n3. Egyptian (Old Kingdom)\n4. Chinese Shang Dynasty\na. 2600–2181 BCE\nb. 1600–1046 BCE\nc. 2600–1900 BCE\nd. 3500–2300 BCE",
+  opts:["1-c, 2-d, 3-a, 4-b","1-a, 2-b, 3-c, 4-d","1-d, 2-c, 3-b, 4-a","1-b, 2-a, 3-d, 4-c"],
+  ans:0,
+  expl:"Mature Harappan phase: 2600–1900 BCE. Egyptian Old Kingdom: 2600–2181 BCE. Sumerian civilization peaked 3500–2300 BCE (earlier than Harappan). Chinese Shang Dynasty: 1600–1046 BCE (later than Harappan). All four are Bronze Age civilizations but span different periods.",
+  pyq:"TNPSC Group 1 2020",
+  expected:true
+},
+{
+  id:122, sec:7, type:"Statement",
+  badges:["expected","gem"],
+  stem:"Which of the following correctly distinguish Harappan civilization from Mesopotamian civilization?\n(i) Harappan cities had no monumental temple towers (ziggurats) while Mesopotamia did.\n(ii) Harappan script is deciphered; Mesopotamian cuneiform was also deciphered.\n(iii) Harappan civilization left no clear evidence of kings or warfare; Mesopotamia had both.\n(iv) The Harappan civilization was larger in geographical extent than Mesopotamian civilization.",
+  opts:["(i), (iii) and (iv) only","(i) and (iii) only","(i), (ii), (iii) and (iv)","(ii) and (iv) only"],
+  ans:0,
+  expl:"Statements (i), (iii), and (iv) are correct. Mesopotamia had ziggurats; Harappan had none. Mesopotamia had kings and war art; Harappan had neither. Harappan civilization was larger in area. Statement (ii) is false — Harappan script is NOT deciphered, though Mesopotamian cuneiform was deciphered in the 19th century.",
+  gem:"The contrast between the two civilizations is striking: Mesopotamia celebrated war and kings in massive monuments and texts; the Harappans, equally sophisticated, left no war art, no battle scenes, no royal proclamations. The Harappan civilization may represent humanity's most successful ancient experiment in peaceful urban civilization.",
+  expected:true
+},
+{
+  id:123, sec:7, type:"MCQ",
+  badges:["pyq"],
+  stem:"Harappan beads (carnelian) found at Adichanallur in Tamil Nadu prove:",
+  opts:[
+    "Harappans established colonies in Tamil Nadu",
+    "Trade connections between Harappan civilization and South India",
+    "Harappans conquered South India",
+    "Tamil civilization originated from the Harappan civilization"
+  ],
+  ans:1,
+  expl:"Harappan carnelian beads found at Adichanallur (Thoothukudi district, Tamil Nadu) provide evidence of trade connections between the Harappan network and South India. This shows that Harappan trade extended all the way to the southern tip of the subcontinent, though not necessarily involving direct Harappan presence.",
+  pyq:"TNPSC Group 1 2021"
+},
+{
+  id:124, sec:7, type:"Chronological",
+  badges:["expected"],
+  stem:"Arrange the following in correct chronological order (earliest to latest):\n1. Decline of the Mature Harappan phase\n2. Establishment of Mehrgarh (Neolithic)\n3. Discovery of Harappa by Daya Ram Sahni\n4. Publication of Rakhigarhi DNA study",
+  opts:["2-1-3-4","1-2-3-4","2-3-1-4","3-2-4-1"],
+  ans:0,
+  expl:"Mehrgarh was established ~7000 BCE. Mature Harappan declined ~1900 BCE. Harappa was discovered in 1921 CE. The Rakhigarhi DNA study was published in 2019 CE. This question blends prehistorical and modern chronology — a common TNPSC trap.",
+  expected:true
+},
+{
+  id:125, sec:7, type:"MCQ",
+  badges:["pyq","gem"],
+  stem:"The term 'Bronze Age' when applied to the Harappan civilization means:",
+  opts:[
+    "The civilization worshipped bronze idols",
+    "The primary metal used for tools and weapons was copper/bronze",
+    "Bronze was the only metal known to the Harappans",
+    "The Harappans invented bronze smelting"
+  ],
+  ans:1,
+  expl:"'Bronze Age' refers to the historical period when copper and bronze (copper+tin alloy) were the primary metals used for tools, weapons, and ornaments. This applies to the Harappan civilization (2600–1900 BCE). Gold and silver were also used for ornaments. Bronze was not the only metal, but it was the primary functional metal.",
+  gem:"The Harappans obtained tin from Afghanistan/Central Asia and copper from Rajasthan to create bronze. The logistics of this multi-region supply chain for a single alloy tells us about the complexity and scale of Harappan long-distance trade.",
+  pyq:"TNPSC Group 4 2019"
+},
+{
+  id:126, sec:7, type:"Assertion",
+  badges:["expected"],
+  stem:"Assertion (A): The Harappan civilization can be called 'urban' despite having no clearly identified kings or temples.\nReason (R): Urban civilization is defined by planned cities, craft specialization, trade, writing, and social complexity — all of which the Harappans possessed.",
+  opts:[
+    "Both A and R are true and R is the correct explanation of A",
+    "Both A and R are true but R is not the correct explanation of A",
+    "A is true but R is false",
+    "A is false but R is true"
+  ],
+  ans:0,
+  expl:"Both A and R are true and R explains A perfectly. V. Gordon Childe's famous 'Urban Revolution' criteria (planned cities, writing, craft specialization, monumental architecture, long-distance trade, social stratification) are met by the Harappan civilization — even without the 'standard' features of kings and temples.",
+  expected:true
+},
+{
+  id:127, sec:7, type:"Statement",
+  badges:["pyq","gem"],
+  stem:"Which of the following statements about Harappan contributions to world civilization are correct?\n(i) The Harappans cultivated cotton for the first time in human history.\n(ii) The Harappan drainage system is the world's oldest known planned underground sewage network.\n(iii) The Great Bath is considered the world's first public swimming pool.\n(iv) Harappan weights represent one of the earliest known standardized measurement systems.",
+  opts:["(i), (ii) and (iv) only","(i), (ii), (iii) and (iv)","(i) and (iv) only","(ii), (iii) and (iv) only"],
+  ans:0,
+  expl:"Statements (i), (ii), and (iv) are correct. Cotton cultivation, underground drainage, and standardized weights are genuine Harappan firsts. Statement (iii) is false — the Great Bath was most likely a ritual bathing tank, not a recreational swimming pool. The distinction between sacred and recreational use is important.",
+  gem:"The Harappan measurement system used binary progression (1,2,4,8,16...) — the same mathematical foundation used in modern binary computing and digital technology. This is a coincidence, but a striking one worth noting.",
+  pyq:"TNPSC Group 1 2019"
+},
+{
+  id:128, sec:7, type:"MCQ",
+  badges:["expected","pyq"],
+  stem:"Which of the following correctly describes the relationship between the Harappan and Vedic civilizations?",
+  opts:[
+    "They are the same civilization — Vedic texts describe Harappan cities",
+    "The Harappan civilization preceded the Vedic civilization; they were distinct but may have influenced each other",
+    "The Vedic civilization predates the Harappan civilization",
+    "Harappan civilization emerged from Vedic civilization"
+  ],
+  ans:1,
+  expl:"The Harappan Mature phase (2600–1900 BCE) preceded the Vedic age (approximately 1500–500 BCE). They were distinct cultures — Harappan was urban, script-using, trade-oriented, without clear warfare; Vedic was semi-nomadic/pastoral, Sanskrit-using, horse-based, with Ashvamedha rituals. Cultural survivals from Harappan into Vedic India are debated.",
+  pyq:"TNPSC Group 1 2020",
+  expected:true
+},
+{
+  id:129, sec:7, type:"NotCorrect",
+  badges:["trap","pyq"],
+  stem:"Which of the following about the extent of the Harappan civilization is NOT correct?",
+  opts:[
+    "The civilization stretched from Balochistan in the west to Uttar Pradesh in the east",
+    "The northernmost site was Manda in Jammu & Kashmir",
+    "The southernmost site was Daimabad in Maharashtra",
+    "The civilization was confined entirely within present-day Pakistan"
+  ],
+  ans:3,
+  expl:"Statement (D) is false. The Harappan civilization extended well beyond Pakistan into present-day India — including Gujarat, Rajasthan, Haryana, Punjab, UP (Alamgirpur), Jammu & Kashmir (Manda), and Maharashtra (Daimabad). More than two-thirds of known Harappan sites are in present-day India.",
+  trap:"A common misconception — since the two most famous sites (Harappa and Mohenjo-daro) are in Pakistan, students sometimes think the civilization was Pakistan-exclusive.",
+  pyq:"TNPSC Group 2 2021"
+},
+{
+  id:130, sec:7, type:"Match",
+  badges:["expected"],
+  stem:"Match the scholars with their contributions to Harappan studies:\nColumn I ↔ Column II\n1. John Marshall\n2. Ernest Mackay\n3. R.S. Rao\n4. R.S. Bisht\na. Excavation of Lothal (1955 onwards)\nb. Systematic excavation of Dholavira (1990 onwards)\nc. Director-General of ASI; announced IVC to the world (1924)\nd. Excavation of Mohenjo-daro after Marshall",
+  opts:["1-c, 2-d, 3-a, 4-b","1-a, 2-b, 3-c, 4-d","1-d, 2-c, 3-b, 4-a","1-b, 2-a, 3-d, 4-c"],
+  ans:0,
+  expl:"John Marshall announced the IVC to the world in 1924. Ernest Mackay continued Mohenjo-daro excavations after Marshall. S.R. Rao excavated Lothal from 1955. R.S. Bisht systematically excavated Dholavira from 1990, revealing its three-part city plan and signboard inscription.",
+  expected:true
+},
+{
+  id:131, sec:7, type:"MCQ",
+  badges:["pyq","expected"],
+  stem:"Which of the following is considered a Neolithic predecessor site that bridges the gap between early farming and the Harappan civilization?",
+  opts:["Kot Diji","Kalibangan","Mehrgarh","Surkotada"],
+  ans:2,
+  expl:"Mehrgarh (Balochistan, 7000–3200 BCE) is the key Neolithic predecessor site. It shows the progression from early farming (barley, wheat, cotton) through the Chalcolithic to the Early Harappan phase. Kot Diji is an Early Harappan to Mature transition site, not a Neolithic precursor.",
+  pyq:"TNPSC Group 1 2018",
+  expected:true
+},
+{
+  id:132, sec:7, type:"Chronological",
+  badges:["pyq"],
+  stem:"Arrange the following in chronological order of their major archaeological publication/study:\n1. Giosan et al. climate change study\n2. John Marshall's official announcement of IVC\n3. Rakhigarhi DNA study\n4. Mortimer Wheeler's excavations and Aryan Invasion Theory",
+  opts:["2-4-1-3","1-2-3-4","4-2-3-1","2-3-4-1"],
+  ans:0,
+  expl:"Marshall announced IVC in 1924. Wheeler excavated and proposed AIT in 1944–47. Giosan's climate study was published in 2012. Rakhigarhi DNA study was published in 2019. This chronology reflects the evolution of Harappan scholarship over a century.",
+  pyq:"TNPSC Group 1 2023"
+},
+{
+  id:133, sec:7, type:"Statement",
+  badges:["expected"],
+  stem:"Which of the following similarities exist between Harappan and Mesopotamian civilizations?\n(i) Both had urban cities with planned streets.\n(ii) Both had writing systems (though only Mesopotamian is deciphered).\n(iii) Both engaged in long-distance trade.\n(iv) Both had similar religious systems centered on temple worship.",
+  opts:["(i), (ii) and (iii) only","(i) and (iii) only","(i), (ii), (iii) and (iv)","(ii) and (iv) only"],
+  ans:0,
+  expl:"Statements (i), (ii), and (iii) are correct — both had cities, writing, and trade. Statement (iv) is false — Mesopotamian religion was centrally organized around massive temple ziggurats and priest-kings, while Harappan religion shows no conclusive temple structures, representing a very different religious organization.",
+  expected:true
+},
+{
+  id:134, sec:7, type:"MCQ",
+  badges:["gem","pyq"],
+  stem:"The Yoga tradition in India is sometimes linked to the Harappan civilization through:",
+  opts:[
+    "Written yoga texts found at Mohenjo-daro",
+    "The yogic posture of the figure on the Pashupati Seal",
+    "Yoga mats found at Harappan excavations",
+    "A Sanskrit yoga manual found at Harappa"
+  ],
+  ans:1,
+  expl:"The seated figure on the Pashupati Seal from Mohenjo-daro is depicted in what scholars describe as a yogic posture (legs folded, possibly in a specific asana). This is used as evidence that meditative practices resembling yoga may have origins in the Harappan civilization, predating the Vedic texts that later codified yoga.",
+  gem:"If this Harappan-yoga connection is valid, it would push the origins of yoga back to at least 2500 BCE — making it one of the oldest continuous practices in human history. Today, yoga is a global phenomenon with over 300 million practitioners worldwide.",
+  pyq:"TNPSC Group 2 2022"
+},
+{
+  id:135, sec:7, type:"Assertion",
+  badges:["expected"],
+  stem:"Assertion (A): The Harappan civilization is significant for Tamil Nadu's history specifically.\nReason (R): Harappan trade beads have been found at Adichanallur, and trade networks extended to South India.",
+  opts:[
+    "Both A and R are true and R is the correct explanation of A",
+    "Both A and R are true but R is not the correct explanation of A",
+    "A is true but R is false",
+    "A is false but R is true"
+  ],
+  ans:0,
+  expl:"Both A and R are true and R explains A. The discovery of Harappan carnelian beads at Adichanallur (Tamil Nadu) demonstrates direct or indirect trade links between the Harappan world and South India, making Harappan civilization relevant to Tamil Nadu's ancient history — not just the northwestern regions.",
+  expected:true
+},
+{
+  id:136, sec:7, type:"MCQ",
+  badges:["pyq"],
+  stem:"Which of the following modern countries contain Harappan civilization sites?",
+  opts:[
+    "India and Pakistan only",
+    "India, Pakistan, and Afghanistan",
+    "India, Pakistan, Afghanistan, and Iran",
+    "India, Pakistan, and Bangladesh"
+  ],
+  ans:1,
+  expl:"Harappan sites have been confirmed in India (Gujarat, Rajasthan, Haryana, Punjab, UP, J&K, Maharashtra), Pakistan (Sindh, Punjab, Balochistan), and Afghanistan (Shortugai in Kunduz province). No confirmed Harappan sites are located in Iran or Bangladesh.",
+  pyq:"TNPSC Group 4 2021"
+},
+{
+  id:137, sec:7, type:"Statement",
+  badges:["gem","expected"],
+  stem:"Which of the following represents the TNPSC-relevant connections between Harappan and Tamil civilizations?\n(i) Harappan beads found at Adichanallur (Tamil Nadu).\n(ii) Some scholars see Harappan script as an early form of Tamil-Brahmi.\n(iii) The stepwell tradition of Gujarat may be linked to temple tanks in Tamil Nadu.\n(iv) The Harappan and Sangam civilizations were contemporary.",
+  opts:["(i) and (iii) only","(i), (ii) and (iii) only","All of the above","(i) and (ii) only"],
+  ans:1,
+  expl:"Statements (i), (ii), and (iii) are plausible connections studied by scholars. Adichanallur beads confirm trade. Some Dravidian linguists (Asko Parpola, Iravatham Mahadevan) link Harappan to proto-Dravidian/Tamil. Stepwells-to-temple tanks is a cultural continuity argument. Statement (iv) is false — Harappan (2600–1900 BCE) predates classical Sangam literature (300 BCE–300 CE) by ~2000 years.",
+  gem:"Iravatham Mahadevan's work on the Harappan-Tamil/Dravidian connection is particularly significant for Tamil Nadu's TNPSC exam. His 'Indus Script Concordance' remains a major reference for Harappan script studies from a Dravidian linguistic perspective.",
+  expected:true
+},
+{
+  id:138, sec:7, type:"Match",
+  badges:["pyq"],
+  stem:"Match the Harappan firsts with their correct descriptions:\nColumn I ↔ Column II\n1. First cotton cultivation\n2. First planned drainage system\n3. First dockyard\n4. First standardized weights\na. Lothal, Gujarat\nb. Mohenjo-daro and all major cities\nc. Mehrgarh / Mohenjo-daro\nd. All major Harappan sites — binary system",
+  opts:["1-c, 2-b, 3-a, 4-d","1-a, 2-c, 3-b, 4-d","1-d, 2-a, 3-c, 4-b","1-b, 2-d, 3-a, 4-c"],
+  ans:0,
+  expl:"First cotton cultivation: Mehrgarh (earliest evidence) and Mohenjo-daro (fiber traces). First planned drainage: Mohenjo-daro and all major cities. First dockyard: Lothal. First standardized weights: all major Harappan sites using binary/decimal system. These 'firsts' are high-frequency TNPSC exam topics.",
+  pyq:"TNPSC Group 1 2021"
+},
+{
+  id:139, sec:7, type:"MCQ",
+  badges:["expected","pyq"],
+  stem:"For TNPSC Group 1 2026 preparation, which of the following Harappan topics is MOST LIKELY to be tested based on recent trends?",
+  opts:[
+    "Names of all 1500+ Harappan sites",
+    "Rakhigarhi DNA study findings and their implications",
+    "The exact weight of each Harappan stone weight",
+    "The personal names of Harappan merchants"
+  ],
+  ans:1,
+  expl:"The Rakhigarhi DNA study (2019, Shinde et al.) is the most significant recent development in Harappan studies and is highly likely to be tested in TNPSC Group 1 2026. It addresses the Aryan question, genetic ancestry, and civilizational continuity — all major themes in Group 1 History syllabi.",
+  pyq:"TNPSC Group 1 2023",
+  expected:true
+},
+{
+  id:140, sec:7, type:"Assertion",
+  badges:["expected"],
+  stem:"Assertion (A): The Harappan civilization represents one of humanity's earliest and most successful experiments in large-scale urban planning.\nReason (R): Grid streets, standardized bricks, underground drainage, and standardized weights across an area larger than Mesopotamia and Egypt combined demonstrate extraordinary planning capacity.",
+  opts:[
+    "Both A and R are true and R is the correct explanation of A",
+    "Both A and R are true but R is not the correct explanation of A",
+    "A is true but R is false",
+    "A is false but R is true"
+  ],
+  ans:0,
+  expl:"Both A and R are true and R explains A comprehensively. The combination of standardized construction across 1.5 million sq. km — with consistent brick ratios, drainage systems, weights, and city layouts — is unparalleled in the Bronze Age world. The Harappan achievement in civic planning was not surpassed in India until the Mauryan period.",
+  expected:true
+},
+{
+  id:141, sec:7, type:"Fill",
+  badges:["pyq"],
+  stem:"The ancient Sumerian texts referred to the Harappan civilization region as ________, mentioning it as a source of copper, gold, and lapis lazuli.",
+  opts:["Dilmun","Magan","Meluhha","Aratta"],
+  ans:2,
+  expl:"Sumerian cuneiform texts from Mesopotamia refer to 'Meluhha' as a distant eastern land from which they received precious goods. The identification of Meluhha with the Harappan civilization/Indus region is now well-established based on geographic descriptions, goods mentioned, and archaeological finds.",
+  pyq:"TNPSC Group 2 2020"
+},
+{
+  id:142, sec:7, type:"MCQ",
+  badges:["gem","expected"],
+  stem:"The concept of 'living traditions' from the Harappan civilization that continue in India today includes all EXCEPT:",
+  opts:[
+    "Pipal tree worship (Bodhi tree)","Stepwell tradition (vav/kund)","Sanskrit Vedic chanting","Shell (shankh) bangle tradition"],
+  ans:2,
+  expl:"Sanskrit Vedic chanting is associated with the Vedic/Aryan tradition, NOT the Harappan civilization. The other three are considered potential Harappan continuities: pipal (Bodhi/sacred fig) worship, stepwells (architectural descendants of Harappan wells and the Great Bath), and the shankh bangle tradition (Turbinella pyrum shell bangles still worn in West Bengal).",
+  gem:"The pipal tree (Ficus religiosa) depicted on Harappan seals as a sacred object became the Bodhi tree under which Buddha attained enlightenment, continues as the Ashvattha tree of Hindu temples, and is planted outside mosques across South Asia too — one of the most cross-religious sacred trees in the world.",
+  expected:true
+},
+{
+  id:143, sec:7, type:"Chronological",
+  badges:["expected","pyq"],
+  stem:"Arrange these events from TNPSC exam history in the order they are most logically taught:\n1. Harappan script and seals\n2. Decline theories and DNA studies\n3. Discovery and excavation of major sites\n4. Urban planning features",
+  opts:["3-4-1-2","1-2-3-4","2-3-1-4","4-1-3-2"],
+  ans:0,
+  expl:"In a logical pedagogical sequence: first comes discovery/excavation (establishing what sites exist), then urban planning (what the cities look like), then script and seals (what tools/records they left), and finally decline theories (how and why it ended). This is also the sequence of most major textbooks and TNPSC syllabus coverage.",
+  pyq:"TNPSC Group 1 2023",
+  expected:true
+},
+{
+  id:144, sec:7, type:"MCQ",
+  badges:["pyq"],
+  stem:"The Harappan civilization is classified under which UNESCO-defined heritage category as evidenced by Dholavira's listing?",
+  opts:[
+    "Intangible Cultural Heritage","World Natural Heritage","World Cultural Heritage Site","Memory of the World Register"],
+  ans:2,
+  expl:"Dholavira was inscribed on UNESCO's World Heritage List (World Cultural Heritage) in 2021. This category covers outstanding cultural sites of universal value. Natural heritage is for natural sites; Intangible Heritage covers traditions and practices; Memory of the World is for documentary heritage.",
+  pyq:"TNPSC Group 4 2022"
+},
+{
+  id:145, sec:7, type:"Statement",
+  badges:["expected"],
+  stem:"Which of the following are correct about the recent discoveries/developments (2015–2025) in Harappan studies relevant for TNPSC Group 1?\n(i) Rakhigarhi is now confirmed as the largest Harappan site.\n(ii) Dholavira was inscribed as UNESCO World Heritage Site in 2021.\n(iii) DNA studies have resolved the Aryan debate conclusively.\n(iv) Satellite archaeology has revealed new sites along the Ghaggar-Hakra river bed.",
+  opts:["(i), (ii) and (iv) only","(i) and (ii) only","(i), (ii), (iii) and (iv)","(ii), (iii) and (iv) only"],
+  ans:0,
+  expl:"Statements (i), (ii), and (iv) are correct. Rakhigarhi is confirmed largest, Dholavira is UNESCO listed, and satellite archaeology continues to reveal new sites. Statement (iii) is false — the DNA studies have significantly advanced but NOT conclusively resolved the Aryan debate; they have CHALLENGED the Invasion Theory but the full picture is still emerging.",
+  expected:true
+},
+{
+  id:146, sec:7, type:"Assertion",
+  badges:["gem","pyq"],
+  stem:"Assertion (A): The Harappan civilization is sometimes called the 'Forgotten Civilization.'\nReason (R): Knowledge of the Harappan civilization was completely lost until its rediscovery in the 1920s.",
+  opts:[
+    "Both A and R are true and R is the correct explanation of A",
+    "Both A and R are true but R is not the correct explanation of A",
+    "A is true but R is false",
+    "A is false but R is true"
+  ],
+  ans:0,
+  expl:"Both A and R are true and R explains A. Unlike ancient Egypt or Mesopotamia which had surviving historical records, the Harappan civilization left no known historical texts in any known language — its script is undeciphered, and no later tradition explicitly remembered it. It was truly rediscovered from the ground up in the 1920s.",
+  gem:"The contrast with Egypt is instructive: Herodotus wrote about Egyptian civilization in 450 BCE; ancient Greeks and Romans visited Egyptian monuments; Egypt was continuously remembered. The Harappans left no such memory trail in any subsequent literary tradition — a genuinely 'forgotten' civilization.",
+  pyq:"TNPSC Group 2 2022"
+},
+{
+  id:147, sec:7, type:"MCQ",
+  badges:["expected"],
+  stem:"Which of the following books is the most important degree-level reference for the Harappan civilization, widely cited in TNPSC Group 1 preparation?",
+  opts:[
+    "R.S. Sharma — 'Ancient India' (NCERT old edition)",
+    "Romila Thapar — 'Early India'",
+    "A.L. Basham — 'The Wonder That Was India'",
+    "All of the above are important references"
+  ],
+  ans:3,
+  expl:"All three are essential references for Harappan studies at degree level. R.S. Sharma's Ancient India (old NCERT XI) is the foundation. Romila Thapar's Early India provides broader context and a more critical perspective. Basham's Wonder That Was India provides comprehensive cultural coverage. TNPSC Group 1 questions draw from all three.",
+  expected:true
+},
+{
+  id:148, sec:7, type:"Match",
+  badges:["pyq","expected"],
+  stem:"Match TNPSC exam years with significant Harappan questions asked:\nColumn I (Year/Exam) ↔ Column II (Key Topic Tested)\n1. TNPSC Group 1 2023\n2. TNPSC Group 1 2021\n3. TNPSC Group 1 2019\n4. TNPSC Group 4 2022\na. Dholavira UNESCO listing and script\nb. Brick ratio in Harappan construction\nc. Harappan sites and Tamil Nadu connection\nd. Excavation chronology of sites",
+  opts:["1-a, 2-c, 3-b, 4-d","1-b, 2-a, 3-d, 4-c","1-d, 2-b, 3-c, 4-a","1-c, 2-d, 3-a, 4-b"],
+  ans:0,
+  expl:"TNPSC Group 1 2023 tested Dholavira's UNESCO listing and Harappan script. Group 1 2021 tested Tamil Nadu-Harappan connections (Adichanallur). Group 1 2019 tested brick ratios and urban features. Group 4 2022 tested excavation chronology (order of discovery of sites).",
+  pyq:"Multiple years",
+  expected:true
+},
+{
+  id:149, sec:7, type:"Numerical",
+  badges:["expected","pyq"],
+  stem:"Approximately how many years before the Vedic civilization did the Mature Harappan phase end?",
+  opts:["100–200 years","300–400 years","500–1000 years","More than 2000 years"],
+  ans:1,
+  expl:"The Mature Harappan phase ended around 1900 BCE. The Vedic age (Early Vedic/Rigveda) is generally dated to approximately 1500–1200 BCE. This means there is a gap of approximately 300–400 years between the end of Mature Harappan and the beginning of the Vedic age as conventionally dated — time for Late Harappan transition cultures.",
+  pyq:"TNPSC Group 1 2022",
+  expected:true
+},
+{
+  id:150, sec:7, type:"Statement",
+  badges:["expected","gem","pyq"],
+  stem:"As a comprehensive revision: Which of the following statements about the Harappan civilization are correct?\n(i) The civilization was contemporary with Mesopotamia and Egyptian Old Kingdom.\n(ii) Dholavira, the largest Indian site, was added to UNESCO World Heritage in 2021.\n(iii) The Harappan script has been deciphered and found to be proto-Sanskrit.\n(iv) The Rakhigarhi DNA study found no steppe ancestry in IVC individuals.\n(v) Lothal (Gujarat) had the only known dockyard of the Harappan civilization.",
+  opts:[
+    "(i), (ii), (iv) and (v) only",
+    "(i), (ii) and (v) only",
+    "(i), (iii), (iv) and (v) only",
+    "All of the above"
+  ],
+  ans:0,
+  expl:"Statements (i), (ii), (iv), and (v) are correct. Harappan was contemporary with Mesopotamia and Egyptian Old Kingdom. Dholavira is UNESCO listed (2021). Rakhigarhi DNA showed no steppe ancestry. Lothal has the only dockyard. Statement (iii) is false — the Harappan script is NOT deciphered and has NOT been identified as proto-Sanskrit; this is a common and politically motivated misconception.",
+  gem:"This final question is a comprehensive revision test. If you answered correctly without hesitation, you are well-prepared for the Harappan Civilization section of TNPSC Group 1 2026. Review any statements that confused you using the explanations above.",
+  pyq:"TNPSC Group 1 2023",
+  expected:true
+}
+];
+
+// ============================================================
+// STATE
+// ============================================================
+let answers = new Array(151).fill(null);
+let flagged = new Array(151).fill(false);
+let submitted = false;
+let startTime = Date.now();
+let currentFilter = 'all';
+
+// ============================================================
+// RENDER
+// ============================================================
+function init() {
+  buildPalette();
+  renderAllSections();
+  updateProgress();
+}
+
+function buildPalette() {
+  const wrap = document.getElementById('palette-wrap');
+  wrap.innerHTML = '';
+  for (let i = 1; i <= 150; i++) {
+    const d = document.createElement('div');
+    d.className = 'palette-q';
+    d.textContent = i;
+    d.id = `pal-${i}`;
+    d.onclick = () => scrollToQ(i);
+    wrap.appendChild(d);
+  }
+}
+
+function scrollToQ(n) {
+  const el = document.getElementById(`qcard-${n}`);
+  if (el) el.scrollIntoView({ behavior:'smooth', block:'center' });
+}
+
+function renderAllSections() {
+  const tv = document.getElementById('test-view');
+  tv.innerHTML = '';
+
+  SECTIONS.forEach((sec, si) => {
+    const secDiv = document.createElement('div');
+    secDiv.id = `sec-${si}`;
+
+    const header = document.createElement('div');
+    header.className = 'section-header';
+    header.style.setProperty('--card-accent', sec.color);
+    header.innerHTML = `
+      <div class="section-tag"><span class="tag-dot"></span>SECTION ${si+1} · ${sec.count} QUESTIONS</div>
+      <div class="section-title">§${si+1} <span>${sec.name}</span></div>
+    `;
+    secDiv.appendChild(header);
+
+    const grid = document.createElement('div');
+    grid.className = 'questions-grid';
+    grid.style.setProperty('--card-accent', sec.color);
+
+    const secQs = QUESTIONS.filter(q => q.sec === si);
+    secQs.forEach((q, qi) => {
+      grid.appendChild(renderCard(q, si, qi));
+    });
+
+    secDiv.appendChild(grid);
+    tv.appendChild(secDiv);
+  });
+}
+
+function renderCard(q, si, qi) {
+  const sec = SECTIONS[si];
+  const card = document.createElement('div');
+  card.className = 'q-card';
+  card.id = `qcard-${q.id}`;
+  card.style.setProperty('--card-accent', sec.color);
+  card.style.animationDelay = `${qi * 0.03}s`;
+
+  const typeLabel = {
+    MCQ:'MCQ', Statement:'STATEMENT', Assertion:'ASSERTION', Match:'MATCH',
+    Chronological:'ORDER', Fill:'FILL-IN', NotCorrect:'NEGATIVE', Numerical:'NUMERICAL'
+  }[q.type] || q.type.toUpperCase();
+
+  const badgesHTML = (q.badges||[]).map(b => `<span class="callout-badge ${b}">[${b.toUpperCase()}]</span>`).join('');
+
+  card.innerHTML = `
+    <div class="q-card-head">
+      <span class="q-num">Q${q.id}</span>
+      <span class="q-type-badge">${typeLabel}</span>
+      ${badgesHTML}
+      <button class="flag-btn" id="flag-${q.id}" onclick="toggleFlag(${q.id})" title="Mark for review">⚑</button>
+    </div>
+    <div class="q-body">
+      <div class="q-stem">${formatStem(q)}</div>
+      <div class="options-list" id="opts-${q.id}">${renderOptions(q)}</div>
+      <div class="explanation-box" id="expl-${q.id}"></div>
+    </div>
+  `;
+  return card;
+}
+
+function formatStem(q) {
+  let s = q.stem.replace(/\n/g, '<br>');
+  
+  if (q.type === 'Statement') {
+    // Already formatted with line breaks
+  }
+  if (q.type === 'Assertion') {
+    s = s.replace(/Assertion \(A\):/g, '<div class="assert-box"><div class="assert-label">ASSERTION (A)</div>')
+         .replace(/Reason \(R\):/g, '</div><div class="assert-box"><div class="assert-label">REASON (R)</div>')
+         + '</div>';
+  }
+  if (q.type === 'Match') {
+    // render columns
+    const lines = q.stem.split('\n').filter(l => l.trim());
+    const col1 = [], col2 = [];
+    let inCol = 0;
+    let desc = '';
+    lines.forEach(l => {
+      if (l.includes('Column I') && l.includes('Column II')) { inCol = 1; return; }
+      if (l.match(/^\d+\./)) col1.push(l.trim());
+      else if (l.match(/^[a-d]\./)) col2.push(l.trim());
+      else if (inCol === 0) desc += l + ' ';
+    });
+    if (col1.length && col2.length) {
+      const c1html = col1.map(i => `<div class="match-item">${i}</div>`).join('');
+      const c2html = col2.map(i => `<div class="match-item">${i}</div>`).join('');
+      s = `<div style="font-family:var(--font-body);font-size:15px;margin-bottom:12px">${desc}</div>
+           <div class="match-grid">
+             <div><div class="match-col-head">COLUMN I</div>${c1html}</div>
+             <div><div class="match-col-head">COLUMN II</div>${c2html}</div>
+           </div>`;
+    }
+  }
+  return s;
+}
+
+function renderOptions(q) {
+  return q.opts.map((o, i) => {
+    const letter = ['A','B','C','D'][i];
+    return `<button class="option-btn" id="opt-${q.id}-${i}" onclick="selectAnswer(${q.id},${i})">
+      <span class="opt-letter">${letter}</span>
+      <span class="opt-text">${o}</span>
+    </button>`;
+  }).join('');
+}
+
+function selectAnswer(qid, optIdx) {
+  if (submitted) return;
+  answers[qid] = optIdx;
+
+  // Update button styles
+  const q = QUESTIONS.find(x => x.id === qid);
+  q.opts.forEach((_, i) => {
+    const btn = document.getElementById(`opt-${qid}-${i}`);
+    if (btn) {
+      btn.className = 'option-btn' + (i === optIdx ? ' selected' : '');
+    }
+  });
+
+  // Update palette
+  const pal = document.getElementById(`pal-${qid}`);
+  if (pal) {
+    pal.classList.remove('flagged');
+    pal.classList.add('answered');
+    if (flagged[qid]) { pal.classList.add('flagged'); }
+  }
+
+  updateProgress();
+  updateSectionBadge(q.sec);
+}
+
+function toggleFlag(qid) {
+  flagged[qid] = !flagged[qid];
+  const btn = document.getElementById(`flag-${qid}`);
+  const pal = document.getElementById(`pal-${qid}`);
+  if (btn) btn.classList.toggle('flagged', flagged[qid]);
+  if (pal) pal.classList.toggle('flagged', flagged[qid]);
+}
+
+function updateProgress() {
+  const answered = answers.slice(1).filter(a => a !== null).length;
+  const pct = (answered / 150) * 100;
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('answered-count').textContent = answered;
+}
+
+function updateSectionBadge(secIdx) {
+  const secQs = QUESTIONS.filter(q => q.sec === secIdx);
+  const answeredInSec = secQs.filter(q => answers[q.id] !== null).length;
+  const badge = document.getElementById(`badge-${secIdx}`);
+  if (badge) {
+    badge.textContent = `${answeredInSec}/${secQs.length}`;
+    badge.classList.toggle('done', answeredInSec === secQs.length);
+  }
+}
+
+function jumpSection(idx) {
+  document.querySelectorAll('.toc-item').forEach((el,i) => {
+    el.classList.toggle('active', i === idx);
+  });
+}
+
+// ============================================================
+// SUBMIT
+// ============================================================
+function submitTest() {
+  const answered = answers.slice(1).filter(a => a !== null).length;
+  document.getElementById('modal-answered').textContent = answered;
+  document.getElementById('submit-modal').classList.remove('hidden');
+}
+
+function closeModal() {
+  document.getElementById('submit-modal').classList.add('hidden');
+}
+
+function confirmSubmit() {
+  closeModal();
+  submitted = true;
+  showResults();
+}
+
+function showResults() {
+  document.getElementById('test-view').style.display = 'none';
+  document.getElementById('submit-area').style.display = 'none';
+  document.getElementById('palette-section').style.display = 'none';
+  document.getElementById('progress-bar-wrap').style.display = 'none';
+
+  // Calculate results
+  let total = 0;
+  const secScores = SECTIONS.map((s, si) => {
+    const secQs = QUESTIONS.filter(q => q.sec === si);
+    let correct = 0;
+    secQs.forEach(q => {
+      if (answers[q.id] === q.ans) { correct++; total++; }
+    });
+    return { ...s, correct, total: secQs.length };
+  });
+
+  const pct = Math.round((total / 150) * 100);
+  const elapsed = Math.round((Date.now() - startTime) / 1000);
+  const mins = Math.floor(elapsed / 60);
+  const secs = elapsed % 60;
+
+  document.getElementById('final-score').innerHTML = `${total}<span class="score-denom">/150</span>`;
+  document.getElementById('final-pct').textContent = `${pct}%`;
+  document.getElementById('time-taken').textContent = `Time taken: ${mins}m ${secs}s`;
+
+  let grade, gradeClass;
+  if (pct >= 85) { grade = '🏆 Excellent'; gradeClass = 'excellent'; }
+  else if (pct >= 70) { grade = '👍 Good'; gradeClass = 'good'; }
+  else if (pct >= 50) { grade = '📚 Average'; gradeClass = 'average'; }
+  else { grade = '💪 Needs Work'; gradeClass = 'needs-work'; }
+
+  const gb = document.getElementById('grade-badge');
+  gb.textContent = grade;
+  gb.className = `grade-badge ${gradeClass}`;
+
+  // Section bars
+  const barsEl = document.getElementById('section-bars');
+  barsEl.innerHTML = '';
+  secScores.forEach(s => {
+    const p = Math.round((s.correct / s.total) * 100);
+    const color = p >= 60 ? 'var(--green)' : p >= 40 ? 'var(--gold)' : 'var(--red)';
+    barsEl.innerHTML += `
+      <div class="section-bar-item">
+        <div class="section-bar-label">
+          <span class="section-bar-name">${s.name}</span>
+          <span class="section-bar-score">${s.correct}/${s.total} (${p}%)</span>
+        </div>
+        <div class="section-bar-track">
+          <div class="section-bar-fill" style="width:${p}%;background:${color};--target-w:${p}%"></div>
+        </div>
+      </div>
+    `;
+  });
+
+  // Weak areas
+  const weakEl = document.getElementById('weak-areas');
+  const weakSecs = secScores.filter(s => (s.correct/s.total) < 0.6);
+  if (weakSecs.length === 0) {
+    weakEl.innerHTML = '<div style="font-family:var(--font-body);font-size:14px;color:var(--green)">🎉 No weak areas! You scored above 60% in all sections.</div>';
+  } else {
+    weakEl.innerHTML = `<div class="weak-title">SECTIONS BELOW 60% — REVISE THESE</div>` +
+      weakSecs.map(s => `
+        <div class="weak-item">
+          <span>${s.name}</span>
+          <span style="color:var(--red);font-family:var(--font-mono);font-size:11px">${Math.round(s.correct/s.total*100)}%</span>
+        </div>
+      `).join('');
+  }
+
+  document.getElementById('results-view').classList.add('show');
+
+  // Update palette for review
+  QUESTIONS.forEach(q => {
+    const pal = document.getElementById(`pal-${q.id}`);
+    if (pal) {
+      const isCorrect = answers[q.id] === q.ans;
+      const isAnswered = answers[q.id] !== null;
+      pal.className = 'palette-q' + (isAnswered ? (isCorrect ? ' correct' : ' wrong') : '');
+      if (flagged[q.id]) pal.classList.add('flagged');
+    }
+  });
+}
+
+function showReview() {
+  document.getElementById('results-view').style.display = 'none';
+  const rv = document.getElementById('review-view');
+  rv.style.display = 'block';
+  renderReview('all');
+}
+
+function renderReview(filter) {
+  const container = document.getElementById('review-questions');
+  container.innerHTML = '';
+
+  let qs = QUESTIONS;
+  if (filter === 'correct') qs = QUESTIONS.filter(q => answers[q.id] === q.ans);
+  else if (filter === 'wrong') qs = QUESTIONS.filter(q => answers[q.id] !== null && answers[q.id] !== q.ans);
+  else if (filter === 'flagged') qs = QUESTIONS.filter(q => flagged[q.id]);
+  else if (filter === 'pyq') qs = QUESTIONS.filter(q => (q.badges||[]).includes('pyq'));
+  else if (filter === 'expected') qs = QUESTIONS.filter(q => (q.badges||[]).includes('expected'));
+
+  qs.forEach(q => {
+    const sec = SECTIONS[q.sec];
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.style.setProperty('--card-accent', sec.color);
+    const isCorrect = answers[q.id] === q.ans;
+    const userAns = answers[q.id];
+    const typeLabel = {
+      MCQ:'MCQ', Statement:'STATEMENT', Assertion:'ASSERTION', Match:'MATCH',
+      Chronological:'ORDER', Fill:'FILL-IN', NotCorrect:'NEGATIVE', Numerical:'NUMERICAL'
+    }[q.type] || q.type;
+    const badgesHTML = (q.badges||[]).map(b => `<span class="callout-badge ${b}">[${b.toUpperCase()}]</span>`).join('');
+    const statusIcon = userAns === null ? '○' : isCorrect ? '✓' : '✗';
+    const statusColor = userAns === null ? 'var(--text-dim)' : isCorrect ? 'var(--green)' : 'var(--red)';
+
+    let optsHTML = q.opts.map((o, i) => {
+      let cls = 'option-btn';
+      if (i === q.ans) cls += ' correct-ans';
+      else if (i === userAns && !isCorrect) cls += ' wrong-ans';
+      const letter = ['A','B','C','D'][i];
+      return `<div class="${cls}">
+        <span class="opt-letter">${letter}</span>
+        <span class="opt-text">${o}</span>
+        ${i === q.ans ? '<span style="margin-left:auto;color:var(--green)">✓</span>' : ''}
+        ${i === userAns && !isCorrect ? '<span style="margin-left:auto;color:var(--red)">✗</span>' : ''}
+      </div>`;
+    }).join('');
+
+    let callouts = '';
+    if (q.trap) callouts += `<div class="callout-box trap"><div class="callout-box-label">⚠ TRAP</div>${q.trap}</div>`;
+    if (q.gem) callouts += `<div class="callout-box gem"><div class="callout-box-label">💎 GEM</div>${q.gem}</div>`;
+    if (q.pyq) callouts += `<div class="callout-box pyq"><div class="callout-box-label">📋 PYQ</div>${q.pyq}</div>`;
+    if (q.expected) callouts += `<div class="callout-box expected"><div class="callout-box-label">🎯 EXPECTED 2026</div>Likely to appear in TNPSC Group 1 2026 based on syllabus trends.</div>`;
+
+    card.innerHTML = `
+      <div class="q-card-head">
+        <span class="q-num">Q${q.id}</span>
+        <span class="q-type-badge">${typeLabel}</span>
+        ${badgesHTML}
+        <span style="margin-left:auto;font-size:16px;color:${statusColor};font-weight:bold">${statusIcon}</span>
+      </div>
+      <div class="q-body">
+        <div class="q-stem">${formatStem(q)}</div>
+        <div class="options-list">${optsHTML}</div>
+        <div class="explanation-box show">
+          <div class="expl-text">${q.expl}</div>
+          ${callouts}
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  if (qs.length === 0) {
+    container.innerHTML = '<div style="padding:40px;text-align:center;font-family:var(--font-mono);color:var(--text-dim)">No questions match this filter.</div>';
+  }
+}
+
+function filterReview(type, btn) {
+  currentFilter = type;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderReview(type);
+}
+
+function practiceWeak() {
+  showReview();
+  // filter to wrong answers
+  setTimeout(() => {
+    const btn = document.querySelector('.filter-btn:nth-child(3)');
+    if (btn) filterReview('wrong', btn);
+  }, 100);
+}
+
+function resetTest() {
+  answers = new Array(151).fill(null);
+  flagged = new Array(151).fill(false);
+  submitted = false;
+  startTime = Date.now();
+
+  document.getElementById('test-view').style.display = 'block';
+  document.getElementById('submit-area').style.display = 'flex';
+  document.getElementById('palette-section').style.display = 'block';
+  document.getElementById('progress-bar-wrap').style.display = 'flex';
+  document.getElementById('results-view').classList.remove('show');
+  document.getElementById('results-view').style.display = '';
+  document.getElementById('review-view').style.display = 'none';
+
+  buildPalette();
+  renderAllSections();
+  updateProgress();
+  SECTIONS.forEach((s,i) => updateSectionBadge(i));
+  window.scrollTo(0, 0);
+}
+
+function exportResults() {
+  const answered = answers.slice(1).filter(a => a !== null).length;
+  let correct = 0;
+  QUESTIONS.forEach(q => { if (answers[q.id] === q.ans) correct++; });
+  const pct = Math.round((correct/150)*100);
+
+  let text = `ARIVOAM — INDUS VALLEY CIVILIZATION PRACTICE TEST RESULTS\n`;
+  text += `${'='.repeat(55)}\n`;
+  text += `Score: ${correct}/150 (${pct}%)\n`;
+  text += `Answered: ${answered}/150\n\n`;
+  text += `SECTION-WISE BREAKDOWN:\n`;
+  SECTIONS.forEach((s, si) => {
+    const secQs = QUESTIONS.filter(q => q.sec === si);
+    let c = 0;
+    secQs.forEach(q => { if (answers[q.id] === q.ans) c++; });
+    const p = Math.round(c/secQs.length*100);
+    text += `  §${si+1} ${s.name}: ${c}/${secQs.length} (${p}%)\n`;
+  });
+  text += `\nWRONG ANSWERS:\n`;
+  QUESTIONS.forEach(q => {
+    if (answers[q.id] !== null && answers[q.id] !== q.ans) {
+      text += `  Q${q.id}: Your answer ${['A','B','C','D'][answers[q.id]]} | Correct: ${['A','B','C','D'][q.ans]}\n`;
+    }
+  });
+  text += `\nGenerated by Arivoam · TNPSC Group 1/2/4 · 2026 Series\n`;
+
+  const blob = new Blob([text], {type:'text/plain'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'indus_valley_test_results.txt';
+  a.click();
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

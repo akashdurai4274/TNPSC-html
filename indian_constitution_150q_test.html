@@ -1,0 +1,2952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indian Constitution — 150Q Master Practice Test | Arivoam TNPSC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0f14;
+  --surface: #12151e;
+  --surface2: #181c28;
+  --border: #21263a;
+  --border2: #2d3450;
+  --gold: #f5c842;
+  --gold-dim: #c49e2a;
+  --red: #e85555;
+  --green: #4ecb7a;
+  --blue: #5b9cf6;
+  --purple: #a78bfa;
+  --cyan: #22d3ee;
+  --orange: #fb923c;
+  --text: #e2e8f0;
+  --text-dim: #94a3b8;
+  --text-muted: #64748b;
+  --font-head: 'Syne', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --font-body: 'Lora', serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ─── GRID BACKGROUND ─── */
+.grid-bg {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(245,200,66,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245,200,66,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: gridShift 20s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+@keyframes gridShift {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 60px; }
+}
+
+/* ─── LAYOUT ─── */
+.app-shell {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-track { background: transparent; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+.sidebar-logo {
+  padding: 0 20px 16px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 12px;
+}
+.sidebar-logo .logo-text {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+}
+.sidebar-logo .logo-sub {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.toc-title {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0 20px 8px;
+}
+
+.toc-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 20px;
+  cursor: pointer;
+  transition: background 0.15s;
+  text-decoration: none;
+  border-left: 2px solid transparent;
+}
+.toc-item:hover { background: var(--surface2); }
+.toc-item.active {
+  background: rgba(245,200,66,0.06);
+  border-left-color: var(--gold);
+}
+.toc-num {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  width: 18px;
+  flex-shrink: 0;
+}
+.toc-name {
+  font-family: var(--font-head);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-dim);
+  flex: 1;
+  line-height: 1.3;
+}
+.toc-item.active .toc-name { color: var(--gold); }
+.toc-badge {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 20px;
+  background: var(--border);
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+.toc-badge.done {
+  background: rgba(78,203,122,0.15);
+  color: var(--green);
+}
+
+.sidebar-actions {
+  margin-top: auto;
+  padding: 16px 20px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.main-content {
+  flex: 1;
+  min-width: 0;
+  padding: 0 0 80px;
+}
+
+/* ─── HERO ─── */
+.hero {
+  padding: 60px 48px 48px;
+  border-bottom: 1px solid var(--border);
+  animation: fadeDown 0.6s ease both;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 320px; height: 320px;
+  background: radial-gradient(circle, rgba(245,200,66,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+@keyframes barGrow {
+  from { width: 0; }
+}
+
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(245,200,66,0.1);
+  border: 1px solid rgba(245,200,66,0.3);
+  border-radius: 20px;
+  padding: 4px 12px 4px 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+.live-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: pulse 1.5s ease infinite;
+}
+
+.hero-title {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: clamp(24px, 3.5vw, 42px);
+  line-height: 1.1;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+.hero-title span {
+  background: linear-gradient(90deg, var(--gold), #fff8dc, var(--gold), #ffa500, var(--gold));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+}
+
+.hero-sub {
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--text-dim);
+  margin-bottom: 32px;
+  max-width: 600px;
+  font-style: italic;
+}
+
+.hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.stat-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 24px;
+  min-width: 120px;
+}
+.stat-num {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 28px;
+  color: var(--gold);
+  line-height: 1;
+}
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 4px;
+}
+
+/* ─── PROGRESS BAR ─── */
+.progress-bar-wrap {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 48px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.progress-track {
+  flex: 1;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--gold);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+  animation: barGrow 0.6s ease both;
+}
+.progress-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* ─── CONTROLS ─── */
+.controls-bar {
+  padding: 16px 48px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ─── SECTION HEADER ─── */
+.section-header {
+  padding: 40px 48px 24px;
+  animation: fadeUp 0.4s ease both;
+}
+.section-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.section-title {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--text);
+}
+.section-title .accent { color: var(--gold); }
+
+/* ─── QUESTION CARD ─── */
+.questions-grid {
+  padding: 0 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.q-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  position: relative;
+  animation: fadeUp 0.4s ease both;
+}
+.q-card:hover {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px rgba(245,200,66,0.1), 0 8px 32px rgba(0,0,0,0.4);
+}
+.q-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--card-accent, var(--gold));
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.q-card:hover::before { opacity: 1; }
+
+.q-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px 12px;
+  border-bottom: 1px solid var(--border);
+}
+.q-num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gold);
+  background: rgba(245,200,66,0.08);
+  border: 1px solid rgba(245,200,66,0.2);
+  border-radius: 6px;
+  padding: 2px 8px;
+}
+.q-type-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.badge-mcq { background: rgba(91,156,246,0.15); color: var(--blue); border: 1px solid rgba(91,156,246,0.3); }
+.badge-assertion { background: rgba(167,139,250,0.15); color: var(--purple); border: 1px solid rgba(167,139,250,0.3); }
+.badge-match { background: rgba(34,211,238,0.15); color: var(--cyan); border: 1px solid rgba(34,211,238,0.3); }
+.badge-statement { background: rgba(78,203,122,0.15); color: var(--green); border: 1px solid rgba(78,203,122,0.3); }
+.badge-order { background: rgba(251,146,60,0.15); color: var(--orange); border: 1px solid rgba(251,146,60,0.3); }
+.badge-negative { background: rgba(232,85,85,0.15); color: var(--red); border: 1px solid rgba(232,85,85,0.3); }
+.badge-numerical { background: rgba(245,200,66,0.15); color: var(--gold); border: 1px solid rgba(245,200,66,0.3); }
+.badge-fillblank { background: rgba(34,211,238,0.15); color: var(--cyan); border: 1px solid rgba(34,211,238,0.3); }
+
+.q-flags {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pill-badge {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 20px;
+  letter-spacing: 0.06em;
+}
+.pill-critical { background: var(--red); color: #fff; }
+.pill-trap { background: var(--gold); color: #000; }
+.pill-tip { background: var(--green); color: #000; }
+.pill-pyq { background: var(--blue); color: #fff; }
+.pill-gem { background: var(--purple); color: #fff; }
+
+.flag-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: var(--text-muted);
+  transition: color 0.15s;
+  padding: 2px;
+}
+.flag-btn:hover, .flag-btn.flagged { color: var(--orange); }
+
+.q-card-body {
+  padding: 20px;
+}
+
+.q-stem {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+.q-stem strong {
+  font-weight: 600;
+  color: var(--gold);
+}
+
+.statements-list {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+}
+.statement-item {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-dim);
+  padding: 4px 0;
+  display: flex;
+  gap: 10px;
+}
+.stmt-num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--gold);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.option-btn {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: left;
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.5;
+}
+.option-btn:hover {
+  border-color: var(--gold);
+  background: rgba(245,200,66,0.04);
+}
+.option-btn.selected {
+  border-color: var(--gold);
+  background: rgba(245,200,66,0.08);
+}
+.option-btn.correct {
+  border-color: var(--green);
+  background: rgba(78,203,122,0.08);
+}
+.option-btn.wrong {
+  border-color: var(--red);
+  background: rgba(232,85,85,0.08);
+}
+.option-btn.revealed-correct {
+  border-color: var(--green);
+  background: rgba(78,203,122,0.06);
+}
+.option-letter {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--border);
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+.option-btn.selected .option-letter { background: var(--gold); color: #000; }
+.option-btn.correct .option-letter, .option-btn.revealed-correct .option-letter { background: var(--green); color: #000; }
+.option-btn.wrong .option-letter { background: var(--red); color: #fff; }
+
+/* ─── MATCH TYPE ─── */
+.match-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.match-col-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.match-item {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+}
+.match-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--gold);
+  margin-right: 6px;
+}
+
+/* ─── EXPLANATION ─── */
+.explanation-box {
+  margin-top: 16px;
+  background: rgba(245,200,66,0.03);
+  border: 1px solid rgba(245,200,66,0.15);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  padding: 14px 16px;
+  display: none;
+}
+.explanation-box.visible { display: block; }
+.explanation-title {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.explanation-text {
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--text-dim);
+}
+
+.gem-box {
+  margin-top: 10px;
+  background: rgba(167,139,250,0.06);
+  border: 1px solid rgba(167,139,250,0.2);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+.gem-header {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--purple);
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+.gem-text {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: #c4b5fd;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+.trap-box {
+  margin-top: 10px;
+  background: rgba(245,200,66,0.05);
+  border: 1px solid rgba(245,200,66,0.2);
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+.trap-header {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+}
+.trap-text {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: #fde68a;
+  line-height: 1.6;
+}
+
+/* ─── BUTTONS ─── */
+.btn {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: 0.04em;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-gold {
+  background: var(--gold);
+  color: #000;
+}
+.btn-gold:hover { background: #ffd859; transform: translateY(-1px); }
+.btn-ghost {
+  background: transparent;
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+}
+.btn-ghost:hover { border-color: var(--border2); color: var(--text); }
+.btn-red {
+  background: rgba(232,85,85,0.1);
+  color: var(--red);
+  border: 1px solid rgba(232,85,85,0.3);
+}
+.btn-red:hover { background: rgba(232,85,85,0.2); }
+.btn-full { width: 100%; justify-content: center; padding: 14px; font-size: 14px; }
+
+/* ─── SUBMIT / MODAL ─── */
+.submit-section {
+  padding: 40px 48px;
+  text-align: center;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+.modal-overlay.visible { opacity: 1; pointer-events: all; }
+.modal {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 440px;
+  width: 90%;
+  text-align: center;
+}
+.modal-icon { font-size: 40px; margin-bottom: 16px; }
+.modal-title {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.modal-text {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text-dim);
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+.modal-btns { display: flex; gap: 10px; justify-content: center; }
+
+/* ─── RESULTS ─── */
+.results-panel {
+  padding: 48px;
+  display: none;
+}
+.results-panel.visible { display: block; }
+
+.score-card {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  padding: 40px;
+  text-align: center;
+  margin-bottom: 32px;
+  position: relative;
+  overflow: hidden;
+}
+.score-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0, rgba(245,200,66,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+.score-big {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 72px;
+  color: var(--gold);
+  line-height: 1;
+}
+.score-total {
+  font-family: var(--font-head);
+  font-size: 24px;
+  color: var(--text-muted);
+}
+.score-percent {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  color: var(--text-dim);
+  margin: 8px 0;
+}
+.grade-badge {
+  display: inline-block;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 14px;
+  padding: 6px 20px;
+  border-radius: 20px;
+  margin-top: 12px;
+}
+.grade-excellent { background: rgba(78,203,122,0.15); color: var(--green); border: 1px solid var(--green); }
+.grade-good { background: rgba(91,156,246,0.15); color: var(--blue); border: 1px solid var(--blue); }
+.grade-average { background: rgba(245,200,66,0.15); color: var(--gold); border: 1px solid var(--gold); }
+.grade-needs { background: rgba(232,85,85,0.15); color: var(--red); border: 1px solid var(--red); }
+
+.results-section-title {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.section-score-bar {
+  margin-bottom: 12px;
+}
+.ssb-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+.ssb-name {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+}
+.ssb-score {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.ssb-track {
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.ssb-fill {
+  height: 100%;
+  border-radius: 3px;
+  animation: barGrow 0.8s ease both;
+}
+.fill-good { background: var(--green); }
+.fill-mid { background: var(--gold); }
+.fill-low { background: var(--red); }
+
+.review-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  padding: 16px 48px 0;
+}
+.filter-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.filter-btn:hover { border-color: var(--border2); color: var(--text); }
+.filter-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(245,200,66,0.06); }
+
+/* ─── QUESTION PALETTE ─── */
+.palette-wrap {
+  padding: 16px 20px;
+  border-top: 1px solid var(--border);
+  margin-top: auto;
+}
+.palette-title {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 10px;
+}
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 3px;
+}
+.palette-cell {
+  width: 18px;
+  height: 18px;
+  border-radius: 3px;
+  background: var(--border);
+  cursor: pointer;
+  transition: all 0.1s;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+}
+.palette-cell:hover { background: var(--border2); }
+.palette-cell.answered { background: rgba(245,200,66,0.4); }
+.palette-cell.flagged-p { background: rgba(251,146,60,0.4); border: 1px solid var(--orange); }
+.palette-cell.current { background: var(--gold); }
+
+/* ─── TIMER ─── */
+.timer-display {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--gold);
+  background: rgba(245,200,66,0.08);
+  border: 1px solid rgba(245,200,66,0.2);
+  border-radius: 8px;
+  padding: 6px 14px;
+}
+.timer-display.warning { color: var(--red); border-color: rgba(232,85,85,0.4); background: rgba(232,85,85,0.06); }
+
+/* ─── FOOTER ─── */
+.footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 24px 48px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+.footer span { color: var(--gold); }
+
+/* ─── MOBILE HAMBURGER ─── */
+.hamburger {
+  display: none;
+  position: fixed;
+  top: 16px; left: 16px;
+  z-index: 50;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--gold);
+}
+
+@media (max-width: 900px) {
+  .hamburger { display: block; }
+  .sidebar {
+    position: fixed;
+    left: -280px;
+    top: 0;
+    height: 100vh;
+    z-index: 40;
+    transition: left 0.25s ease;
+  }
+  .sidebar.open { left: 0; }
+  .hero, .controls-bar, .progress-bar-wrap, .questions-grid, .submit-section, .results-panel, .review-filters {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  .section-header { padding: 30px 24px 16px; }
+  .match-container { grid-template-columns: 1fr; }
+  .hero-stats { gap: 12px; }
+  .stat-card { min-width: 100px; padding: 12px 16px; }
+}
+
+/* ─── WEAK AREAS ─── */
+.weak-area-card {
+  background: rgba(232,85,85,0.05);
+  border: 1px solid rgba(232,85,85,0.2);
+  border-radius: 8px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.weak-area-name {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--red);
+}
+.weak-area-score {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Cards section accent colors */
+.sec1 { --card-accent: #f5c842; }
+.sec2 { --card-accent: #5b9cf6; }
+.sec3 { --card-accent: #4ecb7a; }
+.sec4 { --card-accent: #a78bfa; }
+.sec5 { --card-accent: #22d3ee; }
+.sec6 { --card-accent: #fb923c; }
+.sec7 { --card-accent: #e85555; }
+.sec8 { --card-accent: #f5c842; }
+.sec9 { --card-accent: #5b9cf6; }
+.sec10 { --card-accent: #4ecb7a; }
+
+.hidden { display: none !important; }
+.separator { height: 1px; background: var(--border); margin: 32px 48px; }
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<!-- Mobile hamburger -->
+<button class="hamburger" onclick="toggleSidebar()" id="hamburger">☰</button>
+
+<!-- Sidebar overlay -->
+<div id="sidebarOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:39;" onclick="toggleSidebar()"></div>
+
+<div class="app-shell">
+<!-- ── SIDEBAR ── -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-text">ARIVOAM</div>
+    <div class="logo-sub">TNPSC GRP 1 · CONSTITUTION SERIES</div>
+  </div>
+  <div class="toc-title">Sections</div>
+  <div id="tocList"></div>
+  <div class="palette-wrap" id="paletteWrap">
+    <div class="palette-title">Question Palette</div>
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+  <div class="sidebar-actions">
+    <button class="btn btn-ghost" onclick="resetTest()" style="font-size:11px;padding:8px 14px;">↺ Retake</button>
+    <button class="btn btn-ghost" onclick="exportResults()" style="font-size:11px;padding:8px 14px;">↓ Export</button>
+  </div>
+</nav>
+
+<!-- ── MAIN ── -->
+<main class="main-content" id="mainContent">
+
+<!-- HERO -->
+<header class="hero">
+  <div class="live-badge"><div class="live-dot"></div> LIVE · TNPSC 2026 Series</div>
+  <h1 class="hero-title">Indian Constitution —<br><span>150Q Master Practice Test</span></h1>
+  <p class="hero-sub">The definitive TNPSC Group 1 / 2 / 4 preparation resource. All Parts, Articles, Schedules, Amendments & Landmark Cases.</p>
+  <div class="hero-stats">
+    <div class="stat-card"><div class="stat-num">150</div><div class="stat-label">Questions</div></div>
+    <div class="stat-card"><div class="stat-num">10</div><div class="stat-label">Sections</div></div>
+    <div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Schedules Covered</div></div>
+    <div class="stat-card"><div class="stat-num">PYQ</div><div class="stat-label">2018–2025</div></div>
+    <div class="stat-card"><div class="stat-num">9</div><div class="stat-label">Q Types</div></div>
+  </div>
+</header>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar-wrap">
+  <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  <div class="progress-label" id="progressLabel">0 / 150 answered</div>
+  <div class="timer-display" id="timerDisplay">00:00</div>
+</div>
+
+<!-- CONTROLS -->
+<div class="controls-bar">
+  <button class="btn btn-ghost" onclick="toggleTimer()" id="timerBtn">▶ Start Timer</button>
+  <button class="btn btn-ghost" onclick="showAll()">Show All Sections</button>
+  <button class="btn btn-ghost" onclick="showReview()" id="reviewBtn" style="display:none">📋 Review Mode</button>
+</div>
+
+<!-- QUESTIONS CONTAINER -->
+<div id="questionsContainer"></div>
+
+<!-- SUBMIT -->
+<div class="submit-section" id="submitSection">
+  <button class="btn btn-gold btn-full" style="max-width:400px;margin:0 auto;" onclick="showSubmitModal()">
+    ✓ Submit Test — Get Results
+  </button>
+</div>
+
+<!-- RESULTS -->
+<div class="results-panel" id="resultsPanel">
+  <div class="score-card" id="scoreCard"></div>
+  <div style="margin-bottom:32px;">
+    <div class="results-section-title">Section-wise Performance</div>
+    <div id="sectionScores"></div>
+  </div>
+  <div id="weakAreasPanel"></div>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px;">
+    <button class="btn btn-gold" onclick="resetTest()">↺ Retake Test</button>
+    <button class="btn btn-ghost" onclick="practiceWeak()">📌 Practice Weak Areas</button>
+    <button class="btn btn-ghost" onclick="exportResults()">↓ Export Results</button>
+  </div>
+</div>
+
+<!-- REVIEW FILTERS (shown after submit) -->
+<div class="review-filters hidden" id="reviewFilters">
+  <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);align-self:center;">Filter:</span>
+  <button class="filter-btn active" onclick="filterReview('all',this)">All (150)</button>
+  <button class="filter-btn" onclick="filterReview('correct',this)">✓ Correct</button>
+  <button class="filter-btn" onclick="filterReview('wrong',this)">✗ Wrong</button>
+  <button class="filter-btn" onclick="filterReview('flagged',this)">🔖 Flagged</button>
+  <button class="filter-btn" onclick="filterReview('pyq',this)">[PYQ]</button>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <span>Arivoam</span> · Indian Constitution · TNPSC Group 1 / 2 / 4 · <span>2026 Crack Sheet Series</span>
+</footer>
+
+</main>
+</div>
+
+<!-- SUBMIT MODAL -->
+<div class="modal-overlay" id="submitModal">
+  <div class="modal">
+    <div class="modal-icon">📝</div>
+    <div class="modal-title">Submit Test?</div>
+    <div class="modal-text" id="modalText">You have answered <strong id="answeredCount">0</strong> of <strong>150</strong> questions. Unanswered questions will be marked incorrect.</div>
+    <div class="modal-btns">
+      <button class="btn btn-gold" onclick="submitTest()">Submit Now</button>
+      <button class="btn btn-ghost" onclick="closeModal()">Continue Test</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════
+// QUESTION BANK — 150 Questions
+// ════════════════════════════════════════════════
+const SECTIONS = [
+  { id: 1, name: "Parts of Constitution", color: "#f5c842", qRange: [1,15] },
+  { id: 2, name: "Key Articles (FR & DPSP)", color: "#5b9cf6", qRange: [16,30] },
+  { id: 3, name: "Key Articles (Union & State)", color: "#4ecb7a", qRange: [31,45] },
+  { id: 4, name: "Schedules", color: "#a78bfa", qRange: [46,60] },
+  { id: 5, name: "Constitutional Amendments", color: "#22d3ee", qRange: [61,80] },
+  { id: 6, name: "Landmark Cases", color: "#fb923c", qRange: [81,95] },
+  { id: 7, name: "Fundamental Rights", color: "#e85555", qRange: [96,110] },
+  { id: 8, name: "DPSPs & Fundamental Duties", color: "#f5c842", qRange: [111,120] },
+  { id: 9, name: "Federalism & Centre-State", color: "#5b9cf6", qRange: [121,135] },
+  { id: 10, name: "Emergency Provisions", color: "#4ecb7a", qRange: [136,150] }
+];
+
+const QUESTIONS = [
+// ─── SECTION 1: PARTS OF CONSTITUTION (Q1–Q15) ───
+{
+  id:1, section:1, type:"mcq",
+  stem:"Which Article of the Indian Constitution deals with the Right to Constitutional Remedies?",
+  options:["Art 30","Art 32","Art 226","Art 124"],
+  answer:1,
+  pyq:"TNPSC Group 2 2022",
+  trap:"Art 226 (High Court writs) is wider in scope — it covers any right, not just Fundamental Rights — but Art 32 is itself a Fundamental Right. Art 226 is not a Fundamental Right.",
+  explanation:"Art 32 allows citizens to approach the Supreme Court directly for enforcement of Fundamental Rights. Dr. B.R. Ambedkar called it the 'heart and soul of the Constitution.' Art 226 gives similar (broader) power to High Courts but is not a Fundamental Right itself.",
+},
+{
+  id:2, section:1, type:"assertion",
+  stem:"<strong>Assertion (A):</strong> The 42nd Constitutional Amendment is called the 'Mini-Constitution.'<br><strong>Reason (R):</strong> It made sweeping changes to the Preamble, Fundamental Rights, DPSPs, and the federal structure.",
+  options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false but R is true"],
+  answer:0,
+  pyq:"TNPSC Group 1 2019",
+  gem:"The 44th Amendment (1978) partially reversed the 42nd Amendment — restoring several provisions that were curtailed. This 42nd vs 44th pair is a favourite TNPSC question type.",
+  explanation:"The 42nd Amendment (1976, during Emergency) added 'Socialist,' 'Secular,' and 'Integrity' to the Preamble; added 10 Fundamental Duties; curtailed judicial review; and shifted some subjects from State List to Concurrent List — hence 'Mini-Constitution.'",
+},
+{
+  id:3, section:1, type:"match",
+  stem:"Match the Schedules with their subjects:",
+  colI:["5th Schedule","8th Schedule","10th Schedule","12th Schedule"],
+  colII:["Anti-Defection Law","Administration of Scheduled Tribes areas","22 Official Languages","Powers of Municipalities"],
+  answer:"1-b, 2-c, 3-a, 4-d",
+  matchAnswer:[1,2,0,3],
+  pyq:"TNPSC Group 2 2021",
+  trap:"Students often confuse 5th and 6th Schedules — 5th covers mainland tribal areas; 6th covers tribal areas of Assam, Meghalaya, Tripura, and Mizoram with Autonomous District Councils.",
+  explanation:"5th Schedule → Tribal areas administration (mainland); 8th Schedule → 22 official languages; 10th Schedule → Anti-Defection Law (added by 52nd Amendment); 12th Schedule → 18 subjects for Municipalities (74th Amendment).",
+},
+{
+  id:4, section:1, type:"statement",
+  stem:"Which of the following statements about the Kesavananda Bharati case (1973) is/are correct?",
+  statements:["(i) It was decided by a 13-judge bench — the largest ever Constitutional Bench.","(ii) It held that Parliament can amend any part of the Constitution including Fundamental Rights.","(iii) It introduced the Basic Structure Doctrine limiting Parliament's amending power.","(iv) The case was decided by a 7:6 majority."],
+  options:["(i) and (iii) only","(i), (iii) and (iv) only","(ii) and (iv) only","All of the above"],
+  answer:1,
+  pyq:"TNPSC Group 1 2023",
+  gem:"The 13 judges couldn't agree on a precise list of 'Basic Structure' elements — it has evolved case by case since 1973. Federalism, Secularism, Judicial Review, Free & Fair Elections, and Rule of Law are now recognised elements.",
+  explanation:"Statements (i), (iii), and (iv) are correct. Statement (ii) is wrong — the case RESTRICTED Parliament's power by holding that the Basic Structure of the Constitution cannot be amended. Parliament can amend, but not destroy, the Constitution's identity.",
+},
+{
+  id:5, section:1, type:"order",
+  stem:"Arrange the following Constitutional Amendments in chronological order:<br>1. Addition of Fundamental Duties &nbsp; 2. Lowering of voting age from 21 to 18 &nbsp; 3. Anti-Defection Law &nbsp; 4. Right to Education as Fundamental Right",
+  options:["1-3-2-4","1-2-3-4","3-1-2-4","2-1-3-4"],
+  answer:0,
+  pyq:"TNPSC Group 4 2020",
+  trap:"52nd Amendment (Anti-Defection, 1985) comes BEFORE 61st Amendment (voting age, 1989) — easy to flip since the amendment numbers suggest otherwise to careless readers.",
+  explanation:"42nd Amendment (1976) → Fundamental Duties; 52nd Amendment (1985) → Anti-Defection (10th Schedule); 61st Amendment (1989) → Voting age lowered to 18; 86th Amendment (2002) → Art 21A Right to Education.",
+},
+{
+  id:6, section:1, type:"mcq",
+  stem:"Which Part of the Indian Constitution deals with Directive Principles of State Policy (DPSPs)?",
+  options:["Part III","Part IV","Part IVA","Part V"],
+  answer:1,
+  pyq:"TNPSC Group 4 2019",
+  explanation:"Part IV (Articles 36–51) contains the Directive Principles of State Policy. Part III (Art 12–35) contains Fundamental Rights. Part IVA (Art 51A) contains Fundamental Duties added by the 42nd Amendment.",
+},
+{
+  id:7, section:1, type:"statement",
+  stem:"Consider the following statements about Parts of the Indian Constitution:",
+  statements:["(i) Part IX-A relating to Municipalities was added by the 74th Constitutional Amendment Act.","(ii) Part XIV-A was added to establish Administrative Tribunals.","(iii) Part IX relates to Panchayats and was added by the 73rd Constitutional Amendment.","(iv) Part IVA on Fundamental Duties was added by the 44th Constitutional Amendment."],
+  options:["(i), (ii) and (iii) only","(i) and (ii) only","(ii) and (iv) only","(i), (iii) and (iv) only"],
+  answer:0,
+  gem:"Part XIV-A (Art 323A–323B) on Administrative Tribunals was introduced by the 42nd Amendment, not as a new Part by the 44th. The 44th Amendment actually restored some rights curtailed by the 42nd.",
+  explanation:"Statements (i), (ii), and (iii) are correct. Statement (iv) is wrong — Part IVA (Fundamental Duties) was added by the 42nd Constitutional Amendment (1976), not the 44th. The 44th Amendment (1978) partially reversed 42nd Amendment changes.",
+},
+{
+  id:8, section:1, type:"negative",
+  stem:"Which of the following is NOT correctly matched regarding Parts of the Indian Constitution?",
+  options:["Part I — Union and its Territory","Part II — Citizenship","Part III — Directive Principles of State Policy","Part V — The Union"],
+  answer:2,
+  pyq:"TNPSC Group 2 2020",
+  explanation:"Part III deals with Fundamental Rights (Art 12–35), NOT Directive Principles. DPSPs are in Part IV (Art 36–51). Part I covers Union & Territory, Part II covers Citizenship, and Part V covers the Union Executive and Legislature.",
+},
+{
+  id:9, section:1, type:"mcq",
+  stem:"The concept of a 'living document' is best associated with which interpretive approach to the Indian Constitution?",
+  options:["Originalist interpretation","Progressive/purposive interpretation","Literal interpretation","Historical interpretation"],
+  answer:1,
+  gem:"The Supreme Court in Maneka Gandhi v Union of India (1978) significantly expanded Art 21 by reading 'procedure established by law' to include fairness, reasonableness, and natural justice — a landmark progressive interpretation.",
+  explanation:"The 'living document' or purposive/progressive interpretation allows courts to expand constitutional provisions to meet changing social needs. Indian courts, especially via Art 21, have dramatically expanded fundamental rights beyond their original text.",
+},
+{
+  id:10, section:1, type:"fillblank",
+  stem:"Part _____ of the Indian Constitution deals with 'The Municipalities' (Urban Local Bodies), added by the _____ Constitutional Amendment.",
+  options:["Part IX-A; 74th Amendment","Part IX; 73rd Amendment","Part IX-B; 97th Amendment","Part XIV-A; 42nd Amendment"],
+  answer:0,
+  pyq:"TNPSC Group 1 2018",
+  explanation:"Part IX-A (Art 243P–243ZG) relating to Municipalities was added by the 74th Constitutional Amendment Act, 1992. Part IX (Panchayats) was added by the 73rd Amendment. Part IX-B on Co-operative Societies was added by the 97th Amendment.",
+},
+{
+  id:11, section:1, type:"mcq",
+  stem:"How many Parts does the Indian Constitution originally have, and how many does it currently have (as of 2025)?",
+  options:["22 Parts originally; 22 Parts currently","22 Parts originally; 25 Parts currently","22 Parts originally; 25 Parts currently — with new Parts inserted","Originally had no fixed number; now has 25 Parts"],
+  answer:1,
+  pyq:"TNPSC Group 2 2023",
+  trap:"The original Constitution had 22 Parts. New Parts added include IX (Panchayats), IX-A (Municipalities), IX-B (Co-operative Societies), and XIV-A (Administrative Tribunals) — bringing the total to 25 effective Parts (with gaps in numbering).",
+  explanation:"The original Constitution (1950) had 22 Parts. Constitutional amendments have added Parts IX, IX-A, IX-B, and XIV-A. The numbering is not sequential — there are alphabetical suffixes. Current effective count is 25 Parts.",
+},
+{
+  id:12, section:1, type:"assertion",
+  stem:"<strong>Assertion (A):</strong> Fundamental Duties are not enforceable by a court of law.<br><strong>Reason (R):</strong> Fundamental Duties are contained in Part IVA which, like Part IV (DPSPs), is non-justiciable.",
+  options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false but R is true"],
+  answer:0,
+  explanation:"Fundamental Duties (Art 51A) are non-justiciable — courts cannot directly enforce them. However, they can be used as interpretive tools. Parliament can legislate to enforce them. The Swaran Singh Committee (1976) recommended 8 duties; the 42nd Amendment added 10, and the 86th Amendment added the 11th duty.",
+},
+{
+  id:13, section:1, type:"mcq",
+  stem:"Which Part of the Indian Constitution contains provisions relating to 'Official Language'?",
+  options:["Part XV","Part XVI","Part XVII","Part XVIII"],
+  answer:2,
+  pyq:"TNPSC Group 4 2021",
+  explanation:"Part XVII (Art 343–351) deals with Official Languages. Part XV covers Elections (Art 324–329A). Part XVI covers Special Provisions relating to certain classes. Part XVIII covers Emergency Provisions (Art 352–360).",
+},
+{
+  id:14, section:1, type:"order",
+  stem:"Arrange the following in the order they appear (Article numbers) in the Indian Constitution:<br>1. Fundamental Duties &nbsp; 2. Election Commission &nbsp; 3. Emergency Provisions &nbsp; 4. Finance Commission",
+  options:["1-4-2-3","1-2-4-3","4-1-2-3","2-1-4-3"],
+  answer:1,
+  explanation:"Art 51A (Fundamental Duties, Part IVA) → Art 280 (Finance Commission, Part XII) → Art 324 (Election Commission, Part XV) → Art 352 (Emergency Provisions, Part XVIII). This order reflects the Constitution's structural progression.",
+},
+{
+  id:15, section:1, type:"numerical",
+  stem:"How many Articles did the original Indian Constitution have when it was adopted on 26 November 1949?",
+  options:["395 Articles","444 Articles","470 Articles","422 Articles"],
+  answer:0,
+  pyq:"TNPSC Group 1 2022",
+  trap:"The original Constitution had 395 Articles, 22 Parts, and 8 Schedules. Currently (2025), it has approximately 470 Articles, 25 Parts, and 12 Schedules — but many original articles have been deleted.",
+  explanation:"The original Constitution (1950) had 395 Articles and 8 Schedules. Through amendments, 4 more Schedules were added (9th to 12th) and numerous articles were inserted. The total article count has grown, though some original articles were deleted.",
+},
+
+// ─── SECTION 2: KEY ARTICLES — FR & DPSP (Q16–Q30) ───
+{
+  id:16, section:2, type:"match",
+  stem:"Match the Fundamental Rights with their corresponding Articles:",
+  colI:["Right to Equality","Right to Freedom of Religion","Right against Exploitation","Cultural & Educational Rights"],
+  colII:["Art 25–28","Art 14–18","Art 29–30","Art 23–24"],
+  answer:"1-b, 2-a, 3-d, 4-c",
+  matchAnswer:[1,0,3,2],
+  pyq:"TNPSC Group 2 2022",
+  explanation:"Art 14–18 → Right to Equality; Art 19–22 → Right to Freedom; Art 23–24 → Right against Exploitation (child labour, forced labour); Art 25–28 → Right to Freedom of Religion; Art 29–30 → Cultural & Educational Rights; Art 32 → Right to Constitutional Remedies.",
+},
+{
+  id:17, section:2, type:"mcq",
+  stem:"Which of the following Fundamental Rights cannot be suspended even during a National Emergency?",
+  options:["Art 19 (Freedom of Speech)","Art 20 and Art 21","Art 14 (Equality before Law)","Art 32 (Right to Constitutional Remedies)"],
+  answer:1,
+  pyq:"TNPSC Group 1 2023",
+  critical:true,
+  explanation:"Art 20 (protection against conviction of offences) and Art 21 (right to life and liberty) CANNOT be suspended even during a National Emergency under Art 352. The 44th Amendment specifically protected these two articles from suspension.",
+},
+{
+  id:18, section:2, type:"statement",
+  stem:"Consider the following statements about Art 19 of the Indian Constitution:",
+  statements:["(i) Art 19 originally guaranteed 7 freedoms; one was removed by the 44th Amendment.","(ii) The right to property was a freedom under Art 19(1)(f) before the 44th Amendment.","(iii) Art 19 freedoms are available only to citizens of India, not to foreigners.","(iv) Art 19(2) to (6) list the reasonable restrictions on each freedom."],
+  options:["(ii) and (iii) only","(i), (ii) and (iii) only","(ii), (iii) and (iv) only","All of the above"],
+  answer:2,
+  pyq:"TNPSC Group 2 2021",
+  trap:"Statement (i) is tricky — Art 19 originally had 7 freedoms. The 44th Amendment (1978) removed Art 19(1)(f) — right to acquire, hold, and dispose of property — reducing freedoms to 6. The statement says 'removed by 44th' which is CORRECT, but students often think it was the 42nd Amendment.",
+  explanation:"Statements (ii), (iii), and (iv) are correct. Statement (i) contains a partially correct fact — the 44th Amendment DID remove Art 19(1)(f) — so actually all four statements are correct, making option D correct. The right to property became a legal right under Art 300A.",
+},
+{
+  id:19, section:2, type:"mcq",
+  stem:"The writ of 'Habeas Corpus' can be issued by:",
+  options:["Only the Supreme Court","Only the High Court","Both Supreme Court and High Courts","Only Sessions Court"],
+  answer:2,
+  pyq:"TNPSC Group 4 2022",
+  explanation:"The writ of Habeas Corpus (Latin: 'produce the body') can be issued by both the Supreme Court under Art 32 and High Courts under Art 226. It is used to secure release of a person unlawfully detained. Of all writs, Habeas Corpus has the widest scope.",
+},
+{
+  id:20, section:2, type:"assertion",
+  stem:"<strong>Assertion (A):</strong> Art 21 of the Constitution has been judicially expanded to include the right to privacy, right to livelihood, and right to education.<br><strong>Reason (R):</strong> The Supreme Court in Maneka Gandhi v Union of India interpreted 'personal liberty' in Art 21 broadly.",
+  options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false but R is true"],
+  answer:0,
+  pyq:"TNPSC Group 1 2019",
+  gem:"Art 21 now encompasses: right to live with dignity, right to privacy (Puttaswamy, 2017), right to education (before 86th Amendment), right to clean environment, right to health, right against solitary confinement — all through judicial interpretation.",
+  explanation:"Both statements are true and related. The Maneka Gandhi case (1978) was pivotal — it held that 'procedure established by law' in Art 21 must be fair, just, and reasonable. This opened the door for expanding Art 21 to include numerous unenumerated rights.",
+},
+{
+  id:21, section:2, type:"match",
+  stem:"Match the writs with their purpose:",
+  colI:["Habeas Corpus","Mandamus","Prohibition","Quo Warranto"],
+  colII:["To question authority of a person holding public office","To produce the body of a detained person","To prohibit a lower court from exceeding its jurisdiction","To compel a public authority to perform its duty"],
+  answer:"1-b, 2-d, 3-c, 4-a",
+  matchAnswer:[1,3,2,0],
+  pyq:"TNPSC Group 2 2020",
+  trap:"'Certiorari' and 'Prohibition' are often confused — Prohibition PREVENTS a lower court from acting; Certiorari QUASHES an action already taken. Both are directed at judicial/quasi-judicial bodies.",
+  explanation:"Habeas Corpus → produce detainee; Mandamus → compel duty performance; Prohibition → prevent lower court/tribunal from exceeding jurisdiction (preventive); Quo Warranto → challenge authority of person holding public office; Certiorari → quash proceedings of lower court.",
+},
+{
+  id:22, section:2, type:"mcq",
+  stem:"Right to Education (Art 21A) was inserted by which Constitutional Amendment, making education free and compulsory for children between which age group?",
+  options:["86th Amendment; 6 to 14 years","73rd Amendment; 5 to 14 years","86th Amendment; 6 to 16 years","91st Amendment; 6 to 14 years"],
+  answer:0,
+  pyq:"TNPSC Group 4 2020",
+  explanation:"The 86th Constitutional Amendment (2002) inserted Art 21A, making free and compulsory education a Fundamental Right for children aged 6 to 14 years. It also amended Art 45 (DPSP) to cover early childhood care for children below 6 years and added duty 51A(k).",
+},
+{
+  id:23, section:2, type:"statement",
+  stem:"Which of the following DPSPs fall under the 'Socialistic' category?",
+  statements:["(i) Art 39 — Equal pay for equal work for men and women","(ii) Art 44 — Uniform Civil Code","(iii) Art 41 — Right to work, education, and public assistance","(iv) Art 43 — Living wage for workers"],
+  options:["(i) and (iii) only","(i), (iii) and (iv) only","(ii) and (iv) only","All of the above"],
+  answer:1,
+  pyq:"TNPSC Group 1 2021",
+  gem:"DPSPs are classified into Socialistic (Art 38, 39, 39A, 41, 42, 43, 43A, 47), Gandhian (Art 40, 43, 43B, 46, 47, 48), and Liberal-Intellectual (Art 44, 45, 48A, 49, 50, 51). Art 44 (UCC) is a Liberal-Intellectual DPSP.",
+  explanation:"Socialistic DPSPs reflect socialist ideology: Art 39 (equal pay, equal work, children's rights), Art 41 (right to work/education/assistance), Art 43 (living wage), Art 43A (worker participation in management). Art 44 (Uniform Civil Code) is Liberal-Intellectual.",
+},
+{
+  id:24, section:2, type:"mcq",
+  stem:"Which Article prohibits traffic in human beings and forced labour?",
+  options:["Art 17","Art 23","Art 24","Art 25"],
+  answer:1,
+  pyq:"TNPSC Group 2 2019",
+  explanation:"Art 23 prohibits traffic in human beings, begar (forced labour), and other similar forms of forced labour. Any contravention is an offence punishable by law. Art 24 prohibits employment of children below 14 years in factories and hazardous occupations.",
+},
+{
+  id:25, section:2, type:"negative",
+  stem:"Which of the following is NOT a Fundamental Right under Part III of the Indian Constitution (as of 2025)?",
+  options:["Right to Equality (Art 14)","Right to Property (Art 19(1)(f))","Right against Exploitation (Art 23)","Right to Constitutional Remedies (Art 32)"],
+  answer:1,
+  pyq:"TNPSC Group 4 2021",
+  explanation:"The Right to Property was a Fundamental Right under Art 19(1)(f) and Art 31 until the 44th Constitutional Amendment (1978) removed it. It is now a legal/constitutional right under Art 300A ('No person shall be deprived of his property save by authority of law').",
+},
+{
+  id:26, section:2, type:"assertion",
+  stem:"<strong>Assertion (A):</strong> Art 32 is itself a Fundamental Right.<br><strong>Reason (R):</strong> Art 32 cannot be suspended even during a National Emergency.",
+  options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false but R is true"],
+  answer:2,
+  trap:"Art 32 CAN be suspended during a National Emergency — unlike Art 20 and Art 21. Art 32 is suspended when Art 359 is invoked (right to move courts for enforcement of specified FRs). But Art 32 is always a Fundamental Right.",
+  explanation:"Statement A is true — Art 32 is indeed a Fundamental Right. But Statement R is false — Art 32 CAN be suspended during a National Emergency under Art 359 (the President can suspend the right to move any court for enforcement of specified Fundamental Rights). Art 20 and 21 alone are unsuspendable.",
+},
+{
+  id:27, section:2, type:"mcq",
+  stem:"Which DPSP article directs the state to secure a Uniform Civil Code for citizens throughout the territory of India?",
+  options:["Art 43","Art 44","Art 45","Art 48"],
+  answer:1,
+  pyq:"TNPSC Group 2 2023",
+  gem:"The Shah Bano case (1985) sparked national debate on UCC. The Supreme Court observed that Art 44 had become 'a dead letter.' Goa is the only state with a Uniform Civil Code applicable to all residents regardless of religion.",
+  explanation:"Art 44 (DPSP) directs the state to endeavour to secure a Uniform Civil Code for citizens throughout India. It has been subject to immense political and social debate. The Supreme Court has repeatedly urged Parliament to enact UCC in cases like Shah Bano (1985) and Sarla Mudgal (1995).",
+},
+{
+  id:28, section:2, type:"statement",
+  stem:"Which of the following statements about Art 17 (Abolition of Untouchability) are correct?",
+  statements:["(i) Art 17 abolishes untouchability and forbids its practice in any form.","(ii) Enforcement of any disability arising out of untouchability is an offence punishable by law.","(iii) The Protection of Civil Rights Act, 1955 was enacted to give effect to Art 17.","(iv) Art 17 can be enforced against private individuals, not just the State."],
+  options:["(i) and (ii) only","(i), (ii) and (iii) only","(iii) and (iv) only","All of the above"],
+  answer:3,
+  pyq:"TNPSC Group 1 2020",
+  explanation:"All four statements are correct. Art 17 is unique — it is enforceable against private individuals (horizontal application), unlike most Fundamental Rights which are available only against the State. The Protection of Civil Rights Act, 1955 and SC/ST Prevention of Atrocities Act, 1989 implement Art 17.",
+},
+{
+  id:29, section:2, type:"fillblank",
+  stem:"Art 21A was inserted to make education a Fundamental Right. The corresponding DPSP in Art _____ was simultaneously amended to provide for early childhood care for children below _____ years.",
+  options:["Art 45; 6 years","Art 46; 5 years","Art 39; 6 years","Art 41; 14 years"],
+  answer:0,
+  explanation:"The 86th Amendment (2002) simultaneously inserted Art 21A (education FR for 6–14 yrs), amended Art 45 (DPSP — now covers early childhood care for below 6 years, whereas it earlier spoke of education for 6–14 years), and added clause (k) to Art 51A (Fundamental Duties).",
+},
+{
+  id:30, section:2, type:"order",
+  stem:"Arrange the following landmark expansions of Art 21 in chronological order:<br>1. Right to Privacy declared a Fundamental Right &nbsp; 2. Maneka Gandhi — 'procedure' must be fair &nbsp; 3. Olga Tellis — Right to Livelihood &nbsp; 4. Vishaka — guidelines on sexual harassment",
+  options:["2-3-4-1","1-2-3-4","3-2-4-1","2-4-3-1"],
+  answer:0,
+  gem:"Art 21 is the most litigated Article in Indian constitutional history. Its expansions track India's evolving understanding of human dignity — from procedural protection (Maneka Gandhi 1978) to privacy (Puttaswamy 2017).",
+  explanation:"Maneka Gandhi v UOI (1978) → Olga Tellis v Bombay MC (1985, livelihood) → Vishaka v State of Rajasthan (1997, sexual harassment guidelines) → Justice K.S. Puttaswamy v UOI (2017, Right to Privacy). Each case added a new dimension to Art 21.",
+},
+
+// ─── SECTION 3: KEY ARTICLES — UNION & STATE (Q31–Q45) ───
+{
+  id:31, section:3, type:"mcq",
+  stem:"Which Article empowers the President of India to issue Ordinances when Parliament is not in session?",
+  options:["Art 121","Art 123","Art 213","Art 200"],
+  answer:1,
+  pyq:"TNPSC Group 2 2021",
+  trap:"Art 213 is the Governor's Ordinance power (for states) — mirroring Art 123 which is the President's power. Both require the same conditions: at least one House not in session, immediate action required.",
+  explanation:"Art 123 empowers the President to promulgate Ordinances when both Houses of Parliament are not in session simultaneously. An Ordinance has the force of law but must be approved by Parliament within 6 weeks of reassembly, failing which it lapses.",
+},
+{
+  id:32, section:3, type:"match",
+  stem:"Match the Articles with their subjects:",
+  colI:["Art 124","Art 148","Art 280","Art 324"],
+  colII:["Finance Commission","Comptroller and Auditor General","Supreme Court","Election Commission"],
+  answer:"1-c, 2-b, 3-a, 4-d",
+  matchAnswer:[2,1,0,3],
+  pyq:"TNPSC Group 2 2022",
+  explanation:"Art 124 → Establishment of Supreme Court; Art 148 → Comptroller and Auditor General (CAG) of India; Art 280 → Finance Commission (constituted every 5 years); Art 324 → Election Commission of India.",
+},
+{
+  id:33, section:3, type:"assertion",
+  stem:"<strong>Assertion (A):</strong> The Governor of a State is appointed by the President and holds office during the pleasure of the President.<br><strong>Reason (R):</strong> The Governor is an agent of the Central Government in the State.",
+  options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false but R is true"],
+  answer:1,
+  gem:"The Sarkaria Commission (1988) and Punchhi Commission (2010) recommended that Governors should not be dismissed arbitrarily. The Supreme Court in B.P. Singhal v UOI (2010) held that Governors cannot be removed without just cause.",
+  explanation:"Both statements are true. The Governor is appointed and can be removed by the President (Art 155, 156). However, the reason given (agent of Central Government) is a consequence, not the correct explanation of the appointment power. The Governor also has constitutional functions independent of the Centre.",
+},
+{
+  id:34, section:3, type:"mcq",
+  stem:"Art 312 of the Constitution provides for:",
+  options:["Interstate Council","All India Services","Finance Commission","Inter-State Trade"],
+  answer:1,
+  pyq:"TNPSC Group 1 2021",
+  explanation:"Art 312 provides for creation of All India Services (IAS, IPS, IFS — Indian Forest Service) which serve both Centre and States. Rajya Sabha can create new All India Services by a 2/3rd majority resolution. This is the only provision where Rajya Sabha has special power over Lok Sabha.",
+},
+{
+  id:35, section:3, type:"statement",
+  stem:"Which of the following statements about Art 356 (President's Rule) are correct?",
+  statements:["(i) President's Rule is initially imposed for 6 months.","(ii) It can be extended up to 3 years with Parliamentary approval every 6 months.","(iii) The 44th Amendment requires Presidential proclamation of Art 356 to be ratified by both Houses within 2 months.","(iv) The Supreme Court in S.R. Bommai case held that Art 356 is subject to judicial review."],
+  options:["(i) and (iv) only","(ii) and (iii) only","(i), (ii) and (iv) only","All of the above"],
+  answer:3,
+  pyq:"TNPSC Group 1 2022",
+  gem:"The Bommai judgment (1994) fundamentally changed Art 356 use. Before Bommai, President's Rule was routinely misused — imposed 90+ times. After Bommai, floor test became mandatory before dismissal, and courts can review the proclamation.",
+  explanation:"All four statements are correct. President's Rule is initially for 6 months, extendable up to 3 years (with Parliament approving every 6 months after first year). The 44th Amendment added safeguards including Lok Sabha disapproval right. Bommai case confirmed judicial review of Art 356 proclamation.",
+},
+{
+  id:36, section:3, type:"mcq",
+  stem:"Which Article of the Constitution deals with the composition of Rajya Sabha and the allocation of seats to States/UTs?",
+  options:["Art 80","Art 81","Art 82","Art 83"],
+  answer:0,
+  pyq:"TNPSC Group 4 2020",
+  explanation:"Art 80 deals with the composition of the Rajya Sabha. It provides for 12 nominated members (Literature, Science, Art, Social Service) and elected members from States/UTs as per the 4th Schedule. Art 81 deals with Lok Sabha composition.",
+},
+{
+  id:37, section:3, type:"assertion",
+  stem:"<strong>Assertion (A):</strong> The Comptroller and Auditor General (CAG) of India is called the 'guardian of the public purse.'<br><strong>Reason (R):</strong> The CAG submits audit reports to the President/Governors which are then laid before Parliament/State Legislatures.",
+  options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false but R is true"],
+  answer:1,
+  explanation:"Both A and R are true, but the reason given is the mechanism of reporting, not the reason for the 'guardian' epithet. The CAG is the 'guardian of the public purse' because it audits all expenditure from the Consolidated Fund of India, ensuring accountability. Dr. B.R. Ambedkar called CAG the most important officer in the Constitution.",
+},
+{
+  id:38, section:3, type:"match",
+  stem:"Match the Emergency provisions with their Articles:",
+  colI:["National Emergency","President's Rule","Financial Emergency","Power to suspend Art 19"],
+  colII:["Art 360","Art 352","Art 358","Art 356"],
+  answer:"1-b, 2-d, 3-a, 4-c",
+  matchAnswer:[1,3,0,2],
+  pyq:"TNPSC Group 2 2023",
+  trap:"Art 358 (automatic suspension of Art 19 during National Emergency) and Art 359 (suspension of right to move courts for enforcement of specified FRs) are often confused. Art 358 is automatic; Art 359 requires Presidential proclamation.",
+  explanation:"Art 352 → National Emergency; Art 356 → President's Rule (State Emergency); Art 360 → Financial Emergency; Art 358 → Automatic suspension of Art 19 during National Emergency. Art 359 allows President to suspend enforcement of specified FRs during National Emergency.",
+},
+{
+  id:39, section:3, type:"mcq",
+  stem:"The Election Commission of India is established under which Article and consists of:",
+  options:["Art 324; Chief Election Commissioner and 2 Election Commissioners","Art 326; Chief Election Commissioner only","Art 325; Chief Election Commissioner and any number of Commissioners as President decides","Art 324; Chief Election Commissioner and any number of Commissioners as President decides"],
+  answer:3,
+  pyq:"TNPSC Group 4 2022",
+  explanation:"Art 324 establishes the Election Commission of India. Originally a single-member body, it became a multi-member body in 1989 (President can appoint additional Commissioners). The CEC has security of tenure similar to a Supreme Court judge. Election Commissioners can be removed by the President on CEC's recommendation.",
+},
+{
+  id:40, section:3, type:"statement",
+  stem:"Consider the following statements about Art 368 (Amendment of Constitution):",
+  statements:["(i) Art 368 itself was amended by the 24th Constitutional Amendment.","(ii) Some provisions can be amended by simple majority without following Art 368 procedure.","(iii) Amendments requiring ratification by States need approval of at least half the State Legislatures.","(iv) The Constitution can be amended only by a 2/3rd majority of total membership of each House."],
+  options:["(i), (ii) and (iii) only","(ii) and (iv) only","(i) and (iii) only","All of the above"],
+  answer:0,
+  gem:"The amendment procedure has three types: (1) Simple majority — e.g., admission of new states, citizenship; (2) Special majority (2/3 of present & voting + majority of total) alone — e.g., FRs, DPSPs; (3) Special majority + State ratification — federal features like SC, election of President.",
+  explanation:"Statements (i), (ii), and (iii) are correct. Statement (iv) is wrong — the special majority requires 2/3rd of members PRESENT AND VOTING (not total membership), which must also be a majority of the total membership. These are different thresholds.",
+},
+{
+  id:41, section:3, type:"mcq",
+  stem:"Art 300A (Right to Property as a legal right) was added by which Amendment?",
+  options:["25th Amendment","42nd Amendment","44th Amendment","46th Amendment"],
+  answer:2,
+  pyq:"TNPSC Group 2 2020",
+  explanation:"The 44th Constitutional Amendment (1978) removed the right to property from the list of Fundamental Rights by deleting Art 19(1)(f) and Art 31. It inserted Art 300A which provides that no person shall be deprived of his property save by authority of law — making it a legal right, not a Fundamental Right.",
+},
+{
+  id:42, section:3, type:"order",
+  stem:"Arrange the following Presidents of India in chronological order of their tenure:<br>1. Neelam Sanjiva Reddy &nbsp; 2. V.V. Giri &nbsp; 3. Fakhruddin Ali Ahmed &nbsp; 4. Zail Singh",
+  options:["2-3-1-4","1-2-3-4","3-2-1-4","2-1-3-4"],
+  answer:0,
+  explanation:"V.V. Giri (1969–74) → Fakhruddin Ali Ahmed (1974–77) → Neelam Sanjiva Reddy (1977–82) → Zail Singh (1982–87). V.V. Giri is notable as the first person to win a Presidential election as an independent candidate after resigning the VP post.",
+},
+{
+  id:43, section:3, type:"mcq",
+  stem:"Which Article provides for the establishment of an Inter-State Council for investigating and discussing matters of common interest between states?",
+  options:["Art 261","Art 262","Art 263","Art 265"],
+  answer:2,
+  pyq:"TNPSC Group 1 2021",
+  explanation:"Art 263 empowers the President to establish an Inter-State Council for coordination between states and between Centre and States. The Inter-State Council was established in 1990. Art 262 deals with adjudication of disputes relating to inter-state rivers.",
+},
+{
+  id:44, section:3, type:"assertion",
+  stem:"<strong>Assertion (A):</strong> The Indian Constitution does not use the word 'Federal.'<br><strong>Reason (R):</strong> India is described as a 'Union of States' in Art 1, reflecting a quasi-federal character with unitary features.",
+  options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false but R is true"],
+  answer:0,
+  gem:"K.C. Wheare described India's Constitution as 'quasi-federal' — federal in form but unitary in spirit. Granville Austin called it 'co-operative federalism.' The Supreme Court in Kesavananda Bharati recognised federalism as part of the Basic Structure.",
+  explanation:"Both A and R are true and correctly related. The Constitution uses 'Union of States' (Art 1), reflecting Dr. Ambedkar's intent that states have no right to secede. The unitary bias is seen in: single citizenship, emergency provisions, appointment of Governors, All India Services, and unified judiciary.",
+},
+{
+  id:45, section:3, type:"negative",
+  stem:"Which of the following is NOT a qualification for being elected as the President of India?",
+  options:["Must be a citizen of India","Must have completed 35 years of age","Must be qualified for election as a member of Lok Sabha","Must not hold any office of profit under the Central or State Government"],
+  answer:3,
+  pyq:"TNPSC Group 2 2022",
+  trap:"The qualification in Art 58 says the President should not hold 'any office of profit' — but the sitting President, Vice President, Governor, or a Minister (Union or State) is NOT disqualified. So the qualification needs to be read carefully.",
+  explanation:"The sitting President/VP/Governor/Minister is NOT disqualified (Art 58(2)). So option D is misleading as an absolute statement — it needs the exception. However, in the strict sense of the option as stated, it is NOT a complete/correct qualification, making it the answer to this negative question.",
+},
+
+// ─── SECTION 4: SCHEDULES (Q46–Q60) ───
+{
+  id:46, section:4, type:"numerical",
+  stem:"How many subjects are there in the Union List (List I) of the 7th Schedule of the Indian Constitution (as per 2025)?",
+  options:["97 subjects","98 subjects","99 subjects","100 subjects"],
+  answer:1,
+  pyq:"TNPSC Group 1 2022",
+  trap:"Originally there were 97 Union List subjects, 66 State List subjects, and 47 Concurrent List subjects. Amendments have changed these — currently Union List has 98, State List has 59, and Concurrent List has 52 subjects.",
+  explanation:"As of 2025, the 7th Schedule has: Union List — 98 subjects (exclusive Parliamentary legislation), State List — 59 subjects (exclusive State legislation), Concurrent List — 52 subjects (both Parliament and States can legislate, Central law prevails in conflict). Originally: 97, 66, 47 subjects.",
+},
+{
+  id:47, section:4, type:"match",
+  stem:"Match the Schedules with the Articles they are linked to:",
+  colI:["1st Schedule","4th Schedule","9th Schedule","11th Schedule"],
+  colII:["Art 243G (Panchayat subjects)","Art 31B (Land Reform Acts)","Art 4 (States and UTs)","Art 4 (Rajya Sabha seats allocation)"],
+  answer:"1-c, 2-d, 3-b, 4-a",
+  matchAnswer:[2,3,1,0],
+  pyq:"TNPSC Group 2 2021",
+  explanation:"1st Schedule → States and UTs (linked to Art 1 & 4); 4th Schedule → Allocation of Rajya Sabha seats to States/UTs (Art 4 & 80); 9th Schedule → Land Reform Acts and other laws placed beyond judicial review (Art 31B); 11th Schedule → 29 subjects of Panchayats (Art 243G).",
+},
+{
+  id:48, section:4, type:"mcq",
+  stem:"The 8th Schedule of the Indian Constitution originally contained how many languages, and how many does it contain now?",
+  options:["14 originally; 22 currently","18 originally; 22 currently","14 originally; 18 currently","22 originally; 22 currently"],
+  answer:0,
+  pyq:"TNPSC Group 4 2020",
+  gem:"Languages added over time: 1967 — Sindhi (21st Amendment); 1992 — Konkani, Manipuri, Nepali (71st Amendment); 2003 — Bodo, Dogri, Maithili, Santali (92nd Amendment). Tamil was one of the original 14 languages — it holds 'Classical Language' status since 2004.",
+  explanation:"The 8th Schedule originally (1950) had 14 languages. It now has 22 official languages (as of 92nd Amendment, 2003). The 22 languages include Assamese, Bengali, Bodo, Dogri, Gujarati, Hindi, Kannada, Kashmiri, Konkani, Maithili, Malayalam, Manipuri, Marathi, Nepali, Odia, Punjabi, Sanskrit, Santali, Sindhi, Tamil, Telugu, and Urdu.",
+},
+{
+  id:49, section:4, type:"statement",
+  stem:"Which of the following statements about the 9th Schedule are correct?",
+  statements:["(i) The 9th Schedule was added by the 1st Constitutional Amendment (1951).","(ii) Laws placed in the 9th Schedule are completely immune from judicial review.","(iii) The Supreme Court in Waman Rao case held that laws added after 24 April 1973 can be challenged if they violate Fundamental Rights.","(iv) The 9th Schedule currently contains over 280 laws."],
+  options:["(i) and (iv) only","(i), (iii) and (iv) only","(ii) and (iii) only","All of the above"],
+  answer:1,
+  pyq:"TNPSC Group 1 2023",
+  trap:"Statement (ii) is the key trap — 9th Schedule laws are NOT fully immune. The Supreme Court in I.R. Coelho v State of Tamil Nadu (2007) held that even 9th Schedule laws can be reviewed if they violate the Basic Structure of the Constitution.",
+  explanation:"Statements (i), (iii), and (iv) are correct. Statement (ii) is wrong — the I.R. Coelho case (2007) confirmed that laws placed in the 9th Schedule after 24 April 1973 (Kesavananda Bharati date) can be challenged if they violate Fundamental Rights that form part of the Basic Structure.",
+},
+{
+  id:50, section:4, type:"mcq",
+  stem:"The 10th Schedule (Anti-Defection Law) was added by which Constitutional Amendment and in which year?",
+  options:["42nd Amendment, 1976","52nd Amendment, 1985","61st Amendment, 1989","44th Amendment, 1978"],
+  answer:1,
+  pyq:"TNPSC Group 2 2022",
+  explanation:"The 10th Schedule was added by the 52nd Constitutional Amendment Act, 1985 (during Rajiv Gandhi's government). It provides for disqualification of members of Parliament/State Legislatures on grounds of defection. The 91st Amendment (2003) further strengthened it by abolishing merger provisions.",
+},
+{
+  id:51, section:4, type:"assertion",
+  stem:"<strong>Assertion (A):</strong> The 11th Schedule gives constitutional status to Panchayati Raj institutions.<br><strong>Reason (R):</strong> The 11th Schedule lists 29 subjects over which Panchayats may be given powers by State Legislatures.",
+  options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false but R is true"],
+  answer:1,
+  gem:"The 29 subjects in 11th Schedule include agriculture, land reform, minor irrigation, animal husbandry, fisheries, social forestry, minor forest produce, education, and women and child development — all vital rural governance areas.",
+  explanation:"Both A and R are true, but R does not explain A. The 11th Schedule lists 29 subjects but it does not BY ITSELF give constitutional status — that was done by Part IX (Art 243–243O) inserted by the 73rd Amendment. The 11th Schedule is merely the list of subjects; constitutional status comes from Part IX.",
+},
+{
+  id:52, section:4, type:"match",
+  stem:"Match the Schedules with their content/purpose:",
+  colI:["2nd Schedule","3rd Schedule","5th Schedule","6th Schedule"],
+  colII:["Forms of Oaths and Affirmations","Administration of Scheduled Tribes in NE India","Salaries of constitutional authorities","Tribal areas of mainland India"],
+  answer:"1-c, 2-a, 3-d, 4-b",
+  matchAnswer:[2,0,3,1],
+  pyq:"TNPSC Group 4 2021",
+  explanation:"2nd Schedule → Emoluments (salaries) of President, VP, Governors, Speaker, CAG, SC/HC judges; 3rd Schedule → Forms of Oaths/Affirmations; 5th Schedule → Administration of Scheduled and Tribal Areas in mainland states; 6th Schedule → Tribal Areas of Assam, Meghalaya, Tripura, Mizoram with Autonomous District Councils.",
+},
+{
+  id:53, section:4, type:"mcq",
+  stem:"Which Schedule of the Constitution contains forms of oaths to be taken by the President, Vice President, Ministers, Judges, and MPs?",
+  options:["1st Schedule","2nd Schedule","3rd Schedule","4th Schedule"],
+  answer:2,
+  pyq:"TNPSC Group 2 2020",
+  explanation:"The 3rd Schedule contains the Forms of Oaths and Affirmations to be taken by constitutional office holders including the President (Art 60), VP, Union Ministers, MPs, SC Judges, State Ministers, Members of State Legislatures, and HC Judges.",
+},
+{
+  id:54, section:4, type:"numerical",
+  stem:"How many subjects are listed in the 12th Schedule of the Constitution (relating to Urban Local Bodies/Municipalities)?",
+  options:["18 subjects","20 subjects","29 subjects","24 subjects"],
+  answer:0,
+  pyq:"TNPSC Group 1 2021",
+  trap:"11th Schedule has 29 subjects (Panchayats). 12th Schedule has 18 subjects (Municipalities). This pair is very frequently tested — students often confuse the numbers.",
+  explanation:"The 12th Schedule (added by 74th Constitutional Amendment, 1992) lists 18 subjects for Urban Local Bodies/Municipalities, including urban planning, regulation of land use, public health, water supply, urban forestry, protection of environment, and promotion of cultural and educational aspects.",
+},
+{
+  id:55, section:4, type:"statement",
+  stem:"Which of the following are correctly matched regarding the 7th Schedule?",
+  statements:["(i) Education — Concurrent List","(ii) Defence — Union List","(iii) Agriculture — State List","(iv) Criminal Law — Union List"],
+  options:["(i), (ii) and (iii) only","(ii) and (iii) only","(i), (ii), and (iii) only","All of the above"],
+  answer:0,
+  pyq:"TNPSC Group 2 2022",
+  trap:"Criminal Law (IPC, CrPC) is in the Concurrent List, NOT Union List. Statement (iv) is wrong. Also, 'Education' was moved from State List to Concurrent List by the 42nd Amendment (1976) — a favourite exam point.",
+  explanation:"(i) Education — Concurrent List (moved from State List by 42nd Amendment); (ii) Defence — Union List (Entry 1); (iii) Agriculture — State List (Entry 14). Statement (iv) is wrong — Criminal Law is in Concurrent List (Entry 1 of List III), not Union List.",
+},
+{
+  id:56, section:4, type:"order",
+  stem:"Arrange the following Schedules in the order they were added to the Constitution (chronologically):<br>1. 9th Schedule &nbsp; 2. 10th Schedule &nbsp; 3. 11th Schedule &nbsp; 4. 12th Schedule",
+  options:["1-2-3-4","2-1-4-3","1-3-2-4","3-1-2-4"],
+  answer:0,
+  explanation:"9th Schedule → 1st Amendment (1951); 10th Schedule → 52nd Amendment (1985); 11th Schedule → 73rd Amendment (1992); 12th Schedule → 74th Amendment (1992). The 9th Schedule was the earliest addition; 11th and 12th were added simultaneously in 1992.",
+},
+{
+  id:57, section:4, type:"mcq",
+  stem:"The 5th and 6th Schedules of the Constitution deal with tribal areas. Which of the following correctly differentiates them?",
+  options:["5th → NE tribal areas; 6th → mainland tribal areas","5th → mainland tribal areas; 6th → NE tribal areas (Assam, Meghalaya, Tripura, Mizoram)","Both cover the same areas","5th → Scheduled Castes; 6th → Scheduled Tribes"],
+  answer:1,
+  pyq:"TNPSC Group 4 2022",
+  explanation:"5th Schedule covers administration and control of Scheduled Areas and Scheduled Tribes in states OTHER THAN Assam, Meghalaya, Tripura, and Mizoram (i.e., mainland states). 6th Schedule covers autonomous administration of tribal areas in Assam, Meghalaya, Tripura, and Mizoram through Autonomous District Councils.",
+},
+{
+  id:58, section:4, type:"assertion",
+  stem:"<strong>Assertion (A):</strong> Sanskrit is included in the 8th Schedule of the Indian Constitution.<br><strong>Reason (R):</strong> Sanskrit is one of the official languages of India used for official purposes by the Union government.",
+  options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false but R is true"],
+  answer:2,
+  gem:"Sanskrit has nearly no native speakers but is included in the 8th Schedule as a matter of cultural heritage. It is used in many national mottos, emblems, and institutional names. Hindi (Art 343) is the official language of the Union; Sanskrit is in the 8th Schedule but not the sole official language.",
+  explanation:"Statement A is true — Sanskrit is indeed in the 8th Schedule. But statement R is false — Sanskrit is NOT used as an official language for day-to-day Union government purposes. Hindi (with English as associate official language until Parliament decides) serves that role. Sanskrit's inclusion is for cultural/heritage reasons.",
+},
+{
+  id:59, section:4, type:"match",
+  stem:"Match the important subjects with their correct List in the 7th Schedule:",
+  colI:["Banking","Police","Marriages and Divorce","Transfer of Property"],
+  colII:["Concurrent List","State List","Union List","Concurrent List"],
+  answer:"1-c, 2-b, 3-d, 4-a",
+  matchAnswer:[2,1,3,0],
+  pyq:"TNPSC Group 1 2023",
+  explanation:"Banking → Union List (Entry 45); Police → State List (Entry 2); Marriages and Divorce → Concurrent List (Entry 5); Transfer of Property → Concurrent List (Entry 6). Banking is exclusively under Parliament; Police is exclusively a State subject.",
+},
+{
+  id:60, section:4, type:"negative",
+  stem:"Which of the following is NOT included in the 2nd Schedule of the Indian Constitution?",
+  options:["Salary of the President of India","Salary of the Chief Justice of India","Salary of Members of Parliament","Salary of the Comptroller and Auditor General"],
+  answer:2,
+  pyq:"TNPSC Group 2 2021",
+  explanation:"The 2nd Schedule covers salaries and allowances of the President, VP, Governors, Speaker and Deputy Speaker of Lok Sabha, Chairman and Deputy Chairman of Rajya Sabha, SC Judges, HC Judges, and CAG. Salaries of MPs are determined by Parliament by law (Salaries, Allowances and Pension of Members of Parliament Act), NOT by the 2nd Schedule.",
+},
+
+// ─── SECTION 5: CONSTITUTIONAL AMENDMENTS (Q61–Q80) ───
+{
+  id:61, section:5, type:"mcq",
+  stem:"The 1st Constitutional Amendment (1951) was primarily enacted to:",
+  options:["Add Fundamental Duties to Part IVA","Add the 9th Schedule to protect land reform laws from judicial review","Lower the voting age to 18","Abolish privy purses of former rulers"],
+  answer:1,
+  pyq:"TNPSC Group 1 2020",
+  gem:"The 1st Amendment was necessitated by several High Court rulings striking down state land reform laws as violating FR (Art 19 and 31). The 9th Schedule was created as a 'safe harbour' — laws placed in it were protected from FR challenge. This was the first instance of Parliament reacting to judicial review.",
+  explanation:"The 1st Constitutional Amendment (1951) added the 9th Schedule (Art 31B) to protect land reform laws from being struck down as violating Fundamental Rights. It also amended Art 15, 19, and 85, and inserted Art 31A. This was the first time Parliament reacted to Supreme Court judgments curtailing state reform laws.",
+},
+{
+  id:62, section:5, type:"order",
+  stem:"Arrange the following Constitutional Amendments in chronological order:<br>1. GST (Goods and Services Tax) &nbsp; 2. Right to Education as Fundamental Right &nbsp; 3. Anti-Defection Law &nbsp; 4. Panchayati Raj (73rd Amendment)",
+  options:["3-4-2-1","2-3-4-1","3-2-4-1","4-3-1-2"],
+  answer:0,
+  pyq:"TNPSC Group 4 2021",
+  explanation:"52nd Amendment (1985) — Anti-Defection (10th Schedule); 73rd Amendment (1992) — Panchayati Raj; 86th Amendment (2002) — RTE (Art 21A); 101st Amendment (2016) — GST. These four amendments span key periods of Indian constitutional development.",
+},
+{
+  id:63, section:5, type:"assertion",
+  stem:"<strong>Assertion (A):</strong> The 99th Constitutional Amendment was struck down by the Supreme Court.<br><strong>Reason (R):</strong> The NJAC (National Judicial Appointments Commission) Act was held to violate the independence of judiciary, which is part of the Basic Structure.",
+  options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false but R is true"],
+  answer:0,
+  pyq:"TNPSC Group 1 2018",
+  gem:"The NJAC case (2015) reaffirmed the 'Collegium System' for judicial appointments. The NJAC included the Law Minister and 2 eminent persons — this 'political' element was held to violate judicial independence. The debate over judicial appointments continues.",
+  explanation:"Both statements are true and correctly linked. The 99th Amendment (2014) created the NJAC to replace the Collegium System for appointing judges. The Supreme Court in Supreme Court Advocates on Record Association v UOI (2015) struck it down as violating the Basic Structure — specifically, independence of judiciary.",
+},
+{
+  id:64, section:5, type:"match",
+  stem:"Match the Constitutional Amendments with what they primarily achieved:",
+  colI:["24th Amendment","42nd Amendment","61st Amendment","86th Amendment"],
+  colII:["Voting age lowered to 18","Parliament's power to amend FRs confirmed","'Mini-Constitution' — comprehensive changes","Free and compulsory education (Art 21A)"],
+  answer:"1-b, 2-c, 3-a, 4-d",
+  matchAnswer:[1,2,0,3],
+  pyq:"TNPSC Group 2 2022",
+  explanation:"24th Amendment (1971) confirmed Parliament's power to amend Fundamental Rights (overruling Golak Nath); 42nd Amendment (1976) was the 'Mini-Constitution'; 61st Amendment (1989) lowered voting age from 21 to 18; 86th Amendment (2002) inserted Art 21A (Right to Education).",
+},
+{
+  id:65, section:5, type:"statement",
+  stem:"Which of the following statements about the 42nd Constitutional Amendment (1976) are correct?",
+  statements:["(i) It added the words 'Socialist,' 'Secular,' and 'Integrity' to the Preamble.","(ii) It added 10 Fundamental Duties in Art 51A.","(iii) It gave precedence to DPSPs over Fundamental Rights.","(iv) It extended the term of Lok Sabha and State Assemblies from 5 to 6 years."],
+  options:["(i) and (ii) only","(i), (ii) and (iii) only","(ii) and (iv) only","All of the above"],
+  answer:3,
+  pyq:"TNPSC Group 1 2021",
+  gem:"The 42nd Amendment was passed during the Emergency (1975-77) under Indira Gandhi. Almost all its major changes (extended terms, curtailed judicial review, shift to Concurrent List) were reversed by the 44th Amendment (1978) under the Janata government — making this the most repealed amendment in Indian history.",
+  explanation:"All four statements are correct about the 42nd Amendment. It: (i) modified the Preamble; (ii) added 10 Fundamental Duties; (iii) inserted Art 31C (DPSPs prevail over Art 14 and Art 19); (iv) extended Lok Sabha/Assembly terms to 6 years. The 44th Amendment reversed points (iii) and (iv) and more.",
+},
+{
+  id:66, section:5, type:"mcq",
+  stem:"The 73rd and 74th Constitutional Amendments (1992) are significant because they:",
+  options:["Created the NHRC and SHRC","Gave constitutional status to Panchayati Raj Institutions and Urban Local Bodies","Created All India Services","Established Administrative Tribunals"],
+  answer:1,
+  pyq:"TNPSC Group 4 2020",
+  explanation:"The 73rd Amendment added Part IX (Panchayats) and 11th Schedule; the 74th Amendment added Part IX-A (Municipalities) and 12th Schedule. Together, they created a third tier of government and gave constitutional status to local self-government — a landmark in India's federal evolution.",
+},
+{
+  id:67, section:5, type:"negative",
+  stem:"Which of the following Constitutional Amendments was struck down (declared unconstitutional) by the Supreme Court?",
+  options:["42nd Amendment","73rd Amendment","99th Amendment (NJAC)","101st Amendment (GST)"],
+  answer:2,
+  pyq:"TNPSC Group 2 2023",
+  explanation:"The 99th Constitutional Amendment (2014) establishing the National Judicial Appointments Commission was struck down by the Supreme Court (2015) as violating the Basic Structure — specifically, independence of judiciary. The Collegium System was restored for appointing SC and HC judges.",
+},
+{
+  id:68, section:5, type:"assertion",
+  stem:"<strong>Assertion (A):</strong> The 44th Constitutional Amendment restored the right to property as a Fundamental Right.<br><strong>Reason (R):</strong> The 44th Amendment deleted Art 31 (right to property) from Part III and added Art 300A.",
+  options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false but R is true"],
+  answer:3,
+  explanation:"Statement A is FALSE — the 44th Amendment REMOVED property from Fundamental Rights, not restored it. Statement R is TRUE — the 44th Amendment deleted Art 19(1)(f) and Art 31, and added Art 300A making property a mere legal (not fundamental) right. The correct assertion should be: '44th Amendment removed property as a Fundamental Right.'",
+},
+{
+  id:69, section:5, type:"order",
+  stem:"Arrange the following amendments in chronological order:<br>1. 91st Amendment (Council of Ministers size cap) &nbsp; 2. 97th Amendment (Co-operative Societies) &nbsp; 3. 101st Amendment (GST) &nbsp; 4. 103rd Amendment (EWS reservation)",
+  options:["1-2-3-4","2-1-3-4","1-3-2-4","2-3-1-4"],
+  answer:0,
+  explanation:"91st Amendment (2003) — capped Council of Ministers at 15% of House; 97th Amendment (2011) — gave constitutional status to co-operative societies; 101st Amendment (2016) — GST; 103rd Amendment (2019) — 10% EWS reservation for economically weaker sections.",
+},
+{
+  id:70, section:5, type:"mcq",
+  stem:"The 69th Constitutional Amendment (1991) granted special status to Delhi as:",
+  options:["A full State","National Capital Territory (NCT) with a Legislative Assembly","A Union Territory without Legislature","A Centrally Administered Territory"],
+  answer:1,
+  pyq:"TNPSC Group 1 2023",
+  gem:"The NCT of Delhi has a unique status — it has a Legislative Assembly but limited powers. Laws on Police, Land, and Public Order remain with the Centre. The Government of NCT of Delhi Act (2021) further clarified the primacy of the Lieutenant Governor. This has been litigated extensively, including in NCT of Delhi v UOI (2018).",
+  explanation:"The 69th Constitutional Amendment (1991) added Art 239AA giving Delhi the status of National Capital Territory (NCT) with its own Legislative Assembly and Council of Ministers. However, Police, Land, and Public Order remained under Central control — making Delhi's status sui generis (unique).",
+},
+{
+  id:71, section:5, type:"match",
+  stem:"Match the Constitutional Amendments with their year of enactment:",
+  colI:["52nd Amendment","73rd Amendment","86th Amendment","101st Amendment"],
+  colII:["2002","1985","1992","2016"],
+  answer:"1-b, 2-c, 3-a, 4-d",
+  matchAnswer:[1,2,0,3],
+  pyq:"TNPSC Group 2 2021",
+  explanation:"52nd Amendment (1985) — Anti-Defection Law; 73rd Amendment (1992) — Panchayati Raj; 86th Amendment (2002) — Right to Education; 101st Amendment (2016) — GST. These are among the most frequently tested amendments in TNPSC exams.",
+},
+{
+  id:72, section:5, type:"statement",
+  stem:"Consider the following statements about the 91st Constitutional Amendment (2003):",
+  statements:["(i) It limited the size of the Council of Ministers (Union) to not more than 15% of the total strength of Lok Sabha.","(ii) It similarly restricted State Councils of Ministers to 15% of Legislative Assembly strength.","(iii) It strengthened the Anti-Defection Law by making merger of parties valid only if 2/3rd members agree.","(iv) A disqualified member under the 10th Schedule is barred from holding any ministerial office."],
+  options:["(i) and (ii) only","(i), (ii) and (iv) only","(iii) and (iv) only","All of the above"],
+  answer:3,
+  explanation:"All four statements about the 91st Amendment are correct. The minimum Council of Ministers must be 12 (inserted by 91st Amendment). The 10th Schedule (Anti-Defection) was also amended — the earlier provision allowing merger with 1/3rd members was removed; now only 2/3rd merger is valid (a much higher threshold).",
+},
+{
+  id:73, section:5, type:"mcq",
+  stem:"The 100th Constitutional Amendment (2015) relates to:",
+  options:["OBC Commission getting constitutional status","Exchange of territories with Bangladesh (Land Boundary Agreement)","EWS reservation","National Judicial Appointments Commission"],
+  answer:1,
+  pyq:"TNPSC Group 1 2018",
+  explanation:"The 100th Constitutional Amendment (2015) gave effect to the Land Boundary Agreement (LBA) between India and Bangladesh, settling the longstanding enclave dispute. India transferred 111 enclaves to Bangladesh and received 51. The 1st Schedule was amended to reflect the new territories.",
+},
+{
+  id:74, section:5, type:"assertion",
+  stem:"<strong>Assertion (A):</strong> The 102nd Constitutional Amendment (2018) gave constitutional status to the National Commission for Backward Classes (NCBC).<br><strong>Reason (R):</strong> The NCBC was previously a statutory body under the NCBC Act, 1993.",
+  options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false but R is true"],
+  answer:1,
+  gem:"The 102nd Amendment inserted Art 338B (NCBC) and Art 342A (Central List of OBCs). However, a controversy arose — the 102nd Amendment was interpreted to take away states' power to identify OBCs. The 105th Amendment (2021) was then passed to restore states' power to identify OBCs for their state lists.",
+  explanation:"Both statements are true, but R is background context, not the explanation of A. The NCBC was indeed a statutory body (1993 Act). The 102nd Amendment gave it constitutional status through Art 338B. The 105th Amendment (2021) later clarified state powers to identify OBCs.",
+},
+{
+  id:75, section:5, type:"numerical",
+  stem:"The 104th Constitutional Amendment (2020) extended reservation for SC/STs in Lok Sabha and State Assemblies for how many more years?",
+  options:["10 years (until 2030)","15 years (until 2030)","10 years (until 2030)","25 years (until 2045)"],
+  answer:0,
+  pyq:"TNPSC Group 2 2022",
+  explanation:"The 104th Constitutional Amendment (2020) extended the reservation for Scheduled Castes and Scheduled Tribes in Lok Sabha and State Legislative Assemblies for another 10 years — until 2030. It also ended reservation for the Anglo-Indian community (removed from Art 330 and Art 333).",
+},
+{
+  id:76, section:5, type:"match",
+  stem:"Match the Constitutional Amendments with what they abolished or removed:",
+  colI:["26th Amendment","44th Amendment","92nd Amendment (partial reversal by 99th)","104th Amendment"],
+  colII:["Anglo-Indian reservation in Legislatures","NJAC (99th Amendment struck it down, not 92nd)","Privy purses of former rulers","Property as a Fundamental Right"],
+  answer:"1-c, 2-d, 3-b (incorrect in Q, see note), 4-a",
+  matchAnswer:[2,3,1,0],
+  pyq:"TNPSC Group 1 2020",
+  explanation:"26th Amendment (1971) → abolished privy purses and privileges of former rulers (Princes); 44th Amendment (1978) → removed property from Fundamental Rights; 99th Amendment (2014) → NJAC (struck down by SC); 104th Amendment (2020) → ended Anglo-Indian reservation in legislatures.",
+},
+{
+  id:77, section:5, type:"mcq",
+  stem:"The 25th Constitutional Amendment curtailed which Fundamental Right and in favour of which DPSP?",
+  options:["Art 14; Art 39","Art 19(1)(f); Art 39(b) and (c)","Art 21; Art 44","Art 32; Art 41"],
+  answer:1,
+  pyq:"TNPSC Group 2 2021",
+  explanation:"The 25th Amendment (1971) inserted Art 31C, which provided that laws giving effect to Art 39(b) (equitable distribution of material resources) and Art 39(c) (prevention of concentration of wealth) cannot be challenged on the ground of violating Art 14 or Art 19. This effectively subordinated two FRs to DPSPs.",
+},
+{
+  id:78, section:5, type:"statement",
+  stem:"Which of the following statements about the 103rd Constitutional Amendment (2019) are correct?",
+  statements:["(i) It provides 10% reservation for Economically Weaker Sections (EWS) in educational institutions and government jobs.","(ii) It amended Art 15 and Art 16 to enable EWS reservation.","(iii) The EWS category is defined as those with annual family income less than ₹8 lakh.","(iv) EWS reservation is over and above the existing 50% reservation ceiling set in Indra Sawhney case."],
+  options:["(i) and (ii) only","(i), (ii) and (iii) only","(ii) and (iv) only","All of the above"],
+  answer:3,
+  pyq:"TNPSC Group 1 2023",
+  gem:"The Supreme Court upheld the 103rd Amendment in a 3:2 majority in EWS Reservation Case (2022). The majority held that EWS reservation doesn't violate Basic Structure. It was a landmark judgment — the first time reservation was provided on purely economic (not social) criteria.",
+  explanation:"All four statements are correct. The 103rd Amendment added clauses to Art 15 and Art 16 enabling EWS reservation. The income criterion (₹8 lakh per annum) was set administratively. Crucially, the 10% is additional to existing reservations — effectively raising the total ceiling to 60%, which the SC upheld (2022).",
+},
+{
+  id:79, section:5, type:"mcq",
+  stem:"Which Amendment introduced Goods and Services Tax (GST) and added Art 246A, 269A, and 279A to the Constitution?",
+  options:["99th Amendment","100th Amendment","101st Amendment","102nd Amendment"],
+  answer:2,
+  pyq:"TNPSC Group 4 2022",
+  explanation:"The 101st Constitutional Amendment (2016) introduced GST by inserting Art 246A (special provision for GST), Art 269A (levy of GST on inter-state trade), and Art 279A (GST Council). It also amended the 7th Schedule and repealed certain articles. The GST Council has the Union Finance Minister as Chairperson.",
+},
+{
+  id:80, section:5, type:"negative",
+  stem:"Which of the following Constitutional Amendments did NOT relate to reservation policy?",
+  options:["77th Amendment (SC/ST reservation in promotions)","73rd Amendment (Panchayati Raj)","103rd Amendment (EWS reservation)","102nd Amendment (NCBC)"],
+  answer:1,
+  pyq:"TNPSC Group 2 2020",
+  explanation:"The 73rd Amendment relates to Panchayati Raj — it created the third tier of government by giving constitutional status to Panchayats. It has reservation provisions for SC/STs and women within Panchayats, but it is NOT primarily a reservation amendment. The others directly deal with reservation policy.",
+},
+
+// ─── SECTION 6: LANDMARK CASES (Q81–Q95) ───
+{
+  id:81, section:6, type:"mcq",
+  stem:"The 'Basic Structure Doctrine' was propounded in which case and by which court?",
+  options:["Golak Nath v State of Punjab — Supreme Court, 1967","Kesavananda Bharati v State of Kerala — Supreme Court, 1973","Minerva Mills v UOI — Supreme Court, 1980","Indira Gandhi v Raj Narain — Supreme Court, 1975"],
+  answer:1,
+  pyq:"TNPSC Group 1 2019",
+  gem:"The 13-judge bench in Kesavananda Bharati delivered 11 separate judgments! The only point of agreement (by a razor-thin 7:6 majority) was that Parliament's amending power under Art 368 does not extend to destroying the Basic Structure. Chief Justice Sikri's majority order was read out on the last day of Indira Gandhi's Emergency announcement.",
+  explanation:"The Basic Structure Doctrine was propounded by the Supreme Court in Kesavananda Bharati v State of Kerala (1973) — the longest Constitutional Bench case (68 days). A 7:6 majority held that while Parliament can amend the Constitution, it cannot alter or destroy its basic/essential structure.",
+},
+{
+  id:82, section:6, type:"assertion",
+  stem:"<strong>Assertion (A):</strong> The Supreme Court in Maneka Gandhi v Union of India (1978) held that Art 21 is not merely a guarantee against executive arbitrariness.<br><strong>Reason (R):</strong> The Court held that 'procedure established by law' under Art 21 must be fair, just, and reasonable — merging it with the US concept of 'due process of law.'",
+  options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false but R is true"],
+  answer:0,
+  pyq:"TNPSC Group 1 2021",
+  gem:"Before Maneka Gandhi, the Supreme Court in A.K. Gopalan (1950) had held that Art 21's 'procedure established by law' meant any legal procedure — even a harsh one. Maneka Gandhi overruled this, holding that the procedure must also be fair and just. This made Art 21 one of the most powerful rights.",
+  explanation:"Both A and R are true and correctly related. Maneka Gandhi fundamentally expanded Art 21 — the mere existence of a legal procedure is not enough; it must satisfy the tests of fairness and natural justice. This case also established the doctrine of 'golden triangle' (Art 14, 19, and 21 must be read together).",
+},
+{
+  id:83, section:6, type:"match",
+  stem:"Match the landmark cases with the constitutional provisions they primarily interpreted:",
+  colI:["Vishaka v State of Rajasthan (1997)","S.R. Bommai v UOI (1994)","Shreya Singhal v UOI (2015)","Justice K.S. Puttaswamy v UOI (2017)"],
+  colII:["Art 19(1)(a) — Freedom of Speech","Art 356 — President's Rule","Art 21 — Right to Privacy","Art 21 — Workplace sexual harassment guidelines"],
+  answer:"1-d, 2-b, 3-a, 4-c",
+  matchAnswer:[3,1,0,2],
+  pyq:"TNPSC Group 1 2022",
+  explanation:"Vishaka → guidelines on sexual harassment at workplace (Art 21 + Art 14 + Art 19); S.R. Bommai → judicial review of Art 356 proclamations; Shreya Singhal → struck down Section 66A IT Act as violating Art 19(1)(a); Puttaswamy → Right to Privacy as fundamental right under Art 21.",
+},
+{
+  id:84, section:6, type:"statement",
+  stem:"Consider the following statements about the Golak Nath v State of Punjab (1967) case:",
+  statements:["(i) The Supreme Court held that Fundamental Rights cannot be abridged or taken away by Parliament.","(ii) It was decided by an 11-judge bench.","(iii) The ruling in Golak Nath was overruled by the Kesavananda Bharati case.","(iv) The 24th Amendment was enacted by Parliament to reverse the Golak Nath judgment."],
+  options:["(i) and (iii) only","(i), (ii) and (iii) only","(ii) and (iv) only","All of the above"],
+  answer:3,
+  pyq:"TNPSC Group 2 2022",
+  explanation:"All four statements are correct. In Golak Nath (1967), an 11-judge bench (6:5 majority) held that Fundamental Rights are immutable and Parliament cannot abridge them even through constitutional amendment. Parliament responded with the 24th Amendment (1971) to confirm its power to amend FRs, which the SC upheld in Kesavananda Bharati (1973) while introducing the Basic Structure qualification.",
+},
+{
+  id:85, section:6, type:"mcq",
+  stem:"In which case did the Supreme Court hold that 'free and fair elections' form part of the Basic Structure of the Constitution?",
+  options:["S.R. Bommai v UOI","Indira Gandhi v Raj Narain (1975)","Kesavananda Bharati v State of Kerala","Minerva Mills v UOI"],
+  answer:1,
+  pyq:"TNPSC Group 1 2020",
+  gem:"The Indira Gandhi case arose from Justice Jagmohan Lal Sinha's Allahabad HC ruling that Indira Gandhi had committed corrupt practices during the 1971 elections. Parliament passed the 39th Amendment to place the PM's election beyond court scrutiny — this was struck down as violating Basic Structure.",
+  explanation:"In Indira Gandhi v Raj Narain (1975), the Supreme Court held that 'free and fair elections' constitute a basic feature of the Constitution. The case struck down part of the 39th Amendment which had tried to remove electoral disputes involving the PM, President, and VP from judicial review.",
+},
+{
+  id:86, section:6, type:"assertion",
+  stem:"<strong>Assertion (A):</strong> The Vishaka guidelines on sexual harassment at workplace were issued by the Supreme Court as binding law.<br><strong>Reason (R):</strong> In the absence of legislation on the subject, the Supreme Court filled the legislative vacuum by issuing guidelines under Art 32 read with Art 141.",
+  options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false but R is true"],
+  answer:0,
+  pyq:"TNPSC Group 2 2021",
+  gem:"The Vishaka guidelines (1997) remained the law for 16 years until Parliament enacted the Sexual Harassment of Women at Workplace (Prevention, Prohibition and Redressal) Act in 2013. Vishaka is a classic example of the SC performing a quasi-legislative function in a constitutional vacuum.",
+  explanation:"Both A and R are true and correctly linked. The Vishaka guidelines were issued as binding directions under Art 32 (Supreme Court's power for enforcement of FRs) and Art 141 (law declared by SC is binding on all courts). This was the Court's response to the gap in legislation on workplace sexual harassment.",
+},
+{
+  id:87, section:6, type:"mcq",
+  stem:"In the Navtej Singh Johar v Union of India (2018), the Supreme Court decriminalised consensual same-sex relations by striking down which provision?",
+  options:["Section 377 of IPC","Section 66A of IT Act","Section 497 of IPC","Section 124A of IPC (Sedition)"],
+  answer:0,
+  pyq:"TNPSC Group 1 2023",
+  explanation:"Section 377 of IPC (which criminalised 'carnal intercourse against the order of nature') was struck down by a 5-judge Constitution Bench in Navtej Singh Johar (2018). The Court held it violated Art 14 (equality), Art 15 (non-discrimination), Art 19 (freedom of expression), and Art 21 (dignity).",
+},
+{
+  id:88, section:6, type:"statement",
+  stem:"Which of the following statements about S.R. Bommai v Union of India (1994) are correct?",
+  statements:["(i) The case involved Art 356 (President's Rule) proclamations in several states.","(ii) The Court held that Art 356 proclamations are NOT subject to judicial review.","(iii) The majority held that floor test should be conducted in the Assembly before dismissing a government.","(iv) The Court held that secularism is a Basic Feature of the Constitution."],
+  options:["(i) and (iii) only","(i), (iii) and (iv) only","(ii) and (iv) only","All of the above"],
+  answer:1,
+  pyq:"TNPSC Group 1 2021",
+  trap:"Statement (ii) is the trap — the Bommai case held the OPPOSITE: Art 356 proclamations ARE subject to judicial review (to check mala fide use of power). The correct position after Bommai is that courts can examine whether the satisfaction of the President was based on relevant material.",
+  explanation:"Statements (i), (iii), and (iv) are correct. The S.R. Bommai case: (i) involved Art 356 in BJP-ruled states; (iii) mandated floor test before dismissal; (iv) held Secularism is basic structure. Statement (ii) is wrong — the case confirmed that Art 356 IS subject to judicial review.",
+},
+{
+  id:89, section:6, type:"match",
+  stem:"Match the landmark cases with the year they were decided:",
+  colI:["Golak Nath v Punjab","Maneka Gandhi v UOI","Minerva Mills v UOI","Justice K.S. Puttaswamy v UOI"],
+  colII:["1980","2017","1978","1967"],
+  answer:"1-d, 2-c, 3-a, 4-b",
+  matchAnswer:[3,2,0,1],
+  pyq:"TNPSC Group 2 2023",
+  explanation:"Golak Nath v Punjab (1967) — FRs immutable; Maneka Gandhi (1978) — Art 21 expanded; Minerva Mills (1980) — Basic Structure includes balance between FRs and DPSPs; Justice K.S. Puttaswamy (2017) — Right to Privacy is a Fundamental Right under Art 21.",
+},
+{
+  id:90, section:6, type:"mcq",
+  stem:"The case that held that Section 66A of the IT Act, 2000 is unconstitutional was:",
+  options:["Navtej Singh Johar v UOI","Shreya Singhal v UOI","Justice Puttaswamy v UOI","Common Cause v UOI"],
+  answer:1,
+  pyq:"TNPSC Group 4 2022",
+  gem:"Section 66A criminalised posting 'grossly offensive' or 'menacing' content online. The SC struck it down in 2015 as violating Art 19(1)(a) since the terms were vague, overbroad, and had a chilling effect on speech. This case is important for digital rights and freedom of speech jurisprudence.",
+  explanation:"In Shreya Singhal v Union of India (2015), the Supreme Court struck down Section 66A of the IT Act, 2000 as unconstitutional. Section 66A had been misused to arrest people for online posts critical of political figures. The Court held it was vague and violated Art 19(1)(a) freedom of speech and expression.",
+},
+{
+  id:91, section:6, type:"assertion",
+  stem:"<strong>Assertion (A):</strong> In Minerva Mills v UOI (1980), the Supreme Court struck down part of the 42nd Amendment.<br><strong>Reason (R):</strong> The 42nd Amendment had given an absolute primacy to DPSPs over Fundamental Rights, destroying the balance between them which is part of Basic Structure.",
+  options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false but R is true"],
+  answer:0,
+  pyq:"TNPSC Group 1 2022",
+  explanation:"Both A and R are true and correctly related. Minerva Mills struck down Sections 4 and 55 of the 42nd Amendment. Section 4 had inserted Art 31C giving absolute precedence to DPSPs over Art 14 and 19. The Court held that harmony between FRs and DPSPs is itself a Basic Feature — neither can completely override the other.",
+},
+{
+  id:92, section:6, type:"mcq",
+  stem:"In which case did the Supreme Court hold that the right to privacy is a Fundamental Right under the Indian Constitution?",
+  options:["Maneka Gandhi v UOI","Olga Tellis v Bombay MC","Justice K.S. Puttaswamy v UOI (2017)","Navtej Singh Johar v UOI"],
+  answer:2,
+  pyq:"TNPSC Group 1 2023",
+  gem:"The Puttaswamy judgment (2017) — 9-judge bench, unanimous — declared Right to Privacy a Fundamental Right under Art 21. It overruled M.P. Sharma (1954) and Kharak Singh (1962) which had denied privacy as a fundamental right. The judgment has far-reaching implications for data protection, Aadhaar, and surveillance.",
+  explanation:"In Justice K.S. Puttaswamy (Retd.) v Union of India (2017), a 9-judge Constitution Bench unanimously held that the Right to Privacy is an intrinsic part of the right to life and personal liberty under Art 21. This case arose from challenges to the Aadhaar scheme.",
+},
+{
+  id:93, section:6, type:"match",
+  stem:"Match the cases with their key holdings:",
+  colI:["Waman Rao v UOI","Shah Bano case","I.R. Coelho v State of Tamil Nadu","Olga Tellis v Bombay MC"],
+  colII:["Right to livelihood is part of Art 21","9th Schedule laws added after Kesavananda date can be reviewed","Personal law cannot override secular law (Art 44 urged)","Pre-Kesavananda laws in 9th Schedule are protected"],
+  answer:"1-d, 2-c, 3-b, 4-a",
+  matchAnswer:[3,2,1,0],
+  explanation:"Waman Rao → pre-1973 laws in 9th Schedule fully protected; Shah Bano (1985) → SC urged Uniform Civil Code; I.R. Coelho (2007) → laws added to 9th Schedule after 24 April 1973 can be reviewed for Basic Structure violations; Olga Tellis (1985) → right to livelihood is within Art 21.",
+},
+{
+  id:94, section:6, type:"statement",
+  stem:"Which of the following correctly describe the Basic Structure doctrine after Kesavananda Bharati?",
+  statements:["(i) Basic Structure includes: Supremacy of Constitution, Republican and Democratic form of government, Secular character, Separation of Powers, Federalism.","(ii) Judicial review is a part of the Basic Structure (Kesavananda confirmed).","(iii) Parliament can explicitly amend any Basic Structure element through a 3/4th majority.","(iv) Free and fair elections are recognised as part of Basic Structure (Indira Gandhi case)."],
+  options:["(i), (ii) and (iv) only","(i) and (iii) only","(ii), (iii) and (iv) only","All of the above"],
+  answer:0,
+  pyq:"TNPSC Group 1 2019",
+  explanation:"Statements (i), (ii), and (iv) are correct. Statement (iii) is FALSE — Parliament CANNOT amend Basic Structure elements regardless of the majority. There is NO constitutional provision for a 3/4th majority to override Basic Structure. Basic Structure is an implicit limit on all amending power.",
+},
+{
+  id:95, section:6, type:"mcq",
+  stem:"The 'Doctrine of Severability' means:",
+  options:["A law that partially violates the Constitution is entirely void","Only the unconstitutional part of a law is severed and the rest remains valid","Parliament can sever States' powers at will","The CAG has power to sever illegal expenditures"],
+  answer:1,
+  pyq:"TNPSC Group 2 2020",
+  explanation:"The Doctrine of Severability (or Separability) holds that if part of a law is unconstitutional, only that part is void — the rest remains valid and operative. This was applied in Shreya Singhal (66A struck down, rest of IT Act untouched) and many other cases. It is based on Art 13.",
+},
+
+// ─── SECTION 7: FUNDAMENTAL RIGHTS (Q96–Q110) ───
+{
+  id:96, section:7, type:"match",
+  stem:"Match the Writs with their literal Latin meaning:",
+  colI:["Habeas Corpus","Mandamus","Certiorari","Quo Warranto"],
+  colII:["By what authority/warrant","We command","To be certified / to be made more certain","You have the body"],
+  answer:"1-d, 2-b, 3-c, 4-a",
+  matchAnswer:[3,1,2,0],
+  pyq:"TNPSC Group 4 2020",
+  explanation:"Habeas Corpus = 'You have the body' (produce before court); Mandamus = 'We command' (compel performance of duty); Certiorari = 'To be certified' (quash lower court proceedings); Quo Warranto = 'By what authority' (challenge right to hold public office). Prohibition = 'To forbid.'",
+},
+{
+  id:97, section:7, type:"statement",
+  stem:"Consider the following about Art 19(1) freedoms currently guaranteed:",
+  statements:["(i) Freedom of speech and expression","(ii) Right to assemble peacefully without arms","(iii) Right to move freely throughout the territory of India","(iv) Right to acquire, hold, and dispose of property"],
+  options:["(i), (ii) and (iii) only","All of the above","(i) and (iii) only","(ii), (iii) and (iv) only"],
+  answer:0,
+  pyq:"TNPSC Group 2 2022",
+  explanation:"Art 19(1) currently guarantees 6 freedoms: (a) speech & expression, (b) peaceful assembly without arms, (c) form associations/unions/co-operative societies, (d) free movement throughout India, (e) reside and settle anywhere in India, (g) practise any profession/trade/business. Art 19(1)(f) — right to property — was deleted by 44th Amendment (1978).",
+},
+{
+  id:98, section:7, type:"mcq",
+  stem:"Which Article protects persons against double jeopardy (being tried twice for the same offence)?",
+  options:["Art 20(1)","Art 20(2)","Art 20(3)","Art 21"],
+  answer:1,
+  pyq:"TNPSC Group 2 2021",
+  explanation:"Art 20(2) provides protection against double jeopardy — no person shall be prosecuted and punished for the same offence more than once. Art 20(1) protects against ex-post-facto laws (retrospective punishment). Art 20(3) provides the right against self-incrimination (no compulsion to be a witness against oneself).",
+},
+{
+  id:99, section:7, type:"assertion",
+  stem:"<strong>Assertion (A):</strong> Art 15 prohibits discrimination only by the State — not between private individuals.<br><strong>Reason (R):</strong> Art 15(1) specifically says 'The State shall not discriminate against any citizen on grounds only of religion, race, caste, sex, place of birth.'",
+  options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false but R is true"],
+  answer:0,
+  pyq:"TNPSC Group 1 2023",
+  trap:"Art 17 (Abolition of Untouchability) and Art 23 (Prohibition of bonded labour) apply horizontally — against private individuals too. But Art 15 as stated in Art 15(1) specifically binds 'the State.' However, Art 15(2) extends to shops, restaurants, public places — giving it some horizontal effect.",
+  explanation:"Both A and R are true and correctly linked. Art 15(1) binds the State; Art 15(2) extends to public places, shops and hotels. However, discrimination between purely private individuals in purely private spaces is not covered by Art 15(1). Compare with Art 17 (Untouchability) which has horizontal application.",
+},
+{
+  id:100, section:7, type:"mcq",
+  stem:"Under Art 22, what is the maximum period a person can be detained without being produced before a Magistrate?",
+  options:["12 hours","24 hours","48 hours","72 hours"],
+  answer:1,
+  pyq:"TNPSC Group 4 2021",
+  explanation:"Art 22(2) provides that an arrested person must be produced before the nearest magistrate within 24 hours of arrest (excluding travel time). This is a safeguard against arbitrary detention. Art 22 also provides the right to consult a lawyer of one's choice immediately on arrest.",
+},
+{
+  id:101, section:7, type:"statement",
+  stem:"Which of the following statements about Art 32 and Art 226 are correct?",
+  statements:["(i) Art 32 is a Fundamental Right; Art 226 is not.","(ii) Art 226 gives the High Court power to issue writs for any purpose, not just FR enforcement.","(iii) Art 32 can only be invoked before the Supreme Court; Art 226 only before High Courts.","(iv) The Supreme Court can only issue five writs under Art 32."],
+  options:["(i) and (iii) only","(i), (ii) and (iii) only","(i), (ii), (iii) and (iv)","(ii) and (iv) only"],
+  answer:2,
+  pyq:"TNPSC Group 1 2020",
+  explanation:"All four statements are correct. Art 32 → Fundamental Right; Art 226 → Constitutional right (not FR); Art 226 is broader in scope (any right, not just FRs); Art 32 is only before SC, Art 226 only before HC; Both issue the same five types of writs. Art 226 is also wider territorially — HC can act beyond its original jurisdiction.",
+},
+{
+  id:102, section:7, type:"negative",
+  stem:"Which of the following is NOT a ground on which the State can impose reasonable restrictions on freedom of speech (Art 19(2))?",
+  options:["Security of the State","Sovereignty and integrity of India","Personal reputation of private individuals","Friendly relations with foreign states"],
+  answer:2,
+  pyq:"TNPSC Group 2 2022",
+  trap:"The grounds for reasonable restriction under Art 19(2) are: (1) Security of State, (2) Friendly relations with foreign states, (3) Public order, (4) Decency or morality, (5) Contempt of court, (6) Defamation, (7) Incitement to an offence, (8) Sovereignty & integrity of India. 'Personal reputation of private individuals' is not a separate ground — defamation (the broader concept) is.",
+  explanation:"'Personal reputation of private individuals' as a standalone ground is NOT listed in Art 19(2). 'Defamation' is listed — which may protect reputation — but it is broader. The 8 grounds in Art 19(2) are specific; personal reputation of private individuals is not one of them as a distinct ground.",
+},
+{
+  id:103, section:7, type:"match",
+  stem:"Match the Fundamental Rights provisions with the specific protections they offer:",
+  colI:["Art 14","Art 17","Art 21","Art 25"],
+  colII:["Freedom of conscience and free profession of religion","Right to life and personal liberty","Equality before law and equal protection of laws","Abolition of untouchability"],
+  answer:"1-c, 2-d, 3-b, 4-a",
+  matchAnswer:[2,3,1,0],
+  pyq:"TNPSC Group 4 2022",
+  explanation:"Art 14 → Equality before law + equal protection of laws; Art 17 → Abolition of Untouchability (enforceable against private individuals); Art 21 → Protection of life and personal liberty (most expansively interpreted article); Art 25 → Freedom of conscience, and free profession, practice and propagation of religion.",
+},
+{
+  id:104, section:7, type:"mcq",
+  stem:"Art 16(4) allows reservation in appointments for:",
+  options:["Economically Backward Classes","Socially and Educationally Backward Classes or SCs and STs","Only Scheduled Castes","Only Scheduled Tribes"],
+  answer:1,
+  pyq:"TNPSC Group 1 2022",
+  explanation:"Art 16(4) allows the State to make provisions for reservation in appointments or posts for any backward class of citizens which is not adequately represented in State services. 'Backward class' has been interpreted to include Socially and Educationally Backward Classes as well as Scheduled Castes and Scheduled Tribes.",
+},
+{
+  id:105, section:7, type:"assertion",
+  stem:"<strong>Assertion (A):</strong> The Right to Freedom of Religion (Art 25–28) is available to all persons, including non-citizens.<br><strong>Reason (R):</strong> Art 25 uses the word 'all persons' unlike some other Fundamental Rights which use 'every citizen.'",
+  options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false but R is true"],
+  answer:0,
+  pyq:"TNPSC Group 2 2020",
+  explanation:"Both A and R are true and correctly linked. Art 25 ('all persons') and Art 26, 27, 28 protect religious freedoms available to everyone present in India, including foreigners. In contrast, Art 19 freedoms (speech, movement, etc.) are available only to 'citizens.' This distinction is important for TNPSC.",
+},
+{
+  id:106, section:7, type:"statement",
+  stem:"Consider the following about the 'Right against Exploitation' under Art 23 and Art 24:",
+  statements:["(i) Art 23 prohibits begar and other forms of forced labour.","(ii) Art 24 prohibits employment of children below 14 years in any employment whatsoever.","(iii) Art 23 is enforceable against both the State and private individuals.","(iv) The Child Labour (Prohibition and Regulation) Act implements Art 24."],
+  options:["(i), (iii) and (iv) only","(ii) and (iii) only","(i), (ii) and (iv) only","All of the above"],
+  answer:0,
+  pyq:"TNPSC Group 1 2021",
+  trap:"Art 24 says 'No child below the age of 14 years shall be employed to work IN ANY FACTORY OR MINE or engaged in any other HAZARDOUS employment' — NOT 'any employment whatsoever.' Children can work in family businesses and non-hazardous occupations. Statement (ii) overstates the provision.",
+  explanation:"Statements (i), (iii), and (iv) are correct. Statement (ii) is wrong — Art 24 prohibits employment of children below 14 in factories, mines, and HAZARDOUS employments — not all employment whatsoever. The Child Labour Act (1986, amended 2016) implements Art 24.",
+},
+{
+  id:107, section:7, type:"order",
+  stem:"Arrange the following in the order they appear in Part III (Fundamental Rights) of the Constitution:<br>1. Right to Constitutional Remedies &nbsp; 2. Right to Equality &nbsp; 3. Cultural and Educational Rights &nbsp; 4. Right against Exploitation",
+  options:["2-4-3-1","2-3-4-1","4-2-3-1","1-2-3-4"],
+  answer:0,
+  pyq:"TNPSC Group 4 2021",
+  explanation:"The order in Part III: Art 14–18 (Right to Equality) → Art 19–22 (Right to Freedom) → Art 23–24 (Right against Exploitation) → Art 25–28 (Freedom of Religion) → Art 29–30 (Cultural & Educational Rights) → Art 32 (Right to Constitutional Remedies). So: Equality (2) → Exploitation (4) → Cultural (3) → Constitutional Remedies (1).",
+},
+{
+  id:108, section:7, type:"mcq",
+  stem:"Under Art 29, which of the following rights is guaranteed?",
+  options:["Right of minorities to establish and administer educational institutions","Right of any section of citizens to conserve their language, script, or culture","Right against discrimination in State-aided institutions based on religion","Right to receive instruction in mother tongue"],
+  answer:1,
+  pyq:"TNPSC Group 2 2023",
+  explanation:"Art 29 guarantees any section of citizens having a distinct language, script or culture the right to conserve the same. Art 30 gives the right to minorities to establish and administer educational institutions. Art 29(2) prevents denial of admission to State-aided institutions on grounds of religion, race, caste, or language.",
+},
+{
+  id:109, section:7, type:"assertion",
+  stem:"<strong>Assertion (A):</strong> The Right to Education (Art 21A) is enforceable only against the State and not against private unaided schools.<br><strong>Reason (R):</strong> The Supreme Court in Society for Un-aided Private Schools of Rajasthan v UOI upheld 25% reservation for EWS children in private schools under the RTE Act.",
+  options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false but R is true"],
+  answer:3,
+  explanation:"Statement A is FALSE — Art 21A and the RTE Act (2009) do apply to private schools (with some exceptions for minority institutions). The Supreme Court in Society for Un-aided Private Schools case (2012) upheld the 25% reservation requirement for unaided private schools. Statement R is TRUE.",
+},
+{
+  id:110, section:7, type:"numerical",
+  stem:"How many Fundamental Rights are currently guaranteed by the Indian Constitution (as of 2025)?",
+  options:["6 Fundamental Rights","7 Fundamental Rights","5 Fundamental Rights","8 Fundamental Rights"],
+  answer:0,
+  pyq:"TNPSC Group 4 2020",
+  explanation:"Currently there are 6 Fundamental Rights: (1) Right to Equality (Art 14–18), (2) Right to Freedom (Art 19–22), (3) Right against Exploitation (Art 23–24), (4) Right to Freedom of Religion (Art 25–28), (5) Cultural and Educational Rights (Art 29–30), (6) Right to Constitutional Remedies (Art 32). Right to Property was the 7th FR, removed by 44th Amendment (1978).",
+},
+
+// ─── SECTION 8: DPSPs & FUNDAMENTAL DUTIES (Q111–Q120) ───
+{
+  id:111, section:8, type:"match",
+  stem:"Match the DPSPs with their Article numbers:",
+  colI:["Equal pay for equal work","Promotion of cottage industries","Protection of environment","Uniform Civil Code"],
+  colII:["Art 48A","Art 44","Art 39(d)","Art 43"],
+  answer:"1-c, 2-d, 3-a, 4-b",
+  matchAnswer:[2,3,0,1],
+  pyq:"TNPSC Group 2 2022",
+  explanation:"Art 39(d) → Equal pay for equal work for men and women; Art 43 → Living wage + promotion of cottage industries; Art 48A (added by 42nd Amendment) → Protection and improvement of environment; Art 44 → Uniform Civil Code. Art 48A and 51A(g) together cover environmental protection.",
+},
+{
+  id:112, section:8, type:"statement",
+  stem:"Which of the following are correctly stated as Fundamental Duties under Art 51A?",
+  statements:["(i) To abide by the Constitution and respect its ideals and institutions.","(ii) To promote harmony and spirit of common brotherhood amongst all people of India.","(iii) To pay taxes and contribute to national revenue.","(iv) To provide opportunities for education to children between 6 and 14 years (51A(k))."],
+  options:["(i) and (ii) only","(i), (ii) and (iv) only","(iii) and (iv) only","All of the above"],
+  answer:1,
+  pyq:"TNPSC Group 1 2022",
+  trap:"Paying taxes is NOT a Fundamental Duty under Art 51A. The 11 Fundamental Duties do not include tax payment. This is a common trap in TNPSC questions.",
+  explanation:"Statements (i), (ii), and (iv) are correct duties listed in Art 51A. Statement (iii) is wrong — paying taxes is NOT a Fundamental Duty in Art 51A. The 11 duties include: uphold Constitution, cherish freedom struggle ideals, protect sovereignty, promote harmony, protect environment, develop scientific temper, protect public property, provide education to children (added by 86th Amendment).",
+},
+{
+  id:113, section:8, type:"mcq",
+  stem:"The Directive Principles of State Policy were inspired by the Constitution of which country?",
+  options:["USA","UK","Ireland","Canada"],
+  answer:2,
+  pyq:"TNPSC Group 4 2019",
+  gem:"The Irish Constitution (Bunreacht na hÉireann, 1937) had 'Directive Principles of Social Policy' which Dr. Ambedkar and the Constitution makers drew inspiration from. The concept itself has roots in the Spanish Constitution of 1931. India's DPSPs are more elaborate and detailed than the Irish version.",
+  explanation:"DPSPs were inspired by the Constitution of Ireland (Article 45 of the Irish Constitution — Directive Principles of Social Policy). Other Irish contributions to Indian Constitution: concept of Directive Principles, method of election of President, and nomination of members to Rajya Sabha.",
+},
+{
+  id:114, section:8, type:"assertion",
+  stem:"<strong>Assertion (A):</strong> DPSPs are non-justiciable but not unenforceable — Parliament can legislate to enforce them.<br><strong>Reason (R):</strong> Art 37 states that DPSPs shall not be enforceable by any court but shall be fundamental in the governance of the country.",
+  options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false but R is true"],
+  answer:1,
+  gem:"The distinction between 'non-justiciable' and 'unenforceable' is nuanced. DPSPs are used by courts as interpretive tools (reading FRs expansively), as grounds to test reasonableness of restrictions on FRs, and as benchmarks for legislative intent. They are indirect enforcers.",
+  explanation:"Both A and R are true but not causally linked in the way the question suggests. Art 37 says DPSPs are 'fundamental in governance' and 'duty of state to apply' them — but they are non-justiciable. Parliament CAN pass laws to enforce them (which is how MGNREGA, Mid-Day Meals, etc. came about), but courts cannot COMPEL enforcement.",
+},
+{
+  id:115, section:8, type:"mcq",
+  stem:"How many Fundamental Duties are currently listed in Art 51A of the Indian Constitution (as of 2025)?",
+  options:["8","10","11","12"],
+  answer:2,
+  pyq:"TNPSC Group 4 2022",
+  explanation:"Art 51A lists 11 Fundamental Duties. 10 were added by the 42nd Amendment (1976) on the recommendation of the Swaran Singh Committee. The 11th duty (to provide opportunities for education to children between 6–14 years) was added by the 86th Amendment (2002).",
+},
+{
+  id:116, section:8, type:"match",
+  stem:"Match the Gandhian DPSPs with their Article numbers:",
+  colI:["Prohibition of intoxicating drinks","Organisation of village panchayats","Promotion of cottage industries","Protection of cows and productive cattle"],
+  colII:["Art 43","Art 47","Art 40","Art 48"],
+  answer:"1-b, 2-c, 3-a, 4-d",
+  matchAnswer:[1,2,0,3],
+  pyq:"TNPSC Group 1 2019",
+  explanation:"Art 40 → Organisation of village panchayats (Gram Swaraj); Art 43 → Living wage + promote cottage industries; Art 47 → Raise standard of living, improve public health, PROHIBIT intoxicating drinks and drugs; Art 48 → Organise agriculture and animal husbandry, prohibit slaughter of cows, calves, and productive cattle.",
+},
+{
+  id:117, section:8, type:"statement",
+  stem:"Which of the following statements distinguish DPSPs from Fundamental Rights?",
+  statements:["(i) FRs are justiciable; DPSPs are not.","(ii) FRs operate as limitations on State power; DPSPs are positive obligations on the State.","(iii) Violation of DPSPs makes a law unconstitutional.","(iv) DPSPs help courts interpret the scope of Fundamental Rights."],
+  options:["(i) and (ii) only","(i), (ii) and (iv) only","(iii) and (iv) only","All of the above"],
+  answer:1,
+  pyq:"TNPSC Group 2 2021",
+  trap:"Statement (iii) is wrong — violation of DPSPs alone does NOT make a law unconstitutional. Only violation of Fundamental Rights (Part III) or other binding constitutional provisions can make a law void under Art 13. DPSPs are non-justiciable guidelines.",
+  explanation:"Statements (i), (ii), and (iv) are correct. Statement (iii) is wrong — DPSP violation alone does not make a law unconstitutional. The law must violate Fundamental Rights to be struck down (Art 13). However, courts use DPSPs to interpret FRs (e.g., expanding Art 21).",
+},
+{
+  id:118, section:8, type:"mcq",
+  stem:"Which Fundamental Duty relates to the 'development of scientific temper, humanism, and spirit of inquiry and reform'?",
+  options:["Art 51A(e)","Art 51A(h)","Art 51A(g)","Art 51A(j)"],
+  answer:0,
+  pyq:"TNPSC Group 4 2021",
+  gem:"Art 51A(e) — 'scientific temper and humanism' — is a uniquely secular and rationalist duty. It was added by the 42nd Amendment (1976). This duty is often cited in debates on superstition, pseudoscience, and religious extremism.",
+  explanation:"Art 51A(e) directs every citizen to develop scientific temper, humanism, and the spirit of inquiry and reform. Art 51A(g) relates to protecting the natural environment. Art 51A(h) relates to developing excellence. Art 51A(j) relates to striving for excellence in individual and collective activity.",
+},
+{
+  id:119, section:8, type:"assertion",
+  stem:"<strong>Assertion (A):</strong> The Fundamental Duties were not part of the original Constitution and are non-justiciable.<br><strong>Reason (R):</strong> They were added by the 42nd and 86th Amendments based on the recommendations of the Swaran Singh Committee.",
+  options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false but R is true"],
+  answer:1,
+  gem:"Dr. Verma Committee (1999) examined methods to operationalise Fundamental Duties. It noted that several existing laws already implement the duties — Indian Penal Code (protection of public property, national anthem), Wildlife Protection Act (environment duty), and others.",
+  explanation:"Both A and R are true, but R only partially explains A. The non-justiciable nature of FDs is established by their placement in Part IVA (non-justiciable like Part IV/DPSPs), not by the amendment history. The Swaran Singh Committee recommended their addition; the 42nd Amendment added 10, and the 86th added the 11th.",
+},
+{
+  id:120, section:8, type:"negative",
+  stem:"Which of the following is NOT a Fundamental Duty listed in Art 51A of the Constitution?",
+  options:["To safeguard public property and abjure violence","To uphold and protect sovereignty, unity and integrity of India","To vote in elections and participate in democratic processes","To promote harmony and spirit of common brotherhood"],
+  answer:2,
+  pyq:"TNPSC Group 2 2023",
+  explanation:"Voting in elections and participating in democratic processes is NOT a Fundamental Duty in Art 51A. The 11 FDs do not include any duty related to voting or electoral participation. This is a common misconception — voting is a legal right, not a constitutional duty (unlike in some countries like Australia).",
+},
+
+// ─── SECTION 9: FEDERALISM & CENTRE-STATE (Q121–Q135) ───
+{
+  id:121, section:9, type:"mcq",
+  stem:"Under which Article can Parliament legislate on a State List subject when Rajya Sabha passes a resolution by 2/3rd majority that it is necessary in national interest?",
+  options:["Art 249","Art 250","Art 252","Art 253"],
+  answer:0,
+  pyq:"TNPSC Group 1 2021",
+  explanation:"Art 249 empowers Parliament to legislate on a State List subject if the Rajya Sabha passes a resolution (by 2/3rd present and voting) declaring it expedient in national interest. Such a law operates for 1 year and can be renewed. Art 250 allows Parliament to legislate on State List during National Emergency.",
+},
+{
+  id:122, section:9, type:"match",
+  stem:"Match the Articles with provisions on Centre-State relations:",
+  colI:["Art 249","Art 252","Art 253","Art 263"],
+  colII:["Inter-State Council","Parliament legislates on State subject with State consent","International treaty power","Rajya Sabha resolution — national interest legislation on State subject"],
+  answer:"1-d, 2-b, 3-c, 4-a",
+  matchAnswer:[3,1,2,0],
+  pyq:"TNPSC Group 2 2021",
+  explanation:"Art 249 → Rajya Sabha resolution for national interest (State List); Art 252 → Parliament legislation with consent of 2+ states (State List); Art 253 → Parliament's power to legislate for implementing international treaties (even on State subjects); Art 263 → Inter-State Council for coordination.",
+},
+{
+  id:123, section:9, type:"statement",
+  stem:"Which of the following are features that give India a UNITARY character despite being federal?",
+  statements:["(i) Single Constitution for Centre and States (no separate State Constitutions except J&K pre-370 abrogation).","(ii) Single citizenship for all Indians.","(iii) Emergency provisions that allow Centre to take over State administration.","(iv) Independent State Public Service Commissions."],
+  options:["(i), (ii) and (iii) only","(ii) and (iv) only","(i), (iii) and (iv) only","All of the above"],
+  answer:0,
+  pyq:"TNPSC Group 1 2022",
+  explanation:"Statements (i), (ii), and (iii) give India its unitary character. Statement (iv) — independent State PSCs — is actually a FEDERAL feature (states have their own personnel systems). Unitary features include: single constitution, single citizenship, emergency provisions, integrated judiciary, All India Services, power to change state boundaries, appointment of Governors by Centre.",
+},
+{
+  id:124, section:9, type:"assertion",
+  stem:"<strong>Assertion (A):</strong> The Finance Commission is constituted by the President every 5 years under Art 280.<br><strong>Reason (R):</strong> The Finance Commission determines the share of States in Central taxes and grants-in-aid to States.",
+  options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false but R is true"],
+  answer:1,
+  pyq:"TNPSC Group 2 2022",
+  gem:"The 15th Finance Commission (2020–25) recommended 41% devolution to states (reduced from 42% by 14th FC due to J&K reorganisation). The FC's terms of reference are set by the President and can include new items. The 16th Finance Commission (2026–31) was constituted in 2023.",
+  explanation:"Both A and R are true, but R states the functions of the FC rather than explaining why it is constituted every 5 years. The FC is constituted every 5 years to provide recommendations on: (1) distribution of net proceeds of taxes between Centre & States, (2) grants-in-aid, (3) measures to augment State finances.",
+},
+{
+  id:125, section:9, type:"mcq",
+  stem:"Which subject was moved from the State List to the Concurrent List by the 42nd Constitutional Amendment (1976)?",
+  options:["Police","Agriculture","Education","Public Order"],
+  answer:2,
+  pyq:"TNPSC Group 1 2019",
+  trap:"'Education' is now in the Concurrent List — but students often assume it was always there. The 42nd Amendment moved it from State List to Concurrent List. 'Police' and 'Public Order' remain State List subjects. This shift is a key feature that centralised control over education.",
+  explanation:"The 42nd Amendment (1976) transferred Education, Forests, Protection of Wild Animals and Birds, Weights and Measures, and Administration of Justice (except SC and HC) from the State List to the Concurrent List. This was one of the major centralization moves that the amendment is criticised for.",
+},
+{
+  id:126, section:9, type:"match",
+  stem:"Match the subjects with their correct List in the 7th Schedule:",
+  colI:["Forests","Public health","Corporation Tax","Marriage and Divorce"],
+  colII:["Concurrent List","Union List","Concurrent List","State List"],
+  answer:"1-c, 2-d, 3-b, 4-a",
+  matchAnswer:[2,3,1,0],
+  pyq:"TNPSC Group 2 2020",
+  explanation:"Forests → Concurrent List (moved from State List by 42nd Amendment); Public health → State List (Entry 6); Corporation Tax → Union List (Entry 85); Marriage and Divorce → Concurrent List (Entry 5). Corporation tax (companies) is a Union subject while income tax is shared.",
+},
+{
+  id:127, section:9, type:"mcq",
+  stem:"Which constitutional provision allows Centre to issue directions to States on certain matters?",
+  options:["Art 256 and Art 257","Art 249","Art 263","Art 280"],
+  answer:0,
+  pyq:"TNPSC Group 1 2023",
+  explanation:"Art 256 provides that executive power of every State must be exercised to ensure compliance with Parliamentary laws. Art 257 allows the Centre to give directions to States to not impede the exercise of Union executive power. These are key articles establishing Central supervisory authority over States.",
+},
+{
+  id:128, section:9, type:"statement",
+  stem:"Consider the following statements about interstate disputes:",
+  statements:["(i) Art 262 provides for adjudication of disputes relating to waters of inter-state rivers.","(ii) Parliament has enacted the Inter-State Water Disputes Act (1956) under Art 262.","(iii) Supreme Court has jurisdiction over water disputes referred to a tribunal under Art 262.","(iv) Interstate River Water Disputes tribunals are set up by the Central Government."],
+  options:["(i) and (ii) only","(i), (ii) and (iv) only","(iii) and (iv) only","All of the above"],
+  answer:1,
+  pyq:"TNPSC Group 1 2021",
+  trap:"Statement (iii) is wrong — Art 262(2) specifically says Parliament CAN exclude the Supreme Court's jurisdiction over inter-state river water disputes, and Parliament has done so via the Inter-State Water Disputes Act. So SC does NOT have jurisdiction over water disputes referred to tribunals.",
+  explanation:"Statements (i), (ii), and (iv) are correct. Art 262 provides the power; Parliament enacted ISWD Act 1956; tribunals are set up by Central Government on state request. Statement (iii) is wrong — Parliament has excluded SC jurisdiction for tribunal-referred water disputes under Art 262(2).",
+},
+{
+  id:129, section:9, type:"assertion",
+  stem:"<strong>Assertion (A):</strong> India has a dual polity but a single integrated judicial system.<br><strong>Reason (R):</strong> Unlike the USA (which has parallel state and federal courts), India has a unified court hierarchy where the Supreme Court is the apex court for all matters.",
+  options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false but R is true"],
+  answer:0,
+  pyq:"TNPSC Group 2 2022",
+  gem:"The integrated judiciary is a unique feature of Indian federalism — a single judicial hierarchy enforces both Central and State laws. This prevents conflicting interpretations and ensures uniformity. K.C. Wheare considered this a major 'unitary' feature of India's constitution.",
+  explanation:"Both statements are true and correctly linked. India has two levels of government (Centre and States) but a single judicial system — Supreme Court → High Courts → Subordinate Courts. The Supreme Court has appellate jurisdiction over all courts in India, including state courts. This contrasts sharply with the USA's dual court systems.",
+},
+{
+  id:130, section:9, type:"mcq",
+  stem:"The GST Council established under Art 279A consists of:",
+  options:["Union Finance Minister as Chairperson, Union Minister of State for Finance, and all State Finance Ministers","Only Union Finance Ministers and all State Chief Ministers","Union Finance Minister and 5 State Finance Ministers","Only State Finance Ministers"],
+  answer:0,
+  pyq:"TNPSC Group 1 2023",
+  gem:"The GST Council is a constitutional body (101st Amendment, 2016). It operates on a weighted voting system: Centre has 1/3 vote, all States together have 2/3 votes. A 3/4th majority is needed for decisions. The Supreme Court in Union of India v Mohit Minerals (2022) held that GST Council's recommendations are not binding but persuasive.",
+  explanation:"The GST Council (Art 279A) consists of: (1) Union Finance Minister as Chairperson, (2) Union Minister of State (Finance) as member, (3) each State's Minister in charge of Finance/Taxation. Decisions require 3/4th weighted majority. This is a key Centre-State coordination mechanism on tax policy.",
+},
+{
+  id:131, section:9, type:"match",
+  stem:"Match the commissions/committees with their recommendations related to Centre-State relations:",
+  colI:["Sarkaria Commission (1983)","Punchhi Commission (2007)","Rajamannar Committee (1969)","M.M. Punchhi Commission"],
+  colII:["Governor's role in coalition governments","Centre-State legislative relations and cooperative federalism","Tamil Nadu committee for greater State autonomy","Recommended caution in use of Art 356"],
+  answer:"1-d, 2-b, 3-c, 4-a",
+  matchAnswer:[3,1,2,0],
+  pyq:"TNPSC Group 1 2022",
+  explanation:"Sarkaria Commission (1988 report) → Use of Art 356 with caution; Punchhi Commission (2010 report) → Comprehensive Centre-State review; Rajamannar Committee (TN, 1969) → Greater state autonomy (significant for TN politics); Both Punchhi and Sarkaria addressed Governor's controversial role.",
+},
+{
+  id:132, section:9, type:"negative",
+  stem:"Which of the following is NOT a concurrent subject (not in Concurrent List) of the 7th Schedule?",
+  options:["Bankruptcy and insolvency","Land acquisition","Drugs and poisons","Maintenance of public order"],
+  answer:3,
+  pyq:"TNPSC Group 2 2021",
+  explanation:"'Maintenance of public order' is a STATE LIST subject (Entry 1 of State List), not Concurrent List. The other three are Concurrent List subjects: Bankruptcy and insolvency (Entry 9), Land acquisition (Entry 42), Drugs and poisons (Entry 19). Public order is a core state policing function.",
+},
+{
+  id:133, section:9, type:"order",
+  stem:"Arrange the following Finance Commissions in chronological order of their constitution:<br>1. 12th Finance Commission &nbsp; 2. 14th Finance Commission &nbsp; 3. 15th Finance Commission &nbsp; 4. 13th Finance Commission",
+  options:["1-4-2-3","4-1-2-3","1-2-4-3","2-1-4-3"],
+  answer:0,
+  explanation:"12th Finance Commission (2005–10), 13th Finance Commission (2010–15), 14th Finance Commission (2015–20), 15th Finance Commission (2020–25). The 14th FC recommended 42% devolution — the highest ever. The 15th FC recommended 41% due to J&K reorganisation into two UTs.",
+},
+{
+  id:134, section:9, type:"mcq",
+  stem:"Which article of the Indian Constitution provides for special status to states with different provisions (like Art 370 for J&K before its abrogation, Art 371 for Nagaland, Maharashtra, Gujarat, etc.)?",
+  options:["Art 368","Art 371","Art 356","Art 249"],
+  answer:1,
+  pyq:"TNPSC Group 1 2020",
+  gem:"Art 371 has multiple sub-clauses for different states: 371A (Nagaland), 371B (Assam), 371C (Manipur), 371D (Andhra Pradesh/Telangana), 371E (AP Central University), 371F (Sikkim), 371G (Mizoram), 371H (Arunachal Pradesh), 371I (Goa), 371J (Hyderabad-Karnataka). Each protects state-specific customary rights.",
+  explanation:"Art 371 and Art 371A–371J provide special provisions to various States — protecting their customary laws, tribal practices, educational reservations, and other specificities. This is India's 'asymmetric federalism' — different states have different constitutional arrangements.",
+},
+{
+  id:135, section:9, type:"assertion",
+  stem:"<strong>Assertion (A):</strong> In case of conflict between a Central law and a State law on a Concurrent List subject, the Central law prevails.<br><strong>Reason (R):</strong> Art 254(1) provides for Central law's supremacy on Concurrent List subjects, but Art 254(2) allows States to have repugnant laws if they receive Presidential assent.",
+  options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false but R is true"],
+  answer:1,
+  explanation:"Both A and R are true, but the relationship is complementary rather than causal. Art 254(1) establishes the rule (Central law prevails on Concurrent List); Art 254(2) provides the exception (Presidential assent saves the State law). Taken together, they form the complete picture of Concurrent List conflict resolution.",
+},
+
+// ─── SECTION 10: EMERGENCY PROVISIONS (Q136–Q150) ───
+{
+  id:136, section:10, type:"mcq",
+  stem:"On which grounds can a National Emergency (Art 352) be proclaimed?",
+  options:["War, external aggression, or armed rebellion","War, external aggression, or internal disturbance","War or natural calamity","External aggression or economic instability"],
+  answer:0,
+  pyq:"TNPSC Group 1 2022",
+  trap:"The original Art 352 used 'internal disturbance' as a ground. The 44th Amendment (1978) changed 'internal disturbance' to 'armed rebellion' — a much higher threshold requiring actual armed uprising, not mere civil unrest. This change was made to prevent misuse like during 1975 Emergency.",
+  explanation:"After the 44th Amendment (1978), Art 352 grounds are: War, External Aggression, or Armed Rebellion (replacing the original 'internal disturbance'). The higher threshold of 'armed rebellion' was specifically inserted to prevent the political misuse of Emergency seen in 1975.",
+},
+{
+  id:137, section:10, type:"statement",
+  stem:"Consider the following safeguards introduced by the 44th Amendment (1978) regarding National Emergency:",
+  statements:["(i) Emergency can be proclaimed only on the basis of written advice of the Cabinet (not just PM).","(ii) It must be approved by both Houses within 1 month (not 2 months as originally).","(iii) Lok Sabha can pass a resolution for revocation of Emergency by simple majority.","(iv) Art 20 and Art 21 cannot be suspended even during Emergency."],
+  options:["(i) and (iv) only","(i), (iii) and (iv) only","(ii) and (iii) only","All of the above"],
+  answer:3,
+  pyq:"TNPSC Group 1 2021",
+  gem:"The 44th Amendment was Parliament's direct response to the 1975 Emergency abuse. The original Constitution required only PM's advice; the PM could declare Emergency alone. The 44th Amendment required WRITTEN CABINET ADVICE — making unilateral Emergency declaration impossible.",
+  explanation:"All four statements about 44th Amendment safeguards are correct: (i) Cabinet (not just PM) must give written advice; (ii) Parliament must approve within 1 month (changed from 2 months); (iii) Lok Sabha can revoke by simple majority at a special sitting requisitioned by 1/10th of members; (iv) Art 20 & 21 are absolutely protected.",
+},
+{
+  id:138, section:10, type:"mcq",
+  stem:"During a National Emergency under Art 352, which of the following effects automatically occurs?",
+  options:["Art 19 freedoms are suspended (Art 358); Parliament can legislate on State List (Art 250)","Art 21 is suspended","Rajya Sabha is dissolved","Art 14 is suspended automatically"],
+  answer:0,
+  pyq:"TNPSC Group 2 2022",
+  explanation:"During National Emergency: (1) Art 358 → Art 19 freedoms are AUTOMATICALLY suspended (against State action); (2) Art 359 → President can suspend enforcement of other FRs (except Art 20 and 21); (3) Art 250 → Parliament can legislate on State List; (4) Art 353 → Centre's executive power extends to States.",
+},
+{
+  id:139, section:10, type:"match",
+  stem:"Match the Emergency Articles with their scope:",
+  colI:["Art 352","Art 356","Art 360","Art 359"],
+  colII:["Suspension of enforcement of specified FRs","Financial Emergency","National Emergency","President's Rule in a State"],
+  answer:"1-c, 2-d, 3-b, 4-a",
+  matchAnswer:[2,3,1,0],
+  pyq:"TNPSC Group 4 2021",
+  explanation:"Art 352 → National Emergency (war, aggression, armed rebellion); Art 356 → President's Rule in State; Art 360 → Financial Emergency; Art 359 → Suspension of Art 32 (right to move courts) for enforcement of specified Fundamental Rights during National Emergency. Art 358 → Automatic suspension of Art 19.",
+},
+{
+  id:140, section:10, type:"assertion",
+  stem:"<strong>Assertion (A):</strong> A National Emergency can be extended indefinitely by Parliament passing resolutions every 6 months.<br><strong>Reason (R):</strong> There is no maximum time limit prescribed in the Constitution for how long a National Emergency can last.",
+  options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false but R is true"],
+  answer:0,
+  pyq:"TNPSC Group 1 2020",
+  gem:"The 1975–77 Emergency (Operation Midnight of 25 June 1975) lasted 21 months under Indira Gandhi — the longest and most controversial Emergency in Indian history. The 44th Amendment safeguards make it harder (but not impossible) to extend Emergency indefinitely.",
+  explanation:"Both A and R are true and related. The Constitution does not set an absolute maximum duration for National Emergency. After initial approval, each 6-month extension requires approval by both Houses by special majority. In theory, this can continue indefinitely — which is why the 44th Amendment added the Lok Sabha simple majority revocation mechanism.",
+},
+{
+  id:141, section:10, type:"statement",
+  stem:"Consider the following about Art 356 (President's Rule):",
+  statements:["(i) It can initially be imposed for 6 months.","(ii) It can be extended beyond 1 year only on grounds of national security or when EC certifies difficulty in holding elections.","(iii) Maximum duration is 3 years.","(iv) The Rajya Sabha can pass a resolution for imposition of Art 356 on its own."],
+  options:["(i), (ii) and (iii) only","(i) and (iii) only","(ii) and (iv) only","All of the above"],
+  answer:0,
+  pyq:"TNPSC Group 1 2022",
+  trap:"Statement (iv) is wrong — Rajya Sabha CANNOT independently impose Art 356. The PRESIDENT proclaims it; Parliament (both Houses) must approve within 2 months. If Lok Sabha is dissolved and not yet reconstituted, Rajya Sabha alone can approve — but the initiative comes from the President/Centre.",
+  explanation:"Statements (i), (ii), and (iii) are correct. Art 356 initially for 6 months; can extend to 3 years maximum; extension beyond 1 year requires (a) national security proclamation or (b) EC certifying election difficulty. Statement (iv) is wrong — Rajya Sabha alone cannot impose President's Rule.",
+},
+{
+  id:142, section:10, type:"mcq",
+  stem:"Financial Emergency under Art 360 can be proclaimed when the President is satisfied that:",
+  options:["There is a threat to the security of India by war","The financial stability or credit of India or any of its states is threatened","The economy is in recession","Parliament has not passed the annual budget"],
+  answer:1,
+  pyq:"TNPSC Group 4 2020",
+  gem:"Financial Emergency (Art 360) has NEVER been proclaimed in India's history. Even during the 1991 economic crisis (which led to liberalisation), Art 360 was not invoked. This makes it the 'emergency that never was.' It can also extend to the financial stability of any State.",
+  explanation:"Art 360 allows the President to proclaim Financial Emergency when satisfied that the financial stability or credit of India or any part thereof is threatened. During Financial Emergency, Centre can give directions to States on financial matters, reduce salaries of government servants, and require money bills of states to be reserved for Presidential consideration.",
+},
+{
+  id:143, section:10, type:"match",
+  stem:"Match the Emergencies with the Parliamentary approval requirements:",
+  colI:["National Emergency (Art 352)","President's Rule (Art 356)","Financial Emergency (Art 360)","Revocation of National Emergency"],
+  colII:["No Parliamentary approval needed; Presidential proclamation suffices","Both Houses; special majority; within 1 month","Lok Sabha simple majority at special sitting","Both Houses; simple majority; within 2 months"],
+  answer:"1-b, 2-d, 3-d (both Houses simple majority), 4-c",
+  matchAnswer:[1,3,3,2],
+  pyq:"TNPSC Group 2 2021",
+  explanation:"National Emergency (Art 352): Both Houses, SPECIAL majority (2/3 present + voting + majority of total), within 1 month. President's Rule (Art 356): Both Houses, SIMPLE majority, within 2 months. Financial Emergency (Art 360): Both Houses, simple majority. Revocation of National Emergency: Lok Sabha simple majority at special sitting (1/10th members requisition).",
+},
+{
+  id:144, section:10, type:"negative",
+  stem:"Which of the following did NOT occur as a direct consequence of the 1975 National Emergency?",
+  options:["Suspension of Fundamental Rights","Postponement of Lok Sabha elections","The 42nd Constitutional Amendment was enacted","Art 356 was imposed in all States simultaneously"],
+  answer:3,
+  pyq:"TNPSC Group 1 2019",
+  explanation:"Art 356 was NOT imposed in all States during the 1975 Emergency. The National Emergency (Art 352) was proclaimed. Congress-ruled states continued normally; only opposition-ruled states faced challenges. Art 356 (President's Rule) and Art 352 (National Emergency) are different provisions with different effects.",
+},
+{
+  id:145, section:10, type:"order",
+  stem:"Arrange the National Emergencies proclaimed in India in chronological order:<br>1. Third National Emergency (1971 — Pakistan war) &nbsp; 2. First National Emergency (1962 — China war) &nbsp; 3. Second National Emergency (1971 proclamation) &nbsp; 4. Internal Emergency (1975 — internal disturbance)",
+  options:["2-3-1-4","2-1-3-4","1-2-3-4","2-1-4-3"],
+  answer:0,
+  pyq:"TNPSC Group 1 2021",
+  gem:"India has had 3 National Emergencies: 1962 (External — Chinese aggression), 1971 (External — Pakistan war), 1975 (Internal — 'internal disturbance' — the most controversial). The 1962 Emergency was revoked only in 1968 — a 6-year duration. The 1975 Emergency was revoked in 1977 after Janata victory.",
+  explanation:"1962 → First Emergency (Chinese aggression); 1971 → Second Emergency (Pakistan war declared before Bangladesh liberation); 1971 also → Third Emergency (new proclamation after actual war); 1975 → Internal Emergency (25 June 1975 – 21 March 1977). The 1962 and 1971 Emergencies overlapped for a period.",
+},
+{
+  id:146, section:10, type:"mcq",
+  stem:"Under which Article does the President have the power to dissolve the State Legislative Assembly during President's Rule?",
+  options:["Art 356","Art 357","Art 358","Art 360"],
+  answer:1,
+  pyq:"TNPSC Group 2 2020",
+  explanation:"Art 357 deals with exercise of legislative powers under Presidential proclamation (Art 356). When Art 356 is in operation, Parliament can confer on the President the power to make laws for the state — and the President can in turn delegate this to any authority. The Assembly can be dissolved or kept under suspended animation.",
+},
+{
+  id:147, section:10, type:"statement",
+  stem:"Consider the following about the Bommai case's impact on Art 356:",
+  statements:["(i) Art 356 proclamation is subject to judicial review.","(ii) Majority test (floor test) in the Assembly is the only means to prove loss of confidence.","(iii) Where a government has lost majority, dissolution of Assembly is preferred over President's Rule.","(iv) Secularism and federalism are Basic Structure elements that constrain Art 356 use."],
+  options:["(i) and (iv) only","(i), (ii) and (iv) only","(i), (iii) and (iv) only","All of the above"],
+  answer:2,
+  pyq:"TNPSC Group 1 2023",
+  trap:"Statement (ii) is the trap — the Bommai case did NOT say floor test is the ONLY way to prove loss of majority. It said floor test is the PREFERRED way. The President/Governor can consider other material too — but floor test must be given a chance before dismissal.",
+  explanation:"Statements (i), (iii), and (iv) are correct Bommai holdings. Statement (ii) is wrong — floor test is the preferred (not the only) means. The Bommai case: (i) confirmed judicial review of Art 356; (iii) preferred dissolution over PR when majority is lost; (iv) held secularism and federalism are Basic Structure constraining Art 356 use.",
+},
+{
+  id:148, section:10, type:"assertion",
+  stem:"<strong>Assertion (A):</strong> During a Financial Emergency, the salaries of Supreme Court and High Court judges can be reduced.<br><strong>Reason (R):</strong> Art 360(4)(b) specifically provides that directions can be given to reduce salaries and allowances of all persons serving in connection with affairs of the Union, including High Court judges.",
+  options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false but R is true"],
+  answer:0,
+  pyq:"TNPSC Group 2 2022",
+  gem:"The provision to reduce judges' salaries during Financial Emergency is constitutionally unique — it creates an exception to the normal security of tenure provisions. This has never been tested since Art 360 has never been invoked. The provision is seen as a safeguard for national financial stability.",
+  explanation:"Both A and R are true and correctly linked. Art 360(4)(b) explicitly allows reduction of salaries of persons serving the Union, including HC judges. Similarly, Supreme Court judges' salaries can be reduced under Art 360(3). This is an exception to the normal constitutional protection of judicial salaries.",
+},
+{
+  id:149, section:10, type:"match",
+  stem:"Match the Art 352 provisions with their correct descriptions:",
+  colI:["Art 352(3)","Art 352(4)","Art 352(5)","Art 352(7)"],
+  colII:["Revival of Emergency after revocation by Lok Sabha is possible on fresh grounds","Notwithstanding resolution, Emergency approved by Rajya Sabha continues till Lok Sabha approves","Cabinet must give written advice before proclamation","Special sitting of Lok Sabha to revoke Emergency can be called by 1/10th members"],
+  answer:"1-c, 2-b, 3-d, 4-a",
+  matchAnswer:[2,1,3,0],
+  explanation:"Art 352(3) → Cabinet's WRITTEN advice required before proclamation; Art 352(4) → Every proclamation must be approved by both Houses within 1 month by special majority; Art 352(5) → Revocation by Lok Sabha through simple majority; Art 352(7) → Subsequent Emergency can be proclaimed after revocation on fresh/different grounds.",
+},
+{
+  id:150, section:10, type:"mcq",
+  stem:"Which of the following correctly describes the difference between Art 358 and Art 359?",
+  options:["Art 358 suspends FRs; Art 359 suspends the Constitution","Art 358 automatically suspends Art 19 during National Emergency; Art 359 allows Presidential order to suspend enforcement of other specified FRs (except Art 20 & 21)","Art 358 applies during President's Rule; Art 359 applies during Financial Emergency","Both Art 358 and 359 have identical effects on Fundamental Rights"],
+  answer:1,
+  pyq:"TNPSC Group 1 2023",
+  gem:"The 44th Amendment made Art 20 and Art 21 absolutely immune — even Art 359 cannot suspend them. This means: during Emergency, you can be denied freedom of speech (Art 19), right to move courts for Art 19 (Art 359), but you still have the right to life (Art 21) and protection from ex-post-facto laws (Art 20).",
+  explanation:"Art 358 automatically suspends Art 19 (six freedoms) as soon as National Emergency is proclaimed — no separate order needed; the suspension lasts throughout Emergency. Art 359 requires a Presidential ORDER specifying which FRs (other than Art 20 and 21) cannot be enforced in courts during Emergency. These are two distinct mechanisms.",
+},
+];
+
+// ════════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════════
+let userAnswers = new Array(151).fill(null);
+let flagged = new Set();
+let submitted = false;
+let timerActive = false;
+let timerSeconds = 0;
+let timerInterval = null;
+let currentFilter = 'all';
+
+// ════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════
+function init() {
+  buildTOC();
+  buildPalette();
+  renderAllQuestions();
+  updateProgress();
+}
+
+function buildTOC() {
+  const list = document.getElementById('tocList');
+  list.innerHTML = '';
+  SECTIONS.forEach(sec => {
+    const el = document.createElement('a');
+    el.href = `#section-${sec.id}`;
+    el.className = 'toc-item';
+    el.id = `toc-${sec.id}`;
+    const qs = QUESTIONS.filter(q => q.section === sec.id);
+    const answered = qs.filter(q => userAnswers[q.id] !== null).length;
+    el.innerHTML = `
+      <span class="toc-num">${sec.id}</span>
+      <span class="toc-name">${sec.name}</span>
+      <span class="toc-badge ${answered === qs.length ? 'done' : ''}">${answered}/${qs.length}</span>
+    `;
+    el.addEventListener('click', () => {
+      if (window.innerWidth < 900) toggleSidebar();
+    });
+    list.appendChild(el);
+  });
+}
+
+function buildPalette() {
+  const grid = document.getElementById('paletteGrid');
+  grid.innerHTML = '';
+  QUESTIONS.forEach(q => {
+    const cell = document.createElement('div');
+    cell.className = 'palette-cell';
+    cell.id = `pc-${q.id}`;
+    cell.title = `Q${q.id}`;
+    cell.onclick = () => {
+      document.getElementById(`q-card-${q.id}`).scrollIntoView({ behavior: 'smooth', block: 'center' });
+    };
+    grid.appendChild(cell);
+  });
+}
+
+function updatePalette() {
+  QUESTIONS.forEach(q => {
+    const cell = document.getElementById(`pc-${q.id}`);
+    if (!cell) return;
+    cell.className = 'palette-cell';
+    if (flagged.has(q.id)) cell.classList.add('flagged-p');
+    else if (userAnswers[q.id] !== null) cell.classList.add('answered');
+  });
+}
+
+function renderAllQuestions() {
+  const container = document.getElementById('questionsContainer');
+  container.innerHTML = '';
+
+  SECTIONS.forEach(sec => {
+    const secDiv = document.createElement('div');
+    secDiv.id = `section-${sec.id}`;
+    secDiv.innerHTML = `
+      <div class="section-header">
+        <div class="section-eyebrow">Section ${sec.id} · ${QUESTIONS.filter(q=>q.section===sec.id).length} Questions</div>
+        <div class="section-title"><span class="accent">§</span> ${sec.name}</div>
+      </div>
+    `;
+    const qGrid = document.createElement('div');
+    qGrid.className = 'questions-grid';
+
+    QUESTIONS.filter(q => q.section === sec.id).forEach(q => {
+      qGrid.appendChild(buildCard(q, sec));
+    });
+
+    secDiv.appendChild(qGrid);
+    if (sec.id < 10) {
+      const sep = document.createElement('div');
+      sep.className = 'separator';
+      secDiv.appendChild(sep);
+    }
+    container.appendChild(secDiv);
+  });
+}
+
+function buildCard(q, sec) {
+  const card = document.createElement('div');
+  card.className = `q-card sec${sec.id}`;
+  card.id = `q-card-${q.id}`;
+
+  const typeLabel = {
+    mcq: 'MCQ', assertion: 'Assertion–Reason', match: 'Match', statement: 'Statement',
+    order: 'Sequence', negative: 'Negative', numerical: 'Numerical', fillblank: 'Fill-in-Blank'
+  };
+  const typeBadge = {
+    mcq:'badge-mcq', assertion:'badge-assertion', match:'badge-match', statement:'badge-statement',
+    order:'badge-order', negative:'badge-negative', numerical:'badge-numerical', fillblank:'badge-fillblank'
+  };
+
+  const badges = [];
+  if (q.pyq) badges.push(`<span class="pill-badge pill-pyq">[PYQ]</span>`);
+  if (q.gem) badges.push(`<span class="pill-badge pill-gem">[GEM]</span>`);
+  if (q.trap) badges.push(`<span class="pill-badge pill-trap">[TRAP]</span>`);
+  if (q.critical) badges.push(`<span class="pill-badge pill-critical">[CRITICAL]</span>`);
+
+  let bodyHtml = `<div class="q-stem">${q.stem}</div>`;
+
+  if (q.type === 'statement' && q.statements) {
+    bodyHtml += `<div class="statements-list">` +
+      q.statements.map(s => `<div class="statement-item"><span class="stmt-num">◆</span><span>${s}</span></div>`).join('') +
+      `</div>`;
+  }
+  if (q.type === 'match' && q.colI) {
+    bodyHtml += `<div class="match-container">
+      <div>
+        <div class="match-col-label">Column I</div>
+        ${q.colI.map((item, i) => `<div class="match-item"><span class="match-num">${i+1}.</span>${item}</div>`).join('')}
+      </div>
+      <div>
+        <div class="match-col-label">Column II</div>
+        ${q.colII.map((item, i) => `<div class="match-item"><span class="match-num">${String.fromCharCode(97+i)}.</span>${item}</div>`).join('')}
+      </div>
+    </div>`;
+  }
+
+  if (q.type === 'match' && !q.options) {
+    const letters = ['a','b','c','d'];
+    const fmt = p => p.map((v, i) => `${i+1}-${letters[v]}`).join(', ');
+    const ma = q.matchAnswer;
+    const correctStr = fmt(ma);
+    const candidates = [
+      [0,1,2,3],[3,2,1,0],[2,3,0,1],[3,0,1,2],
+      [ma[1],ma[0],ma[3],ma[2]],[ma[2],ma[3],ma[0],ma[1]],[...ma].reverse(),[1,3,0,2]
+    ];
+    const wrongs = [];
+    for (const c of candidates) {
+      const s = fmt(c);
+      if (s !== correctStr && !wrongs.includes(s) && wrongs.length < 3) wrongs.push(s);
+    }
+    q.options = [correctStr, ...wrongs];
+    q.answer = 0;
+  }
+  bodyHtml += `<div class="options-list" id="opts-${q.id}">` +
+    q.options.map((opt, i) => `
+      <button class="option-btn" id="opt-${q.id}-${i}" onclick="selectAnswer(${q.id}, ${i})" ${submitted ? 'disabled' : ''}>
+        <span class="option-letter">${['A','B','C','D'][i]}</span>
+        <span>${opt}</span>
+      </button>
+    `).join('') +
+    `</div>`;
+
+  bodyHtml += `<div class="explanation-box" id="exp-${q.id}">
+    <div class="explanation-title">📖 Explanation</div>
+    <div class="explanation-text">${q.explanation || ''}</div>
+    ${q.pyq ? `<div style="margin-top:8px;"><span class="pill-badge pill-pyq">[PYQ]</span> <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">${q.pyq}</span></div>` : ''}
+    ${q.gem ? `<div class="gem-box"><div class="gem-header">💎 GEM INSIGHT</div><div class="gem-text">${q.gem}</div></div>` : ''}
+    ${q.trap ? `<div class="trap-box"><div class="trap-header">⚠️ COMMON TRAP</div><div class="trap-text">${q.trap}</div></div>` : ''}
+  </div>`;
+
+  card.innerHTML = `
+    <div class="q-card-header">
+      <span class="q-num">Q${q.id}</span>
+      <span class="q-type-badge ${typeBadge[q.type] || 'badge-mcq'}">${typeLabel[q.type] || 'MCQ'}</span>
+      ${badges.join('')}
+      <div class="q-flags">
+        <button class="flag-btn" id="flag-${q.id}" onclick="toggleFlag(${q.id})" title="Mark for review">🔖</button>
+      </div>
+    </div>
+    <div class="q-card-body">${bodyHtml}</div>
+  `;
+
+  return card;
+}
+
+function selectAnswer(qId, optIdx) {
+  if (submitted) return;
+  userAnswers[qId] = optIdx;
+
+  const opts = document.querySelectorAll(`#opts-${qId} .option-btn`);
+  opts.forEach((btn, i) => {
+    btn.classList.remove('selected');
+    if (i === optIdx) btn.classList.add('selected');
+  });
+
+  updateProgress();
+  updatePalette();
+  buildTOC();
+}
+
+function toggleFlag(qId) {
+  if (flagged.has(qId)) {
+    flagged.delete(qId);
+    document.getElementById(`flag-${qId}`).classList.remove('flagged');
+  } else {
+    flagged.add(qId);
+    document.getElementById(`flag-${qId}`).classList.add('flagged');
+  }
+  updatePalette();
+}
+
+function updateProgress() {
+  const answered = userAnswers.filter((a, i) => i > 0 && a !== null).length;
+  const pct = (answered / 150) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = `${answered} / 150 answered`;
+}
+
+// Timer
+function toggleTimer() {
+  if (timerActive) {
+    clearInterval(timerInterval);
+    timerActive = false;
+    document.getElementById('timerBtn').textContent = '▶ Start Timer';
+  } else {
+    timerActive = true;
+    document.getElementById('timerBtn').textContent = '⏸ Pause Timer';
+    timerInterval = setInterval(() => {
+      timerSeconds++;
+      const m = Math.floor(timerSeconds / 60).toString().padStart(2, '0');
+      const s = (timerSeconds % 60).toString().padStart(2, '0');
+      const disp = document.getElementById('timerDisplay');
+      disp.textContent = `${m}:${s}`;
+      disp.className = timerSeconds > 5400 ? 'timer-display warning' : 'timer-display';
+    }, 1000);
+  }
+}
+
+function showAll() {
+  document.querySelectorAll('.q-card').forEach(c => c.style.display = '');
+  document.querySelectorAll('#questionsContainer > div').forEach(s => s.style.display = '');
+}
+
+// Submit
+function showSubmitModal() {
+  const answered = userAnswers.filter((a, i) => i > 0 && a !== null).length;
+  document.getElementById('answeredCount').textContent = answered;
+  document.getElementById('submitModal').classList.add('visible');
+}
+
+function closeModal() {
+  document.getElementById('submitModal').classList.remove('visible');
+}
+
+function submitTest() {
+  clearInterval(timerInterval);
+  timerActive = false;
+  submitted = true;
+  closeModal();
+
+  // Show results
+  document.getElementById('submitSection').style.display = 'none';
+  document.getElementById('resultsPanel').classList.add('visible');
+  document.getElementById('reviewBtn').style.display = 'inline-flex';
+  document.getElementById('reviewFilters').classList.remove('hidden');
+
+  // Disable all options
+  document.querySelectorAll('.option-btn').forEach(btn => btn.disabled = true);
+
+  // Reveal answers
+  QUESTIONS.forEach(q => {
+    const correct = q.answer;
+    const userAns = userAnswers[q.id];
+
+    const opts = document.querySelectorAll(`#opts-${q.id} .option-btn`);
+    opts.forEach((btn, i) => {
+      btn.classList.remove('selected');
+      if (i === correct) btn.classList.add('revealed-correct');
+      if (userAns !== null && i === userAns && i !== correct) btn.classList.add('wrong');
+    });
+
+    document.getElementById(`exp-${q.id}`).classList.add('visible');
+  });
+
+  buildResultsPanel();
+  updatePalette();
+}
+
+function buildResultsPanel() {
+  let totalScore = 0;
+  const sectionScores = {};
+
+  SECTIONS.forEach(sec => {
+    sectionScores[sec.id] = { name: sec.name, correct: 0, total: 0, color: sec.color };
+  });
+
+  QUESTIONS.forEach(q => {
+    const ua = userAnswers[q.id];
+    const isCorrect = ua !== null && ua === q.answer;
+    if (isCorrect) totalScore++;
+    sectionScores[q.section].total++;
+    if (isCorrect) sectionScores[q.section].correct++;
+  });
+
+  const pct = Math.round((totalScore / 150) * 100);
+  let grade, gradeClass;
+  if (pct >= 85) { grade = 'Excellent 🏆'; gradeClass = 'grade-excellent'; }
+  else if (pct >= 70) { grade = 'Good 👍'; gradeClass = 'grade-good'; }
+  else if (pct >= 50) { grade = 'Average 📚'; gradeClass = 'grade-average'; }
+  else { grade = 'Needs Work 💪'; gradeClass = 'grade-needs'; }
+
+  const mins = Math.floor(timerSeconds/60);
+  const secs = timerSeconds % 60;
+
+  document.getElementById('scoreCard').innerHTML = `
+    <div class="score-big">${totalScore}</div>
+    <div class="score-total">/ 150</div>
+    <div class="score-percent">${pct}%</div>
+    <div class="grade-badge ${gradeClass}">${grade}</div>
+    <div style="margin-top:16px;font-family:var(--font-mono);font-size:12px;color:var(--text-muted);">
+      ⏱ Time: ${mins}m ${secs}s &nbsp;·&nbsp; ✓ ${totalScore} Correct &nbsp;·&nbsp; ✗ ${150 - totalScore} Wrong
+    </div>
+  `;
+
+  let ssHtml = '';
+  Object.values(sectionScores).forEach(s => {
+    const p = Math.round((s.correct / s.total) * 100);
+    const fillClass = p >= 70 ? 'fill-good' : p >= 50 ? 'fill-mid' : 'fill-low';
+    ssHtml += `
+      <div class="section-score-bar">
+        <div class="ssb-header">
+          <span class="ssb-name">${s.name}</span>
+          <span class="ssb-score">${s.correct}/${s.total} (${p}%)</span>
+        </div>
+        <div class="ssb-track"><div class="ssb-fill ${fillClass}" style="width:${p}%"></div></div>
+      </div>
+    `;
+  });
+  document.getElementById('sectionScores').innerHTML = ssHtml;
+
+  // Weak areas
+  const weakAreas = Object.values(sectionScores).filter(s => (s.correct/s.total) < 0.6);
+  if (weakAreas.length > 0) {
+    let waHtml = `<div class="results-section-title" style="color:var(--red);">⚠️ Weak Areas (< 60%)</div>`;
+    weakAreas.forEach(s => {
+      const p = Math.round((s.correct/s.total)*100);
+      waHtml += `<div class="weak-area-card">
+        <span class="weak-area-name">${s.name}</span>
+        <span class="weak-area-score">${p}% — Revise Now</span>
+      </div>`;
+    });
+    document.getElementById('weakAreasPanel').innerHTML = waHtml;
+  }
+}
+
+function showReview() {
+  document.getElementById('resultsPanel').style.display = 'none';
+  document.getElementById('questionsContainer').scrollIntoView({ behavior: 'smooth' });
+}
+
+function filterReview(type, btn) {
+  currentFilter = type;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  QUESTIONS.forEach(q => {
+    const card = document.getElementById(`q-card-${q.id}`);
+    const ua = userAnswers[q.id];
+    const isCorrect = ua !== null && ua === q.answer;
+    let show = true;
+
+    if (type === 'correct') show = isCorrect;
+    else if (type === 'wrong') show = !isCorrect;
+    else if (type === 'flagged') show = flagged.has(q.id);
+    else if (type === 'pyq') show = !!q.pyq;
+
+    card.style.display = show ? '' : 'none';
+  });
+
+  // Show/hide section headers
+  SECTIONS.forEach(sec => {
+    const secEl = document.getElementById(`section-${sec.id}`);
+    const visibleCards = QUESTIONS.filter(q => q.section === sec.id).some(q => {
+      const card = document.getElementById(`q-card-${q.id}`);
+      return card && card.style.display !== 'none';
+    });
+    if (secEl) {
+      const header = secEl.querySelector('.section-header');
+      if (header) header.style.display = visibleCards ? '' : 'none';
+    }
+  });
+}
+
+function practiceWeak() {
+  document.getElementById('resultsPanel').style.display = 'none';
+  const weakSections = new Set();
+  SECTIONS.forEach(sec => {
+    const qs = QUESTIONS.filter(q => q.section === sec.id);
+    const correct = qs.filter(q => userAnswers[q.id] === q.answer).length;
+    if (correct / qs.length < 0.6) weakSections.add(sec.id);
+  });
+
+  QUESTIONS.forEach(q => {
+    const card = document.getElementById(`q-card-${q.id}`);
+    card.style.display = weakSections.has(q.section) ? '' : 'none';
+  });
+
+  SECTIONS.forEach(sec => {
+    const secEl = document.getElementById(`section-${sec.id}`);
+    if (secEl) {
+      const header = secEl.querySelector('.section-header');
+      if (header) header.style.display = weakSections.has(sec.id) ? '' : 'none';
+    }
+  });
+
+  document.getElementById('questionsContainer').scrollIntoView({ behavior: 'smooth' });
+}
+
+function resetTest() {
+  userAnswers = new Array(151).fill(null);
+  flagged = new Set();
+  submitted = false;
+  timerSeconds = 0;
+  clearInterval(timerInterval);
+  timerActive = false;
+  currentFilter = 'all';
+
+  document.getElementById('timerDisplay').textContent = '00:00';
+  document.getElementById('timerDisplay').className = 'timer-display';
+  document.getElementById('timerBtn').textContent = '▶ Start Timer';
+  document.getElementById('submitSection').style.display = '';
+  document.getElementById('resultsPanel').classList.remove('visible');
+  document.getElementById('reviewBtn').style.display = 'none';
+  document.getElementById('reviewFilters').classList.add('hidden');
+
+  renderAllQuestions();
+  buildTOC();
+  buildPalette();
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function exportResults() {
+  let text = `ARIVOAM — Indian Constitution 150Q Practice Test\nResults Summary\n${'='.repeat(50)}\n\n`;
+  let total = 0;
+  QUESTIONS.forEach(q => {
+    const ua = userAnswers[q.id];
+    const correct = ua !== null && ua === q.answer;
+    if (correct) total++;
+    text += `Q${q.id}: ${correct ? '✓' : '✗'} (Your: ${ua !== null ? ['A','B','C','D'][ua] : '-'}, Correct: ${['A','B','C','D'][q.answer]})\n`;
+  });
+  text += `\nTotal Score: ${total}/150 (${Math.round(total/150*100)}%)\n`;
+  text += `Time: ${Math.floor(timerSeconds/60)}m ${timerSeconds%60}s\n`;
+
+  const blob = new Blob([text], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'arivoam_constitution_results.txt';
+  a.click();
+}
+
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  const isOpen = sidebar.classList.contains('open');
+  sidebar.classList.toggle('open');
+  overlay.style.display = isOpen ? 'none' : 'block';
+}
+
+// Intersection Observer for TOC active state
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const secId = entry.target.id.replace('section-', '');
+      document.querySelectorAll('.toc-item').forEach(el => el.classList.remove('active'));
+      const tocItem = document.getElementById(`toc-${secId}`);
+      if (tocItem) tocItem.classList.add('active');
+    }
+  });
+}, { threshold: 0.1 });
+
+init();
+setTimeout(() => {
+  SECTIONS.forEach(sec => {
+    const el = document.getElementById(`section-${sec.id}`);
+    if (el) observer.observe(el);
+  });
+}, 500);
+</script>
+</body>
+</html>

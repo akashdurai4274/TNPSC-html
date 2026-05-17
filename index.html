@@ -5,39 +5,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Arivoam — TNPSC & SSC Study Hub</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap"
-    rel="stylesheet">
+  <link rel="stylesheet" href="arivoam-shared.css">
   <style>
     :root {
-      --bg: #08090d;
-      --bg2: #0d0f14;
-      --surface: #12151e;
+      /* File-specific overrides / additions */
+      --surface:  #12151e;
       --surface2: #181c28;
-      --border: #21263a;
-      --border2: #2d3450;
-      --gold: #f5c842;
-      --gold2: #e8b830;
-      --red: #e85555;
-      --green: #4ecb7a;
-      --blue: #5b9cf6;
-      --purple: #a78bfa;
-      --cyan: #22d3ee;
-      --orange: #fb923c;
-      --pink: #f472b6;
-      --text: #e8eaf0;
-      --muted: #6b7599;
-      --muted2: #9099b8;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
+      --green:    #4ecb7a;
+      --blue:     #5b9cf6;
+      --purple:   #a78bfa;
+      --pink:     #f472b6;
     }
 
     body {
@@ -996,9 +973,15 @@
       animation-delay: .25s
     }
 
-    .card:nth-child(6) {
-      animation-delay: .3s
-    }
+    .card:nth-child(6)  { animation-delay: .30s }
+    .card:nth-child(7)  { animation-delay: .35s }
+    .card:nth-child(8)  { animation-delay: .40s }
+    .card:nth-child(9)  { animation-delay: .45s }
+    .card:nth-child(10) { animation-delay: .50s }
+    .card:nth-child(11) { animation-delay: .55s }
+    .card:nth-child(12) { animation-delay: .60s }
+
+    body.anim-paused::before { animation-play-state: paused; }
 
     /* ── MOBILE ── */
     @media(max-width:900px) {
@@ -1122,13 +1105,13 @@
   <!-- EXAM SWITCHER -->
   <div class="exam-switcher">
     <div class="exam-tabs">
-      <button class="exam-tab active" onclick="switchExam('ssc', this)">
+      <button class="exam-tab active" data-action="switchExam" data-exam="ssc">
         <span class="tab-icon">🏛️</span> SSC (CGL / CHSL)
       </button>
-      <button class="exam-tab" onclick="switchExam('tnpsc', this)">
+      <button class="exam-tab" data-action="switchExam" data-exam="tnpsc">
         <span class="tab-icon">🌿</span> TNPSC (Gr 1 / 2 / 4)
       </button>
-      <button class="exam-tab" onclick="switchExam('overview', this)">
+      <button class="exam-tab" data-action="switchExam" data-exam="overview">
         <span class="tab-icon">🗂️</span> All Subjects
       </button>
     </div>
@@ -1164,8 +1147,7 @@
 
   <script>
     /* ─────────────── DATA ─────────────── */
-    /* ─────────────── DATA ─────────────── */
-    /* EXAMS is populated at runtime via fetch('arivoam-data.json') — see init() below */
+    /* EXAMS is populated at runtime via fetch('exams.json') — see init() below */
     let EXAMS = {};
 
     /* ─────────────── STATE ─────────────── */
@@ -1179,13 +1161,13 @@
       const content = document.getElementById('contentArea');
 
       nav.innerHTML = `<div class="nav-header">All Subjects</div>
-    <a class="nav-item active" onclick="switchExam('overview', null)"><span class="nav-icon">🗂️</span> Overview</a>
+    <a class="nav-item active" data-action="switchExam" data-exam="overview" role="button" tabindex="0"><span class="nav-icon">🗂️</span> Overview</a>
     <div class="nav-divider"></div>
     <div class="nav-group-label">SSC</div>
-    ${EXAMS.ssc.subjects.map(s => `<a class="nav-item" onclick="switchExam('ssc',null,'${s.id}')"><span class="nav-icon">${s.icon}</span>${s.label}<span class="nav-count">${totalCards(s)}</span></a>`).join('')}
+    ${EXAMS.ssc.subjects.map(s => `<a class="nav-item" data-action="switchExam" data-exam="ssc" data-subject="${s.id}" role="button" tabindex="0"><span class="nav-icon">${s.icon}</span>${s.label}<span class="nav-count">${totalCards(s)}</span></a>`).join('')}
     <div class="nav-divider"></div>
     <div class="nav-group-label">TNPSC</div>
-    ${EXAMS.tnpsc.subjects.map(s => `<a class="nav-item" onclick="switchExam('tnpsc',null,'${s.id}')"><span class="nav-icon">${s.icon}</span>${s.label}<span class="nav-count">${totalCards(s)}</span></a>`).join('')}
+    ${EXAMS.tnpsc.subjects.map(s => `<a class="nav-item" data-action="switchExam" data-exam="tnpsc" data-subject="${s.id}" role="button" tabindex="0"><span class="nav-icon">${s.icon}</span>${s.label}<span class="nav-count">${totalCards(s)}</span></a>`).join('')}
   `;
 
       let html = `<div><div class="section-header" style="margin-bottom:24px"><div><div class="section-label">All Exams & Subjects</div><div class="section-title">Complete Subject Library</div></div></div>`;
@@ -1206,7 +1188,7 @@
     function renderOverviewCard(s, examId) {
       const sections = Object.values(s.sections);
       const chipLabels = sections.map(sec => sec.sectionTitle.split('—')[0].trim());
-      return `<div class="overview-card" style="--ov-accent:${s.color}" onclick="switchExam('${examId}',null,'${s.id}')">
+      return `<div class="overview-card" style="--ov-accent:${s.color}" data-action="switchExam" data-exam="${examId}" data-subject="${s.id}" role="button" tabindex="0">
     <div class="ov-header"><span class="ov-icon">${s.icon}</span><div><div class="ov-label">${examId.toUpperCase()}</div><div class="ov-name">${s.label}</div></div></div>
     <div class="ov-desc">${s.desc}</div>
     <div class="ov-chips">${chipLabels.slice(0, 3).map(c => `<span class="ov-chip">${c}</span>`).join('')}</div>
@@ -1219,19 +1201,20 @@
     }
 
     /* ─────────────── RENDER EXAM ─────────────── */
-    function renderExam(examId, targetSubjectId) {
+    function renderExam(examId, targetSubjectId, targetSectionId) {
       const exam = EXAMS[examId];
-      const firstSubject = targetSubjectId
-        ? exam.subjects.find(s => s.id === targetSubjectId)
-        : exam.subjects[0];
-      currentSubjectId = firstSubject.id;
+      const subject = (targetSubjectId && exam.subjects.find(s => s.id === targetSubjectId))
+        || exam.subjects[0];
+      currentSubjectId = subject.id;
 
-      // Pick first section
-      const firstSectionId = Object.keys(firstSubject.sections)[0];
-      currentSectionId = firstSectionId;
+      // Use target section if valid, otherwise first section
+      const sectionId = (targetSectionId && subject.sections[targetSectionId])
+        ? targetSectionId
+        : Object.keys(subject.sections)[0];
+      currentSectionId = sectionId;
 
-      renderNav(exam, firstSubject);
-      renderSubjectContent(firstSubject, firstSectionId, exam);
+      renderNav(exam, subject);
+      renderSubjectContent(subject, sectionId, exam);
     }
 
     function renderNav(exam, activeSubject) {
@@ -1243,8 +1226,8 @@
         subject.navGroups.forEach(group => {
           html += `<div class="nav-group-label">${subject.icon} ${subject.label}</div>`;
           group.items.forEach(item => {
-            html += `<a class="nav-item ${isActiveSub && item.id === currentSectionId ? 'active' : ''}" 
-          onclick="navigateTo('${subject.id}','${item.id}')">
+            html += `<a class="nav-item ${isActiveSub && item.id === currentSectionId ? 'active' : ''}"
+          data-action="navigate" data-subject="${subject.id}" data-section="${item.id}" role="button" tabindex="0">
           <span class="nav-icon">${item.icon}</span>${item.label}
           <span class="nav-count">${item.count}</span>
         </a>`;
@@ -1275,7 +1258,7 @@
       // Search
       html += `<div class="search-wrap">
     <span class="search-icon">⌕</span>
-    <input class="search-input" type="text" id="searchInput" placeholder="Search topics, rules, patterns…" oninput="filterCards()">
+    <input class="search-input" type="text" id="searchInput" placeholder="Search topics, rules, patterns…" >
   </div>`;
 
       // Section header
@@ -1290,7 +1273,7 @@
       // Filters
       const filterLabels = { all: 'All', ready: '✓ Ready', soon: 'Coming Soon', tier2: 'Tier-II Focus', grp1: 'Group 1 Focus' };
       html += `<div class="filter-row">
-    ${section.filters.map((f, i) => `<button class="filter-btn ${i === 0 ? 'active' : ''}" onclick="filterBy('${f}',this)">${filterLabels[f] || f}</button>`).join('')}
+    ${section.filters.map((f, i) => `<button class="filter-btn ${i === 0 ? 'active' : ''}" data-action="filter" data-filter="${f}">${filterLabels[f] || f}</button>`).join('')}
   </div>`;
 
       // Cards
@@ -1347,27 +1330,33 @@
     function navigateTo(subjectId, sectionId) {
       currentSubjectId = subjectId;
       currentSectionId = sectionId;
+      try {
+        localStorage.setItem('arivoam_last_tab', currentExam);
+        localStorage.setItem('arivoam_last_subject_' + currentExam, subjectId);
+        localStorage.setItem('arivoam_last_section_' + currentExam, sectionId);
+      } catch(e) {}
       const exam = EXAMS[currentExam];
       const subject = exam.subjects.find(s => s.id === subjectId);
       renderNav(exam, subject);
       renderSubjectContent(subject, sectionId, exam);
     }
 
-    function switchExam(examId, btn, targetSubjectId) {
+    function switchExam(examId, btn, targetSubjectId, targetSectionId) {
       currentExam = examId;
+      try { localStorage.setItem('arivoam_last_tab', examId); } catch(e) {}
       // update tab buttons
       document.querySelectorAll('.exam-tab').forEach(t => t.classList.remove('active'));
-      if (btn) btn.classList.add('active');
-      else {
-        const tabMap = { ssc: 0, tnpsc: 1, overview: 2 };
-        const tabs = document.querySelectorAll('.exam-tab');
-        if (tabs[tabMap[examId]]) tabs[tabMap[examId]].classList.add('active');
-      }
+      const tabMap = { ssc: 0, tnpsc: 1, overview: 2 };
+      const tabs = document.querySelectorAll('.exam-tab');
+      if (tabs[tabMap[examId]]) tabs[tabMap[examId]].classList.add('active');
 
       if (examId === 'overview') {
         renderOverview();
       } else {
-        renderExam(examId, targetSubjectId || null);
+        // Use explicit target, or fall back to saved state
+        const subId = targetSubjectId || (function(){ try { return localStorage.getItem('arivoam_last_subject_' + examId); } catch(e){ return null; } })();
+        const secId = targetSectionId || (function(){ try { return localStorage.getItem('arivoam_last_section_' + examId); } catch(e){ return null; } })();
+        renderExam(examId, subId, secId);
       }
     }
 
@@ -1413,21 +1402,45 @@
          </div>`;
 
       try {
-        const res = await fetch('exams.json');
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        EXAMS = await res.json();
-        switchExam('ssc', null);
+        const cached = sessionStorage.getItem('arivoam_exams');
+        if (cached) {
+          EXAMS = JSON.parse(cached);
+        } else {
+          const res = await fetch('exams.json');
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          EXAMS = await res.json();
+          sessionStorage.setItem('arivoam_exams', JSON.stringify(EXAMS));
+        }
+        const lastTab = (function(){ try { return localStorage.getItem('arivoam_last_tab') || 'ssc'; } catch(e){ return 'ssc'; } })();
+        switchExam(lastTab, null, null, null);
       } catch (err) {
         document.getElementById('subjectNav').innerHTML = '';
         document.getElementById('contentArea').innerHTML =
           `<div style="padding:40px 0;color:var(--red);font-family:'IBM Plex Mono',monospace;font-size:13px;">
              ⚠ Failed to load data: ${err.message}<br>
              <span style="color:var(--muted);font-size:11px;margin-top:8px;display:block;">
-               Make sure <strong>arivoam-data.json</strong> is in the same folder as this HTML file.
+               Make sure <strong>exams.json</strong> is in the same folder as this HTML file.
              </span>
            </div>`;
       }
     }
+
+    document.addEventListener('click', e => {
+      const el = e.target.closest('[data-action]');
+      if (!el) return;
+      const { action, exam, subject, section, filter } = el.dataset;
+      if (action === 'switchExam') switchExam(exam, null, subject || null);
+      else if (action === 'navigate') navigateTo(subject, section);
+      else if (action === 'filter') filterBy(filter, el);
+    });
+
+    document.addEventListener('input', e => {
+      if (e.target.id === 'searchInput') filterCards();
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      document.body.classList.toggle('anim-paused', document.hidden);
+    });
 
     init();
   </script>

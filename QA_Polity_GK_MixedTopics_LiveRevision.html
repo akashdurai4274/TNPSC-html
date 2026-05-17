@@ -896,10 +896,25 @@
         flex-direction: column;
       }
     }
-  </style>
+  
+/* ── BACK LINK & PRINT ── */
+.back-link-hub{position:fixed;top:8px;left:12px;z-index:999;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gold);background:rgba(13,15,20,0.92);border:1px solid rgba(245,200,66,0.3);padding:4px 10px;border-radius:4px;text-decoration:none;transition:background 0.2s;backdrop-filter:blur(4px)}
+.back-link-hub:hover{background:rgba(245,200,66,0.12)}
+@media print{
+  .back-link-hub,.filter-bar,.topic-nav,.filter-bar-inner,.topic-nav-inner,
+  .search-bar,.search-bar-inner,.progress-bar-wrap,.back-top,.bookmark-link,
+  .revised-label,.bookmarks-section,.filter-row,.fb,.topic-tab{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  .hero{background:#fff!important;border-bottom:1px solid #ccc!important;color:#000!important}
+  .q-card{border:1px solid #ccc!important;break-inside:avoid;box-shadow:none!important}
+  .q-body{max-height:none!important}
+  a{color:#000}
+}</style>
 </head>
 
 <body>
+<a href="../index.html" class="back-link-hub" aria-label="Back to Study Hub">← Hub</a>
+
 
   <!-- ═══════════════════════════════════════════════ HERO -->
   <div class="hero">
@@ -4762,6 +4777,24 @@
       });
     }
   </script>
-</body>
+
+<script>
+(function(){
+  document.querySelectorAll('.q-header').forEach(function(h){
+    h.setAttribute('role','button');
+    h.setAttribute('tabindex','0');
+    h.setAttribute('aria-expanded','false');
+    h.addEventListener('keydown',function(e){
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();h.click();}
+    });
+  });
+  document.addEventListener('click',function(e){
+    var h=e.target.closest('.q-header');
+    if(!h)return;
+    var card=h.closest('.q-card');
+    if(card) h.setAttribute('aria-expanded', card.classList.contains('open')?'true':'false');
+  });
+})();
+</script></body>
 
 </html>

@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Select-String -Path \"C:\\\\TNPSC\\\\Software\\\\TNPSC-v2\\\\QA_History_StoneAge_IndusValley_LiveRevision \\(1\\).html\" -Pattern \"<script\")",
+      "Bash(Select-Object -First 3)",
+      "Bash(node -e \"try { JSON.parse\\(require\\('fs'\\).readFileSync\\('exams.json','utf8'\\)\\); console.log\\('JSON valid'\\); } catch\\(e\\) { console.log\\('JSON error:', e.message\\); }\")",
+      "Bash(node -e \"try { const d = JSON.parse\\(require\\('fs'\\).readFileSync\\('exams.json','utf8'\\)\\); console.log\\('valid. tnpsc subjects:', d.tnpsc.subjects.map\\(s=>s.id\\).join\\(', '\\)\\); console.log\\('ssc subjects:', d.ssc.subjects.map\\(s=>s.id\\).join\\(', '\\)\\); } catch\\(e\\) { console.log\\('JSON error:', e.message\\); }\")",
+      "Bash(node -e \"const d = JSON.parse\\(require\\('fs'\\).readFileSync\\('exams.json','utf8'\\)\\); const ca = d.tnpsc.subjects.find\\(s=>s.id==='tnpsc-current-affairs'\\); console.log\\('CA icon:', ca.icon, 'label:', ca.label, 'color:', ca.color\\); console.log\\('CA nav items:', ca.navGroups[0].items.map\\(i=>i.id\\).join\\(', '\\)\\); console.log\\('CA sections:', Object.keys\\(ca.sections\\).join\\(', '\\)\\); const tests = d.tnpsc.subjects.find\\(s=>s.id==='tnpsc-tests'\\); console.log\\('Tests sections:', Object.keys\\(tests.sections\\).join\\(', '\\)\\);\")",
+      "Bash(node -e ' *)"
+    ]
+  }
+}

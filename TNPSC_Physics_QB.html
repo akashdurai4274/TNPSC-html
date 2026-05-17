@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TNPSC Physics Question Bank | Group 1</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --bg: #0d0f14;
+  --bg2: #13161e;
+  --bg3: #1a1e28;
+  --gold: #f5c842;
+  --gold2: #e8b830;
+  --red: #e84040;
+  --green: #3ecf6e;
+  --blue: #4a9eff;
+  --purple: #b47fff;
+  --gray: #6b7280;
+  --text: #e8e8e8;
+  --text2: #b0b4be;
+  --border: rgba(245,200,66,0.15);
+  --border2: rgba(255,255,255,0.06);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Lora', Georgia, serif;
+  font-size: 15px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(135deg, #0d0f14 0%, #12151f 40%, #0f1520 100%);
+  border-bottom: 2px solid var(--gold);
+  padding: 48px 32px 36px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: -60px; right: -60px;
+  width: 320px; height: 320px;
+  background: radial-gradient(circle, rgba(245,200,66,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 12px; opacity: 0.85;
+}
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(22px, 4vw, 36px);
+  font-weight: 800; color: #fff; line-height: 1.15;
+  margin-bottom: 16px;
+}
+.hero h1 span { color: var(--gold); }
+.hero p { font-size: 14px; color: var(--text2); max-width: 640px; margin-bottom: 4px; }
+.hero-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.pill {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; padding: 4px 12px;
+  border-radius: 20px; border: 1px solid; letter-spacing: 0.5px;
+}
+.pill-gold  { color: var(--gold);  border-color: rgba(245,200,66,0.4);  background: rgba(245,200,66,0.08); }
+.pill-blue  { color: var(--blue);  border-color: rgba(74,158,255,0.4);  background: rgba(74,158,255,0.08); }
+.pill-green { color: var(--green); border-color: rgba(62,207,110,0.4);  background: rgba(62,207,110,0.08); }
+.pill-gray  { color: var(--text2); border-color: rgba(107,114,128,0.4); background: rgba(107,114,128,0.08); }
+
+/* ── FILTER BAR ── */
+.filter-bar {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 32px;
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+  position: sticky; top: 0; z-index: 100;
+  backdrop-filter: blur(10px);
+}
+.filter-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; color: var(--gray); letter-spacing: 2px; text-transform: uppercase;
+  margin-right: 6px;
+}
+.fb {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; padding: 5px 14px; border-radius: 4px;
+  border: 1px solid transparent; cursor: pointer;
+  transition: all 0.18s; background: transparent;
+}
+.fb-all  { color: var(--text2); border-color: var(--gray); }
+.fb-easy { color: var(--green); border-color: rgba(62,207,110,0.35); }
+.fb-med  { color: var(--gold);  border-color: rgba(245,200,66,0.35); }
+.fb-hard { color: var(--red);   border-color: rgba(232,64,64,0.35); }
+.fb-pyq  { color: var(--blue);  border-color: rgba(74,158,255,0.35); }
+.fb:hover, .fb.active { background: rgba(255,255,255,0.07); }
+.fb.pyq-active { background: rgba(74,158,255,0.1); border-color: rgba(74,158,255,0.4); color: var(--blue); }
+
+/* ── TOPIC NAV ── */
+.topic-nav {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 32px;
+  overflow-x: auto;
+}
+.topic-nav-inner { display: flex; gap: 8px; min-width: max-content; }
+.topic-tab {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; padding: 5px 14px; border-radius: 4px;
+  border: 1px solid var(--border2); cursor: pointer;
+  transition: all 0.18s; background: transparent;
+  color: var(--text2); white-space: nowrap;
+}
+.topic-tab:hover { color: var(--gold); border-color: rgba(245,200,66,0.4); }
+.topic-tab.active { background: var(--gold); border-color: var(--gold); color: #000; font-weight: 600; }
+
+/* ── SEARCH BAR ── */
+.search-bar {
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border2);
+  padding: 12px 32px;
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+}
+.search-wrap { position: relative; flex: 1; min-width: 200px; }
+.search-wrap input {
+  width: 100%;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  padding: 8px 12px 8px 36px;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.search-wrap input:focus { border-color: var(--gold); }
+.search-wrap input::placeholder { color: var(--gray); }
+.search-icon {
+  position: absolute; left: 10px; top: 50%;
+  transform: translateY(-50%); color: var(--gray); font-size: 14px;
+}
+
+/* ── PROGRESS BAR ── */
+.progress-bar-wrap {
+  padding: 10px 32px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border2);
+  display: flex; align-items: center; gap: 14px;
+}
+.progress-text {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; color: var(--text2); white-space: nowrap;
+}
+.progress-bar {
+  flex: 1; height: 5px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 3px; overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--gold2));
+  border-radius: 3px; transition: width 0.4s ease; width: 0%;
+}
+.bookmark-link {
+  margin-left: auto;
+  background: transparent;
+  border: 1px solid rgba(245,200,66,0.3);
+  color: var(--gold);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; padding: 5px 12px; border-radius: 4px;
+  cursor: pointer; transition: all 0.2s;
+}
+.bookmark-link:hover { background: rgba(245,200,66,0.08); }
+
+/* ── CONTAINER ── */
+.container { max-width: 1280px; margin: 0 auto; padding: 36px 32px 60px; }
+
+/* ── SECTION HEADERS ── */
+.section-head {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px; font-weight: 700; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--gold);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px; margin: 40px 0 22px;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-head .s-num {
+  font-family: 'IBM Plex Mono', monospace;
+  background: var(--gold); color: #000;
+  font-size: 10px; padding: 2px 7px; border-radius: 2px;
+}
+.section-count {
+  margin-left: auto;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; color: var(--text2);
+  background: var(--bg3); padding: 3px 10px; border-radius: 10px;
+  letter-spacing: 0;
+}
+
+/* ── Q CARDS ── */
+.q-card {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 8px; margin-bottom: 16px;
+  overflow: hidden; transition: border-color 0.2s, box-shadow 0.2s;
+}
+.q-card:hover {
+  border-color: rgba(245,200,66,0.2);
+  box-shadow: 0 0 0 1px rgba(245,200,66,0.1);
+}
+.q-card.bookmarked { border-color: rgba(245,200,66,0.35); }
+.q-card.revised { opacity: 0.55; }
+
+.q-header {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 16px 20px;
+  background: rgba(255,255,255,0.02);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.q-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 12px; font-weight: 700;
+  background: var(--gold); color: #000;
+  padding: 3px 9px; border-radius: 3px;
+  flex-shrink: 0; margin-top: 2px;
+}
+.q-text {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px; font-weight: 600; color: #fff;
+}
+.q-badges { display: flex; gap: 6px; flex-shrink: 0; flex-wrap: wrap; margin-top: 3px; }
+.badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; padding: 2px 8px; border-radius: 3px; font-weight: 600;
+}
+.badge-easy   { background: rgba(62,207,110,0.15);  color: var(--green); }
+.badge-medium { background: rgba(245,200,66,0.15);  color: var(--gold); }
+.badge-hard   { background: rgba(232,64,64,0.15);   color: var(--red); }
+.badge-pyq    { background: rgba(74,158,255,0.12);  color: var(--blue); }
+.badge-topic  { background: rgba(180,127,255,0.1);  color: var(--purple); font-size: 9px; }
+
+.bookmark-btn {
+  background: none; border: none; cursor: pointer;
+  font-size: 16px; color: var(--gray); transition: color 0.2s; padding: 2px; flex-shrink: 0;
+}
+.bookmark-btn.starred { color: var(--gold); }
+
+/* ── TOGGLE BUTTON (Show Answer & Details) ── */
+.q-toggle-btn {
+  display: flex; align-items: center; gap: 8px;
+  background: none; border: none; cursor: pointer;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--gold); padding: 10px 20px;
+  width: 100%; text-align: left;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  transition: background 0.15s; user-select: none;
+}
+.q-toggle-btn:hover { background: rgba(245,200,66,0.05); }
+.q-toggle-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 1px solid rgba(245,200,66,0.4);
+  font-size: 12px; line-height: 1; flex-shrink: 0;
+  transform: rotate(0deg);
+  transition: transform 0.25s ease, background 0.2s ease;
+}
+.q-toggle-icon.open {
+  transform: rotate(180deg);
+  background: rgba(245,200,66,0.15);
+}
+
+/* ── BACK TO TOP ── */
+.back-top {
+  position: fixed; bottom: 28px; right: 28px; z-index: 200;
+  background: var(--gold); color: #000;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px; font-weight: 700;
+  width: 42px; height: 42px; border-radius: 50%;
+  border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 16px rgba(245,200,66,0.35);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.2s ease;
+  transform: translateY(8px);
+}
+.back-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+.back-top:hover { background: var(--gold2); }
+
+/* ── Q BODY ACCORDION ── */
+.q-body {
+  padding: 0 20px; max-height: 0; overflow: hidden; opacity: 0;
+  transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1), padding 0.25s ease, opacity 0.25s ease;
+}
+.q-body.open { max-height: 2400px; padding: 18px 20px 20px; opacity: 1; }
+.q-body-inner { padding: 0; }
+
+/* ── ANSWER ── */
+.answer-box { margin-bottom: 14px; }
+.answer-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--green); margin-bottom: 6px;
+}
+.answer-text {
+  font-size: 14.5px; color: #d4f7e0;
+  padding-left: 12px; border-left: 3px solid var(--green);
+}
+
+/* ── EXPLANATION ── */
+.exp-box { margin: 10px 0; }
+.exp-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--text2); margin-bottom: 6px;
+}
+.exp-text { font-size: 13.5px; color: var(--text2); line-height: 1.65; }
+
+/* ── TIP BOX ── */
+.tip-box {
+  background: rgba(74,158,255,0.08);
+  border: 1px solid rgba(74,158,255,0.3);
+  border-radius: 6px;
+  padding: 10px 14px; margin-top: 12px;
+  font-size: 13px; color: #93c5fd;
+  display: flex; gap: 8px; align-items: flex-start;
+}
+.tip-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px; font-weight: 700; color: var(--blue);
+  letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 3px;
+}
+
+/* ── REVISED LABEL ── */
+.revised-label {
+  display: flex; align-items: center; gap: 8px;
+  margin-top: 12px; padding-top: 10px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.revised-label input { accent-color: var(--green); width: 15px; height: 15px; cursor: pointer; }
+.revised-label span {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; color: var(--gray);
+}
+
+/* ── BOOKMARKS SECTION ── */
+.bookmarks-section {
+  background: rgba(245,200,66,0.04);
+  border: 1px solid rgba(245,200,66,0.2);
+  border-radius: 8px;
+  padding: 20px; margin-bottom: 28px; display: none;
+}
+.bookmarks-section.show { display: block; }
+.bookmarks-section h3 {
+  font-family: 'Syne', sans-serif;
+  color: var(--gold); font-size: 13px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px;
+}
+.bk-list { list-style: none; }
+.bk-list li {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px; color: var(--text2);
+  padding: 6px 0; border-bottom: 1px solid var(--border2); cursor: pointer;
+}
+.bk-list li:hover { color: var(--gold); }
+.bk-empty { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--gray); font-style: italic; }
+
+/* ── NO RESULTS ── */
+.no-results { text-align: center; padding: 60px 20px; color: var(--gray); }
+.no-results-icon { font-size: 36px; margin-bottom: 12px; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--bg2); border-top: 1px solid var(--border);
+  padding: 28px 32px; text-align: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; color: var(--gray); letter-spacing: 1px;
+}
+footer span { color: var(--gold); }
+.total-badge {
+  display: inline-block;
+  background: rgba(245,200,66,0.08);
+  border: 1px solid rgba(245,200,66,0.3);
+  color: var(--gold); font-size: 11px; font-weight: 700;
+  padding: 4px 14px; border-radius: 20px; margin: 10px 0;
+  font-family: 'IBM Plex Mono', monospace;
+}
+footer .quote {
+  font-family: 'Lora', Georgia, serif;
+  font-style: italic; color: var(--gold); margin-top: 8px; font-size: 13px;
+}
+
+/* ── HIDDEN ── */
+.hidden { display: none !important; }
+
+/* ── RESPONSIVE ── */
+@media(max-width:640px){
+  .hero { padding: 28px 16px; }
+  .filter-bar, .topic-nav, .search-bar, .progress-bar-wrap { padding-left: 14px; padding-right: 14px; }
+  .container { padding: 24px 14px 48px; }
+  .q-badges { display: none; }
+}
+
+/* ── INNER WIDTH CAPS ── */
+.filter-bar-inner, .topic-nav-inner, .search-bar-inner {
+  max-width: 1280px; margin: 0 auto;
+}
+  
+/* ── BACK LINK & PRINT ── */
+.back-link-hub{position:fixed;top:8px;left:12px;z-index:999;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gold);background:rgba(13,15,20,0.92);border:1px solid rgba(245,200,66,0.3);padding:4px 10px;border-radius:4px;text-decoration:none;transition:background 0.2s;backdrop-filter:blur(4px)}
+.back-link-hub:hover{background:rgba(245,200,66,0.12)}
+@media print{
+  .back-link-hub,.filter-bar,.topic-nav,.filter-bar-inner,.topic-nav-inner,
+  .search-bar,.search-bar-inner,.progress-bar-wrap,.back-top,.bookmark-link,
+  .revised-label,.bookmarks-section,.filter-row,.fb,.topic-tab{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  .hero{background:#fff!important;border-bottom:1px solid #ccc!important;color:#000!important}
+  .q-card{border:1px solid #ccc!important;break-inside:avoid;box-shadow:none!important}
+  .q-body{max-height:none!important}
+  a{color:#000}
+}</style>
+</head>
+
+<body>
+<a href="../index.html" class="back-link-hub" aria-label="Back to Study Hub">← Hub</a>
+
+
+<!-- BACK TO TOP -->
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">High-Yield Question Bank · TNPSC Group 1</div>
+  <h1>⚡ TNPSC <span>Physics</span> Question Bank</h1>
+  <p>Group 1 | 300 High-Expected Questions with Detailed Explanations</p>
+  <div class="hero-meta">
+    <span class="pill pill-gold">300 Questions</span>
+    <span class="pill pill-blue">10 Topics</span>
+    <span class="pill pill-green">PYQ Included</span>
+    <span class="pill pill-gray">Exam Ready 2025–26</span>
+  </div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <span class="filter-label">Difficulty →</span>
+  <button class="fb fb-all active" id="diffAll" onclick="setDiff('all')">All</button>
+  <button class="fb fb-easy" id="diffEasy" onclick="setDiff('Easy')">Easy</button>
+  <button class="fb fb-med" id="diffMed" onclick="setDiff('Medium')">Medium</button>
+  <button class="fb fb-hard" id="diffHard" onclick="setDiff('Hard')">Hard</button>
+  <button class="fb fb-pyq" id="pyqBtn" onclick="togglePYQ()">🏆 PYQ Only</button>
+  <button class="fb fb-all" onclick="expandAll()" style="margin-left:auto;">Expand All</button>
+  <button class="fb fb-all" onclick="collapseAll()">Collapse All</button>
+</div>
+
+<!-- TOPIC NAV -->
+<div class="topic-nav" id="topicNav">
+  <div class="topic-nav-inner">
+    <button class="topic-tab active" onclick="filterTopic('all',this)">All Topics</button>
+    <button class="topic-tab" onclick="filterTopic('Mechanics & Motion',this)">1. Mechanics & Motion</button>
+    <button class="topic-tab" onclick="filterTopic('Properties of Matter',this)">2. Properties of Matter</button>
+    <button class="topic-tab" onclick="filterTopic('Force & Energy',this)">3. Force & Energy</button>
+    <button class="topic-tab" onclick="filterTopic('Electricity & Magnetism',this)">4. Electricity & Magnetism</button>
+    <button class="topic-tab" onclick="filterTopic('Light & Optics',this)">5. Light & Optics</button>
+    <button class="topic-tab" onclick="filterTopic('Sound & Waves',this)">6. Sound & Waves</button>
+    <button class="topic-tab" onclick="filterTopic('Heat & Thermodynamics',this)">7. Heat & Thermodynamics</button>
+    <button class="topic-tab" onclick="filterTopic('Nuclear Physics',this)">8. Nuclear Physics</button>
+    <button class="topic-tab" onclick="filterTopic('Laser & Electronics',this)">9. Laser & Electronics</button>
+    <button class="topic-tab" onclick="filterTopic('Communications & Modern Physics',this)">10. Communications</button>
+    <button class="topic-tab" style="color:var(--gold);border-color:rgba(245,200,66,0.3);" onclick="showBookmarks()">⭐ Bookmarks</button>
+  </div>
+</div>
+
+<!-- SEARCH BAR -->
+<div class="search-bar">
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="Search questions, concepts, keywords..." oninput="applyFilters()">
+  </div>
+</div>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar-wrap">
+  <span class="progress-text" id="progressText">0 of 300 revised</span>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+  <button class="bookmark-link" onclick="showBookmarks()">⭐ My Bookmarks (<span id="bkCount">0</span>)</button>
+</div>
+
+<div class="container">
+
+  <div class="bookmarks-section" id="bookmarkSection">
+    <h3>⭐ Bookmarked Questions</h3>
+    <ul class="bk-list" id="bkList"></ul>
+  </div>
+
+  <div id="noResults" class="no-results hidden">
+    <div class="no-results-icon">🔍</div>
+    <p>No questions match your search. Try different keywords.</p>
+  </div>
+
+  <div id="questionsContainer"></div>
+
+</div>
+
+<footer>
+  <p>Prepared for <span>TNPSC Group 1</span> Aspirants | Physics GS Section</p>
+  <p style="margin-top:4px;">All questions based on TNPSC GS Syllabus · Physics Topics · Standard 6–12 NCERT + Tamil Nadu Board</p>
+  <div class="total-badge">300 Questions Total</div>
+  <p class="quote">"Physics is the most fundamental and all-inclusive of the sciences." — Richard Feynman</p>
+</footer>
+
+  <script>
+    const questions = [
+
+      // ==================== 1. MECHANICS & MOTION (Q1–Q30) ====================
+      { id: 1, topic: "Mechanics & Motion", q: "What is the SI unit of force?", a: "Newton (N)", exp: "Force is defined as mass × acceleration (F = ma). The SI unit is Newton (N), named after Sir Isaac Newton. 1 Newton is the force required to accelerate a mass of 1 kg by 1 m/s².", tip: "Remember: 1 N = 1 kg·m/s²", diff: "Easy", pyq: false },
+      { id: 2, topic: "Mechanics & Motion", q: "A body thrown vertically upward reaches its maximum height when its velocity becomes:", a: "Zero", exp: "At the highest point of a vertically thrown object, all kinetic energy is converted to potential energy. The velocity momentarily becomes zero before the object starts falling. Gravity continuously decelerates the upward motion.", tip: "Zero velocity at peak = maximum height reached", diff: "Easy", pyq: true, pyqYear: "2019" },
+      { id: 3, topic: "Mechanics & Motion", q: "Which law of Newton states that 'every action has an equal and opposite reaction'?", a: "Newton's Third Law of Motion", exp: "Newton's Third Law states that for every action, there is an equal and opposite reaction. Examples: rocket propulsion (exhaust gases go down, rocket goes up), swimming (you push water back, water pushes you forward), gun recoil.", tip: "Third law = action-reaction pair, always equal in magnitude but opposite in direction", diff: "Easy", pyq: true, pyqYear: "2017" },
+      { id: 4, topic: "Mechanics & Motion", q: "The tendency of a body to remain in its state of rest or uniform motion is called:", a: "Inertia", exp: "Inertia is the property of a body to resist any change in its state of rest or uniform motion. It is directly proportional to mass — heavier objects have more inertia. This is the basis of Newton's First Law.", tip: "More mass = more inertia. A loaded truck is harder to start or stop than a bicycle.", diff: "Easy", pyq: false },
+      { id: 5, topic: "Mechanics & Motion", q: "What is the acceleration due to gravity on the surface of the Earth?", a: "9.8 m/s² (approximately 9.81 m/s²)", exp: "The acceleration due to gravity (g) on Earth's surface is approximately 9.8 m/s². It varies slightly from equator (9.78) to poles (9.83) due to Earth's oblate shape and rotation. On Moon, g = 1.62 m/s² (about 1/6th of Earth's).", tip: "Standard value used in problems: g = 9.8 m/s² or sometimes simplified to 10 m/s²", diff: "Easy", pyq: true, pyqYear: "2018" },
+      { id: 6, topic: "Mechanics & Motion", q: "The velocity of a body at any instant of time is called:", a: "Instantaneous velocity", exp: "Instantaneous velocity is the velocity of a body at a specific moment. Average velocity = total displacement / total time. Speed is the magnitude of velocity (scalar), while velocity is a vector quantity with both magnitude and direction.", tip: "Velocity = vector (has direction); Speed = scalar (no direction)", diff: "Easy", pyq: false },
+      { id: 7, topic: "Mechanics & Motion", q: "What is the unit of momentum?", a: "kg·m/s (kilogram-metre per second)", exp: "Momentum (p) = mass × velocity = kg × m/s = kg·m/s. Momentum is a vector quantity. The law of conservation of momentum states that the total momentum of an isolated system remains constant. This explains rocket propulsion and collisions.", tip: "p = mv. Momentum is always conserved in closed systems.", diff: "Easy", pyq: false },
+      { id: 8, topic: "Mechanics & Motion", q: "A car travelling at 60 km/h suddenly brakes. The passengers jerk forward due to:", a: "Inertia of motion", exp: "The passengers were moving forward at 60 km/h along with the car. When the car brakes suddenly, the passengers (due to inertia of motion) tend to continue moving forward. This is why seatbelts are essential — they apply the braking force to passengers gradually.", tip: "Seatbelt harnesses inertia safely. Newton's First Law in everyday life.", diff: "Medium", pyq: false },
+      { id: 9, topic: "Mechanics & Motion", q: "What type of motion does a stone tied to a string and whirled in a circle undergo?", a: "Uniform circular motion", exp: "In uniform circular motion, the speed is constant but the direction (and hence velocity) continuously changes. The centripetal acceleration always points toward the center. The force required (centripetal force) = mv²/r, directed inward.", tip: "Uniform circular motion ≠ uniform velocity. Speed is uniform, velocity changes.", diff: "Medium", pyq: true, pyqYear: "2020" },
+      { id: 10, topic: "Mechanics & Motion", q: "The distance-time graph of a body at rest is:", a: "A horizontal straight line parallel to the time axis", exp: "If a body is at rest, its position does not change with time. On a distance-time graph, this appears as a horizontal line — the distance value stays constant regardless of how much time passes.", tip: "Slope of d-t graph = speed. Horizontal line = zero slope = zero speed = at rest.", diff: "Easy", pyq: false },
+      { id: 11, topic: "Mechanics & Motion", q: "Which physical quantity is conserved in elastic collisions but NOT in inelastic collisions?", a: "Kinetic energy", exp: "In elastic collisions, both momentum AND kinetic energy are conserved. In inelastic collisions, only momentum is conserved; some kinetic energy is lost as heat, sound, or deformation. A perfectly inelastic collision is one where objects stick together.", tip: "All collisions conserve momentum. Only elastic collisions also conserve KE.", diff: "Medium", pyq: true, pyqYear: "2021" },
+      { id: 12, topic: "Mechanics & Motion", q: "The rate of change of displacement is called:", a: "Velocity", exp: "Velocity = change in displacement / change in time (dS/dt). It is a vector quantity. Speed = change in distance / change in time (scalar). The difference: displacement considers direction, distance does not.", diff: "Easy", pyq: false },
+      { id: 13, topic: "Mechanics & Motion", q: "A satellite orbiting the Earth in a circular orbit is an example of:", a: "Uniform circular motion", exp: "A satellite in circular orbit has constant speed but changing direction (continuously falling toward Earth while moving forward). The gravitational force provides centripetal force. Geostationary satellites at ~36,000 km orbit have period = 24 hours.", diff: "Medium", pyq: false },
+      { id: 14, topic: "Mechanics & Motion", q: "The escape velocity from the surface of the Earth is approximately:", a: "11.2 km/s", exp: "Escape velocity is the minimum velocity needed for an object to escape Earth's gravitational pull without further propulsion. Formula: v = √(2gR). Earth's escape velocity = 11.2 km/s. Moon's escape velocity ≈ 2.4 km/s (which is why Moon has no atmosphere).", tip: "11.2 km/s for Earth. Less than this = falls back. More = escapes.", diff: "Hard", pyq: true, pyqYear: "2016" },
+      { id: 15, topic: "Mechanics & Motion", q: "Which law gives the relationship between force, mass, and acceleration?", a: "Newton's Second Law (F = ma)", exp: "Newton's Second Law: F = ma. Force equals the product of mass and acceleration. This law quantifies force — 1 Newton accelerates 1 kg by 1 m/s². It also shows that for a fixed force, a larger mass means smaller acceleration.", tip: "F=ma is the most important equation in classical mechanics.", diff: "Easy", pyq: false },
+      { id: 16, topic: "Mechanics & Motion", q: "What is projectile motion?", a: "Motion under gravity in two dimensions (horizontal + vertical)", exp: "Projectile motion occurs when a body is thrown at an angle to the horizontal and moves under gravity. Horizontal velocity remains constant (no horizontal force). Vertical velocity changes due to gravity. Path is a parabola.", tip: "Cricket ball thrown, bullet fired, javelin thrown — all projectiles.", diff: "Medium", pyq: false },
+      { id: 17, topic: "Mechanics & Motion", q: "The angular momentum of a rotating body is conserved when:", a: "No external torque acts on it", exp: "Conservation of angular momentum: L = Iω = constant when no external torque. Example: a spinning figure skater pulls arms in (reducing moment of inertia I) → spin speed (ω) increases to keep L constant.", tip: "Ice skater spin example = perfect for TNPSC application question.", diff: "Hard", pyq: false },
+      { id: 18, topic: "Mechanics & Motion", q: "What does the slope of a velocity-time graph represent?", a: "Acceleration", exp: "On a velocity-time (v-t) graph: slope = Δv/Δt = acceleration. Area under the v-t graph = displacement. A straight line with positive slope = uniform acceleration. Horizontal line = zero acceleration (constant velocity).", tip: "v-t graph: slope=acceleration, area=displacement. d-t graph: slope=speed.", diff: "Medium", pyq: true, pyqYear: "2022" },
+      { id: 19, topic: "Mechanics & Motion", q: "Centripetal force acts in which direction in circular motion?", a: "Toward the center of the circle", exp: "Centripetal force always acts toward the center of the circular path — it is the 'center-seeking' force. Without it, the body would move in a straight line (Newton's First Law). Examples: string tension, friction, gravity provide centripetal force.", diff: "Easy", pyq: false },
+      { id: 20, topic: "Mechanics & Motion", q: "A body moving with uniform velocity has its acceleration equal to:", a: "Zero", exp: "Uniform velocity means constant speed AND constant direction. Acceleration = change in velocity / time. If velocity doesn't change, acceleration = 0. Note: uniform speed in circular motion still has acceleration (centripetal) because direction changes.", diff: "Easy", pyq: false },
+      { id: 21, topic: "Mechanics & Motion", q: "Kepler's Second Law (law of areas) states that a planet sweeps equal areas in:", a: "Equal times", exp: "Kepler's Second Law: The line joining a planet to the Sun sweeps equal areas in equal intervals of time. This means planets move faster when closer to the Sun (perihelion) and slower when far (aphelion). It is a consequence of conservation of angular momentum.", tip: "Equal areas = equal times. Planet fastest at perihelion, slowest at aphelion.", diff: "Hard", pyq: true, pyqYear: "2019" },
+      { id: 22, topic: "Mechanics & Motion", q: "The period of a simple pendulum depends on:", a: "Length of the pendulum and acceleration due to gravity (g)", exp: "T = 2π√(L/g). The period depends ONLY on length (L) and gravity (g). It does NOT depend on mass of the bob or amplitude (for small angles). This is why pendulum clocks run slow on mountains (g is less → T increases).", tip: "Longer pendulum = longer period. Higher altitude = slower pendulum clock.", diff: "Medium", pyq: false },
+      { id: 23, topic: "Mechanics & Motion", q: "Which type of motion is exhibited by the tip of a clock's second hand?", a: "Uniform circular motion", exp: "The second hand completes one revolution (360°) every 60 seconds at constant angular speed. The tip moves at constant speed in a circular path — this is uniform circular motion. Its velocity direction changes continuously.", diff: "Easy", pyq: false },
+      { id: 24, topic: "Mechanics & Motion", q: "What is the work done by a body moving perpendicular to the applied force?", a: "Zero", exp: "Work = F × d × cosθ. When force and displacement are perpendicular (θ = 90°), cos90° = 0, so work = 0. Example: A coolie carrying a load on head and walking horizontally does zero work against gravity (force vertical, motion horizontal).", tip: "W = Fd cosθ. Perpendicular force does no work.", diff: "Medium", pyq: false },
+      { id: 25, topic: "Mechanics & Motion", q: "Friction is greater for which surface type — rough or smooth?", a: "Rough surfaces", exp: "Friction depends on the nature of surfaces (coefficient of friction μ) and normal force. Rough surfaces have higher μ, producing more friction. Friction = μN. Lubricants reduce friction by introducing a thin fluid layer between surfaces.", diff: "Easy", pyq: false },
+      { id: 26, topic: "Mechanics & Motion", q: "What is the SI unit of power?", a: "Watt (W)", exp: "Power = Work done / Time = Joule / Second = Watt. 1 Watt = 1 J/s. Horsepower is another unit: 1 HP ≈ 746 W. A light bulb rated 100W uses 100 joules of energy per second.", tip: "1 HP = 746 W. This conversion appears in TNPSC.", diff: "Easy", pyq: true, pyqYear: "2017" },
+      { id: 27, topic: "Mechanics & Motion", q: "A body in free fall has which type of acceleration?", a: "Uniform acceleration (due to gravity, 9.8 m/s²)", exp: "Free fall = falling only under gravity with no air resistance. Acceleration is uniform = 9.8 m/s² downward. All objects fall with the same acceleration regardless of mass (Galileo's discovery). Air resistance causes different terminal velocities.", diff: "Easy", pyq: false },
+      { id: 28, topic: "Mechanics & Motion", q: "The law of conservation of energy states that energy can be:", a: "Neither created nor destroyed, only converted from one form to another", exp: "Total energy of an isolated system is always conserved. KE + PE = constant (mechanical energy conservation). Energy conversions: electrical → mechanical (motor), chemical → heat (combustion), PE → KE (falling object).", tip: "Energy conservation is fundamental to all physics problems.", diff: "Easy", pyq: true, pyqYear: "2018" },
+      { id: 29, topic: "Mechanics & Motion", q: "A body is said to be in translatory motion when:", a: "All parts of the body move in the same direction with the same velocity", exp: "Translatory motion: every particle moves equally. Types: rectilinear (straight line — car on straight road) and curvilinear (curved path — car on curved road). Rotatory motion: body spins about an axis.", diff: "Medium", pyq: false },
+      { id: 30, topic: "Mechanics & Motion", q: "What happens to the gravitational force between two bodies when the distance between them is doubled?", a: "The gravitational force becomes one-fourth (¼)", exp: "Newton's Law of Gravitation: F = Gm₁m₂/r². If r doubles → r² becomes 4r² → F becomes F/4. Gravity follows inverse-square law. Same applies to electrostatic force (Coulomb's law). This is why gravity weakens rapidly with distance.", tip: "Inverse square law: double distance = ¼ force. Triple distance = 1/9 force.", diff: "Medium", pyq: true, pyqYear: "2021" },
+
+      // ==================== 2. PROPERTIES OF MATTER (Q31–Q60) ====================
+      { id: 31, topic: "Properties of Matter", q: "Why does ice float on water?", a: "Ice is less dense than water (density of ice ≈ 0.92 g/cm³, water = 1 g/cm³)", exp: "Water expands when it freezes due to hydrogen bonding creating a crystalline lattice structure with open spaces. This makes ice less dense than liquid water. This anomalous expansion of water is unique and biologically crucial — it allows aquatic life to survive under frozen lakes.", tip: "Ice density < Water density. Ice floats = life in frozen lakes saved.", diff: "Easy", pyq: true, pyqYear: "2016" },
+      { id: 32, topic: "Properties of Matter", q: "What is Archimedes' principle?", a: "A body immersed in a fluid experiences an upward buoyant force equal to the weight of the fluid displaced", exp: "Archimedes' Principle: Buoyant force = weight of displaced fluid. This explains why ships (which displace large volumes of water) float even though steel is denser than water. A ship floats when buoyant force ≥ weight of ship.", tip: "Ship floats by displacing water equal to its weight. Hollow shape increases displacement.", diff: "Easy", pyq: true, pyqYear: "2018" },
+      { id: 33, topic: "Properties of Matter", q: "Surface tension in liquids is due to:", a: "Cohesive forces between molecules at the surface", exp: "Molecules inside a liquid are pulled equally in all directions. Molecules at the surface experience net inward pull (no molecules above them) — this creates surface tension. Surface tension allows insects to walk on water, makes water droplets spherical.", tip: "Surface tension = cohesion at surface. Soap reduces surface tension.", diff: "Medium", pyq: false },
+      { id: 34, topic: "Properties of Matter", q: "The property of a fluid by which it resists relative motion between its layers is called:", a: "Viscosity", exp: "Viscosity is internal friction in fluids. High viscosity: honey, glycerin (thick, flow slowly). Low viscosity: water, petrol (thin, flow fast). Viscosity decreases with temperature in liquids but increases with temperature in gases.", tip: "Viscosity decreases with heat in liquids. Honey flows faster when warm.", diff: "Medium", pyq: true, pyqYear: "2020" },
+      { id: 35, topic: "Properties of Matter", q: "Pascal's law states that pressure applied to an enclosed liquid is transmitted:", a: "Equally in all directions throughout the liquid", exp: "Pascal's Law: Pressure applied at any point in a confined liquid is transmitted undiminished in all directions. Applications: hydraulic press, hydraulic brakes, hydraulic lift. The hydraulic press amplifies force because pressure is constant (P=F/A) but area varies.", tip: "Hydraulic jack, car brakes, hydraulic lifts all use Pascal's Law.", diff: "Medium", pyq: true, pyqYear: "2019" },
+      { id: 36, topic: "Properties of Matter", q: "Bernoulli's principle relates to which property of a flowing fluid?", a: "The sum of pressure energy, kinetic energy, and potential energy per unit volume is constant", exp: "Bernoulli's principle: P + ½ρv² + ρgh = constant. Fast-moving fluid has lower pressure. Applications: aeroplane wing lift (air moves faster over curved top → lower pressure above wing → lift), carburettor, spray pump, Bunsen burner.", tip: "Fast flow = low pressure. Slow flow = high pressure. Aircraft wing uses this.", diff: "Hard", pyq: true, pyqYear: "2022" },
+      { id: 37, topic: "Properties of Matter", q: "What is the SI unit of pressure?", a: "Pascal (Pa) — 1 Pa = 1 N/m²", exp: "Pressure = Force / Area. SI unit = Pascal (Pa) = Newton per square metre. Other units: atmosphere (1 atm = 101325 Pa), bar (1 bar = 10⁵ Pa), mmHg (used for blood pressure). Atmospheric pressure at sea level ≈ 1 atm = 76 cm of mercury.", diff: "Easy", pyq: false },
+      { id: 38, topic: "Properties of Matter", q: "A sharp knife cuts more easily than a blunt knife because:", a: "Sharp knife has smaller area, producing greater pressure for the same force", exp: "Pressure = Force / Area. A sharp edge concentrates force on a very small area, producing enormous pressure to cut. A blunt knife has larger contact area, distributing force and reducing pressure. Same principle: stiletto heels vs flat shoes.", diff: "Easy", pyq: false },
+      { id: 39, topic: "Properties of Matter", q: "Which phenomenon causes water to rise in a capillary tube?", a: "Capillarity (capillary action)", exp: "Capillary action results from adhesive force (water to glass) being stronger than cohesive force (water to water). Water rises in narrow glass tubes. Mercury falls in glass capillaries because mercury's cohesion > adhesion to glass. This principle allows water transport in plants (xylem).", tip: "Water rises in glass capillary (adhesion > cohesion). Mercury falls (cohesion > adhesion).", diff: "Medium", pyq: true, pyqYear: "2017" },
+      { id: 40, topic: "Properties of Matter", q: "The elasticity of a material is measured by:", a: "Young's modulus (for stretching/compression)", exp: "Young's modulus Y = Stress / Strain. High Y = very stiff material (steel has Y ≈ 2×10¹¹ Pa). Other elastic moduli: Bulk modulus (volume change), Shear modulus (shape change). Rubber has low Y — stretches easily. Steel has high Y — resists deformation.", diff: "Hard", pyq: false },
+      { id: 41, topic: "Properties of Matter", q: "What is the buoyancy of a completely submerged object equal to?", a: "Weight of fluid displaced by the object", exp: "Buoyancy (upthrust) = ρ_fluid × V_submerged × g. An object sinks if its density > fluid density; floats if density < fluid density; remains suspended if densities are equal. This explains why objects weigh less in water (apparent weight = true weight - buoyancy).", diff: "Medium", pyq: false },
+      { id: 42, topic: "Properties of Matter", q: "Steel is more elastic than rubber because:", a: "Steel returns to its original shape with lesser deformation per unit stress", exp: "Elasticity = ability to return to original shape. Young's modulus of steel (2×10¹¹ Pa) >> rubber (~10⁶ Pa). 'More elastic' in physics means it deforms less for the same stress. This is opposite to everyday language where 'elastic' means 'stretchy'.", tip: "Physics elastic ≠ everyday elastic. Steel is MORE elastic than rubber in physics.", diff: "Hard", pyq: true, pyqYear: "2018" },
+      { id: 43, topic: "Properties of Matter", q: "Hydraulic brakes in cars work on the principle of:", a: "Pascal's Law", exp: "Brake fluid is an enclosed liquid. When you press the brake pedal, pressure is applied to the fluid. Pascal's Law transmits this pressure equally to all four brake callipers. The large piston area at each wheel amplifies the braking force.", diff: "Easy", pyq: false },
+      { id: 44, topic: "Properties of Matter", q: "What causes the spherical shape of raindrops?", a: "Surface tension minimises surface area for a given volume (sphere has minimum SA)", exp: "A sphere has the minimum surface area for a given volume. Surface tension acts to minimise surface area. Therefore, free liquid droplets naturally adopt a spherical shape. The same principle makes soap bubbles spherical.", diff: "Medium", pyq: false },
+      { id: 45, topic: "Properties of Matter", q: "The atmospheric pressure at higher altitudes is:", a: "Lower (decreases with altitude)", exp: "Atmospheric pressure = weight of air column above per unit area. As altitude increases, less air is above → lower pressure. At Mount Everest top (8848 m), pressure ≈ 33 kPa (about 1/3 of sea level). Water boils at lower temperature at altitude because of lower pressure.", tip: "High altitude = low pressure = water boils at lower temperature.", diff: "Easy", pyq: true, pyqYear: "2019" },
+      { id: 46, topic: "Properties of Matter", q: "What is Stokes' Law related to?", a: "The viscous drag force on a sphere moving through a fluid", exp: "Stokes' Law: F = 6πηrv, where η = viscosity, r = sphere radius, v = velocity. Used to determine terminal velocity — when drag force equals gravitational force, acceleration = 0 and object falls at constant speed (terminal velocity).", tip: "Raindrop, parachutist reach terminal velocity when drag = weight.", diff: "Hard", pyq: false },
+      { id: 47, topic: "Properties of Matter", q: "Which property of a fluid allows a boat to float even though the material is denser than water?", a: "Buoyancy (Archimedes' principle — displaced water weight = boat weight)", exp: "A steel boat is hollow, so it displaces a large volume of water. The weight of water displaced equals the boat's weight. The boat floats. Same reason a heavy ship of steel floats — it is shaped to displace enough water to equal its total weight.", diff: "Easy", pyq: false },
+      { id: 48, topic: "Properties of Matter", q: "Angle of contact between water and glass is:", a: "Acute (less than 90°)", exp: "When adhesive force > cohesive force (water-glass), the liquid meniscus curves upward and contact angle < 90° (acute). Water wets glass. Mercury on glass: cohesive > adhesive → contact angle > 90° (obtuse), meniscus curves downward.", tip: "Water on glass: acute angle, concave meniscus. Mercury: obtuse angle, convex meniscus.", diff: "Medium", pyq: false },
+      { id: 49, topic: "Properties of Matter", q: "The property of a gas by which it exerts pressure equally in all directions is given by which law?", a: "Gay-Lussac's Law / also related to kinetic theory of gases", exp: "Gas pressure results from molecule collisions with container walls. Due to random motion, equal pressure acts in all directions. Gay-Lussac's Law: P ∝ T (constant volume). Combined with Boyle's (P∝1/V) and Charles's (V∝T) gives Ideal Gas Law: PV = nRT.", diff: "Medium", pyq: false },
+      { id: 50, topic: "Properties of Matter", q: "What is terminal velocity?", a: "The constant maximum velocity reached by a falling body when drag force equals gravitational force", exp: "As a body falls, speed increases → air drag increases → net force decreases → acceleration decreases. Eventually drag = weight → net force = 0 → constant velocity. Terminal velocity of a skydiver ≈ 55 m/s. Parachute increases drag surface → lower terminal velocity.", diff: "Medium", pyq: true, pyqYear: "2020" },
+      { id: 51, topic: "Properties of Matter", q: "Which law states that for a fixed amount of gas at constant temperature, pressure and volume are inversely proportional?", a: "Boyle's Law (P ∝ 1/V at constant T)", exp: "Boyle's Law: PV = constant (at constant temperature). Double the pressure → volume halves. This explains why deep-sea divers must ascend slowly (if they rise quickly, dissolved nitrogen in blood expands — 'bends'). Also explains how a bicycle pump works.", tip: "Boyle: P×V = constant. Charles: V/T = constant. Gay-Lussac: P/T = constant.", diff: "Easy", pyq: true, pyqYear: "2016" },
+      { id: 52, topic: "Properties of Matter", q: "The reason why a needle floats on water despite being denser than water is:", a: "Surface tension supports the needle's weight", exp: "A steel needle carefully placed on water surface is supported by surface tension. The needle doesn't pierce the surface film as long as the downward weight is balanced by the upward component of surface tension force along the contact perimeter.", diff: "Medium", pyq: false },
+      { id: 53, topic: "Properties of Matter", q: "Compressibility of solids is much less than gases because:", a: "Molecules in solids are very close together with strong intermolecular forces", exp: "Solid molecules are closely packed with strong attractive forces — very little space to compress further. Gas molecules are far apart with minimal forces — huge amounts of space → highly compressible. Liquids are intermediate.", diff: "Medium", pyq: false },
+      { id: 54, topic: "Properties of Matter", q: "The working principle of a hydraulic lift is based on which concept?", a: "Pascal's Law", exp: "In a hydraulic lift, a small force applied on a small-area piston creates pressure P = F₁/A₁. This pressure is transmitted to a large-area piston (Pascal's Law), generating large force F₂ = P×A₂. Mechanical advantage = A₂/A₁.", diff: "Easy", pyq: false },
+      { id: 55, topic: "Properties of Matter", q: "What happens to the viscosity of liquids when temperature increases?", a: "Viscosity decreases", exp: "In liquids, molecules are held together by cohesive forces. As temperature rises, molecules gain kinetic energy, overcoming cohesion, reducing internal friction → viscosity decreases. Honey flows more easily when hot. Engine oil thins out in summer.", tip: "Liquid: heat → less viscous. Gas: heat → more viscous (opposite!)", diff: "Medium", pyq: true, pyqYear: "2021" },
+      { id: 56, topic: "Properties of Matter", q: "What is the critical temperature of a gas?", a: "The temperature above which a gas cannot be liquefied by pressure alone", exp: "Above critical temperature, no amount of pressure can convert a gas to liquid (the distinction between gas and liquid disappears). CO₂ critical temp = 31.1°C. This is why oxygen and nitrogen at room temperature cannot be liquefied by just applying pressure.", diff: "Hard", pyq: false },
+      { id: 57, topic: "Properties of Matter", q: "The working principle of a barometer is based on:", a: "Atmospheric pressure supporting a column of mercury", exp: "A Torricelli barometer: a mercury-filled tube inverted in a mercury trough. Atmospheric pressure pushes mercury up the tube. At sea level, mercury rises to 76 cm (760 mmHg = 1 atm). Fortin barometer is the most accurate mercury barometer.", tip: "Barometer invented by Torricelli. 76 cm Hg = 1 atm at sea level.", diff: "Easy", pyq: false },
+      { id: 58, topic: "Properties of Matter", q: "Why do we slip on a banana peel?", a: "The liquid film on the peel dramatically reduces friction (acts as lubricant)", exp: "Friction between foot and ground enables walking. Banana peel has a smooth surface with a liquid coating (juice) that acts as a lubricant, reducing friction coefficient between shoe sole and peel, causing slipping.", diff: "Easy", pyq: false },
+      { id: 59, topic: "Properties of Matter", q: "The unit of surface tension is:", a: "N/m (Newton per metre) or J/m²", exp: "Surface tension (γ) = force per unit length = N/m, or energy per unit area = J/m². Typical values: water = 0.072 N/m at 20°C. Adding soap reduces surface tension to ≈0.025 N/m (reason soap bubbles form easily).", diff: "Medium", pyq: false },
+      { id: 60, topic: "Properties of Matter", q: "The phenomenon of wetting is due to which force being dominant?", a: "Adhesive force (between liquid and solid) being greater than cohesive force", exp: "Wetting occurs when the adhesive force (liquid to solid) exceeds the cohesive force (liquid to liquid). Water wets glass (adhesion > cohesion), cloth, and wood. Mercury does NOT wet glass (cohesion > adhesion). This determines whether a liquid spreads or beads.", diff: "Medium", pyq: true, pyqYear: "2017" },
+
+      // ==================== 3. FORCE & ENERGY (Q61–Q90) ====================
+      { id: 61, topic: "Force & Energy", q: "What is the work-energy theorem?", a: "The net work done on an object equals the change in its kinetic energy (W_net = ΔKE)", exp: "Work-Energy Theorem: W = ΔKE = ½mv² - ½mv₀². This is extremely useful — instead of force-acceleration analysis, we use energy. A car braking: kinetic energy converted to heat by friction. The work done by brakes equals the change in kinetic energy.", tip: "W = ΔKE. Net work changes kinetic energy.", diff: "Medium", pyq: false },
+      { id: 62, topic: "Force & Energy", q: "What is potential energy?", a: "Energy stored in a body due to its position or configuration", exp: "Gravitational PE = mgh (height above reference). Elastic PE = ½kx² (spring). Chemical PE (stored in bonds). A stretched rubber band, water behind a dam, a charged battery — all have potential energy. PE converts to KE as an object falls.", diff: "Easy", pyq: false },
+      { id: 63, topic: "Force & Energy", q: "The work done against gravity when lifting an object of mass m to height h is:", a: "mgh (gravitational potential energy gained)", exp: "W = F × d = mg × h = mgh. This equals the gravitational PE gained. To lift a 10 kg object 2 m: W = 10 × 9.8 × 2 = 196 J. This energy is stored as potential energy and released when the object falls.", diff: "Easy", pyq: true, pyqYear: "2018" },
+      { id: 64, topic: "Force & Energy", q: "A spring's potential energy is given by which formula?", a: "PE = ½kx², where k is spring constant and x is compression/extension", exp: "Elastic PE = ½kx². When a spring is compressed or stretched by x, it stores energy. A car's suspension springs, watch springs, and bows work on this principle. Hook's Law: F = kx (restoring force proportional to deformation).", tip: "Hooke's Law: F = kx. Spring PE = ½kx².", diff: "Medium", pyq: false },
+      { id: 65, topic: "Force & Energy", q: "What is the difference between renewable and non-renewable energy?", a: "Renewable: replenishes naturally (solar, wind, hydro). Non-renewable: finite, takes millions of years to form (coal, oil, gas)", exp: "Renewable energy sources are replenished by nature continuously. Solar, wind, tidal, hydroelectric, geothermal are renewable. Coal, petroleum, natural gas are non-renewable fossil fuels. India aims for 500 GW renewable energy by 2030.", diff: "Easy", pyq: false },
+      { id: 66, topic: "Force & Energy", q: "Nuclear energy is obtained from:", a: "Fission (splitting of heavy nuclei) or fusion (combining light nuclei)", exp: "Fission: heavy nuclei (U-235, Pu-239) split → releases huge energy (used in nuclear reactors and bombs). Fusion: light nuclei (hydrogen isotopes) combine → even more energy per kg (powers the Sun). Commercial fusion power is still under development.", tip: "Fission = split → nuclear plants. Fusion = join → sun's energy. ITER project = fusion.", diff: "Medium", pyq: true, pyqYear: "2019" },
+      { id: 67, topic: "Force & Energy", q: "What is the law of conservation of momentum?", a: "The total momentum of an isolated system remains constant if no external force acts on it", exp: "p_initial = p_final (in isolated system). When gun fires: bullet goes forward + gun recoils backward. Total momentum = 0 both before and after (started at rest). Rocket propulsion: fuel ejected backward → rocket moves forward.", tip: "Gun recoil + rocket propulsion = conservation of momentum examples.", diff: "Medium", pyq: false },
+      { id: 68, topic: "Force & Energy", q: "What is one horsepower (HP) equal to in watts?", a: "1 HP = 746 watts", exp: "1 HP was defined by James Watt based on the rate of work a horse can do. 1 HP = 550 ft-lb/s = 746 W. Engine power is rated in HP or kW. 1 kW = 1000 W. A typical car engine = 100–200 HP. 1 HP = 0.746 kW.", tip: "1 HP = 746 W. TNPSC frequently asks this conversion.", diff: "Easy", pyq: true, pyqYear: "2020" },
+      { id: 69, topic: "Force & Energy", q: "In a simple pendulum, energy conversion takes place between:", a: "Potential energy and kinetic energy", exp: "At highest point: maximum PE, zero KE. At lowest point: zero PE, maximum KE. At intermediate points: both KE and PE present. Total mechanical energy (PE + KE) remains constant (ignoring friction). This is conservation of energy.", diff: "Easy", pyq: false },
+      { id: 70, topic: "Force & Energy", q: "What is the gravitational potential energy of a body at an infinite distance from Earth?", a: "Zero (by convention)", exp: "Gravitational PE is defined as zero at infinity. Near Earth, PE = -GMm/r (negative, meaning energy must be added to reach infinity). This is why escape velocity exists — you must supply enough energy to reach where PE = 0.", diff: "Hard", pyq: false },
+      { id: 71, topic: "Force & Energy", q: "The efficiency of a machine is defined as:", a: "(Useful output energy / Input energy) × 100%", exp: "No machine is 100% efficient due to energy losses as heat (friction, air resistance). Efficiency = (Output/Input) × 100%. An electric motor with 80% efficiency: for 100 J input, 80 J useful mechanical work, 20 J lost as heat.", diff: "Easy", pyq: false },
+      { id: 72, topic: "Force & Energy", q: "What principle does a lever work on?", a: "Principle of moments: moment of force about fulcrum is balanced", exp: "Lever principle: F₁ × d₁ = F₂ × d₂ (clockwise moment = anticlockwise moment). Three types: Class I (fulcrum between effort and load — scissors, seesaw), Class II (load between effort and fulcrum — wheelbarrow), Class III (effort between fulcrum and load — tweezers).", tip: "Three lever classes: Class I-seesaw, Class II-wheelbarrow, Class III-tweezers", diff: "Medium", pyq: true, pyqYear: "2016" },
+      { id: 73, topic: "Force & Energy", q: "What is mechanical advantage of a machine?", a: "Ratio of load (output force) to effort (input force)", exp: "MA = Load/Effort. If MA > 1, machine multiplies force. Hydraulic jack has large MA. MA = velocity ratio × efficiency. A pulley system with 4 pulleys: effort = W/4 (ideal), MA = 4.", diff: "Medium", pyq: false },
+      { id: 74, topic: "Force & Energy", q: "Which type of energy does a wound-up watch spring possess?", a: "Elastic potential energy (strain energy)", exp: "A wound spring has elastic/strain PE stored in its deformed material. As the spring unwinds, PE → KE of gear mechanism → movement of watch hands. Same for a bow and arrow — drawn bow stores elastic PE.", diff: "Easy", pyq: false },
+      { id: 75, topic: "Force & Energy", q: "What is tidal energy?", a: "Energy derived from the gravitational pull of the Moon and Sun on Earth's oceans", exp: "Tides are caused by the Moon's (and Sun's) gravity. High tides occur on the side facing the Moon and opposite side. Tidal power plants harness this energy. India has tidal power potential in Gulf of Khambhat, Gulf of Kutch, and Sundarbans.", tip: "India's tidal energy potential: Gulf of Khambhat > Gulf of Kutch.", diff: "Medium", pyq: false },
+      { id: 76, topic: "Force & Energy", q: "The rate of doing work is called:", a: "Power", exp: "Power P = Work / Time = W/t. SI unit: Watt (W) = J/s. Average power considers total work over total time. Instantaneous power = F × v. A powerful machine does more work per second. 1 kW = 1000 W. 1 MW = 10⁶ W.", diff: "Easy", pyq: false },
+      { id: 77, topic: "Force & Energy", q: "What is geothermal energy?", a: "Heat energy extracted from the Earth's interior", exp: "Earth's interior heat (from radioactive decay and residual formation heat) can be harnessed. Hot springs, geysers, and volcanic regions are used. Geothermal plants: Iceland (80% energy from geothermal), USA has the most capacity. Potential sites in India: Himalayas, Western Ghats.", diff: "Easy", pyq: false },
+      { id: 78, topic: "Force & Energy", q: "The principle behind a rocket's propulsion is:", a: "Newton's Third Law (action-reaction) + conservation of momentum", exp: "Rockets eject burnt fuel (action force backward) → rocket moves forward (reaction force). The combined momentum of rocket + fuel remains constant. No external medium needed — this is why rockets work in vacuum (space). Jet engines need oxygen from air (don't work in space).", tip: "Rocket: works in space. Jet engine: needs air (doesn't work in space).", diff: "Medium", pyq: true, pyqYear: "2021" },
+      { id: 79, topic: "Force & Energy", q: "What happens to kinetic energy when the velocity of a body is doubled?", a: "Kinetic energy becomes four times (KE = ½mv² → quadruples when v doubles)", exp: "KE = ½mv². If v → 2v, then KE = ½m(2v)² = ½m×4v² = 4×(½mv²). KE quadruples. This is why high-speed vehicle collisions are much more destructive — doubling speed quadruples destructive energy.", diff: "Medium", pyq: true, pyqYear: "2019" },
+      { id: 80, topic: "Force & Energy", q: "What is the energy transformation in a hydroelectric power plant?", a: "Potential energy (water at height) → Kinetic energy → Electrical energy", exp: "Water stored in dam at height h has PE = mgh. Released water gains KE → hits turbine blades → turbine rotates generator → electrical energy. Efficiency of hydro plants is typically 85–95% — highest among power plants. India's largest: Tehri Dam (2400 MW).", diff: "Easy", pyq: false },
+      { id: 81, topic: "Force & Energy", q: "What is wind energy? Which states in India lead in wind power?", a: "Energy from wind (kinetic energy of moving air). Tamil Nadu, Gujarat, Rajasthan lead.", exp: "Wind turbines convert wind's KE into electrical energy. India has ~45 GW installed wind capacity (3rd largest globally). Tamil Nadu (historically largest), Gujarat, Maharashtra, Rajasthan are leading states. Offshore wind is being developed.", diff: "Easy", pyq: false },
+      { id: 82, topic: "Force & Energy", q: "Centripetal force is a:", a: "Real force directed toward the center (not fictitious)", exp: "Centripetal force is a real force always pointing toward the center of circular path. It is provided by different agents: tension (string), friction (car turning), gravity (satellite orbiting). Without centripetal force, the object moves in a straight line.", diff: "Medium", pyq: false },
+      { id: 83, topic: "Force & Energy", q: "The turning effect of a force is called:", a: "Torque (moment of force)", exp: "Torque τ = F × r (force × perpendicular distance from pivot). Unit: N·m. Larger torque = more turning effect. Door handle at edge: small force, large r → easy to open. Handle near hinge: large force needed (small r). Spanner with longer handle uses less force.", diff: "Easy", pyq: false },
+      { id: 84, topic: "Force & Energy", q: "What is the principle of conservation of energy?", a: "Energy can neither be created nor destroyed; total energy of universe remains constant", exp: "In all physical processes, total energy is conserved. Energy changes form: PE→KE, chemical→heat, nuclear→electrical. Even in nuclear reactions (E = mc²), mass-energy is conserved. This is the most fundamental law in physics.", diff: "Easy", pyq: false },
+      { id: 85, topic: "Force & Energy", q: "A body performing circular motion — when the string is cut, the body moves in:", a: "A straight line tangent to the circle (Newton's First Law)", exp: "In circular motion, centripetal force keeps the body in circular path. When string is cut, centripetal force disappears. Body continues with velocity at that instant (tangential) in straight line — Newton's First Law. This is why water flies tangentially from a spinning wet umbrella.", diff: "Medium", pyq: false },
+      { id: 86, topic: "Force & Energy", q: "What is solar energy? What is a solar cell's principle?", a: "Energy from the Sun (electromagnetic radiation). Solar cell works on photovoltaic effect.", exp: "The Sun radiates 3.8×10²⁶ W. Earth receives about 1.7×10¹⁷ W. Solar cells (photovoltaic) use semiconductor p-n junctions: photons of light knock electrons free → electric current. Silicon solar cells have ~20% efficiency commercially. India: 80 GW+ solar capacity.", diff: "Easy", pyq: true, pyqYear: "2022" },
+      { id: 87, topic: "Force & Energy", q: "What is biomass energy?", a: "Energy derived from organic matter (plants, animal waste, agricultural residue)", exp: "Biomass includes wood, agricultural waste, animal dung (biogas/methane), sewage. Burning biomass releases CO₂ (but considered partially carbon-neutral since plants absorb CO₂ during growth). Biogas plants produce methane for cooking, electricity.", diff: "Easy", pyq: false },
+      { id: 88, topic: "Force & Energy", q: "Friction is both a boon and a bane. Which of these uses friction?", a: "Walking, brakes, writing, grinding — all use friction as a benefit", exp: "Boon: walking (friction between shoe and ground), brakes, writing with a pen, matchstick lighting, belt drives. Bane: wears out machine parts, generates unwanted heat, reduces efficiency. Lubricants reduce unwanted friction.", diff: "Easy", pyq: false },
+      { id: 89, topic: "Force & Energy", q: "The principle of a pulley is to:", a: "Change the direction of force or achieve mechanical advantage (reduce effort needed)", exp: "Single fixed pulley: only changes direction (effort = load). Movable pulley: MA = 2 (effort = W/2). Block and tackle system (multiple pulleys): MA can be very high. Cranes, elevators, and well pulleys all use this principle.", diff: "Easy", pyq: false },
+      { id: 90, topic: "Force & Energy", q: "What is the moment of inertia?", a: "The rotational equivalent of mass — resistance to angular acceleration (I = mr²)", exp: "Moment of inertia I = Σmr² (depends on mass distribution relative to axis). Like mass resists linear acceleration, I resists angular acceleration. A flywheel has large I (energy storage). A spinning skater: arms in → small I → fast spin.", diff: "Hard", pyq: false },
+
+      // ==================== 4. ELECTRICITY & MAGNETISM (Q91–Q120) ====================
+      { id: 91, topic: "Electricity & Magnetism", q: "What is Ohm's Law?", a: "V = IR (Voltage = Current × Resistance)", exp: "Ohm's Law: V = IR. Voltage (V) in volts, current (I) in amperes, resistance (R) in ohms (Ω). It is valid for ohmic conductors (metals at constant temperature). Non-ohmic devices: diode, transistor (don't follow Ohm's law).", tip: "V=IR. The most fundamental equation in electricity.", diff: "Easy", pyq: true, pyqYear: "2017" },
+      { id: 92, topic: "Electricity & Magnetism", q: "What is the SI unit of electric charge?", a: "Coulomb (C)", exp: "Electric charge unit = Coulomb. Charge of 1 electron = 1.6×10⁻¹⁹ C. So 1 C = 6.25×10¹⁸ electrons. Current I = Q/t. 1 Ampere = 1 Coulomb per second. Charge is quantised — always a multiple of electron charge (e).", diff: "Easy", pyq: false },
+      { id: 93, topic: "Electricity & Magnetism", q: "What happens to resistance when resistors are connected in series?", a: "Total resistance = sum of individual resistances (R_total = R₁ + R₂ + R₃...)", exp: "Series connection: same current flows through all, voltages add up. R_total = R₁+R₂+... (total always > any individual). Parallel: same voltage, currents add. 1/R_total = 1/R₁+1/R₂... (total always < smallest individual).", tip: "Series: R adds up. Parallel: R decreases. Home wiring: parallel (each device gets full voltage).", diff: "Medium", pyq: true, pyqYear: "2019" },
+      { id: 94, topic: "Electricity & Magnetism", q: "Which instrument is used to measure electric current?", a: "Ammeter (connected in series)", exp: "Ammeter: measures current, connected in series (low resistance — doesn't impede current). Voltmeter: measures voltage, connected in parallel (very high resistance). Galvanometer: detects small currents. Multimeter: measures V, I, R (versatile).", tip: "Ammeter = series (low R). Voltmeter = parallel (high R).", diff: "Easy", pyq: false },
+      { id: 95, topic: "Electricity & Magnetism", q: "What is the effect of increasing temperature on the resistance of a conductor (metal)?", a: "Resistance increases with temperature", exp: "In metals, as temperature rises, ions vibrate more vigorously, increasing collisions with electrons → more resistance. R = R₀(1+αΔT) where α = temperature coefficient. In semiconductors: resistance DECREASES with temperature (more charge carriers freed). In insulators: same as semiconductors.", tip: "Metal: heat → more R. Semiconductor: heat → less R. Opposite behaviour!", diff: "Medium", pyq: true, pyqYear: "2021" },
+      { id: 96, topic: "Electricity & Magnetism", q: "The device that converts AC to DC is called:", a: "Rectifier (diode-based circuit — half wave or full wave)", exp: "AC (alternating current) changes direction periodically. DC (direct current) flows in one direction. A diode allows current only in one direction. Half-wave rectifier uses 1 diode. Full-wave rectifier uses 4 diodes (bridge rectifier). Then a capacitor filter smooths the output.", diff: "Medium", pyq: false },
+      { id: 97, topic: "Electricity & Magnetism", q: "What is the principle of an electric motor?", a: "Converts electrical energy to mechanical energy using the motor effect (force on current in magnetic field)", exp: "A current-carrying conductor in a magnetic field experiences a force (motor effect). The direction is given by Fleming's Left Hand Rule. An electric motor: current in coil → magnetic force rotates coil → mechanical rotation. Used in fans, pumps, EVs.", tip: "Motor: electrical → mechanical. Generator: mechanical → electrical. (opposite!)", diff: "Medium", pyq: true, pyqYear: "2020" },
+      { id: 98, topic: "Electricity & Magnetism", q: "What is the frequency of AC supply in India?", a: "50 Hz (50 cycles per second)", exp: "In India, AC mains supply: 220-240 V, 50 Hz. USA uses 120 V, 60 Hz. Frequency 50 Hz means current reverses direction 100 times per second (50 complete cycles). Fans set to 50 Hz speed; motors designed for 50 Hz.", tip: "India: 220V, 50Hz. USA: 120V, 60Hz.", diff: "Easy", pyq: true, pyqYear: "2016" },
+      { id: 99, topic: "Electricity & Magnetism", q: "Electromagnetic induction was discovered by:", a: "Michael Faraday (1831)", exp: "Faraday's Law: changing magnetic flux through a coil induces an EMF. EMF = -dΦ/dt (Faraday's Law). Lenz's Law: induced current opposes the change causing it. These principles are the basis of all generators, transformers, and electric motors.", tip: "Faraday = electromagnetic induction. Lenz's Law = direction of induced current.", diff: "Easy", pyq: false },
+      { id: 100, topic: "Electricity & Magnetism", q: "A transformer works on the principle of:", a: "Mutual electromagnetic induction", exp: "A transformer has two coils (primary and secondary) on an iron core. AC in primary creates changing flux → induces EMF in secondary. V_s/V_p = N_s/N_p. Step-up (more secondary turns → higher voltage). Step-down (fewer secondary turns → lower voltage). Power transmission uses step-up transformers.", tip: "Transformer only works with AC, not DC.", diff: "Medium", pyq: true, pyqYear: "2018" },
+      { id: 101, topic: "Electricity & Magnetism", q: "What is Joule's heating effect?", a: "Heat produced in a conductor = I²Rt (current squared × resistance × time)", exp: "Joule's Law: H = I²Rt. When current flows through a resistor, electrical energy converts to heat. Applications: electric heater, toaster, bulb filament (tungsten), electric iron. Fuse wire melts when I² R heating exceeds its capacity, protecting the circuit.", diff: "Medium", pyq: false },
+      { id: 102, topic: "Electricity & Magnetism", q: "What is a fuse? Which material is it made of?", a: "A safety device that melts and breaks the circuit when current exceeds safe limit. Made of tin-lead alloy (low melting point).", exp: "Fuse wire: low melting point material (tin-lead alloy, or for cartridge fuses: copper in precise gauges). When excess current flows, I²R heating melts the fuse wire, breaking the circuit before damage to appliances. MCB (Miniature Circuit Breaker) is modern alternative — can be reset.", diff: "Easy", pyq: false },
+      { id: 103, topic: "Electricity & Magnetism", q: "The unit of electrical resistance is:", a: "Ohm (Ω)", exp: "Resistance R = V/I. SI unit = Ohm (Ω). 1 Ω = 1 V/A. Named after Georg Simon Ohm. Resistance depends on material (resistivity ρ), length (R∝L), and cross-sectional area (R∝1/A): R = ρL/A.", diff: "Easy", pyq: false },
+      { id: 104, topic: "Electricity & Magnetism", q: "Magnetic field lines emerge from which pole of a magnet?", a: "North pole (emerge from N, enter at S pole)", exp: "By convention: magnetic field lines emerge from North pole, enter South pole, and form closed loops inside the magnet. Where field lines are dense, field is strong (near poles). Field lines never cross. The Earth is like a giant magnet with geographic North near magnetic South.", diff: "Easy", pyq: false },
+      { id: 105, topic: "Electricity & Magnetism", q: "The force on a moving charge in a magnetic field is called:", a: "Lorentz force (F = qvB sinθ)", exp: "Lorentz force: F = q(v × B). Direction: perpendicular to both velocity and field (right-hand rule or Fleming's rule). This force is responsible for circular motion of charges in magnetic fields, cyclotron principle, aurora borealis, and CRT displays.", diff: "Hard", pyq: false },
+      { id: 106, topic: "Electricity & Magnetism", q: "Electric power is measured in which unit?", a: "Watt (W) — P = VI = I²R = V²/R", exp: "Electrical power P = VI. A 60W bulb uses 60 J per second. Energy consumed = P×t (kWh for billing). 1 kWh (unit) = 1000 W × 3600 s = 3.6×10⁶ J = 3.6 MJ. One electrical unit = 1 kWh.", tip: "Electricity bill: 1 unit = 1 kWh. A 100W bulb for 10 hours = 1 unit.", diff: "Easy", pyq: true, pyqYear: "2017" },
+      { id: 107, topic: "Electricity & Magnetism", q: "What is a semiconductor?", a: "A material with electrical conductivity between conductor and insulator (e.g., silicon, germanium)", exp: "Semiconductors have a band gap that can be overcome by temperature, light, or impurity doping. Intrinsic semiconductor: pure silicon. Extrinsic: n-type (phosphorus doped — extra electrons) or p-type (boron doped — extra holes). p-n junction forms the basic diode.", diff: "Medium", pyq: false },
+      { id: 108, topic: "Electricity & Magnetism", q: "What is the principle behind a galvanometer?", a: "A current-carrying coil in a magnetic field experiences a torque (motor effect)", exp: "A galvanometer detects very small currents. A rectangular coil in magnetic field deflects when current flows. Scale deflection proportional to current. Modified with shunt resistor → ammeter. Modified with series resistor → voltmeter.", diff: "Medium", pyq: false },
+      { id: 109, topic: "Electricity & Magnetism", q: "Coulomb's law states the force between two charges is:", a: "F = kq₁q₂/r² (directly proportional to product of charges, inversely to square of distance)", exp: "Coulomb's Law: F = kq₁q₂/r² where k = 9×10⁹ N·m²/C². Like charges repel, unlike attract. Follows inverse-square law (same as gravity). Superposition principle: total force = vector sum of individual Coulomb forces.", diff: "Medium", pyq: false },
+      { id: 110, topic: "Electricity & Magnetism", q: "What is the earth wire (green wire) in household electrical connections used for?", a: "Safety — connects appliance casing to earth; prevents electric shock if insulation fails", exp: "Three-wire system: Live (brown/red, 220V), Neutral (blue/black, 0V), Earth (green, 0V). Earth wire provides safe path for fault current to flow to ground, tripping fuse/MCB instead of shocking the user. Compulsory for appliances with metal cases.", tip: "India: Live=Red, Neutral=Black, Earth=Green. UK: Live=Brown, Neutral=Blue, Earth=Green-Yellow.", diff: "Easy", pyq: false },
+      { id: 111, topic: "Electricity & Magnetism", q: "The SI unit of magnetic field strength (flux density) is:", a: "Tesla (T)", exp: "Magnetic flux density B measured in Tesla (T). Earth's magnetic field ≈ 25–65 microtesla. MRI machine: 1.5–3 T. Named after Nikola Tesla. Related: Magnetic flux Φ = BA (Weber, Wb). 1 Tesla = 1 Wb/m².", diff: "Medium", pyq: false },
+      { id: 112, topic: "Electricity & Magnetism", q: "The phenomenon of bending of light when passing from one medium to another is called:", a: "Refraction (but this belongs to electricity & magnetism context: EM waves change speed at boundaries)", exp: "Electromagnetic waves (including light) slow down in denser media. This is refraction. Refractive index n = c/v (speed in vacuum / speed in medium). Water: n=1.33, glass: n=1.5, diamond: n=2.42. Higher n → more bending.", diff: "Easy", pyq: false },
+      { id: 113, topic: "Electricity & Magnetism", q: "What is the working principle of a generator (dynamo)?", a: "Electromagnetic induction — mechanical energy converts to electrical energy", exp: "A generator rotates a coil in a magnetic field → changing flux → induces EMF (Faraday's law). AC generator: coil rotates continuously → sinusoidal output. DC generator: uses commutator. Turbines in power plants (steam, hydro, wind) drive generators.", diff: "Easy", pyq: true, pyqYear: "2019" },
+      { id: 114, topic: "Electricity & Magnetism", q: "In which circuit connection does the same voltage appear across all components?", a: "Parallel connection", exp: "Parallel circuit: same voltage across each branch; currents are different (I = V/R for each branch). Total current = sum of branch currents. Household circuits are parallel — each appliance gets full 220V. If one fails, others still work.", diff: "Easy", pyq: false },
+      { id: 115, topic: "Electricity & Magnetism", q: "What is the role of a capacitor in a circuit?", a: "Stores electrical energy in an electric field between two conducting plates", exp: "Capacitor = two plates separated by insulator (dielectric). Stores charge Q = CV (C = capacitance, V = voltage). Used in: filter circuits (smoothing DC from rectifier), tuning circuits in radio, flash units in cameras, power factor correction.", diff: "Medium", pyq: false },
+      { id: 116, topic: "Electricity & Magnetism", q: "Lightning conductor works on which principle?", a: "Lightning is attracted to the pointed conductor (high electric field at tips), safely conducted to earth", exp: "Sharp pointed conductors have very high electric field strength at the tip. A lightning conductor (thick copper rod with sharp tip, connected to earth) attracts lightning → safely conducts huge current to ground → protects building.", diff: "Easy", pyq: false },
+      { id: 117, topic: "Electricity & Magnetism", q: "What is a magnetic compass and which direction does it point?", a: "A freely pivoting magnetic needle that aligns with Earth's magnetic field, pointing approximately North-South", exp: "Earth behaves like a giant bar magnet with magnetic South near geographic North pole. A compass needle's North pole points toward Earth's magnetic North (geographic North). Magnetic declination: angle between geographic North and magnetic North (varies by location).", diff: "Easy", pyq: false },
+      { id: 118, topic: "Electricity & Magnetism", q: "Superconductivity is the phenomenon where:", a: "Electrical resistance drops to zero below a critical temperature", exp: "Some materials (mercury, niobium, YBCO ceramics) become superconductors below critical temperature (Tc). Zero resistance means no energy loss. Applications: MRI machines, maglev trains, particle accelerators (LHC). Room-temperature superconductor would revolutionize energy.", tip: "MRI machines use superconducting magnets cooled by liquid helium.", diff: "Hard", pyq: true, pyqYear: "2021" },
+      { id: 119, topic: "Electricity & Magnetism", q: "The ozone layer is depleted by which chemicals related to electronics/refrigeration?", a: "Chlorofluorocarbons (CFCs) used as refrigerants and aerosol propellants", exp: "CFCs (freon) were used in refrigerators, ACs, and aerosol cans. UV radiation in stratosphere breaks down CFCs → releases chlorine atoms → destroys ozone (O₃) catalytically. Montreal Protocol (1987) phased out CFCs. HFCs (hydrochlorofluorocarbons) are safer alternatives.", diff: "Medium", pyq: false },
+      { id: 120, topic: "Electricity & Magnetism", q: "What is the photoelectric effect?", a: "Emission of electrons from a metal surface when light of sufficient frequency shines on it", exp: "Photoelectric effect: discovered by Hertz, explained by Einstein (Nobel 1921). Photons of light carry energy E = hf. If hf > work function of metal, electrons are emitted. Key: depends on frequency (not intensity). Explained quantum nature of light. Used in solar cells, photomultipliers.", tip: "Einstein won Nobel for photoelectric effect, not relativity!", diff: "Hard", pyq: true, pyqYear: "2018" },
+
+      // ==================== 5. LIGHT & OPTICS (Q121–Q150) ====================
+      { id: 121, topic: "Light & Optics", q: "Why is the sky blue?", a: "Rayleigh scattering — short wavelength blue light is scattered more by atmospheric particles", exp: "Sunlight has all colours. Atmospheric molecules (mainly N₂, O₂) scatter short wavelengths (blue, violet) far more than long wavelengths (red, orange). We see the scattered blue light from all directions — hence blue sky. At sunrise/sunset, light travels through more atmosphere — only long wavelengths (red/orange) remain.", tip: "Sky blue = Rayleigh scattering. Sunset red = long path through atmosphere.", diff: "Easy", pyq: true, pyqYear: "2016" },
+      { id: 122, topic: "Light & Optics", q: "The speed of light in vacuum is:", a: "3 × 10⁸ m/s (approximately 300,000 km/s)", exp: "Speed of light c = 2.998×10⁸ m/s ≈ 3×10⁸ m/s in vacuum. Light slows down in all other media. In water: ≈2.25×10⁸ m/s. In glass: ≈2×10⁸ m/s. Refractive index n = c/v (speed in vacuum / speed in medium). Nothing travels faster than c.", diff: "Easy", pyq: true, pyqYear: "2018" },
+      { id: 123, topic: "Light & Optics", q: "What is total internal reflection?", a: "When light hits a boundary at angle ≥ critical angle, it reflects entirely back into the denser medium", exp: "For light going from dense to rare medium (glass→air), if the angle of incidence ≥ critical angle, all light reflects back — no refraction. Critical angle for glass-air: ~42°. Applications: optical fibres, diamonds (brilliant sparkle), mirage in deserts.", tip: "Optical fibre works on total internal reflection — no signal loss.", diff: "Medium", pyq: true, pyqYear: "2019" },
+      { id: 124, topic: "Light & Optics", q: "A convex lens forms a real, inverted image when the object is placed:", a: "Beyond the focal length (further than F)", exp: "Convex lens rules: Object beyond 2F → image between F and 2F (real, inverted, diminished). Object at 2F → image at 2F (real, inverted, same size). Object between F and 2F → image beyond 2F (real, inverted, magnified). Object at F → image at infinity.", diff: "Medium", pyq: false },
+      { id: 125, topic: "Light & Optics", q: "Which mirror is used in vehicle rear-view mirrors and why?", a: "Convex mirror — gives wide field of view (erect, virtual, diminished image)", exp: "Convex mirror (bulging outward) always forms erect, virtual, diminished image of objects in a wide field of view. This allows driver to see a large area behind. Concave mirror: used in headlights (converging, powerful beam), dentist's mirror (magnified image).", tip: "Convex = rear-view (wide view). Concave = headlight + dentist mirror.", diff: "Easy", pyq: true, pyqYear: "2017" },
+      { id: 126, topic: "Light & Optics", q: "What defect of vision is corrected by a concave lens?", a: "Myopia (short-sightedness / near-sightedness)", exp: "Myopia: eyeball too long or lens too convex → image forms in front of retina → far objects blurry. Corrected with concave (diverging) lens, which shifts image back to retina. Hypermetropia (farsightedness): eyeball too short → image behind retina → near objects blurry → corrected with convex lens.", tip: "Myopia → Concave lens. Hypermetropia → Convex lens. Presbyopia → Bifocal.", diff: "Easy", pyq: true, pyqYear: "2020" },
+      { id: 127, topic: "Light & Optics", q: "What is dispersion of light?", a: "The splitting of white light into its constituent colours (spectrum) when passing through a prism", exp: "White light consists of 7 colours (VIBGYOR). Different colours travel at different speeds in glass → different refractive indices → different bending angles → spectrum. Violet bends most (highest n), red least (lowest n). Rainbow = natural dispersion by water droplets.", tip: "VIBGYOR. Violet bends most. Red bends least. Remember the reverse of rainbow order.", diff: "Easy", pyq: false },
+      { id: 128, topic: "Light & Optics", q: "The phenomenon responsible for the formation of a rainbow is:", a: "Dispersion + internal reflection + refraction by raindrops", exp: "Sunlight enters a water droplet, undergoes refraction (splitting into colours), total internal reflection inside the drop, then emerges with further refraction. Primary rainbow: one internal reflection (red outside, violet inside, at 42°). Secondary rainbow: two reflections (colours reversed).", diff: "Medium", pyq: true, pyqYear: "2021" },
+      { id: 129, topic: "Light & Optics", q: "Optical fibre communication works on which principle?", a: "Total internal reflection", exp: "Optical fibres carry light signals as pulses through a glass/plastic core (high refractive index) surrounded by cladding (lower refractive index). Light undergoes repeated total internal reflection along the fibre. Used in internet cables, medical endoscopes, decorative lights.", diff: "Easy", pyq: false },
+      { id: 130, topic: "Light & Optics", q: "What is the power of a lens?", a: "P = 1/f (reciprocal of focal length in metres), measured in dioptres (D)", exp: "Power of lens: P = 1/f (f in metres). Unit: dioptre (D). A lens with f = 0.5 m has P = +2D. Positive power = convex. Negative power = concave. Eye lens power: +18 to +20 D (highly converging). Spectacle lenses: -0.5 D to -15 D (myopia).", diff: "Medium", pyq: false },
+      { id: 131, topic: "Light & Optics", q: "Why does a diamond sparkle?", a: "Total internal reflection due to high refractive index (n = 2.42) and many facets", exp: "Diamond has very high n = 2.42 → critical angle of only ~24° (very small). Light entering the diamond undergoes total internal reflection at many surfaces (carefully cut facets) before exiting — giving the brilliant sparkle. Artificial gems have lower n → less sparkle.", diff: "Medium", pyq: false },
+      { id: 132, topic: "Light & Optics", q: "What is a mirage? Which atmospheric phenomenon causes it?", a: "An optical illusion caused by total internal reflection of light in hot air layers near the ground", exp: "In deserts, air near ground is very hot (low density, low n). Cool air above has higher n. Light from distant objects gradually bends due to refractive index gradient and undergoes total internal reflection — appears as water pools (sky reflected below horizon).", diff: "Medium", pyq: true, pyqYear: "2018" },
+      { id: 133, topic: "Light & Optics", q: "The focal length of a concave mirror is related to radius of curvature by:", a: "f = R/2 (focal length = half the radius of curvature)", exp: "For a spherical mirror: f = R/2. If R = 20 cm, then f = 10 cm. Concave mirror: converges light (real focus). Convex mirror: diverges light (virtual focus). Mirror formula: 1/v + 1/u = 1/f.", diff: "Easy", pyq: false },
+      { id: 134, topic: "Light & Optics", q: "Which phenomenon explains why the Sun appears elliptical at sunrise/sunset?", a: "Atmospheric refraction bends light — objects near horizon appear lifted", exp: "Atmospheric refraction: Earth's atmosphere gradually increases in density closer to ground. Sunlight bends (refracts) as it enters denser layers → we see the Sun slightly above its actual position. At sunset, the Sun is geometrically below the horizon but still visible. The vertical compression (differential refraction) makes it appear elliptical.", diff: "Hard", pyq: false },
+      { id: 135, topic: "Light & Optics", q: "What is magnification?", a: "M = image size / object size = -v/u (for mirrors) or v/u (for lenses)", exp: "Magnification: if |M| > 1, image is larger; < 1, image is smaller; = 1, same size. Negative M = inverted image; positive M = erect image. A plane mirror: M = +1 (erect, same size). Convex mirror: always 0 < M < 1 (diminished, erect).", diff: "Medium", pyq: false },
+      { id: 136, topic: "Light & Optics", q: "What are the electromagnetic waves in decreasing order of wavelength?", a: "Radio → Microwave → Infrared → Visible → UV → X-rays → Gamma rays", exp: "EM spectrum from long to short wavelength: Radio (>1m), Microwave (1m–1mm), Infrared (1mm–700nm), Visible (700–400nm), UV (400–10nm), X-rays (10–0.01nm), Gamma (<0.01nm). All travel at c = 3×10⁸ m/s in vacuum.", tip: "Remember: RMIUVXG (Radio, Micro, IR, Visible, UV, X-ray, Gamma)", diff: "Medium", pyq: true, pyqYear: "2022" },
+      { id: 137, topic: "Light & Optics", q: "Which mirror is used in telescopes?", a: "Concave mirror (reflecting telescope / Newtonian telescope)", exp: "Reflecting telescopes use large concave mirrors to collect and focus distant starlight (large mirrors → more light collection). Refracting telescopes use convex lenses. Modern large telescopes (like Hubble Space Telescope) use concave mirrors. Concave mirrors don't suffer from chromatic aberration.", diff: "Medium", pyq: false },
+      { id: 138, topic: "Light & Optics", q: "The angle of incidence equals the angle of reflection. This is:", a: "The First Law of Reflection", exp: "Laws of Reflection: (1) Angle of incidence = angle of reflection (measured from normal). (2) Incident ray, normal, and reflected ray are coplanar. These laws apply to all types of reflection — plane mirror, curved mirror, and for any wave.", diff: "Easy", pyq: false },
+      { id: 139, topic: "Light & Optics", q: "Which lens is used as a magnifying glass?", a: "Convex lens (object placed within focal length → erect, virtual, magnified image)", exp: "Magnifying glass: convex lens with object between F and lens. Virtual, erect, magnified image formed on same side as object. Magnification M = 1 + D/f (D = least distance of distinct vision = 25 cm). A lens of f=5cm gives M = 1+25/5 = 6×.", diff: "Easy", pyq: false },
+      { id: 140, topic: "Light & Optics", q: "What is chromatic aberration?", a: "The failure of a lens to focus all colours at the same point due to different refractive indices for different wavelengths", exp: "Different colours refract by different amounts → different focal lengths → coloured fringes around image (chromatic aberration). Corrected by achromatic doublet (combining convex + concave lenses of different glass types). Reflecting telescopes avoid this entirely.", diff: "Hard", pyq: false },
+      { id: 141, topic: "Light & Optics", q: "Why do stars twinkle but planets do not?", a: "Stars are point sources — atmospheric turbulence causes twinkling. Planets are extended discs — average effect is stable.", exp: "Stars are so far that they appear as point sources. Small atmospheric turbulence causes their light to refract differently moment to moment → twinkling. Planets are much closer and appear as small discs — many points average out atmospheric fluctuations → don't twinkle.", diff: "Medium", pyq: true, pyqYear: "2016" },
+      { id: 142, topic: "Light & Optics", q: "The phenomenon of scattering of light by colloidal particles is called:", a: "Tyndall effect", exp: "When light passes through a colloid (like milk, fog, smoke), tiny suspended particles scatter light. The scattered light makes the beam visible from the side (Tyndall effect). Examples: beam of sunlight through dusty air, headlights in fog, blue colour of veins (skin scatters blue more).", diff: "Medium", pyq: true, pyqYear: "2020" },
+      { id: 143, topic: "Light & Optics", q: "What is the persistence of vision?", a: "The retina retains an image for about 1/16 second after the light stimulus stops", exp: "Persistence of vision (or retinal persistence): the human eye retains an image for ~1/16 s. This allows films (24 frames/second), TV (25-30 fps), and animation to appear continuous. Each frame is displayed before the previous one fades — creating illusion of motion.", diff: "Easy", pyq: false },
+      { id: 144, topic: "Light & Optics", q: "LASER stands for:", a: "Light Amplification by Stimulated Emission of Radiation", exp: "LASER: Light Amplification by Stimulated Emission of Radiation. Properties: monochromatic (single wavelength), coherent (same phase), highly directional (narrow beam), intense. First laser: Theodore Maiman (1960) using ruby crystal. Types: gas laser (He-Ne), semiconductor laser, CO₂ laser.", tip: "LASER = Light Amplification by Stimulated Emission of Radiation.", diff: "Easy", pyq: true, pyqYear: "2019" },
+      { id: 145, topic: "Light & Optics", q: "A periscope works on the principle of:", a: "Reflection of light by two parallel plane mirrors at 45°", exp: "Periscope uses two plane mirrors at 45° to the vertical. Light enters from above, reflects 90° at top mirror, travels down the tube, reflects again at bottom mirror 90°, and exits horizontally to the eye. Used in submarines and over crowd viewing.", diff: "Easy", pyq: false },
+      { id: 146, topic: "Light & Optics", q: "What is the principle of camera?", a: "A convex lens forms a real, inverted, diminished image on the film/sensor", exp: "Camera: convex lens (adjustable focal length) focuses light onto photosensitive film or CMOS sensor. Aperture (f-stop) controls amount of light. Shutter speed controls exposure time. Modern digital cameras use CMOS/CCD sensors. The image is real, inverted, and usually diminished.", diff: "Easy", pyq: false },
+      { id: 147, topic: "Light & Optics", q: "What causes the blue colour of deep sea water?", a: "Scattering and absorption — water absorbs red wavelengths, blue light is scattered", exp: "Seawater absorbs red, orange, yellow wavelengths strongly but barely absorbs blue. Blue light also scatters in water. At depth, only blue light survives. Shallow coastal water appears greenish (algae/sediment add colour). Deep ocean = deep blue.", diff: "Medium", pyq: false },
+      { id: 148, topic: "Light & Optics", q: "The 'magic of moonlight' — Moon shines at night because:", a: "The Moon is NOT a light source — it reflects sunlight", exp: "Moon has no light of its own. It reflects about 12% of sunlight falling on it (albedo = 0.12). This reflected sunlight is what we see. Moon phases occur because we see different illuminated portions as Moon orbits Earth. Full moon = we face the fully lit side.", diff: "Easy", pyq: false },
+      { id: 149, topic: "Light & Optics", q: "The focal length of a plane mirror is:", a: "Infinity (∞)", exp: "A plane mirror can be considered a spherical mirror with infinite radius of curvature (R = ∞). Since f = R/2, f = ∞. This means parallel rays remain parallel after reflection — no convergence or divergence. The image is virtual, erect, and same size.", diff: "Medium", pyq: false },
+      { id: 150, topic: "Light & Optics", q: "Astigmatism (a defect of vision) is corrected by:", a: "Cylindrical lens", exp: "Astigmatism: cornea or lens is not perfectly spherical → different focal lengths in different planes → blurred/distorted vision. Corrected with cylindrical lenses that compensate for the asymmetric curvature. Often combined with myopia or hypermetropia in toric lens prescriptions.", diff: "Hard", pyq: false },
+
+      // ==================== 6. SOUND & WAVES (Q151–Q180) ====================
+      { id: 151, topic: "Sound & Waves", q: "Sound waves are which type of waves?", a: "Longitudinal mechanical waves (require a material medium for propagation)", exp: "Sound travels as compressions and rarefactions (areas of high and low pressure) in the direction of wave propagation — longitudinal. Sound cannot travel through vacuum (needs medium). Speed in air ≈ 343 m/s at 20°C. Faster in solids, liquids than gases.", tip: "Sound = longitudinal wave. Light = transverse wave. Sound needs medium; light doesn't.", diff: "Easy", pyq: true, pyqYear: "2017" },
+      { id: 152, topic: "Sound & Waves", q: "What is the speed of sound in air at 0°C?", a: "332 m/s (approximately 331–333 m/s)", exp: "Speed of sound: 332 m/s at 0°C, 343 m/s at 20°C. Speed increases with temperature: v ∝ √T. Speed in water ≈ 1482 m/s. In steel ≈ 5960 m/s. In general: speed in solids > liquids > gases.", tip: "Speed: solid > liquid > gas. Sound fastest in solids.", diff: "Easy", pyq: true, pyqYear: "2019" },
+      { id: 153, topic: "Sound & Waves", q: "The frequency range of human hearing is:", a: "20 Hz to 20,000 Hz (20 kHz)", exp: "Human ears can hear frequencies from 20 Hz to 20,000 Hz. Below 20 Hz = infrasound (earthquakes, elephants communicate, whales). Above 20 kHz = ultrasound (bats, dolphins, medical imaging, sonar). Hearing range decreases with age.", tip: "Ultrasound > 20 kHz. Infrasound < 20 Hz. SONAR uses ultrasound.", diff: "Easy", pyq: true, pyqYear: "2018" },
+      { id: 154, topic: "Sound & Waves", q: "The Doppler effect relates to:", a: "Apparent change in frequency of sound/light when source or observer is moving", exp: "Doppler Effect: if source approaches → frequency appears higher (pitch rises). Source recedes → frequency appears lower (pitch falls). Examples: ambulance siren pitch changes as it passes, radar speed detection, redshift/blueshift of light from galaxies.", tip: "Approaching = higher frequency. Receding = lower frequency. Police radar uses Doppler.", diff: "Medium", pyq: true, pyqYear: "2021" },
+      { id: 155, topic: "Sound & Waves", q: "What is SONAR and which principle does it work on?", a: "Sound Navigation And Ranging — works on echo (reflection) of ultrasonic waves", exp: "SONAR emits ultrasonic pulses, which reflect off underwater objects (submarines, fish, sea floor) and return. Distance = (speed × time)/2. Used in submarines, oceanography, fish finding, and mapping sea floor. Bats use echolocation (biological SONAR).", diff: "Easy", pyq: true, pyqYear: "2020" },
+      { id: 156, topic: "Sound & Waves", q: "Echo is produced when sound reflects back after hitting a hard surface. What is the minimum distance needed?", a: "17 metres (at 20°C, for echo to be heard as separate from original after 0.1 s)", exp: "For an echo to be heard separately, minimum time gap = 0.1 s. Distance = v × t/2 = 343 × 0.1/2 = 17.15 m ≈ 17 m. Walls closer than 17 m produce reverberation (overlapping of sound, not distinct echo). Concert halls designed to control reverberation.", tip: "Echo distance ≈ 17 m minimum at room temperature.", diff: "Hard", pyq: false },
+      { id: 157, topic: "Sound & Waves", q: "The pitch (shrillness) of sound depends on:", a: "Frequency — higher frequency = higher pitch", exp: "Pitch ∝ frequency. High pitch (shrill): mosquito, bat, whistle. Low pitch (deep): lion's roar, bass guitar. Loudness ∝ amplitude (intensity). Quality/timbre depends on waveform shape (harmonics present). Pitch is a subjective sensation corresponding to objective frequency.", tip: "Pitch = frequency. Loudness = amplitude. Timbre = waveform shape.", diff: "Easy", pyq: false },
+      { id: 158, topic: "Sound & Waves", q: "What is resonance?", a: "When the frequency of an applied force matches the natural frequency of a body → large amplitude vibration", exp: "Resonance: maximum energy transfer when driving frequency = natural frequency. Examples: breaking a wine glass by voice (matched frequency), Tacoma Narrows Bridge collapse (wind resonance), MRI machines (nuclear magnetic resonance), tuning of radio (circuit resonance).", tip: "Resonance destroyed Tacoma Narrows Bridge (1940). Soldiers must break step on bridges!", diff: "Medium", pyq: false },
+      { id: 159, topic: "Sound & Waves", q: "Ultrasound is used in medical imaging (USG). Why ultrasound, not audible sound?", a: "Short wavelength of ultrasound gives high resolution; it's harmless and non-ionising", exp: "Ultrasound (>20 kHz, typically 2–15 MHz for medical use): wavelength 0.1–0.75 mm → can resolve small structures. Reflects off tissue boundaries → computerised to form images. Non-ionising radiation (safe for fetuses). Used in: prenatal scans, echocardiography, kidney stone detection.", diff: "Medium", pyq: false },
+      { id: 160, topic: "Sound & Waves", q: "The loudness of sound is measured in:", a: "Decibel (dB)", exp: "Sound intensity level measured in decibels. 0 dB = threshold of hearing. 30 dB = whisper. 60 dB = normal conversation. 90 dB = heavy traffic. 120 dB = pain threshold. 140 dB+ = jet engine. Prolonged exposure to >85 dB causes hearing loss.", tip: "Normal conversation = 60 dB. Pain threshold = 120 dB.", diff: "Easy", pyq: true, pyqYear: "2016" },
+      { id: 161, topic: "Sound & Waves", q: "What is the difference between transverse and longitudinal waves?", a: "Transverse: particles vibrate perpendicular to wave direction. Longitudinal: particles vibrate parallel to wave direction.", exp: "Transverse waves: vibration ⊥ propagation (electromagnetic waves, string waves, water surface waves). Longitudinal waves: vibration ∥ propagation (sound waves, seismic P-waves). Transverse waves can be polarised; longitudinal cannot.", diff: "Medium", pyq: false },
+      { id: 162, topic: "Sound & Waves", q: "What is the speed of sound in steel approximately?", a: "≈ 5,000 m/s (5 km/s)", exp: "Speed of sound in different media at 20°C: Air ≈ 343 m/s, Water ≈ 1482 m/s, Steel ≈ 5000–6000 m/s. More rigid/dense medium → faster sound. Miners tap railway lines to hear approaching trains — sound in steel travels much faster and farther than in air.", diff: "Hard", pyq: false },
+      { id: 163, topic: "Sound & Waves", q: "Bats navigate by:", a: "Echolocation — emitting ultrasound pulses and detecting echoes", exp: "Bats emit ultrasound (50–200 kHz). Echoes from objects return → processed by brain for distance, size, speed. Biological SONAR. Dolphins also use echolocation. This principle led to development of SONAR for submarines. Bats can detect objects as thin as 0.12 mm wire!", diff: "Easy", pyq: false },
+      { id: 164, topic: "Sound & Waves", q: "What is the phenomenon of interference in sound?", a: "Superposition of two sound waves — constructive (louder) or destructive (quieter) interference", exp: "Wave interference: when two sound waves of same frequency meet, they superpose. Constructive interference (waves in phase) → louder sound. Destructive interference (waves out of phase) → silence or quieter sound. Noise-cancelling headphones use destructive interference.", tip: "Noise-cancelling headphones = destructive interference in action.", diff: "Hard", pyq: false },
+      { id: 165, topic: "Sound & Waves", q: "What are seismic waves? Which type is most destructive?", a: "Waves produced by earthquakes. S-waves (secondary/shear waves) are more destructive than P-waves.", exp: "P-waves (primary/compressional): longitudinal, travel through solid+liquid+gas, fastest. S-waves (secondary/shear): transverse, travel only through solids, slower than P-waves but more destructive to buildings. Surface waves: slowest but most destructive (L-waves, Rayleigh waves).", tip: "P-waves first (detected first). S-waves more destructive. Surface waves most damage.", diff: "Hard", pyq: true, pyqYear: "2022" },
+      { id: 166, topic: "Sound & Waves", q: "The speed of sound increases with:", a: "Increase in temperature (v ∝ √T)", exp: "Speed of sound in air: v = 331 + 0.6T (T in °C). At 0°C: 331 m/s. At 20°C: 343 m/s. Humidity also slightly increases speed (moist air lighter than dry air). Altitude decreases speed (lower temperature, lower pressure).", diff: "Medium", pyq: false },
+      { id: 167, topic: "Sound & Waves", q: "What is the 'sonic boom'?", a: "A shock wave created when an aircraft exceeds the speed of sound", exp: "Sonic boom: when aircraft speed > speed of sound (supersonic), pressure waves pile up into a conical shock wave. The sudden pressure change arrives as a boom. Concorde (retired) flew supersonically. Sonic booms cause window breakage and startle people on ground.", diff: "Medium", pyq: false },
+      { id: 168, topic: "Sound & Waves", q: "Mach number is:", a: "Ratio of object's speed to the speed of sound in the same medium", exp: "Mach 1 = speed of sound. Mach 2 = twice the speed of sound. Named after Ernst Mach. Subsonic: Mach < 1. Supersonic: Mach > 1. Hypersonic: Mach > 5 (space capsule re-entry). Military jets routinely fly at Mach 1.5–2.", diff: "Medium", pyq: false },
+      { id: 169, topic: "Sound & Waves", q: "Beats are produced when two sound waves of slightly different frequencies are:", a: "Superposed — periodic variations in loudness with frequency = |f₁ - f₂|", exp: "Beats: when two frequencies f₁ and f₂ (close to each other) superpose, loudness alternately increases and decreases. Beat frequency = |f₁ - f₂|. Guitarists use beats to tune: when beats disappear, strings have same frequency. Used in tuning musical instruments.", diff: "Hard", pyq: false },
+      { id: 170, topic: "Sound & Waves", q: "Which type of waves are used in microwave ovens?", a: "Microwaves (radio waves, 2.45 GHz frequency)", exp: "Microwave ovens use 2.45 GHz microwaves. This frequency is absorbed efficiently by water molecules (causes them to vibrate → heat). Food is cooked from inside out. Metal reflects microwaves (hence no metal in microwave). Microwave bandwidth also used for Wi-Fi (2.4 GHz).", diff: "Easy", pyq: false },
+      { id: 171, topic: "Sound & Waves", q: "The stethoscope works on the principle of:", a: "Multiple reflections of sound amplifying it to the doctor's ears", exp: "Stethoscope: invented by René Laennec (1816). Sound from heart/lungs enters the chest piece → travels through tubing → earpieces. The tubing walls reflect sound, preventing energy loss. Modern electronic stethoscopes amplify the electrical signal of sound.", diff: "Easy", pyq: false },
+      { id: 172, topic: "Sound & Waves", q: "What is the relationship between wavelength, frequency, and speed of a wave?", a: "v = fλ (speed = frequency × wavelength)", exp: "Wave equation: v = fλ. Speed of sound in air = 343 m/s at 20°C. If frequency = 343 Hz, wavelength = 1 m. High frequency → short wavelength (inversely proportional at constant speed). This applies to all waves: sound, light, water.", tip: "v = fλ. The single most important wave equation.", diff: "Easy", pyq: false },
+      { id: 173, topic: "Sound & Waves", q: "Musical instruments produce sound. Which part of a flute vibrates to produce sound?", a: "Air column inside the flute vibrates (standing waves in the tube)", exp: "Wind instruments: vibrating air column inside tube produces sound. Flute, clarinet, trumpet — air column vibrates. String instruments: string vibrates (violin, guitar). Percussion: membrane vibrates (drum, tabla). Resonance of air column (organ pipe theory) explains notes.", diff: "Medium", pyq: false },
+      { id: 174, topic: "Sound & Waves", q: "What is infrasound? Which animals use it for communication?", a: "Sound below 20 Hz (human hearing threshold). Elephants, blue whales, rhinos use infrasound.", exp: "Infrasound (<20 Hz): inaudible to humans. Travels very long distances (low frequency → less absorption). Elephants communicate over 10 km using infrasound. Whales communicate across ocean basins. Also produced by earthquakes, volcanoes, ocean waves. Can be detected by specialized instruments.", diff: "Medium", pyq: false },
+      { id: 175, topic: "Sound & Waves", q: "The phenomenon of polarisation applies to which type of waves?", a: "Only transverse waves (like light); longitudinal waves (like sound) cannot be polarised", exp: "Polarisation restricts vibration to one plane. Only transverse waves can be polarised (particles can vibrate in perpendicular plane). Light is transverse → can be polarised by filters, reflection. Sound is longitudinal → cannot be polarised. Polaroid sunglasses reduce glare by polarising reflected light.", diff: "Hard", pyq: true, pyqYear: "2020" },
+      { id: 176, topic: "Sound & Waves", q: "Reverberation in a concert hall is due to:", a: "Multiple reflections of sound from walls, floor, and ceiling", exp: "Reverberation: prolonged persistence of sound after source stops (due to multiple reflections). Optimal reverberation time: 1.5–2 s for music, 0.5–1 s for speech. Excess reverberation = poor clarity. Acoustic tiles, carpets, curtains absorb sound to control reverberation.", diff: "Medium", pyq: false },
+      { id: 177, topic: "Sound & Waves", q: "Which property of sound is responsible for it being used in NDT (Non-Destructive Testing)?", a: "Ultrasound reflects off internal cracks/defects, revealing them without damaging the material", exp: "NDT uses ultrasound to detect internal flaws in metals, welds, concrete. Ultrasonic transducer emits pulses; reflections from cracks show as peaks on screen. Used in aircraft, pipeline, bridge inspection. Also used in determining material thickness without drilling.", diff: "Medium", pyq: false },
+      { id: 178, topic: "Sound & Waves", q: "The audible frequency for human beings is 20 Hz to 20 kHz. What limits the lower hearing threshold?", a: "Below 20 Hz, vibrations are felt as physical vibrations rather than heard as sound", exp: "Very low frequencies are sensed as mechanical vibration by the body rather than perceived as sound by the ear. The ear is optimally sensitive around 1–4 kHz (speech frequencies). Maximum sensitivity: 1000–3000 Hz (this range is critical for speech understanding).", diff: "Hard", pyq: false },
+      { id: 179, topic: "Sound & Waves", q: "What is the working principle of RADAR?", a: "Radio Detection And Ranging — uses reflection of radio waves to detect position and speed of objects", exp: "RADAR emits short radio wave pulses → waves reflect off objects (aircraft, ships, storms) → return signal detected → distance = (c × t)/2. Doppler radar measures frequency shift → calculates speed. Used in weather forecasting, air traffic control, police speed guns.", diff: "Medium", pyq: true, pyqYear: "2022" },
+      { id: 180, topic: "Sound & Waves", q: "What is the unit of frequency?", a: "Hertz (Hz) = cycles per second", exp: "Frequency f = number of cycles per second. SI unit: Hertz (Hz), named after Heinrich Hertz. 1 Hz = 1 cycle/second. kHz = 10³ Hz. MHz = 10⁶ Hz. GHz = 10⁹ Hz. Angular frequency ω = 2πf (radians/second).", diff: "Easy", pyq: false },
+
+      // ==================== 7. HEAT & THERMODYNAMICS (Q181–Q210) ====================
+      { id: 181, topic: "Heat & Thermodynamics", q: "Heat is transferred from a hotter body to a cooler body. What are the three methods?", a: "Conduction, Convection, and Radiation", exp: "Conduction: heat transfer through direct contact (solids — metal rod heated at one end). Convection: heat transfer through fluid movement (liquids and gases — room heating by convection currents). Radiation: heat transfer without medium (electromagnetic waves — Sun's heat reaching Earth).", tip: "Con-Con-Rad: Conduction (solid), Convection (fluid), Radiation (vacuum/all).", diff: "Easy", pyq: true, pyqYear: "2016" },
+      { id: 182, topic: "Heat & Thermodynamics", q: "What is the SI unit of heat?", a: "Joule (J)", exp: "Heat is a form of energy, so its SI unit is Joule (J). Other units: calorie (1 cal = 4.186 J), kilocalorie (food energy), British Thermal Unit (BTU). James Prescott Joule established the mechanical equivalent of heat: 1 cal = 4.186 J.", tip: "1 calorie = 4.2 J (approx). Joule = SI unit. Calorie used for food energy.", diff: "Easy", pyq: false },
+      { id: 183, topic: "Heat & Thermodynamics", q: "What is the zeroth law of thermodynamics?", a: "If two bodies are each in thermal equilibrium with a third body, they are in thermal equilibrium with each other", exp: "Zeroth Law establishes the concept of temperature. It allows us to use a thermometer: if thermometer is in equilibrium with A, and same thermometer with B → A and B are at same temperature. Called 'zeroth' because it was formulated after the 1st and 2nd laws.", diff: "Medium", pyq: false },
+      { id: 184, topic: "Heat & Thermodynamics", q: "The first law of thermodynamics states:", a: "Energy cannot be created or destroyed — heat added to a system equals increase in internal energy plus work done", exp: "First Law: Q = ΔU + W. Heat supplied (Q) = change in internal energy (ΔU) + work done by system (W). This is conservation of energy applied to thermal systems. A refrigerator: work done on gas → gas expels heat (heat pump).", diff: "Medium", pyq: true, pyqYear: "2018" },
+      { id: 185, topic: "Heat & Thermodynamics", q: "The second law of thermodynamics states that heat flows:", a: "Spontaneously from hotter to cooler bodies only (entropy of universe always increases)", exp: "Second Law: heat cannot spontaneously flow from cold to hot. Entropy (disorder) always increases in natural processes. No heat engine is 100% efficient. Refrigerator moves heat from cold to hot but requires external work input. This law dictates the direction of natural processes.", diff: "Hard", pyq: false },
+      { id: 186, topic: "Heat & Thermodynamics", q: "Which thermometric scale has the lowest zero point?", a: "Kelvin scale (0 K = absolute zero = -273.15°C)", exp: "Kelvin scale: starts at absolute zero (0 K), where molecular motion theoretically stops. K = °C + 273.15. Celsius: 0°C = freezing of water. Fahrenheit: 32°F = freezing. Absolute zero = -273.15°C = -459.67°F. Kelvin has no negative values.", tip: "K = °C + 273. F = (9/5)C + 32. These conversions are TNPSC favourites.", diff: "Easy", pyq: true, pyqYear: "2019" },
+      { id: 187, topic: "Heat & Thermodynamics", q: "The working principle of a pressure cooker is:", a: "Increased pressure raises boiling point of water — food cooks faster at higher temperature", exp: "At higher pressure (2 atm in pressure cooker), water boils at ≈120°C (vs 100°C at 1 atm). Higher temperature → food cooks faster. At high altitude, water boils below 100°C (less pressure) → food takes longer to cook. Pressure cooker valve releases excess pressure for safety.", tip: "High pressure → higher boiling point → faster cooking.", diff: "Easy", pyq: true, pyqYear: "2017" },
+      { id: 188, topic: "Heat & Thermodynamics", q: "What is specific heat capacity?", a: "Heat required to raise 1 kg of a substance by 1°C (or 1 K). Unit: J/(kg·K)", exp: "Q = mcΔT. Specific heat capacity (c) of water = 4200 J/(kg·K) — highest of common substances. This is why water regulates climate (coastal areas have moderate temperatures). Metals have low c → heat up and cool down quickly.", tip: "Water's high specific heat = climate regulator. Metals' low c = hot handles.", diff: "Medium", pyq: false },
+      { id: 189, topic: "Heat & Thermodynamics", q: "The temperature scale used in gas laws is:", a: "Kelvin (absolute temperature scale) — always use Kelvin in gas law equations", exp: "Gas laws: PV = nRT (R = 8.314 J/mol·K, T must be in Kelvin). Never use Celsius in gas law calculations — negative Celsius would give nonsensical results. Always convert: T(K) = T(°C) + 273.15.", tip: "Gas law calculations: always convert to Kelvin first.", diff: "Medium", pyq: false },
+      { id: 190, topic: "Heat & Thermodynamics", q: "Latent heat is the heat required to change a substance's:", a: "State (phase) without change in temperature", exp: "Latent heat: 'hidden heat' that changes state without changing temperature. Latent heat of fusion of ice = 336,000 J/kg (water at 0°C). Latent heat of vaporisation of water = 2,260,000 J/kg (steam at 100°C). Steam burns worse than boiling water — it releases latent heat additionally.", tip: "Steam at 100°C burns more than water at 100°C — latent heat released on skin.", diff: "Medium", pyq: true, pyqYear: "2021" },
+      { id: 191, topic: "Heat & Thermodynamics", q: "Why does sweating cool the body?", a: "Evaporation of sweat (liquid→gas) absorbs latent heat from the skin", exp: "Evaporation is an endothermic process — absorbs heat (latent heat of vaporisation ≈ 2260 kJ/kg for water). Sweat evaporates from skin surface, absorbing body heat. High humidity reduces evaporation → sweating less effective → body feels hotter.", tip: "Evaporation = cooling. This is why wet cloth on forehead reduces fever.", diff: "Easy", pyq: false },
+      { id: 192, topic: "Heat & Thermodynamics", q: "What is thermal conductivity?", a: "A material's ability to conduct heat. High TC = good conductor. Unit: W/(m·K)", exp: "High thermal conductivity: copper (385 W/mK), aluminium (205 W/mK) — good for heat sinks, cooking utensils. Low TC: wood, air, glass wool — good insulators. Thermos bottle: vacuum between walls eliminates conduction AND convection; silvered surfaces minimize radiation.", diff: "Medium", pyq: false },
+      { id: 193, topic: "Heat & Thermodynamics", q: "What is the greenhouse effect?", a: "Earth's atmosphere traps infrared radiation, warming the planet (natural + enhanced by CO₂, methane)", exp: "Natural greenhouse effect: Sun's short-wave radiation enters atmosphere → warms Earth → Earth emits long-wave IR → greenhouse gases (CO₂, H₂O, CH₄, N₂O) absorb IR → atmosphere warms. Without it, Earth would be -18°C. Enhanced GHG due to emissions → global warming.", diff: "Easy", pyq: true, pyqYear: "2022" },
+      { id: 194, topic: "Heat & Thermodynamics", q: "What happens to the boiling point of water when salt is added?", a: "Boiling point increases (elevation of boiling point — colligative property)", exp: "Adding solute (salt, sugar) to water raises boiling point and lowers freezing point. Boiling point elevation: ΔTb = Kb × m (Kb = molal elevation constant, m = molality). Practical: salted pasta water boils at slightly higher temperature. This is a colligative property.", diff: "Medium", pyq: false },
+      { id: 195, topic: "Heat & Thermodynamics", q: "The Carnot cycle represents the most efficient heat engine. Its efficiency depends on:", a: "Temperatures of hot source (T_H) and cold sink (T_C): η = 1 - T_C/T_H", exp: "Carnot efficiency = 1 - T_C/T_H (in Kelvin). Maximum efficiency only possible with T_C = 0 K (impossible). Real engines < Carnot efficiency. To improve efficiency: raise T_H or lower T_C. This is why steam turbines operate at very high temperatures.", diff: "Hard", pyq: false },
+      { id: 196, topic: "Heat & Thermodynamics", q: "Thermos flask (vacuum flask) prevents heat transfer by:", a: "Vacuum (eliminates conduction and convection) + silvered surfaces (minimises radiation)", exp: "Thermos flask components: double-walled glass vessel with vacuum between walls (no medium → no conduction or convection). Inner and outer surfaces are silvered (mirror-like) → reflects thermal radiation. Cork stopper prevents evaporation. Keeps liquids hot or cold for hours.", diff: "Easy", pyq: false },
+      { id: 197, topic: "Heat & Thermodynamics", q: "What is Newton's Law of Cooling?", a: "Rate of heat loss of a body is proportional to temperature difference between body and surroundings", exp: "Newton's Law of Cooling: dQ/dt ∝ (T - T_room). Valid for small temperature differences. A hot cup of tea cools faster when temperature difference is large, slower as it approaches room temperature. Used in forensic science to estimate time of death.", diff: "Medium", pyq: false },
+      { id: 198, topic: "Heat & Thermodynamics", q: "A refrigerator works on which principle/cycle?", a: "Refrigeration cycle (reverse Carnot cycle) — uses work to pump heat from cold interior to warm exterior", exp: "Refrigerator: compressor pressurises refrigerant (now hot) → condenser dissipates heat (outside) → expansion valve → refrigerant expands and cools → evaporator absorbs heat from food compartment → back to compressor. COP (Coefficient of Performance) = heat removed/work input.", diff: "Medium", pyq: true, pyqYear: "2019" },
+      { id: 199, topic: "Heat & Thermodynamics", q: "What is the triple point of water?", a: "273.16 K (0.01°C) — the temperature and pressure where all three phases coexist", exp: "Triple point of water: T = 273.16 K, P = 611.73 Pa. Only at this precise combination do ice, liquid water, and water vapor coexist in equilibrium. The Kelvin scale was historically defined using the triple point of water (now defined by fixing the Boltzmann constant).", diff: "Hard", pyq: false },
+      { id: 200, topic: "Heat & Thermodynamics", q: "Which material is a good thermal insulator and why?", a: "Materials with trapped air (wool, glass wool, styrofoam) — air has very low thermal conductivity", exp: "Good insulators: air (0.026 W/mK), glass wool (0.04), styrofoam (0.033), wood (0.12–0.04). Wool fibres trap air → insulates. Building insulation uses fibreglass or foam. Double-glazed windows trap air between panes → reduces heat loss. Hollow walls in buildings → air space insulates.", diff: "Easy", pyq: false },
+      { id: 201, topic: "Heat & Thermodynamics", q: "Stefan-Boltzmann law states that power radiated by a body is proportional to:", a: "Fourth power of absolute temperature (P ∝ T⁴)", exp: "Stefan-Boltzmann Law: P = σAT⁴ (σ = 5.67×10⁻⁸ W/m²K⁴). Doubling absolute temperature → 2⁴ = 16 times more radiation. Sun's temperature ≈ 5778 K → enormous radiative power. Black bodies radiate most efficiently (emissivity = 1).", diff: "Hard", pyq: false },
+      { id: 202, topic: "Heat & Thermodynamics", q: "What is thermal expansion?", a: "Increase in dimensions of a material when heated (due to increased molecular vibration)", exp: "Solids: expand in all directions (linear, area, volume expansion). Liquids: volume expansion. Gases: large volume expansion. Applications: thermometers (liquid expands), bimetallic strip (different expansion rates → bending → thermostats), railway tracks with gaps (expansion space), bridges with expansion joints.", tip: "Railway gaps, bridge expansion joints — all to accommodate thermal expansion.", diff: "Easy", pyq: true, pyqYear: "2020" },
+      { id: 203, topic: "Heat & Thermodynamics", q: "The thermostat uses which device to control temperature?", a: "Bimetallic strip — two metals bonded together that bend with temperature change", exp: "Bimetallic strip: two metals (e.g., brass and invar) with different thermal expansion coefficients bonded together. When heated, one expands more → strip bends → breaks electric circuit (switching off heater). Used in electric irons, room thermostats, circuit breakers.", diff: "Easy", pyq: false },
+      { id: 204, topic: "Heat & Thermodynamics", q: "What is absolute zero temperature?", a: "0 Kelvin = -273.15°C — the theoretical minimum temperature where all molecular motion ceases", exp: "At absolute zero, molecular kinetic energy → 0. Achieved in laboratory down to nanokelvins (10⁻⁹ K) but never exactly 0 K (quantum mechanics: zero-point energy remains). Helium remains liquid down to 4.2 K at atmospheric pressure (used to cool superconducting magnets in MRI).", diff: "Medium", pyq: true, pyqYear: "2016" },
+      { id: 205, topic: "Heat & Thermodynamics", q: "The specific heat of water is 4200 J/kg°C. What does this mean?", a: "4200 joules of heat are needed to raise 1 kg of water by 1°C", exp: "Q = mcΔT = 1×4200×1 = 4200 J per kg per °C. Water's high specific heat makes it ideal for: cooling (car radiator, human body), climate regulation (coastal cities have mild climate), hot water bottles. Metals have low specific heat (c) — heat quickly and cool quickly.", diff: "Easy", pyq: false },
+      { id: 206, topic: "Heat & Thermodynamics", q: "Sea breeze blows from sea to land during daytime. Why?", a: "Land heats faster (lower specific heat) than sea → hot air rises over land → cool sea air flows in", exp: "Daytime: Sun heats land faster than sea (land has lower c than water). Hot air over land rises (convection) → creates low pressure. Cooler sea air flows in toward land → sea breeze. Night: opposite (land cools faster → land breeze from land to sea).", tip: "Day: sea breeze (sea→land). Night: land breeze (land→sea).", diff: "Medium", pyq: true, pyqYear: "2021" },
+      { id: 207, topic: "Heat & Thermodynamics", q: "What is the heat capacity of an object?", a: "The heat required to raise the object's temperature by 1°C. C = mc (total, not per kg)", exp: "Heat capacity C = mc (mass × specific heat capacity). Different from specific heat capacity (which is per unit mass). A large iron block has more heat capacity than a small one, even though specific heat is same. Ocean has massive heat capacity → climate stabilisation.", diff: "Medium", pyq: false },
+      { id: 208, topic: "Heat & Thermodynamics", q: "Why does metal feel colder than wood at the same temperature?", a: "Metal conducts heat away from hand faster (high thermal conductivity) — sensation of cold", exp: "At room temperature, metal and wood are at the same temperature. But metal is a good thermal conductor (rapidly transfers heat away from warm hand) → hand cools quickly → feels cold. Wood is a poor conductor → less heat loss → feels warmer. This is why wooden floors feel warmer than tiled floors.", diff: "Easy", pyq: false },
+      { id: 209, topic: "Heat & Thermodynamics", q: "The working principle of an air conditioner is:", a: "Vapour compression refrigeration cycle — same as refrigerator but larger scale", exp: "AC: refrigerant (R-22, R-410A) compressed → hot condensate releases heat outdoors → expansion valve → cold evaporator absorbs heat from room air → cycle repeats. SEER rating = efficiency. 1 TR (ton of refrigeration) = 12,000 BTU/hr = 3.517 kW.", diff: "Medium", pyq: false },
+      { id: 210, topic: "Heat & Thermodynamics", q: "What is the difference between heat and temperature?", a: "Heat is energy (J); temperature measures average kinetic energy of molecules (°C, K)", exp: "Heat (Q): total thermal energy transferred. Temperature (T): average KE of molecules. A large bucket of water at 40°C has more heat than a small cup at 80°C, even though the cup is hotter. This distinction is crucial in thermodynamics.", diff: "Easy", pyq: false },
+
+      // ==================== 8. NUCLEAR PHYSICS (Q211–Q240) ====================
+      { id: 211, topic: "Nuclear Physics", q: "What is radioactivity?", a: "The spontaneous emission of radiation (alpha, beta, or gamma) from unstable atomic nuclei", exp: "Radioactivity discovered by Henri Becquerel (1896). Marie Curie coined the term. Unstable nuclei emit radiation to become more stable. Three types: alpha (α) particles, beta (β) particles, gamma (γ) rays. Half-life is the time for half the nuclei to decay.", diff: "Easy", pyq: true, pyqYear: "2017" },
+      { id: 212, topic: "Nuclear Physics", q: "What is nuclear fission?", a: "Splitting of a heavy nucleus (like U-235) into smaller fragments, releasing enormous energy", exp: "U-235 + neutron → Ba + Kr + 3 neutrons + energy (200 MeV). Chain reaction: 3 neutrons from each fission can trigger 3 more → exponential chain. Controlled chain reaction: nuclear reactor (slow neutrons, control rods). Uncontrolled: atomic bomb.", tip: "Fission: U-235, Pu-239 split. Used in nuclear reactors and bombs.", diff: "Easy", pyq: true, pyqYear: "2018" },
+      { id: 213, topic: "Nuclear Physics", q: "What is nuclear fusion?", a: "Combining of light nuclei (like hydrogen isotopes) to form heavier nucleus, releasing enormous energy", exp: "Fusion: H-2 + H-3 → He-4 + neutron + 17.6 MeV. Powers the Sun and stars. More energy per gram than fission. Requires extreme T (~10⁷ K) and pressure. ITER project (France) working on commercial fusion. Hydrogen bomb is uncontrolled fusion.", tip: "Fusion = Sun's energy. ITER = international fusion reactor project.", diff: "Medium", pyq: true, pyqYear: "2019" },
+      { id: 214, topic: "Nuclear Physics", q: "The particles emitted in alpha (α) decay are:", a: "Helium-4 nuclei (2 protons + 2 neutrons, charge +2)", exp: "Alpha decay: nucleus emits ²₂He (alpha particle). Mass number decreases by 4, atomic number by 2. Alpha particles are stopped by a sheet of paper or skin (short range, high ionisation). Example: Radium-226 → Radon-222 + alpha.", diff: "Easy", pyq: false },
+      { id: 215, topic: "Nuclear Physics", q: "What is the half-life of a radioactive substance?", a: "The time taken for half the atoms in a sample to decay", exp: "Half-life (t½) is constant for each element. Carbon-14: t½ = 5730 years (used in carbon dating). Uranium-238: t½ = 4.47 billion years. Iodine-131: t½ = 8 days (medical use). After n half-lives: remaining = N₀ × (½)ⁿ.", tip: "After 1 half-life: 50% left. After 2: 25%. After 3: 12.5%.", diff: "Medium", pyq: true, pyqYear: "2021" },
+      { id: 216, topic: "Nuclear Physics", q: "Carbon-14 dating is used to determine the age of:", a: "Organic materials (fossils, wood, bone) up to about 50,000 years old", exp: "Carbon-14 (t½ = 5730 yr) forms in atmosphere (cosmic rays + N-14). Living organisms absorb C-14. After death, C-14 decays without replenishment. Measuring remaining C-14 gives age. For older rocks: Uranium-Lead dating (t½ = 4.47 billion yr).", tip: "C-14: organic materials ≤50,000 yr. U-Pb: rocks/Earth age (millions-billions yr).", diff: "Medium", pyq: true, pyqYear: "2020" },
+      { id: 217, topic: "Nuclear Physics", q: "What is the difference between nuclear fission and a chain reaction?", a: "Fission is a single nuclear split. Chain reaction is self-sustaining fission where each event triggers more.", exp: "In U-235 fission: 1 neutron triggers 1 fission → 3 neutrons released → each triggers another fission → cascade grows exponentially (chain reaction). Critical mass: minimum mass needed for self-sustaining chain reaction. In reactors: controlled. In bombs: uncontrolled.", diff: "Hard", pyq: false },
+      { id: 218, topic: "Nuclear Physics", q: "What are gamma rays?", a: "High-energy electromagnetic radiation emitted from radioactive nuclei (high frequency, short wavelength)", exp: "Gamma rays: electromagnetic waves (no mass, no charge). Highest penetrating power — need thick lead or concrete for shielding. Ionise strongly. Used in: cancer radiotherapy, sterilising medical equipment, food irradiation, Compton scattering research.", diff: "Easy", pyq: false },
+      { id: 219, topic: "Nuclear Physics", q: "The atomic number (Z) of an element is:", a: "The number of protons in the nucleus (equals number of electrons in neutral atom)", exp: "Z = proton number = electron number (neutral). Mass number A = protons + neutrons. Neutrons = A - Z. Isotopes: same Z, different A (same element, different neutron count). Carbon-12, C-13, C-14 are isotopes (Z=6 each).", diff: "Easy", pyq: false },
+      { id: 220, topic: "Nuclear Physics", q: "Isotopes are atoms with the same number of protons but different:", a: "Neutrons (and therefore different mass numbers)", exp: "Isotopes: same element (same Z = same proton count = same chemical properties) but different neutron count → different mass number. Examples: H-1 (no neutrons), H-2 deuterium (1 neutron), H-3 tritium (2 neutrons). Carbon-12, C-13 (stable), C-14 (radioactive).", diff: "Easy", pyq: true, pyqYear: "2016" },
+      { id: 221, topic: "Nuclear Physics", q: "India's first nuclear reactor was:", a: "Apsara — inaugurated in 1956 at BARC, Trombay, Mumbai", exp: "Apsara: India's first nuclear reactor, 1956, designed by Homi J. Bhabha. BARC (Bhabha Atomic Research Centre), Trombay, Mumbai. First reactor outside USA/UK to go critical in Asia. India now has 22 operational reactors. KKNPP (Kudankulam), Tamil Nadu is India's largest nuclear plant.", tip: "Apsara = 1956, BARC. Kudankulam = Tamil Nadu (largest).", diff: "Medium", pyq: true, pyqYear: "2017" },
+      { id: 222, topic: "Nuclear Physics", q: "The moderator in a nuclear reactor is used for:", a: "Slowing down fast neutrons to thermal (slow) neutrons, which are more effective at causing fission", exp: "Fast neutrons from fission need to be slowed to sustain chain reaction. Moderators: heavy water (D₂O), graphite, ordinary water (H₂O). India's reactors mostly use heavy water (PHWR - Pressurised Heavy Water Reactor). Heavy water doesn't absorb neutrons much.", tip: "Moderator: slows neutrons. Control rod (cadmium/boron): absorbs neutrons (controls rate).", diff: "Hard", pyq: false },
+      { id: 223, topic: "Nuclear Physics", q: "What is the mass-energy equivalence discovered by Einstein?", a: "E = mc² — mass can be converted to energy and vice versa", exp: "E = mc². c = 3×10⁸ m/s. Even small mass = enormous energy (c² is very large). Nuclear fission: small mass defect → huge energy. 1 gram of matter completely converted = 9×10¹³ J (≈25 million kWh). Sun converts 4 million tonnes/second of mass to energy.", diff: "Easy", pyq: true, pyqYear: "2018" },
+      { id: 224, topic: "Nuclear Physics", q: "What is the Geiger-Muller (GM) counter used for?", a: "Detecting and measuring radioactivity (counts ionising radiation events)", exp: "GM counter: cylindrical tube with gas (argon + halogen). When ionising radiation (alpha, beta, gamma) enters → ionises gas → electrical pulse → counted as 'clicks'. Used in: radiation protection, nuclear research, prospecting for radioactive ores.", diff: "Easy", pyq: false },
+      { id: 225, topic: "Nuclear Physics", q: "What is the difference between nuclear power and thermal power plants?", a: "Nuclear: energy from fission of U-235. Thermal: energy from burning fossil fuels (coal, oil, gas). Both use steam turbines.", exp: "Both: heat → steam → turbine → generator → electricity. Nuclear: heat from controlled fission, no CO₂ but radioactive waste. Thermal: heat from combustion, CO₂ emissions but simpler fuel handling. Nuclear: higher energy density (1 kg U-235 = 3 million kg coal).", diff: "Medium", pyq: false },
+      { id: 226, topic: "Nuclear Physics", q: "Beta decay emits:", a: "Beta particles — electrons (β⁻) or positrons (β⁺) from the nucleus", exp: "β⁻ decay: neutron → proton + electron + antineutrino. β⁺ decay: proton → neutron + positron + neutrino. Beta particles are faster and more penetrating than alpha (stopped by few mm of aluminium). Used in: smoke detectors (Am-241 emits alpha), medical tracers (Tc-99m emits gamma).", diff: "Medium", pyq: false },
+      { id: 227, topic: "Nuclear Physics", q: "The term 'critical mass' in nuclear physics means:", a: "The minimum amount of fissile material needed to sustain a self-sustaining chain reaction", exp: "Critical mass: below this, too many neutrons escape without causing fission → chain reaction dies. At critical mass: one neutron from each fission triggers exactly one more fission on average. Supercritical (above critical mass): exponential growth → explosion (atomic bomb).", diff: "Hard", pyq: false },
+      { id: 228, topic: "Nuclear Physics", q: "Nuclear fusion is the energy source of:", a: "Stars (including the Sun) — hydrogen fusion to helium", exp: "Sun's core: T ≈ 15×10⁶ K, P = 250 billion atm. Proton-proton chain: 4 hydrogen nuclei → 1 helium-4 + energy. Sun converts 600 million tonnes of H₂ to He every second, losing 4 million tonnes as energy (E=mc²). Sun's lifetime ≈ 10 billion years total (5 billion remaining).", diff: "Easy", pyq: false },
+      { id: 229, topic: "Nuclear Physics", q: "What are control rods in a nuclear reactor made of?", a: "Cadmium or boron — materials that absorb neutrons without causing fission", exp: "Control rods (cadmium, boron, hafnium) absorb neutrons: lowering them into reactor core reduces fission rate (absorbs more neutrons). Raising them → less absorption → faster chain reaction. SCRAM: emergency insertion of all control rods → immediate shutdown.", diff: "Medium", pyq: false },
+      { id: 230, topic: "Nuclear Physics", q: "Radioactive waste from nuclear plants is classified as:", a: "High-level waste (HLW), Intermediate-level waste (ILW), and Low-level waste (LLW)", exp: "HLW: spent fuel rods, extremely radioactive, need thousands of years of isolation. ILW: reactor components, chemical sludge. LLW: gloves, clothing, tools — minimally radioactive. HLW vitrified (mixed with glass) and stored in geological repositories.", diff: "Hard", pyq: false },
+      { id: 231, topic: "Nuclear Physics", q: "What is the Chernobyl disaster (1986)?", a: "A nuclear reactor explosion at Chernobyl, Ukraine (then USSR) — caused by design flaws and operator error", exp: "April 26, 1986: Reactor 4 exploded during safety test. RBMK reactor design (positive void coefficient = unstable). 31 immediate deaths; thousands more from radiation exposure. Exclusion zone still exists (2600 km²). Led to global nuclear safety reforms and design reviews.", diff: "Medium", pyq: false },
+      { id: 232, topic: "Nuclear Physics", q: "What is the role of heavy water in CANDU reactors?", a: "Acts as both moderator AND coolant — slows neutrons and removes heat", exp: "CANDU (CANada Deuterium Uranium) reactors use heavy water (D₂O) as moderator and coolant. Key advantage: can use natural uranium (not enriched) because D₂O barely absorbs neutrons. India's Rajasthan and Madras Atomic Power Stations are PHWR-type (similar to CANDU).", diff: "Hard", pyq: false },
+      { id: 233, topic: "Nuclear Physics", q: "Nuclear binding energy is:", a: "The energy needed to completely separate all nucleons (protons and neutrons) in a nucleus", exp: "Binding energy = mass defect × c². Nuclei weigh less than the sum of individual protons and neutrons (mass defect). This 'missing mass' is converted to binding energy. Iron-56 has the highest binding energy per nucleon — most stable nucleus. Fission and fusion both release energy by moving toward iron-56.", diff: "Hard", pyq: false },
+      { id: 234, topic: "Nuclear Physics", q: "What is the unit of radiation dose?", a: "Gray (Gy) for absorbed dose; Sievert (Sv) for effective dose (weighted by radiation type)", exp: "Absorbed dose: 1 Gray = 1 J/kg of radiation energy absorbed. Effective dose: Sievert (Sv) = Gray × quality factor (alpha: QF=20; gamma: QF=1). Annual background radiation ≈ 2.4 mSv. Lethal dose: >4 Sv acute exposure. Rad and rem are older units.", diff: "Hard", pyq: false },
+      { id: 235, topic: "Nuclear Physics", q: "Who discovered radioactivity?", a: "Henri Becquerel (1896), with further development by Marie and Pierre Curie", exp: "Henri Becquerel (1896): discovered uranium spontaneously emits radiation (uranium rays). Marie Curie coined 'radioactivity'. She discovered polonium and radium. Marie Curie won TWO Nobel prizes (Physics 1903 + Chemistry 1911). She is the only person to win Nobels in two different sciences.", tip: "Becquerel: discovered radioactivity. Marie Curie: 2 Nobels (Physics + Chemistry).", diff: "Easy", pyq: true, pyqYear: "2016" },
+      { id: 236, topic: "Nuclear Physics", q: "What is meant by 'enrichment' of uranium?", a: "Increasing the percentage of U-235 (fissile) in natural uranium above the natural 0.7%", exp: "Natural uranium: 99.3% U-238 (non-fissile), 0.7% U-235 (fissile). Nuclear reactors need 3–5% enrichment. Nuclear weapons need >90% enrichment. Enrichment by: gaseous diffusion or centrifuge (uranium hexafluoride gas). Enrichment is a closely controlled technology (non-proliferation).", diff: "Hard", pyq: false },
+      { id: 237, topic: "Nuclear Physics", q: "Atoms of the same element with different mass numbers are called:", a: "Isotopes", exp: "Isotopes: same Z (protons), different A (mass number = protons + neutrons). Same chemical behaviour (same electron configuration). Different physical properties (mass, stability). Examples: C-12 (stable), C-14 (radioactive). Medical: I-131 for thyroid, Tc-99m for scans.", diff: "Easy", pyq: false },
+      { id: 238, topic: "Nuclear Physics", q: "What is the Fukushima disaster (2011)?", a: "Nuclear accident at Fukushima Daiichi plant, Japan, caused by 2011 tsunami disabling cooling systems", exp: "March 2011 earthquake + tsunami → flooded backup generators → cooling failure → three reactor meltdowns. IAEA rated Level 7 (maximum, same as Chernobyl). No direct deaths from radiation; evacuation of 154,000 people. Led to review of nuclear plant siting near coast.", diff: "Medium", pyq: false },
+      { id: 239, topic: "Nuclear Physics", q: "The radiation therapy used to treat cancer uses which type of radiation?", a: "Gamma rays (from Co-60 or linear accelerator) or X-rays, and sometimes proton/heavy ion beams", exp: "Radiotherapy: targeted high-energy radiation kills rapidly dividing cancer cells (DNA damage). Cobalt-60 teletherapy machine: γ-rays. Linear accelerator (LINAC): high-energy X-rays or electrons. Proton therapy: more precise, spares healthy tissue. Brachytherapy: radioactive seeds implanted inside tumour.", diff: "Medium", pyq: false },
+      { id: 240, topic: "Nuclear Physics", q: "India's three-stage nuclear power programme was conceived by:", a: "Dr. Homi J. Bhabha", exp: "Three stages: Stage 1 - PHWRs using natural U with heavy water (Rajasthan, Madras TAPS). Stage 2 - Fast Breeder Reactors (FBR) using plutonium produced in Stage 1 (PFBR at Kalpakkam). Stage 3 - Thorium reactors (India has world's largest thorium reserves). Vision: energy security using thorium.", tip: "Bhabha = father of India's nuclear program. Kalpakkam = FBR site (Tamil Nadu).", diff: "Hard", pyq: true, pyqYear: "2022" },
+
+      // ==================== 9. LASER & ELECTRONICS (Q241–Q270) ====================
+      { id: 241, topic: "Laser & Electronics", q: "What are the unique properties of laser light?", a: "Monochromatic, coherent, highly directional, and extremely intense", exp: "Monochromatic: single wavelength/color. Coherent: all waves in phase (same direction, frequency, phase). Highly directional: diverges very little over distance. High intensity: power concentrated in narrow beam. These properties make laser unlike ordinary light (which is incoherent, multi-wavelength).", diff: "Easy", pyq: true, pyqYear: "2017" },
+      { id: 242, topic: "Laser & Electronics", q: "What is stimulated emission (the principle behind LASER)?", a: "An excited atom, when hit by a photon of correct energy, emits a second identical photon in phase with the first", exp: "Atoms exist in ground or excited states. Spontaneous emission: random photon emission. Stimulated emission: photon hits excited atom → atom drops to ground state, emitting second identical photon (same wavelength, phase, direction). Chain reaction of stimulated emission = laser amplification.", diff: "Hard", pyq: false },
+      { id: 243, topic: "Laser & Electronics", q: "What is population inversion in a laser?", a: "A state where more atoms are in the excited state than the ground state — necessary for laser action", exp: "Normally, most atoms are in ground state. For laser operation, we need more atoms in excited state than ground state (population inversion). Achieved by 'pumping' energy (optical, electrical, chemical). Without population inversion, absorption > emission → no amplification.", diff: "Hard", pyq: false },
+      { id: 244, topic: "Laser & Electronics", q: "Which laser is most commonly used in ophthalmology (eye surgery)?", a: "Excimer laser (UV, 193 nm) for LASIK surgery; also Nd:YAG laser", exp: "LASIK eye surgery uses excimer laser (ArF, 193 nm) to reshape the cornea. The short UV wavelength causes photochemical ablation (breaks molecular bonds without heat damage). Nd:YAG laser used for treating cataracts and retinal conditions. He-Ne laser (632.8 nm red) used in eye tests.", diff: "Medium", pyq: false },
+      { id: 245, topic: "Laser & Electronics", q: "Barcode scanners at supermarkets use which type of laser?", a: "He-Ne laser or semiconductor diode laser (red, 630–680 nm)", exp: "Barcode scanner: laser beam scans the barcode pattern. Dark bars absorb light; white spaces reflect. Reflected pattern detected by photodiode → decoded to number. Modern scanners use 650 nm red diode lasers. 2D barcodes (QR codes) scanned by imaging sensors (camera).", diff: "Easy", pyq: false },
+      { id: 246, topic: "Laser & Electronics", q: "What is a transistor? What was its significance?", a: "A semiconductor device (BJT or FET) that amplifies or switches electronic signals. Invented 1947, Bell Labs.", exp: "Transistor (BJT): three layers (n-p-n or p-n-p). Base current controls collector current (amplification). Replaced vacuum tubes — smaller, cheaper, no warm-up, more reliable. 2023: modern chips have ~100 billion transistors in fingernail-sized chip (2 nm process).", tip: "Transistor (1947) = most important invention of 20th century. Nobel 1956 to Bardeen, Brattain, Shockley.", diff: "Medium", pyq: true, pyqYear: "2018" },
+      { id: 247, topic: "Laser & Electronics", q: "What is an integrated circuit (IC)?", a: "Multiple electronic components (transistors, resistors, capacitors) fabricated on a single silicon chip", exp: "IC invented by Jack Kilby (1958, Texas Instruments) and Robert Noyce (1959, Fairchild). Nobel Prize 2000 to Kilby. Moore's Law: number of transistors on a chip doubles every ~2 years (1965). First IC: ~10 transistors. Modern IC (Apple M3): 25 billion transistors.", tip: "Jack Kilby = IC inventor. Nobel Prize 2000. Moore's Law = transistor count doubles every 2 years.", diff: "Medium", pyq: true, pyqYear: "2019" },
+      { id: 248, topic: "Laser & Electronics", q: "A p-n junction diode allows current to flow in which direction?", a: "Forward biased direction only (from p to n externally, or from n to p inside the junction)", exp: "Forward bias: p connected to + terminal, n to - → depletion region shrinks → current flows. Reverse bias: p to -, n to + → depletion region grows → almost no current (only tiny leakage). Avalanche breakdown at high reverse voltage.", diff: "Medium", pyq: false },
+      { id: 249, topic: "Laser & Electronics", q: "What is fibre optic communication? What are its advantages?", a: "Transmits data as light pulses through glass fibre. Advantages: high bandwidth, no electromagnetic interference, low loss, secure.", exp: "Optical fibre: glass/plastic core (high n) + cladding (low n). Total internal reflection carries light. Bandwidth: terabits/second possible. Used in: internet backbone (submarine cables), telephone, cable TV. Immune to electromagnetic interference, no signal loss, eavesdrop-resistant.", diff: "Easy", pyq: true, pyqYear: "2021" },
+      { id: 250, topic: "Laser & Electronics", q: "What is a solar cell? Which semiconductor material is most commonly used?", a: "A photovoltaic device converting light to electricity. Silicon (Si) is most common (95% of market).", exp: "Solar cell: p-n junction. Photons knock electrons loose in silicon → electron-hole pairs → electric current across junction. Single cell: ~0.6V. Multiple cells in series = module = higher voltage. Types: monocrystalline Si (~22% efficiency), polycrystalline Si (~17%), thin film (CdTe, CIGS: ~12%), perovskite (research).", diff: "Medium", pyq: false },
+      { id: 251, topic: "Laser & Electronics", q: "What is the difference between AM and FM radio?", a: "AM: signal encoded in amplitude variations of carrier wave. FM: encoded in frequency variations.", exp: "AM (Amplitude Modulation): carrier amplitude varies with audio signal. Susceptible to noise (noise affects amplitude). Longer range (can bounce off ionosphere → worldwide). FM (Frequency Modulation): carrier frequency varies. Better sound quality, less noise but shorter range. India: AM 530–1710 kHz; FM 88–108 MHz.", diff: "Medium", pyq: true, pyqYear: "2020" },
+      { id: 252, topic: "Laser & Electronics", q: "What is semiconductor doping?", a: "Adding impurity atoms to pure semiconductor to increase its conductivity", exp: "Pure Si: 4 valence electrons, few free charge carriers. n-type doping: add pentavalent atoms (P, As) → extra electron → negative carriers dominate. p-type doping: add trivalent atoms (B, In) → electron deficiency (holes) → positive carriers dominate. Doping makes transistors possible.", diff: "Hard", pyq: false },
+      { id: 253, topic: "Laser & Electronics", q: "What is the full form and use of LED?", a: "Light Emitting Diode — emits light when forward biased (electroluminescence)", exp: "LED: p-n junction emits photons when electrons recombine with holes. Colour depends on band gap (material). Red: GaAsP. Blue: InGaN (discovered 1994, Nobel 2014). White LED = blue LED + yellow phosphor. Very efficient (90%+ efficiency). Used: indicators, screens, bulbs, traffic lights.", tip: "Blue LED inventors: Nakamura, Amano, Akasaki — Nobel Prize 2014.", diff: "Easy", pyq: true, pyqYear: "2022" },
+      { id: 254, topic: "Laser & Electronics", q: "What is CRO (Cathode Ray Oscilloscope)?", a: "An instrument that displays electrical waveforms on a screen using an electron beam", exp: "CRO: electron gun fires beam → deflected by electric field (X and Y plates) → hits phosphor screen → displays waveform. Measures: frequency, amplitude, phase, waveform shape. Modern: digital storage oscilloscope (DSO). Used in electronics labs, hospitals (ECG display principle).", diff: "Medium", pyq: false },
+      { id: 255, topic: "Laser & Electronics", q: "What type of laser is used in CD/DVD players?", a: "Semiconductor diode laser — infrared (CD: 780 nm), red (DVD: 650 nm), blue-violet (Blu-ray: 405 nm)", exp: "CD player: 780 nm IR laser reads pits and lands on disc surface. DVD: 650 nm red laser → shorter wavelength → smaller spot → more data. Blu-ray: 405 nm blue-violet laser → smallest spot → highest density. Higher density = more storage capacity.", diff: "Medium", pyq: false },
+      { id: 256, topic: "Laser & Electronics", q: "What is the working principle of a mobile phone?", a: "Converts sound to electrical signals, transmits via radio waves to cell towers, received and reconverted", exp: "Microphone converts voice → electrical signal → digitised → compressed → radio signal (4G/5G) → base station → network → target phone → radio to electrical to sound. Smartphones add: camera, GPS, WiFi, Bluetooth, accelerometer, gyroscope, fingerprint sensor.", diff: "Easy", pyq: false },
+      { id: 257, topic: "Laser & Electronics", q: "What is the principle of MRI (Magnetic Resonance Imaging)?", a: "Nuclear Magnetic Resonance (NMR) of hydrogen protons in the body — maps water content", exp: "MRI: strong magnetic field (1.5–3 T) aligns hydrogen protons. Radiofrequency pulse → protons absorb energy (resonance) → relax → emit RF signals → computer creates image. Shows soft tissue (brain, muscles, ligaments) much better than X-rays. No ionising radiation.", tip: "MRI = NMR applied to medicine. No radiation. Best for soft tissue.", diff: "Hard", pyq: true, pyqYear: "2020" },
+      { id: 258, topic: "Laser & Electronics", q: "What is the principle of X-ray imaging?", a: "X-rays penetrate soft tissue but are absorbed by dense material (bones, metal) — differential absorption creates shadow image", exp: "X-rays (0.01–10 nm wavelength) generated by bombarding metal target with high-energy electrons. Soft tissue: mostly transmitted (appears dark on film). Bone/metal: absorbed (appears white/light). Digital X-ray (computed radiography/DR) replaces film with electronic detectors. CT scan: X-rays + computer = 3D images.", diff: "Easy", pyq: false },
+      { id: 259, topic: "Laser & Electronics", q: "What is a logic gate? Which basic logic gates exist?", a: "Electronic circuit performing logical operations. Basic gates: AND, OR, NOT (universal: NAND, NOR)", exp: "Logic gates process binary (0/1) signals. AND: output 1 only if ALL inputs 1. OR: output 1 if ANY input 1. NOT: inverts input. NAND and NOR are universal — any circuit can be built from only NAND (or only NOR) gates. Foundation of all digital computing.", diff: "Medium", pyq: false },
+      { id: 260, topic: "Laser & Electronics", q: "In which field is the CO₂ laser used industrially?", a: "Cutting, welding, engraving metals, non-metals; also surgery (dermatology, gynaecology)", exp: "CO₂ laser (10.6 μm infrared): very powerful (up to kW range). Industrial: cutting steel, acrylic, wood; welding. Medical: surgery (bloodless cutting — laser cauterises), dermatology (skin resurfacing, scar removal). Most commonly used industrial and medical laser.", diff: "Medium", pyq: false },
+      { id: 261, topic: "Laser & Electronics", q: "What is GPS? Which principle does it use?", a: "Global Positioning System — uses trilateration of signals from ≥4 satellites to determine precise location", exp: "GPS: 24+ satellites in 6 orbits (MEO, ~20,200 km). Each satellite transmits precise time signal. GPS receiver measures time difference from 4+ satellites → calculates distances → trilateration → position (lat, long, altitude) accurate to meters. Galileo (EU), GLONASS (Russia), NavIC (India) are alternative systems.", tip: "NavIC = India's own GPS (IRNSS). Uses 7 satellites. Launched 2018.", diff: "Medium", pyq: true, pyqYear: "2021" },
+      { id: 262, topic: "Laser & Electronics", q: "What is holography?", a: "Recording and reconstruction of 3D images using laser light (interference pattern on photographic film)", exp: "Hologram: laser splits into reference beam + object beam → object beam reflects off object → both beams interfere on film → interference pattern stored. When reconstructed with same laser → 3D image appears. Uses: security holograms on credit cards, passports, art, data storage.", diff: "Medium", pyq: false },
+      { id: 263, topic: "Laser & Electronics", q: "What is an LED vs. OLED display?", a: "LED display: LED backlight behind LCD pixels. OLED: each pixel is an organic LED (self-emitting), no backlight needed.", exp: "LED display (LCD with LED backlight): LED illuminates LCD pixels from behind. OLED: each pixel emits its own light. OLED advantages: true black (pixel off = no light), thinner, flexible possible, better colours, faster response. Disadvantages: burn-in, shorter lifespan of blue pixels.", diff: "Medium", pyq: false },
+      { id: 264, topic: "Laser & Electronics", q: "What is a microprocessor?", a: "An integrated circuit containing the CPU of a computer — performs arithmetic and logic operations", exp: "Microprocessor: Central Processing Unit on a chip. First: Intel 4004 (1971, 2300 transistors). Modern: Intel i9, Apple M3 (billions of transistors, multiple cores). Performs billions of operations/second. Embedded in: phones, cars, appliances, medical devices.", diff: "Easy", pyq: false },
+      { id: 265, topic: "Laser & Electronics", q: "What is the working principle of a laser printer?", a: "Electrophotography — laser charges photosensitive drum, toner attracted to charged areas, fused to paper by heat", exp: "Laser printer: 1) laser discharges specific areas of rotating drum (creates invisible image). 2) Toner (fine charged powder) adheres to discharged areas. 3) Paper pressed against drum → toner transfers. 4) Fuser (heat + pressure) melts toner into paper. 300–1200+ dpi resolution.", diff: "Hard", pyq: false },
+      { id: 266, topic: "Laser & Electronics", q: "What is the use of ultrasound in industry?", a: "NDT (Non-Destructive Testing), cleaning, welding, machining of hard materials", exp: "Industrial ultrasound (>20 kHz): NDT (detect internal cracks without cutting open). Ultrasonic cleaners (cavitation bubbles clean delicate parts). Ultrasonic welding (thermoplastics joined without adhesive). Ultrasonic cutting (food industry, knife doesn't stick). Sonar in submarines.", diff: "Medium", pyq: false },
+      { id: 267, topic: "Laser & Electronics", q: "What is an LCD (Liquid Crystal Display)?", a: "A display using liquid crystals that twist light polarisation — controlled by electric field to show pixels", exp: "LCD: two polarising filters, liquid crystal layer, backlight. Electric field applied to LC pixels → liquid crystals rotate → light passes (white/bright) or blocked (dark). Thin, flat, energy-efficient. Used: TVs, monitors, phones. LCD evolved from TN → IPS → VA (better viewing angles, colours).", diff: "Medium", pyq: false },
+      { id: 268, topic: "Laser & Electronics", q: "What is the difference between analog and digital signals?", a: "Analog: continuous variation (sine wave). Digital: discrete binary values (0 or 1, square wave).", exp: "Analog: varies continuously (old vinyl records, thermometers). Digital: discrete values, represented in binary. Digital advantages: noise resistant (0 and 1 easy to distinguish), can be stored, copied, encrypted, compressed without quality loss. Why digital replaced analog: CD (1982) vs vinyl; digital TV; digital photos.", diff: "Easy", pyq: true, pyqYear: "2019" },
+      { id: 269, topic: "Laser & Electronics", q: "What is quantum tunnelling?", a: "The quantum mechanical phenomenon where a particle passes through a potential energy barrier it classically cannot overcome", exp: "Quantum tunnelling: wave nature of particles allows them to 'tunnel' through barriers with finite probability. Applications: tunnel diodes (fast electronics), scanning tunnelling microscope (atomic-scale imaging), nuclear fusion in stars (protons tunnel through coulomb barrier), flash memory in computers.", diff: "Hard", pyq: false },
+      { id: 270, topic: "Laser & Electronics", q: "What is a photodiode and its application?", a: "A p-n junction diode that generates current when light falls on it (reverse of LED) — used in light detectors, solar cells, fibre optic receivers", exp: "Photodiode: reverse biased p-n junction. Photons generate electron-hole pairs → current flows proportional to light intensity. Applications: light meters, TV remote receivers (IR photodiode), optical fibre receivers, medical imaging (X-ray detectors), camera light sensors.", diff: "Medium", pyq: false },
+
+      // ==================== 10. COMMUNICATIONS & MODERN PHYSICS (Q271–Q300) ====================
+      { id: 271, topic: "Communications & Modern Physics", q: "What are the three main components of a communication system?", a: "Transmitter, Channel (medium), and Receiver", exp: "Communication system: 1) Transmitter converts information to signal suitable for transmission. 2) Channel: medium through which signal propagates (cable, fibre, air). 3) Receiver: detects and reconstructs original information. Noise enters mainly at the channel stage. Signal-to-noise ratio (SNR) determines quality.", diff: "Easy", pyq: true, pyqYear: "2017" },
+      { id: 272, topic: "Communications & Modern Physics", q: "What is bandwidth in communication?", a: "The range of frequencies a channel can transmit, or the data transmission rate of a channel", exp: "Bandwidth: range of frequencies (Hz) or data rate (bits/second). Wider bandwidth = more information per second. Audio bandwidth: 20 Hz–20 kHz. Radio bandwidth: MHz. Optical fibre bandwidth: THz. Internet bandwidth in Mbps/Gbps. Shannon's theorem: max data rate = B log₂(1+SNR).", diff: "Medium", pyq: false },
+      { id: 273, topic: "Communications & Modern Physics", q: "What is modulation in communication? Why is it needed?", a: "Modulation: encoding information onto a high-frequency carrier wave. Needed for efficient transmission.", exp: "Low-frequency audio signals (20Hz–20kHz) cannot be transmitted efficiently as radio waves (require impractically large antennas). Modulation: audio signal modifies carrier wave (AM: amplitude modification, FM: frequency modification). Demodulation at receiver recovers original signal.", diff: "Medium", pyq: true, pyqYear: "2019" },
+      { id: 274, topic: "Communications & Modern Physics", q: "What are the advantages of satellite communication?", a: "Wide coverage area, long-distance communication, broadcast capability, no physical infrastructure between points", exp: "Satellites (geostationary at 36,000 km) cover 1/3 of Earth's surface. Three satellites cover entire Earth. Uses: TV broadcasting (DTH), internet (Starlink), weather forecasting, military, GPS. Limitations: signal delay (250ms round trip for GEO), high launch cost.", diff: "Easy", pyq: false },
+      { id: 275, topic: "Communications & Modern Physics", q: "What frequency bands are used for mobile communication?", a: "700 MHz to 2600 MHz (4G LTE); 5G uses higher sub-6 GHz and millimetre wave (28–39 GHz)", exp: "2G: 900/1800 MHz. 3G: 2100 MHz. 4G LTE: 700–2600 MHz. 5G sub-6 GHz: 600 MHz–6 GHz (wide coverage). 5G mmWave: 24–100 GHz (very high speed, short range). India uses 700, 900, 1800, 2100, 2300, 2500 MHz bands for LTE.", diff: "Hard", pyq: false },
+      { id: 276, topic: "Communications & Modern Physics", q: "What is the de Broglie wavelength?", a: "λ = h/mv — all moving particles have an associated wave. Larger mass/velocity = shorter wavelength.", exp: "Louis de Broglie (1924): matter has wave properties (wave-particle duality). λ = h/(mv) where h = Planck's constant. Electrons: de Broglie wavelength ≈ 0.1 nm (comparable to atomic spacing) → explains atomic structure. Electron microscope uses electron waves for atomic-scale imaging.", diff: "Hard", pyq: false },
+      { id: 277, topic: "Communications & Modern Physics", q: "What is Heisenberg's Uncertainty Principle?", a: "It is impossible to simultaneously know both position and momentum of a particle with perfect precision", exp: "ΔxΔp ≥ h/(4π). More precisely we know position → less precisely we know momentum (and vice versa). Not a measurement limitation but a fundamental property of nature. Explains why electrons don't collapse into nucleus. Implies quantum tunnelling. Named after Werner Heisenberg (1927).", diff: "Hard", pyq: true, pyqYear: "2021" },
+      { id: 278, topic: "Communications & Modern Physics", q: "What is the Internet of Things (IoT)?", a: "Network of physical devices (appliances, vehicles, sensors) connected to the internet and communicating with each other", exp: "IoT: smart home (Alexa, smart thermostat), industrial IoT (factory sensors), healthcare (wearable health monitors), smart cities (traffic sensors), agriculture (soil moisture sensors). By 2030: estimated 30+ billion IoT devices. Security and privacy are major challenges.", diff: "Easy", pyq: false },
+      { id: 279, topic: "Communications & Modern Physics", q: "What is 5G technology?", a: "5th generation mobile network — ultra-fast (up to 10 Gbps), very low latency (1ms), massive device connectivity", exp: "5G features: speed up to 10 Gbps (100× faster than 4G), latency <1ms (crucial for autonomous vehicles, remote surgery), capacity for millions of devices per km². Uses MIMO, beamforming, mmWave frequencies. India's 5G launched October 2022 (Airtel, Jio). Applications: autonomous vehicles, smart cities, Industry 4.0.", diff: "Medium", pyq: true, pyqYear: "2022" },
+      { id: 280, topic: "Communications & Modern Physics", q: "What is quantum computing?", a: "Computers using quantum bits (qubits) that can be 0, 1, or both simultaneously (superposition) — solving certain problems exponentially faster", exp: "Classical bit: 0 or 1. Qubit: superposition of 0 and 1 simultaneously. Entanglement: qubits can be correlated regardless of distance. Applications: cryptography (breaking RSA), drug discovery, optimization problems. Google's Sycamore (2019): 53 qubits → solved problem in 200 seconds (classical would take 10,000 years).", diff: "Hard", pyq: false },
+      { id: 281, topic: "Communications & Modern Physics", q: "What is Planck's quantum theory?", a: "Energy is emitted or absorbed in discrete packets called quanta (photons). E = hf where h = Planck's constant", exp: "Max Planck (1900): solved blackbody radiation by proposing energy is quantised. E = hf (h = 6.626×10⁻³⁴ J·s). This launched quantum mechanics. Einstein extended it to explain photoelectric effect. Photon = quantum of light. Nobel Prize 1918 to Planck.", diff: "Hard", pyq: true, pyqYear: "2018" },
+      { id: 282, topic: "Communications & Modern Physics", q: "What is the principle of a mobile phone network (cellular communication)?", a: "Geographic area divided into 'cells' each served by a base station. Adjacent cells use different frequencies to avoid interference.", exp: "Cellular concept: city divided into hexagonal cells (typically 1–30 km). Each cell has a base transceiver station (BTS). Adjacent cells use different frequency sets. Same frequencies reused far away (frequency reuse). As user moves between cells, call is 'handed off' seamlessly. More small cells = more capacity.", diff: "Medium", pyq: false },
+      { id: 283, topic: "Communications & Modern Physics", q: "What is Bluetooth technology?", a: "Short-range (≈10m) wireless communication using 2.4 GHz radio waves, connecting devices without wires", exp: "Bluetooth: IEEE 802.15.1 standard. Uses 2.4 GHz ISM band, frequency hopping spread spectrum (1600 hops/second — reduces interference). Range: 10 m (class 2). Bluetooth 5.0+: 400 m range, 2 Mbps speed. Applications: wireless headphones, keyboards, medical devices, IoT.", diff: "Easy", pyq: false },
+      { id: 284, topic: "Communications & Modern Physics", q: "What is Wi-Fi? What frequencies does it use?", a: "Wireless local area network technology (IEEE 802.11) using 2.4 GHz and 5 GHz bands", exp: "Wi-Fi (Wireless Fidelity): 802.11 standard family. 2.4 GHz: longer range, more interference (microwave ovens, Bluetooth). 5 GHz: shorter range, faster, less congested. Wi-Fi 6 (802.11ax): up to 9.6 Gbps. Wi-Fi 6E adds 6 GHz band. India: 2.4 GHz (13 channels) and 5 GHz allowed.", diff: "Easy", pyq: false },
+      { id: 285, topic: "Communications & Modern Physics", q: "What is a communication satellite? Name India's main communication satellites.", a: "Geostationary satellites for TV broadcast, telephone, internet. India: INSAT/GSAT series by ISRO.", exp: "INSAT (Indian National Satellite) and GSAT series: India's communication satellites. Geostationary at 36,000 km → appears stationary → easy antenna pointing. DTH (Direct-to-Home) TV, VSAT internet, disaster warning use these. ISRO launched many GSAT satellites from GSLV.", tip: "INSAT/GSAT = India's communication satellites. DTH TV uses these.", diff: "Medium", pyq: true, pyqYear: "2020" },
+      { id: 286, topic: "Communications & Modern Physics", q: "What is Schrödinger's Cat paradox?", a: "A thought experiment illustrating quantum superposition — a cat is simultaneously alive and dead until observed", exp: "Schrödinger (1935): cat in box with radioactive atom + poison. Atom = 50% chance of decaying (quantum superposition). Until measured, cat is 'superimposed' alive + dead. Observation collapses superposition → definite state. Illustrates the 'measurement problem' in quantum mechanics.", diff: "Hard", pyq: false },
+      { id: 287, topic: "Communications & Modern Physics", q: "What is special about the theory of special relativity?", a: "Time dilation, length contraction, mass-energy equivalence (E=mc²) — all at speeds near light (c)", exp: "Einstein's Special Relativity (1905): 1) Speed of light is constant for all observers. 2) Physics laws same in all inertial frames. Consequences: time slows at high speed (GPS satellites must correct for this), lengths contract, mass increases, E=mc². GPS would be wrong by 7 μs/day without relativity correction.", diff: "Hard", pyq: false },
+      { id: 288, topic: "Communications & Modern Physics", q: "What is electromagnetic spectrum? Which portion is visible to human eyes?", a: "All electromagnetic waves arranged by wavelength/frequency. Visible: 400–700 nm (violet to red).", exp: "EM spectrum: radio → microwave → infrared → visible (400–700 nm) → UV → X-ray → gamma. Visible is tiny portion (less than 1 octave of frequency). Plants use visible + near-UV and near-IR (photosynthesis mainly uses red ~680nm and blue ~430nm). Humans: 3 types of cone cells (RGB).", diff: "Easy", pyq: true, pyqYear: "2019" },
+      { id: 289, topic: "Communications & Modern Physics", q: "What is Artificial Intelligence (AI)? How does it relate to physics/computing?", a: "AI: machines simulating human intelligence. Enabled by fast computing (chips), large data, neural network algorithms.", exp: "AI: machine learning, deep learning neural networks. Physics connection: GPU (massively parallel) from graphics → repurposed for AI training. Quantum computing may revolutionize AI. Physics simulation (material science, drug discovery, climate modelling) = key AI application. India's National AI Mission (2024).", diff: "Medium", pyq: false },
+      { id: 290, topic: "Communications & Modern Physics", q: "What is the Hubble Space Telescope and what has it discovered?", a: "NASA's space-based telescope launched 1990, orbiting 570 km above Earth. Discovered: universe expansion accelerating, early galaxies, black holes.", exp: "Hubble (NASA/ESA, 1990): 2.4m mirror telescope in orbit (above atmospheric distortion). Key discoveries: universe is 13.8 billion years old, expansion is accelerating (dark energy), every large galaxy has a supermassive black hole, deep field images showing galaxies from just 600 million years after Big Bang.", diff: "Medium", pyq: false },
+      { id: 291, topic: "Communications & Modern Physics", q: "What is dark matter and dark energy?", a: "Dark matter: invisible matter (~27% of universe) detected only by gravity. Dark energy: unknown repulsive energy (~68%) causing accelerating expansion.", exp: "Dark matter: doesn't interact with light → invisible, but exerts gravitational pull (galaxy rotation curves). Dark energy: ~68% of universe. Causes accelerating expansion (discovered 1998, Nobel 2011 to Perlmutter, Schmidt, Riess). Only 5% of universe is ordinary matter.", diff: "Hard", pyq: false },
+      { id: 292, topic: "Communications & Modern Physics", q: "What is ISRO? What are its major achievements?", a: "Indian Space Research Organisation (1969). Major achievements: Chandrayaan (Moon), Mangalyaan (Mars), PSLV, Gaganyaan.", exp: "ISRO founded 1969, HQ Bengaluru. Missions: SLV (1980, first Indian satellite launch), PSLV (workhorse rocket), GSLV/GSLV-Mk3. Chandrayaan-1 (2008): discovered water on Moon. Chandrayaan-2 (2019). Chandrayaan-3 (2023): soft landing on Moon's south pole. MOM/Mangalyaan (2013): first Asian Mars mission.", tip: "Chandrayaan-3 (2023): India = 4th country to land on Moon, 1st on south pole.", diff: "Easy", pyq: true, pyqYear: "2022" },
+      { id: 293, topic: "Communications & Modern Physics", q: "What is nanotechnology?", a: "Science and engineering of structures at the nanometre scale (1–100 nm). 1 nm = 10⁻⁹ m.", exp: "Nanoscale: quantum effects dominate, properties different from bulk material. Gold nanoparticles appear red/purple (not gold). Applications: nanocomposites (stronger materials), drug delivery nanoparticles (targeted cancer therapy), nanoelectronics (sub-10nm transistors), nanosensors, nanocoatings (waterproof, UV-protective).", diff: "Medium", pyq: false },
+      { id: 294, topic: "Communications & Modern Physics", q: "What is the Standard Model of particle physics?", a: "The theory describing all known fundamental particles and their interactions (except gravity)", exp: "Standard Model: 12 fundamental fermions (6 quarks + 6 leptons), 4 force carriers (photon-EM, W/Z-weak, gluon-strong). Higgs boson (discovered 2012, CERN): gives particles their mass. Missing: gravity (graviton hypothetical), dark matter, dark energy. Nobel 2013 to Higgs and Englert.", diff: "Hard", pyq: false },
+      { id: 295, topic: "Communications & Modern Physics", q: "What is the Large Hadron Collider (LHC)?", a: "World's largest particle accelerator at CERN, Switzerland/France — collides protons at near-light speed to study subatomic particles", exp: "LHC: 27 km circumference ring. Protons accelerated to 0.999999991c. Collision energy: 13.6 TeV. Discovered: Higgs boson (2012). ATLAS and CMS are main detectors. 100 countries, 10,000+ scientists. Next: HL-LHC (High Luminosity) upgrades for even more collisions.", diff: "Hard", pyq: false },
+      { id: 296, topic: "Communications & Modern Physics", q: "What is the Doppler effect in light? How is it used in astronomy?", a: "Redshift (source receding) or blueshift (approaching). Used to measure galaxy recession speeds → Hubble's Law.", exp: "Light from receding source: wavelength stretches → redshift. Approaching source: wavelength compressed → blueshift. Hubble's Law: galaxy recession speed ∝ distance (v = H₀d, H₀ = 70 km/s/Mpc). Redshift measurements proved universe is expanding. Discovered by Hubble (1929).", tip: "Redshift = galaxy moving away = universe expanding. Blueshift = approaching (Andromeda galaxy is blueshifted).", diff: "Hard", pyq: false },
+      { id: 297, topic: "Communications & Modern Physics", q: "What is blockchain technology (in the context of modern physics/computing)?", a: "A distributed, decentralised digital ledger where transactions are recorded in cryptographically linked blocks", exp: "Blockchain: each block contains hash of previous block → chain. Tamper-evident: changing one block changes all subsequent hashes → detected. Decentralised: no single authority. Uses: cryptocurrency (Bitcoin, Ethereum), supply chain, medical records, voting. Hash function is based on mathematical (computational complexity) security.", diff: "Hard", pyq: false },
+      { id: 298, topic: "Communications & Modern Physics", q: "What is the principle of a nuclear magnetic resonance (NMR) spectroscope?", a: "Nuclei with odd mass numbers (like H-1) absorb RF radiation when in magnetic field — resonance reveals molecular structure", exp: "NMR: H-1 nuclei (protons) spin → tiny magnets. External magnetic field aligns spins. RF pulse at resonance frequency → protons flip. Signal emitted during relaxation. Different chemical environments → different resonance frequencies → molecular fingerprint. Basis of MRI in medicine.", diff: "Hard", pyq: false },
+      { id: 299, topic: "Communications & Modern Physics", q: "Which Indian scientist discovered the Raman Effect?", a: "Sir C.V. Raman — discovered 1928, Nobel Prize 1930", exp: "C.V. Raman (1928): when light scatters off molecules, some photons change wavelength (inelastic scattering). The wavelength change reveals molecular vibration modes → chemical identification. Raman spectroscopy: non-destructive analysis tool in chemistry, pharmaceuticals, gemology. Nobel Prize in Physics 1930. February 28 = National Science Day (India).", tip: "National Science Day = February 28. Raman Effect (1928) → Nobel 1930.", diff: "Easy", pyq: true, pyqYear: "2017" },
+      { id: 300, topic: "Communications & Modern Physics", q: "What is Schrödinger's equation?", a: "The fundamental equation of quantum mechanics describing how the quantum state (wave function) of a system evolves over time", exp: "Schrödinger equation (1926): iħ∂ψ/∂t = Hψ (H = Hamiltonian operator, ψ = wave function). |ψ|² gives probability density of finding particle. Solution for hydrogen atom → exactly predicts energy levels. Foundation of all quantum mechanics — explains atomic/molecular structure, lasers, transistors, superconductors.", diff: "Hard", pyq: false },
+
+    ];
+
+    // State
+    let bookmarks = JSON.parse(localStorage.getItem('tnpscPhysicsBookmarks') || '[]');
+    let revised = JSON.parse(localStorage.getItem('tnpscPhysicsRevised') || '[]');
+    let activeDiff = 'all';
+    let activeTopic = 'all';
+    let showPYQOnly = false;
+    //let showBookmarks = false;
+    function showBookmarks() {
+      const sec = document.getElementById('bookmarkSection');
+      sec.classList.toggle('show');
+      updateBookmarkList();
+      if (sec.classList.contains('show')) sec.scrollIntoView({ behavior: 'smooth' });
+    }
+    function saveBookmarks() { localStorage.setItem('tnpscPhysicsBookmarks', JSON.stringify(bookmarks)); }
+    function saveRevised() { localStorage.setItem('tnpscPhysicsRevised', JSON.stringify(revised)); }
+
+    function updateProgress() {
+      const total = questions.length;
+      const done = revised.length;
+      const pct = Math.round((done / total) * 100);
+      document.getElementById('progressText').textContent = `${done} of ${total} revised`;
+      document.getElementById('progressFill').style.width = pct + '%';
+      document.getElementById('bkCount').textContent = bookmarks.length;
+    }
+
+    function toggleBookmark(id, btn) {
+      const idx = bookmarks.indexOf(id);
+      if (idx > -1) { bookmarks.splice(idx, 1); btn.classList.remove('starred'); btn.textContent = '☆'; }
+      else { bookmarks.push(id); btn.classList.add('starred'); btn.textContent = '⭐'; }
+      saveBookmarks(); updateProgress();
+      document.getElementById('bkCount').textContent = bookmarks.length;
+      updateBookmarkList();
+    }
+
+    function toggleRevised(id, card) {
+      const idx = revised.indexOf(id);
+      if (idx > -1) { revised.splice(idx, 1); card.classList.remove('revised'); }
+      else { revised.push(id); card.classList.add('revised'); }
+      saveRevised(); updateProgress();
+    }
+
+    function renderQuestions(qs) {
+      const container = document.getElementById('questionsContainer');
+      const noResults = document.getElementById('noResults');
+      if (qs.length === 0) { container.innerHTML = ''; noResults.classList.remove('hidden'); return; }
+      noResults.classList.add('hidden');
+
+      // Group by topic
+      const topics = [...new Set(qs.map(q => q.topic))];
+      let html = '';
+      topics.forEach(topic => {
+        const tqs = qs.filter(q => q.topic === topic);
+        const topicNum = ["Mechanics & Motion", "Properties of Matter", "Force & Energy", "Electricity & Magnetism", "Light & Optics", "Sound & Waves", "Heat & Thermodynamics", "Nuclear Physics", "Laser & Electronics", "Communications & Modern Physics"].indexOf(topic) + 1;
+        html += `<div id="sec-${topic.replace(/[^a-z]/gi, '_')}" class="section-head">
+  <span class="s-num">${String(topicNum).padStart(2, '0')}</span>
+  ${topic}
+  <span class="section-count">${tqs.length} Q's</span>
+</div>`;
+        tqs.forEach(q => {
+          const isBK = bookmarks.includes(q.id);
+          const isRev = revised.includes(q.id);
+          html += `<div class="q-card${isBK ? ' bookmarked' : ''}${isRev ? ' revised' : ''}" id="qcard-${q.id}" data-topic="${q.topic}" data-diff="${q.diff}" data-pyq="${q.pyq}">
+  <div class="q-header">
+    <span class="q-num">Q${q.id}</span>
+    <div style="flex:1">
+      <div class="q-text">${q.q}</div>
+    </div>
+    <div class="q-badges">
+      ${q.pyq ? `<span class="badge badge-pyq">PYQ ${q.pyqYear}</span>` : ''}
+      <span class="badge badge-${q.diff.toLowerCase()}">${q.diff}</span>
+      <span class="badge badge-topic">${q.topic.substring(0, 12)}</span>
+    </div>
+    <button class="bookmark-btn${isBK ? ' starred' : ''}" onclick="toggleBookmark(${q.id},this)">${isBK ? '⭐' : '☆'}</button>
+  </div>
+  <button class="q-toggle-btn" id="btn-${q.id}" aria-expanded="true" onclick="toggleCard(${q.id})">
+    <span class="q-toggle-icon open">▾</span>
+    <span>Hide Answer &amp; Details</span>
+  </button>
+  <div class="q-body open" id="body-${q.id}">
+    <div class="answer-box">
+      <div class="answer-label">✅ Answer</div>
+      <div class="answer-text">${q.a}</div>
+    </div>
+    <div class="exp-box">
+      <div class="exp-label">📌 Explanation</div>
+      <div class="exp-text">${q.exp}</div>
+    </div>
+    ${q.tip ? `<div class="tip-box"><div><div class="tip-label">💡 Exam Tip</div>${q.tip}</div></div>` : ''}
+    <div class="revised-label">
+      <input type="checkbox" id="rev-${q.id}" ${isRev ? 'checked' : ''} onchange="toggleRevised(${q.id},document.getElementById('qcard-${q.id}'))">
+      <span>Mark as Revised</span>
+    </div>
+  </div>
+</div>`;
+        });
+      });
+      container.innerHTML = html;
+    }
+
+    function toggleCard(id) {
+      const body = document.getElementById('body-' + id);
+      const btn  = document.getElementById('btn-'  + id);
+      const icon = btn.querySelector('.q-toggle-icon');
+      const isOpen = body.classList.contains('open');
+      body.classList.toggle('open', !isOpen);
+      icon.classList.toggle('open', !isOpen);
+      btn.setAttribute('aria-expanded', String(!isOpen));
+      btn.querySelector('span:last-child').textContent = isOpen ? 'Show Answer & Details' : 'Hide Answer & Details';
+    }
+
+    function applyFilters() {
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      let qs = questions.filter(q => {
+        const matchSearch = !search || (q.q.toLowerCase().includes(search) || q.a.toLowerCase().includes(search) || q.exp.toLowerCase().includes(search) || (q.tip && q.tip.toLowerCase().includes(search)));
+        const matchDiff = activeDiff === 'all' || q.diff === activeDiff;
+        const matchTopic = activeTopic === 'all' || q.topic === activeTopic;
+        const matchPYQ = !showPYQOnly || q.pyq;
+        return matchSearch && matchDiff && matchTopic && matchPYQ;
+      });
+      renderQuestions(qs);
+    }
+
+    function filterTopic(topic, tab) {
+      activeTopic = topic;
+      document.querySelectorAll('.topic-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      showBookmarks = false;
+      document.getElementById('bookmarkSection').classList.remove('show');
+      applyFilters();
+      if (topic !== 'all') {
+        const key = topic.replace(/[^a-z]/gi, '_');
+        const el = document.getElementById('sec-' + key);
+        if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+      }
+    }
+
+    function setDiff(d) {
+      activeDiff = d;
+      ['diffAll', 'diffEasy', 'diffMed', 'diffHard'].forEach(id => document.getElementById(id).classList.remove('active'));
+      const map = { 'all': 'diffAll', 'Easy': 'diffEasy', 'Medium': 'diffMed', 'Hard': 'diffHard' };
+      document.getElementById(map[d]).classList.add('active');
+      applyFilters();
+    }
+
+    function togglePYQ() {
+      showPYQOnly = !showPYQOnly;
+      document.getElementById('pyqBtn').classList.toggle('pyq-active', showPYQOnly);
+      applyFilters();
+    }
+
+    function expandAll() {
+      document.querySelectorAll('.q-body').forEach(b => b.classList.add('open'));
+      document.querySelectorAll('.q-toggle-btn').forEach(btn => {
+        btn.setAttribute('aria-expanded', 'true');
+        btn.querySelector('.q-toggle-icon').classList.add('open');
+        btn.querySelector('span:last-child').textContent = 'Hide Answer & Details';
+      });
+    }
+    function collapseAll() {
+      document.querySelectorAll('.q-body').forEach(b => b.classList.remove('open'));
+      document.querySelectorAll('.q-toggle-btn').forEach(btn => {
+        btn.setAttribute('aria-expanded', 'false');
+        btn.querySelector('.q-toggle-icon').classList.remove('open');
+        btn.querySelector('span:last-child').textContent = 'Show Answer & Details';
+      });
+    }
+
+    function updateBookmarkList() {
+      const list = document.getElementById('bkList');
+      if (bookmarks.length === 0) { list.innerHTML = '<li class="bk-empty">No bookmarks yet. Click ☆ on any question to bookmark it.</li>'; return; }
+      list.innerHTML = bookmarks.map(id => {
+        const q = questions.find(x => x.id === id);
+        return q ? `<li onclick="scrollToQ(${id})">Q${id}: ${q.q.substring(0, 70)}${q.q.length > 70 ? '...' : ''}</li>` : '';
+      }).join('');
+    }
+
+    function scrollToQ(id) {
+      const el = document.getElementById('qcard-' + id);
+      if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); const body = document.getElementById('body-' + id); if (body) body.classList.add('open'); }
+    }
+
+
+
+    // Init
+    renderQuestions(questions);
+    updateProgress();
+
+    // Back to top
+    const backTop = document.getElementById('backTop');
+    window.addEventListener('scroll', () => {
+      backTop.classList.toggle('visible', window.scrollY > 400);
+    });
+  </script>
+
+<script>
+(function(){
+  document.querySelectorAll('.q-header').forEach(function(h){
+    h.setAttribute('role','button');
+    h.setAttribute('tabindex','0');
+    h.setAttribute('aria-expanded','false');
+    h.addEventListener('keydown',function(e){
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();h.click();}
+    });
+  });
+  document.addEventListener('click',function(e){
+    var h=e.target.closest('.q-header');
+    if(!h)return;
+    var card=h.closest('.q-card');
+    if(card) h.setAttribute('aria-expanded', card.classList.contains('open')?'true':'false');
+  });
+})();
+</script></body>
+
+</html>

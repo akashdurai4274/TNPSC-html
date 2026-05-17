@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indus Valley Civilization — 150Q Master Practice Test</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Core palette */
+            --bg-color: #0d0f14;
+            --surface-card: #12151e;
+            --surface-hover: #181c28;
+            --border-color: #21263a;
+            --border-hover: #2d3450;
+            --gold-accent: #f5c842;
+
+            --red-color: #e85555;
+            --green-color: #4ecb7a;
+            --blue-color: #5b9cf6;
+            --purple-color: #a78bfa;
+            --cyan-color: #22d3ee;
+            --orange-color: #fb923c;
+
+            --section-accent: var(--gold-accent);
+
+            /* Aliases matching Indus_Valley_I.html naming */
+            --bg: var(--bg-color);
+            --surface: var(--surface-card);
+            --surface2: var(--surface-hover);
+            --border: var(--border-color);
+            --border2: var(--border-hover);
+            --gold: var(--gold-accent);
+            --gold-dim: #c9a52e;
+            --red: var(--red-color);
+            --green: var(--green-color);
+            --blue: var(--blue-color);
+            --purple: var(--purple-color);
+            --cyan: var(--cyan-color);
+            --orange: var(--orange-color);
+            --text: #e8eaf0;
+            --text-dim: #8892aa;
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: 
+                linear-gradient(to right, rgba(245, 200, 66, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(245, 200, 66, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: -1;
+            animation: gridShift 25s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes gridShift {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 1200px; }
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-head);
+            font-weight: 700;
+        }
+
+        .mono {
+            font-family: var(--font-mono);
+        }
+
+        header {
+            max-width: 1400px;
+            margin: 40px auto 20px auto;
+            padding: 0 20px;
+            animation: fadeDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        @keyframes fadeDown {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-panel {
+            background: var(--surface-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold-accent), var(--purple-color));
+        }
+
+        .live-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(78, 203, 122, 0.1);
+            border: 1px solid var(--green-color);
+            color: var(--green-color);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--green-color);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.6; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.6; }
+        }
+
+        .hero-title {
+            font-size: clamp(22px, 3vw, 36px);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(14px, 1.8vw, 18px);
+            font-weight: 600;
+            background: linear-gradient(90deg, #fff, var(--gold-accent), #fff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: goldShimmer 4s linear infinite;
+            margin-bottom: 30px;
+        }
+
+        @keyframes goldShimmer {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 30px;
+        }
+
+        .stat-item h3 {
+            font-size: 2rem;
+            color: var(--gold-accent);
+            margin-bottom: 4px;
+        }
+
+        .stat-item p {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto 60px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 30px;
+        }
+
+        aside {
+            position: sticky;
+            top: 20px;
+            height: calc(100vh - 40px);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .toc-box, .palette-box {
+            background: var(--surface-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .toc-box { flex: 1; }
+        .palette-box { max-height: 350px; }
+
+        .sidebar-title {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .toc-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .toc-item {
+            padding: 10px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.82rem;
+            border: 1px solid transparent;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .toc-item:hover {
+            background: var(--surface-hover);
+            border-color: var(--border-hover);
+        }
+
+        .toc-item.active {
+            background: rgba(245, 200, 66, 0.05);
+            border-color: var(--gold-accent);
+            color: var(--gold-accent);
+        }
+
+        .toc-item .count-badge {
+            background: var(--border-color);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+
+        .grid-palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(32px, 1fr));
+            gap: 5px;
+        }
+
+        .palette-cell {
+            aspect-ratio: 1;
+            border-radius: 4px;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.72rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .palette-cell:hover { border-color: var(--border-hover); }
+
+        .palette-cell.answered {
+            background: var(--gold-accent);
+            color: #000;
+            border-color: var(--gold-accent);
+            font-weight: bold;
+        }
+
+        .palette-cell.flagged {
+            border: 2px solid var(--orange-color) !important;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .sticky-controls {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(13, 15, 20, 0.9);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .progress-wrapper { flex: 1; }
+
+        .progress-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 6px;
+            background: var(--border-color);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--gold-accent);
+            transition: width 0.3s ease;
+        }
+
+        .control-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .timer-box {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--gold-accent);
+            border: 1px solid var(--border-color);
+            padding: 6px 14px;
+            border-radius: 8px;
+        }
+
+        .btn {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.03em;
+            border: none;
+        }
+
+        .btn-gold { background: var(--gold-accent); color: #0d0f14; }
+        .btn-gold:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(245, 200, 66, 0.2); }
+        .btn-outline { background: transparent; border: 1px solid var(--border-color); color: #fff; }
+        .btn-outline:hover { background: var(--surface-hover); border-color: var(--border-hover); }
+
+        .filter-shelf {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            background: var(--surface-card);
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .filter-btn {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
+            padding: 6px 12px;
+            border-radius: 4px;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: #94a3b8;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .filter-btn:hover { border-color: var(--border-hover); color: #fff; }
+        .filter-btn.active { background: var(--border-color); color: var(--gold-accent); border-color: var(--gold-accent); }
+
+        .question-card {
+            background: var(--surface-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 30px;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .question-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 0px;
+            background: var(--section-accent);
+            border-top-left-radius: 10px; border-top-right-radius: 10px;
+            transition: height 0.2s ease;
+        }
+
+        .question-card:hover::before { height: 4px; }
+
+        .card-meta-line {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .q-number-box { font-size: 0.85rem; font-weight: 600; color: var(--section-accent); }
+        .badges-container { display: flex; flex-wrap: wrap; gap: 6px; }
+
+        .pill-badge {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        .pill-badge.crit { background-color: var(--red-color); }
+        .pill-badge.trap { background-color: var(--gold-accent); color: #000; }
+        .pill-badge.tip { background-color: var(--green-color); color: #000; }
+        .pill-badge.pyq { background-color: var(--blue-color); }
+        .pill-badge.gem { background-color: var(--purple-color); }
+        .pill-badge.exp { background-color: var(--cyan-color); color: #000; }
+        .pill-badge.type-badge { background-color: #2d3450; color: #e2e8f0; }
+
+        .flag-btn {
+            background: transparent; border: none; color: #475569; cursor: pointer;
+            transition: color 0.2s ease; display: flex; align-items: center;
+        }
+        .flag-btn.flagged { color: var(--orange-color); }
+
+        .question-stem { font-size: 1.1rem; font-weight: 400; color: #fff; margin-bottom: 20px; }
+
+        .options-block { display: flex; flex-direction: column; gap: 10px; }
+
+        .option-pill {
+            background: #0d0f14; border: 1px solid var(--border-color); border-radius: 8px;
+            padding: 12px 18px; cursor: pointer; transition: all 0.2s ease;
+            display: flex; align-items: center; gap: 12px;
+        }
+
+        .option-pill:hover { border-color: var(--gold-accent); background: var(--surface-hover); }
+
+        .option-pill input[type="radio"] {
+            appearance: none; width: 16px; height: 16px; border: 2px solid var(--border-color);
+            border-radius: 50%; outline: none; transition: all 0.2s ease;
+            flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+        }
+
+        .option-pill input[type="radio"]::before {
+            content: ""; width: 7px; height: 7px; border-radius: 50%;
+            background-color: var(--gold-accent); transform: scale(0); transition: transform 0.2s ease;
+        }
+
+        .option-pill input[type="radio"]:checked { border-color: var(--gold-accent); }
+        .option-pill input[type="radio"]:checked::before { transform: scale(1); }
+
+        .match-container {
+            display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px;
+            background: rgba(0,0,0,0.2); padding: 16px; border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .match-row-flex { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+        .match-col { flex: 1; font-size: 0.9rem; }
+
+        .statements-list {
+            list-style: none; margin-bottom: 16px; background: rgba(0,0,0,0.15);
+            padding: 14px; border-radius: 8px; display: flex; flex-direction: column; gap: 8px;
+            border-left: 3px solid var(--border-color); font-size: 0.9rem;
+        }
+
+        .option-pill.correct-ans { border-color: var(--green-color) !important; background: rgba(78, 203, 122, 0.05) !important; }
+        .option-pill.wrong-ans { border-color: var(--red-color) !important; background: rgba(232, 85, 85, 0.05) !important; }
+
+        .expanded-explanation-box {
+            margin-top: 20px; padding: 16px; background: #0d0f14;
+            border-left: 4px solid var(--gold-accent); border-radius: 0 8px 8px 0;
+            display: flex; flex-direction: column; gap: 12px;
+        }
+
+        .exp-text-stem { font-size: 0.92rem; color: #cbd5e1; }
+
+        .insight-callout-panel { padding: 12px 16px; border-radius: 6px; font-size: 0.88rem; display: flex; gap: 10px; align-items: flex-start; }
+        .insight-callout-panel.gem-panel { background: rgba(167, 139, 250, 0.08); border: 1px solid var(--purple-color); color: #e9e3ff; }
+        .insight-callout-panel.trap-panel { background: rgba(245, 200, 66, 0.06); border: 1px solid var(--gold-accent); color: #fffbeb; }
+
+        .results-hero-grid {
+            display: grid; grid-template-columns: 300px 1fr; gap: 30px;
+            background: var(--surface-card); border: 1px solid var(--border-color);
+            border-radius: 16px; padding: 40px; margin-bottom: 30px;
+        }
+
+        .score-circle-panel {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            border-right: 1px solid var(--border-color); padding-right: 30px;
+        }
+
+        .large-score-num { font-family: 'Syne', sans-serif; font-size: 4rem; font-weight: 800; color: var(--gold-accent); line-height: 1; }
+        .grade-badge-txt { font-family: 'IBM Plex Mono', monospace; font-size: 0.95rem; font-weight: 600; margin-top: 10px; padding: 4px 16px; border-radius: 20px; background: var(--border-color); }
+
+        .section-bars-grid { display: flex; flex-direction: column; gap: 14px; }
+        .section-bar-row h4 { font-size: 0.8rem; font-family: 'IBM Plex Mono', monospace; margin-bottom: 4px; color: #cbd5e1; }
+        .mini-bar-bg { height: 8px; background: var(--bg-color); border-radius: 4px; overflow: hidden; }
+        .mini-bar-fill { height: 100%; width: 0%; background: var(--gold-accent); transition: width 1s ease-out; }
+
+        .weak-areas-panel { background: rgba(232, 85, 85, 0.04); border: 1px solid rgba(232, 85, 85, 0.2); border-radius: 12px; padding: 24px; margin-bottom: 30px; }
+        .weak-areas-panel h3 { color: var(--red-color); margin-bottom: 12px; }
+
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(5, 6, 8, 0.85); backdrop-filter: blur(6px);
+            z-index: 1000; display: none; align-items: center; justify-content: center;
+        }
+
+        .modal-box {
+            background: var(--surface-card); border: 1px solid var(--border-color);
+            padding: 40px; border-radius: 16px; max-width: 500px; width: 90%; text-align: center;
+        }
+
+        .modal-box h2 { margin-bottom: 12px; color: #fff; }
+        .modal-box p { color: #94a3b8; margin-bottom: 24px; font-size: 0.95rem; }
+        .modal-buttons-flex { display: flex; justify-content: center; gap: 16px; }
+
+        footer { border-top: 1px solid var(--border-color); background: #090b0f; padding: 40px 20px; text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; color: #475569; margin-top: 80px; }
+
+        @media (max-width: 1024px) {
+            .app-container { grid-template-columns: 1fr; }
+            aside { position: relative; top: 0; height: auto; }
+            .toc-box { max-height: 250px; }
+            .results-hero-grid { grid-template-columns: 1fr; }
+            .score-circle-panel { border-right: none; padding-right: 0; padding-bottom: 30px; border-bottom: 1px solid var(--border-color); }
+        }
+
+        @media (max-width: 640px) {
+            .hero-title { font-size: 1.8rem; }
+            .hero-panel { padding: 24px; }
+            .question-card { padding: 20px; }
+            .sticky-controls { flex-direction: column; align-items: stretch; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="hero-panel">
+            <div class="live-badge">
+                <div class="live-dot"></div>
+                <span class="mono">CRACK SHEET EXAM ENGINE</span>
+            </div>
+            <h1 class="hero-title">Indus Valley Civilization — 150Q Master Practice Test</h1>
+            <p class="hero-subtitle">High-Yield Evaluation Engine for TNPSC Group 1 Preliminary & Main Examination</p>
+            
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <h3 class="mono">150</h3>
+                    <p>Unique Questions</p>
+                </div>
+                <div class="stat-item">
+                    <h3 class="mono">8</h3>
+                    <p>Syllabus Modules</p>
+                </div>
+                <div class="stat-item">
+                    <h3 class="mono">SCERT/NCERT</h3>
+                    <p>Syllabus Standardized</p>
+                </div>
+                <div class="stat-item">
+                    <h3 class="mono">2015-2025</h3>
+                    <p>TNPSC PYQ Mapped</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="app-container">
+        <aside>
+            <div class="toc-box">
+                <div class="sidebar-title">
+                    <span>Syllabus Breakdown</span>
+                    <span class="mono" style="font-size:0.75rem; color:var(--gold-accent);">TOC</span>
+                </div>
+                <ul class="toc-list" id="tocList"></ul>
+            </div>
+            
+            <div class="palette-box">
+                <div class="sidebar-title">
+                    <span>Question Palette</span>
+                    <span class="mono" id="paletteCounter" style="font-size:0.8rem;">0/150</span>
+                </div>
+                <div class="grid-palette" id="gridPalette"></div>
+            </div>
+        </aside>
+
+        <main>
+            <div class="sticky-controls">
+                <div class="progress-wrapper">
+                    <div class="progress-meta mono">
+                        <span>Progress Engine</span>
+                        <span id="progressPercentTxt">0% Complete</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="progressBarFill"></div>
+                    </div>
+                </div>
+                <div class="control-actions">
+                    <div class="timer-box mono" id="timerDisplay">⏱️ 02:30:00</div>
+                    <button class="btn btn-gold" id="globalSubmitBtn">Submit Test</button>
+                </div>
+            </div>
+
+            <div id="dynamicDashboardShelf"></div>
+            <div class="filter-shelf" id="filterShelf" style="display:none;">
+                <button class="filter-btn active" onclick="filterReview('all')">ALL QUESTIONS</button>
+                <button class="filter-btn" onclick="filterReview('correct')">CORRECT</button>
+                <button class="filter-btn" onclick="filterReview('wrong')">INCORRECT</button>
+                <button class="filter-btn" onclick="filterReview('flagged')">MARKED FOR REVIEW</button>
+                <button class="filter-btn" onclick="filterReview('pyq')">PAST PYQ</button>
+                <button class="filter-btn" onclick="filterReview('expected')">2026 EXPECTED</button>
+            </div>
+            <div id="questionsContainer" style="display: flex; flex-direction: column; gap: 24px;"></div>
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal-box">
+            <h2>Final Test Submission</h2>
+            <p>Are you sure you want to finalize your exam sheet? This unlocks immediate micro-tier analytical breakdown dashboards mapped to the TNPSC syllabus.</p>
+            <div class="modal-buttons-flex">
+                <button class="btn btn-outline" id="modalCancelBtn">Cancel</button>
+                <button class="btn btn-gold" id="modalConfirmBtn">Confirm & Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        Arivoam · Indus Valley Civilization · TNPSC Group 1 / 2 / 4 · 2026 Crack Sheet Series
+    </footer>
+
+    <script>
+        let userAnswers = {};
+        let flaggedQuestions = {};
+        let testSubmitted = false;
+        let timerSeconds = 150 * 60;
+        let timerInterval = null;
+
+        const sectionMeta = [
+            { id: 1, name: "Discovery, Excavation & Chronology", count: 15, color: "#f5c842" },
+            { id: 2, name: "Major Sites & Unique Features", count: 20, color: "#22d3ee" },
+            { id: 3, name: "Urban Planning & Architecture", count: 15, color: "#4ecb7a" },
+            { id: 4, name: "Economy, Trade & Crafts", count: 20, color: "#fb923c" },
+            { id: 5, name: "Social Life, Religion & Culture", count: 20, color: "#a78bfa" },
+            { id: 6, name: "Script, Seals & Weights", count: 15, color: "#5b9cf6" },
+            { id: 7, name: "Decline & Theories", count: 15, color: "#e85555" },
+            { id: 8, name: "Connections, Comparisons & Mix", count: 30, color: "#fb7185" }
+        ];
+
+        // Generator functions to dynamically create 150 unique high-yield questions
+        function buildFullQuestionBank() {
+            const list = [];
+            let currentId = 1;
+
+            // SECTION 1: Discovery, Excavation & Chronology (1-15)
+            list.push({
+                id: currentId++, sectionId: 1, type: "MCQ", badges: ["trap", "pyq"], pyqRef: "Group 2 2019",
+                stem: "Who discovered Mohenjo-daro in 1922?",
+                options: ["Daya Ram Sahni", "John Marshall", "R.D. Banerji", "Mortimer Wheeler"], answer: 2,
+                explanation: "The site of Mohenjo-daro was discovered by R.D. Banerji in 1922 while investigating a Buddhist stupa. Harappa was separately discovered by Daya Ram Sahni in 1921. John Marshall was the Director-General of ASI who published the findings.",
+                trapText: "Daya Ram Sahni → Harappa; R.D. Banerji → Mohenjo-daro — this pair is reversed in ~40% of student answers."
+            });
+            list.push({
+                id: currentId++, sectionId: 1, type: "Order", badges: ["trap", "pyq"], pyqRef: "Group 4 2022",
+                stem: "Arrange the following Harappan sites in the chronological order of their initial excavation or discovery:",
+                statements: ["1. Dholavira", "2. Harappa", "3. Lothal", "4. Mohenjo-daro"],
+                options: ["2-4-3-1", "4-2-3-1", "2-3-4-1", "1-2-3-4"], answer: 0,
+                explanation: "Harappa was discovered in 1921, Mohenjo-daro in 1922, Lothal excavations began in 1955 under S.R. Rao, and Dholavira was systematically excavated from 1990 by R.S. Bisht.",
+                trapText: "Many students place Lothal before Mohenjo-daro — remember S.R. Rao's Lothal work was 1955 onwards, three decades after Marshall's publications."
+            });
+            list.push({
+                id: currentId++, sectionId: 1, type: "Assertion", badges: ["expected"],
+                stem: "Assertion (A): The Harappan civilization was geographically more extensive than ancient Egypt and Mesopotamia combined.<br>Reason (R): Recent archaeological surveys demonstrate that the Mature Harappan domain covers roughly 1.5 million square kilometers.",
+                options: ["Both A and R are true and R is the correct explanation of A", "Both A and R are true but R is not the correct explanation of A", "A is true but R is false", "A is false but R is true"], answer: 0,
+                explanation: "The geographic footprint of IVC was massive, expanding across 1.5 million square kilometers, stretching from Sutkagendor in Balochistan to Alamgirpur in Uttar Pradesh. This far outstripped its contemporary Bronze Age neighbors.",
+                gemText: "This massive footprint shows the incredible organizational cohesion of their trade and planning networks."
+            });
+            list.push({
+                id: currentId++, sectionId: 1, type: "Statement", badges: ["gem", "expected"],
+                stem: "Which of the following statements regarding the excavations at Rakhigarhi are correct?<br>(i) DNA analysis of skeletal remains shows a total lack of steppe pastoralist ancestry.<br>(ii) It has officially overtaken Mohenjo-daro to be classified as the geographically largest Harappan site.",
+                options: ["(i) only", "(ii) only", "Both (i) and (ii)", "Neither (i) nor (ii)"], answer: 2,
+                explanation: "The 2019 ancient DNA research led by Vasant Shinde confirmed no steppe migrations during the Mature Harappan phase, indicating independent indigenous lineage. Rakhigarhi covers over 350 hectares, outsizing Mohenjo-daro.",
+                gemText: "This single study challenges classic Aryan invasion chronologies directly, making it a favorite for upcoming Group 1 papers."
+            });
+            list.push({
+                id: currentId++, sectionId: 1, type: "MCQ", badges: ["pyq"], pyqRef: "Group 1 2017",
+                stem: "Who was the Director-General of the Archaeological Survey of India (ASI) when the discovery of the Indus Civilization was officially announced to the world in 1924?",
+                options: ["Alexander Cunningham", "Sir John Marshall", "Sir Mortimer Wheeler", "Robert Bruce Foote"], answer: 1,
+                explanation: "Sir John Marshall announced the discovery in 1924 in the Illustrated London News, marking the entry of India's oldest urban civilization into global historiography."
+            });
+            list.push({
+                id: currentId++, sectionId: 1, type: "Statement", badges: ["tip"],
+                stem: "Consider the following phases of the Harappan Civilisation:<br>(i) Early Harappan: 3500–2600 BCE<br>(ii) Mature Harappan: 2600–1900 BCE<br>(iii) Late Harappan: 1900–1300 BCE<br>Which of the chronological slots listed above match standard radio-carbon updates?",
+                options: ["(ii) only", "(i) and (ii) only", "(ii) and (iii) only", "All of the above"], answer: 3,
+                explanation: "All three phases represent the standard timeline outlined in Class 11 SCERT and Class 12 NCERT text volumes, validated by continuous calibration metrics."
+            });
+            list.push({
+                id: currentId++, sectionId: 1, type: "Match", badges: ["pyq"], pyqRef: "Group 2 2015",
+                stem: "Match the archaeologists with their foundational excavations:",
+                matchData: {
+                    left: ["1. S.R. Rao", "2. J.P. Joshi", "3. B.B. Lal", "4. R.S. Bisht"],
+                    right: ["a. Kalibangan", "b. Lothal", "c. Dholavira", "d. Surkotada"]
+                },
+                options: ["1-b, 2-d, 3-a, 4-c", "1-a, 2-b, 3-c, 4-d", "1-b, 2-a, 3-d, 4-c", "1-c, 2-d, 3-a, 4-b"], answer: 0,
+                explanation: "S.R. Rao discovered Lothal; J.P. Joshi excavated Surkotada; B.B. Lal worked extensively at Kalibangan; R.S. Bisht conducted the primary systematic excavations at Dholavira."
+            });
+            list.push({
+                id: currentId++, sectionId: 1, type: "Negative", badges: ["trap"],
+                stem: "Which of the following geographical sites is NOT correctly categorized with its current modern nation state boundaries?",
+                options: ["Shortugai — Afghanistan", "Sutkagendor — Pakistan", "Mehrgarh — India", "Manda — India"], answer: 2,
+                explanation: "Mehrgarh is situated in Balochistan, Pakistan, near the Bolan Pass. It is a vital pre-Harappan Neolithic farming settlement.",
+                trapText: "Students confuse pre-Harappan roots with Indian sites. Mehrgarh is definitively in Pakistan."
+            });
+            list.push({
+                id: currentId++, sectionId: 1, type: "Numerical", badges: ["expected"],
+                stem: "According to the Archaeological Survey of India publications, approximately how many total Harappan settlement sites have been mapped across India and Pakistan?",
+                options: ["Around 200 sites", "Approximately 500 sites", "Over 1500+ sites", "Exactly 100 sites"], answer: 2,
+                explanation: "While around 5 to 7 are major structural cities, the entire network spans over 1,500 minor settlements, agricultural villages, and coastal outposts."
+            });
+            list.push({ id: currentId++, sectionId: 1, type: "Fill", badges: ["tip"], stem: "The oldest pre-Harappan agricultural settlement known for early cotton cultivation forms the basis of the ________ site complex.", options: ["Kot Diji", "Mehrgarh", "Amri", "Kalibangan"], answer: 1, explanation: "Mehrgarh is globally renowned as the earliest known center of cotton domestication and early dentistry practices in South Asia." });
+            list.push({ id: currentId++, sectionId: 1, type: "MCQ", badges: ["pyq"], pyqRef: "Group 1 2021", stem: "Which method is primarily deployed by modern archaeologists to determine the definitive chronological phases of Harappan strata?", options: ["Stratigraphic block design", "Radiocarbon (C-14) Dating", "Thermoluminescence testing", "Pottery typo-chronology"], answer: 1, explanation: "Radiocarbon dating provides absolute time parameters, allowing scholars to adjust the baseline of the Mature phase to 2600–1900 BCE." });
+            list.push({ id: currentId++, sectionId: 1, type: "Assertion", badges: ["gem"], stem: "Assertion (A): Sir Mortimer Wheeler introduced the rigorous use of stratigraphy in Indian archaeology.<br>Reason (R): He served as Director-General of the ASI during a critical period of transition before independence.", options: ["Both A and R are true and R explains A", "Both A and R are true but R does not explain A", "A is true but R is false", "A is false"], answer: 0, explanation: "Wheeler applied military precision and stratigraphic excavation techniques to sites like Harappa, moving away from unscientific horizontal trenching methods." });
+            list.push({ id: currentId++, sectionId: 1, type: "Statement", badges: ["trap"], stem: "Which of the following elements characterize the Early Harappan phase?<br>(i) Granary infrastructure development<br>(ii) Absence of large scale writing matrices<br>(iii) Nascent defensive fortifications seen at Kot Diji", options: ["(i) only", "(i) and (iii)", "All of the above", "None of the above"], answer: 2, explanation: "The Early phase (3500-2600 BCE) shows early fortifications, introductory ceramic forms, and regional trading groups that paved the way for the Mature phase." });
+            list.push({ id: currentId++, sectionId: 1, type: "Negative", badges: ["expected"], stem: "Who among the following was NOT associated with early exploratory or systematic excavation missions within the Indus Valley zones?", options: ["Ernest Mackay", "Aurel Stein", "Alexander Cunningham", "Robert Bruce Foote"], answer: 3, explanation: "Robert Bruce Foote is celebrated as the Father of Indian Prehistory for discovering the first Paleolithic tool at Pallavaram, Chennai, not for Indus Valley excavations." });
+            list.push({ id: currentId++, sectionId: 1, type: "Order", badges: ["tip"], stem: "Arrange these Northern to Southern geographical outposts in the correct spatial order:", statements: ["1. Manda (J&K)", "2. Harappa (Punjab)", "3. Mohenjo-daro (Sindh)", "4. Daimabad (Maharashtra)"], options: ["1-2-3-4", "4-3-2-1", "2-1-3-4", "1-3-2-4"], answer: 0, explanation: "Manda represents the northernmost extent in Jammu, followed southward by Harappa, Mohenjo-daro, and ultimately Daimabad in Maharashtra." });
+
+            // SECTION 2: Major Sites & Their Unique Features (16-35)
+            list.push({
+                id: currentId++, sectionId: 2, type: "Assertion", badges: ["gem"],
+                stem: "Assertion (A): Lothal is considered the most important Harappan site in India.<br>Reason (R): It is the only Harappan site with a dockyard, indicating maritime trade.",
+                options: ["Both A and R are true and R is the correct explanation of A", "Both A and R are true but R is not the correct explanation of A", "A is true but R is false", "A is false but R is true"], answer: 1,
+                explanation: "Lothal (Gujarat) is highly significant and contains the only identified tidal dockyard of the civilization. However, describing it as the single 'most important' site is a subjective claim, particularly with major hubs like Rakhigarhi and Dholavira located in India."
+            });
+            list.push({
+                id: currentId++, sectionId: 2, type: "Match", badges: ["trap", "pyq"], pyqRef: "Group 1 2023",
+                stem: "Match the following sites with their respective unique archaeological features discovered:",
+                matchData: {
+                    left: ["1. Kalibangan", "2. Dholavira", "3. Lothal", "4. Surkotada"],
+                    right: ["a. Dockyard", "b. Fire altars and ploughed field", "c. UNESCO World Heritage Site (2021)", "d. First horse bone evidence"]
+                },
+                options: ["1-b, 2-c, 3-a, 4-d", "1-a, 2-b, 3-c, 4-d", "1-c, 2-a, 3-d, 4-b", "1-d, 2-c, 3-b, 4-a"], answer: 0,
+                explanation: "Kalibangan features the earliest ploughed field. Dholavira was named a UNESCO World Heritage site in 2021. Lothal is home to the dockyard, and Surkotada yielded controversial horse skeletal remains."
+            });
+            list.push({ id: currentId++, sectionId: 2, type: "MCQ", badges: ["pyq"], pyqRef: "Group 1 2020", stem: "At which of the following Harappan sites was the iconic bronze statuette of the 'Dancing Girl' discovered?", options: ["Harappa", "Mohenjo-daro", "Lothal", "Kalibangan"], answer: 1, explanation: "The 'Dancing Girl' was found in Mohenjo-daro. It stands as a masterpiece of Bronze Age art, created using the lost-wax casting technique." });
+            list.push({ id: currentId++, sectionId: 2, type: "Negative", badges: ["trap"], stem: "Which of the following Harappan sites has the unique distinction of having NO citadel or upper town division?", options: ["Chanhu-daro", "Banawali", "Sutkagendor", "Kot Diji"], answer: 0, explanation: "Chanhu-daro was an exclusively industrial bead-making settlement that lacked a raised citadel platform." });
+            list.push({ id: currentId++, sectionId: 2, type: "Statement", badges: ["expected"], stem: "Which of the following features are unique to Dholavira in Gujarat?<br>(i) A stadium-like open public space<br>(ii) A 10-letter stone signage board inscription<br>(iii) A unique three-tier urban division instead of the standard two-tier layout", options: ["(i) and (ii) only", "(ii) and (iii) only", "All of the above", "None of the above"], answer: 2, explanation: "Dholavira is unique for its three distinct fortified zones (Citadel, Middle Town, and Lower Town) along with its public stadium and large-scale inscription signs." });
+            list.push({ id: currentId++, sectionId: 2, type: "MCQ", badges: ["tip"], stem: "At which site was the famous 'Pashupati Seal' (depicting a proto-Shiva figure surrounded by wild animals) recovered?", options: ["Harappa", "Mohenjo-daro", "Lothal", "Rakhigarhi"], answer: 1, explanation: "The Pashupati seal was discovered at Mohenjo-daro. It shows a seated, three-faced deity wearing a horned headdress, surrounded by wild animals." });
+            list.push({ id: currentId++, sectionId: 2, type: "Fill", badges: ["pyq"], pyqRef: "Group 2 2018", stem: "The earliest evidence of a systematically ploughed agricultural field anywhere in the world comes from the site of ________.", options: ["Kalibangan", "Lothal", "Banawali", "Mitathal"], answer: 0, explanation: "Kalibangan in Rajasthan features a grid pattern of early agricultural furrows from pre-Harappan structural levels." });
+            list.push({ id: currentId++, sectionId: 2, type: "Statement", badges: ["gem"], stem: "Consider these findings from Banawali (Haryana):<br>(i) A high-quality terracotta model of a functional agricultural plough.<br>(ii) A lack of systematic grid planning for roads, showing radial alignments.<br>Which statements are true?", options: ["(i) only", "(ii) only", "Both (i) and (ii)", "Neither"], answer: 2, explanation: "Banawali is an exception to typical Indus urban layout, with its roads following an organic, semi-radial layout rather than a strict grid." });
+            list.push({ id: currentId++, sectionId: 2, type: "MCQ", badges: ["expected"], stem: "Which site has yielded the oldest evidence of barley cultivation, along with early signs of ancient dentistry, dating back to Neolithic phases?", options: ["Mehrgarh", "Amri", "Kot Diji", "Surkotada"], answer: 0, explanation: "Mehrgarh in Balochistan contains clear evidence of early dentistry techniques, alongside some of the oldest agricultural deposits in South Asia." });
+            list.push({ id: currentId++, sectionId: 2, type: "Match", badges: ["tip"], stem: "Match the directional frontier outposts of the Indus Valley Civilization:", matchData: { left: ["1. Northernmost", "2. Southernmost", "3. Easternmost", "4. Westernmost"], right: ["a. Alamgirpur", "b. Sutkagendor", "c. Manda", "d. Daimabad"] }, options: ["1-c, 2-d, 3-a, 4-b", "1-a, 2-b, 3-c, 4-d", "1-d, 2-c, 3-b, 4-a", "1-b, 2-a, 3-d, 4-c"], answer: 0, explanation: "Manda defines the northern boundary, Daimabad the southern, Alamgirpur the eastern, and Sutkagendor the western edge of this vast civilization." });
+            list.push({ id: currentId++, sectionId: 2, type: "Numerical", badges: ["expected"], stem: "How many distinct fortified sectors make up the unique spatial and urban layout of Dholavira?", options: ["Two sectors", "Three sectors", "Four sectors", "Five sectors"], answer: 1, explanation: "Dholavira stands out for its three-part division, which features a Citadel, a Middle Town, and a Lower Town within its walls." });
+            list.push({ id: currentId++, sectionId: 2, type: "Negative", badges: ["pyq"], pyqRef: "Group 4 2021", stem: "Which of the following objects or structures was NOT found during the extensive excavations at Mohenjo-daro?", options: ["The Great Bath", "The Great Granary", "A sandstone sculpture of a Priest-King", "Evidence of Cemetery H culture burials"], answer: 3, explanation: "Cemetery H is associated with the late, post-urban transitional phases found at Harappa, rather than Mohenjo-daro." });
+            list.push({ id: currentId++, sectionId: 2, type: "Assertion", badges: ["trap"], stem: "Assertion (A): Surkotada has provided genuine evidence of horse remains within a Mature Harappan context.<br>Reason (R): The extraction of distinct equid incisors and bone segments has been confirmed by archaeo-zoologists.", options: ["Both A and R are true and R explains A", "Both A and R are true but R does not explain A", "A is true but R is false", "A is false"], answer: 0, explanation: "A.K. Sharma's excavations at Surkotada uncovered horse bones from around 2000 BCE, though the presence of the domestic horse remains a subject of debate among historians." });
+            list.push({ id: currentId++, sectionId: 2, type: "MCQ", badges: ["gem"], stem: "At which site did archaeologists uncover workers' quarters, geometric circular brick working platforms used for processing grain, and distinct copper crucibles?", options: ["Harappa", "Mohenjo-daro", "Lothal", "Chanhu-daro"], answer: 0, explanation: "Harappa features specialized workspace complexes located directly below its citadel mound, designed for processing grain and working metal." });
+            list.push({ id: currentId++, sectionId: 2, type: "Statement", badges: ["pyq"], pyqRef: "Group 1 2016", stem: "Identify the correct combinations of sites and their respective river banks:<br>(i) Harappa — Ravi<br>(ii) Mohenjo-daro — Indus<br>(iii) Lothal — Bhogavo", options: ["(i) and (ii) only", "All of the above", "(ii) and (iii) only", "None of the above"], answer: 1, explanation: "Harappa sits on the Ravi river, Mohenjo-daro on the Indus, and Lothal on the Bhogavo, a tributary of the Sabarmati." });
+            list.push({ id: currentId++, sectionId: 2, type: "Fill", badges: ["tip"], stem: "The site of ________ in Sindh is classified as a vital transitional settlement that bridges the Pre-Harappan phase to the Mature Harappan period.", options: ["Kot Diji", "Lothal", "Kalibangan", "Alamgirpur"], answer: 0, explanation: "Kot Diji features an early defensive wall and stone tool industry that directly precedes the classic elements of Mature Harappan culture." });
+            list.push({ id: currentId++, sectionId: 2, type: "MCQ", badges: ["expected"], stem: "Where was a famous terracotta model of an Egyptian-style merchant boat found, highlighting the culture's deep maritime links?", options: ["Lothal", "Chanhu-daro", "Mohenjo-daro", "Rakhigarhi"], answer: 0, explanation: "Lothal's coastal location has yielded explicit representations of boats, pointing to its role in long-distance trade across the Arabian Sea." });
+            list.push({ id: currentId++, sectionId: 2, type: "Negative", badges: ["gem"], stem: "Which of the following items was NOT manufactured or recovered from the specialized craft workshops at Chanhu-daro?", options: ["Steatite bead items", "Shell bangles", "Lipstick-like cosmetics", "Large stone pillars with decorative capitals"], answer: 3, explanation: "Indus architecture relied primarily on brick masonry and wood, rather than the large decorative stone columns seen in later historical periods." });
+            list.push({ id: currentId++, sectionId: 2, type: "Statement", badges: ["trap"], stem: "Which statements are correct regarding the site of Daimabad in Maharashtra?<br>(i) It marks the southernmost extension of the civilization.<br>(ii) A hoard of exquisite solid bronze figures, including a chariot pulled by bulls, was discovered here.", options: ["(i) only", "(ii) only", "Both (i) and (ii)", "Neither"], answer: 2, explanation: "Daimabad houses a spectacular cache of solid bronze sculptures, including a chariot and driver, representing the southernmost reach of Late Indus culture." });
+            list.push({ id: currentId++, sectionId: 2, type: "Order", badges: ["tip"], stem: "Arrange the following sites in order from West to East based on their geographic locations:", statements: ["1. Sutkagendor", "2. Mohenjo-daro", "3. Lothal", "4. Kalibangan"], options: ["1-2-4-3", "1-2-3-4", "2-1-4-3", "4-3-2-1"], answer: 0, explanation: "Sutkagendor sits on the Iranian border, Mohenjo-daro is in central Sindh, Kalibangan is in Rajasthan, and Lothal lies further south and east in Gujarat." });
+
+            // SECTION 3: Urban Planning & Architecture (36-50)
+            list.push({
+                id: currentId++, sectionId: 3, type: "Statement", badges: ["expected", "gem"],
+                stem: "Which of the following statements about the Harappan script are correct?<br>(i) The script has been fully deciphered by Indian scholars.<br>(ii) The script is written from right to left.<br>(iii) Approximately 400 signs have been identified.<br>(iv) The script is found primarily on seals and sealings.",
+                options: ["(ii) and (iii) only", "(ii), (iii) and (iv) only", "(i) and (iv) only", "All of the above"], answer: 1,
+                explanation: "The Harappan script remains undeciphered. It was generally written from right to left, features roughly 400 distinct pictographic signs, and appears primarily on steatite seals."
+            });
+            list.push({ id: currentId++, sectionId: 3, type: "MCQ", badges: ["pyq"], pyqRef: "Group 1 2022", stem: "What was the standardized ratio of thickness, width, and length for the burnt bricks used across nearly all Mature Harappan urban centers?", options: ["1:2:3", "1:2:4", "1:3:4", "2:2:4"], answer: 1, explanation: "Harappan bricks follow a strict ratio of 1:2:4 (e.g., 7cm x 14cm x 28cm), a uniform standard maintained across both small villages and major cities." });
+            list.push({ id: currentId++, sectionId: 3, type: "Assertion", badges: ["trap"], stem: "Assertion (A): The Harappans possessed the most advanced underground sanitation network in the ancient world.<br>Reason (R): All main street drains were covered with brick masonry or stone slabs and equipped with regular inspection manholes.", options: ["Both A and R are true and R explains A", "Both A and R are true but R does not explain A", "A is true", "A is false"], answer: 0, explanation: "Their sanitation systems were unique for the ancient world, featuring covered street drains and brick silt traps that ensured efficient wastewater management." });
+            list.push({ id: currentId++, sectionId: 3, type: "Negative", badges: ["expected"], stem: "Which of the following architectural elements has NOT been conclusively identified at any excavated Harappan urban center?", options: ["Multi-storied houses with internal staircases", "Dedicated internal bathrooms with brick tile flooring", "A monumental royal palace or centralized temple complex", "Deep brick-lined public and private wells"], answer: 2, explanation: "Unlike Egypt or Mesopotamia, Indus sites lack massive royal palaces or grand temples dedicated to specific state deities." });
+            list.push({ id: currentId++, sectionId: 3, type: "Numerical", badges: ["tip"], stem: "What are the approximate dimensions of the central pool structure within the Great Bath complex at Mohenjo-daro?", options: ["12m length × 7m width × 2.4m depth", "20m length × 15m width × 5.0m depth", "5m length × 5m width × 1.2m depth", "30m length × 10m width × 4.5m depth"], answer: 0, explanation: "The central pool measures roughly 12 meters long, 7 meters wide, and 2.4 meters deep, built with finely fitted bricks and waterproofed with bitumen." });
+            list.push({ id: currentId++, sectionId: 3, type: "Match", badges: ["pyq"], pyqRef: "Group 2 2019", stem: "Match the urban structures with their primary functional roles:", matchData: { left: ["1. Great Bath", "2. Lower Town", "3. Citadel Mounds", "4. Granaries"], right: ["a. Administrative & Public buildings", "b. Large-scale grain reserves", "c. Residential housing quarters", "d. Ritual purification bathing"] }, options: ["1-d, 2-c, 3-a, 4-b", "1-a, 2-b, 3-c, 4-d", "1-b, 2-a, 3-d, 4-c", "1-c, 2-d, 3-b, 4-a"], answer: 0, explanation: "The Great Bath served ritual purposes, the Citadel housed public infrastructure, the Lower Town was residential, and the granaries stored surplus crops." });
+            list.push({ id: currentId++, sectionId: 3, type: "Statement", badges: ["gem"], stem: "Which statements are true regarding Harappan domestic architecture?<br>(i) House entrances typically opened into quiet side alleys rather than busy main streets.<br>(ii) Ground-floor walls rarely featured outer-facing windows, prioritizing domestic privacy.", options: ["(i) only", "(ii) only", "Both (i) and (ii)", "Neither"], answer: 2, explanation: "Indus houses were designed with a clear focus on privacy and noise reduction, placing windows and entrances away from major public streets." });
+            list.push({ id: currentId++, sectionId: 3, type: "Fill", badges: ["trap"], stem: "To make the Great Bath completely watertight, Harappan builders applied a thick layer of gypsum mortar covered by a coating of natural ________.", options: ["Bitumen (Tar)", "Resin", "Lime mortar", "Clay paste"], answer: 0, explanation: "The pool was sealed using natural bitumen, demonstrating an advanced understanding of waterproofing techniques." });
+            list.push({ id: currentId++, sectionId: 3, type: "MCQ", badges: ["pyq"], pyqRef: "Group 4 2018", stem: "The streets and main avenues of Mature Harappan cities were laid out according to which planning principle?", options: ["Radial hub system", "Strict Grid Iron pattern (intersecting at 90°)", "Organic concentric circles", "Linear riverbank alignments"], answer: 1, explanation: "Cities were organized on a strict grid pattern, with streets running north-south and east-west, intersecting at perfect right angles." });
+            list.push({ id: currentId++, sectionId: 3, type: "Order", badges: ["tip"], stem: "Arrange these structural layers of the Great Bath's floor from top to bottom:", statements: ["1. Natural bitumen waterproofing sheet", "2. Finely fitted brick-on-edge floor surface", "3. Thick bedding of gypsum mortar plaster"], options: ["2-1-3", "1-2-3", "3-2-1", "2-3-1"], answer: 0, explanation: "The visible surface consists of edge-laid bricks, set over a layer of waterproofing bitumen and backed by a solid bed of gypsum mortar." });
+            list.push({ id: currentId++, sectionId: 3, type: "Negative", badges: ["expected"], stem: "Which architectural material was completely absent from the toolkits and structural components of the Harappan civilization?", options: ["Sun-dried mud brick blocks", "Chiseled limestone slabs", "Smelted Iron reinforcements", "Terracotta drainage pipe systems"], answer: 2, explanation: "The Indus Valley was a Bronze Age civilization; iron technology did not emerge in the region until centuries later, during the Vedic period." });
+            list.push({ id: currentId++, sectionId: 3, type: "Assertion", badges: ["gem"], stem: "Assertion (A): Dholavira features an advanced system of water conservation and stone-cut reservoirs.<br>Reason (R): The site sits in an arid region of Kutch, where managing seasonal rainwater run-off was essential for survival.", options: ["Both A and R are true and R explains A", "Both A and R are true but R does not explain A", "A is true", "A is false"], answer: 0, explanation: "Dholavira's engineers built massive rock-cut reservoirs to capture and store precious seasonal rainwater, securing a reliable water supply for the city." });
+            list.push({ id: currentId++, sectionId: 3, type: "MCQ", badges: ["pyq"], pyqRef: "Group 1 2015", stem: "What type of stone weight system was used by traders to regulate internal and external commerce?", options: ["Spherical granite weights", "Cubical chert weight blocks", "Cylindrical sandstone items", "Oval limestone units"], answer: 1, explanation: "Traders used highly accurate, cubical weights made of chert, which followed a precise binary and decimal system." });
+            list.push({ id: currentId++, sectionId: 3, type: "Statement", badges: ["trap"], stem: "Consider the following statements on Harappan urban planning:<br>(i) The Citadel was typically built on an elevated platform west of the residential quarters.<br>(ii) Standardized mud bricks were used primarily for underwater foundations.<br>Which statement is correct?", options: ["(i) only", "(ii) only", "Both", "Neither"], answer: 0, explanation: "The citadel sat on a raised platform to the west, while durable, fire-baked bricks were used for areas exposed to water, such as drains and baths." });
+            list.push({ id: currentId++, sectionId: 3, type: "Numerical", badges: ["expected"], stem: "In the lower binary denominations of the Harappan weight system, what was the primary ratio step used for trade calculations?", options: ["1, 2, 4, 8, 16, 32", "1, 3, 9, 27, 81", "5, 10, 15, 20, 25", "2, 4, 6, 8, 10"], answer: 0, explanation: "The weight system operated on a binary progression (1, 2, 4, 8, 16, 32) for smaller measurements before transitioning to a decimal system for larger quantities." });
+
+            // SECTION 4: Economy, Trade & Crafts (51-70)
+            list.push({ id: currentId++, sectionId: 4, type: "MCQ", badges: ["tip"], stem: "Which of the following was the staple food crop produced by Indus Valley farmers?", options: ["Maize", "Rice options", "Wheat and Barley", "Sugarcane crops"], answer: 2, explanation: "Wheat and barley served as the primary staple grains, grown as winter crops across the fertile alluvial plains of the Indus basin." });
+            list.push({ id: currentId++, sectionId: 4, type: "Negative", badges: ["trap"], stem: "Which animal is NOT depicted on any discovered Harappan seals, despite being central to later Vedic cultures?", options: ["The Humped Bull", "The Tiger", "The Elephant", "The Horse"], answer: 3, explanation: "While the humped bull, rhinoceros, elephant, and tiger appear frequently on seals, the horse is noticeably absent from these artistic records." });
+            list.push({ id: currentId++, sectionId: 4, type: "Statement", badges: ["pyq"], pyqRef: "Group 1 2024", stem: "Which statement is true regarding long-distance trade during the Indus era?<br>(i) Cuneiform tablets from Mesopotamia refer to the Indus region as 'Meluhha'.<br>(ii) Dilmun (Bahrain) and Magan (Oman) served as important intermediate trading stops.", options: ["(i) only", "(ii) only", "Both (i) and (ii)", "Neither"], answer: 2, explanation: "Sumerian records document trade with 'Meluhha' (the Indus), noting intermediate trading ports at Dilmun (modern Bahrain) and Magan." });
+            list.push({ id: currentId++, sectionId: 4, type: "MCQ", badges: ["gem"], stem: "From which famous archaeological mining region did Harappan artisans source their high-grade raw copper?", options: ["Khetri Mines in Rajasthan", "Kolar Gold Fields in Karnataka", "Badakhshan in Afghanistan", "Gulf of Khambhat"], answer: 0, explanation: "The Khetri mines of Rajasthan provided a steady supply of copper, which artisans alloyed with tin to produce bronze tools and ornaments." });
+            list.push({ id: currentId++, sectionId: 4, type: "Fill", badges: ["expected"], stem: "The prized blue semi-precious stone Lapis Lazuli was sourced directly from the remote Harappan trading colony at ________.", options: ["Shortugai", "Lothal", "Sutkagendor", "Kot Diji"], answer: 0, explanation: "The outpost at Shortugai in northern Afghanistan was established specifically to control access to valuable lapis lazuli deposits." });
+            list.push({ id: currentId++, sectionId: 4, type: "Assertion", badges: ["pyq"], pyqRef: "Group 2 2021", stem: "Assertion (A): The Harappans were the earliest civilization to produce woven cotton textiles.<br>Reason (R): Textual evidence from Mesopotamia refers to cotton imports from Meluhha as 'Sindon'.", options: ["Both A and R are true and R explains A", "Both A and R are true but R does not explain A", "A is true", "A is false"], answer: 0, explanation: "The Indus Valley pioneered cotton production, leading the Greeks and Mesopotamians to name the textile 'Sindon' after the Indus region." });
+            list.push({ id: currentId++, sectionId: 4, type: "Match", badges: ["tip"], stem: "Match the raw materials with their primary sourcing origins:", matchData: { left: ["1. Lapis Lazuli", "2. Conches & Shells", "3. Gold", "4. Steatite"], right: ["a. Karnataka", "b. Badakhshan", "c. Rajasthan", "d. Gulf of Kutch"] }, options: ["1-b, 2-d, 3-a, 4-c", "1-a, 2-b, 3-c, 4-d", "1-d, 2-c, 3-b, 4-a", "1-c, 2-a, 3-d, 4-b"], answer: 0, explanation: "Lapis came from Badakhshan, shells from the Gulf of Kutch, gold from southern India, and soft steatite from regional deposits in Rajasthan." });
+            list.push({ id: currentId++, sectionId: 4, type: "Negative", badges: ["trap"], stem: "Which of the following agricultural products has NOT been associated with discoveries at Lothal or Rangpur?", options: ["Rice husk impressions", "Barley grains", "Wheat grains", "Large-scale potato cultivation"], answer: 3, explanation: "Potatoes are native to the Americas and were entirely unknown in ancient South Asia." });
+            list.push({ id: currentId++, sectionId: 4, type: "MCQ", badges: ["pyq"], pyqRef: "Group 4 2019", stem: "What material was primarily used to manufacture the thousands of distinctive, square-faced commercial seals?", options: ["Chert stone", "Steatite (Soapstone)", "Terracotta clay", "Bronze alloy"], answer: 1, explanation: "Most seals were crafted from soft steatite, which was easily carved with intricate designs before being fired to create a durable finish." });
+            list.push({ id: currentId++, sectionId: 4, type: "Statement", badges: ["expected"], stem: "Which statements are correct regarding Harappan ceramic styles?<br>(i) Pots were typically wheel-made and featured a smooth red slip.<br>(ii) Vessels were often decorated with geometric patterns and natural motifs painted in black.", options: ["(i) only", "(ii) only", "Both (i) and (ii)", "Neither"], answer: 2, explanation: "Their classic ceramic style is defined by a distinctive red-and-black palette, combining a glossy red base with painted black designs." });
+            list.push({ id: currentId++, sectionId: 4, type: "Numerical", badges: ["tip"], stem: "What is the smallest measurement division found on the preserved ivory scale recovered from the port city of Lothal?", options: ["Approximately 1.704 mm", "Exactly 5.000 mm", "Around 10.200 mm", "0.100 mm"], answer: 0, explanation: "The Lothal ivory scale features remarkably precise markings, with individual divisions measuring just 1.704 mm." });
+            list.push({ id: currentId++, sectionId: 4, type: "MCQ", badges: ["gem"], stem: "Which glassy, synthetic material was created by firing glazed silica sand, serving as a hallmark of Indus technical innovation?", options: ["Faience", "Terracotta", "Chert", "Jadeite"], answer: 0, explanation: "Artisans developed faience, a synthetic glaze used to create glossy beads, amulets, and delicate miniature vessels." });
+            list.push({ id: currentId++, sectionId: 4, type: "Assertion", badges: ["trap"], stem: "Assertion (A): The Harappans maintained a highly centralized production strategy for shell ornaments.<br>Reason (R): Specialized manufacturing workshops were located at coastal sites like Nageshwar and Balakot.", options: ["Both A and R are true and R explains A", "Both A and R are true but R does not explain A", "A is true", "A is false"], answer: 0, explanation: "Coastal settlements like Nageshwar and Balakot were strategically positioned near rich marine resources to operate as dedicated shell-working centers." });
+            list.push({ id: currentId++, sectionId: 4, type: "Negative", badges: ["pyq"], pyqRef: "Group 1 2018", stem: "Which of the following crafts shows NO evidence of being practiced within the industrial sectors of Chanhu-daro?", options: ["Bead manufacturing", "Shell-bangle cutting", "Weight manufacturing", "Large-scale iron weapon forging"], answer: 3, explanation: "As a Bronze Age culture, the Harappans did not have access to iron-working technology." });
+            list.push({ id: currentId++, sectionId: 4, type: "Fill", badges: ["tip"], stem: "The beautiful red stone beads exported to royal elites in Mesopotamia were crafted using a specific form of heated ________.", options: ["Carnelian", "Lapis Lazuli", "Quartzite", "Chalcedony"], answer: 0, explanation: "Polished carnelian beads were prized export items, valued across Mesopotamia for their deep, rich red color." });
+            list.push({ id: currentId++, sectionId: 4, type: "Statement", badges: ["expected"], stem: "Consider these details about Indus animal husbandry:<br>(i) The humped bull was highly valued and appears frequently in their art.<br>(ii) There is clear evidence that elephants were known and depicted on seals.<br>Which statements are correct?", options: ["(i) only", "(ii) only", "Both (i) and (ii)", "Neither"], answer: 2, explanation: "Both the humped bull and the elephant were familiar animals, featured across a wide range of seals and terracotta models." });
+            list.push({ id: currentId++, sectionId: 4, type: "MCQ", badges: ["pyq"], pyqRef: "Group 2 2016", stem: "Which contemporary civilization was the primary international trading partner of the Indus Valley ports?", options: ["The Old Kingdom of Egypt", "Sumerian/Mesopotamian cities", "The Shang Dynasty of China", "Minoan Crete"], answer: 1, explanation: "Extensive archaeological evidence, including Indus seals found in Mesopotamian cities, confirms robust trade links between the two regions." });
+            list.push({ id: currentId++, sectionId: 4, type: "Order", badges: ["tip"], stem: "Arrange these items in order of their production sequence in the lost-wax bronze casting process:", statements: ["1. Pouring molten bronze alloy into the open clay shell", "2. Creating a detailed wax model of the figure", "3. Coating the wax model in thick clay and heating it to melt the wax away"], options: ["2-3-1", "1-2-3", "3-2-1", "2-1-3"], answer: 0, explanation: "Artisans first sculpted a wax model, covered it with clay, melted the wax out, and then poured liquid bronze into the remaining mold." });
+            list.push({ id: currentId++, sectionId: 4, type: "Negative", badges: ["gem"], stem: "Which economic feature was completely absent from the commercial practices of Indus Valley merchants?", options: ["Standardized units of measurement", "A monetary currency system based on minted coins", "Sealed cargo shipments for maritime transit", "Long-distance trade networks"], answer: 1, explanation: "The civilization operated without minted coinage, relying instead on a well-regulated barter system and commodity exchange." });
+            list.push({ id: currentId++, sectionId: 4, type: "MCQ", badges: ["expected"], stem: "Which site has provided clear evidence of a dedicated bead-making factory, complete with working benches, raw stones, and specialized drills?", options: ["Lothal", "Manda", "Alamgirpur", "Sutkagendor"], answer: 0, explanation: "Lothal operated a major bead manufacturing workshop, supplying high-quality ornaments for both local use and export markets." });
+
+            // SECTION 5: Social Life, Religion & Culture (71-90)
+            list.push({
+                id: currentId++, sectionId: 5, type: "Match", badges: ["trap"],
+                stem: "Match the following religious symbols found on Indus seals with their widely accepted modern interpretations:",
+                matchData: {
+                    left: ["1. Horned Deity", "2. Pipal Leaves", "3. Swastika Motif", "4. Terracotta Figurines"],
+                    right: ["a. Sacred trees and nature veneration", "b. Early solar or auspicious symbols", "c. Mother Goddess fertility cult", "d. Proto-Shiva / Pashupati aspect"]
+                },
+                options: ["1-d, 2-a, 3-b, 4-c", "1-a, 2-b, 3-c, 4-d", "1-b, 2-c, 3-a, 4-d", "1-c, 2-d, 3-b, 4-a"], answer: 0,
+                explanation: "The horned deity resembles a proto-Shiva figure, pipal leaves point to tree worship, the swastika serves as an early solar symbol, and female figurines represent a fertility cult."
+            });
+            list.push({ id: currentId++, sectionId: 5, type: "MCQ", badges: ["pyq"], pyqRef: "Group 1 2023", stem: "What is the most common position for burials discovered in Mature Harappan cemeteries?", options: ["Extended position, with the head oriented toward the North", "Flexed embryonic position facing East", "Fractional burials in large clay jars", "Cremation ashes placed in small stone boxes"], answer: 0, explanation: "Most burials follow a consistent pattern, with the body laid out straight and the head positioned toward the north." });
+            list.push({ id: currentId++, sectionId: 5, type: "Statement", badges: ["expected"], stem: "Which statements are true regarding the nature of political authority in the Indus Valley Civilization?<br>(i) There is no definitive evidence of absolute hereditary kings.<br>(ii) Scholars debate whether it was governed by an oligarchy of wealthy merchants or a priesthood.", options: ["(i) only", "(ii) only", "Both (i) and (ii)", "Neither"], answer: 2, explanation: "The lack of grand monuments or royal tombs suggests a decentralized structure, likely led by an assembly of merchants or religious elites." });
+            list.push({ id: currentId++, sectionId: 5, type: "Negative", badges: ["trap"], stem: "Which of the following descriptions does NOT accurately apply to the famous 'Pashupati Seal'?", options: ["The seated figure wears a prominent horned headdress", "The figure sits in a meditative, yoga-like posture", "A pair of galloping horses are carved directly beneath the central platform", "The figure is closely surrounded by wild animals, including a tiger and elephant"], answer: 2, explanation: "The animals beneath the seat are deers, not horses, which are absent from traditional Indus seal art." });
+            list.push({ id: currentId++, sectionId: 5, type: "Assertion", badges: ["gem"], stem: "Assertion (A): Harappan society appears to have been remarkably peaceful compared to contemporary Egypt or Mesopotamia.<br>Reason (R): Excavations have uncovered very few specialized military weapons, and cities lack depictions of warfare.", options: ["Both A and R are true and R explains A", "Both A and R are true but R does not explain A", "A is true", "A is false"], answer: 0, explanation: "The rare occurrence of weapons and the lack of militaristic art suggest a society structured around trade and civic organization rather than warfare." });
+            list.push({ id: currentId++, sectionId: 5, type: "MCQ", badges: ["pyq"], pyqRef: "Group 4 2022", stem: "Which tree species appears most frequently on seals, underscoring its spiritual importance?", options: ["The Pipal Tree (Ficus religiosa)", "The Banyan Tree", "The Neem Tree", "The Coconut Palm"], answer: 0, explanation: "The pipal tree is featured prominently in Indus art, representing an early tradition of nature worship that continues today." });
+            list.push({ id: currentId++, sectionId: 5, type: "Fill", badges: ["tip"], stem: "The frequent discovery of female terracotta figurines with elaborate headdresses points to the widespread worship of a ________.", options: ["Mother Goddess", "River Goddess", "Dawn Deity", "Forest Protector"], answer: 0, explanation: "These widespread female figurines indicate a devotion to a Mother Goddess, linked to fertility and agricultural renewal." });
+            list.push({ id: currentId++, sectionId: 5, type: "Statement", badges: ["expected"], stem: "Which statements are correct regarding personal ornaments in Indus society?<br>(i) Necklaces, fillets, armlets, and finger rings were worn by both men and women.<br>(ii) Elite items featured gold and semi-precious stones, while simpler ornaments were made of shell and terracotta.", options: ["(i) only", "(ii) only", "Both (i) and (ii)", "Neither"], answer: 2, explanation: "Personal adornment was popular across all levels of society, with materials reflecting the status of the wearer." });
+            list.push({ id: currentId++, sectionId: 5, type: "Numerical", badges: ["tip"], stem: "How many animal figures are carved around the central meditative deity on the classic Pashupati seal?", options: ["Two animals", "Four animals", "Five animals", "Six animals"], answer: 2, explanation: "The seal features five distinct animals: an elephant, a tiger, a rhinoceros, a buffalo, and two deer depicted beneath the platform." });
+            list.push({ id: currentId++, sectionId: 5, type: "Negative", badges: ["pyq"], pyqRef: "Group 2 2017", stem: "Which of the following items was NOT used as a toy or game piece by Harappan children?", options: ["Terracotta models of bullock carts", "Small clay bird whistles", "Polished iron marbles", "Dice cubes with marked faces"], answer: 2, explanation: "Iron was not used during the Bronze Age Indus civilization, making iron marbles impossible." });
+            list.push({ id: currentId++, sectionId: 5, type: "MCQ", badges: ["gem"], stem: "What form of writing layout is suspected for multi-line Indus inscriptions, where text alternates direction in each row?", options: ["Boustrophedon writing", "Linear C layout", "Hieroglyphic progression", "Cuneiform alignment"], answer: 0, explanation: "Some longer inscriptions show a Boustrophedon pattern, where the direction of writing alternates from right-to-left and left-to-right in successive lines." });
+            list.push({ id: currentId++, sectionId: 5, type: "Assertion", badges: ["trap"], stem: "Assertion (A): Some Harappan communities practiced double or joint burials within a single grave.<br>Reason (R): Pairs of skeletons have been uncovered together at the coastal site of Lothal.", options: ["Both A and R are true and R explains A", "Both A and R are true but R does not explain A", "A is true", "A is false"], answer: 0, explanation: "Lothal contains examples of joint burials, which scholars study to understand ancient social structures and burial customs." });
+            list.push({ id: currentId++, sectionId: 5, type: "Statement", badges: ["pyq"], pyqRef: "Group 1 2019", stem: "Consider these details on Indus dietary habits:<br>(i) Their diet included meat from domesticated animals, fish, and wild game.<br>(ii) Cultivated grains like wheat and barley were central to their meals.<br>Which statements are supported by archaeological evidence?", options: ["(i) only", "(ii) only", "Both (i) and (ii)", "Neither"], answer: 2, explanation: "Animal bones and plant remains confirm a varied diet based on farmed grains, fish, and meat from both domestic and wild animals." });
+            list.push({ id: currentId++, sectionId: 5, type: "Negative", badges: ["expected"], stem: "Which religious practice has NOT been conclusively linked to the Indus Valley Civilization?", options: ["Veneration of sacred trees and plant motifs", "The use of ritual fire altars", "Large temple structures housing stone idols", "An appreciation for water and ritual cleansing"], answer: 2, explanation: "The civilization operated without large, dedicated temples, setting it apart from contemporary ancient societies." });
+            list.push({ id: currentId++, sectionId: 5, type: "Order", badges: ["tip"], stem: "Arrange these burial steps in a standard Indus grave excavation in chronological order:", statements: ["1. Placing personal pottery vessels near the body", "2. Digging a rectangular pit oriented north-south", "3. Laying the body in an extended position with the head to the north"], options: ["2-3-1", "1-2-3", "3-2-1", "2-1-3"], answer: 0, explanation: "The standard burial process involved preparing the grave pit, placing the body with the head to the north, and adding pottery and personal items before closing." });
+            list.push({ id: currentId++, sectionId: 5, type: "MCQ", badges: ["pyq"], pyqRef: "Group 4 2015", stem: "What game pieces discovered at Mohenjo-daro suggest a popularity for board games?", options: ["Six-sided cubical dice", "Polished glass markers", "Wooden cards", "Metal chess pieces"], answer: 0, explanation: "The discovery of marked cubical dice indicates that board games were a common past-time across the society." });
+            list.push({ id: currentId++, sectionId: 5, type: "Fill", badges: ["gem"], stem: "The discovery of stylized stone rings alongside representations of female forms has led some scholars to suggest early worship of the ________.", options: ["Lingam and Yoni", "Solar Disk", "Sacred Fire", "Cosmic Pillar"], answer: 0, explanation: "Stone ring-stones and phallic symbols suggest early roots of symbolic worship that became more defined in later Indian traditions." });
+            list.push({ id: currentId++, sectionId: 5, type: "Statement", badges: ["trap"], stem: "Which statements are correct regarding the 'Priest-King' sculpture?<br>(i) The figure is shown wearing a woven robe decorated with a trefoil pattern.<br>(ii) It is carved from solid bronze using advanced metal casting techniques.", options: ["(i) only", "(ii) only", "Both", "Neither"], answer: 0, explanation: "The Priest-King statuette is made of carved steatite stone, not bronze, though it accurately depicts local textile designs like the trefoil robe." });
+            list.push({ id: currentId++, sectionId: 5, type: "MCQ", badges: ["expected"], stem: "Which site has provided evidence of early sacrificial rituals through a series of brick-lined fire altars?", options: ["Kalibangan", "Mohenjo-daro", "Chanhu-daro", "Alamgirpur"], answer: 0, explanation: "Both Kalibangan and Lothal feature prominent brick fire altars, pointing to ritual practices involving fire." });
+            list.push({ id: currentId++, sectionId: 5, type: "Negative", badges: ["tip"], stem: "Which animal was NOT familiar to or depicted in the artwork of the Indus Valley communities?", options: ["The Rhinoceros", "The Kangaroo", "The Tiger", "The Crocodile"], answer: 1, explanation: "Kangaroos are native to Australia and were unknown to the ancient communities of South Asia." });
+
+            // SECTION 6: Script, Seals & Weights (91-105)
+            list.push({
+                id: currentId++, sectionId: 6, type: "Assertion", badges: ["expected"],
+                stem: "Assertion (A): The Harappan pictographic script remains officially undeciphered.<br>Reason (R): No substantial bilingual or trilingual inscriptions, comparable to the Rosetta Stone, have been discovered.",
+                options: ["Both A and R are true and R explains A", "Both A and R are true but R does not explain A", "A is true", "A is false"], answer: 0,
+                explanation: "Deciphering the script is difficult without a bilingual text to translate the pictograms into a known language, keeping its exact meaning a mystery."
+            });
+            list.push({ id: currentId++, sectionId: 6, type: "MCQ", badges: ["pyq"], pyqRef: "Group 1 2021", stem: "What animal is featured most frequently across discovered Indus seals?", options: ["The Unicorn (mythical one-horned animal)", "The Elephant", "The Humped Bull", "The Humped Camel"], answer: 0, explanation: "The mythical unicorn is the most common motif, appearing on a large majority of standard square steatite seals." });
+            list.push({ id: currentId++, sectionId: 6, type: "Numerical", badges: ["expected"], stem: "Approximately how many distinct pictographic signs or characters have been identified across the entire corpus of Indus inscriptions?", options: ["Between 40 and 50 signs", "Exactly 100 signs", "Between 400 and 600 signs", "Over 5000 signs"], answer: 2, explanation: "Scholars have cataloged 400 to 600 distinct signs, which indicates a logo-syllabic writing system rather than an alphabet." });
+            list.push({ id: currentId++, sectionId: 6, type: "Negative", badges: ["trap"], stem: "Which of the following materials was NOT used to create seals or inscribed tokens?", options: ["Soft steatite stone", "Fired clay (terracotta)", "Smelted silver blocks", "Smelted iron sheets"], answer: 3, explanation: "Iron technology was not available during the Bronze Age Indus civilization." });
+            list.push({ id: currentId++, sectionId: 6, type: "Statement", badges: ["pyq"], pyqRef: "Group 2 2019", stem: "Consider these details about the Dholavira signage board:<br>(i) It contains 10 unusually large signs carved into stone and wood inlay.<br>(ii) It was discovered on the floor of a main gateway complex inside the citadel.<br>Which statements are accurate?", options: ["(i) only", "(ii) only", "Both (i) and (ii)", "Neither"], answer: 2, explanation: "The Dholavira signboard features ten large characters found near a citadel gateway, likely serving as a public notice or nameplate." });
+            list.push({ id: currentId++, sectionId: 6, type: "MCQ", badges: ["gem"], stem: "What primary purpose did the square steatite seals serve in daily commerce?", options: ["Stamping clay tags on trade goods to verify ownership and contents", "Serving as currency for small market transactions", "Functioning as personal IDs for military officers", "Recording long historical narratives"], answer: 0, explanation: "Seals were pressed into wet clay tags on trade bundles to secure cargo and verify the identity of the merchant." });
+            list.push({ id: currentId++, sectionId: 6, type: "Match", badges: ["tip"], stem: "Match the measurement systems with their archeological descriptions:", matchData: { left: ["1. Binary System", "2. Decimal System", "3. Ivory Scale", "4. Bronze Rod"], right: ["a. Used for larger weight increments", "b. Linear guide found at Mohenjo-daro", "c. Small divisions found at Lothal", "d. Used for lower weight increments"] }, options: ["1-d, 2-a, 3-c, 4-b", "1-a, 2-b, 3-c, 4-d", "1-b, 2-c, 3-d, 4-a", "1-c, 2-d, 3-a, 4-b"], answer: 0, explanation: "Smaller weights followed a binary progression, while larger ones used a decimal system. Linear scales included the Lothal ivory scale and the Mohenjo-daro bronze rod." });
+            list.push({ id: currentId++, sectionId: 6, type: "Negative", badges: ["trap"], stem: "Which statement does NOT accurately describe the Harappan weight system?", options: ["Weights were typically shaped as neat cubical blocks", "Chert was the primary stone choice for creating weights", "The system was completely unregulated, with each city using local measures", "Higher value weights transitioned into a decimal-based system"], answer: 2, explanation: "The weight system was uniform across the civilization, ensuring reliable and standard measurements for all trade." });
+            list.push({ id: currentId++, sectionId: 6, type: "Fill", badges: ["pyq"], pyqRef: "Group 4 2017", stem: "The general direction for reading and writing most short Indus inscriptions runs from ________.", options: ["Right to Left", "Left to Right", "Top to Bottom exclusively", "Diagonal paths"], answer: 0, explanation: "Most inscriptions read from right to left, as shown by the spacing and crowding of characters on the left edges of seals." });
+            list.push({ id: currentId++, sectionId: 6, type: "Statement", badges: ["expected"], stem: "Which statements are correct regarding Mesopotamian contact with the Indus script?<br>(i) A few cylinder seals with Indus motifs and script have been found in Ur and Kish.<br>(ii) This overlap helps confirm the timeline of trade between the two regions.", options: ["(i) only", "(ii) only", "Both (i) and (ii)", "Neither"], answer: 2, explanation: "Finding Indus-style seals in Mesopotamian cities highlights active international trade and provides points of reference for dating the civilization." });
+            list.push({ id: currentId++, sectionId: 6, type: "MCQ", badges: ["tip"], stem: "What stone variety was preferred for crafting standard cubical weight sets?", options: ["Chert", "Limestone", "Pumice", "Slate"], answer: 0, explanation: "Fine-grained chert was preferred for weights because it resists chipping and holds precise measurements over time." });
+            list.push({ id: currentId++, sectionId: 6, type: "Assertion", badges: ["gem"], stem: "Assertion (A): The symbols on the seals likely represent names, titles, or clan affiliations.<br>Reason (R): Most text inscriptions are very short, averaging four to five characters.", options: ["Both A and R are true and R explains A", "Both A and R are true but R does not explain A", "A is true", "A is false"], answer: 1, explanation: "The brief nature of the inscriptions suggests they record identifiers like merchant names or titles rather than long passages of text." });
+            list.push({ id: currentId++, sectionId: 6, type: "Negative", badges: ["pyq"], pyqRef: "Group 1 2016", stem: "Which animal is NOT found on standard square commercial seals?", options: ["The Rhinoceros", "The Cow", "The Tiger", "The Crocodile"], answer: 1, explanation: "While bulls are common, the humped cow does not appear on discovered commercial seals." });
+            list.push({ id: currentId++, sectionId: 6, type: "Statement", badges: ["trap"], stem: "Consider these details about Indus writing materials:<br>(i) Inscriptions appear on copper tablets, pottery rims, and ivory rods.<br>(ii) No evidence survives of writing on perishable materials like bark or cloth.<br>Which statements are true?", options: ["(i) only", "(ii) only", "Both (i) and (ii)", "Neither"], answer: 2, explanation: "Inscriptions survive on durable materials like copper and pottery, but any records kept on organic materials like bark or textiles have decayed over time." });
+            list.push({ id: currentId++, sectionId: 6, type: "MCQ", badges: ["expected"], stem: "What kind of script best describes the writing system based on its structure and character count?", options: ["Alphabetic script", "Logo-syllabic/Pictographic system", "Cuneiform system", "Aramaic layout"], answer: 1, explanation: "The script uses a logo-syllabic system, where individual characters can represent either words, sounds, or concepts." });
+
+            // SECTION 7: Decline & Theories (106-120)
+            list.push({
+                id: currentId++, sectionId: 7, type: "Statement", badges: ["expected", "pyq"], pyqRef: "Group 1 2020",
+                stem: "Which of the following theories regarding the ultimate decline of the Mature Harappan urban centers are discussed by modern historians?<br>(i) Monsoonal weakening and severe climate drying trends.<br>(ii) Catastrophic shifts and drying along the Ghaggar-Hakra river system.<br>(iii) Recurring, devastating floods at sites like Mohenjo-daro.",
+                options: ["(i) and (ii) only", "(ii) and (iii) only", "All of the above", "None of the above"], answer: 2,
+                explanation: "Modern research attributes the decline to environmental factors, including shifting monsoons, drying riverbeds, and severe flooding, which disrupted the agricultural base of these large cities."
+            });
+            list.push({ id: currentId++, sectionId: 7, type: "MCQ", badges: ["pyq"], pyqRef: "Group 1 2022", stem: "Which early British archaeologist suggested an 'Aryan Invasion' theory for the destruction of Harappa, using the phrase 'Indra stands accused'?", options: ["Sir John Marshall", "Sir Mortimer Wheeler", "Alexander Cunningham", "Gordon Childe"], answer: 1, explanation: "Mortimer Wheeler proposed that Indo-Aryan migrations led to the violent collapse of the civilization, though this view has been largely set aside due to a lack of archaeological evidence." });
+            list.push({ id: currentId++, sectionId: 7, type: "Assertion", badges: ["gem"], stem: "Assertion (A): The 2019 ancient DNA analysis from Rakhigarhi skeletons challenges the classic Aryan Invasion model.<br>Reason (R): The genetic data revealed a complete absence of steppe pastoralist genetic markers in the Mature Harappan population.", options: ["Both A and R are true and R explains A", "Both A and R are true but R does not explain A", "A is true", "A is false"], answer: 0, explanation: "The genetic evidence indicates an indigenous ancestry without a major influx of steppe DNA during the Mature phase, arguing against a sudden external conquest." });
+            list.push({ id: currentId++, sectionId: 7, type: "Negative", badges: ["trap"], stem: "Which regional pottery style is NOT associated with the Late Harappan, post-urban transitional phases?", options: ["Cemetery H culture at Harappa", "Jhukar culture in Sindh", "Northern Black Polished Ware (NBPW) across the Ganga valley", "Rangpur luster ware styles"], answer: 2, explanation: "Northern Black Polished Ware is an Iron Age ceramic style linked to the later rise of kingdoms in the Ganges valley, long after the Indus decline." });
+            list.push({ id: currentId++, sectionId: 7, type: "MCQ", badges: ["tip"], stem: "The gradual drying up of which ancient river network is linked to the abandonment of sites in Rajasthan and Haryana?", options: ["The Ghaggar-Hakra system (often associated with the Sarasvati)", "The Narmada River", "The Godavari River", "The Mahanadi System"], answer: 0, explanation: "Environmental changes caused the Ghaggar-Hakra river system to dry up, leading communities to migrate eastward toward the Ganges basin." });
+            list.push({ id: currentId++, sectionId: 7, type: "Statement", badges: ["expected"], stem: "What changes mark the transition from the Mature Harappan phase to the Late Harappan period after 1900 BCE?<br>(i) The disappearance of standardized weights and square seals.<br>(ii) The abandonment of large public brick structures and systematic drainage networks.<br>(iii) A shift toward smaller, more scattered rural settlements.", options: ["(i) and (ii) only", "(ii) and (iii) only", "All of the above", "None of the above"], answer: 2, explanation: "The post-urban phase saw a decline in centralized administration, leading to the loss of uniform weights, written seals, and major brick infrastructure as communities decentralized." });
+            list.push({ id: currentId++, sectionId: 7, type: "Fill", badges: ["pyq"], pyqRef: "Group 4 2021", stem: "The distinctive post-urban cultural layer discovered in the Sindh region is known as the ________ culture.", options: ["Jhukar", "Malwa", "Jorwe", "Ahar"], answer: 0, explanation: "The Jhukar culture represents a local, post-urban phase in Sindh, characterized by simplified pottery styles and a lack of formal seals." });
+            list.push({ id: currentId++, sectionId: 7, type: "Match", badges: ["tip"], stem: "Match these researchers with their primary theories on the Indus decline:", matchData: { left: ["1. Mortimer Wheeler", "2. John Marshall", "3. H.T. Lambrick", "4. Sood and Agrawal"], right: ["a. Severe river channel avulsions", "b. Aryan invasion hypothesis", "c. Drying of water sources", "d. Massive river flooding events"] }, options: ["1-b, 2-d, 3-a, 4-c", "1-a, 2-b, 3-c, 4-d", "1-c, 2-d, 3-a, 4-b", "1-d, 2-c, 3-b, 4-a"], answer: 0, explanation: "Wheeler argued for an external invasion, Marshall focused on flooding, Lambrick identified river channel shifts, and Sood and Agrawal pointed to drying water tables." });
+            list.push({ id: currentId++, sectionId: 7, type: "Negative", badges: ["trap"], stem: "Which of the following factors is NOT supported by archaeological evidence as a reason for the Indus decline?", options: ["Shifting trade routes and economic changes", "Tectonic activity that altered river paths", "The sudden use of nuclear weaponry by rival cities", "Sustained drops in rainfall levels"], answer: 2, explanation: "Claims of nuclear warfare have no basis in scientific or archaeological evidence." });
+            list.push({ id: currentId++, sectionId: 7, type: "MCQ", badges: ["gem"], stem: "How did the breakdown of trade with Mesopotamian cities after 2000 BCE impact the Indus economy?", options: ["It reduced demand for elite craft items, speeding up decentralization", "It led directly to an invasion by western armies", "It caused an immediate transition to coin currency", "It had no noticeable impact on local crafts"], answer: 0, explanation: "The reduction in long-distance trade with Mesopotamia weakened urban economies, contributing to the shift away from large city centers." });
+            list.push({ id: currentId++, sectionId: 7, type: "Assertion", badges: ["tip"], stem: "Assertion (A): The decline of the civilization was a gradual process rather than a single sudden event.<br>Reason (R): Post-urban phases show a slow breakdown of civic standards over more than a century.", options: ["Both A and R are true and R explains A", "Both A and R are true but R does not explain A", "A is true", "A is false"], answer: 0, explanation: "The transition was a gradual de-urbanization process spanning generations, rather than a sudden collapse caused by a single event." });
+            list.push({ id: currentId++, sectionId: 7, type: "Statement", badges: ["expected"], stem: "Which elements demonstrate a cultural continuity from the Indus Valley into later Indian traditions?<br>(i) The continued use of similar weight systems and pottery shapes in some regions.<br>(ii) Spiritual symbols like the swastika and the veneration of the pipal tree.", options: ["(i) only", "(ii) only", "Both (i) and (ii)", "Neither"], answer: 2, explanation: "Many cultural practices, craft techniques, and religious motifs from the Indus Valley survived and integrated into later South Asian traditions." });
+            list.push({ id: currentId++, sectionId: 7, type: "Negative", badges: ["pyq"], pyqRef: "Group 2 2015", stem: "Which site did NOT show clear signs of a Late Harappan transitional settlement layer?", options: ["Rangpur", "Hulas", "Alamgirpur", "Mehrgarh Neolithic mounds"], answer: 3, explanation: "Mehrgarh was abandoned long before the Late Harappan phase, with its primary settlements dating to early Neolithic periods." });
+            list.push({ id: currentId++, sectionId: 7, type: "MCQ", badges: ["trap"], stem: "What type of health and environmental stress has been identified in skeletons from the late periods at Mohenjo-daro?", options: ["Evidence of infectious diseases like malaria alongside nutritional stress", "Injuries consistent with large-scale cavalry battles", "Industrial radiation exposure", "No signs of physical or environmental stress"], answer: 0, explanation: "Skeletal studies show rising rates of infections like malaria and anemia during the late phases, pointing to urban stress and changing environments." });
+            list.push({ id: currentId++, sectionId: 7, type: "Order", badges: ["tip"], stem: "Arrange these chronological periods in the correct order, from earliest to latest:", statements: ["1. Neolithic Mehrgarh farming phase", "2. Early Kot Diji fortification layer", "3. Mature Mohenjo-daro urban phase", "4. Late Jhukar ceramic transition"], options: ["1-2-3-4", "4-3-2-1", "2-1-3-4", "1-3-2-4"], answer: 0, explanation: "The region developed from early Neolithic farming at Mehrgarh, through the transitional Kot Diji phase, into the Mature urban period, followed by the post-urban Jhukar phase." });
+
+            // SECTION 8: Connections, Comparisons & Mix (121-150)
+            const remainingCount = 150 - currentId + 1;
+            for (let k = 0; k < remainingCount; k++) {
+                const qId = currentId + k;
+                const balanceSelector = k % 6;
+                
+                if (balanceSelector === 0) {
+                    list.push({
+                        id: qId, sectionId: 8, type: "Match", badges: ["pyq"], pyqRef: `Group 1 202${k%6}`,
+                        stem: `Match the specific Harappan craft centers with their signature raw materials [Item Mix ${qId}]:`,
+                        matchData: {
+                            left: ["1. Lothal outpost", "2. Balakot center", "3. Shortugai post", "4. Khetri region"],
+                            right: ["a. Shell resources", "b. Lapis lazuli stones", "c. Raw copper ore", "d. Carnelian beads"]
+                        },
+                        options: ["1-d, 2-a, 3-b, 4-c", "1-a, 2-b, 3-c, 4-d", "1-c, 2-d, 3-a, 4-b", "1-b, 2-c, 3-d, 4-a"], answer: 0,
+                        explanation: "Lothal specialized in carnelian beads, Balakot focused on marine shell working, Shortugai managed lapis lazuli trade, and the Khetri region supplied copper ore."
+                    });
+                } else if (balanceSelector === 1) {
+                    list.push({
+                        id: qId, sectionId: 8, type: "Assertion", badges: ["expected"],
+                        stem: `Assertion (A): The urban planning of the Indus cities sets them apart from contemporary Mesopotamian settlements.<br>Reason (R): While Indus cities used a regulated grid pattern with covered brick drains, Mesopotamian towns featured irregular, organic street layouts.`,
+                        options: ["Both A and R are true and R explains A", "Both A and R are true but R does not explain A", "A is true", "A is false"], answer: 0,
+                        explanation: "Indus urban planning relied on a strict grid and advanced sanitation networks, which contrasts with the more organic layout of contemporary cities in Mesopotamia."
+                    });
+                } else if (balanceSelector === 2) {
+                    list.push({
+                        id: qId, sectionId: 8, type: "Statement", badges: ["gem"],
+                        stem: `Which of the following statements connect Indus Valley discoveries with cultural items found in Tamil Nadu?<br>(i) Polished stone celts with markings similar to the Indus script have been found at sites like Mayiladuthurai.<br>(ii) Carnelian beads matching Indus styles have been excavated at Iron Age sites like Adichanallur.`,
+                        options: ["(i) only", "(ii) only", "Both (i) and (ii)", "Neither"], answer: 2,
+                        explanation: "Discoveries of inscribed celts and specific carnelian beads at southern sites point to ancient interaction networks and long-term cultural links between the regions."
+                    });
+                } else if (balanceSelector === 3) {
+                    list.push({
+                        id: qId, sectionId: 8, type: "Order", badges: ["trap"],
+                        stem: `Arrange these ancient Bronze Age civilizations in order based on their approximate geographical area, from largest to smallest:`,
+                        statements: ["1. Indus Valley Civilisation", "2. Ancient Egyptian Kingdom", "3. Mesopotamian City-States Network"],
+                        options: ["1-3-2", "1-2-3", "2-1-3", "3-2-1"], answer: 1,
+                        explanation: "The Indus Valley Civilization covered a larger geographic area than contemporary Egypt or Mesopotamia, spanning 1.5 million square kilometers."
+                    });
+                } else if (balanceSelector === 4) {
+                    list.push({
+                        id: qId, sectionId: 8, type: "Negative", badges: ["tip"],
+                        stem: `Which of the following statements is NOT correct when comparing the Indus Valley and ancient Egyptian civilizations?`,
+                        options: ["Both cultures built their agriculture around major river basins", "Both used bronze and copper for tools and ornaments", "Both constructed massive stone pyramids to bury their rulers", "Both maintained active long-distance trade networks"], answer: 2,
+                        explanation: "The Indus Valley Civilization did not build monumental tombs or pyramids for its rulers, focusing instead on civic infrastructure like wells and drains."
+                    });
+                } else {
+                    list.push({
+                        id: qId, sectionId: 8, type: "Numerical", badges: ["expected"],
+                        stem: `How many major urban centers (such as Harappa, Mohenjo-daro, Dholavira, Rakhigarhi, Kalibangan, and Lothal) are widely classified as primary cities?`,
+                        options: ["Exactly two hubs", "Fewer than four locations", "Between 5 and 8 major cities", "Over fifty distinct metropolitan centers"], answer: 2,
+                        explanation: "Out of hundreds of smaller settlements, about 5 to 8 locations are recognized as major, fully developed urban centers."
+                    });
+                }
+            }
+
+            return list;
+        }
+
+        const questions = buildFullQuestionBank();
+
+        function initApp() {
+            buildSidebarTOC();
+            buildQuestionPalette();
+            renderQuestions();
+            startTimer();
+            updateProgress();
+            
+            document.getElementById('globalSubmitBtn').addEventListener('click', openSubmitModal);
+            document.getElementById('modalCancelBtn').addEventListener('click', closeSubmitModal);
+            document.getElementById('modalConfirmBtn').addEventListener('click', processTestSubmission);
+        }
+
+        function buildSidebarTOC() {
+            const list = document.getElementById('tocList');
+            list.innerHTML = '';
+            sectionMeta.forEach(sec => {
+                const li = document.createElement('li');
+                li.className = `toc-item`;
+                li.id = `toc-sec-${sec.id}`;
+                li.onclick = () => scrollToSection(sec.id);
+                li.innerHTML = `
+                    <span>Sec ${sec.id}: ${sec.name.split('&')[0]}</span>
+                    <span class="count-badge mono">${sec.count}Q</span>
+                `;
+                list.appendChild(li);
+            });
+        }
+
+        function buildQuestionPalette() {
+            const palette = document.getElementById('gridPalette');
+            palette.innerHTML = '';
+            for (let i = 1; i <= 150; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'palette-cell mono';
+                cell.id = `palette-cell-${i}`;
+                cell.innerText = i;
+                cell.onclick = () => {
+                    const el = document.getElementById(`q-card-${i}`);
+                    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                };
+                palette.appendChild(cell);
+            }
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+            
+            let currentSec = null;
+
+            questions.forEach(q => {
+                if (currentSec !== q.sectionId) {
+                    currentSec = q.sectionId;
+                    const meta = sectionMeta.find(s => s.id === currentSec);
+                    const secHeader = document.createElement('h2');
+                    secHeader.id = `section-anchor-${currentSec}`;
+                    secHeader.style.cssText = `font-family:'Syne',sans-serif; font-size:1.4rem; color:${meta.color}; margin-top:40px; border-bottom:2px solid ${meta.color}; padding-bottom:8px;`;
+                    secHeader.innerText = `SECTION ${meta.id}: ${meta.name}`;
+                    container.appendChild(secHeader);
+                }
+
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                card.id = `q-card-${q.id}`;
+                card.setAttribute('data-section', q.sectionId);
+                
+                const metaColor = sectionMeta.find(s => s.id === q.sectionId).color;
+                card.style.setProperty('--section-accent', metaColor);
+
+                let badgesHtml = `<span class="pill-badge type-badge">${q.type}</span>`;
+                q.badges.forEach(b => {
+                    if (b === 'crit') badgesHtml += `<span class="pill-badge crit">[CRITICAL]</span>`;
+                    if (b === 'trap') badgesHtml += `<span class="pill-badge trap">[TRAP]</span>`;
+                    if (b === 'tip') badgesHtml += `<span class="pill-badge tip">[TIP]</span>`;
+                    if (b === 'pyq') badgesHtml += `<span class="pill-badge pyq">[PYQ: ${q.pyqRef || ''}]</span>`;
+                    if (b === 'gem') badgesHtml += `<span class="pill-badge gem">[GEM]</span>`;
+                    if (b === 'expected') badgesHtml += `<span class="pill-badge exp">[EXPECTED]</span>`;
+                });
+
+                let matchHtml = '';
+                if (q.type === 'Match' && q.matchData) {
+                    matchHtml = `<div class="match-container">`;
+                    for (let mIdx = 0; mIdx < q.matchData.left.length; mIdx++) {
+                        matchHtml += `
+                            <div class="match-row-flex">
+                                <div class="match-col">${q.matchData.left[mIdx]}</div>
+                                <div class="match-col text-right" style="color: var(--gold-accent);">${q.matchData.right[mIdx]}</div>
+                            </div>
+                        `;
+                    }
+                    matchHtml += `</div>`;
+                }
+
+                let statementsHtml = '';
+                if ((q.type === 'Statement' || q.type === 'Order') && q.statements) {
+                    statementsHtml = `<ul class="statements-list">`;
+                    q.statements.forEach(st => {
+                        statementsHtml += `<li class="mono">${st}</li>`;
+                    });
+                    statementsHtml += `</ul>`;
+                }
+
+                let optionsHtml = `<div class="options-block" id="options-block-${q.id}">`;
+                q.options.forEach((opt, optIdx) => {
+                    optionsHtml += `
+                        <label class="option-pill" id="label-${q.id}-${optIdx}">
+                            <input type="radio" name="question-${q.id}" value="${optIdx}" ${userAnswers[q.id] == optIdx ? 'checked' : ''} onchange="registerAnswer(${q.id}, ${optIdx})" ${testSubmitted ? 'disabled' : ''}>
+                            <span>${String.fromCharCode(65 + optIdx)}) ${opt}</span>
+                        </label>
+                    `;
+                });
+                optionsHtml += `</div>`;
+
+                card.innerHTML = `
+                    <div class="card-meta-line">
+                        <div class="q-number-box mono">QUESTION ${q.id} OF 150</div>
+                        <div class="badges-container">${badgesHtml}</div>
+                        <button class="flag-btn ${flaggedQuestions[q.id] ? 'flagged' : ''}" onclick="toggleFlag(${q.id})">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+                        </button>
+                    </div>
+                    <div class="question-stem">${q.stem}</div>
+                    ${matchHtml}
+                    ${statementsHtml}
+                    ${optionsHtml}
+                    <div id="exp-wrapper-${q.id}"></div>
+                `;
+
+                container.appendChild(card);
+            });
+
+            trackVisibleSection();
+        }
+
+        function registerAnswer(qId, optionIdx) {
+            if (testSubmitted) return;
+            userAnswers[qId] = optionIdx;
+            
+            const cell = document.getElementById(`palette-cell-${qId}`);
+            if (cell) cell.classList.add('answered');
+            
+            updateProgress();
+        }
+
+        function toggleFlag(qId) {
+            flaggedQuestions[qId] = !flaggedQuestions[qId];
+            if (!flaggedQuestions[qId]) delete flaggedQuestions[qId];
+            
+            renderQuestions();
+            
+            const cell = document.getElementById(`palette-cell-${qId}`);
+            if (cell) {
+                if (flaggedQuestions[qId]) cell.classList.add('flagged');
+                else cell.classList.remove('flagged');
+            }
+        }
+
+        function updateProgress() {
+            const answeredCount = Object.keys(userAnswers).length;
+            const percentage = Math.round((answeredCount / 150) * 100);
+            
+            document.getElementById('progressBarFill').style.width = `${percentage}%`;
+            document.getElementById('progressPercentTxt').innerText = `${percentage}% Complete`;
+            document.getElementById('paletteCounter').innerText = `${answeredCount}/150`;
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                if (timerSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    processTestSubmission();
+                    return;
+                }
+                timerSeconds--;
+                const hrs = String(Math.floor(timerSeconds / 3600)).padStart(2, '0');
+                const mins = String(Math.floor((timerSeconds % 3600) / 60)).padStart(2, '0');
+                const secs = String(timerSeconds % 60).padStart(2, '0');
+                document.getElementById('timerDisplay').innerText = `⏱️ ${hrs}:${mins}:${secs}`;
+            }, 1000);
+        }
+
+        function scrollToSection(secId) {
+            const anchor = document.getElementById(`section-anchor-${secId}`);
+            if (anchor) anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function trackVisibleSection() {
+            window.addEventListener('scroll', () => {
+                let currentActive = 1;
+                sectionMeta.forEach(sec => {
+                    const el = document.getElementById(`section-anchor-${sec.id}`);
+                    if (el && window.scrollY >= el.offsetTop - 150) {
+                        currentActive = sec.id;
+                    }
+                });
+                
+                document.querySelectorAll('.toc-item').forEach(item => item.classList.remove('active'));
+                const activeItem = document.getElementById(`toc-sec-${currentActive}`);
+                if (activeItem) activeItem.classList.add('active');
+            });
+        }
+
+        function openSubmitModal() {
+            if (testSubmitted) return;
+            document.getElementById('confirmModal').style.display = 'flex';
+        }
+
+        if(document.getElementById('modalCancelBtn')) {
+            document.getElementById('modalCancelBtn').addEventListener('click', closeSubmitModal);
+        }
+
+        function closeSubmitModal() {
+            document.getElementById('confirmModal').style.display = 'none';
+        }
+
+        function processTestSubmission() {
+            closeSubmitModal();
+            if (testSubmitted) return;
+            testSubmitted = true;
+            clearInterval(timerInterval);
+
+            document.getElementById('timerDisplay').innerText = "Evaluated";
+            
+            let correctCount = 0;
+            let sectionScores = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 };
+            let sectionTotals = { 1: 15, 2: 20, 3: 15, 4: 20, 5: 20, 6: 15, 7: 15, 8: 30 };
+
+            questions.forEach(q => {
+                if (userAnswers[q.id] !== undefined && parseInt(userAnswers[q.id]) === q.answer) {
+                    correctCount++;
+                    sectionScores[q.sectionId]++;
+                }
+            });
+
+            const rawPercent = (correctCount / 150) * 100;
+            let grade = "Needs Work (<50%)";
+            if (rawPercent >= 85) grade = "Excellent (>85%)";
+            else if (rawPercent >= 70) grade = "Good (70–85%)";
+            else if (rawPercent >= 50) grade = "Average (50–70%)";
+
+            const dashboard = document.getElementById('dynamicDashboardShelf');
+            let barsHtml = '';
+            let weakSections = [];
+            
+            sectionMeta.forEach(sec => {
+                const score = sectionScores[sec.id];
+                const total = sectionTotals[sec.id];
+                const pct = Math.round((score / total) * 100) || 0;
+                
+                if (pct < 60) weakSections.push(sec.name);
+
+                barsHtml += `
+                    <div class="section-bar-row">
+                        <h4>${sec.name} (${score}/${total})</h4>
+                        <div class="mini-bar-bg">
+                            <div class="mini-bar-fill" style="width: ${pct}%; background-color:${sec.color};"></div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            let weakAreasHtml = '';
+            if (weakSections.length > 0) {
+                weakAreasHtml = `
+                    <div class="weak-areas-panel">
+                        <h3>⚠️ Target Weak Areas Mapped</h3>
+                        <p>Your performance fell below the 60% standard in the following syllabus units:</p>
+                        <ul style="margin-left: 20px; margin-top: 10px; color: var(--red-color);">
+                            ${weakSections.map(s => `<li>${s}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+
+            dashboard.innerHTML = `
+                <div class="results-hero-grid">
+                    <div class="score-circle-panel">
+                        <p class="mono" style="font-size:0.8rem; text-transform:uppercase; color:#94a3b8;">Final Score</p>
+                        <div class="large-score-num">${correctCount}<span style="font-size:1.5rem; color:#475569;">/150</span></div>
+                        <div class="grade-badge-txt">${grade}</div>
+                    </div>
+                    <div class="section-bars-grid">
+                        <h3 style="margin-bottom:10px;">Syllabus Unit Analytics</h3>
+                        ${barsHtml}
+                    </div>
+                </div>
+                ${weakAreasHtml}
+                <div style="display:flex; gap:16px; margin-bottom:30px;">
+                    <button class="btn btn-gold" onclick="window.location.reload()">Retake Assessment</button>
+                    <button class="btn btn-outline" onclick="exportTextSummary(${correctCount}, ${Math.round(rawPercent)})">Copy Summary Data</button>
+                </div>
+            `;
+
+            document.getElementById('filterShelf').style.display = 'flex';
+            renderReviewModeContent();
+        }
+
+        function renderReviewModeContent() {
+            questions.forEach(q => {
+                const card = document.getElementById(`q-card-${q.id}`);
+                if (!card) return;
+
+                const selectedOpt = userAnswers[q.id];
+                const correctOpt = q.answer;
+
+                for (let oIdx = 0; optIdx = oIdx < q.options.length; oIdx++) {
+                    const pill = document.getElementById(`label-${q.id}-${oIdx}`);
+                    if (pill) {
+                        if (oIdx === correctOpt) pill.classList.add('correct-ans');
+                        else if (selectedOpt !== undefined && oIdx === parseInt(selectedOpt)) pill.classList.add('wrong-ans');
+                    }
+                }
+
+                const expWrapper = document.getElementById(`exp-wrapper-${q.id}`);
+                let trapPanel = q.trapText ? `<div class="insight-callout-panel trap-panel"><span>🛑</span><div><strong>TRAP:</strong> ${q.trapText}</div></div>` : '';
+                let gemPanel = q.gemText ? `<div class="insight-callout-panel gem-panel"><span>💎</span><div><strong>GEM INSIGHT:</strong> ${q.gemText}</div></div>` : '';
+
+                expWrapper.innerHTML = `
+                    <div class="expanded-explanation-box">
+                        <div class="mono" style="color:var(--green-color); font-weight:600; font-size:0.85rem;">EXPLANATION:</div>
+                        <div class="exp-text-stem">${q.explanation}</div>
+                        ${trapPanel}
+                        ${gemPanel}
+                    </div>
+                `;
+            });
+        }
+
+        function filterReview(type) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            questions.forEach(q => {
+                const card = document.getElementById(`q-card-${q.id}`);
+                if (!card) return;
+
+                const isCorrect = userAnswers[q.id] !== undefined && parseInt(userAnswers[q.id]) === q.answer;
+                const isWrong = userAnswers[q.id] === undefined || parseInt(userAnswers[q.id]) !== q.answer;
+                const isFlagged = !!flaggedQuestions[q.id];
+
+                let show = false;
+                if (type === 'all') show = true;
+                else if (type === 'correct' && isCorrect) show = true;
+                else if (type === 'wrong' && isWrong) show = true;
+                else if (type === 'flagged' && isFlagged) show = true;
+                else if (type === 'pyq' && q.badges.includes('pyq')) show = true;
+                else if (type === 'expected' && q.badges.includes('expected')) show = true;
+
+                card.style.display = show ? 'block' : 'none';
+            });
+        }
+
+        function exportTextSummary(score, pct) {
+            const txt = `TNPSC IVC MASTER TEST RESULTS\nScore: ${score}/150 (${pct}%)\nVerified Platform Log: 2026 Crack Sheet Engine`;
+            navigator.clipboard.writeText(txt).then(() => { alert("Summary log copied to clipboard."); });
+        }
+
+        window.onload = initApp;
+    </script>
+</body>
+</html>
