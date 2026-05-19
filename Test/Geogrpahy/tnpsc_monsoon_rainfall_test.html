@@ -1,0 +1,1540 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monsoon & Rainfall | 150Q Master Practice Test | TNPSC Group 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d0f14;--surface:#12151e;--surface2:#181c28;--border:#21263a;--border2:#2d3450;--gold:#f5c842;--gold-dim:#c9a230;--red:#e85555;--green:#4ecb7a;--blue:#5b9cf6;--purple:#a78bfa;--cyan:#22d3ee;--orange:#fb923c;--text:#e2e8f0;--text-dim:#94a3b8;--text-muted:#64748b;--font-head:'Syne',sans-serif;--font-mono:'IBM Plex Mono',monospace;--font-body:'Lora',serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;animation:gridShift 20s linear infinite;opacity:.35;pointer-events:none;z-index:0}
+@keyframes gridShift{0%{background-position:0 0}100%{background-position:0 60px}}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes barGrow{from{width:0}to{width:var(--bar-w,0%)}}
+.app-shell{position:relative;z-index:1;display:flex;min-height:100vh}
+.sidebar{width:280px;min-width:280px;background:var(--surface);border-right:1px solid var(--border);position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column;transition:transform .3s}
+.sidebar-inner{padding:20px 16px;flex:1}
+.main{flex:1;min-width:0;padding:0 0 80px}
+.sidebar-logo{font-family:var(--font-mono);font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:2px;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.toc-title{font-family:var(--font-mono);font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px}
+.toc-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:6px;cursor:pointer;border:1px solid transparent;margin-bottom:4px;transition:all .2s;text-decoration:none}
+.toc-item:hover{background:var(--surface2);border-color:var(--border)}
+.toc-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.toc-label{font-family:var(--font-mono);font-size:11px;color:var(--text-dim);flex:1;line-height:1.3}
+.toc-count{font-family:var(--font-mono);font-size:10px;color:var(--text-muted);background:var(--bg);padding:2px 6px;border-radius:10px}
+.sidebar-stats{margin-top:20px;padding-top:16px;border-top:1px solid var(--border)}
+.stat-mini{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.stat-mini-label{font-family:var(--font-mono);font-size:10px;color:var(--text-muted)}
+.stat-mini-val{font-family:var(--font-mono);font-size:12px;color:var(--gold);font-weight:600}
+.sidebar-actions{padding:16px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px}
+.btn-sidebar{padding:8px 12px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text-dim);font-family:var(--font-mono);font-size:11px;cursor:pointer;text-align:left;transition:all .2s}
+.btn-sidebar:hover{border-color:var(--gold);color:var(--gold);background:rgba(245,200,66,.05)}
+.btn-sidebar.primary{background:var(--gold);color:#0d0f14;border-color:var(--gold);font-weight:600}
+.btn-sidebar.primary:hover{background:var(--gold-dim)}
+.toggle-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)}
+.toggle-row:last-of-type{border-bottom:none}
+.toggle-label{font-family:var(--font-mono);font-size:10px;color:var(--text-dim)}
+.toggle-switch{position:relative;width:36px;height:20px;flex-shrink:0}
+.toggle-switch input{opacity:0;width:0;height:0}
+.toggle-track{position:absolute;inset:0;background:var(--surface2);border-radius:20px;cursor:pointer;transition:background .2s;border:1px solid var(--border)}
+.toggle-track::after{content:'';position:absolute;top:3px;left:3px;width:12px;height:12px;background:var(--text-muted);border-radius:50%;transition:transform .2s,background .2s}
+.toggle-switch input:checked+.toggle-track{background:var(--gold);border-color:var(--gold)}
+.toggle-switch input:checked+.toggle-track::after{transform:translateX(16px);background:#0d0f14}
+.toggle-controls{padding:12px 0 4px}
+.hero{padding:48px 48px 40px;border-bottom:1px solid var(--border);animation:fadeDown .6s ease both;background:linear-gradient(180deg,rgba(245,200,66,.03) 0%,transparent 100%)}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(245,200,66,.08);border:1px solid rgba(245,200,66,.2);border-radius:20px;padding:4px 12px;margin-bottom:20px;font-family:var(--font-mono);font-size:11px;color:var(--gold)}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+.hero-title{font-family:var(--font-head);font-size:clamp(22px,3vw,36px);font-weight:800;line-height:1.2;margin-bottom:12px;color:#fff}
+.hero-sub{font-family:var(--font-head);font-size:clamp(14px,1.8vw,18px);font-weight:600;background:linear-gradient(90deg,var(--gold),var(--orange),var(--gold),var(--gold-dim));background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 4s ease infinite;margin-bottom:24px}
+.hero-stats{display:flex;flex-wrap:wrap;gap:20px}
+.hero-stat{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 20px;text-align:center}
+.hero-stat-num{font-family:var(--font-head);font-size:28px;font-weight:800;color:var(--gold);display:block}
+.hero-stat-label{font-family:var(--font-mono);font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px}
+.progress-bar-wrap{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 48px;position:sticky;top:0;z-index:10}
+.progress-info{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.progress-info span{font-family:var(--font-mono);font-size:11px;color:var(--text-muted)}
+.progress-info .prog-count{color:var(--gold);font-weight:600}
+.progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--orange));border-radius:2px;transition:width .4s ease}
+.section-hd{padding:32px 48px 0;animation:fadeDown .4s ease both}
+.section-num{font-family:var(--font-mono);font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:2px;margin-bottom:6px}
+.section-title{font-family:var(--font-head);font-size:clamp(18px,2vw,24px);font-weight:700;color:var(--text);margin-bottom:4px}
+.section-meta{font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-bottom:24px}
+.questions-grid{padding:16px 48px;display:flex;flex-direction:column;gap:16px}
+.q-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px;position:relative;overflow:hidden;animation:fadeUp .4s ease both;transition:border-color .2s,box-shadow .2s}
+.q-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--card-accent,var(--gold));transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.q-card:hover::before{transform:scaleX(1)}
+.q-card:hover{border-color:var(--border2);box-shadow:0 4px 24px rgba(0,0,0,.3)}
+.q-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px}
+.q-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.q-num{font-family:var(--font-mono);font-size:12px;color:var(--gold);font-weight:600}
+.q-type-badge{font-family:var(--font-mono);font-size:9px;padding:2px 8px;border-radius:10px;text-transform:uppercase;letter-spacing:1px;font-weight:600}
+.badge-mcq{background:rgba(91,156,246,.15);color:var(--blue)}
+.badge-statement{background:rgba(167,139,250,.15);color:var(--purple)}
+.badge-ar{background:rgba(34,211,238,.15);color:var(--cyan)}
+.badge-match{background:rgba(251,146,60,.15);color:var(--orange)}
+.badge-fi{background:rgba(232,85,85,.15);color:var(--red)}
+.badge-chrono{background:rgba(78,203,122,.15);color:var(--green)}
+.flag-btn{background:transparent;border:1px solid var(--border);border-radius:6px;padding:4px 8px;cursor:pointer;color:var(--text-muted);font-size:14px;transition:all .2s;flex-shrink:0}
+.flag-btn:hover{border-color:var(--orange);color:var(--orange)}
+.flag-btn.flagged{border-color:var(--orange);color:var(--orange);background:rgba(251,146,60,.1)}
+.q-stem{font-family:var(--font-body);font-size:15px;line-height:1.7;color:var(--text);margin-bottom:16px;white-space:pre-line}
+.options{display:flex;flex-direction:column;gap:8px}
+.option{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all .2s}
+.option:hover{border-color:rgba(245,200,66,.4);background:rgba(245,200,66,.04)}
+.option.selected{border-color:var(--gold);background:rgba(245,200,66,.08)}
+.option.correct{border-color:var(--green);background:rgba(78,203,122,.08)}
+.option.wrong{border-color:var(--red);background:rgba(232,85,85,.08)}
+.option.show-correct{border-color:var(--green);background:rgba(78,203,122,.08)}
+.opt-letter{font-family:var(--font-mono);font-size:11px;font-weight:600;min-width:22px;height:22px;border-radius:4px;display:flex;align-items:center;justify-content:center;background:var(--bg);border:1px solid var(--border);color:var(--text-muted);flex-shrink:0;transition:all .2s}
+.option.selected .opt-letter{background:var(--gold);border-color:var(--gold);color:#0d0f14}
+.option.correct .opt-letter{background:var(--green);border-color:var(--green);color:#0d0f14}
+.option.wrong .opt-letter{background:var(--red);border-color:var(--red);color:#fff}
+.option.show-correct .opt-letter{background:var(--green);border-color:var(--green);color:#0d0f14}
+.opt-text{font-family:var(--font-body);font-size:14px;color:var(--text-dim);line-height:1.5}
+.callout{display:inline-flex;align-items:center;gap:6px;padding:2px 8px;border-radius:4px;font-family:var(--font-mono);font-size:10px;font-weight:600;margin:2px}
+.callout-pyq{background:rgba(91,156,246,.15);color:var(--blue);border:1px solid rgba(91,156,246,.25)}
+.explanation{margin-top:16px;background:var(--bg);border-left:3px solid var(--gold);border-radius:0 6px 6px 0;padding:14px 16px;display:none}
+.explanation.visible{display:block}
+.expl-answer{font-family:var(--font-mono);font-size:12px;font-weight:600;margin-bottom:10px}
+.expl-answer .ans-correct{color:var(--green)}
+.expl-answer .ans-wrong{color:var(--red)}
+.expl-text{font-family:var(--font-body);font-size:13.5px;line-height:1.7;color:var(--text-dim);white-space:pre-line}
+.result-panel{display:none;padding:40px 48px;animation:fadeUp .5s ease both}
+.result-panel.visible{display:block}
+.result-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:40px;text-align:center;margin-bottom:24px}
+.result-score{font-family:var(--font-head);font-size:80px;font-weight:800;color:var(--gold);line-height:1;display:block;margin-bottom:8px}
+.result-total{font-family:var(--font-mono);font-size:16px;color:var(--text-muted)}
+.result-pct{font-family:var(--font-head);font-size:28px;font-weight:700;margin:12px 0;color:var(--text)}
+.grade-badge{display:inline-block;padding:8px 24px;border-radius:20px;font-family:var(--font-mono);font-size:14px;font-weight:600;margin-bottom:16px}
+.grade-excellent{background:rgba(78,203,122,.15);color:var(--green);border:1px solid rgba(78,203,122,.3)}
+.grade-good{background:rgba(91,156,246,.15);color:var(--blue);border:1px solid rgba(91,156,246,.3)}
+.grade-average{background:rgba(245,200,66,.15);color:var(--gold);border:1px solid rgba(245,200,66,.3)}
+.grade-needs{background:rgba(232,85,85,.15);color:var(--red);border:1px solid rgba(232,85,85,.3)}
+.result-time{font-family:var(--font-mono);font-size:13px;color:var(--text-muted)}
+.section-scores{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:24px}
+.score-row{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px}
+.score-row-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.score-row-name{font-family:var(--font-mono);font-size:11px;color:var(--text-dim)}
+.score-row-val{font-family:var(--font-mono);font-size:12px;font-weight:600}
+.score-bar-track{height:6px;background:var(--bg);border-radius:3px;overflow:hidden}
+.score-bar-fill{height:100%;border-radius:3px;animation:barGrow .8s ease both}
+.weak-panel{background:rgba(232,85,85,.06);border:1px solid rgba(232,85,85,.2);border-radius:8px;padding:20px;margin-bottom:24px}
+.weak-title{font-family:var(--font-head);font-size:14px;font-weight:700;color:var(--red);margin-bottom:12px}
+.weak-item{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(232,85,85,.1)}
+.weak-item:last-child{border-bottom:none}
+.weak-item-name{font-family:var(--font-mono);font-size:11px;color:var(--text-dim)}
+.btn-revise{background:transparent;border:1px solid var(--red);color:var(--red);padding:4px 10px;border-radius:4px;font-family:var(--font-mono);font-size:10px;cursor:pointer;transition:all .2s}
+.btn-revise:hover{background:var(--red);color:#fff}
+.result-actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn-result{padding:10px 20px;border-radius:8px;font-family:var(--font-mono);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;border:1px solid var(--border)}
+.btn-result.gold{background:var(--gold);color:#0d0f14;border-color:var(--gold)}
+.btn-result.gold:hover{background:var(--gold-dim)}
+.btn-result.outline{background:transparent;color:var(--text-dim)}
+.btn-result.outline:hover{border-color:var(--gold);color:var(--gold)}
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;padding:16px 48px;border-bottom:1px solid var(--border)}
+.filter-btn{padding:5px 14px;border-radius:16px;font-family:var(--font-mono);font-size:11px;border:1px solid var(--border);background:transparent;color:var(--text-muted);cursor:pointer;transition:all .2s}
+.filter-btn:hover{border-color:var(--gold);color:var(--gold)}
+.filter-btn.active{background:var(--gold);color:#0d0f14;border-color:var(--gold);font-weight:600}
+.submit-wrap{padding:24px 48px;border-top:1px solid var(--border);position:sticky;bottom:0;background:var(--surface);z-index:10}
+.btn-submit{width:100%;padding:14px;background:var(--gold);color:#0d0f14;border:none;border-radius:8px;font-family:var(--font-head);font-size:16px;font-weight:700;cursor:pointer;transition:all .2s}
+.btn-submit:hover{background:var(--gold-dim);transform:translateY(-1px)}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:32px;max-width:440px;width:90%;animation:fadeUp .3s ease both}
+.modal-title{font-family:var(--font-head);font-size:20px;font-weight:700;margin-bottom:12px;color:var(--text)}
+.modal-body{font-family:var(--font-body);font-size:14px;color:var(--text-dim);line-height:1.7;margin-bottom:24px}
+.modal-actions{display:flex;gap:12px}
+.btn-modal{padding:10px 20px;border-radius:8px;font-family:var(--font-mono);font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--border);transition:all .2s}
+.btn-modal.confirm{background:var(--gold);color:#0d0f14;border-color:var(--gold)}
+.btn-modal.cancel{background:transparent;color:var(--text-dim)}
+.btn-modal.cancel:hover{border-color:var(--gold);color:var(--gold)}
+footer{background:var(--surface);border-top:1px solid var(--border);padding:20px 48px;text-align:center;font-family:var(--font-mono);font-size:11px;color:var(--text-muted);position:relative;z-index:1}
+.mob-toggle{display:none;position:fixed;top:16px;left:16px;z-index:50;background:var(--gold);color:#0d0f14;border:none;border-radius:6px;padding:8px 12px;font-family:var(--font-mono);font-size:12px;font-weight:600;cursor:pointer}
+.sidebar-close{display:none;background:transparent;border:none;color:var(--text-muted);font-size:18px;cursor:pointer;padding:4px;margin-left:auto}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:30}
+@media(max-width:900px){.mob-toggle{display:block}.sidebar{position:fixed;top:0;left:0;height:100vh;z-index:40;transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.sidebar-close{display:block}.sidebar-overlay.open{display:block}.main{width:100%}.hero{padding:60px 20px 32px}.questions-grid{padding:12px 16px}.section-hd{padding:24px 16px 0}.progress-bar-wrap{padding:10px 16px}.submit-wrap{padding:16px}.filter-bar{padding:12px 16px}.result-panel{padding:24px 16px}footer{padding:16px}}
+.palette-section{border-top:1px solid var(--border);padding:12px 16px 14px;margin-top:4px}
+.palette-section-title{font-family:var(--font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px}
+.palette-grid-dots{display:flex;flex-wrap:wrap;gap:4px}
+.pal-dot{width:22px;height:22px;border-radius:4px;border:1px solid var(--border);background:var(--surface2);color:var(--text-muted);font-family:var(--font-mono);font-size:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s}
+.pal-dot:hover{transform:scale(1.1)}
+.pal-dot.answered{background:var(--gold);color:#0d0f14;border-color:var(--gold)}
+.pal-dot.flagged{border-color:var(--orange)!important;color:var(--orange)}
+.pal-dot.answered.flagged{background:var(--gold);border-color:var(--orange)!important;color:#0d0f14}
+.pal-dot.correct{background:var(--green);color:#0d0f14;border-color:var(--green)}
+.pal-dot.wrong{background:var(--red);color:#fff;border-color:var(--red)}
+.s1{--card-accent:var(--gold)}.s2{--card-accent:var(--blue)}.s3{--card-accent:var(--red)}.s4{--card-accent:var(--green)}.s5{--card-accent:var(--purple)}
+</style>
+</head>
+<body>
+<button class="mob-toggle" onclick="toggleSidebar()">☰ Sections</button>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+<div class="app-shell">
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-inner">
+    <div style="display:flex;align-items:center;margin-bottom:16px">
+      <div class="sidebar-logo">Arivoam · TNPSC 2026</div>
+      <button class="sidebar-close" onclick="toggleSidebar()">✕</button>
+    </div>
+    <div class="toc-title">Sections</div>
+    <div id="tocList"></div>
+    <div class="palette-section">
+      <div class="palette-section-title">Question Palette</div>
+      <div class="palette-grid-dots" id="paletteGrid"></div>
+    </div>
+    <div class="sidebar-stats">
+      <div class="stat-mini"><span class="stat-mini-label">Answered</span><span class="stat-mini-val" id="statAnswered">0 / 150</span></div>
+      <div class="stat-mini"><span class="stat-mini-label">Flagged</span><span class="stat-mini-val" id="statFlagged" style="color:var(--orange)">0</span></div>
+      <div class="stat-mini" id="timerRow" style="display:none"><span class="stat-mini-label">Time</span><span class="stat-mini-val" id="timerDisplay">00:00</span></div>
+    </div>
+    <div class="toggle-controls">
+      <div class="toggle-row">
+        <span class="toggle-label">Instant Feedback</span>
+        <label class="toggle-switch"><input type="checkbox" id="toggleFeedbackChk" onchange="toggleFeedback()"><span class="toggle-track"></span></label>
+      </div>
+      <div class="toggle-row">
+        <span class="toggle-label">Show Timer</span>
+        <label class="toggle-switch"><input type="checkbox" id="toggleTimerChk" onchange="toggleTimerDisplay()"><span class="toggle-track"></span></label>
+      </div>
+    </div>
+  </div>
+  <div class="sidebar-actions">
+    <button class="btn-sidebar primary" onclick="submitTest()">Submit Test</button>
+    <button class="btn-sidebar" onclick="retakeTest()">↺ Retake Test</button>
+  </div>
+</aside>
+<main class="main" id="mainContent">
+  <div class="hero">
+    <div class="hero-badge"><span class="live-dot"></span>Live Practice Test · Updated 2024–25</div>
+    <h1 class="hero-title">Monsoon &amp; Rainfall<br>150Q Master Practice Test</h1>
+    <div class="hero-sub">TNPSC Group 1 / 2 / 4 · 2026 Crack Sheet Series · PYQ 2010–2025</div>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num">150</span><span class="hero-stat-label">Questions</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">5</span><span class="hero-stat-label">Sections</span></div>
+      <div class="hero-stat"><span class="hero-stat-num" style="font-size:18px">2010–25</span><span class="hero-stat-label">PYQ Range</span></div>
+    </div>
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-info">
+      <span>Progress</span>
+      <span class="prog-count" id="progressText">0 / 150 answered</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  </div>
+  <div id="testArea"></div>
+  <div class="result-panel" id="resultPanel">
+    <div class="result-card">
+      <span class="result-score" id="rScore">—</span>
+      <div class="result-total">out of 150 questions</div>
+      <div class="result-pct" id="rPct">—%</div>
+      <div class="grade-badge" id="rGrade">—</div>
+      <div class="result-time" id="rTime">—</div>
+    </div>
+    <h2 style="font-family:var(--font-head);font-size:18px;font-weight:700;margin-bottom:16px">Section-wise Breakdown</h2>
+    <div class="section-scores" id="sectionScores"></div>
+    <div class="weak-panel" id="weakPanel" style="display:none">
+      <div class="weak-title">⚠ Weak Areas — Score below 60%</div>
+      <div id="weakList"></div>
+    </div>
+    <div class="result-actions">
+      <button class="btn-result gold" onclick="retakeTest()">↺ Retake Test</button>
+      <button class="btn-result outline" onclick="reviewTest()">📋 Review Answers</button>
+      <button class="btn-result outline" onclick="exportResults()">⬇ Export Results</button>
+    </div>
+  </div>
+  <div class="submit-wrap" id="submitWrap">
+    <button class="btn-submit" onclick="openModal()">Submit Test ✓</button>
+  </div>
+</main>
+</div>
+<footer>Arivoam · TNPSC 2026 · Monsoon & Rainfall Practice Test · 150 Questions · PYQ 2010–2025</footer>
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-title">Submit Test?</div>
+    <div class="modal-body">You have answered <strong id="modalAnswered">0</strong> out of 150 questions. Are you sure you want to submit?</div>
+    <div class="modal-actions">
+      <button class="btn-modal confirm" onclick="confirmSubmit()">Yes, Submit</button>
+      <button class="btn-modal cancel" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+<script>
+const SECTIONS=[
+  {id:1,name:'SW Monsoon',full:'SW Monsoon & Mechanism',range:[1,40],color:'#f5c842',accent:'s1'},
+  {id:2,name:'El Niño & Rainfall',full:'El Niño, La Niña & Rainfall',range:[41,75],color:'#5b9cf6',accent:'s2'},
+  {id:3,name:'Cyclones & Extremes',full:'Cyclones & Extreme Weather',range:[76,105],color:'#e85555',accent:'s3'},
+  {id:4,name:'Rivers & Advanced',full:'Rivers, Cauvery & Advanced Topics',range:[106,135],color:'#4ecb7a',accent:'s4'},
+  {id:5,name:'PYQ Focus',full:'PYQ Focus — Tamil Nadu & Mixed',range:[136,150],color:'#a78bfa',accent:'s5'},
+];
+const QUESTIONS=questions.map(q=>({...q,correct:q.answer}));
+
+const questions = [
+// ---- BLOCK 1: Southwest Monsoon Basics (Q1–Q15) ----
+{
+  id:1, type:"MCQ",
+  stem:"The South-West Monsoon normally arrives in India at which location first?",
+  options:["Mumbai","Kerala coast","Chennai","Kolkata"],
+  answer:1,
+  explanation:"The South-West Monsoon arrives first at the Kerala coast (around June 1). The Arabian Sea branch makes landfall over the Kerala–Karnataka coastline before any other part of India."
+},
+{
+  id:2, type:"MCQ", pyq:true,
+  stem:"The normal date of onset of South-West Monsoon over Kerala is:",
+  options:["May 15","June 1","June 15","July 1"],
+  answer:1,
+  explanation:"IMD fixes June 1 as the normal onset date of the South-West Monsoon over Kerala. Advance or delay of a few days is common, but June 1 remains the climatological normal."
+},
+{
+  id:3, type:"STATEMENT",
+  stem:"Consider the following statements about the South-West Monsoon:\nI. It approaches India in two branches — the Arabian Sea branch and the Bay of Bengal branch.\nII. The Bay of Bengal branch first strikes the Andaman & Nicobar Islands in late May.\nIII. The Arabian Sea branch brings more rainfall to the east coast of India.\nWhich of the statements given above are correct?",
+  options:["I and II only","II and III only","I and III only","I, II and III"],
+  answer:0,
+  explanation:"Statements I and II are correct. The SW Monsoon does split into two branches and the Bay of Bengal branch first hits Andaman & Nicobar in late May. Statement III is wrong — the Arabian Sea branch mainly rains on the west coast; the east coast primarily receives rainfall from the Bay of Bengal branch and the retreating NE Monsoon."
+},
+{
+  id:4, type:"MCQ",
+  stem:"The South-West Monsoon covers the entire Indian subcontinent by:",
+  options:["July 1","July 15","August 1","June 30"],
+  answer:1,
+  explanation:"Normally, the SW Monsoon covers the entire country, including Rajasthan and remote north-western regions, by around July 15. This marks the full onset across India."
+},
+{
+  id:5, type:"AR",
+  stem:"Assertion (A): The onset of the South-West Monsoon is associated with a sudden increase in wind speed and heavy rains.\nReason (R): The monsoon onset is caused by the northward shift of the ITCZ over the Indian subcontinent.",
+  options:["Both A and R are correct and R is the correct explanation of A","Both A and R are correct but R is NOT the correct explanation of A","A is correct but R is wrong","A is wrong but R is correct"],
+  answer:0,
+  explanation:"Both are correct and R is the proper explanation. The Inter-Tropical Convergence Zone (ITCZ) shifts northward in summer over India, creating a low-pressure belt that pulls in moist winds from the Indian Ocean as the monsoon, leading to sudden rainfall and strong winds — marking onset."
+},
+{
+  id:6, type:"MCQ", pyq:true,
+  stem:"Which of the following passes assists the Bay of Bengal branch of the South-West Monsoon in reaching the Gangetic plains?",
+  options:["Nathu La","Shipki La","The Garo-Rajmahal Gap","Bolan Pass"],
+  answer:2,
+  explanation:"The Garo-Rajmahal Gap (between the Garo Hills and the Rajmahal Hills) acts as a funnel, allowing the Bay of Bengal branch of the SW Monsoon to enter the Gangetic plains of Bihar, UP, and beyond."
+},
+{
+  id:7, type:"MCQ",
+  stem:"What is 'burst of monsoon'?",
+  options:["Gradual increase in rainfall over weeks","Sudden onset with violent thunder, lightning and heavy rain","The retreat of monsoon from Rajasthan","Cyclonic activity in Bay of Bengal"],
+  answer:1,
+  explanation:"The 'burst of monsoon' refers to the abrupt and explosive onset of the monsoon season, characterised by sudden torrential rains, thunder and lightning, and strong gusty winds — distinguishing it from normal pre-monsoon showers."
+},
+{
+  id:8, type:"STATEMENT",
+  stem:"Which of the following statements about the onset of the South-West Monsoon over Chennai is correct?\nI. Chennai usually receives onset of SW Monsoon in the second week of June.\nII. Chennai is located on the leeward side of the Eastern Ghats, reducing SW Monsoon impact.\nIII. Chennai receives most of its annual rainfall from the retreating NE Monsoon.",
+  options:["I and II only","II and III only","I and III only","I, II and III"],
+  answer:3,
+  explanation:"All three statements are correct. Chennai receives SW Monsoon onset around the second week of June, lies in the rain shadow zone to some extent, and crucially receives the majority (about 60%) of its annual rainfall from the retreating NE Monsoon (October–December)."
+},
+{
+  id:9, type:"MCQ", pyq:true,
+  stem:"The retreating monsoon (North-East Monsoon) withdraws from which part of India first?",
+  options:["West Bengal","Rajasthan","Arunachal Pradesh","Tamil Nadu"],
+  answer:1,
+  explanation:"The SW Monsoon withdraws from north-western India (Rajasthan) first, generally around September 1. The withdrawal is progressive from NW to SE, with complete withdrawal from peninsular India by December."
+},
+{
+  id:10, type:"MCQ",
+  stem:"Which month marks the complete withdrawal of the South-West Monsoon from India?",
+  options:["September","October","November","December"],
+  answer:3,
+  explanation:"The SW Monsoon withdraws from Rajasthan by early September, from the entire Indo-Gangetic plain by mid-October, and completes its withdrawal from the extreme south of India by December, though by then the NE Monsoon has set in over Tamil Nadu."
+},
+{
+  id:11, type:"FI",
+  stem:"Identify the INCORRECT statement about the Arabian Sea branch of the SW Monsoon:",
+  options:["It strikes the Western Ghats and causes heavy orographic rainfall on the windward side","It splits into three sub-branches after hitting the Western Ghats","It causes a rain shadow region to the east of the Western Ghats","It reaches Gujarat coast before reaching Maharashtra"],
+  answer:3,
+  explanation:"The Arabian Sea branch hits Maharashtra (the Western Ghats) first before reaching Gujarat. So statement D is incorrect. The branch actually travels northward along the west coast, striking Maharashtra first and then moving toward Gujarat and Rajasthan."
+},
+{
+  id:12, type:"MCQ",
+  stem:"The 'mango showers' experienced in Kerala and Karnataka before the onset of the South-West Monsoon are also called:",
+  options:["Blossom showers","Cherry blossoms","Norwesters","Loo"],
+  answer:0,
+  explanation:"The pre-monsoon showers in Kerala and Karnataka are called 'mango showers' because they help in the ripening of mangoes. They are also called 'Blossom showers' because they help coffee plants to blossom."
+},
+{
+  id:13, type:"MCQ",
+  stem:"What percentage of India's annual rainfall is contributed by the South-West Monsoon?",
+  options:["50%","75–80%","30–40%","90%"],
+  answer:1,
+  explanation:"The South-West Monsoon (June–September) contributes approximately 75–80% of India's total annual rainfall, making it the most critical rainfall system for India's agriculture and water resources."
+},
+{
+  id:14, type:"STATEMENT",
+  stem:"Statements on monsoon onset:\nI. In 2023, the SW Monsoon onset over Kerala was delayed by about a week.\nII. The monsoon onset over Kerala is declared when 14 out of 14 designated stations receive ≥2.5 mm rainfall for two consecutive days.\nIII. Kerala monsoon onset is also associated with sustained westerly winds at 925 hPa level.\nSelect the correct statements:",
+  options:["I only","II and III only","I and III only","I, II and III"],
+  answer:1,
+  explanation:"IMD uses a combination of criteria: (a) rainfall at ≥60% of 14 designated stations ≥2.5 mm for 2 days, (b) sustained westerly winds at 925 hPa, and (c) Outgoing Longwave Radiation (OLR) below 200 W/m². So II and III are correct; 'all 14 stations' in statement II is technically '60% of 14 stations', but the wind criterion in III is correct, making II and III the best pair."
+},
+{
+  id:15, type:"MCQ", pyq:true,
+  stem:"Which of the following is the correct sequence of SW Monsoon onset across Indian cities?",
+  options:["Mumbai → Delhi → Kolkata → Chennai","Kerala → Mumbai → Delhi → Kolkata","Chennai → Mumbai → Kolkata → Delhi","Kolkata → Mumbai → Delhi → Chennai"],
+  answer:1,
+  explanation:"The correct sequence follows the progressive northward advance: Kerala (June 1) → Mumbai (June 10–15) → then the two branches diverge — Bay of Bengal branch reaches Kolkata/northeast before Delhi; Arabian Sea branch moves north toward Delhi (late June). The sequence Kerala → Mumbai → Delhi → Kolkata broadly represents the Arabian Sea track."
+},
+// ---- BLOCK 2: Northeast Monsoon (Q16–Q25) ----
+{
+  id:16, type:"MCQ", pyq:true,
+  stem:"The North-East Monsoon is most significant for which Indian state?",
+  options:["Kerala","Odisha","Tamil Nadu","West Bengal"],
+  answer:2,
+  explanation:"Tamil Nadu receives about 60% of its annual rainfall from the North-East Monsoon (October–December), making it the state most dependent on the NE Monsoon. Chennai's main rainy season is October–December."
+},
+{
+  id:17, type:"MCQ",
+  stem:"The North-East Monsoon is also called:",
+  options:["Retreating Monsoon","Dry Season","Loo winds","Kalbaisakhi"],
+  answer:0,
+  explanation:"The NE Monsoon is commonly called the 'Retreating Monsoon' because it corresponds to the withdrawal/retreat of the SW Monsoon. The winds blow from the northeast (land to sea), picking up moisture from the Bay of Bengal before striking Tamil Nadu."
+},
+{
+  id:18, type:"STATEMENT",
+  stem:"Consider the following about the North-East Monsoon:\nI. It operates during October–December.\nII. The winds blow from land to sea (northeast to southwest).\nIII. Andhra Pradesh coast also receives significant rainfall from NE Monsoon.\nIV. It brings moisture mainly from the Arabian Sea.\nCorrect statements are:",
+  options:["I and II only","I, II and III only","II and IV only","I, II, III and IV"],
+  answer:1,
+  explanation:"Statements I, II, and III are correct. The NE Monsoon operates October–December, winds blow from northeast to southwest (land to sea), and coastal Andhra Pradesh (especially Nellore–Sriharikota belt) also receives significant rainfall. Statement IV is wrong — the NE Monsoon picks up moisture from the Bay of Bengal, not the Arabian Sea."
+},
+{
+  id:19, type:"MCQ",
+  stem:"Which cyclone-prone coast is most affected by cyclones associated with the NE Monsoon season?",
+  options:["Gujarat coast","Kerala coast","Coromandel coast (Tamil Nadu–AP)","Maharashtra coast"],
+  answer:2,
+  explanation:"The Coromandel Coast (eastern coast of Tamil Nadu and southern Andhra Pradesh) is the most cyclone-prone coast of India during October–December. Post-monsoon cyclones in the Bay of Bengal frequently make landfall here, coinciding with the NE Monsoon."
+},
+{
+  id:20, type:"MCQ", pyq:true,
+  stem:"The city that receives maximum rainfall during the NE Monsoon season is:",
+  options:["Thiruvananthapuram","Chennai","Visakhapatnam","Puducherry"],
+  answer:1,
+  explanation:"Chennai (historically called Madras) receives the maximum rainfall during the NE Monsoon in India — often experiencing heavy rainfall in November and December from this system and associated cyclonic activity."
+},
+{
+  id:21, type:"AR",
+  stem:"Assertion (A): Tamil Nadu has a dry summer while the rest of peninsular India gets heavy rainfall.\nReason (R): Tamil Nadu lies on the leeward side of the Western Ghats during the South-West Monsoon season.",
+  options:["Both A and R are correct and R is the correct explanation of A","Both A and R are correct but R is NOT the correct explanation of A","A is correct but R is wrong","A is wrong but R is correct"],
+  answer:0,
+  explanation:"Both correct and causally linked. The Western Ghats intercept the SW Monsoon and receive heavy orographic rain on the windward (western) side. Tamil Nadu, lying on the leeward (eastern) side, falls in the rain shadow zone and remains relatively dry during June–September, receiving most rainfall during Oct–Dec NE Monsoon."
+},
+{
+  id:22, type:"MCQ",
+  stem:"Which district of Tamil Nadu receives the highest average annual rainfall?",
+  options:["Chennai","Nilgiris","Kanyakumari","Coimbatore"],
+  answer:1,
+  explanation:"The Nilgiris district of Tamil Nadu receives the highest average annual rainfall (over 2500 mm) due to its high elevation and exposure to both SW and NE Monsoons and orographic effect."
+},
+{
+  id:23, type:"FI",
+  stem:"Which of the following statements about NE Monsoon and Tamil Nadu is INCORRECT?",
+  options:["NE Monsoon contributes about 60% of annual rainfall of Tamil Nadu","The NE Monsoon is also called the winter monsoon","Cyclones in the Bay of Bengal during Oct–Dec enhance NE Monsoon rainfall over Tamil Nadu","The NE Monsoon weakens the Western Ghats rain shadow effect"],
+  answer:3,
+  explanation:"Option D is incorrect. The NE Monsoon does not weaken the Western Ghats rain shadow effect — that is a feature of the SW Monsoon. The NE Monsoon is driven by a separate system where winds come from the northeast and bring moisture from the Bay of Bengal. The rain shadow of the Western Ghats is relevant only to the SW Monsoon."
+},
+{
+  id:24, type:"MCQ",
+  stem:"The NE Monsoon onset over Tamil Nadu normally occurs in:",
+  options:["September","October","November","December"],
+  answer:1,
+  explanation:"The NE Monsoon typically sets in over Tamil Nadu in October, with peak rainfall in November–December. October marks the transition from the SW Monsoon withdrawal to the NE Monsoon establishment."
+},
+{
+  id:25, type:"STATEMENT",
+  stem:"I. Pondicherry (Puducherry) receives more rainfall than Chennai in most years.\nII. This is because Puducherry lies directly on the coast, more exposed to NE Monsoon.\nIII. Puducherry records over 1600 mm of annual rainfall compared to Chennai's ~1200 mm.\nSelect correct statements:",
+  options:["I only","I and II only","I and III only","I, II and III"],
+  answer:3,
+  explanation:"All three statements are broadly correct. Puducherry does generally receive more annual rainfall than Chennai (~1600 mm vs ~1200 mm). Being located slightly south and directly on the coast, Puducherry is more exposed to the Bay of Bengal NE Monsoon systems."
+},
+// ---- BLOCK 3: Monsoon Mechanism — ITCZ, Jet Streams (Q26–Q40) ----
+{
+  id:26, type:"MCQ", pyq:true,
+  stem:"The 'Thermal Theory' (Halley's Convection theory) of monsoon suggests that monsoon is caused by:",
+  options:["Differential heating of land and sea","Jet stream movement","ENSO cycles","Orographic barriers"],
+  answer:0,
+  explanation:"Edmund Halley's thermal theory (1686) proposed that monsoon winds are caused by differential heating between land and sea. In summer, the Indian landmass heats up faster than the sea, creating low pressure over land and drawing in moist winds from the ocean — the SW Monsoon. This is the earliest explanation of monsoon."
+},
+{
+  id:27, type:"MCQ",
+  stem:"Which meteorological phenomenon plays the most critical role in the onset of the South-West Monsoon according to modern understanding?",
+  options:["Western Disturbances","Northward shift of ITCZ","Tibetan anticyclone","Mascarene High"],
+  answer:1,
+  explanation:"The northward migration of the Inter-Tropical Convergence Zone (ITCZ) from the equatorial region to around 25°N over the Indian subcontinent during summer is the primary driver of the SW Monsoon onset in modern dynamical understanding."
+},
+{
+  id:28, type:"MCQ", pyq:true,
+  stem:"The Somali Jet (low-level jet stream) is associated with:",
+  options:["Western Disturbances in winter","NE Monsoon in Tamil Nadu","South-West Monsoon onset and intensification","Cyclones in Arabian Sea"],
+  answer:2,
+  explanation:"The Somali Jet (also called the Findlater Jet) is a strong low-level jet stream at about 850 hPa that flows northward along the East African coast, crosses the equator, and intensifies into the SW Monsoon flow over the Arabian Sea. It plays a key role in monsoon onset and intensity."
+},
+{
+  id:29, type:"MCQ",
+  stem:"The sub-tropical jet stream (STJ) over India typically lies at about:",
+  options:["500 hPa, 15°N","200 hPa, 25–30°N","850 hPa, 30°N","700 hPa, 20°N"],
+  answer:1,
+  explanation:"The sub-tropical westerly jet stream lies at approximately 200 hPa (roughly 12 km altitude) around 25–30°N latitude. Its northward shift over the Tibetan Plateau in May–June is considered a key trigger for the onset of the SW Monsoon over India."
+},
+{
+  id:30, type:"AR",
+  stem:"Assertion (A): The Tibetan Plateau plays a crucial role in the Indian Monsoon.\nReason (R): The Tibetan Plateau acts as an elevated heat source in summer, creating upper-level anticyclonic circulation that strengthens monsoon winds.",
+  options:["Both A and R are correct and R is the correct explanation of A","Both A and R are correct but R is NOT the correct explanation of A","A is correct but R is wrong","A is wrong but R is correct"],
+  answer:0,
+  explanation:"Both correct and causally linked. The high-altitude Tibetan Plateau absorbs solar radiation and heats the overlying atmosphere in summer, creating a heat low and strong anticyclonic (divergent) circulation at upper levels. This outflow of air at upper levels contributes to the intensification of the SW Monsoon below."
+},
+{
+  id:31, type:"STATEMENT",
+  stem:"I. The ITCZ is a region of convergence of trade winds near the equator.\nII. In summer, the ITCZ shifts northward over India and is called the 'Monsoon Trough.'\nIII. The position of the Monsoon Trough determines the spatial distribution of rainfall in India.\nWhich are correct?",
+  options:["I only","I and II only","II and III only","I, II and III"],
+  answer:3,
+  explanation:"All three are correct. The ITCZ is the tropical convergence zone of trade winds. It migrates north over India in summer as the Monsoon Trough (visible on weather maps as a low-pressure trough). The trough's north-south fluctuation determines where rainfall is intense at any given time."
+},
+{
+  id:32, type:"MCQ",
+  stem:"The 'Mascarene High' is important for the Indian Monsoon because:",
+  options:["It generates cold air masses that advance into India","It is the source of moisture-laden winds that drive the SW Monsoon","It causes the retreat of the SW Monsoon","It influences western disturbances"],
+  answer:1,
+  explanation:"The Mascarene High is a semi-permanent subtropical high-pressure system in the southern Indian Ocean (near Mascarene Islands). The pressure gradient between this high and the monsoon low over India drives the cross-equatorial flow that feeds the SW Monsoon with warm, moist air."
+},
+{
+  id:33, type:"MCQ", pyq:true,
+  stem:"'Monsoon Break' refers to:",
+  options:["Complete withdrawal of monsoon","Temporary dry spells during the monsoon season","Onset failure of the monsoon","Cyclonic activity interrupting monsoon"],
+  answer:1,
+  explanation:"A 'Monsoon Break' refers to temporary dry spells or cessation of rainfall during the monsoon season (June–September). These breaks of a few days to a week occur when the monsoon trough shifts northward toward the Himalayas, reducing rainfall over most of central India while increasing it over the foothills."
+},
+{
+  id:34, type:"MCQ",
+  stem:"Which of the following best describes 'Active Monsoon' conditions?",
+  options:["Monsoon trough shifts to the Himalayas; heavy rain over foothills","Monsoon trough lies over the Indo-Gangetic plain; widespread rain over central India","Monsoon has withdrawn from northern India","Cyclone-induced precipitation replaces normal monsoon rain"],
+  answer:1,
+  explanation:"During 'Active Monsoon,' the monsoon trough (low pressure belt) lies over the Indo-Gangetic plain and central India, leading to widespread, well-distributed rainfall. This contrasts with 'Monsoon Break' when the trough shifts north to the Himalayas."
+},
+{
+  id:35, type:"FI",
+  stem:"Which of the following statements about jet streams and the Indian Monsoon is INCORRECT?",
+  options:["The Sub-Tropical Westerly Jet shifts north of the Himalayas in summer, helping trigger monsoon onset","The Tropical Easterly Jet operates at high altitude over peninsular India during summer","The Somali Jet is a low-level jet at 200 hPa altitude","Western Disturbances are brought to India by the Sub-Tropical Westerly Jet in winter"],
+  answer:2,
+  explanation:"Statement C is incorrect — the Somali Jet is a LOW-LEVEL jet stream at approximately 850 hPa (not 200 hPa). The 200 hPa level is associated with the upper-level jet streams and the Tropical Easterly Jet. The Somali Jet flows at a lower altitude near 1.5 km above sea level."
+},
+{
+  id:36, type:"MCQ",
+  stem:"The 'Tropical Easterly Jet' (TEJ) over India in summer:",
+  options:["Flows from west to east at 850 hPa","Flows from east to west at 200 hPa over peninsular India in summer","Causes western disturbances in winter","Is responsible for NE Monsoon"],
+  answer:1,
+  explanation:"The Tropical Easterly Jet (TEJ) is an upper-level jet stream that flows from east to west at about 200 hPa over peninsular India during summer. It is associated with the heating of the Tibetan Plateau and is considered a diagnostic indicator of a good monsoon season."
+},
+{
+  id:37, type:"MATCH",
+  stem:"Match the following Jet Streams with their characteristics:\nList I (Jet Stream) — List II (Characteristic)\nA. Sub-Tropical Westerly Jet (winter) — 1. Triggers withdrawal of SW Monsoon when it re-establishes south of Himalayas\nB. Somali Jet — 2. Low-level jet; feeds moisture into SW Monsoon\nC. Tropical Easterly Jet — 3. Upper level; eastward flow; summer monsoon indicator\nD. Sub-Tropical Westerly Jet (summer position) — 4. Shifts north of Tibet; linked to monsoon onset",
+  options:["A-1, B-2, C-3, D-4","A-2, B-1, C-4, D-3","A-3, B-4, C-2, D-1","A-4, B-3, C-1, D-2"],
+  answer:0,
+  explanation:"The correct matching: A-1 (The STW Jet re-establishing south of the Himalayas in September triggers SW Monsoon withdrawal), B-2 (Somali Jet is the low-level moisture feeder), C-3 (TEJ is upper-level eastward flowing jet in summer), D-4 (STW Jet's summer northward shift north of Tibet is linked to monsoon onset)."
+},
+{
+  id:38, type:"MCQ",
+  stem:"Which of the following is NOT a factor in explaining the Indian Monsoon?",
+  options:["Differential heating of land and sea","Position and movement of ITCZ","Presence of the Himalayan mountain barrier","Coriolis force direction reversal at 30°N"],
+  answer:3,
+  explanation:"The Coriolis force direction reversal occurs at the equator (0°), not at 30°N. All other factors — differential land-sea heating, ITCZ position, and the Himalayan barrier (which prevents cold air from entering and forces moisture uplift) — are genuine monsoon-influencing factors."
+},
+{
+  id:39, type:"MCQ", pyq:true,
+  stem:"'Kalbaisakhi' storms are pre-monsoon convective storms occurring in:",
+  options:["Rajasthan","West Bengal and Assam","Kerala","Gujarat"],
+  answer:1,
+  explanation:"Kalbaisakhi (meaning 'Misfortune of Baisakh') are violent pre-monsoon squalls/thunderstorms occurring in West Bengal and Assam during April–May. They cause damage but also bring some relief from summer heat. They are equivalent to 'Nor'westers' and cause heavy local rainfall."
+},
+{
+  id:40, type:"MCQ",
+  stem:"Which meteorological term refers to the 'pulsating' or intermittent nature of the monsoon?",
+  options:["Monsoon Surge","Monsoon Active-Break Cycle","Monsoon Burst","Monsoon Retreat"],
+  answer:1,
+  explanation:"The monsoon Active-Break Cycle refers to the alternating spells of heavy rainfall (active phase) and dry/reduced rainfall (break phase) during the monsoon season. This pulsating nature is a fundamental characteristic of the Indian Monsoon."
+},
+// ---- BLOCK 4: El Niño, La Niña, ENSO (Q41–Q55) ----
+{
+  id:41, type:"MCQ", pyq:true,
+  stem:"El Niño refers to the abnormal warming of surface water in the:",
+  options:["Indian Ocean near the equator","Eastern and Central Pacific Ocean along the South American coast","Bay of Bengal","North Atlantic Ocean"],
+  answer:1,
+  explanation:"El Niño is the abnormal warming of sea surface temperatures in the central and eastern tropical Pacific Ocean, particularly along the South American coast. This disrupts the normal Walker Circulation and has global climate teleconnections."
+},
+{
+  id:42, type:"MCQ",
+  stem:"La Niña conditions typically result in:",
+  options:["Below-normal monsoon rainfall in India","Above-normal or good monsoon rainfall in India","No significant effect on Indian Monsoon","Drought conditions in India"],
+  answer:1,
+  explanation:"La Niña (abnormal cooling of the eastern Pacific) is associated with enhanced low pressure over the Indian Ocean, strengthened monsoon winds, and generally above-normal or good rainfall over India. It is opposite to El Niño in its effect."
+},
+{
+  id:43, type:"STATEMENT",
+  stem:"I. ENSO stands for El Niño Southern Oscillation.\nII. The Southern Oscillation is the seesaw of atmospheric pressure between the western and eastern Pacific.\nIII. The SOI (Southern Oscillation Index) is calculated as the pressure difference between Tahiti and Darwin.\nIV. A negative SOI indicates El Niño conditions.\nCorrect statements:",
+  options:["I and II only","I, II and III only","I, II, III and IV","II and IV only"],
+  answer:2,
+  explanation:"All four statements are correct. ENSO = El Niño Southern Oscillation. The Southern Oscillation is the atmospheric component (pressure seesaw between eastern and western Pacific). SOI = Tahiti pressure minus Darwin pressure. Negative SOI (low pressure at Tahiti, high at Darwin) = El Niño."
+},
+{
+  id:44, type:"MCQ", pyq:true,
+  stem:"Which of the following is correct about El Niño and Indian Monsoon?",
+  options:["El Niño always causes drought in India","El Niño weakens the monsoon but does not always cause drought","La Niña causes below-normal rainfall","El Niño strengthens the Indian Ocean low-pressure system"],
+  answer:1,
+  explanation:"El Niño generally weakens the Indian Monsoon by warming the western Pacific and weakening the pressure gradient that drives monsoon circulation. However, it does not ALWAYS cause drought — not all El Niño years are drought years in India (e.g., 1997 El Niño was severe but India had normal monsoon)."
+},
+{
+  id:45, type:"MCQ",
+  stem:"The Indian Ocean Dipole (IOD) is linked to monsoon because:",
+  options:["A positive IOD (warmer western Indian Ocean) tends to strengthen the Indian Monsoon","A negative IOD strengthens the monsoon","IOD has no influence on monsoon","IOD operates only in winter"],
+  answer:0,
+  explanation:"A positive IOD (warmer sea surface temperatures in the western Indian Ocean relative to the eastern Indian Ocean) is associated with enhanced moisture supply to India and tends to produce above-normal monsoon rainfall. A positive IOD can partially offset El Niño's negative impact."
+},
+{
+  id:46, type:"AR",
+  stem:"Assertion (A): The great Indian drought of 2002 was partially linked to El Niño conditions.\nReason (R): El Niño suppresses the Walker Circulation, reducing moisture supply to the Indian subcontinent.",
+  options:["Both A and R are correct and R is the correct explanation of A","Both A and R are correct but R is NOT the correct explanation of A","A is correct but R is wrong","A is wrong but R is correct"],
+  answer:0,
+  explanation:"Both are correct and causally related. The 2002 drought was indeed associated with El Niño. El Niño suppresses the Walker Circulation (the east-west circulation cell over the tropical Pacific), which weakens the pressure gradient that drives moisture-laden winds from the Indian Ocean to India, reducing monsoon rainfall."
+},
+{
+  id:47, type:"MCQ",
+  stem:"Walker Circulation is:",
+  options:["A vertical circulation cell over the Indian subcontinent","An east-west atmospheric circulation cell over the tropical Pacific","A circulation pattern of monsoon winds","Circulation of ocean currents in the Bay of Bengal"],
+  answer:1,
+  explanation:"The Walker Circulation is a large-scale east-west atmospheric circulation cell in the tropical Pacific. In normal years, surface air rises over the western Pacific (warm), flows east aloft, sinks over the eastern Pacific (cool), and returns west along the surface. El Niño disrupts this cell."
+},
+{
+  id:48, type:"MCQ", pyq:true,
+  stem:"The term 'El Niño' was coined by:",
+  options:["Australian meteorologists","Peruvian fishermen","Indian Meteorological Department","NOAA scientists"],
+  answer:1,
+  explanation:"'El Niño' (meaning 'The Child' or 'The Christ Child' in Spanish) was originally named by Peruvian fishermen who noticed a warm ocean current appearing around Christmas along the South American coast, bringing poor fishing conditions."
+},
+{
+  id:49, type:"FI",
+  stem:"Which of the following about ENSO is INCORRECT?",
+  options:["ENSO cycles occur approximately every 2–7 years","El Niño and La Niña are the two opposing phases of ENSO","La Niña typically causes drought in India","A positive IOD can counter the negative impact of El Niño on Indian Monsoon"],
+  answer:2,
+  explanation:"Statement C is incorrect. La Niña typically causes ABOVE-normal (good/excess) rainfall in India, not drought. It is El Niño that is associated with below-normal or drought conditions. La Niña strengthens the pressure gradient favouring stronger monsoon winds and more rainfall."
+},
+{
+  id:50, type:"MCQ",
+  stem:"'Modoki' El Niño is different from a conventional El Niño because:",
+  options:["It occurs in the Indian Ocean","Warming is concentrated in the central Pacific rather than the eastern Pacific","It is weaker in intensity","It has no impact on Indian Monsoon"],
+  answer:1,
+  explanation:"El Niño Modoki (meaning 'similar but different' in Japanese) is characterised by warming in the CENTRAL Pacific Ocean rather than the eastern Pacific. It has different teleconnection patterns compared to classical El Niño and can affect the Indian Monsoon differently."
+},
+{
+  id:51, type:"STATEMENT",
+  stem:"I. The 1877 and 1899 Indian famines were associated with severe El Niño events.\nII. The British used ENSO data to manage famine relief in colonial India.\nIII. Gilbert Walker discovered the Southern Oscillation while studying Indian monsoon failures.\nCorrect statements:",
+  options:["I only","I and III only","II and III only","I, II and III"],
+  answer:1,
+  explanation:"Statements I and III are correct. Major Indian famines (1877, 1899) occurred during strong El Niño years. Sir Gilbert Walker (head of the Indian Meteorological Department in early 20th century) discovered the Southern Oscillation while attempting to predict Indian monsoon failures. Statement II is an overstatement."
+},
+{
+  id:52, type:"MCQ",
+  stem:"Which year's Indian Monsoon is considered an exception to the El Niño–drought correlation because India had normal rainfall despite strong El Niño?",
+  options:["1987","1997","2014","2009"],
+  answer:1,
+  explanation:"The 1997–98 El Niño was one of the strongest on record, but India received near-normal monsoon rainfall in 1997. This is partly attributed to a simultaneous positive IOD event that compensated for the El Niño effect. It demonstrates that El Niño does not always guarantee drought in India."
+},
+{
+  id:53, type:"MCQ",
+  stem:"The Bjerknes feedback is associated with ENSO because:",
+  options:["It describes the cooling of the Pacific due to volcanic eruptions","It explains the self-amplifying nature of El Niño once it initiates","It models the Indian Monsoon variability","It predicts monsoon onset dates"],
+  answer:1,
+  explanation:"Bjerknes feedback is the positive feedback mechanism in ENSO: initial warming of eastern Pacific → weakening of trade winds → reduced upwelling → more warming → further weakening of trade winds — creating a self-amplifying cycle that sustains and intensifies El Niño."
+},
+{
+  id:54, type:"MCQ",
+  stem:"What is the approximate recurrence interval of ENSO (El Niño / La Niña) events?",
+  options:["Every year","Every 2–7 years","Every 10–12 years","Every 25–30 years"],
+  answer:1,
+  explanation:"ENSO events (both El Niño and La Niña) recur irregularly but typically every 2–7 years. There is no fixed interval; some El Niño events are followed immediately by La Niña while others are followed by neutral conditions."
+},
+{
+  id:55, type:"MCQ", pyq:true,
+  stem:"The concept of 'Monsoon Trough' is best described as:",
+  options:["A cold front over the Himalayan region","An elongated area of low pressure extending from the Pakistan border to the Bay of Bengal during monsoon season","A high-pressure system over the Arabian Sea","A jet stream at 500 hPa"],
+  answer:1,
+  explanation:"The Monsoon Trough is the extension of the ITCZ over the Indian subcontinent during the SW Monsoon season. It is an elongated low-pressure trough that runs roughly from northwest India (Pakistan border area) to the head of the Bay of Bengal. Its position determines rainfall distribution day-to-day."
+},
+// ---- BLOCK 5: Rainfall Distribution — India & Tamil Nadu (Q56–Q75) ----
+{
+  id:56, type:"MCQ", pyq:true,
+  stem:"Which of the following places receives the highest average annual rainfall in India?",
+  options:["Cherrapunji","Mawsynram","Agumbe","Mahabaleshwar"],
+  answer:1,
+  explanation:"Mawsynram in Meghalaya receives the highest average annual rainfall in India (approximately 11,871 mm), narrowly surpassing Cherrapunji (Sohra, also in Meghalaya, ~11,430 mm). Both receive orographic rainfall from Bay of Bengal branch monsoon hitting the Khasi Hills."
+},
+{
+  id:57, type:"MCQ",
+  stem:"Which region of India receives the least average annual rainfall?",
+  options:["Western Rajasthan (Jaisalmer region)","Ladakh (Leh)","Kutch, Gujarat","Deccan Plateau rain shadow"],
+  answer:1,
+  explanation:"Leh in Ladakh receives the least rainfall in India — less than 100 mm per year. Being in the rain shadow of the Great Himalayas and far from any moisture source, it is an extreme cold desert. Jaisalmer also receives very little rain (~100–150 mm) but Leh gets even less."
+},
+{
+  id:58, type:"STATEMENT",
+  stem:"I. Western Rajasthan receives less than 150 mm of annual rainfall.\nII. Tamil Nadu's western districts (like Coimbatore) receive more rainfall than coastal Chennai.\nIII. The Deccan Plateau interior is relatively dry compared to the coast.\nIV. The northeast region (Meghalaya) is the wettest in India.\nSelect all correct statements:",
+  options:["I, III and IV only","I, II, III and IV","II and III only","I and IV only"],
+  answer:1,
+  explanation:"All four are correct. Western Rajasthan is indeed below 150 mm. Coimbatore in western Tamil Nadu is closer to the Western Ghats and receives higher SW Monsoon rainfall than coastal Chennai. The Deccan interior is drier. Meghalaya (particularly Mawsynram/Cherrapunji) is the wettest region in India."
+},
+{
+  id:59, type:"MCQ", pyq:true,
+  stem:"The rain shadow area of the Western Ghats is called:",
+  options:["Malnad","Maidan","Bayaluseeme","Konkan"],
+  answer:2,
+  explanation:"Bayaluseeme (meaning 'open/dry country') in Kannada refers to the semi-arid areas on the leeward (eastern) side of the Western Ghats — roughly the eastern parts of Karnataka and districts of Tamil Nadu bordering Karnataka. It is a classic rain shadow region. 'Malnad' refers to the wet hill country (windward side)."
+},
+{
+  id:60, type:"MCQ",
+  stem:"Which of the following rivers in Tamil Nadu is most dependent on NE Monsoon rainfall for its flow?",
+  options:["Cauvery","Vaigai","Palar","Tamiraparani"],
+  answer:1,
+  explanation:"The Vaigai river in Tamil Nadu (flowing through Madurai) is primarily dependent on NE Monsoon rainfall from the eastern slopes of the Western Ghats and the surrounding region. It is also fed by Mullai Periyar project water. Unlike Cauvery which receives SW Monsoon, Vaigai's basin is more NE Monsoon dependent."
+},
+{
+  id:61, type:"MCQ",
+  stem:"The annual rainfall of India decreases as one moves from east to west along the Tropic of Cancer because:",
+  options:["The Arabian Sea is colder than the Bay of Bengal","The Bay of Bengal branch progressively loses moisture moving westward","Western India is on the windward side of the Ghats","Coriolis force deflects rainfall eastward"],
+  answer:1,
+  explanation:"The Bay of Bengal branch of the SW Monsoon progressively deposits moisture as it moves westward and northward across the Indo-Gangetic plain. By the time it reaches western India, much of the moisture has been used up, resulting in decreasing rainfall from east to west along the Tropic of Cancer."
+},
+{
+  id:62, type:"MATCH",
+  stem:"Match the following rainfall types with regions:\nList I (Region) — List II (Primary Monsoon/Rainfall source)\nA. Tamil Nadu — 1. NE Monsoon (Retreating Monsoon)\nB. Meghalaya — 2. Orographic rainfall from Bay of Bengal branch SW Monsoon\nC. Western Ghats windward — 3. Orographic rainfall from Arabian Sea branch SW Monsoon\nD. Western Rajasthan — 4. Minimal rainfall, arid region",
+  options:["A-1, B-2, C-3, D-4","A-2, B-1, C-4, D-3","A-3, B-4, C-2, D-1","A-4, B-3, C-1, D-2"],
+  answer:0,
+  explanation:"Correct matching: A-1 (Tamil Nadu ← NE Monsoon), B-2 (Meghalaya ← orographic from Bay of Bengal branch), C-3 (Western Ghats windward ← Arabian Sea branch orographic), D-4 (Western Rajasthan ← very little rainfall, arid)."
+},
+{
+  id:63, type:"MCQ", pyq:true,
+  stem:"The Western Ghats receive heavy rainfall on their western slopes because:",
+  options:["They are parallel to the coast and act as an orographic barrier to the SW Monsoon","They are near the Equator","Western Ghats are at higher latitude","Cold currents exist on their western side"],
+  answer:0,
+  explanation:"The Western Ghats run parallel to India's west coast and act as a formidable orographic barrier. Moist Arabian Sea branch winds are forced to ascend the steep western slopes, causing adiabatic cooling and heavy orographic/relief rainfall. The eastern slopes lie in rain shadow."
+},
+{
+  id:64, type:"MCQ",
+  stem:"Which is the wettest district of India receiving over 10,000 mm of annual rainfall?",
+  options:["Idukki, Kerala","East Khasi Hills, Meghalaya","North Sikkim","Coorg (Kodagu), Karnataka"],
+  answer:1,
+  explanation:"East Khasi Hills district in Meghalaya, which contains Mawsynram and Cherrapunji, is the wettest district in India and likely the world, with average annual rainfall exceeding 10,000 mm. The funnel-shaped terrain forces moisture-laden Bay of Bengal winds to ascend, causing extreme orographic precipitation."
+},
+{
+  id:65, type:"MCQ",
+  stem:"What is 'isohyet'?",
+  options:["A line connecting places of equal temperature","A line connecting places of equal rainfall (precipitation)","A line connecting places of equal pressure","A line connecting places of equal sunshine hours"],
+  answer:1,
+  explanation:"An isohyet is a line on a map connecting all points that receive equal amounts of precipitation (rainfall) over a given period. It is analogous to an isotherm (temperature) or isobar (pressure). Isohyetal maps show the spatial distribution of rainfall."
+},
+{
+  id:66, type:"STATEMENT",
+  stem:"Consider the rainfall pattern in Tamil Nadu:\nI. The eastern coastal districts of Tamil Nadu receive most of their rain from NE Monsoon.\nII. The western districts like Coimbatore receive most rainfall from SW Monsoon.\nIII. The Nilgiris are one of the wettest regions in Tamil Nadu, receiving rain from both monsoons.\nIV. Thoothukudi (Tuticorin) district is relatively dry compared to other Tamil Nadu districts.",
+  options:["I, II and III only","II, III and IV only","I, III and IV only","I, II, III and IV"],
+  answer:3,
+  explanation:"All four statements are correct. Eastern coastal TN: NE Monsoon dominant. Western TN (Coimbatore): SW Monsoon from Western Ghats. Nilgiris: highest rainfall, exposed to both monsoons. Thoothukudi: relatively dry (rain shadow + interior location) with ~600–700 mm average."
+},
+{
+  id:67, type:"MCQ",
+  stem:"Mahabaleshwar (Maharashtra) receives heavy rainfall because:",
+  options:["It is on the leeward side of the Ghats","It is on the windward side of the Western Ghats at high elevation","It receives NE Monsoon","It lies in a river valley"],
+  answer:1,
+  explanation:"Mahabaleshwar, one of the wettest places in Maharashtra (~6,000+ mm), is located on the windward (western) side of the Western Ghats at high elevation. The moist Arabian Sea winds are forced upward here, causing heavy orographic rainfall. It is among India's highest rainfall stations."
+},
+{
+  id:68, type:"MCQ", pyq:true,
+  stem:"The term 'Orographic Rainfall' (Relief Rainfall) refers to rainfall caused by:",
+  options:["Convergence of trade winds near the equator","Moist air being forced upward by mountains, cooling and condensing","Convection due to surface heating","Fronts between cold and warm air masses"],
+  answer:1,
+  explanation:"Orographic (relief) rainfall occurs when moisture-laden winds are forced to ascend mountain slopes. As the air rises, it expands and cools adiabatically (at ~6.5°C per 1000 m), reaching the dew point, causing condensation and precipitation on the windward side."
+},
+{
+  id:69, type:"MCQ",
+  stem:"Which of the following is the correct decreasing order of annual rainfall in India?",
+  options:["Meghalaya > Kerala > Andaman > Rajasthan","Kerala > Meghalaya > Rajasthan > Andaman","Andaman > Meghalaya > Kerala > Rajasthan","Meghalaya > Andaman > Kerala > Rajasthan"],
+  answer:0,
+  explanation:"The correct general order of annual rainfall: Meghalaya (highest, ~11,000+ mm) > Kerala coast (~3,000–4,000 mm) > Andaman (tropical high rainfall, ~3,000+ mm) > Rajasthan (lowest, ~100–500 mm)."
+},
+{
+  id:70, type:"MCQ",
+  stem:"The 'leeward side' of a mountain receives less rainfall because:",
+  options:["Winds are faster on leeward side","Air descends and warms up on the leeward side, reducing chance of condensation","More evaporation occurs on leeward side","Solar radiation is less on leeward side"],
+  answer:1,
+  explanation:"On the leeward (rain shadow) side, air descends after crossing the mountain. Descending air undergoes adiabatic compression and warming, reducing relative humidity and making precipitation less likely. Hence leeward areas are dry — called the 'rain shadow zone.'"
+},
+{
+  id:71, type:"STATEMENT",
+  stem:"I. Pune receives less rainfall than Mumbai though both are in Maharashtra.\nII. This is because Pune lies on the leeward side of the Western Ghats.\nIII. Pune's average annual rainfall is approximately 700 mm while Mumbai receives around 2400 mm.\nIV. The difference is entirely due to higher altitude at Mumbai.",
+  options:["I and II only","I, II and III only","II and III only","I, II, III and IV"],
+  answer:1,
+  explanation:"Statements I, II, and III are correct. Pune (~700 mm) receives much less rainfall than Mumbai (~2400 mm). This is because Mumbai is on the windward coast and Pune is on the leeward side — rain shadow of Western Ghats. Statement IV is wrong — Mumbai is not at higher altitude; the difference is entirely due to orographic effect."
+},
+{
+  id:72, type:"MCQ",
+  stem:"The Andaman & Nicobar Islands receive more than __ mm of annual rainfall.",
+  options:["1000","1500","2500","5000"],
+  answer:2,
+  explanation:"The Andaman & Nicobar Islands receive more than 2500 mm of annual rainfall due to their tropical location, exposure to both the Bay of Bengal branch of the SW Monsoon and the NE Monsoon, and cyclonic rainfall. Parts receive over 3000 mm annually."
+},
+{
+  id:73, type:"MCQ", pyq:true,
+  stem:"Which of the following cities in India has the MOST variability (irregularity) in rainfall from year to year?",
+  options:["Cherrapunji","Jodhpur (Rajasthan)","Mangaluru (Mangalore)","Port Blair"],
+  answer:1,
+  explanation:"Arid and semi-arid regions like Jodhpur in Rajasthan have high variability (or coefficient of variation) in annual rainfall. When annual rainfall is low (~300–400 mm), the percentage variation from the mean is extremely high. Contrast this with Cherrapunji where high totals mean lower relative variability."
+},
+{
+  id:74, type:"MCQ",
+  stem:"The concept of 'Coefficient of Variation' of rainfall indicates:",
+  options:["Total annual rainfall","Difference between maximum and minimum rainfall","Relative variability or reliability of rainfall","Seasonal distribution of rainfall"],
+  answer:2,
+  explanation:"Coefficient of Variation (CV) of rainfall = (Standard Deviation / Mean) × 100. A high CV indicates high variability/unreliability of rainfall (common in arid regions), while a low CV indicates reliable, consistent rainfall (like in heavy-rainfall areas near Western Ghats)."
+},
+{
+  id:75, type:"FI",
+  stem:"Which of the following about India's rainfall distribution is INCORRECT?",
+  options:["Rainfall decreases from west to east along the Himalayan foothills (opposite of the peninsular trend)","The interior of the Deccan Plateau receives 500–750 mm of annual rainfall","The Karakoram Desert in Ladakh receives less than 100 mm","The Coromandel coast of Tamil Nadu is wetter in winter (NE Monsoon) than in summer (SW Monsoon)"],
+  answer:0,
+  explanation:"Statement A is incorrect. Rainfall INCREASES from west to east along the Himalayan foothills — as the Bay of Bengal branch progressively pushes westward, but the Eastern Himalayas/northeast receives much more than western Himalayas. So rainfall generally decreases from east to west along the foothills (not west to east). In the peninsula, rainfall decreases from the coasts toward the interior."
+},
+// ---- BLOCK 6: Cyclones & Western Disturbances (Q76–Q90) ----
+{
+  id:76, type:"MCQ", pyq:true,
+  stem:"Which sea gives rise to more cyclones affecting India's coasts?",
+  options:["Arabian Sea","Bay of Bengal","Both equal","Neither — all cyclones are Atlantic"],
+  answer:1,
+  explanation:"The Bay of Bengal produces about 5–6 times more cyclones than the Arabian Sea. This is because the Bay of Bengal is warmer, less saline, and has less vertical wind shear — all conditions favoring cyclone formation and intensification."
+},
+{
+  id:77, type:"MCQ",
+  stem:"'Western Disturbances' are:",
+  options:["Low-pressure systems originating over the Tibetan Plateau","Extra-tropical cyclones embedded in westerly jet streams originating in the Mediterranean/Atlantic region","Cyclones from the Bay of Bengal in winter","Convective systems over the Western Ghats"],
+  answer:1,
+  explanation:"Western Disturbances are extra-tropical (mid-latitude) cyclonic systems that originate over the Mediterranean Sea, Atlantic Ocean, or Caspian Sea and travel eastward embedded in the Sub-Tropical Westerly Jet stream. They bring winter rainfall to north India and snowfall to the Himalayas."
+},
+{
+  id:78, type:"STATEMENT",
+  stem:"I. Western Disturbances bring winter rainfall to Punjab, Haryana, and northwestern India (Rabi crop benefit).\nII. They cause snowfall in the Himalayan region during December–March.\nIII. Western Disturbances can reach as far south as Tamil Nadu occasionally.\nIV. The Avalanche incidents in the Himalayas are often linked to Western Disturbances.\nCorrect statements:",
+  options:["I and II only","I, II and IV only","I, II, III and IV","II and III only"],
+  answer:2,
+  explanation:"All four statements are correct. Western Disturbances: benefit Rabi crops in NW India; cause Himalayan snowfall; occasionally bring cloudy/rainy conditions to Tamil Nadu (especially northern TN); and are linked to avalanches in the Himalayas due to heavy snowfall."
+},
+{
+  id:79, type:"MCQ", pyq:true,
+  stem:"The cyclone season in the Bay of Bengal is:",
+  options:["January–March","April–June and September–December","June–September only","November–February"],
+  answer:1,
+  explanation:"Cyclone season in the Bay of Bengal has two peaks: (1) the pre-monsoon period (April–June) and (2) the post-monsoon period (September–December, with peak in October–November). Very few cyclones occur during the peak monsoon months (July–August) despite warm temperatures."
+},
+{
+  id:80, type:"MCQ",
+  stem:"A tropical cyclone is called a 'Hurricane' when wind speed exceeds:",
+  options:["63 km/h","89 km/h","119 km/h","150 km/h"],
+  answer:2,
+  explanation:"A tropical cyclone is classified as a Hurricane (Atlantic/eastern Pacific) when sustained wind speeds exceed 119 km/h (74 mph). In the Indian Ocean context, the IMD uses 'Very Severe Cyclonic Storm' for winds 89–117 km/h and 'Super Cyclonic Storm' for winds >221 km/h."
+},
+{
+  id:81, type:"AR",
+  stem:"Assertion (A): The Arabian Sea cyclones have become more intense and frequent in recent decades.\nReason (R): Climate change and global warming are increasing sea surface temperatures in the Arabian Sea.",
+  options:["Both A and R are correct and R is the correct explanation of A","Both A and R are correct but R is NOT the correct explanation of A","A is correct but R is wrong","A is wrong but R is correct"],
+  answer:0,
+  explanation:"Both are correct and causally linked. Research (including IPCC reports) indicates that Arabian Sea cyclones have indeed intensified in recent decades. Rising sea surface temperatures (due to climate change) provide more thermal energy for cyclone intensification, potentially leading to more Category 4 and 5 storms in the Arabian Sea."
+},
+{
+  id:82, type:"MCQ",
+  stem:"The 'eye' of a cyclone is characterised by:",
+  options:["Maximum wind speed and heavy rainfall","Calm conditions with light winds and clear sky","Cold temperatures and strong updrafts","Vertical wind shear"],
+  answer:1,
+  explanation:"The eye of a tropical cyclone is a region of calm weather — relatively light winds, clear or partly cloudy skies, and warm temperatures. It is surrounded by the 'eyewall,' which has the most destructive winds and heaviest rainfall."
+},
+{
+  id:83, type:"MATCH",
+  stem:"Match cyclone names with their affected regions:\nList I — List II\nA. Cyclone Vardah (2016) — 1. Tamil Nadu coast (Chennai)\nB. Cyclone Ockhi (2017) — 2. Kerala–Tamil Nadu coast (southernmost tip)\nC. Cyclone Gaja (2018) — 3. Nagapattinam–Pamban coast (Tamil Nadu)\nD. Cyclone Nivar (2020) — 4. North Tamil Nadu–Puducherry coast",
+  options:["A-1, B-2, C-3, D-4","A-2, B-1, C-4, D-3","A-3, B-4, C-1, D-2","A-4, B-3, C-2, D-1"],
+  answer:0,
+  explanation:"Correct matching: A-1 (Vardah 2016 → Chennai coast), B-2 (Ockhi 2017 → Kerala–southernmost TN), C-3 (Gaja 2018 → Nagapattinam–Pamban), D-4 (Nivar 2020 → north TN–Puducherry coast)."
+},
+{
+  id:84, type:"MCQ",
+  stem:"Which of the following classification systems does India use for tropical cyclones?",
+  options:["Saffir-Simpson Scale","IMD Classification (Depression, Cyclonic Storm, Severe Cyclonic Storm, etc.)","Fujita Scale","NOAA Scale"],
+  answer:1,
+  explanation:"India uses the IMD (India Meteorological Department) classification for tropical cyclones in the North Indian Ocean. The scale ranges from: Low Pressure Area → Depression → Deep Depression → Cyclonic Storm → Severe Cyclonic Storm → Very Severe → Extremely Severe → Super Cyclonic Storm."
+},
+{
+  id:85, type:"MCQ", pyq:true,
+  stem:"The deadliest cyclone to hit Tamil Nadu/Andhra Pradesh in recent decades, in November 1977, was:",
+  options:["Cyclone BOB 06/1977","Divi Seema Cyclone","Cyclone Vardah","Cyclone 05B"],
+  answer:1,
+  explanation:"The Divi Seema Cyclone of November 1977 is one of the deadliest to hit the Indian coast, making landfall near Krishna district (Andhra Pradesh) and causing catastrophic flooding and deaths numbering in the tens of thousands. It remains a benchmark for disaster management planning."
+},
+{
+  id:86, type:"MCQ",
+  stem:"The 'Rapid Intensification' of cyclones in the Arabian Sea is primarily due to:",
+  options:["Cold upwelling of water","Warm sea surface temperatures and weak vertical wind shear","Monsoon trough alignment","High relative humidity at upper troposphere"],
+  answer:1,
+  explanation:"Rapid intensification of cyclones requires warm sea surface temperatures (>26.5°C to substantial depth), weak vertical wind shear, and high relative humidity in the middle troposphere. The Arabian Sea's increasing SST due to climate change, combined with periods of low wind shear, enables rapid intensification."
+},
+{
+  id:87, type:"MCQ",
+  stem:"'Storm Surge' associated with cyclones is:",
+  options:["Heavy rainfall preceding cyclone landfall","Abnormal rise in coastal sea level due to cyclone wind-driven water piling up","Strong coastal winds during cyclone","Tsunami-like waves generated by cyclone"],
+  answer:1,
+  explanation:"Storm surge is the abnormal rise in sea level caused by the combination of strong cyclone winds pushing water toward the coast and the low atmospheric pressure at the cyclone center lifting the sea surface. It is the deadliest aspect of cyclones in low-lying coastal areas."
+},
+{
+  id:88, type:"STATEMENT",
+  stem:"I. Pre-monsoon cyclones in the Bay of Bengal are generally more intense than post-monsoon cyclones.\nII. Post-monsoon cyclones are more in number than pre-monsoon cyclones.\nIII. The Indian coastline prone to cyclone landfalls extends from Odisha to Tamil Nadu on the east coast.\nIV. Arabian Sea cyclones rarely cross the Indian coast and usually recurve.",
+  options:["I and III only","II and III only","I, II and III only","II, III and IV only"],
+  answer:1,
+  explanation:"Statements II and III are correct. Post-monsoon (October–December) cyclones are more numerous than pre-monsoon (April–June) ones. The east coast from Odisha to Tamil Nadu is the most cyclone-prone stretch. Statement I is wrong — post-monsoon cyclones are sometimes more intense. Statement IV is partially true but Arabian Sea cyclones do sometimes hit the Indian/Pakistan coast."
+},
+{
+  id:89, type:"MCQ",
+  stem:"Which Indian coastal state is most frequently affected by tropical cyclones?",
+  options:["Tamil Nadu","Odisha","Kerala","Goa"],
+  answer:1,
+  explanation:"Odisha (especially districts like Kendrapara, Ganjam, Puri) is the most cyclone-prone state in India by frequency of landfall. The Super Cyclone of 1999 that killed ~10,000 people and Cyclone Phailin (2013) are notable examples. The shallow Bay of Bengal north is favorable for cyclone development and landfall in Odisha."
+},
+{
+  id:90, type:"MCQ",
+  stem:"A 'Western Disturbance' is most active over north India during:",
+  options:["June–September","October–November","December–February","March–April"],
+  answer:2,
+  explanation:"Western Disturbances are most frequent and active during December–February (peak winter months). They bring crucial winter rainfall (about 150–250 mm) to Punjab, Haryana, western UP, and J&K, which is vital for the Rabi (winter) crops like wheat."
+},
+// ---- BLOCK 7: Drought, Flood, Rain Shadow (Q91–Q105) ----
+{
+  id:91, type:"MCQ", pyq:true,
+  stem:"A 'Meteorological Drought' is defined by IMD as a situation when the actual rainfall is deficient by more than __ % of normal.",
+  options:["10%","25%","50%","75%"],
+  answer:1,
+  explanation:"IMD defines Meteorological Drought as a situation where actual rainfall in an area is deficient by more than 25% of its long-period average (LPA). If deficiency exceeds 50%, it is called a 'Large-Scale Drought.'"
+},
+{
+  id:92, type:"MCQ",
+  stem:"The 'Rain Shadow' area of the Eastern Ghats means:",
+  options:["Eastern Tamil Nadu coast receives no rainfall","The western side of the Eastern Ghats receives less rain than the eastern (coastal) side","The area east of the Eastern Ghats is drier","The Eastern Ghats cause a barrier to the NE Monsoon"],
+  answer:1,
+  explanation:"The Eastern Ghats also create a limited rain shadow effect — their western slopes (inland plateau) receive less rainfall as the SE branch of SW Monsoon or NE Monsoon loses some moisture crossing the ghats. However, the Eastern Ghats effect is much less pronounced than the Western Ghats."
+},
+{
+  id:93, type:"STATEMENT",
+  stem:"I. Flood-prone regions of India include the Brahmaputra valley, Gangetic delta, and coastal areas of Odisha.\nII. Droughts are most common in Rajasthan, Marathwada, Vidarbha, and Rayalaseema.\nIII. The Deccan Plateau receives both high flood risk and drought risk in different parts.\nSelect the correct statements:",
+  options:["I only","I and II only","I, II and III","II and III only"],
+  answer:2,
+  explanation:"All three are correct. Brahmaputra valley, Gangetic delta, and Odisha coast are highly flood-prone. Rajasthan, Marathwada, Vidarbha, and Rayalaseema are chronically drought-prone. The Deccan is diverse — coastal Maharashtra floods while interior Marathwada droughts."
+},
+{
+  id:94, type:"MCQ",
+  stem:"The 'Drought of 1987' in India is considered one of the worst in the 20th century because:",
+  options:["All of India received zero rainfall","50% of India's area and over 300 million people were affected","Rainfall was deficient only in Tamil Nadu","It occurred due to a severe La Niña event"],
+  answer:1,
+  explanation:"The 1987 drought was one of India's worst — affecting nearly 50% of the country's area and over 300 million people. It was associated with El Niño conditions that weakened the SW Monsoon significantly. Crop production fell sharply and famine conditions threatened several regions."
+},
+{
+  id:95, type:"MCQ",
+  stem:"Which of the following is a 'drought shadow' district in Tamil Nadu?",
+  options:["Nilgiris","Kancheepuram","Dharmapuri","Thanjavur"],
+  answer:2,
+  explanation:"Dharmapuri district in Tamil Nadu is considered drought-prone. It lies in the interior, away from both the SW Monsoon (partially in rain shadow of the Nilgiris) and the NE Monsoon coastal belt. Other drought-prone TN districts include Vellore, Tiruppur interior areas, and Pudukkottai."
+},
+{
+  id:96, type:"MCQ", pyq:true,
+  stem:"The Brahmaputra river valley experiences annual floods primarily because:",
+  options:["Cyclones hit the valley every year","Himalayan glaciers melt in summer combined with heavy monsoon rainfall","Western Disturbances bring excessive rain","ENSO causes abnormal flooding"],
+  answer:1,
+  explanation:"The Brahmaputra valley floods annually due to: (1) extremely heavy SW Monsoon rainfall over Assam and Arunachal Pradesh (among the world's highest), (2) glacial melt from the Himalayas, and (3) the river's shallow, braided channel that cannot contain the immense discharge. Combined, these cause devastating annual flooding."
+},
+{
+  id:97, type:"MCQ",
+  stem:"The 'Chennai Floods of November–December 2015' were caused by:",
+  options:["SW Monsoon failure recovery","Extremely intense NE Monsoon and associated cyclonic activity, combined with urban flooding","Western Disturbance","El Niño direct impact"],
+  answer:1,
+  explanation:"The 2015 Chennai floods — one of India's worst urban flooding disasters — were caused by extremely intense NE Monsoon rainfall (associated with a positive IOD and warm Bay of Bengal), cyclonic circulation, and Chennai's poor urban drainage infrastructure. Over 1,000 mm fell in 24 hours in some areas during early December 2015."
+},
+{
+  id:98, type:"MCQ",
+  stem:"A 'Hydrological Drought' refers to:",
+  options:["Deficiency in precipitation only","Reduction in surface water (rivers, reservoirs) and groundwater below normal levels","Soil moisture depletion","Crop failure due to heat stress"],
+  answer:1,
+  explanation:"Hydrological Drought refers to deficiencies in surface and subsurface water supply — reduced streamflow, low reservoir levels, declining groundwater tables — as a result of prolonged periods of below-normal precipitation. It lags behind meteorological drought."
+},
+{
+  id:99, type:"STATEMENT",
+  stem:"I. Assam receives over 2500 mm of rainfall but still faces floods, not drought.\nII. Rajasthan receives less than 300 mm in western districts but occasionally has localized floods.\nIII. The concept of 'flood drought continuum' suggests that both extremes can occur in the same region in different years.\nSelect correct statements:",
+  options:["I only","I and III only","I, II and III","II and III only"],
+  answer:2,
+  explanation:"All three are correct. Assam's excessive rainfall causes floods despite being wet. Rajasthan's few rain events can sometimes be intense and cause flash floods in otherwise arid areas. The flood-drought continuum is a recognised climatic reality for India's variable monsoon regions."
+},
+{
+  id:100, type:"MCQ",
+  stem:"The National Disaster Management Authority (NDMA) classifies drought under how many types?",
+  options:["2","3","4","5"],
+  answer:2,
+  explanation:"NDMA and climatologists generally classify drought into 4 types: (1) Meteorological Drought (rainfall deficiency), (2) Hydrological Drought (water body depletion), (3) Agricultural Drought (soil moisture deficit affecting crops), and (4) Socio-Economic Drought (when drought affects human welfare)."
+},
+{
+  id:101, type:"MCQ", pyq:true,
+  stem:"The 'Green Revolution' in India was partly necessitated by frequent agricultural droughts. Which decade saw the worst consecutive monsoon failures?",
+  options:["1940s","1960s","1980s","2000s"],
+  answer:1,
+  explanation:"The 1960s saw severe consecutive monsoon failures — 1965 and 1966 were back-to-back drought years, leading to severe food shortages. This crisis accelerated the Green Revolution (introduction of HYV seeds, irrigation expansion). The 1960s remain the worst decade of consecutive monsoon failures in post-independence India."
+},
+{
+  id:102, type:"MCQ",
+  stem:"Which of the following Indian states has been most frequently declared drought-affected?",
+  options:["Kerala","Maharashtra","West Bengal","Arunachal Pradesh"],
+  answer:1,
+  explanation:"Maharashtra, particularly the Marathwada and Vidarbha regions, has been most frequently declared drought-affected in India. The state regularly suffers from monsoon deficiency, crop failures, and farmer distress. It accounts for a large share of India's total drought-affected area in most years."
+},
+{
+  id:103, type:"MCQ",
+  stem:"The 'Dry Farming Belt' of India is mainly located in:",
+  options:["Northeast India","Interior of the Deccan Plateau and Rajasthan","Western Ghats region","Himalayan foothills"],
+  answer:1,
+  explanation:"The dry farming belt is concentrated in the semi-arid interior Deccan Plateau (Marathwada, Vidarbha, Rayalaseema, interior Karnataka) and Rajasthan, where annual rainfall is 300–750 mm and unreliable. Farmers here practice dry land agriculture with rain-fed crops like jowar, bajra, and cotton."
+},
+{
+  id:104, type:"AR",
+  stem:"Assertion (A): The Chennai Metropolitan Area has higher flood risk today than 50 years ago.\nReason (R): Urbanisation has reduced permeable surfaces, leading to higher surface runoff and reduced groundwater recharge.",
+  options:["Both A and R are correct and R is the correct explanation of A","Both A and R are correct but R is NOT the correct explanation of A","A is correct but R is wrong","A is wrong but R is correct"],
+  answer:0,
+  explanation:"Both correct and causally linked. Chennai's rapid urbanisation (converting wetlands, water bodies into built-up areas; laying impermeable concrete/asphalt) has dramatically increased surface runoff during heavy rain events. Reduced permeability means water that would have been absorbed now flows into drains and floods streets — directly causing the urban flood phenomenon."
+},
+{
+  id:105, type:"MCQ",
+  stem:"The term 'Desert in the Rain Shadow' refers to which of the following Indian regions?",
+  options:["Deccan Plateau east of Western Ghats","The Thar Desert, which is in the rain shadow of the Aravalli Range","Kutch, Gujarat","Eastern Rajasthan hills"],
+  answer:0,
+  explanation:"The Deccan Plateau (particularly eastern Karnataka, interior Maharashtra, interior Andhra Pradesh) lies in the rain shadow of the Western Ghats. This rain shadow effect makes much of the Deccan interior semi-arid. While the Thar has multiple causes for aridity, the clearest 'rain shadow desert' term applies to the Deccan leeward zone."
+},
+// ---- BLOCK 8: Rivers, Cauvery, Rainfall Dependency (Q106–Q115) ----
+{
+  id:106, type:"MCQ", pyq:true,
+  stem:"The river Cauvery originates from:",
+  options:["Brahmagiri Hills, Kodagu (Coorg), Karnataka","Nilgiris, Tamil Nadu","Sahyadri ranges near Mahabaleshwar","Anamalai Hills, Tamil Nadu"],
+  answer:0,
+  explanation:"River Cauvery originates from the Brahmagiri Hills in Kodagu (Coorg) district, Karnataka, at Talakaveri, at an altitude of about 1341 m. It flows east through Karnataka and Tamil Nadu before reaching the Bay of Bengal near Poompuhar."
+},
+{
+  id:107, type:"STATEMENT",
+  stem:"I. Cauvery basin receives rainfall from both the SW Monsoon (upper reaches in Karnataka) and the NE Monsoon (lower reaches in Tamil Nadu).\nII. The inter-state water dispute between Tamil Nadu and Karnataka over Cauvery is partly due to the differential timing of their rainfall seasons.\nIII. The Kaveri river is a rain-fed river and does not receive any glacier meltwater.\nSelect correct statements:",
+  options:["I only","I and II only","I, II and III","II only"],
+  answer:2,
+  explanation:"All three are correct. Cauvery's Karnataka upper basin receives SW Monsoon rain; Tamil Nadu lower basin relies on NE Monsoon. The dispute is worsened by different rainfall timing — Karnataka farmers need water during SW Monsoon; TN farmers need releases during NE Monsoon season. Cauvery is purely rain-fed, no glaciers."
+},
+{
+  id:108, type:"MCQ",
+  stem:"Which river is called the 'Sorrow of Bihar' due to its tendency to flood?",
+  options:["Ganga","Kosi","Son","Gandak"],
+  answer:1,
+  explanation:"The Kosi river is called the 'Sorrow of Bihar' because of its catastrophic annual floods. The Kosi drains from the Nepal Himalayas and carries enormous silt loads, frequently changing its course and causing devastating floods in Bihar. The 2008 Kosi embankment breach displaced millions."
+},
+{
+  id:109, type:"MCQ",
+  stem:"The flow of the river Godavari is mainly dependent on which monsoon?",
+  options:["NE Monsoon only","SW Monsoon only","Both equally","Western Disturbances"],
+  answer:1,
+  explanation:"The Godavari basin, covering Maharashtra, Telangana, and Andhra Pradesh, receives its rainfall predominantly from the SW Monsoon (June–September). Over 80% of the annual flow in the Godavari occurs during the SW Monsoon period, making it a classic SW Monsoon dependent river."
+},
+{
+  id:110, type:"MCQ", pyq:true,
+  stem:"The Palar river in Tamil Nadu is known for:",
+  options:["Perennial flow from SW Monsoon","Being almost ephemeral (seasonal/intermittent flow) dependent on NE Monsoon","Its large delta","Heavy water withdrawal for hydroelectric power"],
+  answer:1,
+  explanation:"The Palar river in Tamil Nadu is almost ephemeral — it flows only during and shortly after the NE Monsoon season and is dry for much of the year. It originates from Karnataka and flows through Tamil Nadu to the Bay of Bengal. Its basin is among the most water-scarce in the state."
+},
+{
+  id:111, type:"MCQ",
+  stem:"The Mahanadi river flood in Odisha is partly due to:",
+  options:["Western Disturbances","SW Monsoon rainfall over Chhattisgarh catchment area and cyclonic systems","NE Monsoon effects","Glacial lake outburst floods"],
+  answer:1,
+  explanation:"Mahanadi floods in Odisha are caused by heavy SW Monsoon rainfall over its upper catchment (Chhattisgarh plateau) combined with cyclonic systems over the Bay of Bengal in October–November. The Hirakud Dam controls some flooding, but still cannot fully contain major flood events."
+},
+{
+  id:112, type:"MCQ",
+  stem:"Which of the following Indian rivers forms the largest delta?",
+  options:["Ganga","Godavari","Mahanadi","Krishna"],
+  answer:0,
+  explanation:"The Ganga-Brahmaputra delta (Sundarbans) is the world's largest river delta. Individually, the Ganga-Brahmaputra system forms the largest delta in India. The Godavari delta is among the largest in peninsular India."
+},
+{
+  id:113, type:"MCQ",
+  stem:"The 'Mettur Dam' in Tamil Nadu is primarily associated with which river?",
+  options:["Bhavani","Cauvery","Amaravathi","Palar"],
+  answer:1,
+  explanation:"The Mettur Dam (officially Stanley Reservoir) is constructed across the River Cauvery at Mettur in Salem district, Tamil Nadu. It is one of the largest dams in India and plays a crucial role in irrigation for the delta districts. Water release is traditionally linked to SW Monsoon filling of the Cauvery reservoir."
+},
+{
+  id:114, type:"STATEMENT",
+  stem:"I. The Tamiraparani is the only perennial river in Tamil Nadu.\nII. Tamiraparani rises from the Agasthyar Malai range in the Western Ghats.\nIII. Tamiraparani basin receives both SW and NE Monsoon rainfall.\nSelect correct statements:",
+  options:["I only","I and II only","I, II and III","II and III only"],
+  answer:2,
+  explanation:"All three are correct. Tamiraparani (Tirunelveli district) is indeed the only perennial river in Tamil Nadu, receiving rainfall from both monsoons due to its strategic location near the southern Western Ghats (catching SW Monsoon) and the southern tip (exposed to NE Monsoon). It originates from Agasthyar Malai (Agasthya Hills)."
+},
+{
+  id:115, type:"MCQ", pyq:true,
+  stem:"The inter-linking of rivers project in India primarily aims at:",
+  options:["Generating hydroelectric power from excess flow","Transferring surplus monsoon water from flood-prone river basins to water-deficient regions","Preventing saltwater intrusion into deltas","Promoting inland navigation"],
+  answer:1,
+  explanation:"The National River Linking Project (NRLP) aims to transfer surplus monsoon floodwaters from rain-surplus basins (like Brahmaputra, upper Ganga, Mahanadi) to water-deficit basins (Cauvery, Krishna, Godavari lower reaches, Rajasthan). It seeks to solve both flood and drought problems."
+},
+// ---- BLOCK 9: Advanced Topics — ENSO Teleconnection, Climate Change, Miscellaneous (Q116–Q135) ----
+{
+  id:116, type:"MCQ",
+  stem:"The 'Madden-Julian Oscillation' (MJO) affects the Indian Monsoon by:",
+  options:["Replacing the ITCZ in the Indian Ocean","Creating intraseasonal (30–60 day) active/break cycles of monsoon rainfall","Causing permanent drought over peninsular India","Enhancing Arabian Sea cold upwelling"],
+  answer:1,
+  explanation:"The Madden-Julian Oscillation (MJO) is an eastward-propagating system of enhanced and suppressed rainfall on a 30–60 day cycle. Its active phase over India enhances monsoon rainfall; its suppressed phase contributes to monsoon breaks. MJO significantly controls intraseasonal variability of the Indian Monsoon."
+},
+{
+  id:117, type:"MCQ",
+  stem:"'Convective Available Potential Energy' (CAPE) is a measure of:",
+  options:["Rainfall total over a season","Potential for thunderstorm/convective activity in the atmosphere","Ocean heat content","Monsoon wind speed"],
+  answer:1,
+  explanation:"CAPE (Convective Available Potential Energy) measures the amount of energy available for atmospheric convection. High CAPE indicates high potential for thunderstorms and convective rainfall. It is widely used in weather forecasting to predict severe convective events, hailstorms, and intense rain."
+},
+{
+  id:118, type:"MCQ", pyq:true,
+  stem:"The 'Long Period Average' (LPA) of Indian Monsoon rainfall used by IMD as a baseline is approximately:",
+  options:["600 mm","780 mm","889 mm","1000 mm"],
+  answer:2,
+  explanation:"The IMD uses a Long Period Average (LPA) of approximately 880–889 mm (commonly cited as 890 mm or 880 mm) for the June–September SW Monsoon season over India as a whole. Rainfall forecasts are expressed as percentage of this LPA. The current LPA (updated periodically) is approximately 880.6 mm."
+},
+{
+  id:119, type:"MCQ",
+  stem:"Climate change is expected to affect the Indian Monsoon by:",
+  options:["Reducing total monsoon rainfall and making it more predictable","Increasing extreme rainfall events and making the monsoon more variable and uncertain","Having no significant impact on monsoon","Uniformly increasing monsoon rainfall across all regions"],
+  answer:1,
+  explanation:"Climate change projections (IPCC, IMD studies) suggest the Indian Monsoon will become more intense and variable — more extreme rainfall events (cloud bursts, flooding) alongside prolonged dry spells. Total monsoon rainfall may slightly increase in some regions but distribution will be more uneven and uncertain."
+},
+{
+  id:120, type:"STATEMENT",
+  stem:"I. Under climate change, the number of rainy days may decrease while rainfall intensity per event increases.\nII. Wet regions are expected to get wetter and dry regions drier under climate change.\nIII. Sea surface temperature increase in the Indian Ocean may strengthen the monsoon indefinitely.\nSelect correct statements:",
+  options:["I only","I and II only","II and III only","I, II and III"],
+  answer:1,
+  explanation:"Statements I and II are correct. Climate models consistently project fewer rainy days but higher intensity events (flooding risk), and amplification of wet/dry contrasts. Statement III is oversimplified — while warmer SSTs increase moisture, competing dynamics (like changes in wind patterns) can also disrupt monsoon circulation."
+},
+{
+  id:121, type:"MCQ",
+  stem:"The 'Indian Ocean Warming Hole' refers to:",
+  options:["A cold spot in the central Indian Ocean that affects monsoon","An area in the Indian Ocean where sea surface temperatures have risen less than surrounding regions","A region of low rainfall in the Indian Ocean","Upwelling of cold water near the Indian coast"],
+  answer:1,
+  explanation:"The 'Southern Ocean/Indian Ocean Warming Hole' describes a region where SST rise has been slower than the global average, potentially due to upwelling or ocean circulation changes. This can affect the SST gradient that drives monsoon circulation."
+},
+{
+  id:122, type:"MCQ", pyq:true,
+  stem:"Which of the following best describes 'Cloudburst'?",
+  options:["Normal monsoon rainfall over a day","Rainfall exceeding 100 mm per hour over a small area","Cyclonic rainfall over 24 hours","Orographic rainfall exceeding 500 mm per day"],
+  answer:1,
+  explanation:"A cloudburst is defined meteorologically as rainfall of 100 mm or more in one hour over an area of approximately 10 km². They are common in the Himalayan foothills, Uttarakhand, and Himachal Pradesh during the monsoon season, causing flash floods and landslides."
+},
+{
+  id:123, type:"MCQ",
+  stem:"The Uttarakhand Flash Floods of June 2013 were primarily caused by:",
+  options:["Western Disturbance only","A combination of intense SW Monsoon onset, moisture-loaded Bay of Bengal systems, and cloudburst over steep terrain","El Niño-induced excess rainfall","Glacial Lake Outburst Flood (GLOF) without monsoon input"],
+  answer:1,
+  explanation:"The 2013 Uttarakhand disaster (Kedarnath tragedy) involved multiple factors: (1) early intense SW Monsoon onset, (2) a western disturbance creating convergence, (3) extreme cloudbursts over the Kedarnath region in June 2013, and (4) steep terrain causing flash floods and debris flows — killing thousands."
+},
+{
+  id:124, type:"MCQ",
+  stem:"The term 'Orographic Lift' specifically means:",
+  options:["Rising of warm air in convective cells","Forced ascent of air over a mountain barrier","Frontal uplift between air masses","Turbulent ascent caused by jet streams"],
+  answer:1,
+  explanation:"Orographic lift (or forced convection) is the mechanism by which air masses are forced to rise over a mountain barrier (orographic obstacle). As the air is forced upward, it cools at the dry/moist adiabatic rate, condensation occurs, and rainfall results on the windward side."
+},
+{
+  id:125, type:"AR",
+  stem:"Assertion (A): Cherrapunji and Mawsynram in Meghalaya receive the world's highest rainfall.\nReason (R): The funnel-shaped terrain of Meghalaya's Khasi Hills concentrates and lifts moisture-laden Bay of Bengal branch SW Monsoon winds, causing extreme orographic precipitation.",
+  options:["Both A and R are correct and R is the correct explanation of A","Both A and R are correct but R is NOT the correct explanation of A","A is correct but R is wrong","A is wrong but R is correct"],
+  answer:0,
+  explanation:"Both correct and causally related. The Khasi Hills form a south-facing escarpment in a quasi-funnel shape that traps and lifts Bay of Bengal branch monsoon winds. The concentrated orographic uplift causes world-record rainfall at Mawsynram and Cherrapunji. This is a textbook example of terrain-amplified orographic rainfall."
+},
+{
+  id:126, type:"MCQ",
+  stem:"'Thermal Convectional Rainfall' primarily occurs in:",
+  options:["Himalayan mountain slopes","Equatorial and tropical regions with intense surface heating","Western Rajasthan in winter","NE India due to orographic effects"],
+  answer:1,
+  explanation:"Thermal (convectional) rainfall occurs when intense solar heating causes air near the surface to become hot and rise rapidly, forming cumulus and cumulonimbus clouds that produce afternoon thunderstorms with heavy rain. It is the dominant rainfall type in equatorial regions and also contributes to pre-monsoon showers in India."
+},
+{
+  id:127, type:"MATCH",
+  stem:"Match rainfall types with their mechanisms:\nList I (Type) — List II (Mechanism)\nA. Orographic Rainfall — 1. Moist air forced up mountain slopes\nB. Cyclonic/Frontal Rainfall — 2. Warm air rises over cold air at fronts\nC. Convectional Rainfall — 3. Surface heating causes air to rise\nD. Western Disturbance Rainfall — 4. Mediterranean extra-tropical cyclones track east",
+  options:["A-1, B-2, C-3, D-4","A-2, B-1, C-4, D-3","A-3, B-4, C-1, D-2","A-4, B-3, C-2, D-1"],
+  answer:0,
+  explanation:"Correct matching: A-1 (Orographic = mountain slope forcing), B-2 (Cyclonic/Frontal = warm over cold air ascent), C-3 (Convectional = surface heating, air rises), D-4 (Western Disturbances = extra-tropical Mediterranean cyclones tracking east in westerly jet)."
+},
+{
+  id:128, type:"MCQ",
+  stem:"The 'Dew Point Temperature' is important for rainfall because:",
+  options:["It determines wind direction","It is the temperature at which air becomes saturated and condensation begins, leading to cloud formation and potential rainfall","It measures the intensity of solar radiation","It predicts cyclone formation"],
+  answer:1,
+  explanation:"Dew point temperature is the temperature to which air must be cooled (at constant pressure and humidity) for saturation to occur. When air temperature reaches the dew point, condensation begins, forming clouds. If updrafts carry this condensed moisture high enough, precipitation occurs. It is a fundamental concept in rainfall meteorology."
+},
+{
+  id:129, type:"MCQ", pyq:true,
+  stem:"The 'Indian Monsoon Mission' (IMM) launched by the Ministry of Earth Sciences aims to:",
+  options:["Increase monsoon rainfall by cloud seeding","Improve the predictive skill of seasonal monsoon forecasts using coupled ocean-atmosphere models","Prevent droughts through artificial measures","Map monsoon wind patterns by satellite"],
+  answer:1,
+  explanation:"The National Monsoon Mission (NMM/IMM) is a major research initiative by MoES to improve monsoon prediction skill at different timescales (extended range 15–30 days, seasonal). It uses the NCEP Coupled Forecast System Model and aims to provide better pre-season forecasts to benefit farmers and disaster managers."
+},
+{
+  id:130, type:"MCQ",
+  stem:"'Cloud Seeding' to enhance rainfall involves:",
+  options:["Heating clouds to cause condensation","Introducing freezing nuclei (like silver iodide) or hygroscopic particles into clouds to induce artificial precipitation","Reducing wind speed around clouds","Increasing solar radiation over target areas"],
+  answer:1,
+  explanation:"Cloud seeding (artificial rain making) involves dispersing substances like silver iodide, liquid propane, or salt particles into clouds. These act as additional condensation/freezing nuclei, promoting droplet growth and coalescence, thereby inducing or enhancing rainfall. Tamil Nadu has conducted cloud seeding operations during droughts."
+},
+{
+  id:131, type:"MCQ",
+  stem:"The 'Sundarbans' mangrove ecosystem in the Ganga-Brahmaputra delta is threatened by monsoon-related factors including:",
+  options:["Decreasing monsoon rainfall only","Sea level rise (intensifying storm surges), increasing cyclone intensity, and changing freshwater inflow from monsoon","Western Disturbances","ENSO La Niña only"],
+  answer:1,
+  explanation:"Sundarbans face multiple monsoon-related threats: (1) sea level rise intensifying cyclone-driven storm surges flooding the delta; (2) more intense cyclones (Bay of Bengal); (3) changes in freshwater-saltwater balance from altered monsoon river flows; (4) increased salinity intrusion. All are amplified by climate change."
+},
+{
+  id:132, type:"FI",
+  stem:"Which of the following is INCORRECT about rainfall in India?",
+  options:["India's average annual rainfall is about 1160 mm","About 80% of India's annual rainfall comes from the SW Monsoon","Rajasthan receives least rainfall among Indian states","Kerala receives rainfall only from SW Monsoon"],
+  answer:3,
+  explanation:"Statement D is incorrect. Kerala receives rainfall from BOTH the SW Monsoon (June–September, contributing ~75% of Kerala's rainfall) AND the NE Monsoon (October–December). Additionally, pre-monsoon showers and occasional western disturbance effects also bring some rainfall. Kerala is not exclusive to SW Monsoon."
+},
+{
+  id:133, type:"MCQ",
+  stem:"The 'Carbon Monsoon Feedback' theory suggests that:",
+  options:["Monsoon rainfall increases carbon emissions","Increased monsoon rainfall leads to more vegetation, sequestering CO₂ and partially offsetting climate warming","Carbon emissions cause permanent drought","CO₂ levels have no effect on monsoon"],
+  answer:1,
+  explanation:"The Carbon-Monsoon feedback suggests that stronger monsoons lead to increased vegetation (more photosynthesis) on the Indian subcontinent and Sahel, sequestering atmospheric CO₂. This is a negative feedback that partially moderates the warming effect of CO₂ — though the net effect is complex and still researched."
+},
+{
+  id:134, type:"MCQ", pyq:true,
+  stem:"The concept of 'Teleconnection' in monsoon meteorology refers to:",
+  options:["Satellite communication for monsoon forecasting","Statistical correlation between climate anomalies at widely separated geographic locations (e.g., ENSO and Indian Monsoon)","Direct physical connection between the Monsoon Trough and jet streams","Telephone-based warning systems for cyclones"],
+  answer:1,
+  explanation:"Teleconnection in climatology refers to the statistical link between climate anomalies at distant locations — e.g., El Niño in the Pacific affecting Indian Monsoon thousands of kilometres away. These remote influences operate through atmospheric wave patterns, altered circulation cells, and sea surface temperature gradients."
+},
+{
+  id:135, type:"MCQ",
+  stem:"Which parameter is used by IMD to declare 'onset of South-West Monsoon' beyond Kerala?",
+  options:["Rainfall alone","Wind direction, OLR, and rainfall criteria over specific stations","Temperature decrease","Sea surface temperature increase"],
+  answer:1,
+  explanation:"IMD uses multiple criteria for declaring monsoon onset over subsequent stations beyond Kerala: (1) OLR (Outgoing Longwave Radiation) below threshold, (2) lower-level southwesterly winds strengthening, and (3) rainfall at a majority of stations in the region exceeding the threshold. It is a combined wind-OLR-rainfall criterion."
+},
+// ---- BLOCK 10: Final Mix — PYQ Heavy, Advanced, Tamil Nadu Focus (Q136–Q150) ----
+{
+  id:136, type:"MCQ", pyq:true,
+  stem:"The highest rainfall in Tamil Nadu is recorded in which type of terrain?",
+  options:["Coastal plains","Deltas","High Nilgiri plateau and Western Ghats slopes","Interior plateau"],
+  answer:2,
+  explanation:"The Nilgiris and the high Western Ghats ranges of Tamil Nadu record the highest annual rainfall — often exceeding 2500 mm. The high elevation stations like Valparai (Anamalais), Top Slip, and Upper Nilgiris receive heavy orographic rainfall from both monsoons."
+},
+{
+  id:137, type:"MCQ",
+  stem:"'Monsoon Prediction' by IMD involves all of the following EXCEPT:",
+  options:["Statistical models based on 8 predictors","Dynamical coupled ocean-atmosphere models","Seasonal SST anomalies over Pacific and Indian Oceans","Direct temperature measurements in the Thar Desert alone"],
+  answer:3,
+  explanation:"IMD's monsoon prediction uses: statistical models (old 16-parameter, then 8-parameter Pant and Kumar models), dynamical coupled ocean-atmosphere models (CFS, ECMWF, etc.), and teleconnections with ENSO/IOD via Pacific and Indian Ocean SST anomalies. Direct Thar Desert temperature alone is not a standalone predictive tool."
+},
+{
+  id:138, type:"CHRONO",
+  stem:"Arrange the following in the correct chronological order of the annual SW Monsoon onset:\n1. Onset over Andaman & Nicobar Islands\n2. Onset over Kerala\n3. Onset over Mumbai\n4. Onset over Delhi\n5. Complete coverage of India",
+  options:["2-1-3-4-5","1-2-3-4-5","2-1-4-3-5","1-2-4-3-5"],
+  answer:1,
+  explanation:"Chronological order: (1) Andaman & Nicobar — late May (~May 20); (2) Kerala — June 1; (3) Mumbai — June 10–15; (4) Delhi — late June (~June 27–30); (5) Complete coverage of India — July 15. The Bay of Bengal branch reaches the northeast (Kolkata, Shillong) slightly earlier than Delhi, but for the Arabian Sea branch track, this order is correct."
+},
+{
+  id:139, type:"STATEMENT",
+  stem:"I. The Coromandel coast receives maximum rainfall in November.\nII. The reason is that the retreating SW Monsoon picks up moisture from the Bay of Bengal.\nIII. Cyclonic disturbances contribute to Coromandel coast rainfall in October–December.\nIV. The term 'Coromandel coast' refers to the eastern coast of Tamil Nadu and southern Andhra Pradesh.\nAll correct statements:",
+  options:["I and III only","I, II and III only","I, II, III and IV","III and IV only"],
+  answer:2,
+  explanation:"All four are correct. November is peak NE Monsoon month for Coromandel coast. The retreating SW Monsoon picks up Bay of Bengal moisture and deposits it as NE Monsoon on TN coast. Cyclonic systems in Oct–Dec regularly enhance rainfall. 'Coromandel' refers to the southeastern Indian coast (Tamil Nadu–AP)."
+},
+{
+  id:140, type:"MCQ", pyq:true,
+  stem:"'Mausam' — the first multi-purpose meteorological satellite of India — was launched in:",
+  options:["1999","2014","2019","2023"],
+  answer:1,
+  explanation:"INSAT-3D 'Mausam' was launched in 2014, and the IMD's operations were greatly enhanced for monsoon monitoring. However, 'INSAT-3DR' followed in 2016. The word 'mausam' means weather/season in Hindi/Urdu. IMD uses multiple satellites for monsoon monitoring."
+},
+{
+  id:141, type:"MCQ",
+  stem:"The 'Fury' (or rage) of the Bay of Bengal cyclone season can be attributed to all EXCEPT:",
+  options:["High sea surface temperatures in October–November Bay of Bengal","Low wind shear during NE Monsoon transition period","High salinity inhibiting deep oceanic mixing","Low pressure systems from Bay remnants of SW Monsoon"],
+  answer:2,
+  explanation:"High salinity generally inhibits cyclone intensification by promoting denser water layering; however, the actual reason the Bay is so cyclone-prone is its LOW salinity (major rivers dilute it), which actually REDUCES deep mixing — keeping surface water warm. So Option C, if stating 'high salinity inhibits mixing,' is the incorrect reasoning."
+},
+{
+  id:142, type:"STATEMENT",
+  stem:"I. Tamil Nadu has declared 'drought' in 32 of the 65 years between 1950–2015.\nII. Chennai has an average annual rainfall of about 1200 mm.\nIII. The Palk Strait between India and Sri Lanka affects NE Monsoon reaching Tamil Nadu.\nIV. Sri Lanka's Adam's Peak range intercepts part of the NE Monsoon before it reaches Tamil Nadu.\nCorrect statements:",
+  options:["I and II only","II and III only","II, III and IV only","I, II, III and IV"],
+  answer:2,
+  explanation:"Statements II, III, and IV are correct. Chennai ~1200 mm annual average. The Palk Strait (being a narrow channel) has limited effect as a moisture source but the strait geography matters for cyclone tracks. Sri Lanka's mountains do intercept some moisture before NE Monsoon reaches TN's southern tip. Statement I's statistics need verification and is not a standard cited figure."
+},
+{
+  id:143, type:"MCQ",
+  stem:"Which of the following best explains why the monsoon is late in reaching the extreme northwest of India (Rajasthan, J&K)?",
+  options:["These regions are very cold and repel monsoon winds","The moisture in the Bay of Bengal branch is exhausted over the Gangetic plain before reaching NW India; the Arabian Sea branch has to travel the farthest","Jet streams block monsoon entry into northwest India","Western Disturbances prevent monsoon advance into northwest India"],
+  answer:1,
+  explanation:"The Bay of Bengal branch deposits much of its moisture en route, while the Arabian Sea branch has to traverse the entire length of the subcontinent northward. The increasing distance from moisture sources, the high temperatures (creating strong low pressure which actually helps draw the monsoon) and the Thar desert heating all interact — but the key factor is the long distance from the Arabian Sea moisture source."
+},
+{
+  id:144, type:"MCQ", pyq:true,
+  stem:"The first scientific study and prediction of the Indian monsoon was done by:",
+  options:["Sir Edmund Halley (1686)","Henry Blanford (1884)","Gilbert Walker (1923)","Jacob Bjerknes"],
+  answer:1,
+  explanation:"Henry Blanford in 1884 made the first scientific seasonal forecast of the Indian Monsoon, using Himalayan snowfall data as a predictor. He was the first Director-General of the India Meteorological Department (IMD), founded in 1875. Gilbert Walker later refined monsoon research with the Southern Oscillation."
+},
+{
+  id:145, type:"AR",
+  stem:"Assertion (A): The inter-tropical convergence zone (ITCZ) over India during monsoon is not exactly on the geographic equator.\nReason (R): Due to the asymmetry in land-sea distribution of the Northern and Southern hemispheres, the ITCZ is displaced northward over the Indian subcontinent in summer.",
+  options:["Both A and R are correct and R is the correct explanation of A","Both A and R are correct but R is NOT the correct explanation of A","A is correct but R is wrong","A is wrong but R is correct"],
+  answer:0,
+  explanation:"Both correct and causally linked. The ITCZ migrates far northward (to ~25°N) over India in the monsoon season, far from the geographic equator. This is because the Northern Hemisphere's larger landmass heats up more than the Southern Hemisphere's ocean-dominated surface, pulling the ITCZ northward — this is the thermal asymmetry explanation."
+},
+{
+  id:146, type:"MCQ",
+  stem:"'Heat Low' over the Thar Desert is important for the Indian Monsoon because:",
+  options:["It repels monsoon winds from entering India","It creates a strong low-pressure center that attracts moisture-laden SW Monsoon winds from the Arabian Sea","It causes cold fronts to form over Rajasthan","It blocks Western Disturbances in winter"],
+  answer:1,
+  explanation:"The 'Heat Low' (thermal low) over the Thar Desert (and NW India generally) in May–June is a crucial driver of the SW Monsoon. The intense heating of the Thar creates a deep, strong low-pressure system that 'pulls' or attracts moist onshore winds from the Arabian Sea — contributing to the establishment of SW Monsoon."
+},
+{
+  id:147, type:"CHRONO",
+  stem:"Arrange the following climatic events in correct chronological order during an ENSO cycle:\n1. Warming of eastern Pacific sea surface (El Niño onset)\n2. Weakening of trade winds\n3. Bjerknes feedback amplification\n4. Weakening of Indian Monsoon\n5. Return to neutral/La Niña conditions",
+  options:["2-1-3-4-5","1-2-3-4-5","3-1-2-4-5","2-3-1-4-5"],
+  answer:0,
+  explanation:"The sequence in ENSO development: (2) Trade winds weaken → (1) Eastern Pacific warms (El Niño onset) → (3) Bjerknes feedback amplifies the warming → (4) Walker Circulation disrupted → Indian Monsoon weakens → (5) Eventually the system overcorrects → La Niña or neutral. Weakening trade winds initiates the El Niño development."
+},
+{
+  id:148, type:"MCQ",
+  stem:"The percentage of India's area receiving annual rainfall below 750 mm (semi-arid to arid) is approximately:",
+  options:["10%","20%","33%","50%"],
+  answer:2,
+  explanation:"Approximately one-third (33%) of India's geographical area receives annual rainfall below 750 mm — covering much of Rajasthan, parts of Gujarat, interior Deccan Plateau, and Ladakh. These are semi-arid to arid zones where water scarcity and drought are chronic problems."
+},
+{
+  id:149, type:"MCQ", pyq:true,
+  stem:"Which of the following is the correct abbreviation for the index used to measure ENSO?",
+  options:["ENSO Index","Niño 3.4 SST Anomaly","Pacific Decadal Oscillation","Atlantic Multidecadal Oscillation"],
+  answer:1,
+  explanation:"The standard ENSO monitoring index is the 'Niño 3.4 SST Anomaly' — the sea surface temperature anomaly in the Niño 3.4 region (5°N–5°S, 120°W–170°W) in the central Pacific. El Niño is declared when this anomaly exceeds +0.5°C for 5 consecutive overlapping 3-month periods."
+},
+{
+  id:150, type:"MCQ",
+  stem:"The term 'Monsoon' itself is derived from the Arabic word 'Mausim' meaning:",
+  options:["Wind","Season","Rain","Ocean"],
+  answer:1,
+  explanation:"The word 'Monsoon' is derived from the Arabic 'Mausim' (موسم), meaning 'season' — specifically referring to the seasonally reversing wind system that Arab sailors relied upon for trade routes between Arabia and India. Portuguese traders later adapted the term to 'monção,' which became 'monsoon' in English."
+}
+];
+
+// Assign sec field
+QUESTIONS.forEach(q=>{
+  if(q.id<=40) q.sec=1;
+  else if(q.id<=75) q.sec=2;
+  else if(q.id<=105) q.sec=3;
+  else if(q.id<=135) q.sec=4;
+  else q.sec=5;
+});
+
+let answers={},flagged={},locked={},submitted=false,immediateFeedback=false,timerDisplayVisible=false,filterMode='all',timerInterval=null,elapsedSeconds=0,startTime=Date.now();
+
+function init(){renderTOC();renderQuestions();buildPalette();updateProgress();startTimer();}
+
+function buildPalette(){
+  const grid=document.getElementById('paletteGrid');grid.innerHTML='';
+  QUESTIONS.forEach(q=>{const d=document.createElement('div');d.className='pal-dot';d.id=`pal-${q.id}`;d.textContent=q.id;d.title=`Q${q.id}`;d.onclick=()=>{const el=document.getElementById(`qcard-${q.id}`);if(el)el.scrollIntoView({behavior:'smooth',block:'center'});};grid.appendChild(d);});
+}
+
+function updatePaletteQ(qId){
+  const dot=document.getElementById(`pal-${qId}`);if(!dot)return;
+  dot.className='pal-dot';if(flagged[qId])dot.classList.add('flagged');
+  if(answers[qId]!==undefined){
+    if(immediateFeedback&&locked[qId]){const q=QUESTIONS.find(q=>q.id===qId);if(q&&answers[qId]===q.correct)dot.classList.add('correct');else dot.classList.add('wrong');}
+    else dot.classList.add('answered');
+  }
+}
+
+function updatePaletteAfterSubmit(){
+  QUESTIONS.forEach(q=>{const dot=document.getElementById(`pal-${q.id}`);if(!dot)return;dot.className='pal-dot';if(answers[q.id]!==undefined&&answers[q.id]===q.correct)dot.classList.add('correct');else if(answers[q.id]!==undefined)dot.classList.add('wrong');if(flagged[q.id])dot.classList.add('flagged');});
+}
+
+function renderTOC(){
+  document.getElementById('tocList').innerHTML=SECTIONS.map(s=>`<a class="toc-item" href="#section-${s.id}" onclick="closeSidebarMob()"><span class="toc-dot" style="background:${s.color}"></span><span class="toc-label">${s.name}</span><span class="toc-count">${s.range[1]-s.range[0]+1}Q</span></a>`).join('');
+}
+
+function renderQuestions(){
+  const area=document.getElementById('testArea');let html='';
+  SECTIONS.forEach(sec=>{
+    const sqs=QUESTIONS.filter(q=>q.sec===sec.id);
+    html+=`<div id="section-${sec.id}"><div class="section-hd"><div class="section-num">Section ${sec.id} · ${sqs.length} Questions</div><div class="section-title">${sec.full}</div><div class="section-meta">Q${sec.range[0]}–Q${sec.range[1]} · <span style="color:${sec.color}">●</span></div></div><div class="questions-grid">`;
+    sqs.forEach((q,i)=>{html+=buildCard(q,sec,i);});
+    html+=`</div></div>`;
+  });
+  area.innerHTML=html;
+}
+
+function buildCard(q,sec,animIdx){
+  const tl={MCQ:'MCQ',STATEMENT:'Statement',AR:'A–R',MATCH:'Match',FI:'Find Incorrect',CHRONO:'Chronological'};
+  const bc={MCQ:'badge-mcq',STATEMENT:'badge-statement',AR:'badge-ar',MATCH:'badge-match',FI:'badge-fi',CHRONO:'badge-chrono'};
+  const optLetters=['A','B','C','D'];
+  const opts=q.options.map((opt,i)=>`<div class="option" id="opt-${q.id}-${i}" onclick="selectOption(${q.id},${i})"><span class="opt-letter">${optLetters[i]}</span><span class="opt-text">${opt}</span></div>`).join('');
+  const pyqHtml=q.pyq?`<span class="callout callout-pyq">PYQ</span>`:'';
+  return `<div class="q-card ${sec.accent}" id="qcard-${q.id}" style="animation-delay:${animIdx*0.03}s">
+    <div class="q-header"><div class="q-meta"><span class="q-num">Q${q.id}</span><span class="q-type-badge ${bc[q.type]||'badge-mcq'}">${tl[q.type]||q.type}</span>${pyqHtml}</div><button class="flag-btn" id="flag-${q.id}" onclick="toggleFlag(${q.id})" title="Mark for Review">🔖</button></div>
+    <div class="q-stem">${q.stem}</div>
+    <div class="options" id="opts-${q.id}">${opts}</div>
+    <div class="explanation" id="expl-${q.id}"><div class="expl-answer" id="expl-ans-${q.id}"></div><div class="expl-text">${q.explanation||''}</div></div>
+  </div>`;
+}
+
+function selectOption(qId,optIdx){
+  if(submitted)return;if(locked[qId])return;
+  answers[qId]=optIdx;
+  document.querySelectorAll(`#opts-${qId} .option`).forEach((el,i)=>el.classList.toggle('selected',i===optIdx));
+  if(immediateFeedback){locked[qId]=true;showImmediateFeedback(qId);}
+  updatePaletteQ(qId);updateProgress();
+}
+
+function toggleFlag(qId){
+  flagged[qId]=!flagged[qId];
+  const btn=document.getElementById(`flag-${qId}`);if(btn)btn.classList.toggle('flagged',flagged[qId]);
+  document.getElementById('statFlagged').textContent=Object.values(flagged).filter(Boolean).length;
+  updatePaletteQ(qId);
+}
+
+function updateProgress(){
+  const ans=Object.keys(answers).length,total=QUESTIONS.length;
+  document.getElementById('progressFill').style.width=(ans/total*100)+'%';
+  document.getElementById('progressText').textContent=`${ans} / ${total} answered`;
+  document.getElementById('statAnswered').textContent=`${ans} / ${total}`;
+}
+
+function startTimer(){
+  startTime=Date.now();
+  timerInterval=setInterval(()=>{elapsedSeconds=Math.floor((Date.now()-startTime)/1000);if(timerDisplayVisible)document.getElementById('timerDisplay').textContent=formatTime(elapsedSeconds);},1000);
+}
+
+function toggleFeedback(){
+  immediateFeedback=document.getElementById('toggleFeedbackChk').checked;
+  if(!immediateFeedback){locked={};QUESTIONS.forEach(q=>updatePaletteQ(q.id));}
+}
+
+function toggleTimerDisplay(){
+  timerDisplayVisible=document.getElementById('toggleTimerChk').checked;
+  document.getElementById('timerRow').style.display=timerDisplayVisible?'flex':'none';
+  if(timerDisplayVisible)document.getElementById('timerDisplay').textContent=formatTime(elapsedSeconds);
+}
+
+function showImmediateFeedback(qId){
+  const q=QUESTIONS.find(q=>q.id===qId);if(!q)return;
+  const ans=answers[qId],ci=q.correct;
+  document.querySelectorAll(`#opts-${qId} .option`).forEach((el,i)=>{el.classList.remove('selected','correct','wrong','show-correct');if(i===ci)el.classList.add('show-correct');if(ans!==undefined&&i===ans&&ans!==ci)el.classList.add('wrong');});
+  const expl=document.getElementById(`expl-${qId}`);if(expl)expl.classList.add('visible');
+  const explAns=document.getElementById(`expl-ans-${qId}`);
+  if(explAns){const isC=ans===ci;explAns.innerHTML=`Correct Answer: <span class="ans-correct">${['A','B','C','D'][ci]}</span>${!isC?`<span class="ans-wrong"> (Your Answer: ${['A','B','C','D'][ans]})</span>`:'<span class="ans-correct"> ✓ Correct!</span>'}`;;}
+}
+
+function formatTime(s){const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sc=s%60;if(h>0)return`${pad(h)}:${pad(m)}:${pad(sc)}`;return`${pad(m)}:${pad(sc)}`;}
+function pad(n){return n<10?'0'+n:n}
+
+function openModal(){document.getElementById('modalAnswered').textContent=Object.keys(answers).length;document.getElementById('modal').classList.add('open');}
+function closeModal(){document.getElementById('modal').classList.remove('open')}
+function confirmSubmit(){closeModal();doSubmit();}
+function submitTest(){openModal();}
+
+function doSubmit(){
+  submitted=true;clearInterval(timerInterval);
+  let correct=0;const sc={},st={};SECTIONS.forEach(s=>{sc[s.id]=0;st[s.id]=0;});
+  QUESTIONS.forEach(q=>{st[q.sec]++;if(answers[q.id]!==undefined&&answers[q.id]===q.correct){correct++;sc[q.sec]++;}});
+  showResults(correct,QUESTIONS.length,sc,st);updatePaletteAfterSubmit();
+  QUESTIONS.forEach(q=>{
+    const ans=answers[q.id],ci=q.correct;
+    document.querySelectorAll(`#opts-${q.id} .option`).forEach((el,i)=>{el.classList.remove('selected','correct','wrong','show-correct');if(i===ci)el.classList.add('show-correct');if(ans!==undefined&&i===ans&&ans!==ci)el.classList.add('wrong');});
+    const expl=document.getElementById(`expl-${q.id}`);if(expl)expl.classList.add('visible');
+    const explAns=document.getElementById(`expl-ans-${q.id}`);
+    if(explAns){const isC=ans===ci,uA=ans!==undefined?` (Your Answer: ${['A','B','C','D'][ans]})`:'(Not answered)';explAns.innerHTML=`Correct Answer: <span class="ans-correct">${['A','B','C','D'][ci]}</span>${!isC?`<span class="ans-wrong">${uA}</span>`:'<span class="ans-correct"> ✓ Correct!</span>'}`;}
+  });
+  document.getElementById('submitWrap').style.display='none';showFilterBar();
+  document.getElementById('resultPanel').scrollIntoView({behavior:'smooth'});
+}
+
+function showResults(correct,total,sc,st){
+  const pct=Math.round((correct/total)*100);
+  document.getElementById('rScore').textContent=correct;
+  document.getElementById('rPct').textContent=pct+'%';
+  document.getElementById('rTime').textContent=`⏱ Time taken: ${formatTime(elapsedSeconds)}`;
+  let g='',gc='';if(pct>=85){g='Excellent 🏆';gc='grade-excellent';}else if(pct>=70){g='Good 👍';gc='grade-good';}else if(pct>=50){g='Average 📚';gc='grade-average';}else{g='Needs Work 💪';gc='grade-needs';}
+  const gb=document.getElementById('rGrade');gb.textContent=g;gb.className='grade-badge '+gc;
+  const colors={1:'#f5c842',2:'#5b9cf6',3:'#e85555',4:'#4ecb7a',5:'#a78bfa'};
+  document.getElementById('sectionScores').innerHTML=SECTIONS.map(s=>{const c=sc[s.id],t=st[s.id],sp=t>0?Math.round((c/t)*100):0;return`<div class="score-row"><div class="score-row-hd"><span class="score-row-name">${s.full}</span><span class="score-row-val" style="color:${colors[s.id]}">${c}/${t} (${sp}%)</span></div><div class="score-bar-track"><div class="score-bar-fill" style="background:${colors[s.id]};--bar-w:${sp}%;width:${sp}%"></div></div></div>`;}).join('');
+  const weak=SECTIONS.filter(s=>st[s.id]>0&&Math.round((sc[s.id]/st[s.id])*100)<60);
+  if(weak.length>0){document.getElementById('weakPanel').style.display='block';document.getElementById('weakList').innerHTML=weak.map(s=>`<div class="weak-item"><span class="weak-item-name">${s.full}</span><button class="btn-revise" onclick="scrollToSection(${s.id})">Revise Now →</button></div>`).join('');}
+  document.getElementById('resultPanel').classList.add('visible');
+}
+
+function scrollToSection(id){document.getElementById(`section-${id}`).scrollIntoView({behavior:'smooth'});}
+
+function showFilterBar(){
+  const fb=document.createElement('div');fb.className='filter-bar';fb.id='filterBar';
+  fb.innerHTML=`<button class="filter-btn active" onclick="applyFilter('all',this)">All (150)</button><button class="filter-btn" onclick="applyFilter('correct',this)">✓ Correct</button><button class="filter-btn" onclick="applyFilter('wrong',this)">✗ Wrong</button><button class="filter-btn" onclick="applyFilter('flagged',this)">🔖 Flagged</button><button class="filter-btn" onclick="applyFilter('pyq',this)">📋 PYQ</button>`;
+  document.getElementById('resultPanel').after(fb);
+}
+
+function applyFilter(mode,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  QUESTIONS.forEach(q=>{
+    const card=document.getElementById(`qcard-${q.id}`);if(!card)return;
+    const ans=answers[q.id],ci=q.correct;
+    const show=mode==='all'||(mode==='correct'&&ans===ci)||(mode==='wrong'&&(ans===undefined||ans!==ci))||(mode==='flagged'&&!!flagged[q.id])||(mode==='pyq'&&!!q.pyq);
+    card.style.display=show?'block':'none';
+  });
+  SECTIONS.forEach(s=>{const el=document.getElementById(`section-${s.id}`);if(!el)return;el.style.display=QUESTIONS.filter(q=>q.sec===s.id).some(q=>{const c=document.getElementById(`qcard-${q.id}`);return c&&c.style.display!=='none';})?'block':'none';});
+}
+
+function retakeTest(){
+  answers={};flagged={};locked={};submitted=false;elapsedSeconds=0;startTime=Date.now();
+  document.getElementById('resultPanel').classList.remove('visible');
+  document.getElementById('submitWrap').style.display='block';
+  const fb=document.getElementById('filterBar');if(fb)fb.remove();
+  QUESTIONS.forEach(q=>{
+    document.querySelectorAll(`#opts-${q.id} .option`).forEach(el=>el.classList.remove('selected','correct','wrong','show-correct'));
+    const expl=document.getElementById(`expl-${q.id}`);if(expl)expl.classList.remove('visible');
+    const explAns=document.getElementById(`expl-ans-${q.id}`);if(explAns)explAns.innerHTML='';
+    const card=document.getElementById(`qcard-${q.id}`);if(card)card.style.display='block';
+    const flag=document.getElementById(`flag-${q.id}`);if(flag)flag.classList.remove('flagged');
+  });
+  document.getElementById('statFlagged').textContent='0';
+  SECTIONS.forEach(s=>{const el=document.getElementById(`section-${s.id}`);if(el)el.style.display='block';});
+  buildPalette();updateProgress();clearInterval(timerInterval);startTimer();
+  if(timerDisplayVisible)document.getElementById('timerDisplay').textContent='00:00';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function reviewTest(){document.getElementById('testArea').scrollIntoView({behavior:'smooth'});}
+
+function exportResults(){
+  const correct=QUESTIONS.filter(q=>answers[q.id]===q.correct).length,pct=Math.round((correct/150)*100);
+  let text=`TNPSC Monsoon & Rainfall Test — Results\nScore: ${correct}/150 (${pct}%)\nTime: ${formatTime(elapsedSeconds)}\n\nSection-wise:\n`;
+  SECTIONS.forEach(s=>{const sqs=QUESTIONS.filter(q=>q.sec===s.id);text+=`${s.full}: ${sqs.filter(q=>answers[q.id]===q.correct).length}/${sqs.length}\n`;});
+  navigator.clipboard.writeText(text).then(()=>alert('Results copied!')).catch(()=>alert(text));
+}
+
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sidebarOverlay').classList.toggle('open');}
+function closeSidebarMob(){if(window.innerWidth<=900){document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebarOverlay').classList.remove('open');}}
+
+init();
+</script>
+</body>
+</html>

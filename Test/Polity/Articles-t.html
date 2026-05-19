@@ -887,6 +887,18 @@ body {
 .palette-cell.flagged-p { background: rgba(251,146,60,0.4); border: 1px solid var(--orange); }
 .palette-cell.current { background: var(--gold); }
 
+/* ─── TOGGLE SWITCHES ─── */
+.toggle-controls-sidebar{padding:12px 20px;border-top:1px solid var(--border)}
+.toggle-row-s{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border)}
+.toggle-row-s:last-of-type{border-bottom:none}
+.toggle-label-s{font-family:var(--font-mono);font-size:10px;color:var(--text-dim)}
+.toggle-sw{position:relative;width:34px;height:18px;flex-shrink:0}
+.toggle-sw input{opacity:0;width:0;height:0}
+.toggle-trk{position:absolute;inset:0;background:var(--surface2);border-radius:20px;cursor:pointer;transition:background .2s;border:1px solid var(--border)}
+.toggle-trk::after{content:'';position:absolute;top:2px;left:2px;width:12px;height:12px;background:var(--text-muted);border-radius:50%;transition:transform .2s,background .2s}
+.toggle-sw input:checked+.toggle-trk{background:var(--gold);border-color:var(--gold)}
+.toggle-sw input:checked+.toggle-trk::after{transform:translateX(16px);background:#0d0f14}
+
 /* ─── TIMER ─── */
 .timer-display {
   font-family: var(--font-mono);
@@ -1009,6 +1021,16 @@ body {
     <div class="palette-title">Question Palette</div>
     <div class="palette-grid" id="paletteGrid"></div>
   </div>
+  <div class="toggle-controls-sidebar">
+    <div class="toggle-row-s">
+      <span class="toggle-label-s">Instant Feedback</span>
+      <label class="toggle-sw"><input type="checkbox" id="toggleFeedbackChk" onchange="toggleFeedback()"><span class="toggle-trk"></span></label>
+    </div>
+    <div class="toggle-row-s">
+      <span class="toggle-label-s">Show Timer</span>
+      <label class="toggle-sw"><input type="checkbox" id="toggleTimerChk" onchange="toggleTimerDisplay()"><span class="toggle-trk"></span></label>
+    </div>
+  </div>
   <div class="sidebar-actions">
     <button class="btn btn-ghost" onclick="resetTest()" style="font-size:11px;padding:8px 14px;">↺ Retake</button>
     <button class="btn btn-ghost" onclick="exportResults()" style="font-size:11px;padding:8px 14px;">↓ Export</button>
@@ -1036,12 +1058,11 @@ body {
 <div class="progress-bar-wrap">
   <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
   <div class="progress-label" id="progressLabel">0 / 150 answered</div>
-  <div class="timer-display" id="timerDisplay">00:00</div>
+  <div class="timer-display" id="timerDisplay" style="display:none">00:00</div>
 </div>
 
 <!-- CONTROLS -->
 <div class="controls-bar">
-  <button class="btn btn-ghost" onclick="toggleTimer()" id="timerBtn">▶ Start Timer</button>
   <button class="btn btn-ghost" onclick="showAll()">Show All Sections</button>
   <button class="btn btn-ghost" onclick="showReview()" id="reviewBtn" style="display:none">📋 Review Mode</button>
 </div>
@@ -2461,8 +2482,10 @@ const QUESTIONS = [
 // ════════════════════════════════════════════════
 let userAnswers = new Array(151).fill(null);
 let flagged = new Set();
+let locked = {};
 let submitted = false;
-let timerActive = false;
+let immediateFeedback = false;
+let timerDisplayVisible = false;
 let timerSeconds = 0;
 let timerInterval = null;
 let currentFilter = 'all';
@@ -2475,6 +2498,7 @@ function init() {
   buildPalette();
   renderAllQuestions();
   updateProgress();
+  startTimer();
 }
 
 function buildTOC() {
@@ -2645,6 +2669,7 @@ function buildCard(q, sec) {
 
 function selectAnswer(qId, optIdx) {
   if (submitted) return;
+  if (locked[qId]) return;
   userAnswers[qId] = optIdx;
 
   const opts = document.querySelectorAll(`#opts-${qId} .option-btn`);
@@ -2652,6 +2677,11 @@ function selectAnswer(qId, optIdx) {
     btn.classList.remove('selected');
     if (i === optIdx) btn.classList.add('selected');
   });
+
+  if (immediateFeedback) {
+    locked[qId] = true;
+    showImmediateFeedback(qId);
+  }
 
   updateProgress();
   updatePalette();
@@ -2677,23 +2707,50 @@ function updateProgress() {
 }
 
 // Timer
-function toggleTimer() {
-  if (timerActive) {
-    clearInterval(timerInterval);
-    timerActive = false;
-    document.getElementById('timerBtn').textContent = '▶ Start Timer';
-  } else {
-    timerActive = true;
-    document.getElementById('timerBtn').textContent = '⏸ Pause Timer';
-    timerInterval = setInterval(() => {
-      timerSeconds++;
+function startTimer() {
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    if (timerDisplayVisible) {
       const m = Math.floor(timerSeconds / 60).toString().padStart(2, '0');
       const s = (timerSeconds % 60).toString().padStart(2, '0');
-      const disp = document.getElementById('timerDisplay');
-      disp.textContent = `${m}:${s}`;
-      disp.className = timerSeconds > 5400 ? 'timer-display warning' : 'timer-display';
-    }, 1000);
+      document.getElementById('timerDisplay').textContent = `${m}:${s}`;
+    }
+  }, 1000);
+}
+
+function toggleFeedback() {
+  immediateFeedback = document.getElementById('toggleFeedbackChk').checked;
+  if (!immediateFeedback) {
+    locked = {};
+    updatePalette();
   }
+}
+
+function toggleTimerDisplay() {
+  timerDisplayVisible = document.getElementById('toggleTimerChk').checked;
+  const disp = document.getElementById('timerDisplay');
+  disp.style.display = timerDisplayVisible ? '' : 'none';
+  if (timerDisplayVisible) {
+    const m = Math.floor(timerSeconds / 60).toString().padStart(2, '0');
+    const s = (timerSeconds % 60).toString().padStart(2, '0');
+    disp.textContent = `${m}:${s}`;
+  }
+}
+
+function showImmediateFeedback(qId) {
+  const q = QUESTIONS.find(q => q.id === qId);
+  if (!q) return;
+  const ans = userAnswers[qId];
+  const correct = q.answer;
+  const opts = document.querySelectorAll(`#opts-${qId} .option-btn`);
+  opts.forEach((btn, i) => {
+    btn.classList.remove('selected', 'correct', 'wrong', 'revealed-correct');
+    if (i === correct) btn.classList.add('revealed-correct');
+    if (ans !== null && i === ans && ans !== correct) btn.classList.add('wrong');
+    btn.disabled = true;
+  });
+  const expEl = document.getElementById(`exp-${qId}`);
+  if (expEl) expEl.classList.add('visible');
 }
 
 function showAll() {
@@ -2714,7 +2771,6 @@ function closeModal() {
 
 function submitTest() {
   clearInterval(timerInterval);
-  timerActive = false;
   submitted = true;
   closeModal();
 
@@ -2879,15 +2935,16 @@ function practiceWeak() {
 function resetTest() {
   userAnswers = new Array(151).fill(null);
   flagged = new Set();
+  locked = {};
   submitted = false;
   timerSeconds = 0;
   clearInterval(timerInterval);
-  timerActive = false;
   currentFilter = 'all';
 
-  document.getElementById('timerDisplay').textContent = '00:00';
-  document.getElementById('timerDisplay').className = 'timer-display';
-  document.getElementById('timerBtn').textContent = '▶ Start Timer';
+  if (timerDisplayVisible) {
+    document.getElementById('timerDisplay').textContent = '00:00';
+    document.getElementById('timerDisplay').className = 'timer-display';
+  }
   document.getElementById('submitSection').style.display = '';
   document.getElementById('resultsPanel').classList.remove('visible');
   document.getElementById('reviewBtn').style.display = 'none';
@@ -2897,6 +2954,7 @@ function resetTest() {
   buildTOC();
   buildPalette();
   updateProgress();
+  startTimer();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 

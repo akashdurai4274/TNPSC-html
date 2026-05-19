@@ -92,6 +92,18 @@ body::before{
 .btn-sidebar.primary{background:var(--gold);color:#0d0f14;border-color:var(--gold);font-weight:600}
 .btn-sidebar.primary:hover{background:var(--gold-dim)}
 
+/* TOGGLE SWITCHES */
+.toggle-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)}
+.toggle-row:last-of-type{border-bottom:none}
+.toggle-label{font-family:var(--font-mono);font-size:10px;color:var(--text-dim)}
+.toggle-switch{position:relative;width:36px;height:20px;flex-shrink:0}
+.toggle-switch input{opacity:0;width:0;height:0}
+.toggle-track{position:absolute;inset:0;background:var(--surface2);border-radius:20px;cursor:pointer;transition:background .2s;border:1px solid var(--border)}
+.toggle-track::after{content:'';position:absolute;top:3px;left:3px;width:12px;height:12px;background:var(--text-muted);border-radius:50%;transition:transform .2s,background .2s}
+.toggle-switch input:checked+.toggle-track{background:var(--gold);border-color:var(--gold)}
+.toggle-switch input:checked+.toggle-track::after{transform:translateX(16px);background:#0d0f14}
+.toggle-controls{padding:12px 0 4px}
+
 /* HERO */
 .hero{
   padding:48px 48px 40px;
@@ -394,12 +406,21 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:20px
     <div class="sidebar-stats">
       <div class="stat-mini"><span class="stat-mini-label">Answered</span><span class="stat-mini-val" id="statAnswered">0 / 150</span></div>
       <div class="stat-mini"><span class="stat-mini-label">Flagged</span><span class="stat-mini-val" id="statFlagged" style="color:var(--orange)">0</span></div>
-      <div class="stat-mini"><span class="stat-mini-label">Time</span><span class="stat-mini-val" id="timerDisplay">00:00</span></div>
+      <div class="stat-mini" id="timerRow" style="display:none"><span class="stat-mini-label">Time</span><span class="stat-mini-val" id="timerDisplay">00:00</span></div>
+    </div>
+    <div class="toggle-controls">
+      <div class="toggle-row">
+        <span class="toggle-label">Instant Feedback</span>
+        <label class="toggle-switch"><input type="checkbox" id="toggleFeedbackChk" onchange="toggleFeedback()"><span class="toggle-track"></span></label>
+      </div>
+      <div class="toggle-row">
+        <span class="toggle-label">Show Timer</span>
+        <label class="toggle-switch"><input type="checkbox" id="toggleTimerChk" onchange="toggleTimerDisplay()"><span class="toggle-track"></span></label>
+      </div>
     </div>
   </div>
   <div class="sidebar-actions">
     <button class="btn-sidebar primary" onclick="submitTest()">Submit Test</button>
-    <button class="btn-sidebar" onclick="toggleTimer()">⏱ Toggle Timer</button>
     <button class="btn-sidebar" onclick="retakeTest()">↺ Retake Test</button>
   </div>
 </aside>
@@ -1471,11 +1492,13 @@ pyq:"TNPSC Group 1 2023"},
 // ============================================================
 // APP STATE
 // ============================================================
-let answers = {}; // qId -> optionIndex
-let flagged = {}; // qId -> bool
+let answers = {};
+let flagged = {};
+let locked = {};
 let submitted = false;
-let filterMode = 'all'; // all, correct, wrong, flagged, pyq
-let timerOn = true;
+let immediateFeedback = false;
+let timerDisplayVisible = false;
+let filterMode = 'all';
 let timerInterval = null;
 let elapsedSeconds = 0;
 let startTime = Date.now();
@@ -1511,7 +1534,15 @@ function updatePaletteQ(qId){
   if(!dot) return;
   dot.className = 'pal-dot';
   if(flagged[qId]) dot.classList.add('flagged');
-  if(answers[qId] !== undefined) dot.classList.add('answered');
+  if(answers[qId] !== undefined){
+    if(immediateFeedback && locked[qId]){
+      const q = QUESTIONS.find(q=>q.id===qId);
+      if(q && answers[qId]===getCorrectIdx(q)) dot.classList.add('correct');
+      else dot.classList.add('wrong');
+    } else {
+      dot.classList.add('answered');
+    }
+  }
 }
 
 function updatePaletteAfterSubmit(){
@@ -1620,10 +1651,15 @@ function buildCard(q, sec, animIdx){
 
 function selectOption(qId, optIdx){
   if(submitted) return;
+  if(locked[qId]) return;
   answers[qId] = optIdx;
   document.querySelectorAll(`#opts-${qId} .option`).forEach((el,i)=>{
     el.classList.toggle('selected', i===optIdx);
   });
+  if(immediateFeedback){
+    locked[qId] = true;
+    showImmediateFeedback(qId);
+  }
   updatePaletteQ(qId);
   updateProgress();
 }
@@ -1649,13 +1685,43 @@ function updateProgress(){
 function startTimer(){
   startTime = Date.now();
   timerInterval = setInterval(()=>{
-    if(!timerOn) return;
     elapsedSeconds = Math.floor((Date.now()-startTime)/1000);
-    document.getElementById('timerDisplay').textContent = formatTime(elapsedSeconds);
+    if(timerDisplayVisible) document.getElementById('timerDisplay').textContent = formatTime(elapsedSeconds);
   },1000);
 }
-function toggleTimer(){
-  timerOn = !timerOn;
+function toggleFeedback(){
+  immediateFeedback = document.getElementById('toggleFeedbackChk').checked;
+  if(!immediateFeedback){
+    // Unlock all cards when turning off
+    locked = {};
+    QUESTIONS.forEach(q=>updatePaletteQ(q.id));
+  }
+}
+function toggleTimerDisplay(){
+  timerDisplayVisible = document.getElementById('toggleTimerChk').checked;
+  const row = document.getElementById('timerRow');
+  row.style.display = timerDisplayVisible ? 'flex' : 'none';
+  if(timerDisplayVisible) document.getElementById('timerDisplay').textContent = formatTime(elapsedSeconds);
+}
+function showImmediateFeedback(qId){
+  const q = QUESTIONS.find(q=>q.id===qId);
+  if(!q) return;
+  const ans = answers[qId];
+  const correctIdx = getCorrectIdx(q);
+  const opts = document.querySelectorAll(`#opts-${qId} .option`);
+  opts.forEach((el,i)=>{
+    el.classList.remove('selected','correct','wrong','show-correct');
+    if(i===correctIdx) el.classList.add('show-correct');
+    if(ans!==undefined && i===ans && ans!==correctIdx) el.classList.add('wrong');
+  });
+  const expl = document.getElementById(`expl-${qId}`);
+  if(expl) expl.classList.add('visible');
+  const explAns = document.getElementById(`expl-ans-${qId}`);
+  if(explAns){
+    const isCorrect = ans===correctIdx;
+    const userAnsText = ans!==undefined ? ` (Your Answer: ${['A','B','C','D'][ans]})` : '';
+    explAns.innerHTML = `Correct Answer: <span class="ans-correct">${['A','B','C','D'][correctIdx]}</span>${!isCorrect?`<span class="ans-wrong">${userAnsText}</span>`:'<span class="ans-correct"> ✓ Correct!</span>'}`;
+  }
 }
 function formatTime(s){
   const h = Math.floor(s/3600);
@@ -1830,36 +1896,37 @@ function applyFilter(mode, btn){
 function retakeTest(){
   answers = {};
   flagged = {};
+  locked = {};
   submitted = false;
   elapsedSeconds = 0;
   startTime = Date.now();
-  // Remove result panel, filter bar
   document.getElementById('resultPanel').classList.remove('visible');
   document.getElementById('submitWrap').style.display='block';
   const fb = document.getElementById('filterBar');
   if(fb) fb.remove();
-  // Reset all cards
   QUESTIONS.forEach(q=>{
     document.querySelectorAll(`#opts-${q.id} .option`).forEach(el=>{
       el.classList.remove('selected','correct','wrong','show-correct');
     });
     const expl = document.getElementById(`expl-${q.id}`);
     if(expl) expl.classList.remove('visible');
+    const explAns = document.getElementById(`expl-ans-${q.id}`);
+    if(explAns) explAns.innerHTML = '';
     const card = document.getElementById(`qcard-${q.id}`);
     if(card) card.style.display='block';
     const flag = document.getElementById(`flag-${q.id}`);
     if(flag) flag.classList.remove('flagged');
-    document.getElementById('statFlagged').textContent = '0';
   });
+  document.getElementById('statFlagged').textContent = '0';
   SECTIONS.forEach(s=>{
     const secEl = document.getElementById(`section-${s.id}`);
     if(secEl) secEl.style.display='block';
   });
   buildPalette();
   updateProgress();
-  timerOn = true;
   clearInterval(timerInterval);
   startTimer();
+  if(timerDisplayVisible) document.getElementById('timerDisplay').textContent = '00:00';
   window.scrollTo({top:0,behavior:'smooth'});
 }
 

@@ -212,6 +212,19 @@ body::before {
 .btn-sidebar.primary { background: var(--gold); color: #0d0f14; border-color: var(--gold); font-weight: 600; }
 .btn-sidebar.primary:hover { background: var(--gold-dim); }
 
+/* TOGGLE SWITCHES */
+.toggle-controls{padding:12px 20px 4px;border-top:1px solid var(--border)}
+.toggle-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border)}
+.toggle-row:last-of-type{border-bottom:none}
+.toggle-label{font-family:var(--font-mono);font-size:10px;color:var(--text-dim)}
+.toggle-switch{position:relative;width:36px;height:20px;flex-shrink:0}
+.toggle-switch input{opacity:0;width:0;height:0}
+.toggle-track{position:absolute;inset:0;background:var(--surface2);border-radius:20px;cursor:pointer;transition:background .2s;border:1px solid var(--border)}
+.toggle-track::after{content:'';position:absolute;top:3px;left:3px;width:12px;height:12px;background:var(--text-dim);border-radius:50%;transition:transform .2s,background .2s}
+.toggle-switch input:checked+.toggle-track{background:var(--gold);border-color:var(--gold)}
+.toggle-switch input:checked+.toggle-track::after{transform:translateX(16px);background:#0d0f14}
+.stat-mini-timer{font-family:var(--font-mono);font-size:12px;color:var(--cyan);padding:8px 20px;border-top:1px solid var(--border)}
+
 /* MAIN CONTENT */
 .main {
   overflow: auto;
@@ -1023,6 +1036,17 @@ footer {
   <div id="palette-section">
     <div class="toc-label" style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border)">Palette</div>
     <div class="palette-wrap" id="palette-wrap"></div>
+  </div>
+  <div class="stat-mini-timer" id="timerRow" style="display:none">⏱ <span id="timerDisplay">00:00</span></div>
+  <div class="toggle-controls">
+    <div class="toggle-row">
+      <span class="toggle-label">Instant Feedback</span>
+      <label class="toggle-switch"><input type="checkbox" id="toggleFeedbackChk" onchange="toggleFeedback()"><span class="toggle-track"></span></label>
+    </div>
+    <div class="toggle-row">
+      <span class="toggle-label">Show Timer</span>
+      <label class="toggle-switch"><input type="checkbox" id="toggleTimerChk" onchange="toggleTimerDisplay()"><span class="toggle-track"></span></label>
+    </div>
   </div>
   <div class="sidebar-actions">
     <button class="btn-sidebar primary" onclick="submitTest()">Submit Test</button>
@@ -2948,9 +2972,14 @@ const QUESTIONS = [
 // ============================================================
 let answers = new Array(151).fill(null);
 let flagged = new Array(151).fill(false);
+let locked = new Array(151).fill(false);
 let submitted = false;
 let startTime = Date.now();
 let currentFilter = 'all';
+let immediateFeedback = false;
+let timerDisplayVisible = false;
+let timerInterval = null;
+let elapsedSeconds = 0;
 
 // ============================================================
 // RENDER
@@ -2959,6 +2988,7 @@ function init() {
   buildPalette();
   renderAllSections();
   updateProgress();
+  startTimer();
 }
 
 function buildPalette() {
@@ -3089,23 +3119,22 @@ function renderOptions(q) {
 
 function selectAnswer(qid, optIdx) {
   if (submitted) return;
+  if (locked[qid]) return;
   answers[qid] = optIdx;
 
-  // Update button styles
   const q = QUESTIONS.find(x => x.id === qid);
   q.opts.forEach((_, i) => {
     const btn = document.getElementById(`opt-${qid}-${i}`);
-    if (btn) {
-      btn.className = 'option-btn' + (i === optIdx ? ' selected' : '');
-    }
+    if (btn) btn.className = 'option-btn' + (i === optIdx ? ' selected' : '');
   });
 
-  // Update palette
-  const pal = document.getElementById(`pal-${qid}`);
-  if (pal) {
-    pal.classList.remove('flagged');
-    pal.classList.add('answered');
-    if (flagged[qid]) { pal.classList.add('flagged'); }
+  if (immediateFeedback) { locked[qid] = true; showImmediateFeedback(qid); }
+  else {
+    const pal = document.getElementById(`pal-${qid}`);
+    if (pal) {
+      pal.className = 'palette-q answered';
+      if (flagged[qid]) pal.classList.add('flagged');
+    }
   }
 
   updateProgress();
@@ -3141,6 +3170,55 @@ function jumpSection(idx) {
   document.querySelectorAll('.toc-item').forEach((el,i) => {
     el.classList.toggle('active', i === idx);
   });
+}
+
+// ============================================================
+// TIMER & TOGGLES
+// ============================================================
+function startTimer() {
+  elapsedSeconds = 0;
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    elapsedSeconds++;
+    if (timerDisplayVisible) document.getElementById('timerDisplay').textContent = formatTime(elapsedSeconds);
+  }, 1000);
+}
+
+function formatTime(s) {
+  const m = Math.floor(s / 60).toString().padStart(2, '0');
+  const sec = (s % 60).toString().padStart(2, '0');
+  return `${m}:${sec}`;
+}
+
+function toggleFeedback() {
+  immediateFeedback = document.getElementById('toggleFeedbackChk').checked;
+}
+
+function toggleTimerDisplay() {
+  timerDisplayVisible = document.getElementById('toggleTimerChk').checked;
+  const row = document.getElementById('timerRow');
+  row.style.display = timerDisplayVisible ? 'block' : 'none';
+  if (timerDisplayVisible) document.getElementById('timerDisplay').textContent = formatTime(elapsedSeconds);
+}
+
+function showImmediateFeedback(qid) {
+  const q = QUESTIONS.find(x => x.id === qid);
+  if (!q) return;
+  q.opts.forEach((_, i) => {
+    const btn = document.getElementById(`opt-${qid}-${i}`);
+    if (!btn) return;
+    btn.style.pointerEvents = 'none';
+    if (i === q.ans) btn.classList.add('correct-ans');
+    else if (i === answers[qid]) btn.classList.add('wrong-ans');
+  });
+  const expl = document.getElementById(`expl-${qid}`);
+  if (expl) { expl.innerHTML = `<div class="expl-text">${q.expl || ''}</div>`; expl.classList.add('show'); }
+  const pal = document.getElementById(`pal-${qid}`);
+  if (pal) {
+    pal.className = 'palette-q';
+    if (flagged[qid]) pal.classList.add('flagged');
+    pal.classList.add(answers[qid] === q.ans ? 'correct' : 'wrong');
+  }
 }
 
 // ============================================================
@@ -3341,8 +3419,10 @@ function practiceWeak() {
 function resetTest() {
   answers = new Array(151).fill(null);
   flagged = new Array(151).fill(false);
+  locked = new Array(151).fill(false);
   submitted = false;
   startTime = Date.now();
+  startTimer();
 
   document.getElementById('test-view').style.display = 'block';
   document.getElementById('submit-area').style.display = 'flex';

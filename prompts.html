@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin · Prompts Hub — Arivoam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<script src="prompts-config.js"></script>
+<style>
+:root {
+  --bg:      #0d0f14;
+  --surface: #12151e;
+  --surface2:#181c28;
+  --border:  #21263a;
+  --border2: #2d3450;
+  --gold:    #f5c842;
+  --gold-dim:#c9a52e;
+  --red:     #e85555;
+  --green:   #4ecb7a;
+  --blue:    #5b9cf6;
+  --purple:  #a78bfa;
+  --orange:  #fb923c;
+  --text:    #e8eaf0;
+  --muted:   #8892aa;
+  --muted2:  #4a5168;
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+
+body {
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Lora',serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ── ANIMATED GRID ── */
+body::before {
+  content:'';
+  position:fixed; inset:0; z-index:0;
+  background-image:
+    linear-gradient(rgba(245,200,66,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245,200,66,0.04) 1px, transparent 1px);
+  background-size:60px 60px;
+  animation:gridShift 20s linear infinite;
+  pointer-events:none;
+}
+@keyframes gridShift { 0%{background-position:0 0} 100%{background-position:0 60px} }
+@keyframes fadeDown  { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:none} }
+@keyframes fadeUp    { from{opacity:0;transform:translateY(20px)}  to{opacity:1;transform:none} }
+@keyframes shake     {
+  0%,100%{transform:translateX(0)}
+  20%,60%{transform:translateX(-6px)}
+  40%,80%{transform:translateX(6px)}
+}
+
+/* ─────────────────────────────
+   LOGIN OVERLAY
+───────────────────────────── */
+#loginOverlay {
+  position:fixed; inset:0; z-index:1000;
+  background:rgba(13,15,20,0.97);
+  backdrop-filter:blur(8px);
+  display:flex; align-items:center; justify-content:center;
+}
+.login-card {
+  background:var(--surface);
+  border:1px solid var(--border2);
+  border-radius:16px;
+  padding:48px 44px;
+  width:100%; max-width:400px;
+  animation:fadeDown 0.4s ease both;
+  position:relative; z-index:1;
+}
+.login-badge {
+  display:inline-flex; align-items:center; gap:8px;
+  background:rgba(245,200,66,0.1); border:1px solid rgba(245,200,66,0.3);
+  border-radius:4px; padding:5px 14px; margin-bottom:28px;
+  font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600;
+  color:var(--gold); letter-spacing:0.12em; text-transform:uppercase;
+}
+.login-card h1 {
+  font-family:'Syne',sans-serif; font-size:26px; font-weight:800;
+  color:#fff; margin-bottom:6px;
+}
+.login-card h1 span { color:var(--gold); }
+.login-sub {
+  font-family:'IBM Plex Mono',monospace; font-size:11px;
+  color:var(--muted); margin-bottom:36px; letter-spacing:0.5px;
+}
+.field-group { margin-bottom:18px; }
+.field-label {
+  font-family:'IBM Plex Mono',monospace; font-size:10px; font-weight:600;
+  text-transform:uppercase; letter-spacing:1.5px; color:var(--muted);
+  display:block; margin-bottom:8px;
+}
+.field-input {
+  width:100%; padding:11px 16px;
+  background:var(--surface2); border:1px solid var(--border2);
+  border-radius:8px; color:var(--text);
+  font-family:'IBM Plex Mono',monospace; font-size:13px;
+  outline:none; transition:border-color 0.2s, box-shadow 0.2s;
+}
+.field-input:focus {
+  border-color:rgba(245,200,66,0.5);
+  box-shadow:0 0 0 3px rgba(245,200,66,0.08);
+}
+.field-input.error { border-color:var(--red); box-shadow:0 0 0 3px rgba(232,85,85,0.1); }
+.error-msg {
+  font-family:'IBM Plex Mono',monospace; font-size:11px;
+  color:var(--red); margin-top:6px; display:none;
+}
+.error-msg.visible { display:block; }
+.btn-login {
+  width:100%; padding:13px;
+  background:var(--gold); color:#0d0f14;
+  font-family:'Syne',sans-serif; font-size:14px; font-weight:800;
+  border:none; border-radius:8px; cursor:pointer;
+  text-transform:uppercase; letter-spacing:1px;
+  transition:all 0.2s; margin-top:8px;
+}
+.btn-login:hover { background:var(--gold-dim); box-shadow:0 0 20px rgba(245,200,66,0.25); }
+.btn-login:active { transform:scale(0.98); }
+.btn-login.loading { opacity:0.6; pointer-events:none; }
+.login-shake { animation:shake 0.4s ease; }
+
+/* ─────────────────────────────
+   MAIN HUB (hidden until auth)
+───────────────────────────── */
+#mainHub { display:none; position:relative; z-index:1; }
+
+/* ── TOPBAR ── */
+.topbar {
+  position:sticky; top:0; z-index:100;
+  background:rgba(13,15,20,0.97); backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  padding:12px 28px;
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+}
+.topbar-brand {
+  display:flex; align-items:center; gap:12px;
+}
+.topbar-badge {
+  font-family:'IBM Plex Mono',monospace; font-size:10px; font-weight:700;
+  text-transform:uppercase; letter-spacing:1.5px;
+  background:rgba(245,200,66,0.12); border:1px solid rgba(245,200,66,0.3);
+  color:var(--gold); padding:3px 10px; border-radius:4px;
+}
+.topbar-title {
+  font-family:'Syne',sans-serif; font-size:15px; font-weight:800;
+  color:#fff;
+}
+.topbar-title span { color:var(--gold); }
+.topbar-actions { display:flex; align-items:center; gap:10px; }
+.btn-back {
+  font-family:'IBM Plex Mono',monospace; font-size:11px;
+  color:var(--muted); background:transparent;
+  border:1px solid var(--border); border-radius:6px;
+  padding:6px 14px; cursor:pointer; text-decoration:none;
+  transition:all 0.15s; display:inline-flex; align-items:center; gap:6px;
+}
+.btn-back:hover { border-color:var(--gold); color:var(--gold); }
+.btn-logout {
+  font-family:'IBM Plex Mono',monospace; font-size:11px;
+  color:var(--red); background:transparent;
+  border:1px solid rgba(232,85,85,0.3); border-radius:6px;
+  padding:6px 14px; cursor:pointer;
+  transition:all 0.15s;
+}
+.btn-logout:hover { background:rgba(232,85,85,0.08); }
+
+/* ── HERO ── */
+.hub-hero {
+  max-width:1200px; margin:0 auto;
+  padding:56px 28px 40px;
+  border-bottom:1px solid var(--border);
+  margin-bottom:48px;
+  animation:fadeDown 0.5s ease both;
+}
+.hub-hero-badge {
+  display:inline-flex; align-items:center; gap:8px;
+  background:rgba(245,200,66,0.1); border:1px solid rgba(245,200,66,0.3);
+  border-radius:4px; padding:6px 16px; margin-bottom:20px;
+  font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600;
+  color:var(--gold); letter-spacing:0.12em; text-transform:uppercase;
+}
+.hub-hero h1 {
+  font-family:'Syne',sans-serif; font-size:clamp(32px,5vw,52px); font-weight:800;
+  color:#fff; line-height:1.05; margin-bottom:12px;
+}
+.hub-hero h1 span { color:var(--gold); }
+.hub-hero p {
+  font-family:'Lora',serif; font-style:italic; font-size:16px;
+  color:var(--muted); max-width:560px; line-height:1.7;
+}
+
+/* ── PROMPTS GRID ── */
+.hub-wrap { max-width:1200px; margin:0 auto; padding:0 28px 80px; }
+.hub-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(320px, 1fr));
+  gap:20px;
+  animation:fadeUp 0.5s 0.1s ease both;
+}
+
+.prompt-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:12px; padding:0; overflow:hidden;
+  cursor:pointer; transition:all 0.2s;
+  display:flex; flex-direction:column;
+}
+.prompt-card:hover {
+  border-color:var(--gold);
+  box-shadow:0 0 0 1px rgba(245,200,66,0.15), 0 8px 32px rgba(0,0,0,0.4);
+  transform:translateY(-2px);
+}
+.card-accent {
+  height:3px;
+}
+.card-body { padding:24px 24px 20px; flex:1; }
+.card-icon {
+  font-size:28px; margin-bottom:14px; display:block;
+}
+.card-folder {
+  font-family:'IBM Plex Mono',monospace; font-size:10px; font-weight:600;
+  text-transform:uppercase; letter-spacing:1.5px; color:var(--muted);
+  margin-bottom:8px;
+}
+.card-title {
+  font-family:'Syne',sans-serif; font-size:18px; font-weight:800;
+  color:#fff; margin-bottom:8px; line-height:1.2;
+}
+.card-desc {
+  font-family:'Lora',serif; font-size:13.5px; color:var(--muted);
+  line-height:1.6;
+}
+.card-footer {
+  padding:14px 24px;
+  background:var(--surface2);
+  border-top:1px solid var(--border);
+  display:flex; align-items:center; justify-content:space-between;
+}
+.card-file {
+  font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--muted2);
+}
+.card-cta {
+  font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600;
+  color:var(--gold); display:flex; align-items:center; gap:6px;
+}
+
+/* ─────────────────────────────
+   PROMPT VIEWER (inline)
+───────────────────────────── */
+#promptViewer {
+  display:none; position:relative; z-index:1;
+}
+.viewer-topbar {
+  position:sticky; top:0; z-index:100;
+  background:rgba(13,15,20,0.97); backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  padding:12px 28px;
+  display:flex; align-items:center; gap:12px;
+}
+.viewer-title {
+  font-family:'Syne',sans-serif; font-size:14px; font-weight:700; color:#fff;
+  flex:1;
+}
+.viewer-title span { color:var(--gold); }
+.viewer-actions { display:flex; gap:8px; }
+
+.btn-action {
+  font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600;
+  padding:7px 16px; border-radius:6px; cursor:pointer;
+  border:1px solid; display:inline-flex; align-items:center; gap:7px;
+  transition:all 0.15s; white-space:nowrap;
+}
+.btn-copy {
+  color:var(--gold); border-color:rgba(245,200,66,0.4);
+  background:rgba(245,200,66,0.06);
+}
+.btn-copy:hover { background:rgba(245,200,66,0.14); }
+.btn-copy.copied { color:var(--green); border-color:rgba(78,203,122,0.4); background:rgba(78,203,122,0.08); }
+.btn-edit {
+  color:var(--blue); border-color:rgba(91,156,246,0.4);
+  background:rgba(91,156,246,0.06);
+}
+.btn-edit:hover { background:rgba(91,156,246,0.14); }
+.btn-edit.active { color:var(--orange); border-color:rgba(251,146,60,0.4); background:rgba(251,146,60,0.08); }
+.btn-back-viewer {
+  font-family:'IBM Plex Mono',monospace; font-size:11px;
+  color:var(--muted); border:1px solid var(--border);
+  background:transparent; border-radius:6px; padding:7px 14px; cursor:pointer;
+  display:inline-flex; align-items:center; gap:6px; transition:all 0.15s;
+}
+.btn-back-viewer:hover { color:var(--gold); border-color:rgba(245,200,66,0.4); }
+
+.viewer-wrap { max-width:1000px; margin:0 auto; padding:40px 28px 80px; }
+.viewer-meta {
+  display:flex; align-items:center; gap:12px; margin-bottom:28px;
+  flex-wrap:wrap;
+}
+.viewer-meta-icon { font-size:24px; }
+.viewer-meta-title {
+  font-family:'Syne',sans-serif; font-size:22px; font-weight:800; color:#fff;
+}
+.viewer-meta-folder {
+  font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted);
+  background:var(--surface2); border:1px solid var(--border);
+  padding:4px 10px; border-radius:4px;
+}
+
+.prompt-textarea {
+  width:100%; min-height:70vh;
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:10px; padding:28px 32px;
+  color:var(--text); font-family:'IBM Plex Mono',monospace; font-size:12.5px;
+  line-height:1.8; resize:vertical; outline:none;
+  transition:border-color 0.2s;
+  white-space:pre-wrap; word-wrap:break-word;
+}
+.prompt-textarea[readonly] { cursor:default; }
+.prompt-textarea:not([readonly]) {
+  border-color:rgba(91,156,246,0.4);
+  box-shadow:0 0 0 3px rgba(91,156,246,0.06);
+}
+
+.copy-toast {
+  position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(20px);
+  background:var(--green); color:#0d0f14;
+  font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:700;
+  padding:10px 24px; border-radius:8px; z-index:9999;
+  opacity:0; transition:all 0.3s; pointer-events:none;
+  white-space:nowrap;
+}
+.copy-toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+/* ── LOADING / ERROR STATES ── */
+.viewer-loading {
+  display:flex; align-items:center; gap:12px;
+  font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--muted);
+  padding:60px 0;
+}
+.loading-dot {
+  width:10px; height:10px; border-radius:50%; background:var(--gold);
+  box-shadow:0 0 8px var(--gold); animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.8)} }
+
+/* ── RESPONSIVE ── */
+@media(max-width:640px) {
+  .hub-hero { padding:40px 16px 28px; }
+  .hub-wrap, .viewer-wrap { padding-left:16px; padding-right:16px; }
+  .topbar, .viewer-topbar { padding:10px 16px; }
+  .hub-grid { grid-template-columns:1fr; }
+  .prompt-textarea { font-size:11px; padding:16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ─────────────────────────────
+     LOGIN OVERLAY
+───────────────────────────── -->
+<div id="loginOverlay">
+  <div class="login-card">
+    <div class="login-badge">🔐 Admin Access</div>
+    <h1>Prompts <span>Hub</span></h1>
+    <p class="login-sub">Restricted — authorised personnel only</p>
+
+    <div class="field-group">
+      <label class="field-label" for="loginUser">Username</label>
+      <input id="loginUser" class="field-input" type="text" autocomplete="username"
+             placeholder="Enter username" spellcheck="false">
+    </div>
+
+    <div class="field-group">
+      <label class="field-label" for="loginPass">Password</label>
+      <input id="loginPass" class="field-input" type="password" autocomplete="current-password"
+             placeholder="Enter password">
+      <p id="loginError" class="error-msg">Incorrect username or password.</p>
+    </div>
+
+    <button class="btn-login" id="loginBtn" onclick="attemptLogin()">Login</button>
+  </div>
+</div>
+
+<!-- ─────────────────────────────
+     MAIN HUB
+───────────────────────────── -->
+<div id="mainHub">
+
+  <div class="topbar">
+    <div class="topbar-brand">
+      <span class="topbar-badge">Admin</span>
+      <span class="topbar-title"><span>Prompts</span> Hub</span>
+    </div>
+    <div class="topbar-actions">
+      <a href="index.html" class="btn-back">← Back to Hub</a>
+      <button class="btn-logout" onclick="logout()">Logout</button>
+    </div>
+  </div>
+
+  <div class="hub-hero">
+    <div class="hub-hero-badge">📋 Arivoam · Artifact Prompts</div>
+    <h1>Create <span>Artifacts</span></h1>
+    <p>Choose a prompt template below. Copy it, add your content, and paste into Claude to generate a new artifact matching the exact Arivoam design system.</p>
+  </div>
+
+  <div class="hub-wrap">
+    <div class="hub-grid" id="promptsGrid">
+      <!-- cards injected by JS -->
+    </div>
+  </div>
+
+</div>
+
+<!-- ─────────────────────────────
+     PROMPT VIEWER
+───────────────────────────── -->
+<div id="promptViewer">
+
+  <div class="viewer-topbar">
+    <button class="btn-back-viewer" onclick="backToHub()">← All Prompts</button>
+    <div class="viewer-title" id="viewerTitleBar">—</div>
+    <div class="viewer-actions">
+      <button class="btn-action btn-copy" id="copyBtn" onclick="copyPrompt()">
+        <span>⎘</span> Copy Prompt
+      </button>
+      <button class="btn-action btn-edit" id="editBtn" onclick="toggleEdit()">
+        <span>✎</span> Edit
+      </button>
+    </div>
+  </div>
+
+  <div class="viewer-wrap">
+    <div class="viewer-meta">
+      <span class="viewer-meta-icon" id="viewerIcon">📋</span>
+      <span class="viewer-meta-title" id="viewerMetaTitle">—</span>
+      <span class="viewer-meta-folder" id="viewerFolder">—</span>
+    </div>
+    <div id="viewerContent">
+      <div class="viewer-loading">
+        <div class="loading-dot"></div> Loading prompt…
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── COPY TOAST ── -->
+<div class="copy-toast" id="copyToast">✓ Copied to clipboard!</div>
+
+<script>
+/* ─────────────────────────────────────────
+   PROMPT DEFINITIONS
+───────────────────────────────────────── */
+const PROMPTS = [
+  {
+    id:     'leaders',
+    icon:   '🏛️',
+    title:  'Leaders Notes',
+    folder: 'prompts/Leaders/',
+    file:   'prompts/Leaders/leaders_notes_prompt.md',
+    accent: '#f5c842',
+    desc:   'Single-leader deep-dive notes from a YouTube lecture transcript. Captures every fact, date, quote, and organisation mentioned by the lecturer.',
+  },
+  {
+    id:     'tnpsc-tests',
+    icon:   '📝',
+    title:  'TNPSC Practice Tests',
+    folder: 'prompts/TNPSC_Practice_Tests/',
+    file:   'prompts/TNPSC_Practice_Tests/tnpsc_practice_test_prompt.md',
+    accent: '#a78bfa',
+    desc:   '100–200 MCQ practice tests with collapsible answers, difficulty badges, filter bar, and section navigation. Matches the Arivoam test design.',
+  },
+  {
+    id:     'tnpsc-sim',
+    icon:   '🌿',
+    title:  'TNPSC Simulation',
+    folder: 'prompts/TNPSC_Simulation/',
+    file:   'prompts/TNPSC_Simulation/tnpsc_simulation_prompt.md',
+    accent: '#4ecb7a',
+    desc:   'Full-length TNPSC mock exam interface with timer, question palette, section navigation, and auto-scored results screen.',
+  },
+  {
+    id:     'ssc-sim',
+    icon:   '🏛️',
+    title:  'SSC Simulation',
+    folder: 'prompts/SSC_Simulation/',
+    file:   'prompts/SSC_Simulation/ssc_simulation_prompt.md',
+    accent: '#c9a84c',
+    desc:   'SSC CGL / Selection Post full mock simulator with the warm parchment-gold theme, countdown timer, negative marking, and results analysis.',
+  },
+  {
+    id:     'live-qa',
+    icon:   '💬',
+    title:  'Live QA Revision',
+    folder: 'prompts/Live_QA_Revision/',
+    file:   'prompts/Live_QA_Revision/live_qa_revision_prompt.md',
+    accent: '#5b9cf6',
+    desc:   'Rapid-fire Q&A revision pages with expandable answers, PYQ/GEM/Trap badges, filter bar, and cheat-sheet tables.',
+  },
+];
+
+/* ─────────────────────────────────────────
+   AUTH
+───────────────────────────────────────── */
+async function sha256(message) {
+  const msgBuffer = new TextEncoder().encode(message);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+  return Array.from(new Uint8Array(hashBuffer))
+    .map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function attemptLogin() {
+  const btn   = document.getElementById('loginBtn');
+  const user  = document.getElementById('loginUser').value.trim();
+  const pass  = document.getElementById('loginPass').value;
+  const errEl = document.getElementById('loginError');
+
+  btn.textContent = 'Verifying…';
+  btn.classList.add('loading');
+  errEl.classList.remove('visible');
+
+  const hash = await sha256(pass);
+  const card = document.querySelector('.login-card');
+
+  if (user === PROMPTS_AUTH.username && hash === PROMPTS_AUTH.passwordHash) {
+    sessionStorage.setItem('ph_auth', '1');
+    document.getElementById('loginOverlay').style.display = 'none';
+    showHub();
+  } else {
+    btn.textContent = 'Login';
+    btn.classList.remove('loading');
+    document.getElementById('loginUser').classList.add('error');
+    document.getElementById('loginPass').classList.add('error');
+    errEl.classList.add('visible');
+    card.classList.remove('login-shake');
+    void card.offsetWidth;
+    card.classList.add('login-shake');
+  }
+}
+
+function logout() {
+  sessionStorage.removeItem('ph_auth');
+  location.reload();
+}
+
+/* allow Enter key on login form */
+['loginUser','loginPass'].forEach(id => {
+  document.getElementById(id).addEventListener('keydown', e => {
+    if (e.key === 'Enter') attemptLogin();
+    document.getElementById(id).classList.remove('error');
+  });
+});
+
+/* ─────────────────────────────────────────
+   HUB
+───────────────────────────────────────── */
+function showHub() {
+  document.getElementById('mainHub').style.display = 'block';
+  renderGrid();
+}
+
+function renderGrid() {
+  const grid = document.getElementById('promptsGrid');
+  grid.innerHTML = PROMPTS.map(p => `
+    <div class="prompt-card" onclick="openPrompt('${p.id}')">
+      <div class="card-accent" style="background:${p.accent}"></div>
+      <div class="card-body">
+        <span class="card-icon">${p.icon}</span>
+        <div class="card-folder">${p.folder}</div>
+        <div class="card-title">${p.title}</div>
+        <div class="card-desc">${p.desc}</div>
+      </div>
+      <div class="card-footer">
+        <span class="card-file">${p.file.split('/').pop()}</span>
+        <span class="card-cta">Open →</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ─────────────────────────────────────────
+   VIEWER
+───────────────────────────────────────── */
+let currentPrompt = null;
+
+async function openPrompt(id) {
+  const p = PROMPTS.find(x => x.id === id);
+  if (!p) return;
+  currentPrompt = p;
+
+  document.getElementById('mainHub').style.display    = 'none';
+  document.getElementById('promptViewer').style.display = 'block';
+
+  document.getElementById('viewerTitleBar').innerHTML  = `<span style="color:var(--gold)">${p.icon}</span> ${p.title}`;
+  document.getElementById('viewerIcon').textContent    = p.icon;
+  document.getElementById('viewerMetaTitle').textContent = p.title;
+  document.getElementById('viewerFolder').textContent  = p.folder;
+  document.getElementById('viewerContent').innerHTML   =
+    `<div class="viewer-loading"><div class="loading-dot"></div> Loading prompt…</div>`;
+
+  /* reset edit/copy buttons */
+  document.getElementById('editBtn').classList.remove('active');
+  document.getElementById('editBtn').innerHTML = '<span>✎</span> Edit';
+  document.getElementById('copyBtn').classList.remove('copied');
+  document.getElementById('copyBtn').innerHTML = '<span>⎘</span> Copy Prompt';
+
+  try {
+    const res = await fetch(p.file + '?_=' + Date.now());
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const text = await res.text();
+    renderViewer(text);
+  } catch (err) {
+    document.getElementById('viewerContent').innerHTML =
+      `<div style="color:var(--red);font-family:'IBM Plex Mono',monospace;font-size:13px;padding:40px 0">
+        ⚠ Could not load file: ${p.file}<br>
+        <span style="color:var(--muted);font-size:11px;margin-top:8px;display:block">${err.message}</span>
+       </div>`;
+  }
+}
+
+function renderViewer(text) {
+  document.getElementById('viewerContent').innerHTML =
+    `<textarea id="promptTA" class="prompt-textarea" readonly spellcheck="false">${escHtml(text)}</textarea>`;
+}
+
+function backToHub() {
+  document.getElementById('promptViewer').style.display = 'none';
+  document.getElementById('mainHub').style.display      = 'block';
+  currentPrompt = null;
+  /* reset edit state */
+  document.getElementById('editBtn').classList.remove('active');
+}
+
+/* ─────────────────────────────────────────
+   COPY & EDIT
+───────────────────────────────────────── */
+function copyPrompt() {
+  const ta = document.getElementById('promptTA');
+  if (!ta) return;
+  navigator.clipboard.writeText(ta.value).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.classList.add('copied');
+    btn.innerHTML = '<span>✓</span> Copied!';
+    showToast('✓ Copied to clipboard!');
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = '<span>⎘</span> Copy Prompt';
+    }, 2500);
+  }).catch(() => {
+    /* fallback */
+    const ta2 = document.getElementById('promptTA');
+    ta2.select();
+    document.execCommand('copy');
+    showToast('✓ Copied!');
+  });
+}
+
+function toggleEdit() {
+  const ta  = document.getElementById('promptTA');
+  const btn = document.getElementById('editBtn');
+  if (!ta) return;
+
+  const isEditing = !ta.readOnly;
+  if (isEditing) {
+    /* save mode → back to readonly */
+    ta.readOnly = true;
+    btn.classList.remove('active');
+    btn.innerHTML = '<span>✎</span> Edit';
+    showToast('✓ Changes saved locally');
+  } else {
+    /* enter edit mode */
+    ta.readOnly = false;
+    ta.focus();
+    btn.classList.add('active');
+    btn.innerHTML = '<span>✔</span> Done Editing';
+  }
+}
+
+function showToast(msg) {
+  const t = document.getElementById('copyToast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* ─────────────────────────────────────────
+   INIT — check session
+───────────────────────────────────────── */
+(function() {
+  if (sessionStorage.getItem('ph_auth') === '1') {
+    document.getElementById('loginOverlay').style.display = 'none';
+    showHub();
+  }
+})();
+</script>
+</body>
+</html>

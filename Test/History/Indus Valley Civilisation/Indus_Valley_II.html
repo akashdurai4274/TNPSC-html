@@ -308,6 +308,22 @@
             border: 2px solid var(--orange-color) !important;
         }
 
+        .palette-cell.correct { background: var(--green-color)!important; border-color: var(--green-color)!important; color: #000!important; font-weight: bold!important; }
+        .palette-cell.wrong { background: var(--red-color)!important; border-color: var(--red-color)!important; color: #fff!important; font-weight: bold!important; }
+
+        /* TOGGLE SWITCHES */
+        .toggle-box { padding: 14px; border-top: 1px solid var(--border-color); margin-top: 8px; }
+        .toggle-box-title { font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+        .toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--border-color); }
+        .toggle-row:last-of-type { border-bottom: none; }
+        .toggle-label { font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); }
+        .toggle-switch { position: relative; width: 36px; height: 20px; flex-shrink: 0; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .toggle-track { position: absolute; inset: 0; background: var(--surface-hover); border-radius: 20px; cursor: pointer; transition: background .2s; border: 1px solid var(--border-hover); }
+        .toggle-track::after { content: ''; position: absolute; top: 3px; left: 3px; width: 12px; height: 12px; background: var(--text-dim); border-radius: 50%; transition: transform .2s, background .2s; }
+        .toggle-switch input:checked + .toggle-track { background: var(--gold-accent); border-color: var(--gold-accent); }
+        .toggle-switch input:checked + .toggle-track::after { transform: translateX(16px); background: #0d0f14; }
+
         main {
             display: flex;
             flex-direction: column;
@@ -480,6 +496,10 @@
         }
 
         .option-pill:hover { border-color: var(--gold-accent); background: var(--surface-hover); }
+        .option-pill.correct-ans { border-color: var(--green-color)!important; background: rgba(78,203,122,0.12)!important; pointer-events: none!important; }
+        .option-pill.wrong-ans { border-color: var(--red-color)!important; background: rgba(232,85,85,0.12)!important; pointer-events: none!important; }
+        .imm-expl { background: var(--surface-hover); border-left: 3px solid var(--gold-accent); border-radius: 0 6px 6px 0; padding: 10px 14px; font-size: 13px; color: var(--text-dim); line-height: 1.6; margin-top: 10px; display: none; }
+        .imm-expl.show { display: block; }
 
         .option-pill input[type="radio"] {
             appearance: none; width: 16px; height: 16px; border: 2px solid var(--border-color);
@@ -629,6 +649,17 @@
                 </div>
                 <div class="grid-palette" id="gridPalette"></div>
             </div>
+            <div class="toggle-box">
+                <div class="toggle-box-title">Test Options</div>
+                <div class="toggle-row">
+                    <span class="toggle-label">Instant Feedback</span>
+                    <label class="toggle-switch"><input type="checkbox" id="toggleFeedbackChk" onchange="toggleFeedback()"><span class="toggle-track"></span></label>
+                </div>
+                <div class="toggle-row">
+                    <span class="toggle-label">Show Timer</span>
+                    <label class="toggle-switch"><input type="checkbox" id="toggleTimerChk" onchange="toggleTimerDisplay()"><span class="toggle-track"></span></label>
+                </div>
+            </div>
         </aside>
 
         <main>
@@ -643,7 +674,7 @@
                     </div>
                 </div>
                 <div class="control-actions">
-                    <div class="timer-box mono" id="timerDisplay">⏱️ 02:30:00</div>
+                    <div class="timer-box mono" id="timerDisplay" style="display:none">⏱️ 02:30:00</div>
                     <button class="btn btn-gold" id="globalSubmitBtn">Submit Test</button>
                 </div>
             </div>
@@ -679,9 +710,12 @@
     <script>
         let userAnswers = {};
         let flaggedQuestions = {};
+        let locked = {};
         let testSubmitted = false;
         let timerSeconds = 150 * 60;
         let timerInterval = null;
+        let immediateFeedback = false;
+        let timerDisplayVisible = false;
 
         const sectionMeta = [
             { id: 1, name: "Discovery, Excavation & Chronology", count: 15, color: "#f5c842" },
@@ -1123,11 +1157,17 @@
 
         function registerAnswer(qId, optionIdx) {
             if (testSubmitted) return;
+            if (locked[qId]) return;
             userAnswers[qId] = optionIdx;
-            
-            const cell = document.getElementById(`palette-cell-${qId}`);
-            if (cell) cell.classList.add('answered');
-            
+
+            if (immediateFeedback) {
+                locked[qId] = true;
+                showImmediateFeedback(qId);
+            } else {
+                const cell = document.getElementById(`palette-cell-${qId}`);
+                if (cell) cell.classList.add('answered');
+            }
+
             updateProgress();
         }
 
@@ -1161,11 +1201,43 @@
                     return;
                 }
                 timerSeconds--;
-                const hrs = String(Math.floor(timerSeconds / 3600)).padStart(2, '0');
-                const mins = String(Math.floor((timerSeconds % 3600) / 60)).padStart(2, '0');
-                const secs = String(timerSeconds % 60).padStart(2, '0');
-                document.getElementById('timerDisplay').innerText = `⏱️ ${hrs}:${mins}:${secs}`;
+                if (timerDisplayVisible) {
+                    const hrs = String(Math.floor(timerSeconds / 3600)).padStart(2, '0');
+                    const mins = String(Math.floor((timerSeconds % 3600) / 60)).padStart(2, '0');
+                    const secs = String(timerSeconds % 60).padStart(2, '0');
+                    document.getElementById('timerDisplay').innerText = `⏱️ ${hrs}:${mins}:${secs}`;
+                }
             }, 1000);
+        }
+
+        function toggleTimerDisplay() {
+            timerDisplayVisible = document.getElementById('toggleTimerChk').checked;
+            document.getElementById('timerDisplay').style.display = timerDisplayVisible ? 'block' : 'none';
+        }
+
+        function toggleFeedback() {
+            immediateFeedback = document.getElementById('toggleFeedbackChk').checked;
+        }
+
+        function showImmediateFeedback(qId) {
+            const q = questions.find(x => x.id === qId);
+            if (!q) return;
+            q.options.forEach((_, i) => {
+                const lbl = document.getElementById(`label-${qId}-${i}`);
+                if (!lbl) return;
+                lbl.style.pointerEvents = 'none';
+                if (i === q.answer) lbl.classList.add('correct-ans');
+                else if (i === parseInt(userAnswers[qId])) lbl.classList.add('wrong-ans');
+            });
+            const wrapper = document.getElementById(`exp-wrapper-${qId}`);
+            if (wrapper) {
+                wrapper.innerHTML = `<div class="imm-expl show">${q.explanation || ''}</div>`;
+            }
+            const cell = document.getElementById(`palette-cell-${qId}`);
+            if (cell) {
+                cell.classList.remove('answered');
+                cell.classList.add(parseInt(userAnswers[qId]) === q.answer ? 'correct' : 'wrong');
+            }
         }
 
         function scrollToSection(secId) {

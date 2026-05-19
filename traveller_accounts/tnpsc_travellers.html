@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TNPSC Group 1 — Foreign Travellers to India (18th Century & Before)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0f14;
+  --surface1:#12151e;
+  --surface2:#181c28;
+  --border1:#21263a;
+  --border2:#2d3450;
+  --gold:#f5c842;
+  --red:#e85555;
+  --green:#4ecb7a;
+  --blue:#5b9cf6;
+  --purple:#a78bfa;
+  --cyan:#22d3ee;
+  --orange:#fb923c;
+  --text:#e8eaf0;
+  --muted:#8891a8;
+  --font-head:'Syne',sans-serif;
+  --font-mono:'IBM Plex Mono',monospace;
+  --font-body:'Lora',serif;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+.grid-bg{
+  position:fixed;inset:0;z-index:0;
+  background-image:
+    linear-gradient(rgba(245,200,66,0.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(245,200,66,0.04) 1px,transparent 1px);
+  background-size:60px 60px;
+  animation:gridShift 20s linear infinite;
+  pointer-events:none;
+}
+@keyframes gridShift{
+  0%{background-position:0 0}
+  100%{background-position:0 60px}
+}
+.wrap{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 24px 80px}
+
+/* HERO */
+.hero{
+  text-align:center;
+  padding:60px 0 48px;
+  border-bottom:1px solid var(--border1);
+  margin-bottom:48px;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(245,200,66,0.1);
+  border:1px solid rgba(245,200,66,0.3);
+  border-radius:4px;
+  padding:6px 16px;
+  font-family:var(--font-mono);font-size:11px;font-weight:600;
+  color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;
+  margin-bottom:24px;
+}
+.hero h1{
+  font-family:var(--font-head);font-size:clamp(32px,5vw,58px);font-weight:800;
+  color:#fff;line-height:1.05;margin-bottom:16px;
+}
+.hero h1 span{color:var(--gold)}
+.hero-sub{
+  font-family:var(--font-body);font-style:italic;font-size:18px;
+  color:var(--muted);max-width:680px;margin:0 auto 32px;line-height:1.6;
+}
+.stat-row{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin-top:32px;
+}
+.stat-pill{
+  background:var(--surface2);
+  border:1px solid var(--border2);
+  border-radius:6px;padding:10px 20px;
+  font-family:var(--font-mono);font-size:12px;color:var(--muted);
+  display:flex;align-items:center;gap:8px;
+}
+.stat-pill strong{color:#fff;font-size:15px;font-weight:600;font-family:var(--font-head)}
+
+/* COPY-READY PROMPT BOX */
+.prompt-box{
+  background:var(--surface1);
+  border:1px solid var(--border2);
+  border-left:4px solid var(--gold);
+  border-radius:8px;
+  padding:24px 28px;
+  margin-bottom:48px;
+  position:relative;
+}
+.prompt-box .pb-label{
+  font-family:var(--font-mono);font-size:10px;font-weight:600;
+  color:var(--gold);letter-spacing:0.14em;text-transform:uppercase;
+  margin-bottom:12px;
+}
+.prompt-box p{
+  font-family:var(--font-mono);font-size:13px;line-height:1.7;
+  color:#c8cfdf;
+}
+.copy-btn{
+  position:absolute;top:16px;right:16px;
+  background:rgba(245,200,66,0.12);
+  border:1px solid rgba(245,200,66,0.3);
+  border-radius:4px;
+  padding:6px 14px;
+  font-family:var(--font-mono);font-size:11px;font-weight:600;
+  color:var(--gold);cursor:pointer;transition:all 0.2s;
+}
+.copy-btn:hover{background:rgba(245,200,66,0.22)}
+
+/* SECTION HEADERS */
+.section-label{
+  display:flex;align-items:center;gap:12px;
+  font-family:var(--font-mono);font-size:11px;font-weight:600;
+  color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;
+  margin-bottom:24px;
+}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border1)}
+.section-title{
+  font-family:var(--font-head);font-size:clamp(22px,3vw,30px);font-weight:700;
+  color:#fff;margin-bottom:8px;
+}
+
+/* FILTERS */
+.filters{
+  display:flex;flex-wrap:wrap;gap:8px;
+  margin-bottom:36px;
+}
+.filter-btn{
+  background:var(--surface2);
+  border:1px solid var(--border1);
+  border-radius:4px;
+  padding:7px 16px;
+  font-family:var(--font-mono);font-size:11px;font-weight:500;
+  color:var(--muted);cursor:pointer;transition:all 0.2s;
+}
+.filter-btn.active,.filter-btn:hover{
+  border-color:var(--gold);color:var(--gold);
+  background:rgba(245,200,66,0.08);
+}
+
+/* TRAVELLER CARDS */
+.cards-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
+  gap:20px;
+  margin-bottom:60px;
+}
+.t-card{
+  background:var(--surface1);
+  border:1px solid var(--border1);
+  border-radius:10px;
+  overflow:hidden;
+  transition:border-color 0.25s,transform 0.25s;
+  cursor:pointer;
+  display:flex;flex-direction:column;
+}
+.t-card:hover{
+  border-color:var(--border2);
+  transform:translateY(-3px);
+}
+.t-card.hidden{display:none}
+.card-header{
+  padding:20px 20px 14px;
+  border-bottom:1px solid var(--border1);
+  display:flex;align-items:flex-start;gap:14px;
+}
+.traveller-icon{
+  width:44px;height:44px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-head);font-size:17px;font-weight:800;
+  flex-shrink:0;
+}
+.card-name{
+  font-family:var(--font-head);font-size:17px;font-weight:700;
+  color:#fff;line-height:1.2;
+}
+.card-origin{
+  font-family:var(--font-mono);font-size:11px;color:var(--muted);
+  margin-top:4px;
+}
+.card-meta{
+  display:flex;flex-wrap:wrap;gap:6px;
+  padding:12px 20px;
+  border-bottom:1px solid var(--border1);
+}
+.tag{
+  font-family:var(--font-mono);font-size:10px;font-weight:500;
+  padding:3px 10px;border-radius:3px;letter-spacing:0.06em;
+}
+.tag-period{background:rgba(91,156,246,0.12);color:var(--blue);border:1px solid rgba(91,156,246,0.2)}
+.tag-type{background:rgba(167,139,250,0.12);color:var(--purple);border:1px solid rgba(167,139,250,0.2)}
+.tag-region{background:rgba(34,211,238,0.12);color:var(--cyan);border:1px solid rgba(34,211,238,0.2)}
+.tag-book{background:rgba(78,203,122,0.12);color:var(--green);border:1px solid rgba(78,203,122,0.2)}
+
+.card-body{padding:16px 20px;flex:1}
+.card-body p{
+  font-family:var(--font-body);font-size:14px;line-height:1.7;
+  color:#9aa3b8;
+}
+.info-rows{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.info-row{
+  display:flex;gap:10px;
+  font-family:var(--font-mono);font-size:12px;
+}
+.info-key{color:var(--muted);min-width:80px;flex-shrink:0}
+.info-val{color:#c8d0e0;line-height:1.5}
+
+.card-qs{
+  padding:14px 20px;
+  background:rgba(0,0,0,0.2);
+  border-top:1px solid var(--border1);
+}
+.qs-label{
+  font-family:var(--font-mono);font-size:10px;font-weight:600;
+  color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;
+  margin-bottom:10px;
+}
+.q-item{
+  font-family:var(--font-body);font-size:12.5px;
+  color:#8891a8;line-height:1.6;
+  padding:4px 0;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+}
+.q-item:last-child{border-bottom:none}
+.q-item::before{content:'Q. ';color:var(--gold);font-weight:600;font-family:var(--font-mono);font-size:11px}
+
+/* QUICK REF TABLE */
+.ref-table-wrap{
+  background:var(--surface1);
+  border:1px solid var(--border1);
+  border-radius:10px;
+  overflow:hidden;
+  margin-bottom:60px;
+}
+.ref-table{width:100%;border-collapse:collapse;font-family:var(--font-mono);font-size:12px}
+.ref-table th{
+  background:var(--surface2);
+  color:var(--gold);
+  font-weight:600;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;
+  padding:12px 16px;text-align:left;
+  border-bottom:1px solid var(--border2);
+}
+.ref-table td{
+  padding:11px 16px;
+  border-bottom:1px solid var(--border1);
+  color:#9aa3b8;vertical-align:top;line-height:1.5;
+}
+.ref-table tr:last-child td{border-bottom:none}
+.ref-table tr:hover td{background:rgba(255,255,255,0.02)}
+.ref-table td:first-child{color:#fff;font-weight:500}
+.ref-table td:nth-child(2){color:var(--cyan)}
+
+/* MCQ SECTION */
+.mcq-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
+  gap:20px;
+  margin-bottom:60px;
+}
+.mcq-card{
+  background:var(--surface1);
+  border:1px solid var(--border1);
+  border-radius:10px;
+  padding:20px;
+}
+.mcq-qnum{
+  font-family:var(--font-mono);font-size:10px;font-weight:600;
+  color:var(--gold);letter-spacing:0.1em;margin-bottom:10px;
+}
+.mcq-q{
+  font-family:var(--font-body);font-size:14px;line-height:1.65;
+  color:#c8d0e0;margin-bottom:14px;
+}
+.mcq-opts{display:flex;flex-direction:column;gap:6px}
+.mcq-opt{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:8px 12px;border-radius:5px;
+  font-family:var(--font-body);font-size:13px;line-height:1.5;
+  color:#8891a8;
+  border:1px solid var(--border1);
+  cursor:pointer;transition:all 0.15s;
+}
+.mcq-opt:hover{border-color:var(--border2);color:#c8d0e0;background:rgba(255,255,255,0.02)}
+.mcq-opt.correct{border-color:rgba(78,203,122,0.4);color:var(--green);background:rgba(78,203,122,0.06)}
+.mcq-opt.wrong{border-color:rgba(232,85,85,0.4);color:var(--red);background:rgba(232,85,85,0.06)}
+.opt-letter{
+  font-family:var(--font-mono);font-size:11px;font-weight:600;
+  color:var(--muted);min-width:18px;margin-top:1px;
+}
+.mcq-ans{
+  margin-top:12px;padding:10px 14px;
+  background:rgba(78,203,122,0.06);
+  border:1px solid rgba(78,203,122,0.2);
+  border-radius:5px;
+  font-family:var(--font-mono);font-size:12px;
+  color:var(--green);display:none;line-height:1.6;
+}
+.mcq-ans.show{display:block}
+.show-ans-btn{
+  margin-top:12px;
+  background:none;border:1px solid var(--border2);
+  border-radius:4px;padding:6px 14px;
+  font-family:var(--font-mono);font-size:11px;font-weight:500;
+  color:var(--muted);cursor:pointer;transition:all 0.15s;width:100%;
+}
+.show-ans-btn:hover{border-color:var(--gold);color:var(--gold)}
+
+/* MNEMONICS */
+.mnemonic-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:16px;
+  margin-bottom:60px;
+}
+.mnemonic-card{
+  background:var(--surface2);
+  border:1px solid var(--border1);
+  border-radius:8px;
+  padding:18px;
+}
+.mnemonic-title{
+  font-family:var(--font-head);font-size:14px;font-weight:700;
+  color:var(--gold);margin-bottom:8px;
+}
+.mnemonic-text{
+  font-family:var(--font-body);font-style:italic;font-size:13px;
+  line-height:1.65;color:#9aa3b8;
+}
+.mnemonic-key{
+  font-family:var(--font-mono);font-size:11px;font-weight:600;
+  color:var(--orange);margin-top:8px;
+}
+
+/* FOOTER */
+.footer{
+  text-align:center;padding-top:40px;
+  border-top:1px solid var(--border1);
+  font-family:var(--font-mono);font-size:12px;color:var(--muted);
+}
+.footer span{color:var(--gold)}
+
+/* RESPONSIVE */
+@media(max-width:640px){
+  .cards-grid,.mcq-grid{grid-template-columns:1fr}
+  .ref-table{font-size:11px}
+  .ref-table th,.ref-table td{padding:9px 10px}
+}
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="wrap">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">🧭 TNPSC Group 1 · Prelims + Mains · History</div>
+  <h1>Foreign <span>Travellers</span><br>to India</h1>
+  <p class="hero-sub">A 360° examination-ready compendium of every major foreign traveller — who they were, where they came from, where they visited, what they wrote, and every TNPSC-relevant fact distilled from their accounts.</p>
+  <div class="stat-row">
+    <div class="stat-pill"><strong>20+</strong> Travellers Covered</div>
+    <div class="stat-pill"><strong>6th BC</strong> to <strong>18th AD</strong> Century</div>
+    <div class="stat-pill"><strong>50+</strong> MCQs Embedded</div>
+    <div class="stat-pill"><strong>Tamil Nadu</strong> Focus Included</div>
+  </div>
+</div>
+
+<!-- COPY-READY PROMPT -->
+<div class="prompt-box">
+  <div class="pb-label">📋 Copy-Ready Study Prompt — Paste in any AI for deeper drill</div>
+  <p>Act as a senior TNPSC Group 1 question setter with 18th-century academic rigor. Quiz me on foreign travellers to India — covering: (1) full name & nationality, (2) century/period of visit, (3) exact Indian regions & kingdoms visited, (4) ruler/king they met, (5) title of their travelogue/account, (6) key observations about society, economy, administration, temples, caste, trade, and Tamil Nadu specifically. Frame questions as MCQs with plausible distractors, match-the-following pairs, assertion-reason, and two-statement true/false sets. Emphasize Sangam-era Greek contacts, Chola/Pandya visitors, and Mughal-era European accounts. Difficulty: TNPSC Group 1 Prelims + Mains combined.</p>
+  <button class="copy-btn" onclick="navigator.clipboard.writeText(this.parentElement.querySelector('p').textContent);this.textContent='Copied ✓';setTimeout(()=>this.textContent='Copy',2000)">Copy</button>
+</div>
+
+<!-- TRAVELLER CARDS -->
+<div class="section-label">Traveller Profiles</div>
+<h2 class="section-title">Every Foreign Traveller — Complete Profiles</h2>
+<p style="font-family:var(--font-body);font-size:15px;color:var(--muted);margin-bottom:28px;line-height:1.7;">Each profile includes origin, period, places visited, king/ruler met, travelogue name, and TNPSC-targeted exam questions.</p>
+
+<div class="filters">
+  <button class="filter-btn active" onclick="filterCards('all',this)">All Travellers</button>
+  <button class="filter-btn" onclick="filterCards('greek',this)">Greek / Roman</button>
+  <button class="filter-btn" onclick="filterCards('chinese',this)">Chinese</button>
+  <button class="filter-btn" onclick="filterCards('arab',this)">Arab / Persian</button>
+  <button class="filter-btn" onclick="filterCards('european',this)">European</button>
+  <button class="filter-btn" onclick="filterCards('tn',this)">Tamil Nadu Focus</button>
+</div>
+
+<div class="cards-grid" id="cardsGrid">
+
+<!-- 1 MEGASTHENES -->
+<div class="t-card" data-cats="greek tn">
+  <div class="card-header">
+    <div class="traveller-icon" style="background:rgba(91,156,246,0.15);color:var(--blue)">Mg</div>
+    <div>
+      <div class="card-name">Megasthenes</div>
+      <div class="card-origin">🇬🇷 Greek · Ambassador · Seleucid Empire</div>
+    </div>
+  </div>
+  <div class="card-meta">
+    <span class="tag tag-period">302–298 BCE</span>
+    <span class="tag tag-type">Ambassador</span>
+    <span class="tag tag-region">Pataliputra</span>
+    <span class="tag tag-book">Indica</span>
+  </div>
+  <div class="card-body">
+    <p>The earliest and most important Greek ambassador to India, sent by Seleucus I Nicator to the court of Chandragupta Maurya. His work <em>Indica</em> is the foundational Greek account of India.</p>
+    <div class="info-rows">
+      <div class="info-row"><span class="info-key">King Met</span><span class="info-val">Chandragupta Maurya (Sandrokottos)</span></div>
+      <div class="info-row"><span class="info-key">Capital</span><span class="info-val">Pataliputra (modern Patna, Bihar)</span></div>
+      <div class="info-row"><span class="info-key">Book</span><span class="info-val">Indica (preserved in fragments)</span></div>
+      <div class="info-row"><span class="info-key">Key Notes</span><span class="info-val">Described 7 castes of India; noted absence of slavery; described the royal Mauryan army with war elephants; described Pataliputra's wooden walls and 570 towers. Mentioned south Indian kingdoms as "Pandaea" (Pandya) ruled by a queen.</span></div>
+      <div class="info-row"><span class="info-key">TN Link</span><span class="info-val">First Greek to mention Pandya kingdom — called it "Pandaea" — and described pearl trade from south India</span></div>
+    </div>
+  </div>
+  <div class="card-qs">
+    <div class="qs-label">⚡ TNPSC Exam Questions</div>
+    <div class="q-item">Who was Megasthenes? He was the Greek ambassador sent to the court of Chandragupta Maurya by Seleucus I Nicator.</div>
+    <div class="q-item">What is the name of Megasthenes' travelogue? — Indica.</div>
+    <div class="q-item">Which south Indian kingdom did Megasthenes refer to as "Pandaea"? — Pandya Kingdom.</div>
+    <div class="q-item">Megasthenes described India as having how many castes? — Seven castes.</div>
+  </div>
+</div>
+
+<!-- 2 STRABO -->
+<div class="t-card" data-cats="greek">
+  <div class="card-header">
+    <div class="traveller-icon" style="background:rgba(91,156,246,0.15);color:var(--blue)">St</div>
+    <div>
+      <div class="card-name">Strabo</div>
+      <div class="card-origin">🇬🇷 Greek · Geographer · Pontus (modern Turkey)</div>
+    </div>
+  </div>
+  <div class="card-meta">
+    <span class="tag tag-period">1st Century BCE</span>
+    <span class="tag tag-type">Geographer</span>
+    <span class="tag tag-book">Geographica</span>
+  </div>
+  <div class="card-body">
+    <p>Did not visit India personally but compiled all existing Greek accounts about India in his monumental <em>Geographica</em> — a crucial secondary source for ancient Indian history.</p>
+    <div class="info-rows">
+      <div class="info-row"><span class="info-key">Period</span><span class="info-val">64 BCE – 24 CE</span></div>
+      <div class="info-row"><span class="info-key">Book</span><span class="info-val">Geographica (17 volumes)</span></div>
+      <div class="info-row"><span class="info-key">Key Notes</span><span class="info-val">Preserved information from Megasthenes, Nearchus, and others; described India's physical geography; accounts of Indian rivers (Indus, Ganges); described trade between India and Rome.</span></div>
+    </div>
+  </div>
+  <div class="card-qs">
+    <div class="qs-label">⚡ TNPSC Exam Questions</div>
+    <div class="q-item">Strabo compiled ancient Indian accounts in which book? — Geographica.</div>
+    <div class="q-item">Strabo's Geographica contains how many volumes? — 17 volumes.</div>
+  </div>
+</div>
+
+<!-- 3 PLINY THE ELDER -->
+<div class="t-card" data-cats="greek tn">
+  <div class="card-header">
+    <div class="traveller-icon" style="background:rgba(91,156,246,0.15);color:var(--blue)">Pl</div>
+    <div>
+      <div class="card-name">Pliny the Elder</div>
+      <div class="card-origin">🇮🇹 Roman · Author · Como, Roman Empire</div>
+    </div>
+  </div>
+  <div class="card-meta">
+    <span class="tag tag-period">1st Century CE</span>
+    <span class="tag tag-type">Roman Scholar</span>
+    <span class="tag tag-region">India (via trade)</span>
+    <span class="tag tag-book">Naturalis Historia</span>
+  </div>
+  <div class="card-body">
+    <p>Roman naturalist who wrote <em>Naturalis Historia</em>. Did not visit India but documented Indo-Roman trade extensively. Famously complained that India was draining Rome of its gold.</p>
+    <div class="info-rows">
+      <div class="info-row"><span class="info-key">Book</span><span class="info-val">Naturalis Historia (Natural History)</span></div>
+      <div class="info-row"><span class="info-key">Key Notes</span><span class="info-val">Recorded that Rome paid India 550 million sesterces annually for luxury goods — spices, muslin, precious stones. Documented pepper, silk, ivory trade. Mentioned Muzaris (Muchiri/Cranganore) as a major Indian port.</span></div>
+      <div class="info-row"><span class="info-key">TN Link</span><span class="info-val">Described Tamil ports, pepper trade from Malabar; mentioned Tamil kings sending embassies to Rome</span></div>
+    </div>
+  </div>
+  <div class="card-qs">
+    <div class="qs-label">⚡ TNPSC Exam Questions</div>
+    <div class="q-item">Who complained that trade with India was draining Rome of gold? — Pliny the Elder.</div>
+    <div class="q-item">Pliny's major work documenting India trade is called? — Naturalis Historia.</div>
+    <div class="q-item">Which port did Pliny mention as the busiest Indian trade port? — Muzaris (Cranganore/Muchiri).</div>
+  </div>
+</div>
+
+<!-- 4 PTOLEMY -->
+<div class="t-card" data-cats="greek tn">
+  <div class="card-header">
+    <div class="traveller-icon" style="background:rgba(91,156,246,0.15);color:var(--blue)">Pt</div>
+    <div>
+      <div class="card-name">Claudius Ptolemy</div>
+      <div class="card-origin">🇪🇬 Greek-Egyptian · Geographer · Alexandria</div>
+    </div>
+  </div>
+  <div class="card-meta">
+    <span class="tag tag-period">2nd Century CE</span>
+    <span class="tag tag-type">Geographer</span>
+    <span class="tag tag-book">Geographia</span>
+    <span class="tag tag-region">South India</span>
+  </div>
+  <div class="card-body">
+    <p>Alexandrian geographer whose <em>Geographia</em> contains the earliest map-like description of South India, identifying Tamil ports and rivers with remarkable accuracy.</p>
+    <div class="info-rows">
+      <div class="info-row"><span class="info-key">Book</span><span class="info-val">Geographia</span></div>
+      <div class="info-row"><span class="info-key">Key Notes</span><span class="info-val">Mentioned "Sopatma" (Mahabalipuram area), "Chaberis" (Kaveri mouth/Kaveripattinam), "Poduca" (Pondicherry/Arikamedu), "Camara" (possibly Kaveripattanam). Created early map of India.</span></div>
+      <div class="info-row"><span class="info-key">TN Link</span><span class="info-val">Identified Arikamedu as "Poduca" — a major trading post; mentioned Kaveri river and Cauvery delta ports</span></div>
+    </div>
+  </div>
+  <div class="card-qs">
+    <div class="qs-label">⚡ TNPSC Exam Questions</div>
+    <div class="q-item">Ptolemy identified "Poduca" as which modern Tamil Nadu location? — Arikamedu (near Pondicherry).</div>
+    <div class="q-item">Ptolemy called the Kaveri river by which name? — Chaberis.</div>
+    <div class="q-item">Ptolemy's geographical work is called? — Geographia.</div>
+  </div>
+</div>
+
+<!-- 5 FA-HIEN -->
+<div class="t-card" data-cats="chinese">
+  <div class="card-header">
+    <div class="traveller-icon" style="background:rgba(251,146,60,0.15);color:var(--orange)">Fa</div>
+    <div>
+      <div class="card-name">Fa-Hien (Faxian)</div>
+      <div class="card-origin">🇨🇳 Chinese · Buddhist Monk · China</div>
+    </div>
+  </div>
+  <div class="card-meta">
+    <span class="tag tag-period">399–414 CE</span>
+    <span class="tag tag-type">Buddhist Pilgrim</span>
+    <span class="tag tag-region">North India · Sri Lanka</span>
+    <span class="tag tag-book">Record of Buddhist Kingdoms</span>
+  </div>
+  <div class="card-body">
+    <p>First Chinese Buddhist monk to travel to India in search of Buddhist scriptures. He visited during the reign of Chandragupta II (Vikramaditya) of the Gupta dynasty.</p>
+    <div class="info-rows">
+      <div class="info-row"><span class="info-key">King Met</span><span class="info-val">Chandragupta II (Vikramaditya) — Gupta Empire</span></div>
+      <div class="info-row"><span class="info-key">Places</span><span class="info-val">Peshawar, Taxila, Mathura, Pataliputra, Varanasi, Bodh Gaya, Kapilavastu, Sarnath, Sri Lanka</span></div>
+      <div class="info-row"><span class="info-key">Book</span><span class="info-val">Fo-Kwo-Ki (Record of Buddhist Kingdoms)</span></div>
+      <div class="info-row"><span class="info-key">Key Notes</span><span class="info-val">Described Gupta society as prosperous and peaceful; said no capital punishment existed; observed that people were honest and vegetarian in the central lands; found Buddhist monasteries flourishing; visited sacred Buddhist sites.</span></div>
+    </div>
+  </div>
+  <div class="card-qs">
+    <div class="qs-label">⚡ TNPSC Exam Questions</div>
+    <div class="q-item">During whose reign did Fa-Hien visit India? — Chandragupta II (Vikramaditya) of Gupta dynasty.</div>
+    <div class="q-item">Fa-Hien's travelogue is called? — Fo-Kwo-Ki / Record of Buddhist Kingdoms.</div>
+    <div class="q-item">What did Fa-Hien observe about Gupta society? — Prosperous, no capital punishment, people honest and vegetarian.</div>
+    <div class="q-item">Which Chinese pilgrim visited India between 399–414 CE? — Fa-Hien.</div>
+  </div>
+</div>
+
+<!-- 6 HIUEN TSANG -->
+<div class="t-card" data-cats="chinese tn">
+  <div class="card-header">
+    <div class="traveller-icon" style="background:rgba(251,146,60,0.15);color:var(--orange)">HT</div>
+    <div>
+      <div class="card-name">Hiuen Tsang (Xuanzang)</div>
+      <div class="card-origin">🇨🇳 Chinese · Buddhist Scholar · Henan, China</div>
+    </div>
+  </div>
+  <div class="card-meta">
+    <span class="tag tag-period">629–645 CE</span>
+    <span class="tag tag-type">Buddhist Pilgrim</span>
+    <span class="tag tag-region">All India incl. South India</span>
+    <span class="tag tag-book">Si-Yu-Ki</span>
+  </div>
+  <div class="card-body">
+    <p>The most important Chinese traveller to India. He spent 16 years in India during the reign of Harsha and travelled extensively including South India and Tamil regions. Called the "Prince of Pilgrims".</p>
+    <div class="info-rows">
+      <div class="info-row"><span class="info-key">King Met</span><span class="info-val">Emperor Harsha of Kanauj; also Pulakesi II (Chalukya); visited Pallava kingdom</span></div>
+      <div class="info-row"><span class="info-key">Places</span><span class="info-val">Taxila, Kanauj, Nalanda, Bodh Gaya, Kanchipuram, Mahabalipuram area, Sri Lanka via south India route</span></div>
+      <div class="info-row"><span class="info-key">Book</span><span class="info-val">Si-Yu-Ki (Records of the Western Regions) · Also: Datang Xiyu Ji</span></div>
+      <div class="info-row"><span class="info-key">Key Notes</span><span class="info-val">Described Nalanda University in detail — 10,000 students, 1,500 teachers; praised Harsha as a virtuous ruler; described Kanchipuram (Conjeeveram) as a great city; described the Pallava kingdom's prosperity; noted decline of Buddhism in many parts.</span></div>
+      <div class="info-row"><span class="info-key">TN Link</span><span class="info-val">Visited Kanchipuram — described it as a thriving Buddhist centre; described Pallava king Narasimhavarman; noted Tamil Nadu's wealth and trade</span></div>
+    </div>
+  </div>
+  <div class="card-qs">
+    <div class="qs-label">⚡ TNPSC Exam Questions</div>
+    <div class="q-item">During whose reign did Hiuen Tsang visit India? — Harsha of Kanauj (also Pulakesi II Chalukya).</div>
+    <div class="q-item">Hiuen Tsang's travelogue is named? — Si-Yu-Ki (Records of the Western Regions).</div>
+    <div class="q-item">Which Tamil city did Hiuen Tsang describe as "Kanchipuram"? — Kanchipuram (Pallava capital).</div>
+    <div class="q-item">Hiuen Tsang described which university in detail? — Nalanda University.</div>
+    <div class="q-item">Which Chinese traveller is called the "Prince of Pilgrims"? — Hiuen Tsang.</div>
+  </div>
+</div>
+
+<!-- 7 I-TSING -->
+<div class="t-card" data-cats="chinese tn">
+  <div class="card-header">
+    <div class="traveller-icon" style="background:rgba(251,146,60,0.15);color:var(--orange)">IT</div>
+    <div>
+      <div class="card-name">I-Tsing (Yijing)</div>
+      <div class="card-origin">🇨🇳 Chinese · Buddhist Monk · Shandong, China</div>
+    </div>
+  </div>
+  <div class="card-meta">
+    <span class="tag tag-period">671–695 CE</span>
+    <span class="tag tag-type">Buddhist Pilgrim</span>
+    <span class="tag tag-region">South India · Nalanda · Sri Vijaya</span>
+    <span class="tag tag-book">Buddhist Records</span>
+  </div>
+  <div class="card-body">
+    <p>Chinese monk who travelled to India by sea route via Sri Vijaya (Sumatra). He studied at Nalanda for 10 years and wrote about South Indian Buddhist practices.</p>
+    <div class="info-rows">
+      <div class="info-row"><span class="info-key">Route</span><span class="info-val">Sea route via Sri Vijaya (Sumatra) — not overland like Fa-Hien</span></div>
+      <div class="info-row"><span class="info-key">Places</span><span class="info-val">Nalanda, South India ports, Sri Lanka; studied at Nalanda 10 years</span></div>
+      <div class="info-row"><span class="info-key">Book</span><span class="info-val">Record of Buddhist Practices sent from the South Sea; Biographies of Eminent Monks</span></div>
+      <div class="info-row"><span class="info-key">Key Notes</span><span class="info-val">Described 56 Buddhist monks who visited India; detailed accounts of Nalanda's curriculum; described South Indian Buddhist monasteries; noted that Buddhism was weakening in India but thriving in South-East Asia.</span></div>
+      <div class="info-row"><span class="info-key">TN Link</span><span class="info-val">Described Buddhist centres in South India including Kanchipuram region; documented sea trade routes from Tamil ports</span></div>
+    </div>
+  </div>
+  <div class="card-qs">
+    <div class="qs-label">⚡ TNPSC Exam Questions</div>
+    <div class="q-item">Which Chinese pilgrim took the sea route via Sumatra to reach India? — I-Tsing (Yijing).</div>
+    <div class="q-item">I-Tsing studied at which Indian university for 10 years? — Nalanda University.</div>
+    <div class="q-item">I-Tsing noted Buddhism was thriving in which region? — South-East Asia (Sri Vijaya).</div>
+  </div>
+</div>
+
+<!-- 8 AL-MASUDI -->
+<div class="t-card" data-cats="arab tn">
+  <div class="card-header">
+    <div class="traveller-icon" style="background:rgba(167,139,250,0.15);color:var(--purple)">AM</div>
+    <div>
+      <div class="card-name">Al-Masudi</div>
+      <div class="card-origin">🇮🇶 Arab · Historian-Geographer · Baghdad, Abbasid Caliphate</div>
+    </div>
+  </div>
+  <div class="card-meta">
+    <span class="tag tag-period">10th Century CE (916 CE)</span>
+    <span class="tag tag-type">Arab Geographer</span>
+    <span class="tag tag-region">West India · Deccan · South India</span>
+    <span class="tag tag-book">Muruj al-Dhahab</span>
+  </div>
+  <div class="card-body">
+    <p>Called the "Herodotus of the Arabs," Al-Masudi was an Arab historian and traveller who visited India in 916 CE and wrote extensively about Indian society, trade, and religion.</p>
+    <div class="info-rows">
+      <div class="info-row"><span class="info-key">Period</span><span class="info-val">896–956 CE · Visited India c. 916 CE</span></div>
+      <div class="info-row"><span class="info-key">Book</span><span class="info-val">Muruj al-Dhahab wa Ma'adin al-Jawhar (Meadows of Gold and Mines of Gems)</span></div>
+      <div class="info-row"><span class="info-key">Key Notes</span><span class="info-val">Described the caste system; documented Hindu temples; described the Deccan kingdoms; wrote about Indian Ocean trade; described the western coast of India; mentioned the kingdom of the Rashtrakutas; described Indian customs of sati.</span></div>
+      <div class="info-row"><span class="info-key">TN Link</span><span class="info-val">Described Tamil trade along western coast; wrote about pepper, spices, and textile trade from south India</span></div>
+    </div>
+  </div>
+  <div class="card-qs">
+    <div class="qs-label">⚡ TNPSC Exam Questions</div>
+    <div class="q-item">Al-Masudi is called the "Herodotus of the Arabs." His major work is? — Muruj al-Dhahab (Meadows of Gold).</div>
+    <div class="q-item">Al-Masudi visited India during the reign of which dynasty? — Rashtrakutas (Deccan).</div>
+    <div class="q-item">What Indian social practice did Al-Masudi describe in his accounts? — The caste system and sati.</div>
+  </div>
+</div>
+
+<!-- 9 AL-BIRUNI -->
+<div class="t-card" data-cats="arab">
+  <div class="card-header">
+    <div class="traveller-icon" style="background:rgba(167,139,250,0.15);color:var(--purple)">AB</div>
+    <div>
+      <div class="card-name">Al-Biruni (Abu Rayhan)</div>
+      <div class="card-origin">🇺🇿 Persian · Scholar · Khwarezm (modern Uzbekistan)</div>
+    </div>
+  </div>
+  <div class="card-meta">
+    <span class="tag tag-period">1017–1030 CE</span>
+    <span class="tag tag-type">Persian Scholar</span>
+    <span class="tag tag-region">North India · Punjab · Sindh</span>
+    <span class="tag tag-book">Kitab al-Hind</span>
+  </div>
+  <div class="card-body">
+    <p>The greatest medieval Islamic scholar and the first true Indologist. He came to India with Mahmud of Ghazni and spent 13 years studying Sanskrit, mathematics, astronomy, and Indian philosophy.</p>
+    <div class="info-rows">
+      <div class="info-row"><span class="info-key">Came with</span><span class="info-val">Mahmud of Ghazni (after his invasions)</span></div>
+      <div class="info-row"><span class="info-key">Places</span><span class="info-val">Multan, Thaneswar, Punjab, Sindh, Kashmir region</span></div>
+      <div class="info-row"><span class="info-key">Book</span><span class="info-val">Kitab al-Hind (Book of India / Tahqiq ma lil-Hind)</span></div>
+      <div class="info-row"><span class="info-key">Key Notes</span><span class="info-val">Learned Sanskrit; translated Sanskrit texts into Arabic; described Hindu philosophy, mathematics, and astronomy with deep respect; criticized caste discrimination; noted India's intellectual achievements; described India's physical geography and climate accurately.</span></div>
+    </div>
+  </div>
+  <div class="card-qs">
+    <div class="qs-label">⚡ TNPSC Exam Questions</div>
+    <div class="q-item">Al-Biruni's famous book about India is? — Kitab al-Hind (Tahqiq ma lil-Hind).</div>
+    <div class="q-item">Al-Biruni came to India with which ruler? — Mahmud of Ghazni.</div>
+    <div class="q-item">Which language did Al-Biruni learn to study Indian texts? — Sanskrit.</div>
+    <div class="q-item">Who is considered the first true "Indologist"? — Al-Biruni.</div>
+  </div>
+</div>
+
+<!-- 10 IBN BATTUTA -->
+<div class="t-card" data-cats="arab tn">
+  <div class="card-header">
+    <div class="traveller-icon" style="background:rgba(167,139,250,0.15);color:var(--purple)">IB</div>
+    <div>
+      <div class="card-name">Ibn Battuta</div>
+      <div class="card-origin">🇲🇦 Moroccan · Explorer · Tangier, Morocco</div>
+    </div>
+  </div>
+  <div class="card-meta">
+    <span class="tag tag-period">1333–1347 CE</span>
+    <span class="tag tag-type">Explorer</span>
+    <span class="tag tag-region">Delhi · Deccan · Malabar · Tamil Ports</span>
+    <span class="tag tag-book">Rihla</span>
+  </div>
+  <div class="card-body">
+    <p>The greatest medieval Muslim traveller — called the "Marco Polo of the Muslim World." Served as a Qadi (judge) under Muhammad bin Tughluq in Delhi and later travelled to South India and China.</p>
+    <div class="info-rows">
+      <div class="info-row"><span class="info-key">King Met</span><span class="info-val">Muhammad bin Tughluq (Delhi Sultanate) — served as his ambassador to China</span></div>
+      <div class="info-row"><span class="info-key">Places</span><span class="info-val">Delhi, Daulatabad, Malabar Coast, Quilon (Kollam), Calicut, Hormuz, Maldives, China</span></div>
+      <div class="info-row"><span class="info-key">Book</span><span class="info-val">Rihla (Travels / A Gift to Those Who Contemplate the Wonders of Cities)</span></div>
+      <div class="info-row"><span class="info-key">Key Notes</span><span class="info-val">Described Muhammad bin Tughluq as both a tyrant and generous; described mass transfer of capital from Delhi to Daulatabad; described Malabar pepper trade; described Calicut as a great port; provided vivid accounts of sultanate court life and punishments; described Hindu customs in South India.</span></div>
+      <div class="info-row"><span class="info-key">TN Link</span><span class="info-val">Visited Tamil Nadu ports; described Quilon and Calicut as major trade centres; noted Tamil merchants dealing in spices and textiles</span></div>
+    </div>
+  </div>
+  <div class="card-qs">
+    <div class="qs-label">⚡ TNPSC Exam Questions</div>
+    <div class="q-item">Ibn Battuta served as a Qadi under which Delhi Sultanate ruler? — Muhammad bin Tughluq.</div>
+    <div class="q-item">Ibn Battuta's famous travelogue is called? — Rihla.</div>
+    <div class="q-item">Which South Indian port did Ibn Battuta describe as the greatest? — Calicut (Kozhikode).</div>
+    <div class="q-item">Ibn Battuta is from which country? — Morocco (Tangier).</div>
+    <div class="q-item">As whose ambassador was Ibn Battuta sent to China? — Muhammad bin Tughluq's ambassador.</div>
+  </div>
+</div>
+
+<!-- 11 MARCO POLO -->
+<div class="t-card" data-cats="european tn">
+  <div class="card-header">
+    <div class="traveller-icon" style="background:rgba(78,203,122,0.15);color:var(--green)">MP</div>
+    <div>
+      <div class="card-name">Marco Polo</div>
+      <div class="card-origin">🇮🇹 Italian · Merchant-Explorer · Venice, Italy</div>
+    </div>
+  </div>
+  <div class="card-meta">
+    <span class="tag tag-period">1288–1294 CE</span>
+    <span class="tag tag-type">Merchant Explorer</span>
+    <span class="tag tag-region">South India · Pandya Kingdom · Coromandel</span>
+    <span class="tag tag-book">The Travels of Marco Polo</span>
+  </div>
+  <div class="card-body">
+    <p>The Venetian merchant-explorer who passed through South India on his return journey from China. He described the Pandya kingdom of South India and Tamil Nadu's pearl fisheries in detail.</p>
+    <div class="info-rows">
+      <div class="info-row"><span class="info-key">Period</span><span class="info-val">c. 1288–1294 CE (returning from China via sea)</span></div>
+      <div class="info-row"><span class="info-key">Places</span><span class="info-val">Malabar Coast, Pandya territory (Tamil Nadu), Coromandel Coast, Cape Comorin, Ceylon (Sri Lanka)</span></div>
+      <div class="info-row"><span class="info-key">Book</span><span class="info-val">Il Milione (The Travels of Marco Polo)</span></div>
+      <div class="info-row"><span class="info-key">Key Notes</span><span class="info-val">Described pearl fisheries at Mannar (between TN and Sri Lanka) in great detail; described South Indian practice of going about barely clothed; noted that the king of Ma'abar (Pandya kingdom) wore only a cloth around his waist but was covered in jewels; described the diamond mines of Golconda; described Indian Ocean trade extensively.</span></div>
+      <div class="info-row"><span class="info-key">TN Link</span><span class="info-val">"Ma'abar" = Coromandel Coast (Tamil Nadu). Described Pandya king's court, pearl fisheries, idolatry and Hindu temple practices in Tamil regions</span></div>
+    </div>
+  </div>
+  <div class="card-qs">
+    <div class="qs-label">⚡ TNPSC Exam Questions</div>
+    <div class="q-item">Marco Polo called the Coromandel Coast of Tamil Nadu by which name? — Ma'abar.</div>
+    <div class="q-item">Which pearl fishery location in Tamil Nadu did Marco Polo describe? — Mannar (between Tamil Nadu and Sri Lanka).</div>
+    <div class="q-item">Marco Polo's travelogue is called? — Il Milione (The Travels of Marco Polo).</div>
+    <div class="q-item">Which South Indian dynasty's kingdom did Marco Polo describe as "Ma'abar"? — Pandya Kingdom.</div>
+    <div class="q-item">Marco Polo was from which city in Italy? — Venice.</div>
+  </div>
+</div>
+
+<!-- 12 NICOLO CONTI -->
+<div class="t-card" data-cats="european tn">
+  <div class="card-header">
+    <div class="traveller-icon" style="background:rgba(78,203,122,0.15);color:var(--green)">NC</div>
+    <div>
+      <div class="card-name">Nicolo de Conti</div>
+      <div class="card-origin">🇮🇹 Italian · Merchant · Venice, Italy</div>
+    </div>
+  </div>
+  <div class="card-meta">
+    <span class="tag tag-period">1420–1421 CE</span>
+    <span class="tag tag-type">Merchant</span>
+    <span class="tag tag-region">Vijayanagara · South India</span>
+    <span class="tag tag-book">Account (via Poggio Bracciolini)</span>
+  </div>
+  <div class="card-body">
+    <p>Venetian merchant who visited the Vijayanagara Empire and described it in detail. His account was recorded by the Papal secretary Poggio Bracciolini in the work <em>De Varietate Fortunae</em>.</p>
+    <div class="info-rows">
+      <div class="info-row"><span class="info-key">King Met</span><span class="info-val">Vijayanagara ruler (Deva Raya I era)</span></div>
+      <div class="info-row"><span class="info-key">Places</span><span class="info-val">Vijayanagara (Hampi), Malabar, South India</span></div>
+      <div class="info-row"><span class="info-key">Key Notes</span><span class="info-val">Described Vijayanagara city as very large, with a circumference of 60 miles; described the king's army of 90,000 soldiers; described elephant corps; noted Hindu customs and sati; described South Indian temples.</span></div>
+      <div class="info-row"><span class="info-key">TN Link</span><span class="info-val">Described Vijayanagara's influence over Tamil regions; documented Telugu and Tamil cultural practices</span></div>
+    </div>
+  </div>
+  <div class="card-qs">
+    <div class="qs-label">⚡ TNPSC Exam Questions</div>
+    <div class="q-item">Nicolo de Conti described which empire's capital in South India? — Vijayanagara Empire (Hampi).</div>
+    <div class="q-item">Nicolo de Conti's account was recorded by whom? — Poggio Bracciolini (in De Varietate Fortunae).</div>
+  </div>
+</div>
+
+<!-- 13 ABDUR RAZZAQ -->
+<div class="t-card" data-cats="arab tn">
+  <div class="card-header">
+    <div class="traveller-icon" style="background:rgba(167,139,250,0.15);color:var(--purple)">AR</div>
+    <div>
+      <div class="card-name">Abdur Razzaq</div>
+      <div class="card-origin">🇮🇷 Persian · Ambassador · Herat, Timurid Empire (Persia)</div>
+    </div>
+  </div>
+  <div class="card-meta">
+    <span class="tag tag-period">1443–1444 CE</span>
+    <span class="tag tag-type">Persian Ambassador</span>
+    <span class="tag tag-region">Vijayanagara · Calicut · Mangalore</span>
+    <span class="tag tag-book">Matla-us-Sadain</span>
+  </div>
+  <div class="card-body">
+    <p>Persian ambassador sent by Shah Rukh of the Timurid dynasty to Calicut and Vijayanagara. His account is one of the most important descriptions of the Vijayanagara Empire at its peak.</p>
+    <div class="info-rows">
+      <div class="info-row"><span class="info-key">King Met</span><span class="info-val">Deva Raya II — Vijayanagara Empire</span></div>
+      <div class="info-row"><span class="info-key">Places</span><span class="info-val">Calicut (Kozhikode), Mangalore, Vijayanagara (Hampi city)</span></div>
+      <div class="info-row"><span class="info-key">Book</span><span class="info-val">Matla-us-Sadain wa Majma-ul-Bahrain</span></div>
+      <div class="info-row"><span class="info-key">Key Notes</span><span class="info-val">Described Vijayanagara city in extraordinary detail — its markets, bazaars, temples; said the city was as large as a great metropolis; described Calicut as a great port city with merchants from all over the world; described the prosperity of Deva Raya II's reign; noted Hindu temples with precious gems; described the Dasara festival at Vijayanagara.</span></div>
+      <div class="info-row"><span class="info-key">TN Link</span><span class="info-val">Described Tamil traders in Calicut; documented Vijayanagara's rule over Tamil regions; noted the prosperity of south Indian trade routes</span></div>
+    </div>
+  </div>
+  <div class="card-qs">
+    <div class="qs-label">⚡ TNPSC Exam Questions</div>
+    <div class="q-item">Abdur Razzaq visited Vijayanagara during the reign of which king? — Deva Raya II.</div>
+    <div class="q-item">Abdur Razzaq's travelogue is named? — Matla-us-Sadain.</div>
+    <div class="q-item">Abdur Razzaq was sent as ambassador by which ruler? — Shah Rukh (Timurid/Persian ruler).</div>
+    <div class="q-item">Which festival at Vijayanagara did Abdur Razzaq famously describe? — Dasara (Mahanavami) festival.</div>
+  </div>
+</div>
+
+<!-- 14 DUARTE BARBOSA -->
+<div class="t-card" data-cats="european tn">
+  <div class="card-header">
+    <div class="traveller-icon" style="background:rgba(78,203,122,0.15);color:var(--green)">DB</div>
+    <div>
+      <div class="card-name">Duarte Barbosa</div>
+      <div class="card-origin">🇵🇹 Portuguese · Official · Lisbon, Portugal</div>
+    </div>
+  </div>
+  <div class="card-meta">
+    <span class="tag tag-period">1500–1516 CE</span>
+    <span class="tag tag-type">Portuguese Official</span>
+    <span class="tag tag-region">Malabar · Vijayanagara · Coromandel</span>
+    <span class="tag tag-book">Book of Duarte Barbosa</span>
+  </div>
+  <div class="card-body">
+    <p>Portuguese official who spent years in South India as an interpreter and administrator. His book provides one of the best accounts of South India in the early 16th century.</p>
+    <div class="info-rows">
+      <div class="info-row"><span class="info-key">Period</span><span class="info-val">Served in Portuguese India c. 1500–1516</span></div>
+      <div class="info-row"><span class="info-key">Places</span><span class="info-val">Malabar Coast, Coromandel Coast, Vijayanagara territory, Tamil ports</span></div>
+      <div class="info-row"><span class="info-key">Book</span><span class="info-val">Livro de Duarte Barbosa (Book of Duarte Barbosa)</span></div>
+      <div class="info-row"><span class="info-key">Key Notes</span><span class="info-val">Detailed description of South Indian trade goods: pepper, ginger, cinnamon, precious stones; described Vijayanagara as the greatest Hindu empire; described the caste system in South India; documented Tamil weaving industry and textile exports; noted Brahmin influence.</span></div>
+      <div class="info-row"><span class="info-key">TN Link</span><span class="info-val">Described Tamil ports (Pulicat, Nagapattinam, Tuticorin); documented pearl fisheries; described the Nayaka administration in Tamil regions</span></div>
+    </div>
+  </div>
+  <div class="card-qs">
+    <div class="qs-label">⚡ TNPSC Exam Questions</div>
+    <div class="q-item">Duarte Barbosa was a Portuguese official who described which empire as the "greatest Hindu empire"? — Vijayanagara Empire.</div>
+    <div class="q-item">Which Tamil Nadu ports did Duarte Barbosa describe? — Pulicat, Nagapattinam, Tuticorin.</div>
+    <div class="q-item">Duarte Barbosa's book on South India is called? — Livro de Duarte Barbosa (Book of Duarte Barbosa).</div>
+  </div>
+</div>
+
+<!-- 15 DOMINGO PAES -->
+<div class="t-card" data-cats="european tn">
+  <div class="card-header">
+    <div class="traveller-icon" style="background:rgba(78,203,122,0.15);color:var(--green)">DP</div>
+    <div>
+      <div class="card-name">Domingo Paes</div>
+      <div class="card-origin">🇵🇹 Portuguese · Merchant-Chronicler · Portugal</div>
+    </div>
+  </div>
+  <div class="card-meta">
+    <span class="tag tag-period">1520–1522 CE</span>
+    <span class="tag tag-type">Portuguese Merchant</span>
+    <span class="tag tag-region">Vijayanagara Empire</span>
+    <span class="tag tag-book">Chronica dos reis de Bisnaga</span>
+  </div>
+  <div class="card-body">
+    <p>Portuguese horse-trader and chronicler who visited Vijayanagara during its golden age under Krishna Deva Raya. His account is considered the most vivid description of Vijayanagara at its peak glory.</p>
+    <div class="info-rows">
+      <div class="info-row"><span class="info-key">King Met</span><span class="info-val">Krishna Deva Raya — Vijayanagara Empire (greatest king)</span></div>
+      <div class="info-row"><span class="info-key">Places</span><span class="info-val">Vijayanagara (Hampi), Goa, Malabar Coast</span></div>
+      <div class="info-row"><span class="info-key">Book</span><span class="info-val">Chronica dos reis de Bisnaga (Chronicle of the Kings of Bisnaga)</span></div>
+      <div class="info-row"><span class="info-key">Key Notes</span><span class="info-val">Called Vijayanagara "as large as Rome"; compared Krishna Deva Raya to Alexander the Great; described the Dasara/Mahanavami festival in vivid detail (9-day celebrations); described the king's court — 100,000 soldiers, 11,000 women; described the city's bazaars selling gems and silk; noted the abundance of fresh water and food.</span></div>
+      <div class="info-row"><span class="info-key">TN Link</span><span class="info-val">Krishna Deva Raya's empire included Tamil regions; described Vijayanagara's Telugu and Tamil subjects; noted Nayak governors in Tamil territory</span></div>
+    </div>
+  </div>
+  <div class="card-qs">
+    <div class="qs-label">⚡ TNPSC Exam Questions</div>
+    <div class="q-item">Domingo Paes visited Vijayanagara during whose reign? — Krishna Deva Raya.</div>
+    <div class="q-item">Domingo Paes compared Vijayanagara city to which European city? — Rome.</div>
+    <div class="q-item">Domingo Paes compared Krishna Deva Raya to which conqueror? — Alexander the Great.</div>
+    <div class="q-item">Which festival at Vijayanagara did Domingo Paes describe in extraordinary detail? — Mahanavami (Dasara) festival.</div>
+    <div class="q-item">What is the title of Domingo Paes' chronicle? — Chronica dos reis de Bisnaga.</div>
+  </div>
+</div>
+
+<!-- 16 FERNÃO NUNES -->
+<div class="t-card" data-cats="european">
+  <div class="card-header">
+    <div class="traveller-icon" style="background:rgba(78,203,122,0.15);color:var(--green)">FN</div>
+    <div>
+      <div class="card-name">Fernão Nunes (Nuniz)</div>
+      <div class="card-origin">🇵🇹 Portuguese · Horse Merchant · Portugal</div>
+    </div>
+  </div>
+  <div class="card-meta">
+    <span class="tag tag-period">1535–1537 CE</span>
+    <span class="tag tag-type">Portuguese Merchant</span>
+    <span class="tag tag-region">Vijayanagara</span>
+    <span class="tag tag-book">Chronicle of Vijayanagara</span>
+  </div>
+  <div class="card-body">
+    <p>Portuguese horse merchant who wrote a historical chronicle of Vijayanagara kings. His account provides detailed information about the succession of Vijayanagara rulers.</p>
+    <div class="info-rows">
+      <div class="info-row"><span class="info-key">Period</span><span class="info-val">Visited c. 1535–1537 CE (post Krishna Deva Raya era)</span></div>
+      <div class="info-row"><span class="info-key">Key Notes</span><span class="info-val">Wrote a chronicle of Vijayanagara rulers from 1336 to his time; described revenue system; described the role of Nayaks (governors) in Tamil regions; gave a history of the Sangama, Saluva, and Tuluva dynasties of Vijayanagara.</span></div>
+    </div>
+  </div>
+  <div class="card-qs">
+    <div class="qs-label">⚡ TNPSC Exam Questions</div>
+    <div class="q-item">Fernão Nunes wrote a chronicle covering Vijayanagara from which year? — 1336 CE (founding of Vijayanagara).</div>
+    <div class="q-item">Fernão Nunes described the role of which administrative officers in Tamil territory? — Nayaks (governors).</div>
+  </div>
+</div>
+
+<!-- 17 THOMAS ROE -->
+<div class="t-card" data-cats="european">
+  <div class="card-header">
+    <div class="traveller-icon" style="background:rgba(34,211,238,0.15);color:var(--cyan)">TR</div>
+    <div>
+      <div class="card-name">Sir Thomas Roe</div>
+      <div class="card-origin">🇬🇧 British · Ambassador · England</div>
+    </div>
+  </div>
+  <div class="card-meta">
+    <span class="tag tag-period">1615–1618 CE</span>
+    <span class="tag tag-type">British Ambassador</span>
+    <span class="tag tag-region">Mughal Court · Ajmer · Agra</span>
+    <span class="tag tag-book">Embassy of Sir Thomas Roe</span>
+  </div>
+  <div class="card-body">
+    <p>First official British ambassador to the Mughal court of Jahangir. He came seeking trading rights for the East India Company. His journal is one of the best accounts of Jahangir's court.</p>
+    <div class="info-rows">
+      <div class="info-row"><span class="info-key">King Met</span><span class="info-val">Emperor Jahangir (Mughal Empire) — at Ajmer and Agra</span></div>
+      <div class="info-row"><span class="info-key">Places</span><span class="info-val">Surat, Ajmer, Agra — all within the Mughal Empire</span></div>
+      <div class="info-row"><span class="info-key">Book</span><span class="info-val">Embassy of Sir Thomas Roe to the Court of the Great Mogul (Journal)</span></div>
+      <div class="info-row"><span class="info-key">Key Notes</span><span class="info-val">Described Jahangir's personality and drinking habits; noted Mughal court's love of painting; described the political rivalry among Jahangir's sons; noted Nur Jahan's enormous influence over the emperor; described the East India Company's early trading struggles; provided insights into Mughal administration and wealth.</span></div>
+    </div>
+  </div>
+  <div class="card-qs">
+    <div class="qs-label">⚡ TNPSC Exam Questions</div>
+    <div class="q-item">Thomas Roe was the first British ambassador to the court of which Mughal emperor? — Jahangir.</div>
+    <div class="q-item">Thomas Roe came to India representing which organization? — British East India Company.</div>
+    <div class="q-item">Thomas Roe described the enormous influence of which Mughal queen? — Nur Jahan.</div>
+    <div class="q-item">In which cities did Thomas Roe meet Jahangir? — Ajmer and Agra.</div>
+  </div>
+</div>
+
+<!-- 18 JEAN BAPTISTE TAVERNIER -->
+<div class="t-card" data-cats="european tn">
+  <div class="card-header">
+    <div class="traveller-icon" style="background:rgba(34,211,238,0.15);color:var(--cyan)">JT</div>
+    <div>
+      <div class="card-name">Jean-Baptiste Tavernier</div>
+      <div class="card-origin">🇫🇷 French · Gem Merchant · Paris, France</div>
+    </div>
+  </div>
+  <div class="card-meta">
+    <span class="tag tag-period">1638–1668 CE (6 voyages)</span>
+    <span class="tag tag-type">French Gem Merchant</span>
+    <span class="tag tag-region">Mughal India · Golconda · South India</span>
+    <span class="tag tag-book">Travels in India</span>
+  </div>
+  <div class="card-body">
+    <p>French gem merchant who made six voyages to India over 30 years. He was the first European to describe the famous Kohinoor diamond and gave detailed accounts of Golconda diamond mines and South Indian trade.</p>
+    <div class="info-rows">
+      <div class="info-row"><span class="info-key">King Met</span><span class="info-val">Shah Jahan, Aurangzeb (Mughal); Golconda Sultans</span></div>
+      <div class="info-row"><span class="info-key">Places</span><span class="info-val">Surat, Golconda, Bijapur, Agra, Delhi, Dacca, Masulipatnam (Tamil/AP coast)</span></div>
+      <div class="info-row"><span class="info-key">Book</span><span class="info-val">Les Six Voyages de J.B. Tavernier (Six Voyages in Turkey, Persia and India)</span></div>
+      <div class="info-row"><span class="info-key">Key Notes</span><span class="info-val">First European to describe the Kohinoor diamond; described Golconda diamond mines; described the Taj Mahal under construction; compared Indian and European textile trade; gave detailed account of Indian gemstone trade; noted Aurangzeb's administration and contrast with Shah Jahan; described Indian Ocean trade routes.</span></div>
+      <div class="info-row"><span class="info-key">TN Link</span><span class="info-val">Visited Masulipatnam (Machilipatnam) and Coromandel Coast; described Tamil and Telugu textile industries; documented diamond trade from Golconda affecting South Indian economy</span></div>
+    </div>
+  </div>
+  <div class="card-qs">
+    <div class="qs-label">⚡ TNPSC Exam Questions</div>
+    <div class="q-item">Which French traveller was the first European to describe the Kohinoor diamond? — Jean-Baptiste Tavernier.</div>
+    <div class="q-item">Tavernier made how many voyages to India? — Six voyages (over 30 years).</div>
+    <div class="q-item">Tavernier's book about his Indian travels is called? — Les Six Voyages (Six Voyages).</div>
+    <div class="q-item">Which diamond mines did Tavernier describe in detail? — Golconda diamond mines.</div>
+    <div class="q-item">Tavernier described the Taj Mahal in which state? — Under construction (during Shah Jahan's reign).</div>
+  </div>
+</div>
+
+<!-- 19 FRANCOIS BERNIER -->
+<div class="t-card" data-cats="european">
+  <div class="card-header">
+    <div class="traveller-icon" style="background:rgba(34,211,238,0.15);color:var(--cyan)">FB</div>
+    <div>
+      <div class="card-name">François Bernier</div>
+      <div class="card-origin">🇫🇷 French · Physician-Philosopher · Anjou, France</div>
+    </div>
+  </div>
+  <div class="card-meta">
+    <span class="tag tag-period">1656–1668 CE</span>
+    <span class="tag tag-type">French Physician</span>
+    <span class="tag tag-region">Mughal India · Kashmir · Delhi</span>
+    <span class="tag tag-book">Travels in the Mogul Empire</span>
+  </div>
+  <div class="card-body">
+    <p>French physician who served in the Mughal court as physician to Dara Shikoh (heir of Shah Jahan). He witnessed the Mughal war of succession and Aurangzeb's rise to power.</p>
+    <div class="info-rows">
+      <div class="info-row"><span class="info-key">King Met</span><span class="info-val">Shah Jahan, Dara Shikoh (served as physician), Aurangzeb</span></div>
+      <div class="info-row"><span class="info-key">Places</span><span class="info-val">Delhi, Agra, Kashmir, Surat, Bengal, Bihar</span></div>
+      <div class="info-row"><span class="info-key">Book</span><span class="info-val">Travels in the Mogul Empire (Histoire de la dernière révolution des états du Grand Mogol)</span></div>
+      <div class="info-row"><span class="info-key">Key Notes</span><span class="info-val">Provided eyewitness account of Shah Jahan's illness and succession war; described the execution of Dara Shikoh; described Kashmir's beauty extensively; criticized Mughal land ownership (no private property in land); described Bengal's rich agriculture; wrote about Indian philosophy and compared it with European thought.</span></div>
+    </div>
+  </div>
+  <div class="card-qs">
+    <div class="qs-label">⚡ TNPSC Exam Questions</div>
+    <div class="q-item">François Bernier served as physician to which Mughal prince? — Dara Shikoh (son of Shah Jahan).</div>
+    <div class="q-item">Bernier's book about the Mughal Empire is called? — Travels in the Mogul Empire.</div>
+    <div class="q-item">Which Mughal emperor's succession war did Bernier witness firsthand? — Aurangzeb's war against Dara Shikoh.</div>
+    <div class="q-item">Bernier criticized Mughal land ownership on what grounds? — Absence of private property in land (all land belonged to the Emperor).</div>
+  </div>
+</div>
+
+<!-- 20 WILLIAM HAWKINS -->
+<div class="t-card" data-cats="european">
+  <div class="card-header">
+    <div class="traveller-icon" style="background:rgba(34,211,238,0.15);color:var(--cyan)">WH</div>
+    <div>
+      <div class="card-name">William Hawkins</div>
+      <div class="card-origin">🇬🇧 British · Captain · England</div>
+    </div>
+  </div>
+  <div class="card-meta">
+    <span class="tag tag-period">1608–1611 CE</span>
+    <span class="tag tag-type">English Captain</span>
+    <span class="tag tag-region">Mughal Court · Agra</span>
+    <span class="tag tag-book">Purchas His Pilgrimage</span>
+  </div>
+  <div class="card-body">
+    <p>English sea captain who was the first Englishman to visit the Mughal court of Jahangir. He could speak Turkish which greatly pleased Jahangir, who initially gave him a royal welcome.</p>
+    <div class="info-rows">
+      <div class="info-row"><span class="info-key">King Met</span><span class="info-val">Emperor Jahangir (at Agra)</span></div>
+      <div class="info-row"><span class="info-key">Places</span><span class="info-val">Surat, Agra — Mughal capital</span></div>
+      <div class="info-row"><span class="info-key">Book</span><span class="info-val">Account published in Purchas His Pilgrimage (compiled by Samuel Purchas)</span></div>
+      <div class="info-row"><span class="info-key">Key Notes</span><span class="info-val">First Englishman at Mughal court; Jahangir liked him because he spoke Turkish; Hawkins even married an Armenian woman in India; described Jahangir's alcoholism; noted that Portuguese influence blocked English trading rights; ultimately failed to secure trading concessions; described Surat's trade importance.</span></div>
+    </div>
+  </div>
+  <div class="card-qs">
+    <div class="qs-label">⚡ TNPSC Exam Questions</div>
+    <div class="q-item">William Hawkins was the first Englishman to visit the court of which Mughal emperor? — Jahangir.</div>
+    <div class="q-item">Why did Jahangir initially favour William Hawkins? — Hawkins could speak Turkish, which pleased Jahangir.</div>
+    <div class="q-item">William Hawkins' account was published in which compilation? — Purchas His Pilgrimage (by Samuel Purchas).</div>
+  </div>
+</div>
+
+</div><!-- /cards-grid -->
+
+<!-- QUICK REFERENCE TABLE -->
+<div class="section-label">Quick Reference</div>
+<h2 class="section-title" style="margin-bottom:24px">Master Reference Table — TNPSC Format</h2>
+<div class="ref-table-wrap">
+<table class="ref-table">
+<thead>
+<tr>
+  <th>Traveller</th><th>Period</th><th>Country</th><th>King/Ruler Met</th><th>Travelogue</th><th>Key TNPSC Fact</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Megasthenes</td><td>302–298 BCE</td><td>Greece</td><td>Chandragupta Maurya</td><td>Indica</td><td>Called Pandya kingdom "Pandaea"; described 7 castes</td></tr>
+<tr><td>Fa-Hien</td><td>399–414 CE</td><td>China</td><td>Chandragupta II</td><td>Fo-Kwo-Ki</td><td>Described Gupta golden age; no capital punishment</td></tr>
+<tr><td>Hiuen Tsang</td><td>629–645 CE</td><td>China</td><td>Harsha / Pulakesi II / Pallava king</td><td>Si-Yu-Ki</td><td>"Prince of Pilgrims"; described Kanchipuram; Nalanda</td></tr>
+<tr><td>I-Tsing</td><td>671–695 CE</td><td>China</td><td>—</td><td>Buddhist Records</td><td>Came by sea via Sumatra; studied at Nalanda 10 yrs</td></tr>
+<tr><td>Al-Masudi</td><td>916 CE</td><td>Arab (Baghdad)</td><td>Rashtrakuta rulers</td><td>Muruj al-Dhahab</td><td>"Herodotus of the Arabs"; described sati and castes</td></tr>
+<tr><td>Al-Biruni</td><td>1017–1030 CE</td><td>Persian (Uzbekistan)</td><td>Came with Mahmud of Ghazni</td><td>Kitab al-Hind</td><td>First Indologist; learned Sanskrit; criticized caste</td></tr>
+<tr><td>Marco Polo</td><td>1288–1294 CE</td><td>Italy (Venice)</td><td>Pandya rulers</td><td>Il Milione</td><td>Called TN coast "Ma'abar"; described pearl fisheries</td></tr>
+<tr><td>Ibn Battuta</td><td>1333–1347 CE</td><td>Morocco</td><td>Muhammad bin Tughluq</td><td>Rihla</td><td>Served as Qadi; described capital transfer to Daulatabad</td></tr>
+<tr><td>Nicolo de Conti</td><td>1420–1421 CE</td><td>Italy (Venice)</td><td>Deva Raya I (Vijayanagara)</td><td>De Varietate Fortunae</td><td>Vijayanagara = 60 miles circumference; army of 90,000</td></tr>
+<tr><td>Abdur Razzaq</td><td>1443–1444 CE</td><td>Persia (Herat)</td><td>Deva Raya II (Vijayanagara)</td><td>Matla-us-Sadain</td><td>Described Dasara festival; Calicut as great port</td></tr>
+<tr><td>Duarte Barbosa</td><td>1500–1516 CE</td><td>Portugal</td><td>Vijayanagara rulers</td><td>Book of Duarte Barbosa</td><td>Described TN ports; pearl fisheries; Nayaka system</td></tr>
+<tr><td>Domingo Paes</td><td>1520–1522 CE</td><td>Portugal</td><td>Krishna Deva Raya</td><td>Chronica dos reis de Bisnaga</td><td>KDR = "Alexander the Great"; city = Rome; Dasara</td></tr>
+<tr><td>Fernão Nunes</td><td>1535–1537 CE</td><td>Portugal</td><td>Post-KDR rulers</td><td>Chronicle of Vijayanagara</td><td>History of Vijayanagara from 1336; Nayak governors</td></tr>
+<tr><td>William Hawkins</td><td>1608–1611 CE</td><td>England</td><td>Jahangir</td><td>Purchas His Pilgrimage</td><td>First Englishman at Mughal court; spoke Turkish</td></tr>
+<tr><td>Thomas Roe</td><td>1615–1618 CE</td><td>England</td><td>Jahangir</td><td>Embassy of Sir Thomas Roe</td><td>First British ambassador; described Nur Jahan's power</td></tr>
+<tr><td>Tavernier</td><td>1638–1668 CE</td><td>France</td><td>Shah Jahan, Aurangzeb</td><td>Les Six Voyages</td><td>First European to describe Kohinoor; Golconda mines</td></tr>
+<tr><td>François Bernier</td><td>1656–1668 CE</td><td>France</td><td>Dara Shikoh, Aurangzeb</td><td>Travels in the Mogul Empire</td><td>Physician to Dara Shikoh; witnessed succession war</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- MCQ SECTION -->
+<div class="section-label">Practice MCQs</div>
+<h2 class="section-title" style="margin-bottom:8px">TNPSC-Style MCQ Practice</h2>
+<p style="font-family:var(--font-body);font-size:15px;color:var(--muted);margin-bottom:28px">Click "Show Answer" to reveal the correct answer and explanation.</p>
+<div class="mcq-grid" id="mcqGrid">
+
+<div class="mcq-card">
+  <div class="mcq-qnum">Q.01 · Prelims Level</div>
+  <div class="mcq-q">Which Chinese traveller visited India during the reign of Chandragupta II (Vikramaditya) of the Gupta dynasty?</div>
+  <div class="mcq-opts">
+    <div class="mcq-opt"><span class="opt-letter">A</span> Hiuen Tsang</div>
+    <div class="mcq-opt"><span class="opt-letter">B</span> I-Tsing</div>
+    <div class="mcq-opt correct"><span class="opt-letter">C</span> Fa-Hien</div>
+    <div class="mcq-opt"><span class="opt-letter">D</span> Ma Huan</div>
+  </div>
+  <button class="show-ans-btn" onclick="toggleAns(this)">Show Answer</button>
+  <div class="mcq-ans">✓ Answer: C — Fa-Hien. He visited India in 399–414 CE during Chandragupta II's reign, described as the Gupta golden age with prosperity, no capital punishment, and thriving Buddhism. His book is Fo-Kwo-Ki.</div>
+</div>
+
+<div class="mcq-card">
+  <div class="mcq-qnum">Q.02 · Prelims Level</div>
+  <div class="mcq-q">Megasthenes referred to the Pandya kingdom of South India as:</div>
+  <div class="mcq-opts">
+    <div class="mcq-opt"><span class="opt-letter">A</span> Panduranga</div>
+    <div class="mcq-opt correct"><span class="opt-letter">B</span> Pandaea</div>
+    <div class="mcq-opt"><span class="opt-letter">C</span> Ma'abar</div>
+    <div class="mcq-opt"><span class="opt-letter">D</span> Tamilakam</div>
+  </div>
+  <button class="show-ans-btn" onclick="toggleAns(this)">Show Answer</button>
+  <div class="mcq-ans">✓ Answer: B — Pandaea. Megasthenes in his Indica referred to the Pandya kingdom as "Pandaea," described as ruled by a queen, and noted for its pearl trade. "Ma'abar" was Marco Polo's term for the Coromandel Coast.</div>
+</div>
+
+<div class="mcq-card">
+  <div class="mcq-qnum">Q.03 · Prelims Level</div>
+  <div class="mcq-q">Which traveller is called the "Prince of Pilgrims" and described Kanchipuram as a great Buddhist centre?</div>
+  <div class="mcq-opts">
+    <div class="mcq-opt"><span class="opt-letter">A</span> Fa-Hien</div>
+    <div class="mcq-opt"><span class="opt-letter">B</span> I-Tsing</div>
+    <div class="mcq-opt correct"><span class="opt-letter">C</span> Hiuen Tsang</div>
+    <div class="mcq-opt"><span class="opt-letter">D</span> Al-Biruni</div>
+  </div>
+  <button class="show-ans-btn" onclick="toggleAns(this)">Show Answer</button>
+  <div class="mcq-ans">✓ Answer: C — Hiuen Tsang. Called the "Prince of Pilgrims," he visited Kanchipuram (Pallava capital) during 629–645 CE, described it as a thriving city and Buddhist centre. His travelogue Si-Yu-Ki is the most important account of 7th century India.</div>
+</div>
+
+<div class="mcq-card">
+  <div class="mcq-qnum">Q.04 · Mains Level</div>
+  <div class="mcq-q">Match the travelogue with its author:<br><br>1. Indica 2. Rihla 3. Si-Yu-Ki 4. Kitab al-Hind</div>
+  <div class="mcq-opts">
+    <div class="mcq-opt"><span class="opt-letter">A</span> 1-Hiuen Tsang, 2-Ibn Battuta, 3-Megasthenes, 4-Al-Biruni</div>
+    <div class="mcq-opt correct"><span class="opt-letter">B</span> 1-Megasthenes, 2-Ibn Battuta, 3-Hiuen Tsang, 4-Al-Biruni</div>
+    <div class="mcq-opt"><span class="opt-letter">C</span> 1-Al-Biruni, 2-Megasthenes, 3-Ibn Battuta, 4-Hiuen Tsang</div>
+    <div class="mcq-opt"><span class="opt-letter">D</span> 1-Marco Polo, 2-Fa-Hien, 3-Ibn Battuta, 4-Al-Masudi</div>
+  </div>
+  <button class="show-ans-btn" onclick="toggleAns(this)">Show Answer</button>
+  <div class="mcq-ans">✓ Answer: B — Indica=Megasthenes (Greek ambassador, 302 BCE); Rihla=Ibn Battuta (Moroccan traveller, 1333 CE); Si-Yu-Ki=Hiuen Tsang (Chinese pilgrim, 629 CE); Kitab al-Hind=Al-Biruni (Persian scholar, 1017 CE).</div>
+</div>
+
+<div class="mcq-card">
+  <div class="mcq-qnum">Q.05 · Prelims Level</div>
+  <div class="mcq-q">The Portuguese traveller who compared Vijayanagara to Rome and Krishna Deva Raya to Alexander the Great was:</div>
+  <div class="mcq-opts">
+    <div class="mcq-opt"><span class="opt-letter">A</span> Duarte Barbosa</div>
+    <div class="mcq-opt"><span class="opt-letter">B</span> Abdur Razzaq</div>
+    <div class="mcq-opt correct"><span class="opt-letter">C</span> Domingo Paes</div>
+    <div class="mcq-opt"><span class="opt-letter">D</span> Fernão Nunes</div>
+  </div>
+  <button class="show-ans-btn" onclick="toggleAns(this)">Show Answer</button>
+  <div class="mcq-ans">✓ Answer: C — Domingo Paes (1520–1522). He visited Vijayanagara during Krishna Deva Raya's reign (the golden age) and compared the city to Rome and the king to Alexander. His chronicle: Chronica dos reis de Bisnaga.</div>
+</div>
+
+<div class="mcq-card">
+  <div class="mcq-qnum">Q.06 · Prelims Level</div>
+  <div class="mcq-q">Which French gem merchant was the first European to describe the Kohinoor diamond?</div>
+  <div class="mcq-opts">
+    <div class="mcq-opt correct"><span class="opt-letter">A</span> Jean-Baptiste Tavernier</div>
+    <div class="mcq-opt"><span class="opt-letter">B</span> François Bernier</div>
+    <div class="mcq-opt"><span class="opt-letter">C</span> Thomas Roe</div>
+    <div class="mcq-opt"><span class="opt-letter">D</span> Domingo Paes</div>
+  </div>
+  <button class="show-ans-btn" onclick="toggleAns(this)">Show Answer</button>
+  <div class="mcq-ans">✓ Answer: A — Jean-Baptiste Tavernier. He made 6 voyages to India (1638–1668), described the Kohinoor diamond and Golconda mines, and also described the Taj Mahal under construction. His book: Les Six Voyages.</div>
+</div>
+
+<div class="mcq-card">
+  <div class="mcq-qnum">Q.07 · Mains Level</div>
+  <div class="mcq-q">Consider these statements about Al-Biruni:<br>1. He came to India with Mahmud of Ghazni.<br>2. He wrote Kitab al-Hind after learning Sanskrit.<br>3. He described Vijayanagara empire in detail.<br>Which statements are correct?</div>
+  <div class="mcq-opts">
+    <div class="mcq-opt"><span class="opt-letter">A</span> 1 and 3 only</div>
+    <div class="mcq-opt correct"><span class="opt-letter">B</span> 1 and 2 only</div>
+    <div class="mcq-opt"><span class="opt-letter">C</span> 2 and 3 only</div>
+    <div class="mcq-opt"><span class="opt-letter">D</span> 1, 2 and 3</div>
+  </div>
+  <button class="show-ans-btn" onclick="toggleAns(this)">Show Answer</button>
+  <div class="mcq-ans">✓ Answer: B — Statements 1 and 2. Al-Biruni came with Mahmud of Ghazni (1017 CE) and wrote Kitab al-Hind after learning Sanskrit. Statement 3 is WRONG — Al-Biruni preceded Vijayanagara (founded 1336 CE) by 300 years. Vijayanagara was described by Abdur Razzaq, Domingo Paes, and Nicolo de Conti.</div>
+</div>
+
+<div class="mcq-card">
+  <div class="mcq-qnum">Q.08 · Prelims Level</div>
+  <div class="mcq-q">Marco Polo called the Coromandel Coast (Tamil Nadu) by which name in his travelogue?</div>
+  <div class="mcq-opts">
+    <div class="mcq-opt"><span class="opt-letter">A</span> Pandaea</div>
+    <div class="mcq-opt"><span class="opt-letter">B</span> Tamilakam</div>
+    <div class="mcq-opt correct"><span class="opt-letter">C</span> Ma'abar</div>
+    <div class="mcq-opt"><span class="opt-letter">D</span> Indica</div>
+  </div>
+  <button class="show-ans-btn" onclick="toggleAns(this)">Show Answer</button>
+  <div class="mcq-ans">✓ Answer: C — Ma'abar. Marco Polo called the Coromandel Coast (Tamil Nadu) "Ma'abar" in his travelogue Il Milione. He described the Pandya kingdom's pearl fisheries at Mannar and noted the king's jewel-covered body.</div>
+</div>
+
+<div class="mcq-card">
+  <div class="mcq-qnum">Q.09 · Mains Level</div>
+  <div class="mcq-q">Which traveller described Muhammad bin Tughluq as both a generous and tyrannical ruler, and served as his ambassador to China?</div>
+  <div class="mcq-opts">
+    <div class="mcq-opt"><span class="opt-letter">A</span> Al-Biruni</div>
+    <div class="mcq-opt"><span class="opt-letter">B</span> Abdur Razzaq</div>
+    <div class="mcq-opt correct"><span class="opt-letter">C</span> Ibn Battuta</div>
+    <div class="mcq-opt"><span class="opt-letter">D</span> Al-Masudi</div>
+  </div>
+  <button class="show-ans-btn" onclick="toggleAns(this)">Show Answer</button>
+  <div class="mcq-ans">✓ Answer: C — Ibn Battuta (Moroccan, from Tangier). He served as Qadi (judge) under Muhammad bin Tughluq and was later sent as his ambassador to China. His travelogue Rihla is one of the most important medieval accounts of the Delhi Sultanate.</div>
+</div>
+
+<div class="mcq-card">
+  <div class="mcq-qnum">Q.10 · Prelims Level</div>
+  <div class="mcq-q">The Persian ambassador who visited Vijayanagara during Deva Raya II's reign and described the Dasara festival was:</div>
+  <div class="mcq-opts">
+    <div class="mcq-opt"><span class="opt-letter">A</span> Al-Masudi</div>
+    <div class="mcq-opt"><span class="opt-letter">B</span> Ibn Battuta</div>
+    <div class="mcq-opt correct"><span class="opt-letter">C</span> Abdur Razzaq</div>
+    <div class="mcq-opt"><span class="opt-letter">D</span> Al-Biruni</div>
+  </div>
+  <button class="show-ans-btn" onclick="toggleAns(this)">Show Answer</button>
+  <div class="mcq-ans">✓ Answer: C — Abdur Razzaq. Persian ambassador from Herat (Timurid Empire), sent by Shah Rukh. Visited Calicut and Vijayanagara in 1443–1444 during Deva Raya II's reign. His Matla-us-Sadain described the Dasara festival in detail.</div>
+</div>
+
+</div>
+
+<!-- MNEMONICS -->
+<div class="section-label">Memory Aids</div>
+<h2 class="section-title" style="margin-bottom:24px">Mnemonics & Memory Tricks</h2>
+<div class="mnemonic-grid">
+  <div class="mnemonic-card">
+    <div class="mnemonic-title">Chinese Pilgrims Order</div>
+    <div class="mnemonic-text">"<strong>F</strong>irst <strong>H</strong>appy <strong>I</strong>ndia" — Fa-Hien → Hiuen Tsang → I-Tsing (in chronological order, all Chinese Buddhist pilgrims)</div>
+    <div class="mnemonic-key">F-H-I = Fa-Hien, Hiuen Tsang, I-Tsing</div>
+  </div>
+  <div class="mnemonic-card">
+    <div class="mnemonic-title">Vijayanagara Visitors</div>
+    <div class="mnemonic-text">"<strong>N</strong>ice <strong>A</strong>rmies <strong>D</strong>efeat <strong>D</strong>aring <strong>F</strong>oes" — Nicolo Conti → Abdur Razzaq → Domingo Paes → Duarte Barbosa → Fernão Nunes</div>
+    <div class="mnemonic-key">N-A-D-D-F = 5 Vijayanagara travellers</div>
+  </div>
+  <div class="mnemonic-card">
+    <div class="mnemonic-title">Rulers &amp; Their Visitors</div>
+    <div class="mnemonic-text">Chandragupta Maurya = Megasthenes | Chandragupta II = Fa-Hien | Harsha = Hiuen Tsang | Muhammad bin Tughluq = Ibn Battuta | Jahangir = Hawkins + Roe</div>
+    <div class="mnemonic-key">King → Traveller pair</div>
+  </div>
+  <div class="mnemonic-card">
+    <div class="mnemonic-title">Tamil Nadu Names</div>
+    <div class="mnemonic-text">Pandya = "Pandaea" (Megasthenes) | TN Coast = "Ma'abar" (Marco Polo) | Kanchipuram = described by Hiuen Tsang | Arikamedu = "Poduca" (Ptolemy)</div>
+    <div class="mnemonic-key">Ancient Tamil place names in foreign accounts</div>
+  </div>
+  <div class="mnemonic-card">
+    <div class="mnemonic-title">Arab Trio (MAI)</div>
+    <div class="mnemonic-text">"<strong>M</strong>edieval <strong>A</strong>rabs <strong>I</strong>nspired" — Al-<strong>M</strong>asudi (10th C) → Al-<strong>A</strong>l-Biruni (11th C) → <strong>I</strong>bn Battuta (14th C)</div>
+    <div class="mnemonic-key">M-A-I = Arab/Persian visitors in order</div>
+  </div>
+  <div class="mnemonic-card">
+    <div class="mnemonic-title">French Visitors</div>
+    <div class="mnemonic-text">"<strong>T</strong>avernier <strong>B</strong>rought <strong>G</strong>ems" — Tavernier (gem merchant, Kohinoor) → Bernier (physician, court intrigues). Both French, both 17th century Mughal India.</div>
+    <div class="mnemonic-key">T = Tavernier (gems) | B = Bernier (doctor)</div>
+  </div>
+</div>
+
+<div class="footer">
+  Built for <span>TNPSC Group 1</span> aspirants · All travellers up to 18th century covered · 
+  Exam-pattern questions embedded · <span>Tamil Nadu focus</span> highlighted throughout
+</div>
+</div>
+
+<script>
+function filterCards(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.t-card').forEach(card => {
+    if (cat === 'all') { card.classList.remove('hidden'); return; }
+    const cats = card.dataset.cats || '';
+    cats.includes(cat) ? card.classList.remove('hidden') : card.classList.add('hidden');
+  });
+}
+function toggleAns(btn) {
+  const ans = btn.nextElementSibling;
+  ans.classList.toggle('show');
+  btn.textContent = ans.classList.contains('show') ? 'Hide Answer' : 'Show Answer';
+}
+</script>
+</body>
+</html>

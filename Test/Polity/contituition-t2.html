@@ -222,6 +222,22 @@ footer strong{color:var(--gold)}
 /* REVIEW */
 .q-card.review-correct{border-color:rgba(78,203,122,0.3)}
 .q-card.review-wrong{border-color:rgba(232,85,85,0.3)}
+
+/* PALETTE IMMEDIATE FEEDBACK */
+.palette-dot.correct{background:var(--green)!important;color:#0d0f14!important;border-color:var(--green)!important}
+.palette-dot.wrong{background:var(--red)!important;color:#fff!important;border-color:var(--red)!important}
+
+/* TOGGLE SWITCHES */
+.toggle-controls{padding:12px 16px 4px;border-top:1px solid var(--border)}
+.toggle-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border)}
+.toggle-row:last-of-type{border-bottom:none}
+.toggle-label{font-family:var(--font-mono);font-size:10px;color:var(--text-dim)}
+.toggle-switch{position:relative;width:36px;height:20px;flex-shrink:0}
+.toggle-switch input{opacity:0;width:0;height:0}
+.toggle-track{position:absolute;inset:0;background:var(--surface2);border-radius:20px;cursor:pointer;transition:background .2s;border:1px solid var(--border)}
+.toggle-track::after{content:'';position:absolute;top:3px;left:3px;width:12px;height:12px;background:var(--text-dim);border-radius:50%;transition:transform .2s,background .2s}
+.toggle-switch input:checked+.toggle-track{background:var(--gold);border-color:var(--gold)}
+.toggle-switch input:checked+.toggle-track::after{transform:translateX(16px);background:#0d0f14}
 .q-card.hidden-filter{display:none}
 
 /* RESPONSIVE */
@@ -275,6 +291,16 @@ footer strong{color:var(--gold)}
     <div class="palette-title">Question Palette</div>
     <div class="palette-grid" id="palette"></div>
   </div>
+  <div class="toggle-controls">
+    <div class="toggle-row">
+      <span class="toggle-label">Instant Feedback</span>
+      <label class="toggle-switch"><input type="checkbox" id="toggleFeedbackChk" onchange="toggleFeedback()"><span class="toggle-track"></span></label>
+    </div>
+    <div class="toggle-row">
+      <span class="toggle-label">Show Timer</span>
+      <label class="toggle-switch"><input type="checkbox" id="toggleTimerChk" onchange="toggleTimerDisplay()"><span class="toggle-track"></span></label>
+    </div>
+  </div>
   <div style="padding:12px 16px;border-top:1px solid var(--border)">
     <button class="btn btn-gold" style="width:100%;font-size:11px" onclick="showResults()">📊 Results</button>
     <button class="btn btn-outline btn-sm" style="width:100%;margin-top:6px" onclick="retakeTest()">↺ Retake</button>
@@ -310,7 +336,6 @@ footer strong{color:var(--gold)}
 
     <div class="controls-bar">
       <button class="btn btn-gold" onclick="openModal()">Submit Test</button>
-      <button class="btn btn-outline btn-sm" onclick="toggleTimer()">⏱ Timer</button>
       <div class="timer-display" id="timer-display" style="display:none">00:00:00</div>
       <button class="btn btn-outline btn-sm" onclick="showFlagged()">🚩 Flagged</button>
       <button class="btn btn-outline btn-sm" onclick="scrollToUnanswered()">→ Next Unanswered</button>
@@ -1610,6 +1635,9 @@ let timerInterval = null;
 let timerSeconds = 0;
 let timeTaken = 0;
 let sectionFilter = null;
+let locked = {};
+let immediateFeedback = false;
+let timerDisplayVisible = false;
 
 // ============================================================
 // HELPERS
@@ -1710,7 +1738,14 @@ function updatePalette() {
     if (!dot) return;
     dot.className = 'palette-dot';
     if (flagged.has(q.n)) dot.classList.add('flagged');
-    if (userAnswers[q.n] !== undefined || matchAnswers[q.n]) dot.classList.add('answered');
+    if (userAnswers[q.n] !== undefined || matchAnswers[q.n]) {
+      if (immediateFeedback && locked[q.n]) {
+        if (userAnswers[q.n] === q.ans) dot.classList.add('correct');
+        else dot.classList.add('wrong');
+      } else {
+        dot.classList.add('answered');
+      }
+    }
   });
 }
 
@@ -1840,12 +1875,13 @@ let matchLeftSelected = {};
 
 function selectAnswer(qn, optIndex) {
   if (submitted) return;
+  if (locked[qn]) return;
   userAnswers[qn] = optIndex;
-  // Update UI
   const opts = document.querySelectorAll(`#opts-${qn} .opt`);
   opts.forEach((o,i) => {
     o.classList.toggle('selected', i === optIndex);
   });
+  if (immediateFeedback) { locked[qn] = true; showImmediateFeedback(qn); }
   updateProgress();
 }
 
@@ -1941,20 +1977,19 @@ function showFlagged() {
 // ============================================================
 // TIMER
 // ============================================================
-function toggleTimer() {
+function startTimer() {
+  timerRunning = true;
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    if (timerDisplayVisible) document.getElementById('timer-display').textContent = formatTime(timerSeconds);
+  }, 1000);
+}
+
+function toggleTimerDisplay() {
+  timerDisplayVisible = document.getElementById('toggleTimerChk').checked;
   const disp = document.getElementById('timer-display');
-  if (!timerRunning) {
-    disp.style.display = 'block';
-    timerRunning = true;
-    timerInterval = setInterval(() => {
-      timerSeconds++;
-      disp.textContent = formatTime(timerSeconds);
-    }, 1000);
-  } else {
-    timerRunning = false;
-    clearInterval(timerInterval);
-    disp.style.display = 'none';
-  }
+  disp.style.display = timerDisplayVisible ? 'block' : 'none';
+  if (timerDisplayVisible) disp.textContent = formatTime(timerSeconds);
 }
 
 function formatTime(s) {
@@ -1962,6 +1997,30 @@ function formatTime(s) {
   const m = Math.floor((s%3600)/60).toString().padStart(2,'0');
   const sec = (s%60).toString().padStart(2,'0');
   return `${h}:${m}:${sec}`;
+}
+
+// ============================================================
+// TOGGLES
+// ============================================================
+function toggleFeedback() {
+  immediateFeedback = document.getElementById('toggleFeedbackChk').checked;
+}
+
+function showImmediateFeedback(qn) {
+  const q = Q.find(q => q.n === qn);
+  if (!q) return;
+  const opts = document.querySelectorAll(`#opts-${qn} .opt`);
+  opts.forEach((o, i) => {
+    o.style.pointerEvents = 'none';
+    if (i === q.ans) o.classList.add('show-correct');
+    if (i === userAnswers[qn] && userAnswers[qn] !== q.ans) o.classList.add('wrong');
+    if (i === userAnswers[qn] && userAnswers[qn] === q.ans) o.classList.add('correct');
+  });
+  const expl = document.getElementById('expl-' + qn);
+  if (expl) expl.classList.add('show');
+  const expbtn = document.getElementById('expbtn-' + qn);
+  if (expbtn) expbtn.style.display = 'none';
+  updatePalette();
 }
 
 // ============================================================
@@ -1980,7 +2039,7 @@ function submitTest() {
   closeModal();
   submitted = true;
   timeTaken = timerSeconds;
-  if (timerRunning) { clearInterval(timerInterval); timerRunning = false; }
+  clearInterval(timerInterval); timerRunning = false;
 
   // Show explanation buttons and mark answers
   Q.forEach(q => {
@@ -2156,12 +2215,15 @@ function retakeTest() {
   userAnswers = {};
   matchAnswers = {};
   flagged = new Set();
+  locked = {};
   submitted = false;
   timerSeconds = 0;
   timeTaken = 0;
   if (timerRunning) { clearInterval(timerInterval); timerRunning = false; }
   document.getElementById('timer-display').style.display = 'none';
   document.getElementById('timer-display').textContent = '00:00:00';
+  if (timerDisplayVisible) { document.getElementById('timer-display').style.display = 'block'; }
+  startTimer();
 
   document.getElementById('results-panel').style.display = 'none';
   document.getElementById('test-panel').style.display = 'block';
@@ -2193,6 +2255,7 @@ window.addEventListener('DOMContentLoaded', () => {
   renderPalette();
   renderQuestions();
   updateProgress();
+  startTimer();
 });
 </script>
 </body>
