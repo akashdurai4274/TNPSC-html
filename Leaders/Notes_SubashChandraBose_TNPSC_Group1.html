@@ -1,0 +1,889 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subash Chandra Bose — Arivoam TNPSC Master Notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Andika:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0f14;
+  --bg2: #12151c;
+  --bg3: #181c26;
+  --bg4: #1e2230;
+  --gold: #f5c842;
+  --gold-dim: #c9a22a;
+  --gold-glow: rgba(245,200,66,0.12);
+  --text: #e8e4d8;
+  --text-dim: #9a9585;
+  --text-muted: #5a5650;
+  --red: #e84040;
+  --red-bg: rgba(232,64,64,0.12);
+  --green: #3ecf6e;
+  --green-bg: rgba(62,207,110,0.10);
+  --blue: #4a9fff;
+  --blue-bg: rgba(74,159,255,0.10);
+  --purple: #b06cff;
+  --purple-bg: rgba(176,108,255,0.10);
+  --orange: #ff8c42;
+  --orange-bg: rgba(255,140,66,0.10);
+  --border: rgba(245,200,66,0.18);
+  --border-dim: rgba(255,255,255,0.06);
+  --radius: 10px;
+  --radius-lg: 16px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Andika', sans-serif;
+  line-height: 1.7;
+  min-height: 100vh;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background-image:
+    linear-gradient(rgba(245,200,66,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245,200,66,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: gridShift 20s linear infinite;
+  pointer-events: none;
+}
+@keyframes gridShift { 0%{background-position:0 0} 100%{background-position:0 60px} }
+
+.back-link {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; color: var(--gold);
+  background: rgba(13,15,20,0.92);
+  border: 1px solid rgba(245,200,66,0.3);
+  backdrop-filter: blur(4px);
+  position: fixed; top: 8px; left: 12px; z-index: 999;
+  border-radius: 4px; padding: 4px 10px;
+  text-decoration: none; transition: background 0.2s;
+}
+.back-link:hover { background: var(--gold-glow); }
+
+/* HERO */
+.hero {
+  position: relative; z-index: 1;
+  background: linear-gradient(160deg, #0d1220 0%, #0d0f14 60%, #12101a 100%);
+  border-bottom: 2px solid var(--gold);
+  padding: 64px 32px 40px;
+}
+.hero-inner { max-width: 1100px; margin: 0 auto; }
+.badge-chip {
+  display: inline-block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  background: var(--gold); color: #0d0f14;
+  padding: 3px 12px; border-radius: 3px;
+  font-weight: 600; margin-bottom: 18px;
+}
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(28px,4vw,52px); font-weight: 800;
+  color: var(--gold); line-height: 1.1; margin-bottom: 6px;
+}
+.hero-alt {
+  font-family: 'Andika', sans-serif; font-style: italic;
+  color: var(--text-muted); font-size: 14px; margin-bottom: 20px;
+}
+.meta-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.meta-pill {
+  font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--text-dim);
+  background: var(--bg4); border: 1px solid var(--border-dim);
+  padding: 4px 10px; border-radius: 4px;
+}
+.meta-pill.gold { color: var(--gold); border-color: var(--border); }
+
+/* QUICK FACTS */
+.quick-facts {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 24px 28px;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 16px;
+  margin: 32px 0;
+}
+.fact-lbl {
+  font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+  letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px;
+}
+.fact-val { font-family: 'Andika', sans-serif; font-size: 14px; color: var(--text); }
+.fact-val.gold { color: var(--gold); font-weight: 700; }
+
+/* STICKY NAV */
+.sticky-nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(13,15,20,0.97); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-dim);
+}
+.toc-scroll {
+  max-width: 1200px; margin: 0 auto; padding: 10px 24px;
+  display: flex; flex-wrap: wrap; gap: 6px; overflow-x: auto;
+}
+.toc-link {
+  font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+  color: var(--text-muted); text-decoration: none; white-space: nowrap;
+  padding: 3px 8px; border-radius: 3px; border: 1px solid transparent;
+  transition: all 0.15s;
+}
+.toc-link:hover { color: var(--gold); border-color: rgba(245,200,66,0.3); }
+
+/* CONTENT */
+.content { max-width: 1100px; margin: 0 auto; padding: 32px 24px 80px; position: relative; z-index: 1; }
+
+/* SECTION TITLES */
+.section-title {
+  font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase; color: var(--gold);
+  display: flex; align-items: center; gap: 12px; margin: 48px 0 20px;
+}
+.section-title::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(to right, var(--border), transparent);
+}
+
+/* PROSE */
+.prose { font-family: 'Andika', sans-serif; font-size: 15px; line-height: 1.8; color: var(--text); }
+.prose p { margin-bottom: 14px; }
+.prose .yr { font-family: 'IBM Plex Mono', monospace; color: var(--gold); font-size: 13px; font-weight: 600; }
+
+/* DATA TABLES */
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 12px 0; }
+.data-table th {
+  background: var(--bg4); font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--gold-dim); padding: 10px 12px; text-align: left;
+  border-bottom: 2px solid var(--border);
+}
+.data-table td {
+  padding: 9px 12px; border-bottom: 1px solid var(--border-dim); vertical-align: top;
+  font-family: 'Andika', sans-serif; color: var(--text);
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td { background: rgba(245,200,66,0.04); }
+.data-table td:first-child {
+  font-weight: 700; color: var(--gold);
+  font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+}
+
+/* QUOTES */
+.quote-block {
+  border-left: 3px solid var(--gold); padding: 14px 20px;
+  background: var(--gold-glow); border-radius: 0 var(--radius) var(--radius) 0;
+  margin: 16px 0; font-family: 'Andika', sans-serif; font-style: italic;
+  font-size: 15px; color: var(--text); line-height: 1.8;
+}
+.quote-block cite {
+  display: block; margin-top: 8px;
+  font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+  color: var(--gold-dim); font-style: normal;
+}
+
+/* TIMELINE */
+.timeline { list-style: none; padding: 0; }
+.timeline li {
+  display: flex; gap: 14px; padding: 8px 0;
+  border-bottom: 1px solid var(--border-dim); font-size: 13.5px;
+}
+.tl-year {
+  font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600;
+  color: var(--gold); min-width: 44px; padding-top: 2px;
+}
+.tl-event { font-family: 'Andika', sans-serif; flex: 1; color: var(--text); }
+
+/* CALLOUTS */
+.callout {
+  display: flex; gap: 14px; padding: 14px 18px;
+  border-radius: var(--radius); border-left: 3px solid; margin: 16px 0;
+}
+.callout-icon {
+  padding: 3px 8px; border-radius: 4px;
+  font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase; flex-shrink: 0; height: fit-content;
+}
+.callout.critical { background: var(--red-bg); border-color: var(--red); }
+.callout.critical .callout-icon { background: var(--red); color: #fff; }
+.callout.trap { background: var(--gold-glow); border-color: var(--gold); }
+.callout.trap .callout-icon { background: var(--gold); color: #0d0f14; }
+.callout.tip { background: var(--green-bg); border-color: var(--green); }
+.callout.tip .callout-icon { background: var(--green); color: #0d0f14; }
+.callout.pyq { background: var(--blue-bg); border-color: var(--blue); }
+.callout.pyq .callout-icon { background: var(--blue); color: #fff; }
+.callout.gem { background: var(--purple-bg); border-color: var(--purple); }
+.callout.gem .callout-icon { background: var(--purple); color: #fff; }
+.callout-text { font-family: 'Andika', sans-serif; font-size: 14px; flex: 1; line-height: 1.7; color: var(--text); }
+
+/* CHIPS */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.chip {
+  font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+  border: 1px solid var(--border); border-radius: 4px;
+  padding: 4px 10px; color: var(--text-dim); background: var(--bg3);
+}
+.chip.gold { color: var(--gold); border-color: var(--gold-dim); }
+
+/* FOOTER */
+footer {
+  background: var(--bg2); border-top: 1px solid var(--border-dim);
+  padding: 28px 32px; text-align: center;
+  font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+  color: var(--text-muted); letter-spacing: 1px; margin-top: 80px;
+  position: relative; z-index: 1;
+}
+footer span { color: var(--gold); }
+
+@media(max-width:600px){
+  .hero { padding: 56px 16px 28px; }
+  .content { padding: 20px 14px 60px; }
+  .quick-facts { padding: 16px; }
+}
+</style>
+  <link rel="stylesheet" href="../orbitron-numbers.css">
+</head>
+<body>
+
+<a href="../index.html" class="back-link">← Hub</a>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="badge-chip">TNPSC Group 1 · Group 2 · Group 4 · Leaders</div>
+    <h1>Subash Chandra Bose</h1>
+    <p class="hero-alt">Netaji · "Netaji" meaning "Leader" · Indian National Army Supreme Commander</p>
+    <div class="meta-row">
+      <span class="meta-pill gold">Born: 23 January 1897</span>
+      <span class="meta-pill gold">Died: 1945 (Taiwan — disputed)</span>
+      <span class="meta-pill">Cuttack, Odisha</span>
+      <span class="meta-pill">Indian National Army (INA)</span>
+      <span class="meta-pill">Forward Bloc</span>
+      <span class="meta-pill gold">TNPSC High Relevance</span>
+    </div>
+  </div>
+</section>
+
+<!-- STICKY NAV -->
+<nav class="sticky-nav">
+  <div class="toc-scroll">
+    <a href="#quick-facts" class="toc-link">Quick Facts</a>
+    <a href="#early-life" class="toc-link">Early Life</a>
+    <a href="#education" class="toc-link">Education</a>
+    <a href="#ics" class="toc-link">ICS & Resignation</a>
+    <a href="#career" class="toc-link">Political Career</a>
+    <a href="#escape" class="toc-link">Great Escape</a>
+    <a href="#ina" class="toc-link">INA & Azad Hind</a>
+    <a href="#jaihind" class="toc-link">Jai Hind Story</a>
+    <a href="#works" class="toc-link">Key Works</a>
+    <a href="#organisations" class="toc-link">Organisations</a>
+    <a href="#timeline" class="toc-link">Timeline</a>
+    <a href="#quotes" class="toc-link">Quotes</a>
+    <a href="#connections" class="toc-link">Connections</a>
+    <a href="#pyq" class="toc-link">PYQ Focus</a>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<div class="content">
+
+  <!-- QUICK FACTS -->
+  <div id="quick-facts" class="quick-facts">
+    <div class="fact-item">
+      <div class="fact-lbl">Full Name</div>
+      <div class="fact-val gold">Subash Chandra Bose</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Title / Honour</div>
+      <div class="fact-val gold">Netaji (given by Mahatma Gandhi)</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Netaji Meaning</div>
+      <div class="fact-val">Leader (தலைவர்)</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Born</div>
+      <div class="fact-val gold">23 January</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Birthplace</div>
+      <div class="fact-val gold">Cuttack, Odisha</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Father</div>
+      <div class="fact-val gold">Janakinath Bose</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Mother</div>
+      <div class="fact-val">Prabhavati Devi</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Spouse</div>
+      <div class="fact-val gold">Emilie Schenkl (Austrian)</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Daughter</div>
+      <div class="fact-val">Anita Bose (born ~1942)</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Spiritual Guru</div>
+      <div class="fact-val gold">Swami Vivekananda</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Political Guru</div>
+      <div class="fact-val gold">C.R. Das (Chittaranjan Das)</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Education</div>
+      <div class="fact-val">Cambridge University; ICS (4th Rank, 1920)</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">ICS Rank</div>
+      <div class="fact-val gold">4th Rank in India (1920)</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Death (Disputed)</div>
+      <div class="fact-val gold">Plane crash, Taiwan (Formosa), 1945</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Birthday Celebration</div>
+      <div class="fact-val gold">Parakram Divas — 23 January</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Award on Parakram Divas</div>
+      <div class="fact-val">Disaster Management Award — ₹5 lakh (individual) / ₹51 lakh (org)</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Slogan</div>
+      <div class="fact-val gold">Jai Hind / Give me blood, I'll give you freedom</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Family Surname</div>
+      <div class="fact-val">Bose / Bosh (community/social name)</div>
+    </div>
+  </div>
+
+  <!-- EARLY LIFE -->
+  <h2 class="section-title" id="early-life">Early Life &amp; Background</h2>
+
+  <div class="prose">
+    <p>
+      Subash Chandra Bose was born on <span class="yr">23 January</span> in <strong>Cuttack</strong>, which is part of present-day <strong>Odisha</strong>. His father was <strong>Janakinath Bose</strong> — "Bose" (also spelled "Bosh" in some references) is the family's community/social surname. His mother was <strong>Prabhavati Devi</strong>.
+    </p>
+    <p>
+      From a very young age, Bose was deeply drawn to the ideas of <strong>Swami Vivekananda</strong>, whom he accepted as his <em>spiritual guru</em>. This spiritual foundation shaped his fearless, idealistic personality throughout his life.
+    </p>
+    <p>
+      Even during his school years, Bose developed friction with British authorities. His father, seeing that staying in India would lead to constant confrontation, arranged to send him abroad. In <span class="yr">1919</span>, Bose left for <strong>London, England</strong>.
+    </p>
+    <p>
+      His birthday, <span class="yr">23 January</span>, is now celebrated as <strong>Parakram Divas</strong> (Parakram = Bravery/Valour) — a national day on which India also awards the <strong>Disaster Management Award</strong>. Individuals receive <span class="yr">₹5 lakh</span> and organisations receive <span class="yr">₹51 lakh</span> (approximately 5 million rupees) for distinguished work in disaster management. This award is given on Parakram Divas in his memory.
+    </p>
+  </div>
+
+  <div class="callout pyq">
+    <span class="callout-icon">PYQ</span>
+    <div class="callout-text"><strong>Birthplace of Netaji</strong> — <strong>Cuttack, Odisha</strong>. This was asked directly in a previous year question. Don't confuse with Bengal (where he was politically active).</div>
+  </div>
+
+  <div class="callout gem">
+    <span class="callout-icon">Gem</span>
+    <div class="callout-text"><strong>Parakram Divas</strong> (23 January) is also the day India gives the <strong>National Disaster Management Award</strong>. This was asked in a UPSC exam. An individual winner gets <strong>₹5 lakh</strong>; an organisation gets <strong>₹51 lakh</strong>.</div>
+  </div>
+
+  <!-- EDUCATION -->
+  <h2 class="section-title" id="education">Education</h2>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Institution</th>
+        <th>Year</th>
+        <th>Subject / Degree</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>School in India</td>
+        <td>Before 1919</td>
+        <td>General schooling</td>
+        <td>During school itself, friction with British authorities developed; father sent him to London</td>
+      </tr>
+      <tr>
+        <td>Cambridge University, England</td>
+        <td>1919–1920</td>
+        <td>Studied for ICS (Indian Civil Service) exam</td>
+        <td>Studied for only 8 months — same time it takes students today for Group 4 preparation. Same Cambridge where Nehru studied at Trinity College.</td>
+      </tr>
+      <tr>
+        <td>ICS Examination (London)</td>
+        <td>1920</td>
+        <td>Indian Civil Service (ICS) — equivalent to today's IAS</td>
+        <td>Cleared the exam and secured <strong>4th Rank</strong> among all Indian candidates. ICS exams could only be written in London — only wealthy families could send their children.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout critical">
+    <span class="callout-icon">Critical</span>
+    <div class="callout-text">Bose studied at <strong>Cambridge University</strong> (same as Nehru) and cleared the ICS exam with <strong>4th Rank</strong> in <strong>1920</strong> — after just <strong>8 months</strong> of preparation. He then resigned from the posting in April 1921.</div>
+  </div>
+
+  <div class="callout tip">
+    <span class="callout-icon">Tip</span>
+    <div class="callout-text">The lecturer makes this comparison: "It takes us 8 months to prepare for Group 4, but Bose cleared the ICS (equivalent of IAS) in 8 months." ICS = IAS of today. Only London-written exams. Only rich families could attempt it.</div>
+  </div>
+
+  <!-- ICS RESIGNATION -->
+  <h2 class="section-title" id="ics">ICS Posting &amp; Historic Resignation</h2>
+
+  <div class="prose">
+    <p>
+      After securing the <span class="yr">4th rank</span> in the ICS exam in <span class="yr">1920</span>, Bose received his posting. However, he was witnessing the unfolding of the <strong>Jallianwala Bagh massacre</strong> and the rising <strong>Non-Cooperation Movement</strong>. These events made him realise he could not serve two masters — the British Empire and the Indian people — simultaneously.
+    </p>
+    <p>
+      In <span class="yr">April 1921</span>, he resigned from the ICS posting. He could not serve under British rule while also fighting for India's freedom. As the lecturer notes, giving up such a prestigious, high-paying post (equivalent to an IAS officer today) to join the freedom struggle was an extraordinary sacrifice.
+    </p>
+    <p>
+      After resigning, he directly went to meet <strong>Mahatma Gandhi</strong>. Gandhi told him: "You are from West Bengal; there is a great leader there — follow him and work under him." That leader was <strong>C.R. Das (Chittaranjan Das)</strong> of <strong>Calcutta</strong> — a key figure in West Bengal politics and co-founder (with Motilal Nehru) of the <strong>Swaraj Party</strong>. Bose accepted C.R. Das as his <em>political guru</em>.
+    </p>
+    <p>
+      Bose joined the <strong>Indian National Congress</strong> in <span class="yr">1921</span>.
+    </p>
+  </div>
+
+  <div class="callout critical">
+    <span class="callout-icon">Critical</span>
+    <div class="callout-text">Bose resigned from his ICS posting in <strong>April 1921</strong>. He joined the Indian National Congress in <strong>1921</strong>. He met Gandhi who directed him to C.R. Das. C.R. Das became his political guru.</div>
+  </div>
+
+  <!-- POLITICAL CAREER -->
+  <h2 class="section-title" id="career">Political Career &amp; Congress Years</h2>
+
+  <div class="prose">
+    <p>
+      After joining Congress in <span class="yr">1921</span>, Bose became an increasingly prominent and radical voice. The British, alarmed by his activities in <strong>West Bengal</strong>, imposed an <strong>Emergency Act</strong> on the Bengal province in <span class="yr">1924</span> and imprisoned him in <strong>Alipore Jail</strong> (also known as <strong>Calcutta Central Jail</strong>).
+    </p>
+    <p>
+      Within Congress, Bose was firmly in the <em>extremist</em> (tīvira tēciyavādi) camp — alongside figures like <strong>Bhagat Singh</strong> in the North, <strong>Vasudevan</strong> and <strong>Muthuramalingam Thevar</strong> in Tamil Nadu. He opposed the moderate faction and consistently pushed for complete independence.
+    </p>
+    <p>
+      He actively opposed two important positions: (1) the <strong>Dominion Status</strong> demand put forward by his own political guru <strong>C.R. Das</strong> and <strong>Motilal Nehru</strong> — he believed India must have full independence, not partial self-governance under British defence and foreign policy; and (2) the withdrawal of the <strong>Civil Disobedience Movement</strong> by Gandhi after the <strong>Gandhi-Irwin Pact</strong> and Gandhi's participation in the Second Round Table Conference.
+    </p>
+    <p>
+      In <span class="yr">1938</span> and <span class="yr">1939</span>, Bose presided over two consecutive Congress sessions — <strong>Haripura</strong> (<span class="yr">1938</span>) and <strong>Tripura</strong> (<span class="yr">1939</span>). At Tripura, he stood against <strong>Pattabhi Sitaramayya</strong>, who was Gandhi's preferred candidate. Bose won the election — but Gandhi's displeasure was clear, calling it his own "defeat." Out of respect for Gandhi (whom Bose acknowledged as the Nation's Father despite their ideological differences), Bose resigned from Congress in <span class="yr">1939</span>.
+    </p>
+    <p>
+      After leaving Congress, Bose visited <strong>Madurai</strong> in Tamil Nadu and met <strong>Muthuramalingam Thevar</strong>. Together, they co-founded the <strong>Forward Bloc</strong> party in <span class="yr">1939</span>. The Forward Bloc spread across India but is most prominent in <strong>West Bengal</strong>, <strong>Jharkhand</strong>, and <strong>Tamil Nadu</strong>, where the party still exists today.
+    </p>
+    <p>
+      In <span class="yr">1940–41</span>, the British, unable to imprison him without public backlash, placed Bose under <strong>house arrest</strong>.
+    </p>
+  </div>
+
+  <div class="callout pyq">
+    <span class="callout-icon">PYQ</span>
+    <div class="callout-text"><strong>Haripura (1938) and Tripura (1939)</strong> — the two consecutive Congress sessions chaired by Bose. Remember the order: Hari first, then Tripura. At Tripura he defeated Pattabhi Sitaramayya (Gandhi's candidate).</div>
+  </div>
+
+  <div class="callout trap">
+    <span class="callout-icon">Trap</span>
+    <div class="callout-text">Bose opposed <strong>C.R. Das</strong> (his own political guru) and <strong>Gandhi</strong> on key issues. C.R. Das demanded <em>Dominion Status</em>; Bose wanted <em>full independence</em>. He also opposed Gandhi's suspension of Civil Disobedience. Don't assume he only opposed Gandhi.</div>
+  </div>
+
+  <div class="callout gem">
+    <span class="callout-icon">Gem</span>
+    <div class="callout-text">It was <strong>Netaji Subash Chandra Bose</strong> who first called Mahatma Gandhi the <strong>"Father of the Nation"</strong> (Desh ka Pita / Tēca Tantai). The phrase we use every day for Gandhi was coined by Bose — despite their ideological differences.</div>
+  </div>
+
+  <div class="callout pyq">
+    <span class="callout-icon">PYQ</span>
+    <div class="callout-text"><strong>Forward Bloc</strong> — founded by Bose with Muthuramalingam Thevar (Madurai, Tamil Nadu). Still active in West Bengal, Jharkhand, and Tamil Nadu. This connection to Tamil Nadu is exam-relevant.</div>
+  </div>
+
+  <!-- GREAT ESCAPE -->
+  <h2 class="section-title" id="escape">The Great Escape (1941)</h2>
+
+  <div class="prose">
+    <p>
+      While under house arrest in <strong>Calcutta</strong> in <span class="yr">1940–41</span>, Bose hatched a daring escape plan. He confided in his nephew (his elder brother's son), who visited him regularly. Bose planned to escape through <strong>Afghanistan</strong> (then part of British India's border territory, now Pakistan–Afghanistan border) where his friend <strong>Bhagat Ram Talwar</strong> was waiting.
+    </p>
+    <p>
+      To disguise himself, Bose shaved clean and then wore a <em>fake beard and moustache</em> to look like a Muslim man. He dressed in a large <strong>Afghan Muslim robe</strong> (a colourful full-length garment typical of foreign Muslims) and wore a turban. He adopted the false identity of <strong>Rahmat Khan</strong> (sometimes rendered as "Ziauddin" in other accounts; the transcript specifically gives <em>Rahmat Khan</em>).
+    </p>
+    <p>
+      In this disguise, he escaped from his <strong>Calcutta home</strong>, travelled through <strong>Afghanistan</strong>, and made his way to <strong>Germany</strong> — where <strong>Hitler</strong> was in power and the Second World War was escalating.
+    </p>
+  </div>
+
+  <div class="callout gem">
+    <span class="callout-icon">Gem</span>
+    <div class="callout-text">Bose's disguise identity during the Great Escape: <strong>Rahmat Khan</strong> — dressed as an Afghan Muslim traveller with a fake beard, robe, and turban. His contact in Afghanistan was <strong>Bhagat Ram Talwar</strong>.</div>
+  </div>
+
+  <!-- INA -->
+  <h2 class="section-title" id="ina">INA, Azad Hind &amp; Singapore</h2>
+
+  <div class="prose">
+    <p>
+      After reaching <strong>Germany</strong>, Bose met <strong>Hitler</strong> and sought support. However, Hitler's book <em>The Führer</em> (German: "Der Führer" — meaning "The Leader") had reportedly described Indians in an unflattering way. Hitler gave him limited support and suggested he seek help from <strong>Japan</strong>.
+    </p>
+    <p>
+      In <span class="yr">1942</span>, Bose travelled to <strong>Burma (Myanmar)</strong>, where Japanese forces had taken control from the British. Japan was fighting on the Axis side (Germany, Italy, Japan) against the Allied forces (Britain, France). Bose gathered Indian prisoners of war and political exiles deported there by the British, and began forming a military unit.
+    </p>
+    <p>
+      In <span class="yr">1943</span>, Bose moved to <strong>Singapore</strong>. There he found two key figures who had already established a military formation: <strong>Mohan Singh</strong> and <strong>Rash Behari Bose (Ras Bihari Ghosh)</strong>. They had founded the <strong>Indian National Army (INA)</strong>. They handed over command of the INA to Netaji Subash Chandra Bose.
+    </p>
+    <p>
+      The INA's original name was <strong>Azad Hind Fauj</strong> — "Azad" meaning <em>free/liberated</em>, "Hind" meaning India, "Fauj" meaning army. So: <em>Free India Army</em>. In Singapore, Bose also established a <strong>Provisional Government of Free India</strong> (Azad Hind Government / Indian Independence League), declaring India's liberation.
+    </p>
+    <p>
+      From Singapore, Bose made radio broadcasts declaring: <strong>"Chalo Delhi!"</strong> — "March towards Delhi! Let us liberate the nation!"
+    </p>
+    <p>
+      Within the INA, Bose established a special <strong>Women's Regiment</strong> (பெண்கள் படைப்பிரிவு). He appointed <strong>Lakshmi Sahgal</strong> — a doctor from <strong>Tamil Nadu</strong> who had gone to Singapore to study medicine — as its commander. This appointment is historically significant.
+    </p>
+  </div>
+
+  <div class="callout critical">
+    <span class="callout-icon">Critical</span>
+    <div class="callout-text"><strong>INA (Indian National Army)</strong> was originally founded by <strong>Mohan Singh</strong> and <strong>Rash Behari Bose</strong>. Netaji <strong>took over</strong> command from them in 1943 in Singapore. Do NOT say Netaji founded the INA — he took command of it.</div>
+  </div>
+
+  <div class="callout trap">
+    <span class="callout-icon">Trap</span>
+    <div class="callout-text">The INA was <strong>NOT</strong> founded by Subash Chandra Bose. It was founded by <strong>Mohan Singh</strong> and <strong>Rash Behari Bose (Ghosh)</strong>. Netaji took over as Commander. This distinction is specifically tested in exams.</div>
+  </div>
+
+  <div class="callout gem">
+    <span class="callout-icon">Gem</span>
+    <div class="callout-text"><strong>Lakshmi Sahgal</strong> — from Tamil Nadu, went to Singapore to study medicine in 1943, joined the INA Women's Regiment and was made its commander by Netaji. In <strong>2002</strong>, when Abdul Kalam was elected President (BJP nomination by Vajpayee), <strong>Congress nominated Lakshmi Sahgal</strong> as their Presidential candidate. Two big connections in one person!</div>
+  </div>
+
+  <!-- JAI HIND STORY -->
+  <h2 class="section-title" id="jaihind">The Full Story of "Jai Hind"</h2>
+
+  <div class="prose">
+    <p>
+      The famous slogan <strong>Jai Hind</strong> did not originate with Netaji — it has a fascinating three-person origin story.
+    </p>
+    <p>
+      <strong>Step 1:</strong> In <span class="yr">1933</span>, a <strong>Tamil man</strong> named <strong>Chembakaramam Pillai</strong> (சேம்பகராமன் பிள்ளை) spoke at a conference in <strong>Vienna, Austria</strong>. He said: <em>"Jai Hindustan Ke!"</em> Chembakaramam Pillai had a close friendship with both <strong>Hitler</strong> and Egyptian leader <strong>Nasser</strong>. His slogan was the first use of this kind of nationalist chant. (This name was in older syllabuses but has been removed from current ones.)
+    </p>
+    <p>
+      <strong>Step 2:</strong> Netaji, inspired by Chembakaramam Pillai's phrase, adopted <strong>"Jai Hindustan"</strong> as the INA's battle cry.
+    </p>
+    <p>
+      <strong>Step 3:</strong> A friend of Netaji from <strong>Hyderabad</strong>, <strong>Abdul Hassan</strong> (a Muslim, studying engineering in Germany), raised an objection: "Hindustan sounds like a country only for Hindus — Muslim soldiers may not want to join the INA under that name." He suggested replacing "Hindustan" with "Hind" — which simply means India, without any religious connotation. Netaji agreed, and <strong>"Jai Hind"</strong> became the official slogan — adopted nationwide.
+    </p>
+  </div>
+
+  <div class="callout critical">
+    <span class="callout-icon">Critical</span>
+    <div class="callout-text">Two different exam questions, two different answers: (1) "Who first gave the slogan Jai Hind?" → <strong>Chembakaramam Pillai</strong> (Tamil man, Vienna, 1933) (2) "Who spread / popularised Jai Hind nationwide?" → <strong>Netaji Subash Chandra Bose</strong></div>
+  </div>
+
+  <div class="callout pyq">
+    <span class="callout-icon">PYQ</span>
+    <div class="callout-text">Asked in <strong>VAO exam (2006 and 2016)</strong>: "Who first gave the slogan Jai Hind?" Answer: <strong>Chembakaramam Pillai</strong> (1933, Vienna). "Who spread it across the nation?" Answer: <strong>Netaji Subash Chandra Bose</strong>. Two questions, two answers — do NOT mix them.</div>
+  </div>
+
+  <div class="callout gem">
+    <span class="callout-icon">Gem</span>
+    <div class="callout-text"><strong>Chembakaramam Pillai</strong> — a Tamil person — was the one who inspired the "Jai Hind" slogan. He also had close friendships with <strong>Hitler</strong> and <strong>Nasser (Egypt)</strong>. Previously in the syllabus, now removed — but still asked in exams.</div>
+  </div>
+
+  <div class="callout gem">
+    <span class="callout-icon">Gem</span>
+    <div class="callout-text"><strong>Abdul Hassan</strong> from Hyderabad (studying engineering in Germany) suggested changing "Hindustan" to "Hind" so that Muslim soldiers would feel included in the INA. His suggestion is why we say "Jai Hind" and not "Jai Hindustan."</div>
+  </div>
+
+  <!-- DEATH -->
+  <h2 class="section-title" id="death">Death &amp; Controversy</h2>
+
+  <div class="prose">
+    <p>
+      In <span class="yr">1945</span>, as World War II ended — Hitler died by suicide, Japan surrendered after the atomic bombings of <strong>Hiroshima</strong> and <strong>Nagasaki</strong> by America — the Axis powers collapsed. Bose was in <strong>Bangkok</strong> (<strong>Thailand</strong>'s capital), under Japanese protection. With Japan's surrender, British forces were moving to recapture the region.
+    </p>
+    <p>
+      Bose decided to fly to <strong>Tokyo, Japan</strong>. On the way, his flight passed over <strong>Taiwan</strong> — then known as <strong>Formosa</strong> (a Portuguese word meaning "beautiful island"). A <strong>plane crash</strong> occurred over or on Taiwan, and it is reported that Bose died from his injuries. However, his death has never been conclusively proven.
+    </p>
+    <p>
+      Because the circumstances were unclear, the Indian government set up <strong>three committees</strong> headed by judges to investigate whether he actually died or escaped. One of these committees was asked about specifically in a Group 2 exam.
+    </p>
+  </div>
+
+  <div class="callout pyq">
+    <span class="callout-icon">PYQ</span>
+    <div class="callout-text"><strong>Three committees</strong> were formed to investigate Bose's death. One of these committees was asked in a <strong>Group 2 exam</strong>. Remember: his death is <em>disputed</em> — some say he died in the Taiwan plane crash, others say he survived and lived elsewhere.</div>
+  </div>
+
+  <div class="callout gem">
+    <span class="callout-icon">Gem</span>
+    <div class="callout-text"><strong>Taiwan = Formosa</strong> (Portuguese: "Beautiful Island"). The Portuguese were the first to discover this island, just as Vasco da Gama discovered India. They named it Formosa. This is where the plane crash allegedly occurred in 1945.</div>
+  </div>
+
+  <!-- KEY WORKS -->
+  <h2 class="section-title" id="works">Key Works &amp; Books</h2>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Year</th>
+        <th>Significance</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>The Indian Struggle</td>
+        <td>1942</td>
+        <td>Book about India's freedom movement. Written around the time of his Germany visit and Burma period.</td>
+      </tr>
+      <tr>
+        <td>Indian Sanyasi (Indian Ascetic)</td>
+        <td>—</td>
+        <td>Second major book by Bose.</td>
+      </tr>
+      <tr>
+        <td>Thoughts of a Nation (Dēcattin Yōcanaigaḷ)</td>
+        <td>—</td>
+        <td>Third major book. "Tēcattin Yōcanaigaḷ" in Tamil — his ideas and thoughts on nationhood.</td>
+      </tr>
+      <tr>
+        <td>Letters to Emilie Schenkl</td>
+        <td>—</td>
+        <td>Letters written by Bose to his wife Emilie Schenkl (Austrian). Compiled as a book. Similar to how Nehru's letters to Indira became "Glimpses of World History."</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout tip">
+    <span class="callout-icon">Tip</span>
+    <div class="callout-text">Four books total: (1) The Indian Struggle, (2) Indian Sanyasi, (3) Thoughts of a Nation, (4) Letters to Emilie Schenkl. The lecturer says these haven't been asked in major exams yet but should be known.</div>
+  </div>
+
+  <!-- ORGANISATIONS -->
+  <h2 class="section-title" id="organisations">Organisations Founded / Associated With</h2>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Organisation</th>
+        <th>Year</th>
+        <th>Details</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Indian National Congress</td>
+        <td>Joined 1921</td>
+        <td>Joined after resigning from ICS; left in 1939 after Tripura session controversy</td>
+        <td>Left in 1939</td>
+      </tr>
+      <tr>
+        <td>Swadhinta Sangam (Independent Organisation)</td>
+        <td>~1920s</td>
+        <td>Co-founded with Jawaharlal Nehru. "Swadhinta" = Freedom/Independence. Not in textbooks — extra data.</td>
+        <td>Historical</td>
+      </tr>
+      <tr>
+        <td>Forward Bloc</td>
+        <td>1939</td>
+        <td>Co-founded with Muthuramalingam Thevar (Madurai). Active in West Bengal, Jharkhand, Tamil Nadu.</td>
+        <td>Still Active</td>
+      </tr>
+      <tr>
+        <td>Azad Hind Fauj / INA (Indian National Army)</td>
+        <td>Took command 1943</td>
+        <td>Originally founded by Mohan Singh and Rash Behari Bose. Netaji took over as Supreme Commander in Singapore. Original name: Azad Hind Fauj.</td>
+        <td>Historical</td>
+      </tr>
+      <tr>
+        <td>Azad Hind Provisional Government</td>
+        <td>1943</td>
+        <td>Interim government of Free India declared in Singapore. Indian Independence League / Indian liberation organisation.</td>
+        <td>Historical</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout gem">
+    <span class="callout-icon">Gem</span>
+    <div class="callout-text"><strong>Swadhinta Sangam</strong> (Independent Organisation / Freedom Organisation) — co-founded by Bose AND Jawaharlal Nehru together. Not found in textbooks but mentioned as extra data. They were connected through their political networks (C.R. Das ↔ Motilal Nehru).</div>
+  </div>
+
+  <!-- TIMELINE -->
+  <h2 class="section-title" id="timeline">Complete Chronological Timeline</h2>
+
+  <ul class="timeline">
+    <li><span class="tl-year">23 Jan</span><span class="tl-event">Birth of Subash Chandra Bose, <strong>Cuttack, Odisha</strong>. Father: Janakinath Bose; Mother: Prabhavati Devi</span></li>
+    <li><span class="tl-year">1919</span><span class="tl-event">Leaves India for <strong>London, England</strong>. Goes to <strong>Cambridge University</strong> to prepare for ICS exam. (Some sources say 1920)</span></li>
+    <li><span class="tl-year">1920</span><span class="tl-event">Writes ICS (Indian Civil Service) examination after just <strong>8 months</strong> of preparation. Secures <strong>4th Rank</strong> in India. Receives posting.</span></li>
+    <li><span class="tl-year">1921 Apr</span><span class="tl-event">Resigns from ICS posting in <strong>April 1921</strong>. Cannot serve both British government and India simultaneously. Meets <strong>Gandhi</strong> who directs him to <strong>C.R. Das</strong> in West Bengal.</span></li>
+    <li><span class="tl-year">1921</span><span class="tl-event">Joins the <strong>Indian National Congress</strong>. Accepts <strong>C.R. Das</strong> as political guru. Accepts <strong>Swami Vivekananda</strong> as spiritual guru.</span></li>
+    <li><span class="tl-year">1924</span><span class="tl-event">British impose <strong>Emergency Act</strong> in West Bengal province. Bose imprisoned in <strong>Alipore Jail (Calcutta Central Jail)</strong>.</span></li>
+    <li><span class="tl-year">1930</span><span class="tl-event">Opposes Gandhi's suspension of <strong>Civil Disobedience Movement</strong> and Gandhi's participation in the <strong>Second Round Table Conference</strong>.</span></li>
+    <li><span class="tl-year">1933</span><span class="tl-event"><strong>Chembakaramam Pillai</strong> (Tamil) says <em>"Jai Hindustan Ke!"</em> at a conference in <strong>Vienna, Austria</strong> — the origin of Jai Hind. Bose is already in Europe by this period.</span></li>
+    <li><span class="tl-year">1934</span><span class="tl-event">Meets <strong>Emilie Schenkl</strong> (Austrian stenographer in Vienna secretariat). They fall in love. Daughter <strong>Anita Bose</strong> is born around this period.</span></li>
+    <li><span class="tl-year">1938</span><span class="tl-event">Presides over <strong>Haripura Congress Session</strong> as Congress President.</span></li>
+    <li><span class="tl-year">1939</span><span class="tl-event">Presides over <strong>Tripura Congress Session</strong>. Defeats <strong>Pattabhi Sitaramayya</strong> (Gandhi's candidate) in Congress presidential election. Resigns from Congress out of respect for Gandhi. Co-founds <strong>Forward Bloc</strong> with <strong>Muthuramalingam Thevar</strong> (Madurai, Tamil Nadu). Visits Madurai.</span></li>
+    <li><span class="tl-year">1940–41</span><span class="tl-event">Placed under <strong>house arrest</strong> by British in Calcutta. Cannot be jailed without triggering mass unrest.</span></li>
+    <li><span class="tl-year">1941</span><span class="tl-event"><strong>The Great Escape</strong>: Disguises as <strong>Rahmat Khan</strong> (Afghan Muslim — fake beard, robe, turban). Escapes from Calcutta home, travels through <strong>Afghanistan</strong> (with contact <strong>Bhagat Ram Talwar</strong>) to <strong>Germany</strong>.</span></li>
+    <li><span class="tl-year">1941</span><span class="tl-event">Reaches <strong>Germany</strong>. Meets <strong>Hitler</strong>. Hitler offers limited support; suggests seeking help from <strong>Japan</strong>.</span></li>
+    <li><span class="tl-year">1942</span><span class="tl-event">Travels to <strong>Burma (Myanmar)</strong> — then under Japanese control. Gathers Indian POWs and exiles; begins forming military unit. Publishes book <em>The Indian Struggle</em>.</span></li>
+    <li><span class="tl-year">1943</span><span class="tl-event">Moves to <strong>Singapore</strong>. Finds <strong>Mohan Singh</strong> and <strong>Rash Behari Bose (Ghosh)</strong> who had already formed the INA. Takes over as Supreme Commander of the <strong>Indian National Army (INA) / Azad Hind Fauj</strong>. Establishes <strong>Provisional Government of Azad Hind</strong>. Appoints <strong>Lakshmi Sahgal</strong> (Tamil Nadu doctor) as commander of the Women's Regiment. Broadcasts <em>"Chalo Delhi!"</em> from Singapore radio.</span></li>
+    <li><span class="tl-year">1943</span><span class="tl-event">Abdul Hassan (Hyderabad, Germany) suggests changing "Jai Hindustan" to <strong>"Jai Hind"</strong> for inclusivity. Netaji adopts it as INA's official slogan — spreads nationwide.</span></li>
+    <li><span class="tl-year">1945</span><span class="tl-event">WWII ends: Hitler dies by suicide; Japan surrenders after Hiroshima-Nagasaki bombings. Bose is in <strong>Bangkok, Thailand</strong>. Plans to fly to <strong>Tokyo, Japan</strong>. Plane reportedly crashes over <strong>Taiwan (Formosa)</strong>. Bose reported dead — but disputed.</span></li>
+    <li><span class="tl-year">Post-1947</span><span class="tl-event">Indian government sets up <strong>three committees</strong> (judge-led) to investigate his death. One was asked in a Group 2 exam.</span></li>
+    <li><span class="tl-year">2002–07</span><span class="tl-event"><strong>Lakshmi Sahgal</strong> (Bose's INA Women's Regiment commander) is nominated by <strong>Congress</strong> as Presidential candidate — against <strong>Abdul Kalam</strong> (BJP/NDA nominee, who won).</span></li>
+  </ul>
+
+  <!-- QUOTES -->
+  <h2 class="section-title" id="quotes">Famous Quotes &amp; Slogans</h2>
+
+  <div class="quote-block">
+    இரத்தத்தை கொடுங்கள், நான் உங்களுக்கு சுதந்திரம் கொடுக்கிறேன்.
+    <br><em>(Give me blood, and I shall give you freedom.)</em>
+    <cite>— Netaji Subash Chandra Bose, addressing the youth</cite>
+  </div>
+
+  <div class="quote-block">
+    டெல்லியை நோக்கி செல்லுங்கள்! டெல்லியை நோக்கி புறப்படுங்கள்!
+    <br><em>(Chalo Delhi! — March towards Delhi!)</em>
+    <cite>— Netaji Subash Chandra Bose, radio broadcast from Singapore</cite>
+  </div>
+
+  <div class="quote-block">
+    ஜெய் ஹிந்த்!
+    <br><em>(Jai Hind! — Victory to India!)</em>
+    <cite>— INA Battle Cry, popularised by Netaji Subash Chandra Bose (originated with Chembakaramam Pillai, 1933)</cite>
+  </div>
+
+  <div class="quote-block">
+    [On Mahatma Gandhi:] அவர்தான் நம் நாட்டினுடைய தேச தந்தை.
+    <br><em>(He is the Father of our Nation.) — Bose coined this title for Gandhi</em>
+    <cite>— Netaji Subash Chandra Bose (the first to call Gandhi "Father of the Nation")</cite>
+  </div>
+
+  <!-- CONNECTIONS -->
+  <h2 class="section-title" id="connections">Key Connections &amp; Relationships</h2>
+
+  <div class="prose"><p><strong>Gurus &amp; Mentors:</strong></p></div>
+  <div class="chips">
+    <span class="chip gold">Swami Vivekananda — Spiritual Guru</span>
+    <span class="chip gold">C.R. Das (Chittaranjan Das) — Political Guru</span>
+    <span class="chip">Mahatma Gandhi — National Father (despite differences)</span>
+  </div>
+
+  <div class="prose" style="margin-top:16px"><p><strong>Political Allies &amp; Co-founders:</strong></p></div>
+  <div class="chips">
+    <span class="chip gold">Muthuramalingam Thevar (Madurai, Tamil Nadu) — Forward Bloc co-founder</span>
+    <span class="chip">Jawaharlal Nehru — co-founded Swadhinta Sangam</span>
+    <span class="chip">Mohan Singh — INA original founder (handed command to Bose)</span>
+    <span class="chip">Rash Behari Bose (Ghosh) — INA original founder</span>
+    <span class="chip gold">Lakshmi Sahgal — Women's Regiment commander (Tamil Nadu)</span>
+  </div>
+
+  <div class="prose" style="margin-top:16px"><p><strong>International Contacts:</strong></p></div>
+  <div class="chips">
+    <span class="chip gold">Hitler (Germany) — met him seeking support for India's independence</span>
+    <span class="chip gold">Mussolini (Italy) — studied his military discipline for the INA</span>
+    <span class="chip">Bhagat Ram Talwar — Afghan contact who helped in the Great Escape</span>
+    <span class="chip">Emilie Schenkl (Austria) — wife; stenographer in Vienna</span>
+    <span class="chip">Abdul Hassan (Hyderabad) — suggested "Jai Hind" over "Jai Hindustan"</span>
+    <span class="chip gold">Chembakaramam Pillai (Tamil) — first said "Jai Hindustan Ke" (1933, Vienna)</span>
+  </div>
+
+  <div class="prose" style="margin-top:16px"><p><strong>Those He Opposed:</strong></p></div>
+  <div class="chips">
+    <span class="chip">Mahatma Gandhi — opposed Civil Disobedience suspension &amp; Round Table participation</span>
+    <span class="chip">C.R. Das &amp; Motilal Nehru — opposed their Dominion Status demand</span>
+    <span class="chip">Pattabhi Sitaramayya — defeated at Tripura 1939 Congress election</span>
+  </div>
+
+  <div class="callout gem">
+    <span class="callout-icon">Gem</span>
+    <div class="callout-text">C.R. Das and Motilal Nehru were <strong>close friends</strong>. C.R. Das was Bose's political guru; Motilal Nehru was Jawaharlal Nehru's father. So Bose and Jawaharlal Nehru were like "political cousins" — and they co-founded the <strong>Swadhinta Sangam</strong> together.</div>
+  </div>
+
+  <!-- PYQ FOCUS -->
+  <h2 class="section-title" id="pyq">TNPSC PYQ Focus — Must-Know Points</h2>
+
+  <div class="callout pyq">
+    <span class="callout-icon">PYQ</span>
+    <div class="callout-text"><strong>Birthplace: Cuttack, Odisha</strong> — directly asked in a previous year question. Not Bengal (where he worked politically).</div>
+  </div>
+
+  <div class="callout pyq">
+    <span class="callout-icon">PYQ</span>
+    <div class="callout-text"><strong>ICS 4th Rank (1920)</strong> — Bose secured 4th rank in the ICS exam after only 8 months of preparation at Cambridge. Resigned from posting in <strong>April 1921</strong>.</div>
+  </div>
+
+  <div class="callout pyq">
+    <span class="callout-icon">PYQ</span>
+    <div class="callout-text"><strong>Congress Sessions:</strong> Bose presided over <strong>Haripura (1938)</strong> and <strong>Tripura (1939)</strong>. Order: Hari → Tripura. At Tripura he defeated Gandhi's candidate Pattabhi Sitaramayya.</div>
+  </div>
+
+  <div class="callout pyq">
+    <span class="callout-icon">PYQ</span>
+    <div class="callout-text"><strong>Jai Hind — VAO 2006 &amp; 2016:</strong> "Who first gave the slogan Jai Hind?" → <strong>Chembakaramam Pillai</strong> (1933, Vienna). "Who spread it?" → <strong>Netaji Subash Chandra Bose</strong>. Two separate questions, two different answers.</div>
+  </div>
+
+  <div class="callout pyq">
+    <span class="callout-icon">PYQ</span>
+    <div class="callout-text"><strong>INA Founders:</strong> <strong>Mohan Singh</strong> and <strong>Rash Behari Bose (Ghosh)</strong> founded the INA. Netaji <strong>took over command</strong> in 1943 in Singapore. This distinction has been tested.</div>
+  </div>
+
+  <div class="callout pyq">
+    <span class="callout-icon">PYQ</span>
+    <div class="callout-text"><strong>Three Committees on Bose's Death</strong> — formed post-independence to investigate. One asked in a <strong>Group 2 exam</strong>. Key fact: three judge-headed committees.</div>
+  </div>
+
+  <div class="callout pyq">
+    <span class="callout-icon">PYQ</span>
+    <div class="callout-text"><strong>Parakram Divas = 23 January</strong> (Netaji's birthday). On this day, India gives the National Disaster Management Award. Individual: ₹5 lakh; Organisation: ₹51 lakh. Asked in UPSC.</div>
+  </div>
+
+  <div class="callout pyq">
+    <span class="callout-icon">PYQ</span>
+    <div class="callout-text"><strong>Netaji title</strong> — given by <strong>Mahatma Gandhi</strong>. Netaji = Leader (தலைவர்).</div>
+  </div>
+
+  <div class="callout pyq">
+    <span class="callout-icon">PYQ</span>
+    <div class="callout-text"><strong>Forward Bloc</strong> — co-founded by Bose &amp; <strong>Muthuramalingam Thevar</strong> (Madurai). Still active in West Bengal, Jharkhand, Tamil Nadu.</div>
+  </div>
+
+  <div class="callout pyq">
+    <span class="callout-icon">PYQ</span>
+    <div class="callout-text"><strong>Lakshmi Sahgal</strong> — Tamil Nadu doctor, commanded INA Women's Regiment. In 2002, nominated by <strong>Congress as Presidential candidate</strong> against Abdul Kalam (who won).</div>
+  </div>
+
+  <div class="callout trap">
+    <span class="callout-icon">Trap</span>
+    <div class="callout-text">Do NOT say Bose founded the INA. He took command. Founders = Mohan Singh + Rash Behari Bose. Also: Bose opposed both Gandhi AND his own political guru C.R. Das — not just Gandhi.</div>
+  </div>
+
+  <div class="callout trap">
+    <span class="callout-icon">Trap</span>
+    <div class="callout-text">Taiwan = <strong>Formosa</strong> (Portuguese word = "beautiful island"). The plane crash that allegedly killed Bose happened in/over Taiwan (Formosa) in 1945 — NOT Japan, NOT Burma.</div>
+  </div>
+
+  <div class="callout trap">
+    <span class="callout-icon">Trap</span>
+    <div class="callout-text">"Father of the Nation" — we say Gandhi, but the person who FIRST used this title for Gandhi was <strong>Netaji Subash Chandra Bose</strong>. This is frequently misattributed.</div>
+  </div>
+
+</div><!-- end .content -->
+
+<footer>
+  Source: YouTube Lecture Transcript · <span>Arivoam TNPSC</span> · Subash Chandra Bose (Netaji) Master Notes · Group 1 / Group 2 / Group 4
+</footer>
+
+</body>
+</html>

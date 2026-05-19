@@ -1,0 +1,864 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jawaharlal Nehru — Arivoam TNPSC Master Notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0f14;
+  --bg2: #12151c;
+  --bg3: #181c26;
+  --bg4: #1e2230;
+  --gold: #f5c842;
+  --gold-dim: #c9a22a;
+  --gold-glow: rgba(245,200,66,0.12);
+  --text: #e8e4d8;
+  --text-dim: #9a9585;
+  --text-muted: #5a5650;
+  --red: #e84040;
+  --red-bg: rgba(232,64,64,0.12);
+  --green: #3ecf6e;
+  --green-bg: rgba(62,207,110,0.10);
+  --blue: #4a9fff;
+  --blue-bg: rgba(74,159,255,0.10);
+  --purple: #b06cff;
+  --purple-bg: rgba(176,108,255,0.10);
+  --orange: #ff8c42;
+  --orange-bg: rgba(255,140,66,0.10);
+  --border: rgba(245,200,66,0.18);
+  --border-dim: rgba(255,255,255,0.06);
+  --radius: 10px;
+  --radius-lg: 16px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Syne', sans-serif;
+  line-height: 1.7;
+  min-height: 100vh;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background-image:
+    linear-gradient(rgba(245,200,66,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245,200,66,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: gridShift 20s linear infinite;
+  pointer-events: none;
+}
+@keyframes gridShift { 0%{background-position:0 0} 100%{background-position:0 60px} }
+
+.back-link {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--gold);
+  background: rgba(13,15,20,0.92);
+  border: 1px solid rgba(245,200,66,0.3);
+  backdrop-filter: blur(4px);
+  position: fixed; top: 8px; left: 12px; z-index: 999;
+  border-radius: 4px; padding: 4px 10px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.back-link:hover { background: var(--gold-glow); }
+
+/* HERO */
+.hero {
+  position: relative; z-index: 1;
+  background: linear-gradient(160deg, #0d1220 0%, #0d0f14 60%, #12101a 100%);
+  border-bottom: 2px solid var(--gold);
+  padding: 64px 32px 40px;
+}
+.hero-inner { max-width: 1100px; margin: 0 auto; }
+.badge-chip {
+  display: inline-block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  background: var(--gold); color: #0d0f14;
+  padding: 3px 12px; border-radius: 3px;
+  font-weight: 600; margin-bottom: 18px;
+}
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(28px,4vw,52px);
+  font-weight: 800;
+  color: var(--gold);
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+.hero-alt {
+  font-family: 'Syne', sans-serif;
+  font-style: italic;
+  color: var(--text-muted);
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+.meta-row {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px;
+}
+.meta-pill {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; color: var(--text-dim);
+  background: var(--bg4);
+  border: 1px solid var(--border-dim);
+  padding: 4px 10px; border-radius: 4px;
+}
+.meta-pill.gold { color: var(--gold); border-color: var(--border); }
+
+/* STICKY NAV */
+.sticky-nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(13,15,20,0.97); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-dim);
+}
+.toc-scroll {
+  max-width: 1200px; margin: 0 auto; padding: 10px 24px;
+  display: flex; flex-wrap: wrap; gap: 6px; overflow-x: auto;
+}
+.toc-link {
+  font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+  color: var(--text-muted); text-decoration: none; white-space: nowrap;
+  padding: 3px 8px; border-radius: 3px; border: 1px solid transparent;
+  transition: all 0.15s;
+}
+.toc-link:hover { color: var(--gold); border-color: rgba(245,200,66,0.3); }
+
+/* MAIN CONTENT */
+.content { max-width: 1100px; margin: 0 auto; padding: 32px 24px 80px; position: relative; z-index: 1; }
+
+/* QUICK FACTS */
+.quick-facts {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 24px 28px;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;
+  margin: 32px 0;
+}
+.fact-item {}
+.fact-lbl {
+  font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+  letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px;
+}
+.fact-val { font-family: 'Syne', sans-serif; font-size: 14px; color: var(--text); }
+.fact-val.gold { color: var(--gold); font-weight: 600; }
+
+/* SECTION TITLES */
+.section-title {
+  font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase; color: var(--gold);
+  display: flex; align-items: center; gap: 12px; margin: 48px 0 20px;
+}
+.section-title::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(to right, var(--border), transparent);
+}
+
+/* BODY TEXT */
+.prose { font-family: 'Syne', sans-serif; font-size: 15px; line-height: 1.8; color: var(--text); }
+.prose p { margin-bottom: 14px; }
+.prose .yr { font-family: 'IBM Plex Mono', monospace; color: var(--gold); font-size: 13px; font-weight: 600; }
+
+/* DATA TABLES */
+.data-table {
+  width: 100%; border-collapse: collapse; font-size: 13px; margin: 12px 0;
+}
+.data-table th {
+  background: var(--bg4); font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--gold-dim); padding: 10px 12px; text-align: left;
+  border-bottom: 2px solid var(--border);
+}
+.data-table td {
+  padding: 9px 12px; border-bottom: 1px solid var(--border-dim); vertical-align: top;
+  font-family: 'Syne', sans-serif; color: var(--text);
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td { background: rgba(245,200,66,0.04); }
+.data-table td:first-child {
+  font-weight: 500; color: var(--gold);
+  font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+}
+
+/* QUOTES */
+.quote-block {
+  border-left: 3px solid var(--gold); padding: 14px 20px;
+  background: var(--gold-glow); border-radius: 0 var(--radius) var(--radius) 0;
+  margin: 16px 0;
+  font-family: 'Syne', sans-serif; font-style: italic; font-size: 15px;
+  color: var(--text); line-height: 1.8;
+}
+.quote-block cite {
+  display: block; margin-top: 8px;
+  font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+  color: var(--gold-dim); font-style: normal;
+}
+
+/* TIMELINE */
+.timeline { list-style: none; padding: 0; }
+.timeline li {
+  display: flex; gap: 14px; padding: 8px 0;
+  border-bottom: 1px solid var(--border-dim); font-size: 13.5px;
+}
+.tl-year {
+  font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600;
+  color: var(--gold); min-width: 44px; padding-top: 2px;
+}
+.tl-event { font-family: 'Syne', sans-serif; flex: 1; color: var(--text); }
+
+/* CALLOUTS */
+.callout {
+  display: flex; gap: 14px; padding: 14px 18px;
+  border-radius: var(--radius); border-left: 3px solid; margin: 16px 0;
+}
+.callout-icon {
+  padding: 3px 8px; border-radius: 4px;
+  font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase; flex-shrink: 0; height: fit-content;
+}
+.callout.critical { background: var(--red-bg); border-color: var(--red); }
+.callout.critical .callout-icon { background: var(--red); color: #fff; }
+.callout.trap { background: var(--gold-glow); border-color: var(--gold); }
+.callout.trap .callout-icon { background: var(--gold); color: #0d0f14; }
+.callout.tip { background: var(--green-bg); border-color: var(--green); }
+.callout.tip .callout-icon { background: var(--green); color: #0d0f14; }
+.callout.pyq { background: var(--blue-bg); border-color: var(--blue); }
+.callout.pyq .callout-icon { background: var(--blue); color: #fff; }
+.callout.gem { background: var(--purple-bg); border-color: var(--purple); }
+.callout.gem .callout-icon { background: var(--purple); color: #fff; }
+.callout-text { font-family: 'Syne', sans-serif; font-size: 14px; flex: 1; line-height: 1.7; color: var(--text); }
+
+/* CONNECTION CHIPS */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.chip {
+  font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+  border: 1px solid var(--border); border-radius: 4px;
+  padding: 4px 10px; color: var(--text-dim); background: var(--bg3);
+}
+.chip.gold { color: var(--gold); border-color: var(--gold-dim); }
+
+/* FOOTER */
+footer {
+  background: var(--bg2); border-top: 1px solid var(--border-dim);
+  padding: 28px 32px; text-align: center;
+  font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+  color: var(--text-muted); letter-spacing: 1px; margin-top: 80px;
+  position: relative; z-index: 1;
+}
+footer span { color: var(--gold); }
+
+/* Responsive */
+@media(max-width:600px){
+  .hero { padding:56px 16px 28px; }
+  .content { padding:20px 14px 60px; }
+  .quick-facts { padding:16px; }
+}
+</style>
+  <link rel="stylesheet" href="../orbitron-numbers.css">
+</head>
+<body>
+
+<a href="../index.html" class="back-link">← Hub</a>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="badge-chip">TNPSC Group 1 · Group 2 · Group 4 · Leaders</div>
+    <h1>Jawaharlal Nehru</h1>
+    <p class="hero-alt">Also known as Pandit Nehru · "Chacha Nehru" · The Raja of Roses · The Jewel of India</p>
+    <div class="meta-row">
+      <span class="meta-pill gold">Born: 1889</span>
+      <span class="meta-pill gold">Died: 1964</span>
+      <span class="meta-pill">Indian National Congress</span>
+      <span class="meta-pill">First Prime Minister of India</span>
+      <span class="meta-pill">Non-Aligned Movement</span>
+      <span class="meta-pill gold">TNPSC High Relevance</span>
+    </div>
+  </div>
+</section>
+
+<!-- STICKY NAV -->
+<nav class="sticky-nav">
+  <div class="toc-scroll">
+    <a href="#quick-facts" class="toc-link">Quick Facts</a>
+    <a href="#early-life" class="toc-link">Early Life</a>
+    <a href="#education" class="toc-link">Education</a>
+    <a href="#career" class="toc-link">Political Career</a>
+    <a href="#works" class="toc-link">Key Works</a>
+    <a href="#newspapers" class="toc-link">Newspapers</a>
+    <a href="#organisations" class="toc-link">Organisations</a>
+    <a href="#family" class="toc-link">Family</a>
+    <a href="#timeline" class="toc-link">Timeline</a>
+    <a href="#quotes" class="toc-link">Quotes</a>
+    <a href="#connections" class="toc-link">Connections</a>
+    <a href="#pyq" class="toc-link">PYQ Focus</a>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<div class="content">
+
+  <!-- QUICK FACTS -->
+  <div id="quick-facts" class="quick-facts">
+    <div class="fact-item">
+      <div class="fact-lbl">Full Name</div>
+      <div class="fact-val gold">Jawaharlal Nehru</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Born</div>
+      <div class="fact-val gold">14 November 1889</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Died</div>
+      <div class="fact-val gold">27 May 1964</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Cause of Death</div>
+      <div class="fact-val">Heart Attack (Maraadaippu)</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Age at Death</div>
+      <div class="fact-val gold">74 years</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Birthplace</div>
+      <div class="fact-val">Anand Bhavan, Allahabad, Uttar Pradesh</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Father</div>
+      <div class="fact-val gold">Motilal Nehru</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Mother</div>
+      <div class="fact-val">Swarup Rani (Swaruprani)</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Spouse</div>
+      <div class="fact-val">Kamala Kaul (married 1916)</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Daughter</div>
+      <div class="fact-val gold">Indira Priyadarshini (born 19 Nov 1917)</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Sisters</div>
+      <div class="fact-val">Vijayalakshmi Pandit · Krishna Nehru Hutheesingh</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Ancestral Home</div>
+      <div class="fact-val gold">Anand Bhavan, Allahabad</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Education</div>
+      <div class="fact-val">Trinity College, Cambridge · Barrister (1912)</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Known For</div>
+      <div class="fact-val gold">First & Longest-Serving PM of India</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Years in Jail</div>
+      <div class="fact-val gold">~9 Years</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Children's Day (India)</div>
+      <div class="fact-val gold">14 November (his birthday)</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Appointed By</div>
+      <div class="fact-val">Lord Mountbatten (Governor-General)</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-lbl">Titles / Epithets</div>
+      <div class="fact-val">Raja of Roses · Jewel of India · Architect of Modern India</div>
+    </div>
+  </div>
+
+  <!-- EARLY LIFE -->
+  <h2 class="section-title" id="early-life">Early Life &amp; Background</h2>
+
+  <div class="prose">
+    <p>
+      Jawaharlal Nehru was born on <span class="yr">14 November 1889</span> in <strong>Anand Bhavan</strong>, <strong>Allahabad</strong>, in present-day <strong>Uttar Pradesh</strong>. Anand Bhavan was a grand family residence — and more than just a home, it is an important historical landmark. The family consisted of five members: father <strong>Motilal Nehru</strong>, mother <strong>Swarup Rani (Swaruprani)</strong>, Jawaharlal himself (the eldest child), and his two sisters <strong>Vijayalakshmi Pandit</strong> and <strong>Krishna Nehru Hutheesingh</strong>.
+    </p>
+    <p>
+      His father <strong>Motilal Nehru</strong> was a renowned lawyer and a major influence in the Indian National Congress. Motilal Nehru was the founder of the <strong>Swaraj Party (Swarajya Katchi)</strong> and remained influential in Congress until <span class="yr">1929</span>. His affluent background meant that young Jawaharlal was sent abroad for studies at just <span class="yr">15 years of age</span>.
+    </p>
+    <p>
+      Nehru is remembered with several epithets: <em>Raja of Roses</em> (ரோஜாவின் ராஜா) — he always kept a rose in his lapel or pocket, a habit he reportedly drew inspiration from <strong>George Joseph</strong>, an advocate from <strong>Madurai</strong>, who was a close family friend of the Motilal Nehru family. He is also called the <em>Architect of Modern India</em> (நவீன இந்தியாவினுடைய சிற்பி) and the <em>Jewel / Treasure of India</em>.
+    </p>
+  </div>
+
+  <div class="callout gem">
+    <span class="callout-icon">Gem</span>
+    <div class="callout-text">Nehru's habit of wearing a rose in his pocket was inspired by <strong>George Joseph</strong>, an advocate from <strong>Madurai</strong> (Tamil Nadu), who was a close family friend and major influence on the Motilal Nehru family.</div>
+  </div>
+
+  <div class="callout trap">
+    <span class="callout-icon">Trap</span>
+    <div class="callout-text">Most textbooks mention only <strong>one</strong> sister — Vijayalakshmi Pandit. But Nehru had <strong>TWO</strong> sisters: Vijayalakshmi Pandit AND <strong>Krishna Nehru Hutheesingh</strong>. Krishna married a Jain named Hutheesingh (a prominent freedom fighter in the Jain community), hence the surname Hutheesingh was added.</div>
+  </div>
+
+  <!-- EDUCATION -->
+  <h2 class="section-title" id="education">Education</h2>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Institution / Degree</th>
+        <th>Year</th>
+        <th>Subject</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Trinity College, Cambridge (Cambridge University)</td>
+        <td>Sent at age 15 (~1905)</td>
+        <td>Natural Sciences (இயற்கை அறிவியல்)</td>
+        <td>One of the finest colleges in one of the world's best universities; sent to Britain by his father Motilal</td>
+      </tr>
+      <tr>
+        <td>Cambridge University — Degree</td>
+        <td>1910</td>
+        <td>Natural Sciences Degree</td>
+        <td>Graduated from Cambridge</td>
+      </tr>
+      <tr>
+        <td>Barrister (Bar-at-Law)</td>
+        <td>1912</td>
+        <td>Law (England/France system)</td>
+        <td>Barrister is the highest legal qualification in the British/French legal tradition; both father and son were lawyers</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout tip">
+    <span class="callout-icon">Tip</span>
+    <div class="callout-text">Nehru went to <strong>Britain</strong> (England) — NOT America. He studied at <strong>Trinity College, Cambridge</strong>. Don't confuse with the USA. His father Motilal was also a lawyer, which is why the family could afford to send him abroad at just 15.</div>
+  </div>
+
+  <div class="prose">
+    <p>
+      While in Europe for his studies, Nehru was deeply influenced by the <strong>Italian nationalist leader Garibaldi</strong> (Garibaldi — National Leader of Italy). He read about Garibaldi's speeches, which were full of passionate nationalist fervour. He also encountered the spirit of <strong>Bismarck</strong> — notably, Bismarck is remembered as the German unifier, and Sardar Vallabhbhai Patel is called the "Bismarck of India." Mussolini and Hitler were also European contemporaries Nehru studied. This European exposure planted in the young Nehru the dream of freeing India from British rule.
+    </p>
+  </div>
+
+  <!-- POLITICAL CAREER -->
+  <h2 class="section-title" id="career">Political Career &amp; Contributions</h2>
+
+  <div class="prose">
+    <p>
+      Nehru's active political life formally began in <span class="yr">1916</span> when he attended the <strong>Lucknow Conference (Lucknow Session)</strong>. At this historic session, the Muslim League and Congress came together, and moderates and extremists also gathered under one roof. It was here that Nehru <strong>first met Mahatma Gandhi</strong> — a meeting that shaped Indian history. That same year, <span class="yr">1916</span>, he married <strong>Kamala Kaul</strong>.
+    </p>
+    <p>
+      In <span class="yr">1919</span>, following the <strong>Jallianwala Bagh massacre</strong>, Nehru established a newspaper — <em>The Independent</em>. That same year he was elected <strong>Vice-President of the Kisan Sabha</strong> (Kisan = Farmer/Agriculturalist in Hindi/Sanskrit; also used as "Kisaan Jam" in Tamil). Nehru participated in the <strong>Non-Cooperation Movement</strong> (<span class="yr">1920</span>), gaining his first experience of imprisonment, and spent approximately <span class="yr">9 years</span> in jail during his lifetime.
+    </p>
+    <p>
+      By <span class="yr">1923</span>, he was elected <strong>General Secretary of the Indian National Congress</strong>. One year later in <span class="yr">1924</span>, Gandhi assumed Congress presidency at the <strong>Belgaum Session</strong>. In <span class="yr">1925</span>, <strong>Sarojini Naidu</strong> became Congress president — remember this order: 1923 (Nehru — Secretary), 1924 (Gandhi — Belgaum), 1925 (Sarojini Naidu).
+    </p>
+    <p>
+      In <span class="yr">1929</span>, at the historic <strong>Lahore Conference</strong>, Nehru and his father Motilal together spearheaded the <strong>Purna Swaraj (Complete Independence)</strong> resolution. Jawaharlal was elected Congress President and the famous Purna Swaraj declaration was made. By this time Nehru had effectively become the head of the party, with his father Motilal also prominently involved.
+    </p>
+    <p>
+      In <span class="yr">1937</span>, Nehru presided over the <strong>Faizpur Congress Session</strong> — notable as the <strong>first Congress session held in a village</strong>. This is a frequently tested fact. Faizpur (also spelled Baispur/Paispur in the transcript) is significant precisely because it broke the urban tradition of Congress sessions.
+    </p>
+    <p>
+      In <span class="yr">1940</span>, Gandhi launched the <strong>Individual Civil Disobedience movement</strong>. <strong>Acharya Vinoba Bhave</strong> was the first person selected by Gandhi to offer individual satyagraha; Nehru (along with Pattabhi) was the <strong>second to be arrested</strong> in this movement. Pattabhi and Nehru, though holding different ideologies, were close friends who sometimes quarrelled — but were ultimately political allies.
+    </p>
+    <p>
+      After independence on <span class="yr">15 August 1947</span>, Nehru became <strong>India's first Prime Minister</strong>, appointed and sworn in by <strong>Lord Mountbatten</strong>, who was then the Governor-General. Nehru served as Prime Minister until his death on <span class="yr">27 May 1964</span> — making him the <strong>longest-serving Prime Minister of India to date</strong>. He served through approximately three election periods (1952, 1957, and onwards). During his tenure he established the <strong>IITs</strong> (including IIT Madras, IIT Delhi, IIT Bombay, IIT Calcutta), launched the <strong>Atomic Energy Programme</strong>, and positioned India as a modern, science-driven state. He also articulated the <strong>Non-Aligned Movement</strong> policy — refusing to align with either the American (USA) or Soviet (USSR) bloc during the Cold War.
+    </p>
+  </div>
+
+  <div class="callout critical">
+    <span class="callout-icon">Critical</span>
+    <div class="callout-text">Nehru is India's <strong>longest-serving Prime Minister</strong> to date. He served from <strong>1947 to 1964</strong> — approximately three full terms — until death. No other PM has served this long.</div>
+  </div>
+
+  <div class="callout pyq">
+    <span class="callout-icon">PYQ</span>
+    <div class="callout-text"><strong>Faizpur Session (1937)</strong> — First Congress session held in a VILLAGE. This has been asked multiple times in Group 1, Group 2, and Group 4 exams. Do not forget the name "Faizpur."</div>
+  </div>
+
+  <div class="callout pyq">
+    <span class="callout-icon">PYQ</span>
+    <div class="callout-text"><strong>Lucknow Session (1916)</strong> — Nehru first met Gandhi here. Also the year he married Kamala Kaul. Previously asked question.</div>
+  </div>
+
+  <div class="callout pyq">
+    <span class="callout-icon">PYQ</span>
+    <div class="callout-text"><strong>Individual Civil Disobedience (1940)</strong>: 1st = Acharya Vinoba Bhave; 2nd arrested = Nehru (along with Pattabhi). Asked in exams.</div>
+  </div>
+
+  <!-- KEY WORKS -->
+  <h2 class="section-title" id="works">Key Works &amp; Books</h2>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Year</th>
+        <th>Alternate Title</th>
+        <th>Significance</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Glimpses of World History</td>
+        <td>1934</td>
+        <td>உலக வரலாற்றின் காட்சிகள் (Tamil)</td>
+        <td>Letters written from jail to daughter Indira Priyadarshini; compiled as a book. A collection of letters tracing world history — written during his ~9 years in prison.</td>
+      </tr>
+      <tr>
+        <td>An Autobiography</td>
+        <td>1936</td>
+        <td>Toward Freedom (சுதந்திரத்தை நோக்கி)</td>
+        <td>His own autobiography written in 1936 — unusually early in life. Also known as "Toward Freedom." Written while in jail. Featured in old Tamil syllabus under "letters" topic.</td>
+      </tr>
+      <tr>
+        <td>The Discovery of India</td>
+        <td>1946</td>
+        <td>இந்தியாவின் கண்டுபிடிப்பு (Tamil)</td>
+        <td>Written to introduce India to the world; describes India's "Unity in Diversity." Found in 6th standard school textbooks. Also found in Tamil translation.</td>
+      </tr>
+      <tr>
+        <td>The Unity of India</td>
+        <td>—</td>
+        <td>—</td>
+        <td>Extra/additional book to remember. Mentioned specifically by the lecturer as a lesser-known but important title to note.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout critical">
+    <span class="callout-icon">Critical</span>
+    <div class="callout-text">Three books are absolutely must-know: (1) <strong>The Discovery of India</strong> (1946), (2) <strong>Glimpses of World History</strong> (1934), (3) <strong>An Autobiography / Toward Freedom</strong> (1936). Memorise years too — exams test them.</div>
+  </div>
+
+  <div class="callout tip">
+    <span class="callout-icon">Tip</span>
+    <div class="callout-text">Mnemonic for books order: Glimpses (1934) → Autobiography (1936) → Discovery (1946). Each is roughly 10 years apart: 34 → 36 → 46. "GAD" — Glimpses, Autobiography, Discovery.</div>
+  </div>
+
+  <div class="callout gem">
+    <span class="callout-icon">Gem</span>
+    <div class="callout-text">Nehru wrote his autobiography in <strong>1936</strong> — very early in life, when he was only 46-47 years old and had decades of life ahead. This is unusual. Note: most people write autobiographies near the end of their life; Nehru's was written in the middle of his political career.</div>
+  </div>
+
+  <div class="callout trap">
+    <span class="callout-icon">Trap</span>
+    <div class="callout-text"><strong>An Autobiography</strong> is ALSO called <strong>"Toward Freedom"</strong> (சுதந்திரத்தை நோக்கி). These are the SAME book with two names. Don't count them as two separate books.</div>
+  </div>
+
+  <!-- NEWSPAPERS -->
+  <h2 class="section-title" id="newspapers">Newspapers Founded</h2>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Newspaper</th>
+        <th>Year Founded</th>
+        <th>Context</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>The Independent</td>
+        <td>1919</td>
+        <td>Founded the same year as Jallianwala Bagh massacre; name foreshadowed the Purna Swaraj demand of 1929 by 10 years</td>
+      </tr>
+      <tr>
+        <td>National Herald</td>
+        <td>—</td>
+        <td>Second newspaper associated with Nehru; both names to be remembered together</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout tip">
+    <span class="callout-icon">Tip</span>
+    <div class="callout-text">Only TWO newspapers: <strong>The Independent</strong> (1919) and <strong>National Herald</strong>. Note: "The Independent" in 1919 — the idea of independence came 10 years before the actual Purna Swaraj resolution (1929). Neat connection!</div>
+  </div>
+
+  <!-- ORGANISATIONS -->
+  <h2 class="section-title" id="organisations">Organisations &amp; Associations</h2>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Organisation</th>
+        <th>Year</th>
+        <th>Nehru's Role</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Indian National Congress</td>
+        <td>Member; active from ~1916</td>
+        <td>General Secretary (1923), President (1929, Lahore), PM representing Congress</td>
+        <td>Devoted his entire life to Congress; Congress was founded in 1885 — Nehru born 4 years later in 1889</td>
+      </tr>
+      <tr>
+        <td>Kisan Sabha (Farmers' Union)</td>
+        <td>1919</td>
+        <td>Vice-President</td>
+        <td>Kisan = Farmer (Hindi/Sanskrit). Elected Vice-President 1919</td>
+      </tr>
+      <tr>
+        <td>Non-Aligned Movement (NAM)</td>
+        <td>Post-independence</td>
+        <td>Architect / Co-founder</td>
+        <td>Policy of not aligning with USA or USSR bloc during Cold War. India's diplomatic cornerstone.</td>
+      </tr>
+      <tr>
+        <td>IITs (Indian Institutes of Technology)</td>
+        <td>Post-1947</td>
+        <td>Visionary Founder</td>
+        <td>IIT Madras, IIT Delhi, IIT Bombay, IIT Calcutta, IIT Kozhikode etc. — all seeded by Nehru</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- FAMILY SECTION -->
+  <h2 class="section-title" id="family">Family &amp; Connections</h2>
+
+  <div class="prose">
+    <p>
+      The Nehru family resided in <strong>Anand Bhavan</strong>, <strong>Allahabad</strong>. The five-member household comprised: <strong>Motilal Nehru</strong> (father, lawyer, Swaraj Party founder), <strong>Swarup Rani</strong> (mother), <strong>Jawaharlal Nehru</strong> (eldest, the future PM), <strong>Vijayalakshmi Pandit</strong> (sister), and <strong>Krishna Nehru Hutheesingh</strong> (sister).
+    </p>
+    <p>
+      <strong>Vijayalakshmi Pandit</strong> — India's first woman diplomat; she had an excellent alliance with the <strong>USA</strong>, representing India in America. She was also the first woman to participate in foreign affairs at an international level.
+    </p>
+    <p>
+      <strong>Krishna Nehru Hutheesingh</strong> — married a Jain named <strong>Hutheesingh</strong>, a prominent freedom fighter in the Jain community. She met with <strong>Ben-Gurion</strong>, the first Prime Minister of <strong>Israel</strong>, representing India — making her one of the earliest Indian representatives to engage with Israel. (The lecturer notes this was likely Ben-Gurion, Israel's first PM.)
+    </p>
+    <p>
+      <strong>Indira Priyadarshini Gandhi</strong> — Nehru's daughter, born <span class="yr">19 November 1917</span>. Note: Indira Gandhi studied at <strong>Viswa Bharati University, Shantiniketan</strong> — the university founded by <strong>Tagore</strong>. Later she married Feroze Gandhi and became Prime Minister. She was known for a strong alliance with <strong>USSR (Russia)</strong>; during the <strong>Bangladesh Liberation War</strong>, when Britain sent warships against India, the USSR dispatched its own fleet in India's defence. Nehru's Non-Aligned policy thus had practical benefits in both directions.
+    </p>
+  </div>
+
+  <div class="callout gem">
+    <span class="callout-icon">Gem</span>
+    <div class="callout-text"><strong>Indira Gandhi's full birth name</strong> was <strong>Indira Priyadarshini</strong>. She became "Indira Gandhi" only after marrying Feroze Gandhi. Her birth year: <strong>1917</strong>, born on <strong>19 November</strong> — exactly 5 days after her father's birthday (14 November).</div>
+  </div>
+
+  <div class="callout gem">
+    <span class="callout-icon">Gem</span>
+    <div class="callout-text">The Non-Aligned Movement (NAM) — while Nehru championed not aligning with either bloc, his own family members effectively maintained both alliances: Vijayalakshmi Pandit (USA side) and Indira Gandhi (USSR side), giving India a strategic advantage.</div>
+  </div>
+
+  <!-- TIMELINE -->
+  <h2 class="section-title" id="timeline">Complete Chronological Timeline</h2>
+
+  <ul class="timeline">
+    <li><span class="tl-year">1885</span><span class="tl-event">Indian National Congress founded — Nehru would be born 4 years later</span></li>
+    <li><span class="tl-year">1889</span><span class="tl-event">Jawaharlal Nehru born on <strong>14 November</strong> at Anand Bhavan, Allahabad, UP. Father: Motilal Nehru; Mother: Swarup Rani</span></li>
+    <li><span class="tl-year">~1904</span><span class="tl-event">Sent to Britain at age 15 to study at Trinity College, Cambridge (one of the world's finest universities)</span></li>
+    <li><span class="tl-year">1910</span><span class="tl-event">Receives degree in Natural Sciences from Cambridge University</span></li>
+    <li><span class="tl-year">1912</span><span class="tl-event">Obtains Barrister (Bar-at-Law) qualification — the highest legal degree in the British/French system. Returns to India and begins law practice</span></li>
+    <li><span class="tl-year">1916</span><span class="tl-event">Attends <strong>Lucknow Session / Congress Conference</strong> — meets Mahatma Gandhi for the FIRST time. Muslim League and Congress unite at this session. Nehru marries <strong>Kamala Kaul</strong> same year</span></li>
+    <li><span class="tl-year">1917</span><span class="tl-event">Daughter <strong>Indira Priyadarshini</strong> born on <strong>19 November</strong></span></li>
+    <li><span class="tl-year">1919</span><span class="tl-event">Jallianwala Bagh massacre occurs. Nehru founds newspaper <em>The Independent</em>. Elected Vice-President of <strong>Kisan Sabha</strong></span></li>
+    <li><span class="tl-year">1920</span><span class="tl-event">Participates in <strong>Non-Cooperation Movement</strong>; gains first experience of imprisonment. First among prominent leaders to go to jail in this movement</span></li>
+    <li><span class="tl-year">1923</span><span class="tl-event">Elected <strong>General Secretary (Pothuch Chellaalar) of the Indian National Congress</strong></span></li>
+    <li><span class="tl-year">1924</span><span class="tl-event"><strong>Belgaum Session</strong> — Gandhi takes over Congress presidency</span></li>
+    <li><span class="tl-year">1925</span><span class="tl-event"><strong>Sarojini Naidu</strong> becomes Congress president</span></li>
+    <li><span class="tl-year">1929</span><span class="tl-event"><strong>Lahore Session</strong> — Motilal Nehru and Jawaharlal jointly lead the <strong>Purna Swaraj (Complete Independence)</strong> resolution. Jawaharlal becomes Congress President</span></li>
+    <li><span class="tl-year">1934</span><span class="tl-event">Publishes <em>Glimpses of World History</em> — letters written to daughter Indira from jail, compiled as a book</span></li>
+    <li><span class="tl-year">1935</span><span class="tl-event"><strong>Government of India Act 1935</strong> passed; Nehru calls it "a charter of slavery" (அடிமை பட்டயம்)</span></li>
+    <li><span class="tl-year">1936</span><span class="tl-event">Publishes <em>An Autobiography</em> (also titled <em>Toward Freedom</em> — சுதந்திரத்தை நோக்கி)</span></li>
+    <li><span class="tl-year">1937</span><span class="tl-event">Presides over <strong>Faizpur Congress Session</strong> — first Congress session held in a <strong>village</strong></span></li>
+    <li><span class="tl-year">1940</span><span class="tl-event">Gandhi launches <strong>Individual Civil Disobedience</strong>; <strong>Acharya Vinoba Bhave</strong> is 1st arrested; Nehru (with Pattabhi) is the <strong>2nd to be arrested</strong></span></li>
+    <li><span class="tl-year">1946</span><span class="tl-event">Publishes <em>The Discovery of India</em></span></li>
+    <li><span class="tl-year">1947</span><span class="tl-event"><strong>15 August 1947</strong> — India gains independence. Nehru sworn in as <strong>First Prime Minister of India</strong> by <strong>Lord Mountbatten</strong> (Governor-General). Delivers famous "Tryst with Destiny" speech</span></li>
+    <li><span class="tl-year">1948</span><span class="tl-event">Mahatma Gandhi assassinated — Nehru delivers tribute: "The light has gone out of our lives..."</span></li>
+    <li><span class="tl-year">1952</span><span class="tl-event">First General Elections — Nehru wins and continues as Prime Minister</span></li>
+    <li><span class="tl-year">1957</span><span class="tl-event">Second General Elections — Nehru re-elected Prime Minister</span></li>
+    <li><span class="tl-year">1964</span><span class="tl-event">Nehru dies on <strong>27 May 1964</strong> of a heart attack (Maraadaippu) at age <strong>74</strong>. Serving as PM until his death. Contemporaries also dying: Muthuramalingam Thevar (1963–64), Kamarajar's tenure ends 1963 (Kamaraj Plan)</span></li>
+  </ul>
+
+  <!-- QUOTES -->
+  <h2 class="section-title" id="quotes">Famous Quotes &amp; Statements</h2>
+
+  <div class="quote-block">
+    உலகம் முறங்கும் போது இந்தியா விழித்து கொண்டது.
+    <br><em>(At the stroke of midnight when the world sleeps, India awakes to life and freedom.)</em>
+    <cite>— Nehru, on Indian Independence, 15 August 1947 (Tryst with Destiny speech)</cite>
+  </div>
+
+  <div class="quote-block">
+    விதியோடு செய்து கொண்ட ஒப்பந்தம்.
+    <br><em>(A Tryst with Destiny — spoken regarding both Independence and the India-Pakistan Partition)</em>
+    <cite>— Nehru, 1947</cite>
+  </div>
+
+  <div class="quote-block">
+    நம் வாழ்வில் ஒளி மறைந்து, எங்கும் இருள் சூழ்ந்து விட்டது.
+    <br><em>(The light has gone out of our lives and there is darkness everywhere.)</em>
+    <cite>— Nehru, on the assassination of Mahatma Gandhi</cite>
+  </div>
+
+  <div class="quote-block">
+    காலம் பொன் போன்றது.
+    <br><em>(Time is Gold.)</em>
+    <cite>— Nehru (this phrase is attributed to him)</cite>
+  </div>
+
+  <div class="quote-block">
+    [The Government of India Act 1935 is] ஒரு அடிமை பட்டயம்.
+    <br><em>(A charter of slavery.)</em>
+    <cite>— Nehru, on the Government of India Act, 1935</cite>
+  </div>
+
+  <div class="quote-block">
+    இந்தியா — வேற்றுமையில் ஒற்றுமை கொண்ட நாடு.
+    <br><em>(India — a land of Unity in Diversity.)</em>
+    <cite>— Nehru, in The Discovery of India (1946)</cite>
+  </div>
+
+  <!-- CONNECTIONS -->
+  <h2 class="section-title" id="connections">Connections, Influences &amp; Comparisons</h2>
+
+  <div class="prose">
+    <p><strong>People who influenced Nehru:</strong></p>
+  </div>
+  <div class="chips">
+    <span class="chip gold">Garibaldi (Italian Nationalist)</span>
+    <span class="chip gold">Mahatma Gandhi (met 1916, Lucknow)</span>
+    <span class="chip gold">George Joseph (Advocate, Madurai — rose habit)</span>
+    <span class="chip gold">Motilal Nehru (father)</span>
+    <span class="chip">Bismarck (European parallel)</span>
+    <span class="chip">Mussolini (studied)</span>
+  </div>
+
+  <div class="prose" style="margin-top:16px"><p><strong>Comparisons made by the lecturer:</strong></p></div>
+  <div class="chips">
+    <span class="chip">Bismarck of India = Sardar Vallabhbhai Patel (NOT Nehru)</span>
+    <span class="chip gold">Father of Pakistan = Muhammad Ali Jinnah</span>
+    <span class="chip">Jinnah had cancer → died early → Pakistan unstable</span>
+    <span class="chip gold">India stable because of Nehru's long tenure (3 terms)</span>
+  </div>
+
+  <div class="prose" style="margin-top:16px"><p><strong>Key contemporaries mentioned:</strong></p></div>
+  <div class="chips">
+    <span class="chip">Acharya Vinoba Bhave</span>
+    <span class="chip">Pattabhi (Sitaramayya)</span>
+    <span class="chip">Sarojini Naidu</span>
+    <span class="chip">Kamarajar (died ~1963–64 same era)</span>
+    <span class="chip">Muthuramalingam Thevar (died 1963–64)</span>
+    <span class="chip gold">Lord Mountbatten (swore Nehru in as PM)</span>
+    <span class="chip">Ben-Gurion (Israel's first PM — met Krishna Nehru)</span>
+    <span class="chip">Yuri Gagarin (USSR space — Cold War context)</span>
+    <span class="chip">Neil Armstrong & Edwin Aldrin (USA Moon — Cold War)</span>
+    <span class="chip gold">Tagore (founded Viswa Bharati / Shantiniketan where Indira studied)</span>
+  </div>
+
+  <div class="callout gem">
+    <span class="callout-icon">Gem</span>
+    <div class="callout-text">Indira Gandhi studied at <strong>Viswa Bharati University, Shantiniketan</strong> — founded by <strong>Rabindranath Tagore</strong>. The connection: Nehru family ↔ Tagore's institution. Shantiniketan = Tagore's home AND university (Viswa Bharati).</div>
+  </div>
+
+  <!-- PYQ FOCUS -->
+  <h2 class="section-title" id="pyq">TNPSC PYQ Focus — Must-Know Points</h2>
+
+  <div class="callout pyq">
+    <span class="callout-icon">PYQ</span>
+    <div class="callout-text"><strong>India's First AND Longest-Serving Prime Minister</strong> — Jawaharlal Nehru. Served 1947–1964 (~17 years). Still the longest tenure. This appears repeatedly in Group 1, Group 2, Group 4 and UPSC.</div>
+  </div>
+
+  <div class="callout pyq">
+    <span class="callout-icon">PYQ</span>
+    <div class="callout-text"><strong>Birth date: 14 November 1889</strong>. India celebrates <strong>Children's Day (Kuzhanthaigal Dhinam)</strong> on <strong>14 November</strong> because it is Nehru's birthday. Nehru is called "Chacha Nehru" by children.</div>
+  </div>
+
+  <div class="callout pyq">
+    <span class="callout-icon">PYQ</span>
+    <div class="callout-text"><strong>Lucknow Session 1916</strong> — Nehru met Gandhi here for the FIRST time. This is a direct previous year question.</div>
+  </div>
+
+  <div class="callout pyq">
+    <span class="callout-icon">PYQ</span>
+    <div class="callout-text"><strong>Faizpur Session 1937</strong> — First Congress session held in a VILLAGE, presided over by Nehru. Asked once or twice in exams — memorise the village name "Faizpur."</div>
+  </div>
+
+  <div class="callout pyq">
+    <span class="callout-icon">PYQ</span>
+    <div class="callout-text"><strong>General Secretary of INC: 1923.</strong> Nehru became General Secretary one year before Gandhi's Belgaum presidency (1924). Order: 1923 (Nehru Sec) → 1924 (Gandhi Belgaum) → 1925 (Sarojini Naidu).</div>
+  </div>
+
+  <div class="callout pyq">
+    <span class="callout-icon">PYQ</span>
+    <div class="callout-text"><strong>Purna Swaraj 1929, Lahore Session</strong> — Nehru and Motilal Nehru together. Nehru elected Congress President. Important distinction: was it Motilal or Jawaharlal at Lahore? Answer: BOTH were involved; Jawaharlal was President.</div>
+  </div>
+
+  <div class="callout pyq">
+    <span class="callout-icon">PYQ</span>
+    <div class="callout-text"><strong>Individual Civil Disobedience 1940</strong>: 1st = Acharya Vinoba Bhave; 2nd = Nehru (with Pattabhi). Frequently tested in sequence questions.</div>
+  </div>
+
+  <div class="callout pyq">
+    <span class="callout-icon">PYQ</span>
+    <div class="callout-text"><strong>Books</strong>: (1) <em>The Discovery of India</em> — 1946 — Unity in Diversity; (2) <em>Glimpses of World History</em> — 1934 — letters to Indira from jail; (3) <em>An Autobiography / Toward Freedom</em> — 1936. All three have been tested. Don't miss <em>The Unity of India</em> as a 4th title.</div>
+  </div>
+
+  <div class="callout pyq">
+    <span class="callout-icon">PYQ</span>
+    <div class="callout-text"><strong>Vijayalakshmi Pandit</strong> — Nehru's sister; first Indian woman to participate in foreign affairs/diplomacy internationally; had strong ties with USA.</div>
+  </div>
+
+  <div class="callout pyq">
+    <span class="callout-icon">PYQ</span>
+    <div class="callout-text"><strong>Government of India Act 1935</strong> — Nehru called it "a Charter of Slavery" (ஒரு அடிமை பட்டயம்). This quote is exam-relevant.</div>
+  </div>
+
+  <div class="callout pyq">
+    <span class="callout-icon">PYQ</span>
+    <div class="callout-text"><strong>Sworn in as PM by Lord Mountbatten</strong> (then Governor-General of India). Know that Mountbatten administered the oath of office.</div>
+  </div>
+
+  <div class="callout pyq">
+    <span class="callout-icon">PYQ</span>
+    <div class="callout-text"><strong>Nehru died on 27 May 1964</strong>, of a heart attack, aged 74. He was PM until his very last day. The same 1963–64 era saw deaths of Muthuramalingam Thevar, and Kamarajar's tenure as CM ending (1963).</div>
+  </div>
+
+  <div class="callout trap">
+    <span class="callout-icon">Trap</span>
+    <div class="callout-text">Nehru studied in <strong>ENGLAND (Britain)</strong>, not America. He went to <strong>Trinity College, Cambridge</strong>. Some students confuse this with the USA.</div>
+  </div>
+
+  <div class="callout trap">
+    <span class="callout-icon">Trap</span>
+    <div class="callout-text">Nehru had <strong>TWO sisters</strong>, not one. Textbooks show only Vijayalakshmi Pandit; the second sister <strong>Krishna Nehru Hutheesingh</strong> is often missed in answers.</div>
+  </div>
+
+  <div class="callout trap">
+    <span class="callout-icon">Trap</span>
+    <div class="callout-text">When a question mentions "Nehru" in context of Lahore 1929 / Purna Swaraj — it may refer to either <strong>Motilal</strong> or <strong>Jawaharlal</strong>. Read carefully. Motilal was also present but Jawaharlal was Congress President at Lahore 1929.</div>
+  </div>
+
+  <div class="callout tip">
+    <span class="callout-icon">Tip</span>
+    <div class="callout-text">Congress founded <strong>1885</strong>. Nehru born in <strong>1889</strong> (= 4 years after Congress). Easy to remember: he was literally born into the Congress era, and devoted his entire life to it.</div>
+  </div>
+
+  <div class="callout tip">
+    <span class="callout-icon">Tip</span>
+    <div class="callout-text">Nehru's death year <strong>1964</strong> clusters with other important events: Muthuramalingam Thevar's death (1963–64), Kamarajar's CM tenure end (1963, K-Plan), making this year a landmark in Tamil Nadu politics too.</div>
+  </div>
+
+</div><!-- end .content -->
+
+<footer>
+  Source: YouTube Lecture Transcript · <span>Arivoam TNPSC</span> · Jawaharlal Nehru Master Notes · Group 1 / Group 2 / Group 4
+</footer>
+
+</body>
+</html>
