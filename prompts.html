@@ -350,6 +350,67 @@ body::before {
 }
 @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.8)} }
 
+/* ─────────────────────────────
+   NOTEPAD SECTION
+───────────────────────────── */
+#notepadSection { display:none; position:relative; z-index:1; }
+
+.notepad-bar {
+  background:var(--surface2); border-bottom:1px solid var(--border2);
+  padding:8px 28px; display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+  position:sticky; top:49px; z-index:90;
+}
+.replace-bar { flex-direction:column; align-items:flex-start; gap:4px; padding-top:10px; padding-bottom:10px; }
+.replace-row { display:flex; align-items:center; gap:8px; }
+.bar-label {
+  font-family:'IBM Plex Mono',monospace; font-size:10px; font-weight:600;
+  text-transform:uppercase; letter-spacing:1.2px; color:var(--muted);
+  min-width:54px;
+}
+.bar-input {
+  background:var(--surface); border:1px solid var(--border2);
+  color:var(--text); font-family:'IBM Plex Mono',monospace; font-size:12px;
+  padding:5px 10px; border-radius:6px; outline:none;
+  transition:border-color 0.15s; width:220px;
+}
+.bar-input:focus { border-color:rgba(245,200,66,0.5); }
+.bar-count {
+  font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--muted);
+  min-width:56px;
+}
+.bar-btn {
+  font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600;
+  padding:5px 10px; border-radius:6px; cursor:pointer;
+  border:1px solid var(--border2); background:var(--surface);
+  color:var(--text); transition:all 0.15s;
+}
+.bar-btn:hover { border-color:var(--gold); color:var(--gold); }
+.bar-btn.bar-close { color:var(--muted); }
+.bar-btn.bar-close:hover { border-color:var(--red); color:var(--red); }
+.bar-btn.bar-replace { color:var(--blue); border-color:rgba(91,156,246,0.4); background:rgba(91,156,246,0.06); }
+.bar-btn.bar-replace:hover { background:rgba(91,156,246,0.14); }
+.bar-divider { width:1px; height:16px; background:var(--border2); margin:0 2px; }
+.bar-no-match .bar-input { border-color:rgba(232,85,85,0.5); }
+.bar-no-match .bar-count { color:var(--red); }
+
+.notepad-textarea {
+  width:100%; height:62vh; min-height:380px;
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:10px; padding:24px 28px;
+  color:var(--text); font-family:'IBM Plex Mono',monospace; font-size:13px;
+  line-height:1.85; resize:vertical; outline:none; transition:border-color 0.2s;
+}
+.notepad-textarea:focus {
+  border-color:rgba(245,200,66,0.3);
+  box-shadow:0 0 0 3px rgba(245,200,66,0.05);
+}
+.notepad-textarea::placeholder { color:var(--muted2); font-style:italic; }
+
+.notepad-status {
+  margin-top:10px; display:flex; justify-content:space-between;
+  font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--muted2);
+}
+
 /* ── RESPONSIVE ── */
 @media(max-width:640px) {
   .hub-hero { padding:40px 16px 28px; }
@@ -451,6 +512,65 @@ body::before {
 
 </div>
 
+<!-- ─────────────────────────────
+     NOTEPAD SECTION
+───────────────────────────── -->
+<div id="notepadSection">
+
+  <div class="viewer-topbar">
+    <button class="btn-back-viewer" onclick="backToHubFromNotepad()">← All Prompts</button>
+    <div class="viewer-title">📝 <span>Notepad</span></div>
+    <div class="viewer-actions">
+      <button class="btn-action" onclick="clearNotepad()"
+        style="color:var(--red);border-color:rgba(232,85,85,0.3);background:transparent;">⊘ Clear</button>
+      <button class="btn-action btn-copy" onclick="copyNotepadAll()">⎘ Copy All</button>
+    </div>
+  </div>
+
+  <!-- Find Bar — Ctrl+F -->
+  <div id="findBar" class="notepad-bar" style="display:none">
+    <span class="bar-label">Find</span>
+    <input id="findInput" class="bar-input" type="text" placeholder="Search text…"
+           oninput="onFindInput()" onkeydown="findBarKey(event)" spellcheck="false">
+    <span id="findCount" class="bar-count">—</span>
+    <button class="bar-btn" onclick="findPrev()" title="Previous (Shift+Enter)">▲</button>
+    <button class="bar-btn" onclick="findNext()" title="Next (Enter)">▼</button>
+    <div class="bar-divider"></div>
+    <button class="bar-btn bar-close" onclick="closeFindBar()" title="Close (Esc)">✕</button>
+  </div>
+
+  <!-- Find & Replace Bar — Ctrl+H -->
+  <div id="replaceBar" class="notepad-bar replace-bar" style="display:none">
+    <div class="replace-row">
+      <span class="bar-label">Find</span>
+      <input id="replaceFindInput" class="bar-input" type="text" placeholder="Find…"
+             oninput="onReplaceFind()" onkeydown="replaceBarKey(event)" spellcheck="false">
+      <span id="replaceCount" class="bar-count">—</span>
+      <button class="bar-btn" onclick="replacePrev()" title="Previous">▲</button>
+      <button class="bar-btn" onclick="replaceNext()" title="Next">▼</button>
+    </div>
+    <div class="replace-row">
+      <span class="bar-label">Replace</span>
+      <input id="replaceWithInput" class="bar-input" type="text" placeholder="Replace with…"
+             onkeydown="replaceBarKey(event)" spellcheck="false">
+      <button class="bar-btn bar-replace" onclick="replaceOne()">Replace</button>
+      <button class="bar-btn bar-replace" onclick="replaceAll()">Replace All</button>
+      <div class="bar-divider"></div>
+      <button class="bar-btn bar-close" onclick="closeReplaceBar()" title="Close (Esc)">✕</button>
+    </div>
+  </div>
+
+  <div class="viewer-wrap">
+    <textarea id="notepadTA" class="notepad-textarea" spellcheck="true"
+      placeholder="Start typing your notes here…&#10;&#10;Ctrl+F  —  Find   ·   Ctrl+H  —  Find &amp; Replace   ·   Esc  —  Close toolbar"></textarea>
+    <div class="notepad-status">
+      <span id="npWordCount">0 words · 0 chars</span>
+      <span>Ctrl+F find · Ctrl+H replace · auto-saved</span>
+    </div>
+  </div>
+
+</div>
+
 <!-- ── COPY TOAST ── -->
 <div class="copy-toast" id="copyToast">✓ Copied to clipboard!</div>
 
@@ -503,6 +623,16 @@ const PROMPTS = [
     file:   'prompts/Live_QA_Revision/live_qa_revision_prompt.md',
     accent: '#5b9cf6',
     desc:   'Rapid-fire Q&A revision pages with expandable answers, PYQ/GEM/Trap badges, filter bar, and cheat-sheet tables.',
+  },
+  {
+    id:     'notepad',
+    icon:   '📝',
+    title:  'Notepad',
+    folder: 'notes/',
+    file:   null,
+    accent: '#fb923c',
+    type:   'notepad',
+    desc:   'Scratch pad for freeform notes. Auto-saved to browser storage. Ctrl+F to find · Ctrl+H to find & replace.',
   },
 ];
 
@@ -578,7 +708,7 @@ function renderGrid() {
         <div class="card-desc">${p.desc}</div>
       </div>
       <div class="card-footer">
-        <span class="card-file">${p.file.split('/').pop()}</span>
+        <span class="card-file">${p.file ? p.file.split('/').pop() : 'browser storage'}</span>
         <span class="card-cta">Open →</span>
       </div>
     </div>
@@ -593,6 +723,7 @@ let currentPrompt = null;
 async function openPrompt(id) {
   const p = PROMPTS.find(x => x.id === id);
   if (!p) return;
+  if (p.type === 'notepad') { openNotepad(); return; }
   currentPrompt = p;
 
   document.getElementById('mainHub').style.display    = 'none';
@@ -692,6 +823,259 @@ function showToast(msg) {
 
 function escHtml(str) {
   return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* ─────────────────────────────────────────
+   NOTEPAD
+───────────────────────────────────────── */
+const NP_KEY = 'arivoam_notepad_v1';
+let npMatches = [];
+let npCurrentMatch = -1;
+let npFindText = '';
+let npActiveBar = null; // 'find' | 'replace' | null
+
+function openNotepad() {
+  document.getElementById('mainHub').style.display = 'none';
+  document.getElementById('notepadSection').style.display = 'block';
+  const ta = document.getElementById('notepadTA');
+  ta.value = localStorage.getItem(NP_KEY) || '';
+  updateNpWordCount();
+  ta.focus();
+}
+
+function backToHubFromNotepad() {
+  closeFindBar(false);
+  closeReplaceBar(false);
+  document.getElementById('notepadSection').style.display = 'none';
+  document.getElementById('mainHub').style.display = 'block';
+}
+
+/* ── keyboard shortcuts on the textarea ── */
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('notepadTA').addEventListener('keydown', function(e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+      e.preventDefault();
+      closeReplaceBar(false);
+      openFindBar();
+    } else if ((e.ctrlKey || e.metaKey) && e.key === 'h') {
+      e.preventDefault();
+      closeFindBar(false);
+      openReplaceBar();
+    } else if (e.key === 'Escape') {
+      if (npActiveBar === 'find') closeFindBar();
+      else if (npActiveBar === 'replace') closeReplaceBar();
+    }
+  });
+
+  document.getElementById('notepadTA').addEventListener('input', function() {
+    localStorage.setItem(NP_KEY, this.value);
+    updateNpWordCount();
+    if (npActiveBar) npRebuildAndSync();
+  });
+});
+
+function updateNpWordCount() {
+  const text = document.getElementById('notepadTA').value;
+  const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+  document.getElementById('npWordCount').textContent =
+    `${words.toLocaleString()} word${words !== 1 ? 's' : ''} · ${text.length.toLocaleString()} chars`;
+}
+
+function clearNotepad() {
+  if (!document.getElementById('notepadTA').value) return;
+  if (!confirm('Clear all notepad content? This cannot be undone.')) return;
+  document.getElementById('notepadTA').value = '';
+  localStorage.removeItem(NP_KEY);
+  updateNpWordCount();
+  npMatches = []; npCurrentMatch = -1;
+  npUpdateCountDisplay();
+}
+
+function copyNotepadAll() {
+  const val = document.getElementById('notepadTA').value;
+  navigator.clipboard.writeText(val).then(() => {
+    showToast('✓ Copied to clipboard!');
+  }).catch(() => {
+    const ta = document.getElementById('notepadTA');
+    ta.select();
+    document.execCommand('copy');
+    showToast('✓ Copied!');
+  });
+}
+
+/* ── Find bar ── */
+function openFindBar() {
+  npActiveBar = 'find';
+  const bar = document.getElementById('findBar');
+  bar.style.display = 'flex';
+  const inp = document.getElementById('findInput');
+  inp.focus(); inp.select();
+  if (inp.value) onFindInput();
+}
+
+function closeFindBar(refocus = true) {
+  npActiveBar = null;
+  document.getElementById('findBar').style.display = 'none';
+  document.getElementById('findBar').classList.remove('bar-no-match');
+  npMatches = []; npCurrentMatch = -1;
+  if (refocus) document.getElementById('notepadTA').focus();
+}
+
+function onFindInput() {
+  npFindText = document.getElementById('findInput').value;
+  npBuildMatches();
+  npCurrentMatch = npMatches.length ? 0 : -1;
+  if (npMatches.length) npJumpToMatch();
+  npUpdateCountDisplay();
+  document.getElementById('findBar').classList.toggle('bar-no-match', !!npFindText && !npMatches.length);
+}
+
+function findBarKey(e) {
+  if (e.key === 'Enter') { e.preventDefault(); e.shiftKey ? findPrev() : findNext(); }
+  if (e.key === 'Escape') closeFindBar();
+}
+
+function findNext() {
+  if (!npMatches.length) return;
+  npCurrentMatch = (npCurrentMatch + 1) % npMatches.length;
+  npJumpToMatch();
+}
+
+function findPrev() {
+  if (!npMatches.length) return;
+  npCurrentMatch = (npCurrentMatch - 1 + npMatches.length) % npMatches.length;
+  npJumpToMatch();
+}
+
+/* ── Replace bar ── */
+function openReplaceBar() {
+  npActiveBar = 'replace';
+  const bar = document.getElementById('replaceBar');
+  bar.style.display = 'flex';
+  const inp = document.getElementById('replaceFindInput');
+  inp.focus(); inp.select();
+  if (inp.value) onReplaceFind();
+}
+
+function closeReplaceBar(refocus = true) {
+  npActiveBar = null;
+  document.getElementById('replaceBar').style.display = 'none';
+  document.getElementById('replaceBar').classList.remove('bar-no-match');
+  npMatches = []; npCurrentMatch = -1;
+  if (refocus) document.getElementById('notepadTA').focus();
+}
+
+function onReplaceFind() {
+  npFindText = document.getElementById('replaceFindInput').value;
+  npBuildMatches();
+  npCurrentMatch = npMatches.length ? 0 : -1;
+  if (npMatches.length) npJumpToMatch();
+  npUpdateCountDisplay();
+  document.getElementById('replaceBar').classList.toggle('bar-no-match', !!npFindText && !npMatches.length);
+}
+
+function replaceBarKey(e) {
+  const active = document.activeElement;
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    if (active.id === 'replaceFindInput') { e.shiftKey ? replacePrev() : replaceNext(); }
+    else if (active.id === 'replaceWithInput') replaceOne();
+  }
+  if (e.key === 'Escape') closeReplaceBar();
+}
+
+function replaceNext() {
+  if (!npMatches.length) return;
+  npCurrentMatch = (npCurrentMatch + 1) % npMatches.length;
+  npJumpToMatch();
+}
+
+function replacePrev() {
+  if (!npMatches.length) return;
+  npCurrentMatch = (npCurrentMatch - 1 + npMatches.length) % npMatches.length;
+  npJumpToMatch();
+}
+
+function replaceOne() {
+  if (!npMatches.length || npCurrentMatch < 0) return;
+  npFindText = document.getElementById('replaceFindInput').value;
+  const replWith = document.getElementById('replaceWithInput').value;
+  if (!npFindText) return;
+
+  const ta = document.getElementById('notepadTA');
+  const start = npMatches[npCurrentMatch];
+  ta.value = ta.value.substring(0, start) + replWith + ta.value.substring(start + npFindText.length);
+
+  localStorage.setItem(NP_KEY, ta.value);
+  updateNpWordCount();
+  npBuildMatches();
+  npCurrentMatch = Math.min(npCurrentMatch, npMatches.length - 1);
+  if (npMatches.length) npJumpToMatch();
+  npUpdateCountDisplay();
+  document.getElementById('replaceBar').classList.toggle('bar-no-match', !!npFindText && !npMatches.length);
+}
+
+function replaceAll() {
+  npFindText = document.getElementById('replaceFindInput').value;
+  const replWith = document.getElementById('replaceWithInput').value;
+  if (!npFindText) return;
+
+  const ta = document.getElementById('notepadTA');
+  const escaped = npFindText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const re = new RegExp(escaped, 'g');
+  const count = (ta.value.match(re) || []).length;
+  if (!count) { showToast('No matches found'); return; }
+
+  ta.value = ta.value.replace(re, replWith);
+  localStorage.setItem(NP_KEY, ta.value);
+  updateNpWordCount();
+  npMatches = []; npCurrentMatch = -1;
+  npUpdateCountDisplay();
+  document.getElementById('replaceBar').classList.remove('bar-no-match');
+  showToast(`✓ Replaced ${count} occurrence${count !== 1 ? 's' : ''}`);
+}
+
+/* ── shared helpers ── */
+function npBuildMatches() {
+  const content = document.getElementById('notepadTA').value;
+  npMatches = [];
+  if (!npFindText) return;
+  const lower = content.toLowerCase();
+  const search = npFindText.toLowerCase();
+  let idx = 0;
+  while ((idx = lower.indexOf(search, idx)) !== -1) {
+    npMatches.push(idx);
+    idx += search.length;
+  }
+}
+
+function npJumpToMatch() {
+  const ta = document.getElementById('notepadTA');
+  if (!npMatches.length) return;
+  const start = npMatches[npCurrentMatch];
+  ta.focus();
+  ta.setSelectionRange(start, start + npFindText.length);
+  const lineHeight = parseFloat(getComputedStyle(ta).lineHeight) || 24;
+  const lines = ta.value.substring(0, start).split('\n').length - 1;
+  ta.scrollTop = Math.max(0, lines * lineHeight - ta.clientHeight / 2);
+  npUpdateCountDisplay();
+}
+
+function npUpdateCountDisplay() {
+  const txt = npMatches.length
+    ? `${npCurrentMatch + 1} of ${npMatches.length}`
+    : (npFindText ? '0 of 0' : '—');
+  if (npActiveBar === 'find') document.getElementById('findCount').textContent = txt;
+  else if (npActiveBar === 'replace') document.getElementById('replaceCount').textContent = txt;
+}
+
+function npRebuildAndSync() {
+  if (npActiveBar === 'find') { npFindText = document.getElementById('findInput').value; }
+  else if (npActiveBar === 'replace') { npFindText = document.getElementById('replaceFindInput').value; }
+  else return;
+  npBuildMatches();
+  if (npCurrentMatch >= npMatches.length) npCurrentMatch = npMatches.length - 1;
+  npUpdateCountDisplay();
 }
 
 /* ─────────────────────────────────────────
