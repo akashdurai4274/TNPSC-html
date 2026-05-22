@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TNPSC Group 1 – Early Vedas to Mauryas | History Practice Test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0f14;--surface:#12151e;--surface2:#181c28;
+  --border:#21263a;--border2:#2d3450;
+  --gold:#f5c842;--red:#e85555;--green:#4ecb7a;
+  --blue:#5b9cf6;--purple:#a78bfa;--cyan:#22d3ee;--orange:#fb923c;
+  --text:#e8eaf0;--text2:#9aa0b8;--text3:#5a6180;
+  --sidebar-w:280px;
+}
+html{scroll-behavior:smooth}
+body{
+  background-color:var(--bg);
+  background-image:linear-gradient(rgba(245,200,66,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(245,200,66,0.04) 1px,transparent 1px);
+  background-size:60px 60px;
+  animation:gridShift 8s linear infinite;
+  color:var(--text);font-family:'Lora',serif;min-height:100vh;
+  display:flex;
+}
+@keyframes gridShift{from{background-position:0 0}to{background-position:0 60px}}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--surface)}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px}
+
+/* SIDEBAR */
+#sidebar{
+  width:var(--sidebar-w);min-width:var(--sidebar-w);height:100vh;position:sticky;top:0;
+  background:#0a0c12;border-right:1px solid var(--border);
+  display:flex;flex-direction:column;overflow:hidden;z-index:100;
+  transition:transform .3s ease;
+}
+.sidebar-header{padding:18px 16px 12px;border-bottom:1px solid var(--border);flex-shrink:0}
+.sidebar-title{font-family:'Syne',sans-serif;font-weight:800;font-size:13px;color:var(--gold);letter-spacing:.5px;text-transform:uppercase}
+.sidebar-subtitle{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);margin-top:3px}
+.topic-badge{display:inline-block;background:rgba(245,200,66,.1);border:1px solid rgba(245,200,66,.25);color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:9px;padding:3px 7px;border-radius:4px;margin-top:6px;letter-spacing:.3px}
+
+/* TIMER */
+.timer-section{padding:12px 16px;border-bottom:1px solid var(--border);flex-shrink:0}
+.timer-label{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.timer-display{font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:600;color:var(--gold);letter-spacing:2px}
+.timer-display.warning{color:var(--orange);animation:pulse .6s ease infinite alternate}
+.timer-display.danger{color:var(--red);animation:pulse .3s ease infinite alternate}
+@keyframes pulse{from{opacity:1}to{opacity:.6}}
+
+/* TOGGLES */
+.toggles-section{padding:10px 16px;border-bottom:1px solid var(--border);flex-shrink:0;display:flex;flex-direction:column;gap:8px}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.toggle-label{font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:var(--text2)}
+.toggle-switch{position:relative;width:36px;height:20px;cursor:pointer;flex-shrink:0}
+.toggle-switch input{opacity:0;width:0;height:0}
+.toggle-track{position:absolute;inset:0;border-radius:10px;background:var(--border2);transition:.3s;border:1px solid var(--border)}
+.toggle-thumb{position:absolute;top:3px;left:3px;width:12px;height:12px;border-radius:50%;background:#5a6180;transition:.3s}
+.toggle-switch input:checked~.toggle-track{background:rgba(245,200,66,.2);border-color:var(--gold)}
+.toggle-switch input:checked~.toggle-thumb{left:19px;background:var(--gold)}
+
+/* PALETTE */
+.palette-section{flex:1;overflow-y:auto;padding:10px 16px}
+.palette-title{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.palette-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.palette-btn{
+  width:32px;height:32px;border-radius:6px;border:1px solid var(--border2);
+  background:var(--surface2);color:var(--text3);
+  font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;
+  cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;
+}
+.palette-btn:hover{border-color:var(--gold);color:var(--gold)}
+.palette-btn.answered{background:rgba(245,200,66,.15);border-color:var(--gold);color:var(--gold)}
+.palette-btn.review{background:rgba(167,139,250,.15);border-color:var(--purple);color:var(--purple)}
+.palette-btn.correct{background:rgba(78,203,122,.15);border-color:var(--green);color:var(--green)}
+.palette-btn.wrong{background:rgba(232,85,85,.15);border-color:var(--red);color:var(--red)}
+
+/* LEGEND */
+.legend{padding:8px 16px;border-top:1px solid var(--border);flex-shrink:0;display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.legend-item{display:flex;align-items:center;gap:5px;font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--text3)}
+.legend-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+
+/* SUBMIT BTN */
+.submit-section{padding:12px 16px;border-top:1px solid var(--border);flex-shrink:0}
+.submit-btn{
+  width:100%;padding:11px;border-radius:8px;border:1px solid var(--gold);
+  background:rgba(245,200,66,.1);color:var(--gold);
+  font-family:'Syne',sans-serif;font-weight:700;font-size:13px;letter-spacing:.5px;
+  cursor:pointer;transition:all .2s;
+}
+.submit-btn:hover{background:var(--gold);color:#0d0f14}
+
+/* MAIN */
+#main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+.sticky-bar{
+  position:sticky;top:0;z-index:50;
+  background:rgba(13,15,20,.92);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);padding:10px 24px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.sticky-title{font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:var(--text)}
+.sticky-meta{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3)}
+.sticky-right{display:flex;gap:8px;align-items:center}
+.hamburger{display:none;background:none;border:1px solid var(--border2);border-radius:6px;padding:6px 8px;cursor:pointer;color:var(--text2)}
+
+/* RESULT CARD */
+#result-card{display:none;margin:20px 24px;background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:24px;box-shadow:0 0 40px rgba(245,200,66,.05)}
+.result-title{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:var(--gold);margin-bottom:16px}
+.result-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:16px}
+.stat-box{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center}
+.stat-num{font-family:'Syne',sans-serif;font-weight:800;font-size:22px}
+.stat-lbl{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3);margin-top:3px;text-transform:uppercase}
+
+/* QUESTIONS FEED */
+#questions-feed{padding:20px 24px;display:flex;flex-direction:column;gap:16px}
+.q-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  padding:20px;transition:box-shadow .2s;
+}
+.q-card:hover{box-shadow:0 4px 20px rgba(245,200,66,.06)}
+.q-header{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px}
+.q-num-badge{
+  min-width:32px;height:22px;border-radius:5px;background:rgba(245,200,66,.12);
+  border:1px solid rgba(245,200,66,.3);color:var(--gold);
+  font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  display:flex;align-items:center;justify-content:center;padding:0 6px;flex-shrink:0;
+}
+.q-type-badge{
+  height:22px;border-radius:5px;padding:0 7px;
+  font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:600;
+  display:flex;align-items:center;flex-shrink:0;
+}
+.badge-direct{background:rgba(91,156,246,.12);border:1px solid rgba(91,156,246,.3);color:var(--blue)}
+.badge-statement{background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.3);color:var(--cyan)}
+.badge-match{background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.3);color:var(--purple)}
+.badge-ar{background:rgba(251,146,60,.12);border:1px solid rgba(251,146,60,.3);color:var(--orange)}
+.badge-chrono{background:rgba(78,203,122,.12);border:1px solid rgba(78,203,122,.3);color:var(--green)}
+.badge-odd{background:rgba(232,85,85,.12);border:1px solid rgba(232,85,85,.3);color:var(--red)}
+.badge-negative{background:rgba(245,200,66,.12);border:1px solid rgba(245,200,66,.3);color:var(--gold)}
+.badge-three{background:rgba(165,180,252,.12);border:1px solid rgba(165,180,252,.3);color:#c4b5fd}
+.pyq-tag{
+  margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:8.5px;
+  background:rgba(251,146,60,.1);border:1px solid rgba(251,146,60,.2);color:var(--orange);
+  padding:2px 6px;border-radius:4px;white-space:nowrap;
+}
+.src-tag{
+  font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--text3);margin-left:6px;
+}
+.q-stem{font-family:'Lora',serif;font-style:italic;font-size:14px;line-height:1.65;color:var(--text);margin-bottom:14px}
+.q-stem pre{font-family:'IBM Plex Mono',monospace;font-size:12px;white-space:pre-wrap;font-style:normal;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:10px;margin:8px 0;color:var(--text2)}
+.options-grid{display:flex;flex-direction:column;gap:7px}
+.option-btn{
+  width:100%;text-align:left;padding:9px 13px;border-radius:8px;
+  border:1px solid var(--border2);background:var(--surface2);
+  color:var(--text2);font-family:'Lora',serif;font-size:13.5px;
+  cursor:pointer;transition:all .15s;display:flex;align-items:flex-start;gap:8px;
+}
+.option-btn:hover:not(:disabled){border-color:var(--gold);background:rgba(245,200,66,.07)}
+.option-btn.selected{border-color:var(--gold);background:rgba(245,200,66,.12);color:var(--text)}
+.option-btn.correct-ans{border-color:var(--green);background:rgba(78,203,122,.12);color:var(--green)}
+.option-btn.wrong-ans{border-color:var(--red);background:rgba(232,85,85,.12);color:var(--red)}
+.option-btn:disabled{cursor:default}
+.opt-letter{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  min-width:18px;height:18px;border-radius:3px;background:var(--border2);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;
+}
+.q-footer{display:flex;align-items:center;gap:8px;margin-top:12px}
+.review-btn{
+  display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:6px;
+  border:1px solid var(--border2);background:transparent;color:var(--text3);
+  font-family:'IBM Plex Mono',monospace;font-size:10px;cursor:pointer;transition:all .15s;
+}
+.review-btn:hover,.review-btn.active{border-color:var(--purple);color:var(--purple);background:rgba(167,139,250,.08)}
+.explanation-box{
+  display:none;margin-top:10px;padding:10px 13px;border-radius:8px;
+  background:rgba(91,156,246,.06);border:1px solid rgba(91,156,246,.2);
+  font-family:'Lora',serif;font-size:12.5px;color:var(--text2);line-height:1.6;
+}
+.explanation-box.visible{display:block}
+.explanation-box strong{color:var(--blue);font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.3px}
+
+/* MODAL */
+#modal-overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);
+  z-index:999;align-items:center;justify-content:center;backdrop-filter:blur(4px);
+}
+#modal-overlay.active{display:flex}
+.modal{
+  background:var(--surface);border:1px solid var(--border2);border-radius:14px;
+  padding:28px;max-width:380px;width:90%;
+}
+.modal h3{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:var(--text);margin-bottom:8px}
+.modal p{font-family:'Lora',serif;font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:20px}
+.modal-btns{display:flex;gap:10px}
+.modal-btns button{flex:1;padding:10px;border-radius:8px;border:none;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;cursor:pointer;transition:all .2s}
+.modal-cancel{background:var(--surface2);color:var(--text2);border:1px solid var(--border2)!important}
+.modal-confirm{background:var(--gold);color:#0d0f14}
+
+/* SIDEBAR OVERLAY for mobile */
+#sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99}
+
+@media(max-width:900px){
+  #sidebar{position:fixed;left:0;top:0;transform:translateX(-100%);z-index:100}
+  #sidebar.open{transform:translateX(0)}
+  #sidebar-overlay.active{display:block}
+  .hamburger{display:flex;align-items:center;gap:4px}
+  #main{width:100%}
+  .result-stats{grid-template-columns:repeat(3,1fr)}
+  #questions-feed{padding:14px}
+}
+@media(max-width:500px){
+  .result-stats{grid-template-columns:repeat(2,1fr)}
+  .sticky-bar{padding:8px 14px}
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR OVERLAY (mobile) -->
+<div id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-title">TNPSC Group 1</div>
+    <div class="sidebar-subtitle">History Practice Test · 150 Q</div>
+    <div class="topic-badge">Early Vedas → Mauryas</div>
+  </div>
+
+  <div class="timer-section">
+    <div class="timer-label">Time Remaining</div>
+    <div class="timer-display" id="timer-display">02:30:00</div>
+  </div>
+
+  <div class="toggles-section">
+    <div class="toggle-row">
+      <span class="toggle-label" id="timer-toggle-label">Timer: ON</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="timer-toggle" checked onchange="toggleTimer()">
+        <div class="toggle-track"></div>
+        <div class="toggle-thumb"></div>
+      </label>
+    </div>
+    <div class="toggle-row">
+      <span class="toggle-label" id="imm-toggle-label">Immediate Validation: OFF</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="imm-toggle" onchange="toggleImmediate()">
+        <div class="toggle-track"></div>
+        <div class="toggle-thumb"></div>
+      </label>
+    </div>
+  </div>
+
+  <div class="palette-section">
+    <div class="palette-title">Question Palette</div>
+    <div class="palette-grid" id="palette-grid"></div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--surface2);border:1px solid var(--border2)"></div>Unattempted</div>
+    <div class="legend-item"><div class="legend-dot" style="background:rgba(245,200,66,.3)"></div>Answered</div>
+    <div class="legend-item"><div class="legend-dot" style="background:rgba(167,139,250,.3)"></div>Review</div>
+    <div class="legend-item"><div class="legend-dot" style="background:rgba(78,203,122,.3)"></div>Correct</div>
+    <div class="legend-item"><div class="legend-dot" style="background:rgba(232,85,85,.3)"></div>Wrong</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--border2)"></div>Unattempted</div>
+  </div>
+
+  <div class="submit-section">
+    <button class="submit-btn" onclick="showSubmitModal()">⬤ Submit Test</button>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div id="main">
+  <div class="sticky-bar">
+    <button class="hamburger" onclick="openSidebar()">☰ Palette</button>
+    <div class="sticky-title">History – Early Vedas to Mauryas</div>
+    <div class="sticky-right">
+      <span class="sticky-meta" id="progress-text">0 / 150 Answered</span>
+    </div>
+  </div>
+
+  <div id="result-card">
+    <div class="result-title">📊 Test Result</div>
+    <div class="result-stats" id="result-stats"></div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);margin-top:4px">Scroll down to review all questions with explanations.</div>
+  </div>
+
+  <div id="questions-feed"></div>
+</div>
+
+<!-- MODAL -->
+<div id="modal-overlay">
+  <div class="modal">
+    <h3>Submit Test?</h3>
+    <p id="modal-text">Are you sure you want to submit? You can review your answers before submitting.</p>
+    <div class="modal-btns">
+      <button class="modal-cancel" onclick="hideModal()">Cancel</button>
+      <button class="modal-confirm" onclick="submitTest()">Submit Now</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── QUESTION BANK ───────────────────────────────────────────────────────────
+const QUESTIONS = [
+  // ── SECTION 1: RIGVEDIC SOCIETY (Q1–Q20) ──
+  {id:1,type:"direct",stem:"The Rigveda is divided into how many Mandalas (books)?",options:["Eight","Nine","Ten","Twelve"],correct:2,explanation:"The Rigveda consists of 10 Mandalas (books), containing 1,028 hymns (suktas) addressed to various deities.",source:"NCERT Gr.6 Ch.4",isPYQ:false},
+  {id:2,type:"direct",stem:"Which river is most frequently mentioned in the Rigveda, regarded as the greatest and most sacred?",options:["Ganga","Indus (Sindhu)","Saraswati","Yamuna"],correct:2,explanation:"The Saraswati is called 'naditama' (best of rivers) in the Rigveda and is most frequently praised, though the Sindhu (Indus) is also important. Modern scholarship confirms Saraswati is the most glorified.",source:"NCERT Gr.6 Ch.4",isPYQ:false},
+  {id:3,type:"direct",stem:"The term 'Jana' in Rigvedic context primarily refers to:",options:["A settled village community","A tribal group or people","A royal assembly","A priestly clan"],correct:1,explanation:"'Jana' in the Rigveda refers to a tribe or people. It later evolved into 'Janapada' meaning a settled territorial unit.",source:"R.S. Sharma – Ancient India",isPYQ:false},
+  {id:4,type:"statement",stem:"Consider the following statements about the Rigvedic period:\nI. The Rigvedic economy was primarily pastoral and cattle-rearing was the main occupation.\nII. Agriculture was unknown during the Rigvedic period.\nWhich of the statements given above is/are correct?",options:["I only","II only","Both I and II","Neither I nor II"],correct:0,explanation:"Statement I is correct — the Rigvedic economy was predominantly pastoral. Statement II is incorrect — there is evidence of agriculture (yava/barley) in the Rigveda, though it was secondary.",source:"NCERT Gr.12 Themes in Indian History",isPYQ:false},
+  {id:5,type:"direct",stem:"The Rigvedic deity who was the lord of Rita (cosmic order/truth) is:",options:["Indra","Varuna","Agni","Soma"],correct:1,explanation:"Varuna was the upholder of Rita (cosmic order and moral law). He was an omniscient god who punished wrongdoers. Indra was the war god and god of rain.",source:"A.L. Basham – The Wonder That Was India",isPYQ:false},
+  {id:6,type:"ar",stem:"Assertion (A): Indra was the most important deity in the Rigveda.\nReason (R): Indra was the god of rain and thunder who helped the Aryans in their conflicts with the Dasas.",options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false and R is true"],correct:0,explanation:"Indra is indeed the most celebrated deity with about 250 hymns dedicated to him. He was the rain god who destroyed the forts of the Dasas (Purandra — destroyer of forts), making R the correct explanation of A.",source:"PYQ 2018",isPYQ:true},
+  {id:7,type:"match",stem:"Match the Rigvedic terms with their meanings:\n\nList I (Term)         List II (Meaning)\nA. Gotra              1. Tribal chief\nB. Rajan              2. Clan or lineage (literally 'cow-pen')\nC. Vish               3. Common people / clan\nD. Gramini            4. Head of a grama (village)",options:["A-2, B-1, C-3, D-4","A-3, B-2, C-1, D-4","A-1, B-2, C-4, D-3","A-2, B-3, C-1, D-4"],correct:0,explanation:"Gotra literally means 'cow-pen' and denotes clan/lineage. Rajan was the tribal chief. Vish referred to the common clan people. Gramini was the leader of a grama (group of families/village).",source:"NCERT Gr.6 Ch.5",isPYQ:false},
+  {id:8,type:"direct",stem:"Which of the following was the main staple crop mentioned in the Rigveda?",options:["Rice (Vrihi)","Wheat (Godhuma)","Barley (Yava)","Sugarcane (Ikshu)"],correct:2,explanation:"Yava (barley) is the main crop mentioned in the Rigveda. It was used in rituals and as food. Rice became prominent only in later Vedic texts.",source:"NCERT Gr.6 Ch.4",isPYQ:false},
+  {id:9,type:"negative",stem:"Which of the following is NOT a feature of Rigvedic society?",options:["Patriarchal family system","Absence of rigid caste system based on birth","Women enjoyed considerable freedom and could attend assemblies","Strict endogamy and untouchability were practised"],correct:3,explanation:"Rigvedic society was relatively egalitarian. Women could attend sabhas, compose hymns (e.g., Gargi, Lopamudra). Rigid untouchability and strict caste endogamy were later developments, not features of the Rigvedic period.",source:"R.S. Sharma – Ancient India",isPYQ:false},
+  {id:10,type:"chrono",stem:"Arrange the following Vedic texts in the correct chronological order (earliest first):\n(i) Atharva Veda\n(ii) Rigveda\n(iii) Samaveda\n(iv) Yajurveda",options:["(ii), (iii), (iv), (i)","(i), (ii), (iii), (iv)","(ii), (i), (iii), (iv)","(iii), (ii), (iv), (i)"],correct:0,explanation:"Rigveda is the oldest (c.1500–1200 BCE), followed by Samaveda and Yajurveda (c.1200–1000 BCE), with Atharvaveda being the latest of the four Vedas.",source:"NCERT Gr.6 Ch.4",isPYQ:false},
+  {id:11,type:"direct",stem:"The 'Sabha' in Rigvedic polity was:",options:["An assembly of the entire tribe","An aristocratic or elite assembly","A royal court of advisors","A village council of elders"],correct:1,explanation:"The Sabha was an aristocratic or elite assembly (council of nobles/elders) while Samiti was the general tribal assembly. Both had roles in governance during the Rigvedic period.",source:"PYQ 2017",isPYQ:true},
+  {id:12,type:"three",stem:"Consider the following statements about Rigvedic religion:\n1. Fire worship (Agni) played a central role in Rigvedic rituals.\n2. Idol worship was a prominent feature of Rigvedic religion.\n3. The Ashvamedha (horse sacrifice) is mentioned in the Rigveda.\nWhich of the statements given above are correct?",options:["1 and 2 only","1 and 3 only","2 and 3 only","1, 2 and 3"],correct:1,explanation:"Agni was the intermediary between gods and humans — fire sacrifices were central. Idol worship is NOT a prominent feature of Rigvedic religion. Ashvamedha (horse sacrifice) is indeed mentioned in the Rigveda.",source:"A.L. Basham – The Wonder That Was India",isPYQ:false},
+  {id:13,type:"direct",stem:"The famous 'Purusha Sukta' hymn, which describes the origin of the four varnas from different parts of the cosmic being (Purusha), is found in which Mandala of the Rigveda?",options:["Second Mandala","Fifth Mandala","Eighth Mandala","Tenth Mandala"],correct:3,explanation:"The Purusha Sukta is hymn 90 of the Tenth Mandala (Book X) of the Rigveda. It is the first textual reference to the four varnas — Brahmin, Kshatriya, Vaishya, and Shudra.",source:"NCERT Gr.6 Ch.5",isPYQ:false},
+  {id:14,type:"odd",stem:"Identify the odd one out from the following Rigvedic deities:",options:["Indra","Varuna","Agni","Shiva"],correct:3,explanation:"Indra, Varuna, and Agni are prominent Rigvedic deities. Shiva (as Rudra in a rudimentary form appears, but Shiva as a major deity) is associated with the Indus Valley Civilization and later Puranic tradition, not a primary Rigvedic deity in the same category.",source:"NCERT Gr.6 Ch.4",isPYQ:false},
+  {id:15,type:"direct",stem:"The concept of 'Dasa' in the Rigveda primarily refers to:",options:["A priestly class","Indigenous people/enemies of the Aryans","A class of artisans","Pastoral nomads"],correct:1,explanation:"'Dasa' (also Dasyu) referred to the indigenous people who were enemies of the Aryans. They are described as dark-skinned (krishnavarna), noseless (anasa), and worshippers of the phallus (shishnadeva). They were eventually defeated and enslaved.",source:"R.S. Sharma – Ancient India",isPYQ:false},
+  {id:16,type:"statement",stem:"Consider the following statements:\nI. The Rigvedic society was divided into four strict varnas from the beginning.\nII. In the Rigveda, varna distinction was based more on colour/complexion than on birth.\nWhich is/are correct?",options:["I only","II only","Both I and II","Neither I nor II"],correct:1,explanation:"Statement I is incorrect — the rigid four-varna system emerged gradually. Statement II is correct — 'Varna' literally means colour, and initially the distinction was between the light-complexioned Aryans and dark-complexioned Dasas.",source:"NCERT Gr.6 Ch.5",isPYQ:false},
+  {id:17,type:"direct",stem:"Who composed the Gayatri Mantra, found in the third Mandala of the Rigveda?",options:["Vasishtha","Vishwamitra","Bharadvaja","Gritsamada"],correct:1,explanation:"The Gayatri Mantra (Rigveda III.62.10) was composed by the sage Vishwamitra. It is addressed to Savitri (the sun deity) and is considered one of the most sacred mantras in Hinduism.",source:"NCERT Gr.6 Ch.4",isPYQ:false},
+  {id:18,type:"direct",stem:"The 'Battle of Ten Kings' (Dasarajna) mentioned in the Rigveda was fought on the banks of which river?",options:["Ravi (Parushni)","Beas (Vipasa)","Saraswati","Yamuna (Yamuna)"],correct:0,explanation:"The Battle of Ten Kings (Dasarajna) was fought on the banks of the Parushni (modern Ravi) river. King Sudas of the Bharata tribe defeated a coalition of ten tribes led by Vishwamitra.",source:"NCERT Gr.12",isPYQ:false},
+  {id:19,type:"direct",stem:"In Rigvedic economy, the word 'Nishka' refers to:",options:["A unit of land measurement","A gold ornament used as currency","A type of agricultural tax","A priestly fee"],correct:1,explanation:"'Nishka' was a gold ornament (neck ornament) that served as a medium of exchange in the Rigvedic period. It is one of the earliest references to currency-like objects in Indian history.",source:"R.S. Sharma – Ancient India",isPYQ:false},
+  {id:20,type:"direct",stem:"The Rigvedic assembly called 'Samiti' was:",options:["A council of nobles","The general tribal assembly of the whole people","A judicial court","An assembly of priests"],correct:1,explanation:"The Samiti was the general tribal assembly where all members of the tribe could participate. It had the power to elect or depose the Rajan (tribal chief).",source:"PYQ 2016",isPYQ:true},
+
+  // ── SECTION 2: LATER VEDIC PERIOD (Q21–Q40) ──
+  {id:21,type:"direct",stem:"The Later Vedic period is generally dated to approximately:",options:["3000–2000 BCE","2000–1500 BCE","1000–600 BCE","600–300 BCE"],correct:2,explanation:"The Later Vedic period is broadly dated to c. 1000–600 BCE. This period saw the composition of the Samaveda, Yajurveda, Atharvaveda, Brahmanas, Aranyakas, and early Upanishads.",source:"NCERT Gr.6 Ch.5",isPYQ:false},
+  {id:22,type:"direct",stem:"Which text is known as the 'Veda of the common people' and deals with charms, spells, and magical formulae?",options:["Samaveda","Yajurveda","Atharvaveda","Rigveda"],correct:2,explanation:"The Atharvaveda is called the 'Veda of the common people.' It contains hymns, charms, and incantations for everyday purposes — curing diseases, winning love, and harming enemies.",source:"NCERT Gr.6 Ch.4",isPYQ:false},
+  {id:23,type:"three",stem:"Identify the correct statements about Later Vedic society:\n1. The Kshatriya varna emerged as a dominant class during this period.\n2. The Vaishyas lost their earlier status and came to be treated as agriculturalists and traders.\n3. The Shudras were completely excluded from Vedic rituals.\nWhich are correct?",options:["1 and 2 only","1 and 3 only","2 and 3 only","1, 2 and 3"],correct:3,explanation:"All three statements are correct. Kshatriyas asserted dominance over Brahmins in the Kuru-Panchala kingdom. Vaishyas became agriculturalists/traders. Shudras were indeed denied Vedic rites (no upanayana).",source:"NCERT Gr.6 Ch.5",isPYQ:false},
+  {id:24,type:"direct",stem:"The Upanishads are also known as:",options:["Shrutis","Vedangas","Vedanta","Puranas"],correct:2,explanation:"The Upanishads are called 'Vedanta' meaning 'end of the Vedas.' They form the concluding philosophical portions of the Vedic texts, focusing on the nature of Brahman (ultimate reality) and Atman (individual soul).",source:"NCERT Gr.6 Ch.4",isPYQ:false},
+  {id:25,type:"match",stem:"Match the Vedic texts with their primary content:\n\nList I (Text)          List II (Content)\nA. Brahmanas           1. Philosophical dialogues on Brahman-Atman\nB. Aranyakas           2. Prose commentaries on Vedic rituals\nC. Upanishads          3. Forest texts — transitional between ritual and philosophy\nD. Vedangas            4. Auxiliary sciences (phonetics, grammar, etc.)",options:["A-2, B-3, C-1, D-4","A-1, B-2, C-3, D-4","A-3, B-1, C-2, D-4","A-2, B-1, C-3, D-4"],correct:0,explanation:"Brahmanas are ritual prose commentaries. Aranyakas are forest texts bridging ritual and philosophy. Upanishads contain philosophical discussions on Brahman-Atman. Vedangas are the six auxiliary disciplines of the Vedas.",source:"A.L. Basham – The Wonder That Was India",isPYQ:false},
+  {id:26,type:"direct",stem:"During the Later Vedic period, the region of Aryavarta shifted eastward towards:",options:["Punjab and Haryana","The Gangetic Plains (Kuru-Panchala region)","Rajasthan","Deccan Plateau"],correct:1,explanation:"During the Later Vedic period, the centre of Aryan civilization shifted from the Sapta Sindhu (seven rivers of Punjab) to the Gangetic Plains, especially the Kuru-Panchala region (modern western UP).",source:"NCERT Gr.6 Ch.5",isPYQ:false},
+  {id:27,type:"ar",stem:"Assertion (A): Iron technology played a crucial role in the expansion of Aryan settlements during the Later Vedic period.\nReason (R): Iron axes helped clear dense forests of the Gangetic Plains for agriculture and iron ploughshares increased agricultural productivity.",options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false and R is true"],correct:0,explanation:"Iron technology (especially axes for forest clearing and ploughshares for deeper ploughing) enabled the eastward expansion of Aryan settlements into the Gangetic Plains. Both A and R are correct and R explains A.",source:"R.S. Sharma – Ancient India",isPYQ:false},
+  {id:28,type:"negative",stem:"Which of the following is NOT associated with the Later Vedic period?",options:["Use of iron implements","Composition of the Puranas","Emergence of the Ashrama system","Development of the concept of gotra"],correct:1,explanation:"The Puranas were composed much later (c. 300–1200 CE), not during the Later Vedic period. Iron implements, the Ashrama system (Brahmacharya-Grihastha-Vanaprastha-Sannyasa), and the gotra system all developed during the Later Vedic period.",source:"NCERT Gr.6 Ch.5",isPYQ:false},
+  {id:29,type:"direct",stem:"The famous philosophical dialogue between Nachiketa and Yama (god of death) on the nature of the soul appears in which Upanishad?",options:["Brihadaranyaka Upanishad","Chandogya Upanishad","Katha Upanishad","Kena Upanishad"],correct:2,explanation:"The Nachiketa-Yama dialogue about the immortality of the soul is found in the Katha Upanishad. It presents the concept of Atman and its relationship with Brahman.",source:"A.L. Basham – The Wonder That Was India",isPYQ:false},
+  {id:30,type:"direct",stem:"'Ashtadhyayi', the first systematic grammar of Sanskrit, was composed by:",options:["Yaska","Panini","Patanjali","Katyayana"],correct:1,explanation:"Panini (c. 4th century BCE) composed the Ashtadhyayi, the world's first systematic and scientific grammar of Sanskrit. It contains 3,976 sutras (aphorisms).",source:"PYQ 2019",isPYQ:true},
+  {id:31,type:"direct",stem:"The concept of 'Gotra' that developed in the Later Vedic period refers to:",options:["A territorial unit","A lineage descended from a common ancestor","A type of land grant","A priestly clan"],correct:1,explanation:"Gotra (literally 'cow-pen') in Later Vedic usage evolved to mean a patrilineal lineage group descended from a common ancestor (usually a Vedic sage). It determined rules of exogamy.",source:"NCERT Gr.6 Ch.5",isPYQ:false},
+  {id:32,type:"statement",stem:"Consider the following about the Sabha and Samiti:\nI. The importance of the Sabha declined in the Later Vedic period compared to the Rigvedic period.\nII. The Samiti, the general tribal assembly, completely disappeared in the Later Vedic period.\nWhich is/are correct?",options:["I only","II only","Both I and II","Neither I nor II"],correct:0,explanation:"Statement I is correct — the Sabha's popular character diminished; it became more aristocratic. Statement II is incorrect — the Samiti did not completely disappear but its power was curtailed as royal authority increased.",source:"R.S. Sharma – Ancient India",isPYQ:false},
+  {id:33,type:"direct",stem:"Which of the following was the most important Later Vedic sacrifice performed by a king to assert sovereignty over other rulers?",options:["Ashvamedha","Rajasuya","Vajapeya","Agnishtoma"],correct:0,explanation:"The Ashvamedha (horse sacrifice) was the most important royal ritual. A horse was released to roam freely for a year — any territory it entered was claimed by the king. At the end, the horse was sacrificed.",source:"PYQ 2020",isPYQ:true},
+  {id:34,type:"direct",stem:"The 'Rajasuya' sacrifice in Later Vedic India was performed to:",options:["Ensure good rainfall","Mark the coronation of a king and consecrate royal power","Seek victory in battle","Purify the kingdom after a calamity"],correct:1,explanation:"The Rajasuya was the royal consecration sacrifice. It legitimized the king's authority and involved multiple rituals over about two years, symbolically giving the king power over all directions.",source:"NCERT Gr.6 Ch.5",isPYQ:false},
+  {id:35,type:"odd",stem:"Identify the odd one out from the following (Vedangas — the six auxiliary sciences of the Vedas):",options:["Shiksha (Phonetics)","Nirukta (Etymology)","Nyaya (Logic)","Kalpa (Ritual)"],correct:2,explanation:"The six Vedangas are: Shiksha, Chandas (Metrics), Vyakarana (Grammar), Nirukta, Jyotisha (Astronomy), and Kalpa. Nyaya is a separate philosophical system (one of the six darshanas), NOT a Vedanga.",source:"NCERT Gr.6 Ch.4",isPYQ:false},
+  {id:36,type:"direct",stem:"Which Later Vedic text is the oldest known treatise on political science and governance?",options:["Arthashastra","Manusmriti","Shukraniti","Aitareya Brahmana"],correct:3,explanation:"The Aitareya Brahmana contains the earliest detailed account of the coronation ceremony (Rajasuya) and concepts of kingship, making it an early text on polity. Note: Arthashastra by Kautilya is c. 300 BCE, later than the Later Vedic period.",source:"R.S. Sharma – Ancient India",isPYQ:false},
+  {id:37,type:"direct",stem:"The four stages of life (Ashramas) as codified in the Later Vedic period were, in correct order:",options:["Brahmacharya → Grihastha → Vanaprastha → Sannyasa","Grihastha → Brahmacharya → Vanaprastha → Sannyasa","Brahmacharya → Vanaprastha → Grihastha → Sannyasa","Sannyasa → Brahmacharya → Grihastha → Vanaprastha"],correct:0,explanation:"The four Ashramas are: (1) Brahmacharya — student life, (2) Grihastha — householder, (3) Vanaprastha — forest dweller/retired, (4) Sannyasa — renunciation. This was the ideal life plan.",source:"NCERT Gr.6 Ch.5",isPYQ:false},
+  {id:38,type:"direct",stem:"The Satapatha Brahmana, one of the most important Brahmana texts, belongs to which Veda?",options:["Rigveda","Samaveda","Yajurveda (White/Shukla)","Atharvaveda"],correct:2,explanation:"The Shatapatha Brahmana ('Brahmana of a hundred paths') belongs to the Shukla (White) Yajurveda. It is the largest and most important Brahmana text and includes the Brihadaranyaka Upanishad.",source:"A.L. Basham – The Wonder That Was India",isPYQ:false},
+  {id:39,type:"direct",stem:"The two great epics of ancient India, Ramayana and Mahabharata, are classified as:",options:["Shruti","Smriti","Vedangas","Puranas"],correct:1,explanation:"Ramayana and Mahabharata are classified as Smriti (that which is remembered), composed by human authors. They are also called Itihasas (epics). Shruti refers to the divinely heard texts (Vedas, Upanishads).",source:"NCERT Gr.6 Ch.4",isPYQ:false},
+  {id:40,type:"ar",stem:"Assertion (A): The status of women declined considerably in the Later Vedic period compared to the Rigvedic period.\nReason (R): In the Later Vedic period, women were denied the right to attend the Sabhas and were no longer allowed to participate in Vedic rites as equal partners.",options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false and R is true"],correct:0,explanation:"Both are true — women's status did decline. They were excluded from Sabhas and Vedic rituals. The Upanayana (sacred thread ceremony) was denied to women, restricting their education and ritual participation.",source:"PYQ 2017",isPYQ:true},
+
+  // ── SECTION 3: MAHAJANAPADAS (Q41–Q60) ──
+  {id:41,type:"direct",stem:"The Mahajanapadas (Great Kingdoms) emerged during approximately which period?",options:["1500–1200 BCE","1000–800 BCE","600–400 BCE","300–100 BCE"],correct:2,explanation:"The sixteen Mahajanapadas emerged around 600 BCE and flourished until about 400 BCE. They are mentioned in Buddhist and Jain texts (Anguttara Nikaya, Bhagavati Sutra).",source:"NCERT Gr.6 Ch.6",isPYQ:false},
+  {id:42,type:"direct",stem:"How many Mahajanapadas are mentioned in the Anguttara Nikaya (Buddhist text)?",options:["Twelve","Fourteen","Sixteen","Twenty"],correct:2,explanation:"The Anguttara Nikaya (a Pali Buddhist text) mentions sixteen Mahajanapadas (Shodasha Mahajanapadas). The same number is mentioned in the Jain text Bhagavati Sutra.",source:"PYQ 2018",isPYQ:true},
+  {id:43,type:"match",stem:"Match the Mahajanapadas with their capitals:\n\nList I (Mahajanapada)    List II (Capital)\nA. Magadha               1. Shravasti\nB. Kosala                2. Rajagriha (Rajgir)\nC. Vatsa                 3. Kaushambi\nD. Avanti                4. Ujjain",options:["A-2, B-1, C-3, D-4","A-1, B-2, C-4, D-3","A-3, B-1, C-2, D-4","A-2, B-3, C-1, D-4"],correct:0,explanation:"Magadha's capital was Rajagriha (later Pataliputra). Kosala's capital was Shravasti. Vatsa's capital was Kaushambi. Avanti had two capitals — Ujjain (north) and Mahishmati (south), with Ujjain being dominant.",source:"NCERT Gr.6 Ch.6",isPYQ:false},
+  {id:44,type:"direct",stem:"Which of the following Mahajanapadas was a republic (gana-sangha), NOT a monarchy?",options:["Magadha","Kosala","Vajji (Vrijji)","Avanti"],correct:2,explanation:"Vajji was a confederacy/republic (gana-sangha) with its capital at Vaishali. It included the Lichchhavis as the most prominent clan. The other options — Magadha, Kosala, and Avanti — were monarchies.",source:"NCERT Gr.6 Ch.6",isPYQ:false},
+  {id:45,type:"direct",stem:"The Licchhavis, who formed an important part of the Vajji confederacy, had their capital at:",options:["Kaushambi","Vaishali","Rajagriha","Champa"],correct:1,explanation:"The Licchhavis were the dominant clan of the Vajji confederacy with their capital at Vaishali (modern Bihar). Vaishali is also associated with the birth of Mahavira and the first Buddhist council after his death.",source:"NCERT Gr.6 Ch.6",isPYQ:false},
+  {id:46,type:"statement",stem:"Consider the following statements about the Gana-Sanghas (republics) of the 6th century BCE:\nI. The Shakya clan, to which Siddhartha Gautama belonged, was a republic with its capital at Kapilavastu.\nII. Gana-Sanghas were characterized by rule by a council of elected representatives from all sections of society.\nWhich is/are correct?",options:["I only","II only","Both I and II","Neither I nor II"],correct:0,explanation:"Statement I is correct — the Shakyas were a republican clan (gana-sangha) with capital at Kapilavastu. Statement II is incorrect — participation in gana-sangha councils was restricted to the Kshatriya ruling class; it was not universal.",source:"R.S. Sharma – Ancient India",isPYQ:false},
+  {id:47,type:"chrono",stem:"Arrange the following rulers in the correct chronological order:\n(i) Bimbisara\n(ii) Ajatashatru\n(iii) Udayin\n(iv) Shishunaga",options:["(i), (ii), (iii), (iv)","(ii), (i), (iv), (iii)","(i), (ii), (iv), (iii)","(iii), (i), (ii), (iv)"],correct:0,explanation:"Bimbisara (c.544–492 BCE) → Ajatashatru (c.492–460 BCE) → Udayin (c.460–444 BCE) → Shishunaga (c.413–395 BCE). This represents the transition from the Haryanka to the Shishunaga dynasty.",source:"NCERT Gr.6 Ch.6",isPYQ:false},
+  {id:48,type:"direct",stem:"The city of Varanasi (Kashi) was the capital of which Mahajanapada?",options:["Kosala","Kashi","Vatsa","Anga"],correct:1,explanation:"Varanasi was the capital of the Mahajanapada of Kashi. Kashi was one of the most powerful Mahajanapadas but was eventually absorbed into Kosala.",source:"NCERT Gr.6 Ch.6",isPYQ:false},
+  {id:49,type:"three",stem:"Consider the following statements about the Mahajanapada period:\n1. Iron was widely used for agricultural implements and weapons during this period.\n2. Coins (punch-marked coins) were first introduced in India during this period.\n3. All sixteen Mahajanapadas were monarchies with hereditary rulers.\nWhich are correct?",options:["1 and 2 only","1 and 3 only","2 and 3 only","1, 2 and 3"],correct:0,explanation:"Statements 1 and 2 are correct. Iron tools drove agricultural expansion; punch-marked coins (Ahata mudra) emerged around 600 BCE enabling trade. Statement 3 is incorrect — several Mahajanapadas like Vajji, Malla, Kamboja, and Shakya were republics (gana-sanghas).",source:"NCERT Gr.6 Ch.6",isPYQ:false},
+  {id:50,type:"direct",stem:"Which Mahajanapada was located in present-day Rajasthan and northwest India, known for its horse trade?",options:["Matsya","Shurasena","Kamboja","Gandhara"],correct:2,explanation:"Kamboja (corresponding to parts of modern Afghanistan and northwest Pakistan) was famous for its horse trade. Horses from Kamboja were prized across the subcontinent.",source:"R.S. Sharma – Ancient India",isPYQ:false},
+  {id:51,type:"ar",stem:"Assertion (A): The rise of Mahajanapadas in the 6th century BCE was closely linked to the second urbanization of India.\nReason (R): Expansion of iron-based agriculture, growth of trade, and the development of punch-marked coins created surplus wealth that supported urban centres.",options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false and R is true"],correct:0,explanation:"The rise of Mahajanapadas coincides with the second urbanization (the first being the Indus Valley Civilization). Iron technology, agricultural surplus, trade expansion, and money economy were the key drivers. Both A and R are correct.",source:"NCERT Gr.6 Ch.6",isPYQ:false},
+  {id:52,type:"direct",stem:"The Mahajanapada of Anga (corresponding to modern Bhagalpur, Bihar) had its capital at:",options:["Vaishali","Champa","Rajagriha","Shravasti"],correct:1,explanation:"Champa (modern Bhagalpur, Bihar) was the capital of Anga. Anga was one of the earliest Mahajanapadas and was conquered by Bimbisara of Magadha.",source:"NCERT Gr.6 Ch.6",isPYQ:false},
+  {id:53,type:"negative",stem:"Which of the following was NOT one of the four powerful Mahajanapadas that survived into the 4th century BCE?",options:["Magadha","Kosala","Vatsa","Matsya"],correct:3,explanation:"By the 4th century BCE, the four surviving powerful Mahajanapadas were Magadha, Kosala, Vatsa, and Avanti. Matsya was a relatively minor kingdom that was absorbed early on.",source:"R.S. Sharma – Ancient India",isPYQ:false},
+  {id:54,type:"direct",stem:"Pradyota, a powerful ruler associated with the Mahajanapada of Avanti, was a contemporary of:",options:["Chandragupta Maurya","Bimbisara","Ashoka","Chanakya"],correct:1,explanation:"Pradyota (Chandapradyota) was the king of Avanti (capital Ujjain) and was a contemporary of Bimbisara of Magadha. They had diplomatic relations — Bimbisara reportedly sent his physician Jivaka to cure Pradyota.",source:"A.L. Basham – The Wonder That Was India",isPYQ:false},
+  {id:55,type:"direct",stem:"In which modern state is the ancient Mahajanapada of 'Shurasena' (with capital at Mathura) located?",options:["Bihar","Uttar Pradesh","Madhya Pradesh","Rajasthan"],correct:1,explanation:"The Mahajanapada of Shurasena with its capital at Mathura corresponds to the Mathura-Agra region of modern Uttar Pradesh. It is associated with the Krishna legend.",source:"NCERT Gr.6 Ch.6",isPYQ:false},
+  {id:56,type:"match",stem:"Match the Mahajanapadas with their approximate modern locations:\n\nList I (Mahajanapada)    List II (Modern Region)\nA. Gandhara              1. Parts of Pakistan/Afghanistan\nB. Kekaya               2. Punjab (east of Gandhara)\nC. Panchala             3. Western UP/Bareilly region\nD. Chedi                4. Bundelkhand (MP/UP border)",options:["A-1, B-2, C-3, D-4","A-2, B-1, C-4, D-3","A-1, B-3, C-2, D-4","A-4, B-1, C-2, D-3"],correct:0,explanation:"Gandhara = modern Pakistan/Afghanistan (Peshawar-Rawalpindi area). Kekaya = Punjab (Jhelum to Beas). Panchala = western UP (Ahichhatra and Kampilya). Chedi = Bundelkhand region.",source:"R.S. Sharma – Ancient India",isPYQ:false},
+  {id:57,type:"direct",stem:"The Taxila (Takshashila), a famous ancient city and learning centre, was the capital of which Mahajanapada?",options:["Kamboja","Gandhara","Kekaya","Madra"],correct:1,explanation:"Taxila (Takshashila) was the capital of Gandhara Mahajanapada. It was one of the ancient world's greatest centres of learning, where students came to study from across the subcontinent.",source:"NCERT Gr.6 Ch.6",isPYQ:false},
+  {id:58,type:"direct",stem:"The 'Mallas', who were a republican clan (gana-sangha) with their two capitals at Kushinara and Pava, are historically significant because:",options:["They defeated Magadha in battle","Buddha passed away (Mahaparinirvana) at Kushinara","They were the most powerful republic of the age","They founded the city of Vaishali"],correct:1,explanation:"Kushinara (modern Kushinagar, UP) was one of the two capitals of the Malla republic. Buddha attained Mahaparinirvana (final nirvana/death) at Kushinara, making the Mallas historically significant.",source:"NCERT Gr.6 Ch.6",isPYQ:false},
+  {id:59,type:"odd",stem:"Identify the Mahajanapada that was NOT located in the Gangetic plain region:",options:["Kosala","Vajji","Magadha","Gandhara"],correct:3,explanation:"Gandhara was located in the northwest (modern Pakistan/Afghanistan), far from the Gangetic plains. The other three — Kosala, Vajji, and Magadha — were all Gangetic plain Mahajanapadas.",source:"NCERT Gr.6 Ch.6",isPYQ:false},
+  {id:60,type:"direct",stem:"Which Buddhist council was held at Vaishali after the First Buddhist Council, marking a split in the Sangha?",options:["First","Second","Third","Fourth"],correct:1,explanation:"The Second Buddhist Council was held at Vaishali (c. 383 BCE), about 100 years after the Buddha's death. It resulted in a split between Sthaviravadins (orthodox) and Mahasanghikas, leading eventually to Theravada and Mahayana Buddhism.",source:"PYQ 2021",isPYQ:true},
+
+  // ── SECTION 4: RISE OF MAGADHA (Q61–Q80) ──
+  {id:61,type:"direct",stem:"Which of the following factors contributed MOST to Magadha's rise as the dominant power among the Mahajanapadas?",options:["Its location in the Deccan Plateau giving strategic advantage","Its fertile land due to Ganga plains, iron ore from Chota Nagpur, and elephants from forests","Its superior cavalry and horse resources","Its strong naval fleet on the Arabian Sea"],correct:1,explanation:"Magadha's rise was due to: fertile Gangetic plains for agriculture, iron ore from Chota Nagpur hills for weapons/tools, war elephants from forests, and strategic location at trade crossroads.",source:"NCERT Gr.6 Ch.6",isPYQ:false},
+  {id:62,type:"direct",stem:"Bimbisara, the founder of the Haryanka dynasty of Magadha, established his capital at:",options:["Pataliputra","Vaishali","Rajagriha (Rajgir)","Champa"],correct:2,explanation:"Bimbisara (c.544–492 BCE) established and fortified Rajagriha (Rajgir) as his capital. It remained the Magadhan capital until Udayin (Bimbisara's grandson) shifted it to Pataliputra.",source:"NCERT Gr.6 Ch.6",isPYQ:false},
+  {id:63,type:"direct",stem:"Bimbisara's matrimonial alliances included marriage to princesses from which kingdoms?",options:["Kosala and Vajji only","Kosala, Vajji (Licchavi), and Madra (Punjab)","Avanti and Gandhara only","Vatsa and Anga only"],correct:1,explanation:"Bimbisara pursued an aggressive matrimonial policy: married Kosaladevi (Kosala princess), Chellana (Lichchhavi princess from Vajji), and Khema from Madra (Punjab). This secured borders and legitimacy.",source:"R.S. Sharma – Ancient India",isPYQ:false},
+  {id:64,type:"ar",stem:"Assertion (A): Ajatashatru killed his father Bimbisara and seized the Magadhan throne.\nReason (R): Ajatashatru's action was driven by his ambition to accelerate Magadha's imperial expansion, which he felt Bimbisara was pursuing too slowly.",options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false and R is true"],correct:1,explanation:"Ajatashatru did kill his father Bimbisara (c.492 BCE) — this is historically established. However, the exact reason is uncertain; Buddhist texts say he was influenced by his friend Devadatta. 'Expansion ambition' is one interpretation but R is not the established correct explanation.",source:"PYQ 2019",isPYQ:true},
+  {id:65,type:"direct",stem:"Ajatashatru fought a prolonged war with the Vajji confederacy (Licchhavis) of Vaishali. He reportedly used two new weapons in this war — name them:",options:["Greek fire and battering rams","Mahashilakantaka (catapult) and Rathamusala (war chariot with blades)","Poisoned arrows and chariots","Elephants with armour and Greek siege engines"],correct:1,explanation:"Ajatashatru used the Mahashilakantaka (a large stone-throwing engine/catapult) and the Rathamusala (a chariot with rotating blades/scythes) against the Vajji confederacy. This 16-year war ended with Magadha's victory.",source:"NCERT Gr.6 Ch.6",isPYQ:false},
+  {id:66,type:"direct",stem:"The Haryanka dynasty of Magadha was succeeded by the:",options:["Nanda dynasty","Maurya dynasty","Shishunaga dynasty","Gupta dynasty"],correct:2,explanation:"The Haryanka dynasty (Bimbisara, Ajatashatru, Udayin) was overthrown by Shishunaga, who founded the Shishunaga dynasty (c.413 BCE). The Shishunaga dynasty was then overthrown by the Nandas.",source:"NCERT Gr.6 Ch.6",isPYQ:false},
+  {id:67,type:"direct",stem:"Udayin, son of Ajatashatru, is credited with founding the city of:",options:["Rajagriha","Vaishali","Pataliputra","Champa"],correct:2,explanation:"Udayin (c.460–444 BCE) founded the city of Pataliputra (modern Patna) at the confluence of the Ganga, Son, and Gandak rivers. It became and remained the capital of successive empires.",source:"NCERT Gr.6 Ch.6",isPYQ:false},
+  {id:68,type:"three",stem:"Consider the following about the Shishunaga dynasty:\n1. The Shishunaga dynasty was founded by Shishunaga, a minister who overthrew the last Haryanka king.\n2. The most important achievement of the Shishunaga dynasty was the destruction of the power of Avanti.\n3. Kalashoka (Kakavarnin) was the last ruler of the Shishunaga dynasty.\nWhich are correct?",options:["1 and 2 only","2 and 3 only","1 and 3 only","1, 2 and 3"],correct:3,explanation:"All three are correct. Shishunaga was a minister/viceroy at Varanasi who overthrew the last Haryanka king. Destruction of Avanti's power was the dynasty's greatest achievement. Kalashoka (also called Kakavarnin) was indeed the last Shishunaga ruler before the Nanda takeover.",source:"R.S. Sharma – Ancient India",isPYQ:false},
+  {id:69,type:"match",stem:"Match the Magadhan dynasties with their correct sequence and founder:\n\nList I (Dynasty)        List II (Founder)\nA. Haryanka             1. Mahapadma Nanda\nB. Shishunaga           2. Bimbisara\nC. Nanda                3. Shishunaga\nD. Maurya               4. Chandragupta Maurya",options:["A-2, B-3, C-1, D-4","A-1, B-2, C-3, D-4","A-3, B-1, C-4, D-2","A-2, B-1, C-3, D-4"],correct:0,explanation:"Haryanka dynasty founded by Bimbisara. Shishunaga dynasty founded by Shishunaga. Nanda dynasty founded by Mahapadma Nanda. Maurya dynasty founded by Chandragupta Maurya.",source:"NCERT Gr.6 Ch.6",isPYQ:false},
+  {id:70,type:"direct",stem:"The Nanda dynasty was founded by Mahapadma Nanda. He is sometimes called 'Sarva Kshatrantaka' meaning:",options:["Destroyer of all Kshatriyas","King of all kings","Conqueror of the south","Protector of the Vedas"],correct:0,explanation:"Mahapadma Nanda is called 'Sarva Kshatrantaka' (destroyer of all Kshatriyas) and 'Ekarat' (sole ruler) in the Puranas because he conquered and eliminated most Kshatriya ruling dynasties, establishing a vast empire.",source:"R.S. Sharma – Ancient India",isPYQ:false},
+  {id:71,type:"direct",stem:"The last ruler of the Nanda dynasty, who was overthrown by Chandragupta Maurya, was:",options:["Mahapadma Nanda","Dhana Nanda","Kalashoka","Sumana"],correct:1,explanation:"Dhana Nanda (also called Agrammes/Xandrames by Greek sources) was the last Nanda ruler. He was known for his enormous wealth and a powerful army of 200,000 infantry, 60,000 cavalry, and 6,000 war elephants.",source:"NCERT Gr.6 Ch.6",isPYQ:false},
+  {id:72,type:"direct",stem:"Alexander's invasion of India (326 BCE) reached up to which river, where his army refused to march further?",options:["Sindhu (Indus)","Jhelum (Hydaspes)","Beas (Hyphasis)","Ravi (Hydraotes)"],correct:2,explanation:"Alexander's army refused to march further east at the Beas (Hyphasis) river. The soldiers were exhausted and fearful of the powerful Nanda army (Gangaridae) ahead. Alexander returned, and the retreat began.",source:"PYQ 2018",isPYQ:true},
+  {id:73,type:"direct",stem:"The Greek ambassador Megasthenes visited the court of which Indian ruler and wrote the famous work 'Indica'?",options:["Ashoka","Dhana Nanda","Chandragupta Maurya","Bindusara"],correct:2,explanation:"Megasthenes was sent by Seleucus I Nicator as ambassador to the court of Chandragupta Maurya. He wrote 'Indica,' which is an invaluable source for the Mauryan period, though the original is lost and known through fragments.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:74,type:"statement",stem:"Consider the following statements about Chanakya (Kautilya):\nI. Chanakya was a professor at Taxila (Takshashila) who helped Chandragupta overthrow the Nandas.\nII. The Arthashastra attributed to Kautilya deals exclusively with economic policy and has no discussion of foreign relations or war.\nWhich is/are correct?",options:["I only","II only","Both I and II","Neither I nor II"],correct:0,explanation:"Statement I is correct — Chanakya/Kautilya was a Taxila professor who was the mastermind behind Chandragupta's rise. Statement II is incorrect — the Arthashastra is a comprehensive treatise covering statecraft, law, economics, military strategy, diplomacy, and espionage.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:75,type:"direct",stem:"Chandragupta Maurya defeated Seleucus Nicator (a general of Alexander) around 305 BCE. As part of the peace treaty, Seleucus ceded which territories to Chandragupta?",options:["Punjab and Sindh only","Parts of Persia","Arachosia, Gedrosia, Aria, and Paropamisadae (modern Afghanistan/Baluchistan regions)","The entire Gandhara region only"],correct:2,explanation:"After Chandragupta's victory, Seleucus ceded Arachosia (Kandahar), Gedrosia (Baluchistan), Aria (Herat), and Paropamisadae (Kabul valley) to Chandragupta. Chandragupta gave 500 war elephants in return.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:76,type:"direct",stem:"According to tradition, Chandragupta Maurya embraced Jainism in his later life and abdicated the throne. He is believed to have fasted unto death (Sallekhana/Santhara) at:",options:["Vaishali","Ujjain","Shravanabelagola","Sarnath"],correct:2,explanation:"Chandragupta Maurya abdicated in favour of his son Bindusara and is believed to have migrated to Shravanabelagola (Karnataka) with the Jain saint Bhadrabahu. He died by Sallekhana (ritual fasting to death) there.",source:"PYQ 2016",isPYQ:true},
+  {id:77,type:"direct",stem:"The Nanda dynasty rulers were from a:",options:["Brahmin family","Kshatriya family","Shudra/low-caste origin","Vaishya merchant family"],correct:2,explanation:"Classical sources (Puranas) indicate that Mahapadma Nanda was of Shudra origin (son of a barber and a Kshatriya woman according to some sources), making the Nanda dynasty's low-caste origin a subject of historical note.",source:"R.S. Sharma – Ancient India",isPYQ:false},
+  {id:78,type:"odd",stem:"Identify the odd one out — sources of information for the Mauryan Empire:",options:["Arthashastra by Kautilya","Indica by Megasthenes","Ashtadhyayi by Panini","Edicts of Ashoka"],correct:2,explanation:"Ashtadhyayi by Panini is a grammar text from pre-Mauryan period (c.4th century BCE) and is not primarily a source about the Mauryan Empire, unlike the other three which are direct sources about the Mauryas.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:79,type:"direct",stem:"Bindusara, the second Mauryan ruler, is known by which Greek name?",options:["Amitraghata (enemy killer) — mentioned as Amitrochates by Greeks","Priyadarshi","Piodasses","Sandrokottos"],correct:0,explanation:"Bindusara's Sanskrit epithet was 'Amitraghata' (slayer of enemies), which the Greeks rendered as 'Amitrochates.' He is called Allitrochades by Athenaeus and maintained diplomatic relations with the Seleucid and Ptolemaic kingdoms.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:80,type:"negative",stem:"Which of the following is NOT correctly matched regarding the Magadhan dynasties?",options:["Haryanka — Bimbisara and Ajatashatru","Shishunaga — conquered Avanti","Nanda — wealthy army and iron tools","Maurya — Chandragupta defeated the Seleucids after the Kalinga war"],correct:3,explanation:"The Kalinga war was fought by ASHOKA (Chandragupta's grandson), not Chandragupta. Chandragupta defeated Seleucus Nicator BEFORE any Kalinga event. All other options are correctly matched.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+
+  // ── SECTION 5: MAURYAN EMPIRE – CHANDRAGUPTA & BINDUSARA (Q81–Q95) ──
+  {id:81,type:"direct",stem:"The Mauryan Empire is generally dated from:",options:["321–185 BCE","500–250 BCE","272–232 BCE","350–150 BCE"],correct:0,explanation:"The Mauryan Empire lasted from approximately 321 BCE (Chandragupta's founding) to 185 BCE (assassination of Brihadratha, last Mauryan ruler). At its peak it covered most of the Indian subcontinent.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:82,type:"direct",stem:"Which of the following ancient texts provides the most detailed description of the Mauryan administration, society, and economy?",options:["Mahabhashya by Patanjali","Arthashastra by Kautilya","Mudrarakshasa by Vishakhadatta","Indica by Megasthenes"],correct:1,explanation:"The Arthashastra by Kautilya (Chanakya) is the most detailed and authentic textbook on Mauryan administration, covering everything from governance to espionage, taxation, and diplomacy.",source:"PYQ 2020",isPYQ:true},
+  {id:83,type:"match",stem:"Match the Mauryan rulers with their epithets/nicknames:\n\nList I (Ruler)           List II (Epithet/Connection)\nA. Chandragupta Maurya   1. Amitraghata (enemy-slayer)\nB. Bindusara             2. Piyadassi / Priyadarshi (Beloved of the Gods)\nC. Ashoka                3. Sandrokottos (Greek name)\nD. Brihadratha           4. Last Mauryan ruler, killed by Pushyamitra Shunga",options:["A-3, B-1, C-2, D-4","A-1, B-3, C-4, D-2","A-2, B-4, C-1, D-3","A-3, B-2, C-1, D-4"],correct:0,explanation:"Chandragupta = Sandrokottos (Greek). Bindusara = Amitraghata/Amitrochates. Ashoka = Piyadassi/Priyadarshi. Brihadratha was the last Mauryan king, killed by his commander-in-chief Pushyamitra Shunga.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:84,type:"direct",stem:"The play 'Mudrarakshasa' by Vishakhadatta deals with:",options:["The life and teachings of Ashoka","The story of Chandragupta Maurya's rise to power","The Kalinga war and its aftermath","The decline of the Mauryan empire"],correct:1,explanation:"Mudrarakshasa (The Signet Ring of Rakshasa) is a Sanskrit play by Vishakhadatta describing how Chandragupta Maurya with Chanakya's help outwitted Rakshasa (the Nanda minister) and established the Mauryan empire.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:85,type:"direct",stem:"Chandragupta Maurya's empire extended in the south up to which region?",options:["Only the Vindhya mountains","The Krishna-Tungabhadra basin","The Kaveri delta","The Deccan plateau south of the Narmada"],correct:3,explanation:"Chandragupta's empire extended to the Deccan plateau south of the Narmada. Some sources suggest it reached as far as Karnataka. His grandson Ashoka further extended Mauryan control to most of the subcontinent.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:86,type:"three",stem:"Consider the following statements about Bindusara:\n1. Bindusara maintained friendly relations with the Syrian king Antiochus I.\n2. Bindusara requested Antiochus to send him sweet wine, dried figs, and a philosopher.\n3. Bindusara conquered the Deccan and extended the empire southward.\nWhich are correct?",options:["1 and 2 only","2 and 3 only","1 and 3 only","1, 2 and 3"],correct:3,explanation:"All three are correct. Bindusara had diplomatic relations with Antiochus I. The request for wine, figs and a philosopher is mentioned in classical sources (Antiochus said he could send wine and figs but not a philosopher). Bindusara is credited with Deccan conquests.",source:"R.S. Sharma – Ancient India",isPYQ:false},
+  {id:87,type:"direct",stem:"Bindusara is associated with which religious sect?",options:["Buddhism","Jainism","Ajivika sect","Brahmanism"],correct:2,explanation:"Bindusara was a follower of the Ajivika sect (founded by Makkhali Gosala), a fatalistic philosophy that believed everything was predetermined by cosmic order (Niyati). He had Ajivika teachers at court.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:88,type:"direct",stem:"The Arthashastra was rediscovered and published in the modern period by which scholar?",options:["Vincent Smith","R. Shamasastry","John Marshall","V.A. Smith"],correct:1,explanation:"R. Shamasastry (R. Shamashastri) discovered a manuscript of the Arthashastra in the Mysore Oriental Library and published the first edition in 1909, followed by an English translation in 1915.",source:"PYQ 2017",isPYQ:true},
+  {id:89,type:"direct",stem:"According to the Arthashastra, the Mauryan state was divided into provinces called 'Janapadas' governed by:",options:["Amatyas","Rajukas","Kumara (Princes) or Aryaputras","Yuktas"],correct:2,explanation:"The Mauryan Empire was divided into provinces (usually 4–5), each governed by a Kumara (prince of royal blood) or Aryaputra. These governors were supported by a council of ministers (Mantriparishad).",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:90,type:"ar",stem:"Assertion (A): The Mauryan Empire had an elaborate spy network described in the Arthashastra.\nReason (R): The Arthashastra mentions various types of spies such as Samstha (stationary) and Sancharas (wandering) spies who reported directly to the king.",options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false and R is true"],correct:0,explanation:"Both are true. The Arthashastra elaborately describes espionage — Samstha (fixed-position agents) and Sanchara (roving agents), along with various disguises (monks, merchants, etc.). This spy system was a key Mauryan administrative tool.",source:"Arthashastra / NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:91,type:"direct",stem:"According to the Arthashastra, the Mauryan treasury (Kosa) was managed by an officer called:",options:["Sannidhata","Samaharta","Dharmadhyaksha","Akshapataladhyaksha"],correct:0,explanation:"The Sannidhata was the treasurer (keeper of the treasury/Kosa). The Samaharta was the chief revenue collector. These were among the most important functionaries in the Mauryan administrative system.",source:"Arthashastra",isPYQ:false},
+  {id:92,type:"statement",stem:"Consider the following statements about the Arthashastra:\nI. The Arthashastra is divided into 15 books (Adhikaranas) covering statecraft, law, and economic policy.\nII. The Arthashastra advocates that the king should always follow dharma (righteousness) even if it conflicts with state interest.\nWhich is/are correct?",options:["I only","II only","Both I and II","Neither I nor II"],correct:0,explanation:"Statement I is correct — the Arthashastra has 15 books covering all aspects of statecraft. Statement II is incorrect — the Arthashastra follows the realpolitik approach (similar to Machiavelli), advocating that state interest (raison d'état) may override dharma.",source:"Arthashastra / R.S. Sharma",isPYQ:false},
+  {id:93,type:"direct",stem:"Chandragupta Maurya's biography is known through a combination of sources. Which of the following is CORRECT about his origins?",options:["He was a prince of the Nanda royal family","His exact lineage is disputed — Buddhist sources claim Kshatriya Moriya clan origin; some sources suggest humble origins","He was a Brahmin from Taxila","He was the son of a Nanda king and a Shudra woman"],correct:1,explanation:"Chandragupta's exact origin is debated. Buddhist texts (Mahavamsa) say he was from the Moriya Kshatriya clan of Pippalivana. Brahmanical sources suggest more humble origins. Justin (Greek source) says he was of low birth.",source:"Upinder Singh – A History of Ancient and Early Medieval India",isPYQ:false},
+  {id:94,type:"direct",stem:"The province of 'Uttarapatha' (northern region) in the Mauryan Empire had its headquarters at:",options:["Pataliputra","Taxila (Takshashila)","Ujjain","Tosali"],correct:1,explanation:"Taxila (Takshashila) was the headquarters of the northern province (Uttarapatha) of the Mauryan Empire. It was one of the most strategically important provinces, often governed by a prince of the royal family.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:95,type:"chrono",stem:"Arrange the following events in chronological order:\n(i) Alexander's invasion of India\n(ii) Founding of the Mauryan Empire\n(iii) Seleucus-Chandragupta war\n(iv) Kalinga War",options:["(i), (ii), (iii), (iv)","(ii), (i), (iii), (iv)","(i), (iii), (ii), (iv)","(iii), (i), (ii), (iv)"],correct:0,explanation:"Alexander's invasion: 326 BCE → Founding of Mauryan Empire: 321 BCE → Seleucus-Chandragupta war: c.305 BCE → Kalinga War: 261 BCE.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+
+  // ── SECTION 6: ASHOKA (Q96–Q120) ──
+  {id:96,type:"direct",stem:"The Kalinga war, which transformed Ashoka, was fought in approximately:",options:["285 BCE","261 BCE","250 BCE","232 BCE"],correct:1,explanation:"The Kalinga war was fought in approximately 261 BCE, in the 8th or 9th year of Ashoka's reign. It resulted in massive destruction, and the sight of the carnage profoundly affected Ashoka and led to his conversion to Buddhism.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:97,type:"direct",stem:"Ashoka's Rock Edict XIII describes the Kalinga war. The edict mentions how many people were killed, deported, and died during the war?",options:["50,000 killed, 100,000 deported, 150,000 died","100,000 killed, 150,000 deported, many more died","150,000 killed, 300,000 deported, uncountable died","200,000 killed, 100,000 deported"],correct:1,explanation:"Rock Edict XIII states that 100,000 people were killed in the Kalinga war, 150,000 were deported (as prisoners), and many more died due to disease and other causes. This edict expresses Ashoka's remorse.",source:"PYQ 2019",isPYQ:true},
+  {id:98,type:"match",stem:"Match Ashoka's edicts with their content/location:\n\nList I (Edict)               List II (Content/Feature)\nA. Major Rock Edicts         1. Inscribed on polished stone pillars\nB. Minor Rock Edicts         2. Found in Kandahar in Greek and Aramaic\nC. Major Pillar Edicts       3. 14 edicts on large rocks about Dhamma\nD. Bilingual Edict           4. Ashoka's first proclamation after conversion",options:["A-3, B-4, C-1, D-2","A-1, B-3, C-2, D-4","A-4, B-2, C-3, D-1","A-3, B-2, C-4, D-1"],correct:0,explanation:"Major Rock Edicts = 14 edicts on large rock faces. Minor Rock Edicts = Ashoka's first proclamations after becoming Buddhist. Major Pillar Edicts = on polished Ashokan pillars. Bilingual edict found at Kandahar (in Greek and Aramaic).",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:99,type:"direct",stem:"Ashoka's Dhamma (Dharma) was based on which principle as its core teaching?",options:["Strict enforcement of the caste system","Ahimsa (non-violence), religious tolerance, respect for elders, and social ethics","Military expansion for the glory of the empire","Conversion of all subjects to Buddhism"],correct:1,explanation:"Ashoka's Dhamma was not Buddhism per se but a universal social ethics: Ahimsa (non-violence), tolerance between sects, respect for elders/parents, generosity, honesty, and compassion. It was a practical moral code.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:100,type:"direct",stem:"The language most commonly used in Ashoka's inscriptions in the Indian subcontinent was:",options:["Sanskrit","Tamil","Prakrit","Pali"],correct:2,explanation:"Ashoka's inscriptions in the Indian subcontinent were mostly in Prakrit (popular language of the masses), written in Brahmi script (mostly) and Kharoshthi script (northwest). The northwest inscriptions also used Greek and Aramaic.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:101,type:"direct",stem:"The Brahmi script used in most of Ashoka's inscriptions was first deciphered by:",options:["Alexander Cunningham","James Prinsep","Max Mueller","Vincent Smith"],correct:1,explanation:"James Prinsep, a British civil servant and orientalist, first deciphered the Brahmi script in 1837 CE. He decoded Ashoka's pillar inscriptions and identified the emperor as 'Priyadarshi' (Ashoka's epithet).",source:"PYQ 2018",isPYQ:true},
+  {id:102,type:"three",stem:"Consider the following statements about Ashoka's missionary activities:\n1. Ashoka sent his son Mahendra and daughter Sanghamitra to Sri Lanka to spread Buddhism.\n2. Ashoka sent Buddhist missionaries to the Hellenistic kingdoms of the West including Syria, Egypt, Cyrene, Macedonia, and Epirus.\n3. Ashoka converted all his subjects to Buddhism by royal decree.\nWhich are correct?",options:["1 and 2 only","2 and 3 only","1 and 3 only","1, 2 and 3"],correct:0,explanation:"Statements 1 and 2 are correct. Mahendra (son) and Sanghamitra (daughter) went to Sri Lanka. Rock Edict XIII mentions missions to Antiochus, Ptolemy, Antigonos, Magas, and Alexander (five Hellenistic rulers). Statement 3 is incorrect — Ashoka never imposed Buddhism; he respected all religions.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:103,type:"ar",stem:"Assertion (A): Ashoka's Dhamma Mahamattas were special officials appointed to oversee the implementation of Dhamma.\nReason (R): Dhamma Mahamattas were created to act as spies to report on religious activities of subjects.",options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false and R is true"],correct:2,explanation:"A is correct — Ashoka created the Dhamma Mahamattas (officers of righteousness) to spread and implement his Dhamma principles. R is incorrect — they were welfare officers for social reform, not spies.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:104,type:"direct",stem:"The Third Buddhist Council, convened to standardize the Buddhist canon, was held during Ashoka's reign at:",options:["Rajagriha","Vaishali","Pataliputra","Sarnath"],correct:2,explanation:"The Third Buddhist Council was held at Pataliputra (c. 250 BCE) under the patronage of Ashoka and presided over by Moggaliputta Tissa. It compiled the Pali canon and decided to send missionaries abroad.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:105,type:"direct",stem:"The famous Ashokan pillar at Sarnath, with the four-lion capital, is significant because:",options:["It marks the site of the First Buddhist Council","It marks the place where Buddha delivered his first sermon (Dhammachakka Pavattana)","It was erected to commemorate the Kalinga victory","It marks the birthplace of Buddha"],correct:1,explanation:"The Sarnath pillar marks the place where Buddha delivered his first sermon (Dhammachakka Pavattana Sutta) after his enlightenment. The four-lion capital from this pillar is India's National Emblem.",source:"PYQ 2021",isPYQ:true},
+  {id:106,type:"direct",stem:"Ashoka's edicts that were discovered at Mansehra and Shahbazgarhi (Pakistan) were written in which script?",options:["Brahmi","Tamil Brahmi","Kharoshthi","Greek"],correct:2,explanation:"The edicts at Mansehra and Shahbazgarhi in the northwest (modern Pakistan) were written in Kharoshthi script (written right to left), used in the Gandhara region. This was the local script of that area.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:107,type:"statement",stem:"Consider the following statements about Ashoka's pillar edicts:\nI. All Ashokan pillars were made of sandstone from Chunar (near Varanasi).\nII. The Rampurva pillar edict contains Ashoka's information about his Dhamma Yatrā (pilgrimages).\nWhich is/are correct?",options:["I only","II only","Both I and II","Neither I nor II"],correct:0,explanation:"Statement I is correct — all Ashokan pillars were made from polished Chunar sandstone, remarkable for their uniformity. Statement II is incorrect — it is the Pillar Edict VII (at various locations) and Rock Edict VIII that mention his pilgrimages to Bodh Gaya and Lumbini.",source:"Upinder Singh – A History of Ancient India",isPYQ:false},
+  {id:108,type:"direct",stem:"Which of Ashoka's edicts specifically mentions his personal adoption of Buddhism (becoming a Buddhist upasaka)?",options:["Major Rock Edict I","Minor Rock Edict I","Pillar Edict IV","Rock Edict XIII"],correct:1,explanation:"Minor Rock Edict I is Ashoka's personal declaration stating that he became a Buddhist upasaka (lay follower) more than 2.5 years before the edict. It mentions his enthusiasm in propagating Buddhism after previously showing less interest.",source:"Upinder Singh – A History of Ancient India",isPYQ:false},
+  {id:109,type:"direct",stem:"Ashoka's mission to Sri Lanka led by Mahendra resulted in the Sri Lankan king Devanampiya Tissa embracing Buddhism. The great Buddhist chronicle 'Mahavamsa' was written in:",options:["Tamil","Sanskrit","Pali","Sinhala"],correct:2,explanation:"The Mahavamsa (Great Chronicle) is a Pali-language chronicle of Sri Lanka's history, written by the monk Mahanama in the 5th-6th century CE. It is an important source for Ashoka's missions and Sri Lankan history.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:110,type:"chrono",stem:"Arrange the following Buddhist councils in correct chronological order:\n(i) Third Buddhist Council at Pataliputra\n(ii) First Buddhist Council at Rajagriha\n(iii) Fourth Buddhist Council (Kashmir)\n(iv) Second Buddhist Council at Vaishali",options:["(ii), (iv), (i), (iii)","(i), (ii), (iv), (iii)","(ii), (i), (iv), (iii)","(iv), (ii), (iii), (i)"],correct:0,explanation:"First Council: Rajagriha, c.483 BCE (after Buddha's death). Second: Vaishali, c.383 BCE. Third: Pataliputra, c.250 BCE (Ashoka's time). Fourth: Kashmir, c.72 CE (during Kanishka's reign).",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:111,type:"negative",stem:"Which of the following is NOT an achievement of Ashoka?",options:["Construction of roads and rest houses (Dharmashalas)","Digging of wells and planting of shade trees along roads","Conquest of Bactria and extending the empire to Central Asia","Appointment of Dhamma Mahamattas"],correct:2,explanation:"Ashoka did NOT conquer Bactria. He abandoned the policy of military conquest after Kalinga. His achievements include roads, dharmashalas, wells, medical facilities for humans and animals, and Dhamma Mahamattas.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:112,type:"direct",stem:"The famous Lumbini pillar inscription of Ashoka records his visit to the birthplace of the Buddha. The inscription states he exempted Lumbini from:",options:["Military service","The religious tax","Land revenue (bali) and reduced the share-tax (bhaga)","Trade restrictions"],correct:2,explanation:"The Lumbini inscription states Ashoka visited the birthplace and exempted the village from bali (the fixed tax) and reduced the bhaga (produce share-tax) to one-eighth. This shows Ashoka's reverence for the Buddha.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:113,type:"match",stem:"Match Ashoka's special officials with their functions:\n\nList I (Official)          List II (Function)\nA. Rajukas                 1. Provincial governors\nB. Yuktas                  2. District officers with judicial powers\nC. Pradeshikas             3. Subordinate officials/scribes\nD. Dhamma Mahamattas       4. Officers to spread Dhamma and welfare",options:["A-2, B-3, C-1, D-4","A-1, B-2, C-3, D-4","A-3, B-4, C-2, D-1","A-2, B-4, C-1, D-3"],correct:0,explanation:"Rajukas = district officers with judicial powers (like modern district collectors). Yuktas = subordinate officials/accountants. Pradeshikas = provincial/divisional governors. Dhamma Mahamattas = welfare/Dhamma officers.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:114,type:"direct",stem:"In Ashoka's inscriptions, his subjects are referred to as his:",options:["Praja (subjects)","Putras (children/sons)","Dasa (servants)","Nayaka (leaders)"],correct:1,explanation:"Ashoka's edicts refer to his subjects as his 'children' (putras). For example, Rock Edict VI states 'All men are my children.' This reflects his paternal attitude towards governance and Dhamma.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:115,type:"direct",stem:"The term 'Piyadassi Laja' (Beloved of the Gods, of gracious mien) — the title used in Ashoka's inscriptions — was first connected to the historical Ashoka by:",options:["James Prinsep","Alexander Cunningham","George Turnour","John Marshall"],correct:2,explanation:"George Turnour, using the Mahavamsa (Sri Lankan chronicle), first established that 'Piyadassi' in the inscriptions referred to Ashoka Maurya (around 1837), which was later confirmed by Prinsep's decipherment.",source:"Upinder Singh – A History of Ancient India",isPYQ:false},
+  {id:116,type:"direct",stem:"Ashoka's Rock Edict II mentions his welfare measures. Which of the following was specifically mentioned as a medical/welfare measure?",options:["Free education for all","Establishment of hospitals for humans and animals","Land grants to Buddhist monasteries","Free meals for all pilgrims"],correct:1,explanation:"Rock Edict II specifically mentions that Ashoka established medical facilities (treatment centres) for humans and animals, planted medicinal herbs, dug wells, and established Dharmashalas (rest houses) along roads.",source:"PYQ 2022",isPYQ:true},
+  {id:117,type:"three",stem:"Consider the following about Ashoka's Dhamma:\n1. Ashoka's Dhamma advocated the supremacy of Buddhism over all other religions.\n2. Ashoka's Dhamma emphasized respect for parents, teachers, relatives, and Brahmins/Sramanas equally.\n3. One of the tenets of Ashoka's Dhamma was abstention from killing animals.\nWhich are correct?",options:["1 and 3 only","2 and 3 only","1 and 2 only","1, 2 and 3"],correct:1,explanation:"Statement 1 is incorrect — Ashoka's Dhamma was universal and non-sectarian; it did not promote Buddhism exclusively. Statements 2 and 3 are correct: his edicts emphasize respect for all and non-violence toward animals.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:118,type:"ar",stem:"Assertion (A): Ashoka's policy of Dhamma Vijaya (conquest through Dhamma) replaced the earlier Digvijaya (military conquest) after Kalinga.\nReason (R): Ashoka realized that true conquest comes through winning hearts and minds, not through military force, and that only Dhamma Vijaya is a real victory.",options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false and R is true"],correct:0,explanation:"Both are true and logically connected. Ashoka's Rock Edict XIII explicitly states that he considers Dhamma Vijaya the only real victory, rejecting military conquest as a means of policy expansion.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:119,type:"direct",stem:"The concept of 'Wheel of Dhamma' (Dhammachakra) that Ashoka propagated is symbolized in India's National Flag. The wheel has how many spokes?",options:["16","20","24","32"],correct:2,explanation:"The Dhammachakra (Wheel of Law) in the Indian National Flag (adopted from the Sarnath Lion Capital) has 24 spokes, representing the 24 hours of the day — symbolizing constant progress and dharma.",source:"PYQ 2014",isPYQ:true},
+  {id:120,type:"odd",stem:"Identify the odd one out — places where Ashokan inscriptions have been found:",options:["Girnar (Gujarat)","Kalsi (Uttarakhand)","Sopara (Maharashtra)","Ajanta (Maharashtra)"],correct:3,explanation:"Ashokan inscriptions have been found at Girnar, Kalsi, Sopara, Dhauli, Jaugada, and many other sites. Ajanta is famous for its Buddhist cave paintings (2nd century BCE to 6th century CE) but is NOT a site of Ashokan inscriptions.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+
+  // ── SECTION 7: MAURYAN ADMINISTRATION, ECONOMY, ART (Q121–Q140) ──
+  {id:121,type:"direct",stem:"The Mauryan Empire's capital Pataliputra was located at the confluence of which rivers?",options:["Ganga and Yamuna","Ganga, Son, and Gandak","Ganga and Gandak only","Ganga and Ghaghra"],correct:1,explanation:"Pataliputra (modern Patna) was located at the confluence of the Ganga, Son (Hiranyavaha), and Gandak rivers. This strategic location made it a great centre of trade and an almost impregnable capital.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:122,type:"direct",stem:"According to Megasthenes' Indica, the municipal administration of Pataliputra was managed by a board of how many commissioners divided into how many committees?",options:["12 commissioners in 2 committees of 6","30 commissioners in 6 committees of 5","20 commissioners in 4 committees of 5","18 commissioners in 3 committees of 6"],correct:1,explanation:"Megasthenes describes Pataliputra's city administration as managed by 30 commissioners divided into 6 committees of 5 each, dealing with: industry/crafts, foreigners, births/deaths, trade/weights, manufacture/sale of goods, and collection of taxes.",source:"Indica / NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:123,type:"match",stem:"Match the Mauryan administrative terms with their functions:\n\nList I (Term)          List II (Function)\nA. Samaharta           1. Chief revenue collector\nB. Sannidhata          2. Chief treasurer\nC. Senapati            3. Commander-in-chief\nD. Mahamatra           4. Senior official/minister",options:["A-1, B-2, C-3, D-4","A-2, B-1, C-4, D-3","A-1, B-3, C-2, D-4","A-4, B-3, C-1, D-2"],correct:0,explanation:"Samaharta = Chief revenue collector. Sannidhata = Chief treasurer (keeper of the treasury). Senapati = Commander-in-chief of the army. Mahamatra = a generic term for senior officials/ministers.",source:"Arthashastra / NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:124,type:"direct",stem:"The Arthashastra mentions a sophisticated system of weights and measures standardized across the Mauryan Empire. The standard unit of weight was called:",options:["Pana","Dharana","Masha","Karsha"],correct:1,explanation:"The Dharana was the standard unit of weight in the Mauryan system as mentioned in the Arthashastra. 16 Mashas = 1 Karsha/Suvarnas = 1 Pala. The Dharana was specifically the silver weight standard.",source:"Arthashastra",isPYQ:false},
+  {id:125,type:"negative",stem:"Which of the following is NOT a feature of the Mauryan army as described by Megasthenes?",options:["It was divided into infantry, cavalry, elephants, chariots, navy, and commissariat (six wings)","The army was maintained by the state — soldiers were paid regular salaries and did not own land","The army included Greek mercenary troops as a significant component","A military board of 30 overseen six committees managed different wings of the army"],correct:2,explanation:"Greek mercenaries were NOT a significant component of the Mauryan army. The army was an entirely Indian standing army. The other statements are correct — six wings, salary-based, and the military board of 30.",source:"Indica / NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:126,type:"direct",stem:"The main source of revenue for the Mauryan state was:",options:["Trade taxes","Land revenue (bhaga — share of produce)","Tribute from conquered kingdoms","Taxes on trade in luxury goods"],correct:1,explanation:"Land revenue (Bhaga — typically 1/4 to 1/6 of produce) was the main source of revenue. Other taxes included customs duties, fines, income from state-owned enterprises, and various other levies mentioned in the Arthashastra.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:127,type:"three",stem:"Consider the following about Mauryan art and architecture:\n1. Mauryan pillars were made of polished Chunar sandstone with extraordinary lustre.\n2. The palaces at Pataliputra described by Megasthenes were entirely made of wood.\n3. The construction of stupas was a significant contribution of the Mauryan period under Ashoka.\nWhich are correct?",options:["1 and 3 only","2 and 3 only","1 and 2 only","1, 2 and 3"],correct:3,explanation:"All three are correct. Mauryan pillars are famous for their mirror-like polish. The Pataliputra palace was indeed largely of wood (confirmed by Fa-Hien's account and archaeology). Ashoka built thousands of stupas including at Sanchi, Sarnath, and Bodh Gaya.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:128,type:"direct",stem:"The Sanchi Stupa, one of the finest examples of Mauryan and post-Mauryan Buddhist architecture, was originally built by:",options:["Kanishka","Ashoka","Chandragupta II","Harsha"],correct:1,explanation:"The Great Stupa at Sanchi (Madhya Pradesh) was originally built by Ashoka as a simple brick stupa. It was later enlarged and beautified with elaborate toranas (gateways) during the Shunga and Satavahana periods.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:129,type:"direct",stem:"The famous Pataliputra capital (the Pataliputra capital/Pataliputra fragment) discovered at Kumrahar (Patna) shows influence of:",options:["Dravidian architecture","Achaemenid (Persian) art","Greek art","Kushan art"],correct:1,explanation:"The Pataliputra lotus capital shows strong Achaemenid (Persian) influence — the palmette design, flame-like pattern, and general aesthetics reflect Persian imperial art, suggesting Mauryan contact with the Achaemenid Empire.",source:"Upinder Singh – A History of Ancient India",isPYQ:false},
+  {id:130,type:"ar",stem:"Assertion (A): Mauryan art is primarily known for its monumental sculpture in stone, particularly the free-standing pillars with animal capitals.\nReason (R): The Mauryas were the first rulers in Indian history to use stone as a medium for architecture and sculpture on a large scale.",options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false and R is true"],correct:0,explanation:"Both are true. The Mauryas pioneered the large-scale use of stone in Indian art and architecture. Their pillars with animal capitals (lion, bull, elephant) are the earliest well-preserved stone sculptures in India.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:131,type:"direct",stem:"The Mauryan pillar capital at Sarnath has four lions back-to-back, a wheel, and four animals running below the wheel. What are the four animals running around the abacus?",options:["Lion, Tiger, Elephant, Bull","Horse, Elephant, Bull, Lion","Elephant, Bull, Horse, Lion (running between four small wheels)","Tiger, Rhinoceros, Bull, Elephant"],correct:2,explanation:"The four animals on the abacus of the Sarnath Lion Capital are: elephant, bull, horse, and lion — separated by four Dhammachakra wheels. They may symbolize the four directions or the stages of Buddha's life.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:132,type:"direct",stem:"Trade guilds (Shrenis) were an important feature of the Mauryan economy. The head of a guild was called:",options:["Sarthavaha","Shresthin","Gramika","Senapati"],correct:1,explanation:"The head of a trade guild (Shreni) was called the Shresthin (Sethi in Pali). The Sarthavaha was the caravan leader. Shrenis were well-organized merchant/craft guilds that played a vital role in the Mauryan economy.",source:"R.S. Sharma – Ancient India",isPYQ:false},
+  {id:133,type:"negative",stem:"Which of the following is NOT a feature of Mauryan economic policy according to the Arthashastra?",options:["State control over strategic industries such as mining, arms manufacturing, and shipbuilding","Complete free market economy with no state regulation of prices or trade","Standardization of weights, measures, and currency across the empire","State-owned farms (Sita) cultivated by hired labour and slaves"],correct:1,explanation:"The Mauryan economy was NOT a free market. The Arthashastra prescribes heavy state regulation — price controls, standard weights and measures, control over strategic industries, and state farms. Free market was the opposite of Mauryan economic policy.",source:"Arthashastra / R.S. Sharma",isPYQ:false},
+  {id:134,type:"direct",stem:"Punch-marked coins (Ahata Mudra), which were the main currency during the Mauryan period, were made of:",options:["Gold","Bronze","Silver and Copper","Iron"],correct:2,explanation:"Punch-marked coins were made of silver (Rupya) and copper. They had various symbols punched (not engraved) on them — hill, sun, moon, animals, etc. Gold coins were rare. These coins were the main medium of trade.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:135,type:"match",stem:"Match the Ashokan pillar capitals with their present locations:\n\nList I (Capital)         List II (Present Location)\nA. Lion Capital (4 lions) 1. Indian Museum, Kolkata\nB. Bull Capital           2. Sarnath Museum, Varanasi\nC. Elephant Capital       3. Allahabad (Prayagraj) pillar\nD. Lion Capital (single)  4. Vaishali (in situ)",options:["A-2, B-1, C-4, D-3","A-3, B-2, C-1, D-4","A-2, B-3, C-1, D-4","A-1, B-4, C-2, D-3"],correct:0,explanation:"The famous four-lion capital is at Sarnath Museum. The bull capital from Rampurva is in Indian Museum, Kolkata. A single lion capital is at Vaishali (in situ). The Allahabad pillar has an inscription (column by Ashoka) but its capital is discussed separately.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:136,type:"direct",stem:"According to the Arthashastra, what was 'Sita' in the context of Mauryan agriculture?",options:["A religious tax imposed on farmers","Crown lands directly controlled by the state and cultivated by labourers","A type of grain offered to priests","Land given to Brahmin scholars"],correct:1,explanation:"'Sita' referred to the crown land or state farm in the Arthashastra. These were directly managed by the state using hired labour (vishti) or slaves (dasa). Revenue from Sita was a direct source of state income.",source:"Arthashastra",isPYQ:false},
+  {id:137,type:"direct",stem:"The Mauryan system of irrigation included the management of water resources. A major irrigation work from the Mauryan period is the Sudarshana Lake in:",options:["Orissa","Gujarat (Girnar)","Rajasthan","Karnataka"],correct:1,explanation:"The Sudarshana Lake near Girnar (Junagadh), Gujarat, was a major irrigation work built during the Mauryan period (possibly under Chandragupta's governor Pushyagupta). Its dam was repaired by Saka Satrap Rudradaman I (150 CE) and later by the Gupta governor.",source:"PYQ 2020",isPYQ:true},
+  {id:138,type:"statement",stem:"Consider the following about the Mauryan economy:\nI. Long-distance trade routes connected the Mauryan Empire with Central Asia, West Asia, and Southeast Asia.\nII. The Arthashastra mentions a state-controlled trading enterprise called 'Panika' to regulate private trade.\nWhich is/are correct?",options:["I only","II only","Both I and II","Neither I nor II"],correct:0,explanation:"Statement I is correct — the Mauryan Empire was well-connected through overland and maritime trade routes. Statement II needs qualification — the Arthashastra mentions state supervision but the specific term 'Panika' refers to spice-sellers, not a trading enterprise.",source:"Arthashastra / R.S. Sharma",isPYQ:false},
+  {id:139,type:"direct",stem:"The 'Navarathna' (nine gems) concept is associated with the court of Chandragupta II (Vikramaditya) of the Gupta period. However, for the MAURYAN period, which of the following was a key intellectual figure in Chandragupta Maurya's court?",options:["Kalidasa","Chanakya (Kautilya)","Aryabhata","Vatsyayana"],correct:1,explanation:"Chanakya (Kautilya) was the most important intellectual in Chandragupta Maurya's court — his prime minister, chief advisor, and mentor. He is the author of the Arthashastra. The others are associated with the Gupta period.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:140,type:"direct",stem:"The Mauryan period saw the development of 'Yaksha' (nature spirit) sculpture. The most famous example is the Yaksha/Yakshi figure found at:",options:["Didarganj (Patna)","Mathura","Bodh Gaya","Ajanta"],correct:0,explanation:"The Didarganj Yakshi (Chauri-bearer) found at Didarganj, Patna, is one of the finest examples of Mauryan sculpture — a female figure with polished sandstone surface. It is now in the Patna Museum.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+
+  // ── SECTION 8: DECLINE OF THE MAURYAS (Q141–Q150) ──
+  {id:141,type:"direct",stem:"The last ruler of the Mauryan dynasty who was assassinated by his commander-in-chief was:",options:["Samprati","Shalishuka","Brihadratha","Dashrath"],correct:2,explanation:"Brihadratha, the last Mauryan emperor, was assassinated by his commander-in-chief Pushyamitra Shunga around 185 BCE. Pushyamitra then founded the Shunga dynasty.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:142,type:"direct",stem:"The Shunga dynasty, which succeeded the Mauryas, was founded by:",options:["Devabhuti","Agnimitra","Pushyamitra Shunga","Vasumitra"],correct:2,explanation:"Pushyamitra Shunga, the Mauryan army commander-in-chief, founded the Shunga dynasty (c.185–73 BCE) after assassinating Brihadratha. He was a Brahmin, and his dynasty revived Brahmanical religion.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:143,type:"three",stem:"Consider the following reasons for the decline of the Mauryan Empire:\n1. Weak successors of Ashoka who could not hold the empire together.\n2. Financial pressure due to Ashoka's welfare expenditure depleting the treasury.\n3. Brahmanical reaction against Ashoka's pro-Buddhist policies.\nWhich are generally cited as reasons for Mauryan decline?",options:["1 and 2 only","2 and 3 only","1 and 3 only","1, 2 and 3"],correct:3,explanation:"All three are cited by historians. H.C. Raychaudhuri argued weak successors; D.D. Kosambi pointed to financial strain. Brahmanical reaction (often overstated) is also cited. The division of the empire between Samprati and Dasaratha after Ashoka accelerated decline.",source:"R.S. Sharma – Ancient India",isPYQ:false},
+  {id:144,type:"ar",stem:"Assertion (A): The assassination of Brihadratha by Pushyamitra Shunga signified a Brahmanical counter-revolution against Buddhist dominance.\nReason (R): Pushyamitra performed Ashvamedha sacrifices and is alleged to have persecuted Buddhists after coming to power.",options:["Both A and R are true and R is the correct explanation of A","Both A and R are true but R is not the correct explanation of A","A is true but R is false","A is false and R is true"],correct:1,explanation:"Both A and R are true but the connection is debated. Pushyamitra did perform Ashvamedha and some Buddhist texts (like Divyavadana) allege persecution. However, modern historians consider 'Brahmanical counter-revolution' too strong — it was primarily a military coup. So R is true but not the precise explanation of A.",source:"R.S. Sharma – Ancient India",isPYQ:false},
+  {id:145,type:"direct",stem:"After Ashoka's death, the Mauryan Empire was split into western and eastern parts. The eastern part (including Magadha) was ruled by:",options:["Samprati","Kunala","Dasaratha","Jalauka"],correct:2,explanation:"After Ashoka's death, the empire split — the eastern portion (including Pataliputra/Magadha) went to Dasaratha, and the western part (including northwest) went to Samprati. Kunala was reportedly blinded; Jalauka ruled Kashmir.",source:"R.S. Sharma – Ancient India",isPYQ:false},
+  {id:146,type:"match",stem:"Match the following historians with their interpretations of Mauryan decline:\n\nList I (Historian)       List II (Argument for Decline)\nA. H.C. Raychaudhuri     1. Financial crisis due to Ashoka's expenditure\nB. D.D. Kosambi          2. Weak successors and Brahmanical reaction\nC. Romila Thapar         3. Absence of any single cause; combination of factors\nD. A.L. Basham           4. Over-centralization that broke down after Ashoka",options:["A-2, B-1, C-4, D-3","A-1, B-4, C-2, D-3","A-2, B-4, C-1, D-3","A-3, B-1, C-2, D-4"],correct:0,explanation:"H.C. Raychaudhuri cited weak successors and Brahmanical reaction. D.D. Kosambi argued for financial crisis. Romila Thapar identified over-centralization as a factor. A.L. Basham maintained that no single cause explains the decline.",source:"Various – NCERT Gr.12",isPYQ:false},
+  {id:147,type:"direct",stem:"The Mauryan Empire's Kalinga (modern Odisha) was an important province. After the Kalinga war, Ashoka placed Kalinga under which type of administration?",options:["Direct Mauryan rule with two special officials — a Kumara and two Mahamattas","Complete autonomy under the local king","Rule by a Buddhist monastery council","Administration by the army commander"],correct:0,explanation:"After conquering Kalinga, Ashoka placed it under direct Mauryan rule. The Dhauli and Jaugada (Kalinga) edicts show special concern for the welfare of the people there, with Kumara governor and Rajukas/Mahamattas overseeing administration.",source:"NCERT Gr.6 Ch.7",isPYQ:false},
+  {id:148,type:"negative",stem:"Which of the following is NOT correct about the impact of Ashoka's Dhamma on Mauryan decline?",options:["Some historians argue Ashoka's pacifism weakened the army","The weakening of state finances due to donations to monasteries is cited","Brahmin resentment against Ashoka's anti-sacrifice edicts is mentioned","Most modern historians agree Ashoka's Dhamma single-handedly caused the Mauryan decline"],correct:3,explanation:"Most modern historians do NOT agree that Dhamma alone caused the decline. The decline was multi-causal. Romila Thapar, R.S. Sharma and others point to multiple factors. The claim that Dhamma 'single-handedly' caused decline is an oversimplification rejected by serious historians.",source:"R.S. Sharma – Ancient India",isPYQ:false},
+  {id:149,type:"direct",stem:"Which of the following is correctly identified as a significant cultural contribution of the Mauryan period to Indian civilization?",options:["Introduction of Sanskrit as the official state language","Beginning of stone architecture and monumental sculpture in India","Development of the caste system","Composition of the Puranas"],correct:1,explanation:"The Mauryan period marks the beginning of stone architecture and monumental sculpture in India. Before the Mauryas, construction was primarily in wood and brick. The tradition of stone art continued through subsequent dynasties.",source:"PYQ 2023",isPYQ:true},
+  {id:150,type:"chrono",stem:"Arrange the following events related to the end of the Mauryan period in correct chronological order:\n(i) Death of Ashoka\n(ii) Assassination of Brihadratha by Pushyamitra Shunga\n(iii) Division of the empire between Dasaratha and Samprati\n(iv) Invasion of northwestern India by the Bactrian Greeks (Indo-Greeks)",options:["(i), (iii), (iv), (ii)","(i), (iv), (iii), (ii)","(iii), (i), (ii), (iv)","(i), (iii), (ii), (iv)"],correct:3,explanation:"Ashoka died c.232 BCE → Division between Dasaratha (east) and Samprati (west) c.232 BCE → Bactrian Greek invasion (Demetrius) c.200–185 BCE → Assassination of Brihadratha c.185 BCE.",source:"R.S. Sharma – Ancient India",isPYQ:false},
+];
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let answers = new Array(150).fill(null);
+let markedReview = new Array(150).fill(false);
+let timerEnabled = true;
+let immValidation = false;
+let submitted = false;
+let totalSeconds = 9000; // 2h30m
+let timerInterval = null;
+let startTime = Date.now();
+let timeTaken = 0;
+
+// ─── BADGE CLASSES ────────────────────────────────────────────────────────────
+const badgeClass = {
+  direct:'badge-direct',statement:'badge-statement',match:'badge-match',
+  ar:'badge-ar',chrono:'badge-chrono',odd:'badge-odd',
+  negative:'badge-negative',three:'badge-three'
+};
+const badgeLabel = {
+  direct:'Direct',statement:'Statement',match:'Match',
+  ar:'A & R',chrono:'Chrono',odd:'Odd One Out',
+  negative:'Negative',three:'3-Statement'
+};
+
+// ─── BUILD PALETTE ────────────────────────────────────────────────────────────
+function buildPalette(){
+  const grid = document.getElementById('palette-grid');
+  grid.innerHTML='';
+  QUESTIONS.forEach((_,i)=>{
+    const btn=document.createElement('button');
+    btn.className='palette-btn';
+    btn.id=`pb-${i+1}`;
+    btn.textContent=i+1;
+    btn.onclick=()=>{ jumpToQuestion(i+1); closeSidebar(); };
+    grid.appendChild(btn);
+  });
+}
+
+function updatePaletteBtn(idx){
+  const btn=document.getElementById(`pb-${idx+1}`);
+  if(!btn)return;
+  btn.className='palette-btn';
+  if(submitted){
+    if(answers[idx]===null) btn.classList.add('unattempted');
+    else if(answers[idx]===QUESTIONS[idx].correct) btn.classList.add('correct');
+    else btn.classList.add('wrong');
+  } else {
+    if(markedReview[idx]) btn.classList.add('review');
+    else if(answers[idx]!==null) btn.classList.add('answered');
+  }
+}
+
+function refreshAllPalette(){
+  QUESTIONS.forEach((_,i)=>updatePaletteBtn(i));
+}
+
+// ─── BUILD QUESTIONS FEED ─────────────────────────────────────────────────────
+function buildFeed(){
+  const feed=document.getElementById('questions-feed');
+  feed.innerHTML='';
+  QUESTIONS.forEach((q,i)=>{
+    const card=document.createElement('div');
+    card.className='q-card';
+    card.id=`q-card-${i+1}`;
+    const pyqTag = q.isPYQ ? `<span class="pyq-tag">PYQ</span>` : '';
+    const srcTag = `<span class="src-tag">${q.source}</span>`;
+    const stemHTML = q.stem.includes('\n')
+      ? q.stem.split('\n').map((line,li)=>li===0?`<span>${line}</span>`:`<pre style="display:block">${line}</pre>`).join('')
+      : q.stem;
+    const opts = q.options.map((o,oi)=>`
+      <button class="option-btn" id="opt-${i+1}-${oi}" onclick="selectOption(${i},${oi})" data-qi="${i}" data-oi="${oi}">
+        <span class="opt-letter">${String.fromCharCode(65+oi)}</span>
+        <span>${o}</span>
+      </button>`).join('');
+    card.innerHTML=`
+      <div class="q-header">
+        <span class="q-num-badge">${i+1}</span>
+        <span class="q-type-badge ${badgeClass[q.type]}">${badgeLabel[q.type]}</span>
+        ${pyqTag}${srcTag}
+      </div>
+      <div class="q-stem">${stemHTML}</div>
+      <div class="options-grid" id="opts-${i+1}">${opts}</div>
+      <div class="q-footer">
+        <button class="review-btn" id="rbtn-${i+1}" onclick="toggleReview(${i})">
+          ★ Mark for Review
+        </button>
+      </div>
+      <div class="explanation-box" id="exp-${i+1}">
+        <strong>Explanation:</strong><br>${q.explanation}
+      </div>
+    `;
+    feed.appendChild(card);
+  });
+}
+
+// ─── OPTION SELECTION ─────────────────────────────────────────────────────────
+function selectOption(qi, oi){
+  if(submitted) return;
+  const q = QUESTIONS[qi];
+  if(immValidation && answers[qi]!==null) return; // locked
+  // clear previous selection UI
+  for(let x=0;x<4;x++){
+    const ob=document.getElementById(`opt-${qi+1}-${x}`);
+    if(ob){ ob.classList.remove('selected','correct-ans','wrong-ans'); }
+  }
+  answers[qi]=oi;
+  const selBtn=document.getElementById(`opt-${qi+1}-${oi}`);
+  if(immValidation){
+    // lock and reveal
+    for(let x=0;x<4;x++){
+      const ob=document.getElementById(`opt-${qi+1}-${x}`);
+      if(ob) ob.disabled=true;
+    }
+    if(oi===q.correct){
+      selBtn.classList.add('correct-ans');
+    } else {
+      selBtn.classList.add('wrong-ans');
+      document.getElementById(`opt-${qi+1}-${q.correct}`).classList.add('correct-ans');
+    }
+    document.getElementById(`exp-${qi+1}`).classList.add('visible');
+  } else {
+    selBtn.classList.add('selected');
+  }
+  updatePaletteBtn(qi);
+  updateProgress();
+}
+
+// ─── REVIEW TOGGLE ────────────────────────────────────────────────────────────
+function toggleReview(qi){
+  if(submitted) return;
+  markedReview[qi]=!markedReview[qi];
+  const btn=document.getElementById(`rbtn-${qi+1}`);
+  if(markedReview[qi]) btn.classList.add('active'); else btn.classList.remove('active');
+  updatePaletteBtn(qi);
+}
+
+// ─── JUMP TO QUESTION ─────────────────────────────────────────────────────────
+function jumpToQuestion(n){
+  const el=document.getElementById(`q-card-${n}`);
+  if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ─── TIMER ────────────────────────────────────────────────────────────────────
+function formatTime(s){
+  const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;
+  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+}
+function startTimer(){
+  timerInterval=setInterval(()=>{
+    if(!timerEnabled||submitted) return;
+    totalSeconds--;
+    const d=document.getElementById('timer-display');
+    d.textContent=formatTime(totalSeconds);
+    d.className='timer-display'+(totalSeconds<=300?' danger':totalSeconds<=900?' warning':'');
+    if(totalSeconds<=0){clearInterval(timerInterval);submitTest();}
+  },1000);
+}
+function toggleTimer(){
+  timerEnabled=document.getElementById('timer-toggle').checked;
+  document.getElementById('timer-toggle-label').textContent=`Timer: ${timerEnabled?'ON':'OFF'}`;
+}
+function toggleImmediate(){
+  immValidation=document.getElementById('imm-toggle').checked;
+  document.getElementById('imm-toggle-label').textContent=`Immediate Validation: ${immValidation?'ON':'OFF'}`;
+}
+
+// ─── PROGRESS ────────────────────────────────────────────────────────────────
+function updateProgress(){
+  const answered=answers.filter(a=>a!==null).length;
+  document.getElementById('progress-text').textContent=`${answered} / 150 Answered`;
+}
+
+// ─── MODAL ────────────────────────────────────────────────────────────────────
+function showSubmitModal(){
+  if(submitted) return;
+  const answered=answers.filter(a=>a!==null).length;
+  const unattempted=150-answered;
+  document.getElementById('modal-text').textContent=
+    `Answered: ${answered} | Unattempted: ${unattempted}\nAre you sure you want to submit?`;
+  document.getElementById('modal-overlay').classList.add('active');
+}
+function hideModal(){
+  document.getElementById('modal-overlay').classList.remove('active');
+}
+
+// ─── SUBMIT ───────────────────────────────────────────────────────────────────
+function submitTest(){
+  hideModal();
+  submitted=true;
+  timeTaken=Math.round((Date.now()-startTime)/1000);
+  clearInterval(timerInterval);
+  // disable all options
+  QUESTIONS.forEach((_,i)=>{
+    for(let x=0;x<4;x++){
+      const ob=document.getElementById(`opt-${i+1}-${x}`);
+      if(ob) ob.disabled=true;
+    }
+  });
+  // reveal answers
+  let correct=0,wrong=0,unattempted=0;
+  QUESTIONS.forEach((q,i)=>{
+    const ans=answers[i];
+    if(ans===null){ unattempted++; }
+    else if(ans===q.correct){ correct++; }
+    else { wrong++; }
+    // color options
+    for(let x=0;x<4;x++){
+      const ob=document.getElementById(`opt-${i+1}-${x}`);
+      if(!ob) continue;
+      ob.classList.remove('selected','correct-ans','wrong-ans');
+      if(x===q.correct) ob.classList.add('correct-ans');
+      else if(ans===x) ob.classList.add('wrong-ans');
+    }
+    document.getElementById(`exp-${i+1}`).classList.add('visible');
+    updatePaletteBtn(i);
+  });
+  // show result card
+  const score=correct-(wrong*0.33);
+  const accuracy=answers.filter(a=>a!==null).length>0?Math.round((correct/answers.filter(a=>a!==null).length)*100):0;
+  const rc=document.getElementById('result-card');
+  rc.style.display='block';
+  document.getElementById('result-stats').innerHTML=`
+    <div class="stat-box"><div class="stat-num" style="color:var(--gold)">${correct}</div><div class="stat-lbl">Correct</div></div>
+    <div class="stat-box"><div class="stat-num" style="color:var(--red)">${wrong}</div><div class="stat-lbl">Wrong</div></div>
+    <div class="stat-box"><div class="stat-num" style="color:var(--text3)">${unattempted}</div><div class="stat-lbl">Unattempted</div></div>
+    <div class="stat-box"><div class="stat-num" style="color:var(--green)">${accuracy}%</div><div class="stat-lbl">Accuracy</div></div>
+    <div class="stat-box"><div class="stat-num" style="color:var(--cyan)">${formatTime(timeTaken)}</div><div class="stat-lbl">Time Taken</div></div>
+  `;
+  rc.scrollIntoView({behavior:'smooth',block:'start'});
+  refreshAllPalette();
+  updateProgress();
+}
+
+// ─── SIDEBAR MOBILE ───────────────────────────────────────────────────────────
+function openSidebar(){
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('sidebar-overlay').classList.add('active');
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('active');
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+buildPalette();
+buildFeed();
+startTimer();
+</script>
+</body>
+</html>

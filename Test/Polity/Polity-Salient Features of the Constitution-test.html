@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TNPSC GROUP 1 | Polity — Salient Features of the Constitution</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0d0f14;
+  --surface1: #12151e;
+  --surface2: #181c28;
+  --border1: #21263a;
+  --border2: #2d3450;
+  --gold: #f5c842;
+  --red: #e85555;
+  --green: #4ecb7a;
+  --blue: #5b9cf6;
+  --purple: #a78bfa;
+  --cyan: #22d3ee;
+  --orange: #fb923c;
+  --text: #e8eaf0;
+  --muted: #8892a4;
+  --sidebar-w: 280px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Lora', serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(245,200,66,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245,200,66,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: gridShift 60s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes gridShift {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 60px; }
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+/* LAYOUT */
+.app-wrapper {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+.main-panel {
+  flex: 1;
+  margin-right: var(--sidebar-w);
+  padding: 0 0 80px 0;
+  overflow-y: auto;
+}
+
+/* HEADER */
+.header {
+  background: var(--surface1);
+  border-bottom: 1px solid var(--border1);
+  padding: 20px 32px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header-inner {
+  max-width: 860px;
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.exam-badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--bg);
+  background: var(--gold);
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.header h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.header-meta {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+.header-meta span { color: var(--gold); }
+
+/* QUESTIONS CONTAINER */
+.questions-container {
+  max-width: 860px;
+  padding: 24px 32px;
+}
+
+/* QUESTION CARD */
+.question-card {
+  background: var(--surface1);
+  border: 1px solid var(--border1);
+  border-radius: 12px;
+  padding: 28px;
+  margin-bottom: 16px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  scroll-margin-top: 80px;
+}
+
+.question-card.current {
+  border-left: 4px solid var(--gold);
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px rgba(245,200,66,0.15), 0 4px 24px rgba(245,200,66,0.06);
+}
+
+.question-card.answered { border-color: rgba(245,200,66,0.3); }
+.question-card.correct-card { border-color: rgba(78,203,122,0.4); }
+.question-card.wrong-card { border-color: rgba(232,85,85,0.4); }
+
+.q-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.q-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--gold);
+  color: var(--bg);
+  padding: 4px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  letter-spacing: 0.04em;
+}
+
+.q-type-badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  border: 1px solid var(--border2);
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.q-text {
+  font-family: 'Lora', serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+
+.q-text strong { color: var(--gold); font-weight: 600; }
+
+/* OPTIONS */
+.options-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.option-btn {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: left;
+  width: 100%;
+  color: var(--text);
+  font-family: 'Lora', serif;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.option-btn:hover:not(:disabled) {
+  border-color: var(--gold);
+  background: #1a1d2a;
+}
+
+.option-btn.selected {
+  border-color: var(--gold);
+  background: #1e2030;
+}
+
+.option-btn.correct {
+  background: #1a2e20;
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.option-btn.wrong {
+  background: #2e1a1a;
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.option-btn.show-correct {
+  background: #1a2e20;
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.opt-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  background: var(--border1);
+  padding: 2px 7px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.option-btn.selected .opt-label { color: var(--gold); background: rgba(245,200,66,0.15); }
+.option-btn.correct .opt-label { color: var(--green); background: rgba(78,203,122,0.15); }
+.option-btn.wrong .opt-label { color: var(--red); background: rgba(232,85,85,0.15); }
+.option-btn.show-correct .opt-label { color: var(--green); background: rgba(78,203,122,0.15); }
+
+/* EXPLANATION */
+.explanation-box {
+  margin-top: 14px;
+  background: rgba(245,200,66,0.06);
+  border: 1px solid rgba(245,200,66,0.2);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.65;
+  display: none;
+}
+
+.explanation-box.visible { display: block; }
+.explanation-box .exp-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+/* NAV BUTTONS */
+.q-nav {
+  display: flex;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.nav-btn {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border2);
+  background: var(--surface2);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.nav-btn:hover { border-color: var(--gold); color: var(--gold); }
+.nav-btn.primary { background: var(--gold); color: var(--bg); border-color: var(--gold); }
+.nav-btn.primary:hover { filter: brightness(1.1); transform: scale(1.02); }
+
+/* SIDEBAR */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: var(--sidebar-w);
+  height: 100vh;
+  background: var(--surface1);
+  border-left: 1px solid var(--border1);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.sidebar-header {
+  padding: 16px;
+  border-bottom: 1px solid var(--border1);
+  flex-shrink: 0;
+}
+
+.sidebar-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.sidebar-sub {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+/* TIMER */
+.sidebar-section {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border1);
+  flex-shrink: 0;
+}
+
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.toggle-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+/* TOGGLE SWITCH */
+.toggle-switch { position: relative; display: inline-block; width: 40px; height: 22px; }
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-slider {
+  position: absolute; cursor: pointer; inset: 0;
+  background: var(--border1); border-radius: 22px;
+  transition: 0.2s;
+}
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  width: 16px; height: 16px;
+  left: 3px; bottom: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: 0.2s;
+}
+.toggle-switch input:checked + .toggle-slider { background: var(--gold); }
+.toggle-switch input:checked + .toggle-slider::before { transform: translateX(18px); }
+
+.timer-display {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--gold);
+  text-align: center;
+  letter-spacing: 0.05em;
+  padding: 8px 0 4px;
+  display: none;
+}
+
+.timer-display.visible { display: block; }
+.timer-display.warning { color: var(--red); animation: pulse 1s ease infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+
+/* PROGRESS */
+.progress-section {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border1);
+  flex-shrink: 0;
+}
+
+.progress-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.progress-label span { color: var(--gold); font-weight: 600; }
+
+.progress-bar-bg {
+  background: var(--border1);
+  border-radius: 4px;
+  height: 6px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: var(--gold);
+  border-radius: 4px;
+  transition: width 0.3s;
+  width: 0%;
+}
+
+/* PALETTE */
+.palette-section {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 16px;
+}
+
+.palette-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: var(--muted);
+}
+
+.legend-dot {
+  width: 10px; height: 10px;
+  border-radius: 3px;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 4px;
+}
+
+.palette-btn {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 6px;
+  border: 1px solid var(--border2);
+  background: var(--surface2);
+  color: var(--muted);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.palette-btn:hover { border-color: var(--gold); color: var(--gold); }
+.palette-btn.p-answered { background: var(--gold); color: var(--bg); border-color: var(--gold); font-weight: 700; }
+.palette-btn.p-current { background: var(--blue); color: white; border-color: var(--blue); }
+.palette-btn.p-correct { background: var(--green); color: var(--bg); border-color: var(--green); }
+.palette-btn.p-wrong { background: var(--red); color: white; border-color: var(--red); }
+
+/* SUBMIT BUTTON */
+.submit-section {
+  padding: 12px 16px;
+  border-top: 1px solid var(--border1);
+  flex-shrink: 0;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  background: var(--gold);
+  color: var(--bg);
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: 0.02em;
+}
+
+.submit-btn:hover { filter: brightness(1.1); transform: scale(1.01); }
+
+/* MODAL */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(13,15,20,0.92);
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-overlay.visible { display: flex; }
+
+.modal-box {
+  background: var(--surface1);
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 760px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 32px;
+}
+
+.modal-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.modal-sub {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+
+.score-block {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.score-card {
+  background: var(--surface2);
+  border: 1px solid var(--border1);
+  border-radius: 10px;
+  padding: 16px 20px;
+  flex: 1;
+  min-width: 120px;
+  text-align: center;
+}
+
+.score-card .sc-val {
+  font-family: 'Syne', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--gold);
+  display: block;
+}
+
+.score-card .sc-val.green { color: var(--green); }
+.score-card .sc-val.red { color: var(--red); }
+.score-card .sc-val.blue { color: var(--blue); }
+
+.score-card .sc-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-top: 4px;
+  display: block;
+}
+
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-size: 13px;
+}
+
+.results-table th {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border1);
+  text-align: left;
+}
+
+.results-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border1);
+  font-family: 'Lora', serif;
+  color: var(--text);
+  vertical-align: top;
+}
+
+.results-table td.status-correct { color: var(--green); font-weight: 600; }
+.results-table td.status-wrong { color: var(--red); font-weight: 600; }
+.results-table td.q-no { font-family: 'IBM Plex Mono', monospace; color: var(--gold); }
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.modal-btn {
+  flex: 1;
+  min-width: 140px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: none;
+}
+
+.modal-btn.primary { background: var(--gold); color: var(--bg); }
+.modal-btn.secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border2); }
+.modal-btn:hover { filter: brightness(1.1); transform: scale(1.01); }
+
+/* TYPE BREAKDOWN TABLE */
+.breakdown-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+  font-size: 13px;
+}
+.breakdown-table th {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border1);
+  text-align: left;
+}
+.breakdown-table td {
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border1);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--text);
+}
+
+/* MOBILE */
+.sidebar-toggle-fab {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 200;
+  background: var(--gold);
+  color: var(--bg);
+  border: none;
+  border-radius: 50%;
+  width: 52px;
+  height: 52px;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(245,200,66,0.4);
+}
+
+@media (max-width: 768px) {
+  .main-panel { margin-right: 0; }
+  .sidebar {
+    bottom: 0;
+    top: auto;
+    height: 60vh;
+    width: 100%;
+    transform: translateY(100%);
+    transition: transform 0.3s;
+  }
+  .sidebar.open { transform: translateY(0); }
+  .sidebar-toggle-fab { display: flex; align-items: center; justify-content: center; }
+  .questions-container { padding: 16px; }
+  .header { padding: 14px 16px; }
+}
+
+/* REVIEW MODE banner */
+.review-banner {
+  background: rgba(78,203,122,0.1);
+  border: 1px solid rgba(78,203,122,0.3);
+  border-radius: 8px;
+  padding: 10px 16px;
+  margin-bottom: 16px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--green);
+  letter-spacing: 0.04em;
+  display: none;
+}
+.review-banner.visible { display: block; }
+</style>
+</head>
+<body>
+
+<div class="app-wrapper">
+  <!-- MAIN PANEL -->
+  <div class="main-panel" id="mainPanel">
+    <div class="header">
+      <div class="header-inner">
+        <div class="header-top">
+          <span class="exam-badge">TNPSC GROUP 1</span>
+          <h1>Polity — Salient Features of the Constitution</h1>
+        </div>
+        <div class="header-meta">
+          <span>150 Questions</span> · 150 Minutes · Degree Standard · Topics: Preamble, FR, DPSP, FD, Federal Structure, Judiciary
+        </div>
+      </div>
+    </div>
+
+    <div class="questions-container" id="questionsContainer">
+      <div class="review-banner" id="reviewBanner">✓ REVIEW MODE — All correct answers are highlighted in green. Scroll through to review.</div>
+      <!-- Questions injected by JS -->
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-title">Test Navigator</div>
+      <div class="sidebar-sub">TNPSC GROUP 1 · 150 Qs</div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="toggle-row">
+        <span class="toggle-label">⏱ Timer</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="timerToggle" onchange="toggleTimer()">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="timer-display" id="timerDisplay">150:00</div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="toggle-row">
+        <span class="toggle-label">✓ Instant Check</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="instantToggle">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-label">
+        Answered: <span id="answeredCount">0</span> / 150
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progressFill"></div>
+      </div>
+    </div>
+
+    <div class="palette-section">
+      <div class="palette-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--surface2);border:1px solid var(--border2)"></div>Not Answered</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div>Answered</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div>Current</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>Correct</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div>Wrong</div>
+      </div>
+      <div class="palette-grid" id="paletteGrid"></div>
+    </div>
+
+    <div class="submit-section">
+      <button class="submit-btn" onclick="submitTest()">Submit Test</button>
+    </div>
+  </div>
+</div>
+
+<!-- Mobile FAB -->
+<button class="sidebar-toggle-fab" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+
+<!-- Results Modal -->
+<div class="modal-overlay" id="resultsModal">
+  <div class="modal-box">
+    <div class="modal-title">Test Results</div>
+    <div class="modal-sub" id="modalSub">TNPSC GROUP 1 · Salient Features of the Constitution</div>
+    <div class="score-block" id="scoreBlock"></div>
+    <div id="breakdownSection"></div>
+    <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--text);margin-bottom:10px;">Wrong Answers — Review</div>
+    <table class="results-table" id="resultsTable">
+      <thead><tr><th>Q.No</th><th>Your Answer</th><th>Correct Answer</th><th>Status</th></tr></thead>
+      <tbody id="resultsBody"></tbody>
+    </table>
+    <div class="modal-actions">
+      <button class="modal-btn primary" onclick="retryTest()">↺ Retry Test</button>
+      <button class="modal-btn secondary" onclick="reviewAnswers()">Review Answers</button>
+    </div>
+  </div>
+</div>
+
+<!-- Time Up Modal -->
+<div class="modal-overlay" id="timeUpModal">
+  <div class="modal-box" style="max-width:400px;text-align:center">
+    <div style="font-size:48px;margin-bottom:12px">⏱</div>
+    <div class="modal-title">Time's Up!</div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);margin:12px 0 24px">150 minutes elapsed. Your test has been auto-submitted.</div>
+    <button class="modal-btn primary" style="width:100%" onclick="document.getElementById('timeUpModal').classList.remove('visible');submitTest()">View Results</button>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// QUESTIONS DATA — 150 Questions
+// ============================================================
+const questions = [
+// ---- SIMPLE MCQ (Q1–30) ----
+{id:1,type:"mcq",question:"Which Article of the Indian Constitution deals with the definition of 'State' for the purpose of Fundamental Rights?",options:["A) Article 10","B) Article 12","C) Article 13","D) Article 14"],answer:"B",explanation:"Article 12 defines the term 'State' for Part III (Fundamental Rights). It includes the Government and Parliament of India, Government and Legislature of each State, and all local and other authorities within/under the control of the Government."},
+{id:2,type:"mcq",question:"The Preamble to the Indian Constitution was amended by which Constitutional Amendment Act?",options:["A) 24th Amendment Act, 1971","B) 42nd Amendment Act, 1976","C) 44th Amendment Act, 1978","D) 86th Amendment Act, 2002"],answer:"B",explanation:"The 42nd Constitutional Amendment Act of 1976 amended the Preamble and inserted the words 'Socialist', 'Secular' and changed 'unity of the nation' to 'unity and integrity of the nation'."},
+{id:3,type:"mcq",question:"The concept of 'Judicial Review' in India is primarily contained in which Article of the Constitution?",options:["A) Article 13","B) Article 21","C) Article 32","D) Article 368"],answer:"A",explanation:"Article 13 declares that any law inconsistent with or in derogation of Fundamental Rights shall be void. This forms the basis of Judicial Review in India regarding Fundamental Rights."},
+{id:4,type:"mcq",question:"Which one of the following is NOT a feature of the Indian Constitution?",options:["A) Single Citizenship","B) Dual Constitution","C) Independent Judiciary","D) Universal Adult Franchise"],answer:"B",explanation:"India has a single unified Constitution for both the Centre and States (unlike USA which has separate State Constitutions). India does NOT have a dual Constitution — this makes it different from a true federal system."},
+{id:5,type:"mcq",question:"The Fundamental Duties of Indian citizens are enshrined in which Article of the Constitution?",options:["A) Article 49A","B) Article 50A","C) Article 51A","D) Article 52A"],answer:"C",explanation:"Article 51A contains the Fundamental Duties of citizens. It was inserted by the 42nd Constitutional Amendment Act 1976 (originally 10 duties). The 86th Amendment 2002 added the 11th duty."},
+{id:6,type:"mcq",question:"Which of the following countries' constitution is the primary source for the Directive Principles of State Policy in the Indian Constitution?",options:["A) USA","B) UK","C) Ireland","D) Canada"],answer:"C",explanation:"The Directive Principles of State Policy (Part IV, Articles 36–51) were borrowed from the Irish Constitution of 1937. The concept was originally drawn from the Spanish Constitution."},
+{id:7,type:"mcq",question:"The word 'Federal' does NOT appear in the Indian Constitution. The term used is:",options:["A) Quasi-Federal","B) Union of States","C) Federation of States","D) Confederation of States"],answer:"B",explanation:"Article 1 of the Indian Constitution describes India as a 'Union of States'. The word 'Federation' is not used. Dr. B.R. Ambedkar preferred 'Union' to emphasize that India is indestructible."},
+{id:8,type:"mcq",question:"Which Fundamental Right was deleted from the Indian Constitution by the 44th Amendment Act, 1978?",options:["A) Right to Education","B) Right to Property","C) Right to Work","D) Right to Constitutional Remedies"],answer:"B",explanation:"The Right to Property (Article 19(1)(f) and Article 31) was removed from the Fundamental Rights by the 44th Constitutional Amendment Act, 1978. It is now only a legal right under Article 300A."},
+{id:9,type:"mcq",question:"The concept of 'Rule of Law' incorporated in the Indian Constitution was borrowed from which country?",options:["A) USA","B) Ireland","C) UK","D) Australia"],answer:"C",explanation:"The concept of Rule of Law, Parliamentary government, legislative procedure, single citizenship, cabinet system, writs, and the speaker's role were all borrowed from the British Constitution (UK)."},
+{id:10,type:"mcq",question:"Which Article of the Indian Constitution guarantees the Right to Constitutional Remedies?",options:["A) Article 30","B) Article 32","C) Article 35","D) Article 226"],answer:"B",explanation:"Article 32 guarantees the Right to Constitutional Remedies, allowing citizens to move the Supreme Court for enforcement of Fundamental Rights. Dr. Ambedkar called it the 'Heart and Soul of the Constitution'."},
+{id:11,type:"mcq",question:"The Preamble describes India as a 'Republic'. What does this imply?",options:["A) India has a written Constitution","B) The head of the state is elected, not hereditary","C) India has a multi-party system","D) India has federal structure"],answer:"B",explanation:"'Republic' in the Preamble means the head of the state (President) is elected directly or indirectly, not a hereditary monarch. The President is elected for a 5-year term by an electoral college."},
+{id:12,type:"mcq",question:"Which amendment inserted 'Secular' in the Preamble of the Indian Constitution?",options:["A) 40th Amendment","B) 41st Amendment","C) 42nd Amendment","D) 44th Amendment"],answer:"C",explanation:"The 42nd Amendment Act of 1976 inserted 'Secular' along with 'Socialist' in the Preamble. However, the secular character of the Constitution was present from the beginning through various provisions."},
+{id:13,type:"mcq",question:"The provision for a single citizenship in India was borrowed from which country's constitution?",options:["A) Canada","B) Ireland","C) Australia","D) United Kingdom"],answer:"D",explanation:"Single citizenship was borrowed from the British Constitution (UK). In India, there is only one citizenship — Indian citizenship. Unlike the USA where citizens have dual citizenship (federal and state)."},
+{id:14,type:"mcq",question:"The minimum age for voting in India (Universal Adult Franchise) was reduced from 21 to 18 years by which amendment?",options:["A) 42nd Amendment, 1976","B) 44th Amendment, 1978","C) 61st Amendment, 1989","D) 73rd Amendment, 1992"],answer:"C",explanation:"The 61st Constitutional Amendment Act, 1989 reduced the voting age from 21 years to 18 years. This was done to give youth a greater role in the democratic process."},
+{id:15,type:"mcq",question:"Article 368 of the Indian Constitution deals with:",options:["A) Emergency Powers","B) Amendment of the Constitution","C) Judicial Review","D) Fundamental Rights"],answer:"B",explanation:"Article 368 in Part XX of the Indian Constitution deals with the power of Parliament to amend the Constitution and its procedure. The Constitution can be amended by simple majority, special majority, or special majority plus ratification."},
+{id:16,type:"mcq",question:"Which Article of the Constitution establishes the Supreme Court of India?",options:["A) Article 124","B) Article 131","C) Article 136","D) Article 142"],answer:"A",explanation:"Article 124 of the Indian Constitution establishes the Supreme Court of India. It provides for the composition and appointment of judges of the Supreme Court."},
+{id:17,type:"mcq",question:"The Indian Constitution is considered the longest written constitution in the world. Originally, it had how many Articles?",options:["A) 395 Articles, 8 Schedules","B) 395 Articles, 12 Schedules","C) 448 Articles, 12 Schedules","D) 444 Articles, 8 Schedules"],answer:"A",explanation:"Originally (1949) the Indian Constitution had 395 Articles and 8 Schedules. Currently it has around 448 Articles and 12 Schedules due to various amendments. It is the longest written constitution in the world."},
+{id:18,type:"mcq",question:"In the context of the Indian Constitution, the term 'Secular' means:",options:["A) State has its own religion","B) State is anti-religion","C) State treats all religions equally","D) State promotes Hinduism as national religion"],answer:"C",explanation:"'Secular' in the Indian constitutional context means the state has no official religion and treats all religions equally (Sarva Dharma Samabhava). The state neither promotes nor discriminates against any religion."},
+{id:19,type:"mcq",question:"Which Fundamental Right is available to non-citizens of India?",options:["A) Right to vote","B) Right against exploitation (Article 23-24)","C) Right to equality in public employment","D) Right to move freely"],answer:"B",explanation:"Articles 23 and 24 (Right against Exploitation — prohibition of human trafficking and child labour) are available to all persons including non-citizens. Most other Fundamental Rights are available only to citizens."},
+{id:20,type:"mcq",question:"The concept of 'Writs' in the Indian Constitution was borrowed from:",options:["A) USA","B) Ireland","C) UK","D) Australia"],answer:"C",explanation:"The concept of Writs (Habeas Corpus, Mandamus, Certiorari, Prohibition, Quo Warranto) was borrowed from the British Constitution. The Supreme Court under Article 32 and High Courts under Article 226 can issue writs."},
+{id:21,type:"mcq",question:"The 'Socialist' word in the Preamble means India aims for:",options:["A) A communist state","B) A welfare state with democratic means to reduce inequality","C) Nationalization of all industries","D) Abolition of private property"],answer:"B",explanation:"'Socialist' in India's context is 'Democratic Socialism', not communism. It means reducing inequality in income and status through democratic and peaceful means. India allows mixed economy and private property."},
+{id:22,type:"mcq",question:"Which Article of the Indian Constitution provides for the Comptroller and Auditor General (CAG)?",options:["A) Article 148","B) Article 150","C) Article 266","D) Article 268"],answer:"A",explanation:"Article 148 provides for the Comptroller and Auditor General (CAG) of India. The CAG is appointed by the President and is the head of Indian Audit and Accounts Department, ensuring integrated audit machinery."},
+{id:23,type:"mcq",question:"The Government of India Act, 1935 is considered the main source of the Indian Constitution. What percentage of Constitution was drawn from it?",options:["A) About 50%","B) About 60%","C) About 70%","D) About 80%"],answer:"C",explanation:"The Government of India Act, 1935 is the single largest source of the Indian Constitution, contributing approximately 70% of its provisions. It provided the federal scheme, provincial autonomy, judiciary, public service commissions, emergency provisions, etc."},
+{id:24,type:"mcq",question:"The provision for Fundamental Rights in the Indian Constitution was primarily influenced by the constitution of:",options:["A) UK","B) Ireland","C) USA","D) France"],answer:"C",explanation:"The concept of Fundamental Rights (Bill of Rights) was borrowed from the Constitution of the USA. The USA was the first country to have an explicit Bill of Rights. India's Article 32 (constitutional remedy) is similar to the US model."},
+{id:25,type:"mcq",question:"Article 19(1)(a) of the Indian Constitution guarantees:",options:["A) Right to equality before law","B) Freedom of speech and expression","C) Right to life and personal liberty","D) Freedom of movement"],answer:"B",explanation:"Article 19(1)(a) guarantees the fundamental right to freedom of speech and expression. This right is subject to reasonable restrictions under Article 19(2) on grounds such as sovereignty, security, public order, decency, morality, etc."},
+{id:26,type:"mcq",question:"Which Schedule of the Indian Constitution contains the Oath or Affirmation by various constitutional functionaries?",options:["A) First Schedule","B) Second Schedule","C) Third Schedule","D) Fourth Schedule"],answer:"C",explanation:"The Third Schedule contains the forms of Oath or Affirmation for various constitutional offices including the President, Vice President, Ministers, MPs, judges of Supreme Court and High Courts, etc."},
+{id:27,type:"mcq",question:"Emergency Provisions were borrowed into the Indian Constitution primarily from which Act/Constitution?",options:["A) US Constitution","B) Government of India Act 1935","C) German Weimar Constitution","D) British Constitution"],answer:"C",explanation:"Emergency provisions were borrowed from the German Weimar Constitution. The Weimar Republic's emergency powers allowed the President to suspend rights during national emergency — a feature adopted in Articles 352, 356, and 360 of the Indian Constitution."},
+{id:28,type:"mcq",question:"The idea of concurrent legislative list in the Indian Constitution was borrowed from:",options:["A) USA","B) UK","C) Australia","D) Canada"],answer:"C",explanation:"The Concurrent List in the Seventh Schedule was borrowed from the Australian Constitution. The concurrent legislative list allows both Parliament and State Legislatures to make laws on the same subjects."},
+{id:29,type:"mcq",question:"Which Article of the Indian Constitution prohibits discrimination on grounds of religion, race, caste, sex or place of birth?",options:["A) Article 14","B) Article 15","C) Article 16","D) Article 17"],answer:"B",explanation:"Article 15 prohibits the State from discriminating against any citizen on grounds of religion, race, caste, sex, or place of birth. It also empowers the State to make special provisions for women, children, and socially and educationally backward classes."},
+{id:30,type:"mcq",question:"The Parliament of India consists of:",options:["A) Lok Sabha and Rajya Sabha","B) President, Lok Sabha and Rajya Sabha","C) President, Prime Minister, Lok Sabha and Rajya Sabha","D) Lok Sabha only"],answer:"B",explanation:"According to Article 79, the Parliament of India consists of the President, the Council of States (Rajya Sabha), and the House of the People (Lok Sabha). The President is an integral part of Parliament."},
+
+// ---- STATEMENT TYPE (Q31–65) ----
+{id:31,type:"statement",question:"Consider the following statements about the Preamble of the Indian Constitution:\n(i) The Preamble is a part of the Constitution.\n(ii) The Preamble is justiciable and courts can enforce it.\n(iii) The Preamble can be amended under Article 368.\n\nWhich of the above statements is/are correct?",options:["A) (i) and (ii) only","B) (i) and (iii) only","C) (ii) and (iii) only","D) (i), (ii) and (iii)"],answer:"B",explanation:"Statement (i) is correct — In Kesavananda Bharati case (1973), the SC held the Preamble is part of the Constitution. Statement (ii) is incorrect — The Preamble is not justiciable (not enforceable by courts). Statement (iii) is correct — In Kesavananda Bharati, SC held the Preamble can be amended under Article 368 subject to the basic structure doctrine."},
+{id:32,type:"statement",question:"Examine the following statements regarding Fundamental Rights:\n(i) Fundamental Rights are absolute and cannot be restricted.\n(ii) Fundamental Rights are justiciable.\n(iii) Fundamental Rights can be suspended during National Emergency.\n\nWhich statements are correct?",options:["A) (i) and (ii) only","B) (ii) and (iii) only","C) (i) and (iii) only","D) (i), (ii) and (iii)"],answer:"B",explanation:"Statement (i) is incorrect — Fundamental Rights are not absolute; they are subject to reasonable restrictions. Statement (ii) is correct — FRs are justiciable and courts can enforce them. Statement (iii) is correct — Under Article 358 and 359, FRs can be suspended during National Emergency (except Articles 20 and 21)."},
+{id:33,type:"statement",question:"Consider the following statements about Directive Principles of State Policy (DPSP):\n(i) DPSPs are non-justiciable.\n(ii) DPSPs are borrowed from the Irish Constitution.\n(iii) DPSPs are superior to Fundamental Rights.\n\nWhich statements are correct?",options:["A) (i) only","B) (i) and (ii) only","C) (ii) and (iii) only","D) (i), (ii) and (iii)"],answer:"B",explanation:"Statement (i) is correct — DPSPs are non-justiciable (Article 37 — not enforceable by courts). Statement (ii) is correct — borrowed from the Irish Constitution. Statement (iii) is incorrect — In Minerva Mills (1980), SC held FRs and DPSPs must be balanced; neither is superior to the other as per current constitutional interpretation."},
+{id:34,type:"statement",question:"Consider the following statements about Fundamental Duties:\n(i) Fundamental Duties are enforceable by law.\n(ii) They were added by the 42nd Amendment Act, 1976.\n(iii) The 11th Fundamental Duty was added by the 86th Amendment Act, 2002.\n\nWhich of the above statements is/are correct?",options:["A) (i) and (ii) only","B) (ii) and (iii) only","C) (i) and (iii) only","D) All three"],answer:"B",explanation:"Statement (i) is incorrect — Fundamental Duties are non-justiciable (courts cannot enforce them directly). Statement (ii) is correct — 42nd Amendment 1976 inserted 10 Fundamental Duties under Article 51A. Statement (iii) is correct — 86th Amendment 2002 added the 11th duty: 'Provide opportunities for education to child between 6-14 years'."},
+{id:35,type:"statement",question:"Study the following statements about the Federal Features of India:\n(i) India has a dual polity — Centre and States.\n(ii) The Constitution of India provides for a single integrated judiciary.\n(iii) India follows strict separation of powers like the USA.\n\nWhich are correct?",options:["A) (i) only","B) (i) and (ii) only","C) (ii) and (iii) only","D) All three"],answer:"B",explanation:"Statement (i) is correct — India has a dual polity (Centre and States with division of powers). Statement (ii) is correct — India has a single integrated judiciary (unlike USA which has separate federal and state judicial systems). Statement (iii) is incorrect — India does not follow strict separation of powers; it follows the principle of 'checks and balances' with functional separation."},
+{id:36,type:"statement",question:"Consider the following about Article 21 of the Indian Constitution:\n(i) It guarantees right to life and personal liberty.\n(ii) In A.K. Gopalan case (1950), SC gave a wide interpretation.\n(iii) In Maneka Gandhi case (1978), SC enlarged the scope of Article 21.\n\nWhich statements are correct?",options:["A) (i) and (ii) only","B) (i) and (iii) only","C) (ii) and (iii) only","D) All three"],answer:"B",explanation:"Statement (i) is correct — Article 21 protects right to life and personal liberty. Statement (ii) is incorrect — In A.K. Gopalan case (1950), SC gave a narrow interpretation. Statement (iii) is correct — In Maneka Gandhi v. UOI (1978), SC broadened Article 21 to include 'due process of law' and linked it to Article 14, 19 and 21 (golden triangle)."},
+{id:37,type:"statement",question:"Regarding the Parliamentary form of Government in India:\n(i) The President is the constitutional head while the PM is the real executive.\n(ii) The Cabinet is collectively responsible to the Lok Sabha.\n(iii) The President can be impeached by a simple majority in Parliament.\n\nWhich statements are correct?",options:["A) (i) only","B) (i) and (ii) only","C) (ii) and (iii) only","D) All three"],answer:"B",explanation:"Statement (i) is correct — India follows the Westminster model where the President is nominal head and PM is real executive. Statement (ii) is correct — Article 75(3) provides for collective responsibility of Council of Ministers to Lok Sabha. Statement (iii) is incorrect — The President can be impeached only by 2/3rd majority of Parliament under Article 61."},
+{id:38,type:"statement",question:"Study the following statements about Article 13:\n(i) Article 13 applies to pre-constitutional laws as well.\n(ii) 'Law' under Article 13 includes ordinances, by-laws and customs.\n(iii) A Constitutional Amendment Act is not 'law' under Article 13.\n\nWhich are correct?",options:["A) (i) only","B) (i) and (iii) only","C) (ii) and (iii) only","D) All three"],answer:"D",explanation:"All three statements are correct. (i) Article 13(1) applies to pre-constitutional laws (laws in force before Constitution) rendering them void to the extent of inconsistency. (ii) Article 13(3) defines 'law' widely to include ordinances, by-laws, notifications, customs, etc. (iii) In Kesavananda Bharati (1973), SC held that constitutional amendments under Article 368 are not 'law' under Article 13 — a crucial distinction."},
+{id:39,type:"statement",question:"Consider these statements about Secular features of the Indian Constitution:\n(i) India adopted positive secularism unlike the Western model of strict separation.\n(ii) State can provide financial aid to religious educational institutions.\n(iii) Personal laws based on religion are entirely abolished by the Constitution.\n\nWhich are correct?",options:["A) (i) only","B) (i) and (ii) only","C) (ii) and (iii) only","D) All three"],answer:"B",explanation:"Statement (i) is correct — India adopted 'positive secularism' (equal respect/equal distance from all religions), unlike Western negative secularism (strict separation). Statement (ii) is correct — State can aid minority-run religious educational institutions. Statement (iii) is incorrect — Personal laws (Hindu Law, Muslim Law, etc.) continue to exist in India; the Constitution does not abolish them; Article 44 (Uniform Civil Code) remains a DPSP."},
+{id:40,type:"statement",question:"Consider the following about the Amendment Procedure (Article 368):\n(i) Some provisions can be amended by a simple majority of Parliament.\n(ii) Special majority means 2/3rd of members present and voting AND majority of total membership of each House.\n(iii) Provisions relating to federal structure require ratification by at least half of State Legislatures.\n\nWhich statements are correct?",options:["A) (i) only","B) (ii) and (iii) only","C) (i) and (iii) only","D) All three"],answer:"D",explanation:"All three are correct. (i) Some provisions (like adding/changing State names, parliamentary procedures) can be amended by simple majority — these are NOT under Article 368 technically. (ii) Special majority = 2/3rd of members present and voting PLUS absolute majority of total membership of each House. (iii) Federal provisions (election of President, lists, SC/HC powers etc.) need ratification by at least 50% of State Legislatures after special majority."},
+{id:41,type:"statement",question:"Regarding the Kesavananda Bharati v. State of Kerala (1973) case:\n(i) The Supreme Court propounded the Basic Structure doctrine.\n(ii) It overruled the Golak Nath case on the amendability of FRs.\n(iii) It held Parliament has unlimited power to amend the Constitution.\n\nWhich are correct?",options:["A) (i) only","B) (i) and (ii) only","C) (ii) and (iii) only","D) All three"],answer:"B",explanation:"Statement (i) is correct — 13-judge bench propounded the Basic Structure doctrine in 1973. Statement (ii) is correct — It partially overruled Golaknath (1967) by holding FRs can be amended. Statement (iii) is incorrect — The landmark ruling specifically held that Parliament CANNOT amend the basic structure of the Constitution. It set limits on Parliament's amending power."},
+{id:42,type:"statement",question:"Study the following statements about Article 32 and Article 226:\n(i) Article 32 is itself a Fundamental Right.\n(ii) Article 226 confers wider jurisdiction on High Courts than Article 32 on Supreme Court.\n(iii) Under Article 226, High Courts can issue writs for enforcement of any legal right, not just FRs.\n\nWhich are correct?",options:["A) (i) only","B) (i) and (ii) only","C) (i) and (iii) only","D) All three"],answer:"D",explanation:"All three are correct. (i) Article 32 is itself a Fundamental Right (cannot be suspended except during national emergency). (ii) Article 226 gives HC wider jurisdiction — it covers not just FRs but any legal right, and its territorial jurisdiction is broader. (iii) True — HC under Art. 226 can issue writs for enforcement of any right (constitutional, statutory, or common law), not just FRs."},
+{id:43,type:"statement",question:"Consider the following about Emergency Provisions:\n(i) Article 352 deals with National Emergency on grounds of war, external aggression or armed rebellion.\n(ii) Article 356 deals with Financial Emergency.\n(iii) Under Article 352 Emergency, Centre can direct States on any matter.\n\nWhich statements are correct?",options:["A) (i) only","B) (i) and (iii) only","C) (ii) and (iii) only","D) All three"],answer:"B",explanation:"Statement (i) is correct — Article 352 deals with National Emergency on grounds of war, external aggression, or armed rebellion (originally 'internal disturbance', changed to 'armed rebellion' by 44th Amendment). Statement (ii) is incorrect — Article 356 deals with State Emergency (President's Rule), not Financial Emergency. Financial Emergency is under Article 360. Statement (iii) is correct — During National Emergency, Parliament can legislate on State List subjects."},
+{id:44,type:"statement",question:"Consider the following statements about Fundamental Duties under Article 51A:\n(i) To uphold and protect the sovereignty, unity and integrity of India is a Fundamental Duty.\n(ii) To promote harmony and the spirit of common brotherhood is a Fundamental Duty.\n(iii) Fundamental Duties apply only to adult citizens.\n\nWhich are correct?",options:["A) (i) and (ii) only","B) (ii) and (iii) only","C) (i) and (iii) only","D) All three"],answer:"A",explanation:"Statement (i) is correct — Article 51A(c) includes this duty. Statement (ii) is correct — Article 51A(e) mentions promoting harmony and spirit of common brotherhood. Statement (iii) is incorrect — Some duties like Article 51A(k) (providing educational opportunities to children 6-14) apply to parents/guardians, not only adults. Also, duties under 51A apply to all citizens, including minors through their parents."},
+{id:45,type:"statement",question:"Regarding the Independent Judiciary in India:\n(i) Judges of the SC are appointed by the President.\n(ii) Judges of SC can be removed by a simple majority of Parliament.\n(iii) The Supreme Court has original, appellate, and advisory jurisdiction.\n\nWhich are correct?",options:["A) (i) only","B) (i) and (iii) only","C) (ii) and (iii) only","D) All three"],answer:"B",explanation:"Statement (i) is correct — Article 124(2) provides for appointment of SC judges by the President in consultation with such judges as he deems necessary (Collegium system in practice). Statement (ii) is incorrect — SC judges can be removed only on grounds of proven misbehavior or incapacity through an address by 2/3rd majority of Parliament (Article 124(4)) — not simple majority. Statement (iii) is correct — SC has original (Art. 131), appellate (Art. 133-136) and advisory (Art. 143) jurisdiction."},
+{id:46,type:"statement",question:"About the concept of 'Sovereign' in the Preamble:\n(i) India is not subject to the external authority of any foreign nation.\n(ii) India being a member of UNO affects its internal sovereignty.\n(iii) India can acquire or cede territory — an aspect of external sovereignty.\n\nWhich statements are correct?",options:["A) (i) only","B) (i) and (iii) only","C) (ii) and (iii) only","D) All three"],answer:"B",explanation:"Statement (i) is correct — Sovereignty means India is supreme both internally and externally. Statement (ii) is incorrect — Membership in international organizations (UNO, WTO etc.) does not affect sovereignty as India voluntarily joins them. Statement (iii) is correct — India's power to acquire/cede territory is an aspect of external sovereignty, as upheld in Berubari Union case (1960)."},
+{id:47,type:"statement",question:"Consider the following statements about Article 14:\n(i) Article 14 guarantees equality before law and equal protection of laws.\n(ii) 'Equality before law' is a British concept while 'equal protection' is from the USA.\n(iii) Article 14 permits reasonable classification.\n\nWhich are correct?",options:["A) (i) only","B) (i) and (iii) only","C) (ii) and (iii) only","D) All three"],answer:"D",explanation:"All three are correct. (i) Article 14 guarantees both 'equality before law' (negative concept — absence of privilege) and 'equal protection of laws' (positive concept — same treatment in similar circumstances). (ii) 'Equality before law' comes from British constitution's Rule of Law; 'equal protection' from the 14th Amendment of the US Constitution. (iii) Article 14 does not prohibit reasonable classification — only arbitrary classification (as held in various SC cases)."},
+{id:48,type:"statement",question:"Study these statements about Article 17 (Abolition of Untouchability):\n(i) Untouchability has been abolished and its practice is an offence.\n(ii) Article 17 applies to private individuals also, not just the State.\n(iii) The Protection of Civil Rights Act, 1955 was enacted to implement Article 17.\n\nWhich are correct?",options:["A) (i) only","B) (i) and (ii) only","C) (i) and (iii) only","D) All three"],answer:"D",explanation:"All three are correct. (i) Article 17 abolishes untouchability and makes its practice an offence punishable by law. (ii) Uniquely, Article 17 applies to private individuals too (not just state action), as untouchability is a social evil. (iii) The Protection of Civil Rights Act 1955 (earlier Untouchability Offences Act 1955) was enacted to enforce Article 17."},
+{id:49,type:"statement",question:"Regarding the Unitary Features of the Indian Constitution:\n(i) Single Constitution for both Centre and States.\n(ii) Parliament can change the name of a state without its consent.\n(iii) Governor of a state is appointed by the State Legislature.\n\nWhich are correct?",options:["A) (i) only","B) (i) and (ii) only","C) (ii) and (iii) only","D) All three"],answer:"B",explanation:"Statement (i) is correct — India has a single constitution (unlike USA where states have their own constitutions). Statement (ii) is correct — Parliament can alter boundaries or names of states even without the consent of concerned state (Article 3). Statement (iii) is incorrect — The Governor is appointed by the President (Article 155), not by the State Legislature — a strong unitary feature."},
+{id:50,type:"statement",question:"About the Right to Education under the Indian Constitution:\n(i) Right to Education (Article 21A) is a Fundamental Right for children 6-14 years.\n(ii) It was inserted by the 86th Amendment Act, 2002.\n(iii) The RTE Act was passed in 2009 to implement Article 21A.\n\nWhich are correct?",options:["A) (i) only","B) (i) and (ii) only","C) All three","D) (ii) and (iii) only"],answer:"C",explanation:"All three statements are correct. (i) Article 21A guarantees free and compulsory education to children 6-14 years as a Fundamental Right. (ii) It was inserted by the 86th Constitutional Amendment Act, 2002. (iii) The Right of Children to Free and Compulsory Education Act (RTE Act), 2009 was enacted to implement Article 21A effectively."},
+{id:51,type:"statement",question:"Consider the following about the Parliamentary form of Government:\n(i) The Prime Minister is appointed by the President.\n(ii) The Council of Ministers can remain in office as long as they enjoy the confidence of Rajya Sabha.\n(iii) Ministers are collectively responsible to the Lok Sabha.\n\nWhich are correct?",options:["A) (i) only","B) (i) and (iii) only","C) (ii) and (iii) only","D) All three"],answer:"B",explanation:"Statement (i) is correct — Article 75(1) provides that the PM is appointed by the President; however, the President must appoint the leader of the majority party. Statement (ii) is incorrect — The Council of Ministers holds office as long as they have the confidence of Lok Sabha (Article 75(3)), not Rajya Sabha. Statement (iii) is correct — Collective responsibility to Lok Sabha is a cardinal principle of parliamentary democracy."},
+{id:52,type:"statement",question:"Examine statements about the Minerva Mills v. Union of India (1980) case:\n(i) SC struck down clauses (4) and (5) of Article 368 inserted by 42nd Amendment.\n(ii) SC held that FRs and DPSPs must be harmoniously balanced.\n(iii) SC held limited amending power of Parliament is part of basic structure.\n\nWhich are correct?",options:["A) (i) only","B) (i) and (ii) only","C) (ii) and (iii) only","D) All three"],answer:"D",explanation:"All three are correct. In Minerva Mills (1980): (i) SC struck down Article 368(4) and (5) inserted by 42nd Amendment (which gave Parliament unlimited amendment power). (ii) SC held FRs and DPSPs are complementary, not antagonistic — must be balanced. (iii) SC held that limited amending power of Parliament is part of the basic structure — Parliament cannot destroy the Constitution's essential features."},
+{id:53,type:"statement",question:"About Article 356 (President's Rule / State Emergency):\n(i) It can be proclaimed when the Governor reports that the State Government cannot be carried on in accordance with the Constitution.\n(ii) It was amended by the 44th Amendment to require Cabinet's advice in writing.\n(iii) S.R. Bommai case (1994) held that floor test must be conducted before recommending President's Rule.\n\nWhich are correct?",options:["A) (i) only","B) (i) and (iii) only","C) (ii) and (iii) only","D) All three"],answer:"B",explanation:"Statement (i) is correct — Article 356 can be invoked on Governor's report or otherwise (President's own satisfaction). Statement (ii) is incorrect — The 44th Amendment required the Cabinet's advice in writing to the President for National Emergency (Article 352), not specifically for Article 356. Statement (iii) is correct — In S.R. Bommai v. UOI (1994), the SC held that the majority of the Government should be tested on the floor of the House before proclaiming Article 356."},
+{id:54,type:"statement",question:"Consider these about 'Democratic' in the Preamble:\n(i) India is a direct democracy.\n(ii) The concept of political democracy is complemented by social and economic democracy.\n(iii) Universal Adult Franchise is the foundation of Indian democracy.\n\nWhich are correct?",options:["A) (i) only","B) (ii) and (iii) only","C) (i) and (iii) only","D) All three"],answer:"B",explanation:"Statement (i) is incorrect — India is a representative/indirect democracy, not direct democracy. Citizens elect representatives who govern on their behalf. Statement (ii) is correct — Indian democracy encompasses political, social, and economic dimensions. Statement (iii) is correct — Universal Adult Franchise (voting right to all citizens 18+) is the cornerstone of Indian democracy."},
+{id:55,type:"statement",question:"About the Ninth Schedule of the Indian Constitution:\n(i) It was created by the First Constitutional Amendment Act, 1951.\n(ii) Laws placed in the Ninth Schedule were immune from Fundamental Rights challenge until 2007.\n(iii) In I.R. Coelho case (2007), SC held that Ninth Schedule laws are open to judicial review.\n\nWhich statements are correct?",options:["A) (i) and (ii) only","B) (ii) and (iii) only","C) (i) and (iii) only","D) All three"],answer:"D",explanation:"All three are correct. (i) The Ninth Schedule was added by the First Amendment Act, 1951 to protect land reform laws from Fundamental Rights challenge. (ii) Until 2007, laws in Ninth Schedule were considered immune from FR challenge. (iii) In I.R. Coelho v. State of Tamil Nadu (2007), a 9-judge bench held that laws inserted in Ninth Schedule after April 24, 1973 (Kesavananda date) can be judicially reviewed if they violate basic structure."},
+{id:56,type:"statement",question:"Consider statements about 'Justice' in the Preamble:\n(i) Social, economic, and political justice are secured through Fundamental Rights only.\n(ii) Social justice is secured through both FRs and DPSPs.\n(iii) Economic justice relates to equal distribution of wealth and means of production.\n\nWhich are correct?",options:["A) (i) only","B) (ii) and (iii) only","C) (i) and (iii) only","D) All three"],answer:"B",explanation:"Statement (i) is incorrect — Justice is secured through both Fundamental Rights (Part III) and Directive Principles (Part IV) together. Statement (ii) is correct — Social justice involves equal treatment of all persons (FRs tackle discrimination; DPSPs promote welfare). Statement (iii) is correct — Economic justice means non-discrimination based on economic factors and equal distribution of wealth/resources."},
+{id:57,type:"statement",question:"Regarding Article 21 and its judicial expansion:\n(i) Right to livelihood is part of Article 21 (Olga Tellis case, 1985).\n(ii) Right to privacy is part of Article 21 (K.S. Puttaswamy case, 2017).\n(iii) Right to speedy trial is NOT included in Article 21.\n\nWhich statements are correct?",options:["A) (i) only","B) (i) and (ii) only","C) (ii) and (iii) only","D) All three"],answer:"B",explanation:"Statement (i) is correct — In Olga Tellis v. Bombay Municipal Corporation (1985), SC held right to livelihood is part of right to life under Article 21. Statement (ii) is correct — In K.S. Puttaswamy v. UOI (2017), a 9-judge bench unanimously held right to privacy is a Fundamental Right under Article 21. Statement (iii) is incorrect — Right to speedy trial IS a part of Article 21 (Hussainara Khatoon case, 1979)."},
+{id:58,type:"statement",question:"About the DPSP under Article 39:\n(i) Article 39(b) directs the State to ensure that ownership and control of material resources are distributed for the common good.\n(ii) Article 39(c) prevents concentration of wealth to the common detriment.\n(iii) These are enforceable in courts.\n\nWhich are correct?",options:["A) (i) and (ii) only","B) (ii) and (iii) only","C) (i) and (iii) only","D) All three"],answer:"A",explanation:"Statements (i) and (ii) are correct. Article 39(b) aims at equitable distribution of material resources, and Article 39(c) prevents concentration of wealth and means of production. However, statement (iii) is incorrect — like all DPSPs, Articles 39(b) and (c) are NOT justiciable/enforceable in courts. They are fundamental in governance but not legally binding."},
+{id:59,type:"statement",question:"Examine the following about single citizenship:\n(i) In India, a person can have both Indian citizenship and citizenship of another country simultaneously.\n(ii) The Citizenship Act, 1955 governs acquisition/termination of Indian citizenship.\n(iii) Overseas Citizen of India (OCI) holders are full citizens of India.\n\nWhich are correct?",options:["A) (ii) only","B) (i) and (ii) only","C) (ii) and (iii) only","D) All three"],answer:"A",explanation:"Statement (i) is incorrect — India does not permit dual citizenship. A person who acquires foreign citizenship loses Indian citizenship (Section 9, Citizenship Act 1955). Statement (ii) is correct — The Citizenship Act 1955 provides the legal framework. Statement (iii) is incorrect — OCI holders are NOT full citizens; they are quasi-citizens/permanent residents with certain rights but cannot vote, hold constitutional posts, or acquire agricultural land."},
+{id:60,type:"statement",question:"Consider the following statements about the National Emergency under Article 352:\n(i) The 44th Amendment 1978 replaced the word 'internal disturbance' with 'armed rebellion'.\n(ii) National Emergency must be approved by Parliament within 2 months.\n(iii) Rajya Sabha can pass a resolution to revoke National Emergency.\n\nWhich are correct?",options:["A) (i) only","B) (i) and (ii) only","C) (ii) and (iii) only","D) (i), (ii) and (iii)"],answer:"B",explanation:"Statement (i) is correct — 44th Amendment (1978) replaced 'internal disturbance' with the more specific 'armed rebellion'. Statement (ii) is correct — National Emergency must be approved by Parliament by special majority within one month (reduced from 2 months by 44th Amendment). Statement (iii) is incorrect — Only Lok Sabha (not Rajya Sabha) can pass a resolution to revoke National Emergency — by a simple majority of its total membership (Article 352(8))."},
+{id:61,type:"statement",question:"About Part IV (DPSPs) of the Indian Constitution:\n(i) Article 44 directs the State to secure a Uniform Civil Code for citizens.\n(ii) Article 45 originally directed free and compulsory education for children up to 14 years.\n(iii) After the 86th Amendment 2002, Article 45 still remains a DPSP but now applies to children below 6 years.\n\nWhich are correct?",options:["A) (i) only","B) (i) and (iii) only","C) (ii) and (iii) only","D) All three"],answer:"D",explanation:"All three correct. (i) Article 44 — Uniform Civil Code — is a controversial DPSP directing the State to secure UCC for all citizens. (ii) Original Article 45 directed free and compulsory education for children up to 14 years (before 86th Amendment). (iii) After 86th Amendment 2002, Article 21A became FR for 6-14 years; Article 45 was modified to direct early childhood care and education for children below 6 years of age."},
+{id:62,type:"statement",question:"About the Preamble's phrase 'Liberty of thought, expression, belief, faith and worship':\n(i) Liberty of expression is guaranteed as a Fundamental Right under Article 19(1)(a).\n(ii) Liberty of faith and worship is guaranteed under Article 25.\n(iii) These liberties are absolute and not subject to any restrictions.\n\nWhich are correct?",options:["A) (i) only","B) (i) and (ii) only","C) (ii) and (iii) only","D) All three"],answer:"B",explanation:"Statement (i) is correct — Freedom of speech and expression under Article 19(1)(a) gives constitutional backing to liberty of expression. Statement (ii) is correct — Articles 25-28 guarantee freedom of conscience and free profession, practice, and propagation of religion. Statement (iii) is incorrect — These liberties are subject to reasonable restrictions (Art. 19(2) and Art. 25's own caveats of public order, morality, health, and other FRs)."},
+{id:63,type:"statement",question:"Examine statements about Collegium System and judicial appointments:\n(i) The collegium system emerged through Supreme Court judgments, not any constitutional provision.\n(ii) The 99th Amendment creating NJAC was struck down in 2015.\n(iii) The collegium is headed by the Chief Justice of India and 4 senior-most judges.\n\nWhich are correct?",options:["A) (i) only","B) (i) and (iii) only","C) (ii) and (iii) only","D) All three"],answer:"D",explanation:"All three are correct. (i) The collegium system evolved from Second (1993) and Third (1998) Judges cases — no constitutional provision explicitly creates it. (ii) The National Judicial Appointments Commission (NJAC) through 99th Amendment was struck down by SC in Supreme Court Advocates-on-Record Association v. UOI (2015) as violating judicial independence (basic structure). (iii) SC collegium = CJI + 4 senior-most SC judges; HC collegium = Chief Justice + 2 senior-most HC judges."},
+{id:64,type:"statement",question:"About Equality before law and special provisions:\n(i) Article 15(3) allows special provisions for women and children.\n(ii) Article 16(4) allows reservation in appointments for backward classes.\n(iii) These special provisions violate Article 14.\n\nWhich are correct?",options:["A) (i) only","B) (i) and (ii) only","C) (ii) and (iii) only","D) All three"],answer:"B",explanation:"Statement (i) is correct — Article 15(3) empowers the State to make special provisions for women and children without violating equality. Statement (ii) is correct — Article 16(4) enables reservation for backward classes (including SC/ST and OBCs). Statement (iii) is incorrect — These special provisions do NOT violate Article 14 because they constitute 'reasonable classification' based on intelligible differentia that has a rational nexus with the object."},
+{id:65,type:"statement",question:"About the concept of basic structure of the Constitution:\n(i) Supremacy of the Constitution is a basic structure element.\n(ii) Democratic and republican form of government is a basic structure element.\n(iii) Separation of powers is a basic structure element.\n\nWhich are correct?",options:["A) (i) only","B) (i) and (ii) only","C) (ii) and (iii) only","D) All three"],answer:"D",explanation:"All three are correct basic structure elements as identified by the Supreme Court across various cases. Other elements include: Rule of Law, Judicial Review, Secularism, Federal character, Parliamentary system, Sovereignty, Unity and Integrity of India, Fundamental Rights, Harmony between FRs and DPSPs, Welfare state (DPSPs), Free and fair elections, and Limited power of Parliament to amend."},
+
+// ---- MATCH THE FOLLOWING (Q66–90) ----
+{id:66,type:"match",question:"Match List I (Provisions) with List II (Constitutional Articles):\n\nList I:\n(a) Prohibition of discrimination on grounds of religion, race, caste\n(b) Abolition of untouchability\n(c) Abolition of titles\n(d) Equality of opportunity in public employment\n\nList II:\n(1) Article 16\n(2) Article 15\n(3) Article 18\n(4) Article 17\n\nChoose the correct answer:",options:["A) a-2, b-4, c-3, d-1","B) a-2, b-3, c-4, d-1","C) a-1, b-2, c-3, d-4","D) a-3, b-4, c-2, d-1"],answer:"A",explanation:"Correct matching: (a) Prohibition of discrimination — Article 15; (b) Abolition of Untouchability — Article 17; (c) Abolition of Titles — Article 18 (abolishes titles except military and academic); (d) Equality of Opportunity in public employment — Article 16."},
+{id:67,type:"match",question:"Match List I (Source Countries) with List II (Features Borrowed):\n\nList I:\n(a) United States of America\n(b) United Kingdom\n(c) Ireland\n(d) Australia\n\nList II:\n(1) Directive Principles of State Policy\n(2) Concurrent List / Concurrent powers\n(3) Fundamental Rights / Judicial Review\n(4) Parliamentary System / Cabinet System\n\nChoose the correct answer:",options:["A) a-3, b-4, c-1, d-2","B) a-3, b-1, c-4, d-2","C) a-4, b-3, c-1, d-2","D) a-3, b-4, c-2, d-1"],answer:"A",explanation:"Correct matching: (a) USA — Fundamental Rights, Judicial Review, impeachment of President, removal of judges, written constitution, preamble; (b) UK — Parliamentary system, cabinet, single citizenship, rule of law, writs; (c) Ireland — DPSP, method of election of President, nomination of members to Rajya Sabha; (d) Australia — Concurrent list, freedom of trade, commerce and intercourse."},
+{id:68,type:"match",question:"Match List I (Writs) with List II (Purpose/Meaning):\n\nList I:\n(a) Habeas Corpus\n(b) Mandamus\n(c) Prohibition\n(d) Certiorari\n\nList II:\n(1) Issued to quash the decision of lower court after it has been decided\n(2) Issued to a person detained unlawfully to produce before court\n(3) Commands an inferior court/body to stop proceedings\n(4) Commands a public official/body to perform a legal duty\n\nChoose the correct answer:",options:["A) a-2, b-4, c-3, d-1","B) a-2, b-3, c-4, d-1","C) a-1, b-4, c-3, d-2","D) a-4, b-2, c-1, d-3"],answer:"A",explanation:"Correct matching: (a) Habeas Corpus — 'You have the body' — for unlawful detention; (b) Mandamus — 'We command' — to command a body/person to perform a public/legal duty; (c) Prohibition — 'To forbid' — stop proceedings of lower court exceeding jurisdiction; (d) Certiorari — 'To certify/quash' — to remove a case from lower court/quash decision. Quo Warranto is the fifth writ (to question right to hold office)."},
+{id:69,type:"match",question:"Match List I (Schedules) with List II (Subject Matter):\n\nList I:\n(a) Second Schedule\n(b) Sixth Schedule\n(c) Tenth Schedule\n(d) Twelfth Schedule\n\nList II:\n(1) Anti-defection Law\n(2) Powers of Municipalities\n(3) Salaries of Constitutional functionaries\n(4) Tribal Areas administration in NE India\n\nChoose the correct answer:",options:["A) a-3, b-4, c-1, d-2","B) a-4, b-3, c-1, d-2","C) a-3, b-1, c-4, d-2","D) a-2, b-4, c-3, d-1"],answer:"A",explanation:"Correct: (a) Second Schedule — salaries, allowances, privileges of President, Governors, Chief Justice, Judges, CAG, Speaker, etc.; (b) Sixth Schedule — administration of tribal areas in Assam, Meghalaya, Tripura, Mizoram (Autonomous District Councils); (c) Tenth Schedule — Anti-Defection provisions (added by 52nd Amendment 1985); (d) Twelfth Schedule — 18 matters for Municipalities (74th Amendment)."},
+{id:70,type:"match",question:"Match List I (Articles) with List II (Provisions):\n\nList I:\n(a) Article 19\n(b) Article 21\n(c) Article 23\n(d) Article 25\n\nList II:\n(1) Freedom of conscience and free profession of religion\n(2) Right to life and personal liberty\n(3) Six fundamental freedoms of citizens\n(4) Prohibition of traffic in human beings and forced labour\n\nChoose the correct answer:",options:["A) a-3, b-2, c-4, d-1","B) a-2, b-3, c-4, d-1","C) a-3, b-2, c-1, d-4","D) a-4, b-3, c-2, d-1"],answer:"A",explanation:"Correct: (a) Article 19 — 6 Freedoms: speech/expression, assembly, association, movement, residence, profession; (b) Article 21 — Right to life and personal liberty; (c) Article 23 — Prohibition of trafficking and forced labour (Begar); (d) Article 25 — Freedom of conscience, profession, practice and propagation of religion."},
+{id:71,type:"match",question:"Match List I (Constitutional Amendments) with List II (Changes Made):\n\nList I:\n(a) 42nd Amendment, 1976\n(b) 44th Amendment, 1978\n(c) 73rd Amendment, 1992\n(d) 86th Amendment, 2002\n\nList II:\n(1) Right to Education as Fundamental Right\n(2) Panchayati Raj — Constitutional status\n(3) Restoration of Right to Property as only legal right; anti-emergency safeguards\n(4) Mini Constitution — Socialist, Secular, integrity added; 10 FDs\n\nChoose the correct answer:",options:["A) a-4, b-3, c-2, d-1","B) a-3, b-4, c-1, d-2","C) a-4, b-2, c-3, d-1","D) a-1, b-2, c-3, d-4"],answer:"A",explanation:"Correct: (a) 42nd Amendment 1976 — 'Mini Constitution': added Socialist, Secular, integrity in Preamble; added Fundamental Duties; weakened judiciary; (b) 44th Amendment 1978 — removed Right to Property from FRs; strengthened safeguards against misuse of emergency; (c) 73rd Amendment 1992 — gave constitutional status to Panchayati Raj Institutions (Part IX, 11th Schedule); (d) 86th Amendment 2002 — Article 21A (Right to Education as FR)."},
+{id:72,type:"match",question:"Match List I (Constitutional Articles/Provisions) with List II (Type of Majority required):\n\nList I:\n(a) Passing of Money Bill\n(b) Constitutional Amendment under Article 368\n(c) Removal of Supreme Court judge\n(d) Passing an Ordinary Bill\n\nList II:\n(1) Special Majority (2/3rd present & voting + absolute majority)\n(2) Special majority + Ratification by half of States\n(3) Simple majority in Lok Sabha only\n(4) Simple majority in both Houses\n\nChoose the correct answer:",options:["A) a-3, b-1, c-2, d-4","B) a-4, b-1, c-2, d-3","C) a-3, b-2, c-1, d-4","D) a-1, b-3, c-4, d-2"],answer:"A",explanation:"(a) Money Bill — passed by Lok Sabha alone by simple majority; Rajya Sabha can only delay. (b) Constitutional amendment (Art. 368) — requires special majority (2/3rd present & voting + absolute majority of total membership). (c) Removal of SC judge — requires special majority (2/3rd present & voting + majority of total membership) in both Houses + address to President (Art. 124(4)) — similar to special majority. (d) Ordinary Bills — simple majority in both Houses separately."},
+{id:73,type:"match",question:"Match List I (Directive Principles) with List II (Articles):\n\nList I:\n(a) Equal pay for equal work for men and women\n(b) Promotion of cottage industries\n(c) Uniform Civil Code\n(d) Separation of Judiciary from Executive\n\nList II:\n(1) Article 50\n(2) Article 44\n(3) Article 43\n(4) Article 39(d)\n\nChoose the correct answer:",options:["A) a-4, b-3, c-2, d-1","B) a-3, b-4, c-1, d-2","C) a-4, b-2, c-3, d-1","D) a-2, b-3, c-4, d-1"],answer:"A",explanation:"Correct: (a) Equal pay for equal work — Article 39(d); (b) Promotion of cottage industries — Article 43 (also includes right to work, a living wage, leisure); (c) Uniform Civil Code — Article 44; (d) Separation of Judiciary from Executive — Article 50 (directs State to separate judiciary from executive in public services)."},
+{id:74,type:"match",question:"Match List I (Parts of Constitution) with List II (Subject Matter):\n\nList I:\n(a) Part III\n(b) Part IV\n(c) Part IVA\n(d) Part XVIII\n\nList II:\n(1) Emergency Provisions\n(2) Fundamental Duties\n(3) Fundamental Rights\n(4) Directive Principles of State Policy\n\nChoose the correct answer:",options:["A) a-3, b-4, c-2, d-1","B) a-3, b-2, c-4, d-1","C) a-4, b-3, c-2, d-1","D) a-3, b-4, c-1, d-2"],answer:"A",explanation:"Correct: (a) Part III — Articles 12-35 — Fundamental Rights; (b) Part IV — Articles 36-51 — Directive Principles of State Policy; (c) Part IVA — Article 51A — Fundamental Duties (inserted by 42nd Amendment 1976); (d) Part XVIII — Articles 352-360 — Emergency Provisions (National Emergency, State Emergency, Financial Emergency)."},
+{id:75,type:"match",question:"Match List I (Cases) with List II (Principles Established):\n\nList I:\n(a) Kesavananda Bharati v. State of Kerala (1973)\n(b) Maneka Gandhi v. UOI (1978)\n(c) S.R. Bommai v. UOI (1994)\n(d) Minerva Mills v. UOI (1980)\n\nList II:\n(1) Floor test required before Article 356; federalism is basic structure\n(2) Parliamentary amendment power limited by basic structure\n(3) Balance between FRs and DPSPs; limited amending power is basic structure\n(4) Article 21 includes due process; golden triangle of 14, 19, 21\n\nChoose the correct answer:",options:["A) a-2, b-4, c-1, d-3","B) a-4, b-2, c-1, d-3","C) a-2, b-3, c-4, d-1","D) a-1, b-4, c-3, d-2"],answer:"A",explanation:"Correct: (a) Kesavananda Bharati (1973) — basic structure doctrine; Parliament's amending power is limited; (b) Maneka Gandhi (1978) — expanded Art. 21 to include due process; interconnected Articles 14, 19, 21 as 'golden triangle'; (c) S.R. Bommai (1994) — floor test before Art. 356; federalism is basic structure; (d) Minerva Mills (1980) — balance between FRs and DPSPs; limited amendment power is basic structure."},
+{id:76,type:"match",question:"Match List I (Fundamental Rights) with List II (Key Exceptions/Limitations):\n\nList I:\n(a) Article 19(1)(a) — Speech\n(b) Article 19(1)(b) — Assembly\n(c) Article 21 — Life\n(d) Article 25 — Religion\n\nList II:\n(1) State can regulate economic activities associated with religion\n(2) Restriction on grounds of sovereignty, security, public order, morality\n(3) Restriction only by procedure established by law\n(4) Must be peaceful and without arms\n\nChoose the correct answer:",options:["A) a-2, b-4, c-3, d-1","B) a-3, b-4, c-2, d-1","C) a-2, b-3, c-4, d-1","D) a-4, b-2, c-3, d-1"],answer:"A",explanation:"(a) Art. 19(1)(a) — speech can be restricted under Art. 19(2) on grounds of sovereignty, security, friendly relations, public order, decency/morality, contempt, defamation, incitement; (b) Art. 19(1)(b) — right to assemble applies only to 'peaceful' assembly 'without arms'; (c) Art. 21 — right to life can only be curtailed by 'procedure established by law' (now read as 'due process'); (d) Art. 25 — state can regulate secular activities associated with religious practice or economic activities."},
+{id:77,type:"match",question:"Match the following landmark cases with their subject matter:\n\nList I:\n(a) Golaknath v. State of Punjab (1967)\n(b) Bank Nationalisation case (1970)\n(c) Indira Gandhi v. Raj Narain (1975)\n(d) Waman Rao v. UOI (1981)\n\nList II:\n(1) Ninth Schedule laws after Kesavananda date are subject to judicial review\n(2) Right to property is a Fundamental Right; cannot be amended\n(3) Free and fair elections are part of basic structure\n(4) Right to property and adequate compensation for acquisition\n\nChoose the correct answer:",options:["A) a-2, b-4, c-3, d-1","B) a-4, b-2, c-3, d-1","C) a-2, b-3, c-4, d-1","D) a-3, b-4, c-1, d-2"],answer:"A",explanation:"(a) Golaknath (1967) — SC held Parliament cannot amend FRs (reversed by Kesavananda 1973); (b) Bank Nationalisation case (1970) — SC held state must pay market value as compensation for nationalisation; Right to property is FR; (c) Indira Gandhi v. Raj Narain (1975) — SC held free and fair elections are basic structure (struck down 39th Amendment which barred judicial review of PM election); (d) Waman Rao (1981) — SC held Ninth Schedule laws added before Kesavananda (April 24, 1973) are protected; those added after are open to judicial review."},
+{id:78,type:"match",question:"Match List I (Articles) with List II (Subject under DPSPs):\n\nList I:\n(a) Article 39A\n(b) Article 40\n(c) Article 47\n(d) Article 48A\n\nList II:\n(1) Protection of environment and safeguarding forests\n(2) Raise level of nutrition, standard of living, public health\n(3) Organisation of village panchayats\n(4) Equal justice and free legal aid\n\nChoose the correct answer:",options:["A) a-4, b-3, c-2, d-1","B) a-3, b-4, c-1, d-2","C) a-4, b-3, c-1, d-2","D) a-2, b-3, c-4, d-1"],answer:"A",explanation:"(a) Article 39A — Equal justice and free legal aid (added by 42nd Amendment 1976); (b) Article 40 — Organisation of village panchayats and endow them with self-governance powers; (c) Article 47 — Raise level of nutrition and standard of living; prohibition on intoxicating drinks and drugs; (d) Article 48A — Protection and improvement of environment and safeguarding forests and wildlife (added by 42nd Amendment 1976)."},
+{id:79,type:"match",question:"Match List I (Terms in Preamble) with List II (Meaning/Significance):\n\nList I:\n(a) Sovereign\n(b) Socialist\n(c) Secular\n(d) Democratic\n\nList II:\n(1) Government is answerable to the people; elections are held\n(2) India has no state religion; equal treatment to all religions\n(3) India is free from external authority; supreme power\n(4) State aims to reduce inequality through democratic means; welfare state\n\nChoose the correct answer:",options:["A) a-3, b-4, c-2, d-1","B) a-4, b-3, c-2, d-1","C) a-3, b-2, c-4, d-1","D) a-1, b-4, c-3, d-2"],answer:"A",explanation:"(a) Sovereign — India is supreme, free from external control; (b) Socialist — democratic socialism, reducing inequality, welfare state; (c) Secular — no official state religion, equal treatment to all religions; (d) Democratic — government elected by the people, accountable to them."},
+{id:80,type:"match",question:"Match List I (Fundamental Duties - Article 51A) with List II (Duty Numbers):\n\nList I:\n(a) To cherish and follow the noble ideals of freedom struggle\n(b) To protect and improve the natural environment\n(c) To develop scientific temper and spirit of inquiry\n(d) To safeguard public property\n\nList II:\n(1) Article 51A(h)\n(2) Article 51A(i)\n(3) Article 51A(g)\n(4) Article 51A(b)\n\nChoose the correct answer:",options:["A) a-4, b-3, c-1, d-2","B) a-3, b-4, c-1, d-2","C) a-4, b-1, c-3, d-2","D) a-4, b-3, c-2, d-1"],answer:"A",explanation:"Article 51A(b) — to cherish and follow the noble ideals of the freedom struggle; Article 51A(g) — protect and improve the natural environment including forests, lakes, rivers and wildlife; Article 51A(h) — to develop scientific temper, humanism, and spirit of inquiry and reform; Article 51A(i) — to safeguard public property and abjure violence."},
+{id:81,type:"match",question:"Match the sources with borrowed provisions:\n\nList I:\n(a) South Africa\n(b) Japan\n(c) Canada\n(d) USSR (Soviet)\n\nList II:\n(1) Fundamental Duties\n(2) Procedure for amendment and election of Rajya Sabha members\n(3) Residuary powers with Centre; name 'Union of States'\n(4) Procedure established by law\n\nChoose the correct answer:",options:["A) a-2, b-4, c-3, d-1","B) a-1, b-4, c-3, d-2","C) a-4, b-2, c-3, d-1","D) a-2, b-3, c-4, d-1"],answer:"A",explanation:"(a) South Africa — Procedure for amendment (rigid with special majority) and election of members to Rajya Sabha (indirect election by STV); (b) Japan — Procedure established by law (Article 21 uses this phrase); (c) Canada — residuary powers vested with Centre (unlike USA where with States); name inspiration for 'Union'; (d) USSR — Fundamental Duties (Article 51A); the Soviet Constitution 1936 had a list of duties for citizens."},
+{id:82,type:"match",question:"Match List I (Types of Emergencies) with List II (Relevant Constitutional Articles):\n\nList I:\n(a) National Emergency\n(b) State Emergency\n(c) Financial Emergency\n(d) Proclamation during breakdown of constitutional machinery\n\nList II:\n(1) Article 356\n(2) Article 360\n(3) Article 352\n(4) Article 365\n\nChoose the correct answer:",options:["A) a-3, b-1, c-2, d-4","B) a-3, b-4, c-1, d-2","C) a-1, b-3, c-2, d-4","D) a-3, b-1, c-4, d-2"],answer:"A",explanation:"(a) National Emergency — Article 352 (war, external aggression, armed rebellion); (b) State Emergency/President's Rule — Article 356 (failure of constitutional machinery in state); (c) Financial Emergency — Article 360 (threat to financial stability/credit of India); (d) Article 365 — provides that if a State fails to comply with directions of Centre, it shall be lawful for the President to hold that the constitutional machinery has failed (related to Art. 356)."},
+{id:83,type:"match",question:"Match List I (Articles) with List II (Rights under Right to Freedom of Religion):\n\nList I:\n(a) Article 25\n(b) Article 26\n(c) Article 27\n(d) Article 28\n\nList II:\n(1) No religious instruction in State-funded educational institutions\n(2) No compulsion to pay taxes for promotion of any religion\n(3) Freedom to manage religious affairs and establish institutions\n(4) Freedom of conscience and right to profess, practice, propagate religion\n\nChoose the correct answer:",options:["A) a-4, b-3, c-2, d-1","B) a-3, b-4, c-1, d-2","C) a-4, b-2, c-3, d-1","D) a-2, b-3, c-4, d-1"],answer:"A",explanation:"(a) Article 25 — Freedom of conscience and right to profess, practice and propagate religion (subject to public order, morality, health, and other FRs); (b) Article 26 — Freedom to manage religious affairs — every religious denomination can establish/maintain institutions; (c) Article 27 — Freedom from taxation for promotion of any particular religion; (d) Article 28 — Freedom from attending religious instruction in State-wholly-maintained institutions."},
+{id:84,type:"match",question:"Match List I (Parts of Constitution) with List II (Articles range):\n\nList I:\n(a) Part I — The Union and its Territory\n(b) Part V — The Union Government\n(c) Part XIV — Services under the Union and States\n(d) Part XX — Amendment of the Constitution\n\nList II:\n(1) Article 368\n(2) Articles 308-323\n(3) Articles 52-151\n(4) Articles 1-4\n\nChoose the correct answer:",options:["A) a-4, b-3, c-2, d-1","B) a-3, b-4, c-1, d-2","C) a-4, b-3, c-1, d-2","D) a-1, b-2, c-3, d-4"],answer:"A",explanation:"(a) Part I — Union and Territory — Articles 1-4 (name and territory, admission of states, Parliament's power to form new states, etc.); (b) Part V — Union Government — Articles 52-151 (President, VP, PM, Parliament, SC, CAG); (c) Part XIV — Services under Union and States — Articles 308-323 (UPSC, State PSC, recruitment and conditions of service); (d) Part XX — Amendment — Article 368 only."},
+{id:85,type:"match",question:"Match List I (Features) with List II (Countries that inspired India):\n\nList I:\n(a) Five Year Plans\n(b) Written Constitution\n(c) Amendment by special majority\n(d) Fundamental Freedoms\n\nList II:\n(1) South Africa\n(2) USA\n(3) USSR\n(4) USA/Canada\n\nChoose the correct answer:",options:["A) a-3, b-2, c-1, d-4","B) a-2, b-3, c-4, d-1","C) a-3, b-4, c-1, d-2","D) a-1, b-2, c-3, d-4"],answer:"A",explanation:"(a) Five Year Plans — concept inspired from USSR/Soviet model of planned economy; (b) Written Constitution — USA has the first modern written constitution; India followed the practice of having a written constitution; (c) Amendment by special majority — procedure borrowed from South Africa; (d) Fundamental Freedoms (Article 19) — inspired by the US Bill of Rights and Canadian Bill of Rights."},
+{id:86,type:"match",question:"Match List I (Schedules of the Constitution) with List II (Added by which Amendment):\n\nList I:\n(a) Ninth Schedule\n(b) Tenth Schedule\n(c) Eleventh Schedule\n(d) Twelfth Schedule\n\nList II:\n(1) 74th Amendment Act, 1992\n(2) 52nd Amendment Act, 1985\n(3) First Amendment Act, 1951\n(4) 73rd Amendment Act, 1992\n\nChoose the correct answer:",options:["A) a-3, b-2, c-4, d-1","B) a-2, b-3, c-4, d-1","C) a-3, b-4, c-2, d-1","D) a-1, b-2, c-3, d-4"],answer:"A",explanation:"(a) Ninth Schedule — First Amendment Act 1951 (to protect land reform laws from FR challenge); (b) Tenth Schedule — 52nd Amendment 1985 (Anti-defection provisions); (c) Eleventh Schedule — 73rd Amendment 1992 (29 matters for Panchayati Raj institutions); (d) Twelfth Schedule — 74th Amendment 1992 (18 matters for Municipalities/urban local bodies)."},
+{id:87,type:"match",question:"Match List I (Rights of Minorities/Weaker Sections) with List II (Articles):\n\nList I:\n(a) Right of minorities to establish educational institutions\n(b) Right of scheduled castes and tribes — special provisions\n(c) Protection of interests of minorities\n(d) Rights of children for free and compulsory education\n\nList II:\n(1) Article 21A\n(2) Article 29\n(3) Article 30\n(4) Articles 15, 16, 46\n\nChoose the correct answer:",options:["A) a-3, b-4, c-2, d-1","B) a-2, b-3, c-4, d-1","C) a-3, b-2, c-4, d-1","D) a-4, b-3, c-2, d-1"],answer:"A",explanation:"(a) Right of minorities to establish educational institutions — Article 30 (minorities based on religion or language); (b) Special provisions for SC/ST — Articles 15, 16, 46 (reservations, protection from exploitation); (c) Protection of interests of minorities (right to conserve culture and language) — Article 29; (d) Right to free and compulsory education for children 6-14 years — Article 21A."},
+{id:88,type:"match",question:"Match List I (Important DPSP Articles) with List II (Subject Matter):\n\nList I:\n(a) Article 36\n(b) Article 38\n(c) Article 43\n(d) Article 51\n\nList II:\n(1) Promotion of international peace and security\n(2) State shall secure a social order for promotion of welfare\n(3) Living wage for workers and decent standard of life\n(4) Definition of 'State' for Part IV\n\nChoose the correct answer:",options:["A) a-4, b-2, c-3, d-1","B) a-2, b-4, c-3, d-1","C) a-4, b-3, c-2, d-1","D) a-2, b-3, c-4, d-1"],answer:"A",explanation:"(a) Article 36 — Definition of 'State' for Part IV (same as Article 12 for Part III); (b) Article 38 — State shall strive to promote welfare of people by securing and protecting a social order with justice in all spheres; (c) Article 43 — living wage, decent standard of life and full enjoyment of leisure for workers, promotion of cottage industries; (d) Article 51 — Promotion of international peace and security, just dealings between nations, encouraging settlement of international disputes by arbitration."},
+{id:89,type:"match",question:"Match List I (CAG-related provisions) with List II (Articles):\n\nList I:\n(a) Establishment of CAG\n(b) Duties and powers of CAG\n(c) Form of accounts of Union and States\n(d) Audit reports of CAG\n\nList II:\n(1) Article 150\n(2) Article 151\n(3) Article 148\n(4) Article 149\n\nChoose the correct answer:",options:["A) a-3, b-4, c-1, d-2","B) a-4, b-3, c-2, d-1","C) a-3, b-1, c-4, d-2","D) a-2, b-3, c-4, d-1"],answer:"A",explanation:"(a) Article 148 — Comptroller and Auditor General of India (establishment, appointment, term, removal); (b) Article 149 — Duties and Powers of CAG (prescribed by Parliament by law — CAG Act 1971); (c) Article 150 — Form of accounts of Union and States (to be kept in such form as CAG may prescribe with approval of President); (d) Article 151 — Audit reports of CAG shall be submitted to President/Governor who places them before Parliament/State Legislature."},
+{id:90,type:"match",question:"Match List I (Judicial Review related Articles) with List II (Provisions):\n\nList I:\n(a) Article 13\n(b) Article 32\n(c) Article 131\n(d) Article 143\n\nList II:\n(1) Presidential reference (advisory jurisdiction of SC)\n(2) Laws inconsistent with FRs are void\n(3) Original jurisdiction of SC in disputes between States/Centre\n(4) Right to move SC for enforcement of FRs\n\nChoose the correct answer:",options:["A) a-2, b-4, c-3, d-1","B) a-4, b-2, c-3, d-1","C) a-2, b-3, c-4, d-1","D) a-1, b-4, c-3, d-2"],answer:"A",explanation:"(a) Article 13 — Judicial Review: Laws inconsistent with FRs are void; (b) Article 32 — Right to Constitutional Remedies; power of SC to issue writs for enforcement of FRs; (c) Article 131 — Original jurisdiction of SC in disputes involving: Centre vs State(s) or State vs State(s); (d) Article 143 — Advisory jurisdiction: President may refer question of law/public importance to SC for opinion."},
+
+// ---- ASSERTION & REASON (Q91–110) ----
+{id:91,type:"assertion",question:"Assertion (A): The Indian Constitution is described as 'quasi-federal' or 'federal with strong unitary bias'.\nReason (R): The Indian Constitution provides for a strong Centre with emergency powers, single citizenship, integrated judiciary, and Governor as agent of Centre.\n\nChoose the correct option:",options:["A) A is correct, R is correct, and R is the correct explanation of A","B) A is correct, R is correct, but R is NOT the correct explanation of A","C) A is correct, R is incorrect","D) A is incorrect, R is correct"],answer:"A",explanation:"Both Assertion and Reason are correct and R explains A. India is called 'quasi-federal' or 'federal with strong unitary bias' because while it has federal features (dual polity, division of powers, written constitution), there are many unitary features: strong Centre, single citizenship, integrated judiciary, all-India services, Emergency provisions, Governor appointed by President, Parliament can change state boundaries. K.C. Wheare called it 'quasi-federal'."},
+{id:92,type:"assertion",question:"Assertion (A): Fundamental Rights are more important than Directive Principles of State Policy.\nReason (R): Fundamental Rights are justiciable while Directive Principles are non-justiciable.\n\nChoose the correct option:",options:["A) A is correct, R is correct, and R is the correct explanation of A","B) A is correct, R is correct, but R is NOT the correct explanation of A","C) A is incorrect, R is correct","D) Both A and R are incorrect"],answer:"C",explanation:"Assertion (A) is incorrect — After Minerva Mills (1980) and subsequent cases, it is settled that FRs and DPSPs are complementary and must be harmoniously balanced. Neither is inherently superior. Reason (R) is correct — It is factually true that FRs are justiciable and DPSPs are not. However, since A is incorrect, the correct answer is C."},
+{id:93,type:"assertion",question:"Assertion (A): The Preamble to the Indian Constitution cannot be amended.\nReason (R): The Preamble is not a part of the Constitution.\n\nChoose the correct option:",options:["A) A is correct, R is correct, and R is the correct explanation of A","B) A is correct, R is correct, but R is NOT the correct explanation of A","C) A is incorrect, R is correct","D) Both A and R are incorrect"],answer:"D",explanation:"Both A and R are incorrect. (A) The Preamble CAN be amended — as was done by the 42nd Amendment 1976 (Kesavananda Bharati case confirmed it is amendable). (R) The Preamble IS a part of the Constitution — as held by the Supreme Court in Kesavananda Bharati v. State of Kerala (1973), overruling the earlier Beru Bari case which said Preamble is not part of Constitution."},
+{id:94,type:"assertion",question:"Assertion (A): Dr. B.R. Ambedkar called Article 32 the 'Heart and Soul of the Constitution'.\nReason (R): Article 32 provides the right to move the Supreme Court for enforcement of Fundamental Rights and cannot be suspended during normal times.\n\nChoose the correct option:",options:["A) A is correct, R is correct, and R is the correct explanation of A","B) A is correct, R is correct, but R is NOT the correct explanation of A","C) A is correct, R is incorrect","D) A is incorrect, R is correct"],answer:"A",explanation:"Both A and R are correct and R explains A. Dr. Ambedkar described Article 32 as the 'Heart and Soul' because it makes FRs effective and enforceable. Without Article 32, FRs would be meaningless. Article 32 is itself a Fundamental Right and cannot ordinarily be suspended (only under National Emergency under Article 359, but even then Articles 20 and 21 cannot be suspended)."},
+{id:95,type:"assertion",question:"Assertion (A): India adopted 'Positive Secularism' unlike the Western concept of strict separation of Church and State.\nReason (R): The Indian State gives equal respect to all religions (Sarva Dharma Samabhava) and can intervene in religious matters to remove social evils.\n\nChoose the correct option:",options:["A) A is correct, R is correct, and R is the correct explanation of A","B) A is correct, R is correct, but R is NOT the correct explanation of A","C) A is correct, R is incorrect","D) A is incorrect, R is correct"],answer:"A",explanation:"Both A and R are correct and R explains A. Indian secularism is 'positive' — the State gives equal respect/protection to all religions, unlike negative secularism (strict wall of separation between state and religion in the Western model). The Indian State can intervene to reform religion (abolish untouchability, allow women into temples) and can provide aid to minority religious institutions."},
+{id:96,type:"assertion",question:"Assertion (A): The right to property was removed from the list of Fundamental Rights by the 44th Amendment Act, 1978.\nReason (R): The right to property is no longer protected under the Constitution after 1978.\n\nChoose the correct option:",options:["A) A is correct, R is correct, and R is the correct explanation of A","B) A is correct, R is correct, but R is NOT the correct explanation of A","C) A is correct, R is incorrect","D) A is incorrect, R is correct"],answer:"C",explanation:"Assertion (A) is correct — 44th Amendment 1978 removed right to property (Art. 19(1)(f) and Art. 31) from Fundamental Rights. Reason (R) is incorrect — Right to property continues to be protected as a constitutional/legal right under Article 300A ('No person shall be deprived of his property save by authority of law'). It is just not a Fundamental Right anymore."},
+{id:97,type:"assertion",question:"Assertion (A): India has a bicameral legislature at the Central level.\nReason (R): India's Parliament consists of Lok Sabha and Rajya Sabha only.\n\nChoose the correct option:",options:["A) A is correct, R is correct, and R is the correct explanation of A","B) A is correct, R is correct, but R is NOT the correct explanation of A","C) A is correct, R is incorrect","D) A is incorrect, R is correct"],answer:"C",explanation:"Assertion (A) is correct — India does have a bicameral legislature (two houses). Reason (R) is incorrect (incomplete) — Parliament consists of three components: the President, the Lok Sabha, and the Rajya Sabha (Article 79). So R is factually wrong in stating Parliament has only two houses. The President is also part of Parliament."},
+{id:98,type:"assertion",question:"Assertion (A): The concept of Universal Adult Franchise strengthens Indian democracy.\nReason (R): Every citizen above 18 years has the right to vote irrespective of religion, caste, sex, or literacy.\n\nChoose the correct option:",options:["A) A is correct, R is correct, and R is the correct explanation of A","B) A is correct, R is correct, but R is NOT the correct explanation of A","C) A is correct, R is incorrect","D) A is incorrect, R is correct"],answer:"A",explanation:"Both A and R are correct and R explains A. Universal Adult Franchise (Article 326) gives every adult citizen (18+) the right to vote without discrimination on grounds of religion, race, caste, sex, literacy, or wealth. This ensures broad-based democratic participation and strengthens representative government."},
+{id:99,type:"assertion",question:"Assertion (A): The Indian Supreme Court has the power of Judicial Review.\nReason (R): The power of Judicial Review is explicitly mentioned in Article 13 which declares laws violating Fundamental Rights as void.\n\nChoose the correct option:",options:["A) A is correct, R is correct, and R is the correct explanation of A","B) A is correct, R is correct, but R is NOT the correct explanation of A","C) A is correct, R is incorrect","D) A is incorrect, R is correct"],answer:"B",explanation:"Both A and R are correct. Assertion is correct — Indian SC has Judicial Review power. Reason is correct — Article 13 does declare laws inconsistent with FRs as void. However, R is NOT the COMPLETE explanation of A. Judicial Review in India is broader than just Article 13 — it also stems from the Constitution's supremacy, the Rule of Law, and the courts' inherent power to review legislative/executive action for constitutionality."},
+{id:100,type:"assertion",question:"Assertion (A): Fundamental Duties in the Indian Constitution are enforceable by courts.\nReason (R): Article 51A imposes ten (now eleven) duties on citizens of India.\n\nChoose the correct option:",options:["A) A is correct, R is correct, and R is the correct explanation of A","B) A is correct, R is correct, but R is NOT the correct explanation of A","C) A is incorrect, R is correct","D) Both A and R are incorrect"],answer:"C",explanation:"Assertion (A) is incorrect — Fundamental Duties under Article 51A are non-justiciable. Courts cannot directly enforce them. However, Parliament can pass legislation to enforce them (as held in Chandra Bhavan case). Reason (R) is correct — Article 51A originally had 10 duties (42nd Amendment 1976); the 11th was added by 86th Amendment 2002. So A is wrong but R is correct."},
+{id:101,type:"assertion",question:"Assertion (A): The Governor of a State is a constitutional head, not the real executive.\nReason (R): The Governor acts on the aid and advice of the Council of Ministers headed by the Chief Minister in all matters.\n\nChoose the correct option:",options:["A) A is correct, R is correct, and R is the correct explanation of A","B) A is correct, R is correct, but R is NOT the correct explanation of A","C) A is correct, R is incorrect","D) A is incorrect, R is correct"],answer:"B",explanation:"Both A and R are correct. A is correct — Governor is nominal/constitutional head; real executive power is with CM and Cabinet. R is correct — Article 163 says Governor acts on aid and advice of Cabinet (except in specified discretionary matters). But R is NOT the full explanation of A because the Governor also has discretionary powers (like in hung assembly situations, sending reports to President) where he acts independently."},
+{id:102,type:"assertion",question:"Assertion (A): The Indian Constitution provides for an Integrated Audit Machinery.\nReason (R): The Comptroller and Auditor General (CAG) audits accounts of both the Union and State Governments.\n\nChoose the correct option:",options:["A) A is correct, R is correct, and R is the correct explanation of A","B) A is correct, R is correct, but R is NOT the correct explanation of A","C) A is correct, R is incorrect","D) A is incorrect, R is correct"],answer:"A",explanation:"Both A and R are correct and R explains A. India has a single, integrated audit machinery in the form of CAG (Article 148-151). Unlike federal systems where states have their own auditors, the CAG of India audits accounts of both Centre and States, providing a unified audit mechanism. This is a unitary feature of the otherwise federal Constitution."},
+{id:103,type:"assertion",question:"Assertion (A): India has a Presidential form of government.\nReason (R): The President of India is elected by Universal Adult Franchise.\n\nChoose the correct option:",options:["A) A is correct, R is correct, and R is the correct explanation of A","B) A is correct, R is correct, but R is NOT the correct explanation of A","C) A is incorrect, R is correct","D) Both A and R are incorrect"],answer:"D",explanation:"Both A and R are incorrect. (A) India has a Parliamentary form of government (Westminster model), not Presidential. The President is the constitutional/nominal head while the PM and Cabinet are the real executive. (R) The President of India is NOT elected by Universal Adult Franchise — the President is elected by an Electoral College comprising elected members of Parliament and elected members of State Legislative Assemblies (Article 54)."},
+{id:104,type:"assertion",question:"Assertion (A): The Indian Constitution grants more powers to the Centre compared to States.\nReason (R): The Union List has more subjects than the State List and in case of conflict, Central law prevails.\n\nChoose the correct option:",options:["A) A is correct, R is correct, and R is the correct explanation of A","B) A is correct, R is correct, but R is NOT the correct explanation of A","C) A is correct, R is incorrect","D) A is incorrect, R is correct"],answer:"A",explanation:"Both A and R are correct and R explains A. The Union List (100 subjects) has more subjects than State List (61 subjects). The Centre also has the Concurrent List, residuary powers, power to form new states, power to suspend state governments, etc. In conflicts between Union and State laws on Concurrent List subjects, Union law prevails (Article 246). This strong Centre is a unitary bias."},
+{id:105,type:"assertion",question:"Assertion (A): The 42nd Constitutional Amendment is often called the 'Mini Constitution'.\nReason (R): The 42nd Amendment made the most wide-ranging changes to the Constitution in one go.\n\nChoose the correct option:",options:["A) A is correct, R is correct, and R is the correct explanation of A","B) A is correct, R is correct, but R is NOT the correct explanation of A","C) A is correct, R is incorrect","D) A is incorrect, R is correct"],answer:"A",explanation:"Both A and R are correct and R explains A. The 42nd Amendment Act 1976 (passed during Emergency period under PM Indira Gandhi) made sweeping changes: amended Preamble (added Socialist, Secular, integrity), added Fundamental Duties, curtailed Judicial Review, strengthened Centre vis-à-vis States, added new DPSPs, made Directive Principles superior to FRs (later reversed). Its comprehensive nature earned it the name 'Mini Constitution'."},
+{id:106,type:"assertion",question:"Assertion (A): Article 20 cannot be suspended even during a National Emergency.\nReason (R): Article 20 provides protection against arbitrary conviction — no ex-post-facto law, no double jeopardy, no self-incrimination.\n\nChoose the correct option:",options:["A) A is correct, R is correct, and R is the correct explanation of A","B) A is correct, R is correct, but R is NOT the correct explanation of A","C) A is correct, R is incorrect","D) A is incorrect, R is correct"],answer:"B",explanation:"Both A and R are correct but R is not the direct explanation of A. A is correct — Article 20 cannot be suspended during National Emergency (44th Amendment 1978 made Articles 20 and 21 immune from suspension under Article 359). R is also correct — Article 20 gives three protections: (i) no ex-post-facto criminal law, (ii) no double jeopardy, (iii) no self-incrimination. However, R is not the 'reason' for A — the reason is the 44th Amendment's specific protection."},
+{id:107,type:"assertion",question:"Assertion (A): The concept of 'Basic Structure' limits Parliament's power to amend the Constitution.\nReason (R): Basic Structure doctrine was first propounded in the Golaknath case (1967).\n\nChoose the correct option:",options:["A) A is correct, R is correct, and R is the correct explanation of A","B) A is correct, R is correct, but R is NOT the correct explanation of A","C) A is correct, R is incorrect","D) A is incorrect, R is correct"],answer:"C",explanation:"Assertion (A) is correct — The Basic Structure doctrine (Kesavananda Bharati, 1973) places limits on Parliament's amending power; it cannot destroy the essential features of the Constitution. Reason (R) is incorrect — Basic Structure was first propounded in Kesavananda Bharati v. State of Kerala (1973), NOT in Golaknath (1967). Golaknath held Parliament cannot amend Fundamental Rights at all, but did not articulate the 'basic structure' doctrine specifically."},
+{id:108,type:"assertion",question:"Assertion (A): Freedom of speech and expression under Article 19(1)(a) includes freedom of press.\nReason (R): A separate article specifically guaranteeing freedom of press exists in the Indian Constitution.\n\nChoose the correct option:",options:["A) A is correct, R is correct, and R is the correct explanation of A","B) A is correct, R is correct, but R is NOT the correct explanation of A","C) A is correct, R is incorrect","D) A is incorrect, R is correct"],answer:"C",explanation:"Assertion (A) is correct — Freedom of press is included within Article 19(1)(a) as held by SC in Indian Express case and Bennett Coleman case. Freedom of press is not a separate right but flows from Article 19(1)(a). Reason (R) is incorrect — There is NO separate article in the Indian Constitution specifically guaranteeing freedom of press (unlike some other constitutions). It is implied in Article 19(1)(a)."},
+{id:109,type:"assertion",question:"Assertion (A): India has a single unified Constitution for both the Centre and the States.\nReason (R): Unlike the USA, Indian states do not have their own separate constitutions.\n\nChoose the correct option:",options:["A) A is correct, R is correct, and R is the correct explanation of A","B) A is correct, R is correct, but R is NOT the correct explanation of A","C) A is correct, R is incorrect","D) A is incorrect, R is correct"],answer:"A",explanation:"Both A and R are correct and R explains A. India has a single Constitution governing both Centre and States — all constitutional provisions applicable to states are in the same document. This is unlike the USA (or Australia) where each state has its own constitution. This is a significant unitary feature of the Indian quasi-federal structure."},
+{id:110,type:"assertion",question:"Assertion (A): The Indian Constitution guarantees equal justice and free legal aid as a Directive Principle.\nReason (R): The Legal Services Authorities Act, 1987 was enacted to implement this directive.\n\nChoose the correct option:",options:["A) A is correct, R is correct, and R is the correct explanation of A","B) A is correct, R is correct, but R is NOT the correct explanation of A","C) A is correct, R is incorrect","D) A is incorrect, R is correct"],answer:"A",explanation:"Both A and R are correct and R explains A. Article 39A (added by 42nd Amendment 1976) directs the State to ensure equal justice and free legal aid for citizens. The Legal Services Authorities Act 1987 established a statutory framework for providing free legal services to weaker sections — it directly implements Article 39A."},
+
+// ---- CHRONOLOGICAL ORDER (Q111–125) ----
+{id:111,type:"chronological",question:"Arrange the following in chronological order of their enactment/events:\n(i) Government of India Act, 1935\n(ii) Indian Independence Act, 1947\n(iii) Constituent Assembly adopts the Constitution\n(iv) Constitution comes into force\n\nSelect the correct order:",options:["A) (i) → (ii) → (iii) → (iv)","B) (ii) → (i) → (iii) → (iv)","C) (i) → (iii) → (ii) → (iv)","D) (ii) → (iii) → (i) → (iv)"],answer:"A",explanation:"Correct chronological order: (i) Government of India Act 1935 — the most extensive Act for Indian governance; (ii) Indian Independence Act 1947 — granted independence to India and Pakistan; (iii) Constituent Assembly adopted the Constitution on 26 November 1949; (iv) Constitution came into force on 26 January 1950 (Republic Day)."},
+{id:112,type:"chronological",question:"Arrange the following landmark cases in chronological order:\n(i) Maneka Gandhi v. UOI\n(ii) Kesavananda Bharati v. State of Kerala\n(iii) A.K. Gopalan v. State of Madras\n(iv) Golaknath v. State of Punjab\n\nSelect the correct order:",options:["A) (iii) → (iv) → (ii) → (i)","B) (iv) → (iii) → (ii) → (i)","C) (iii) → (ii) → (iv) → (i)","D) (ii) → (iii) → (iv) → (i)"],answer:"A",explanation:"Correct order: (iii) A.K. Gopalan v. State of Madras — 1950 (first major case on Art. 21 and preventive detention); (iv) Golaknath v. State of Punjab — 1967 (Parliament cannot amend FRs); (ii) Kesavananda Bharati v. State of Kerala — 1973 (Basic Structure doctrine); (i) Maneka Gandhi v. UOI — 1978 (expanded Article 21, golden triangle)."},
+{id:113,type:"chronological",question:"Arrange the following Constitutional Amendments in chronological order:\n(i) 44th Amendment (Right to Property removed from FRs)\n(ii) 42nd Amendment (Mini Constitution)\n(iii) 86th Amendment (Right to Education)\n(iv) 73rd Amendment (Panchayati Raj)\n\nSelect the correct order:",options:["A) (ii) → (i) → (iv) → (iii)","B) (i) → (ii) → (iii) → (iv)","C) (ii) → (iv) → (i) → (iii)","D) (iv) → (i) → (ii) → (iii)"],answer:"A",explanation:"Chronological: (ii) 42nd Amendment — 1976; (i) 44th Amendment — 1978; (iv) 73rd Amendment — 1992; (iii) 86th Amendment — 2002."},
+{id:114,type:"chronological",question:"Arrange the following events related to the Constituent Assembly in chronological order:\n(i) First meeting of the Constituent Assembly\n(ii) Appointment of Drafting Committee under Dr. B.R. Ambedkar\n(iii) Objective Resolution moved by Jawaharlal Nehru\n(iv) Constitution adopted by Constituent Assembly\n\nSelect the correct order:",options:["A) (i) → (iii) → (ii) → (iv)","B) (iii) → (i) → (ii) → (iv)","C) (ii) → (i) → (iii) → (iv)","D) (i) → (ii) → (iv) → (iii)"],answer:"A",explanation:"Correct order: (i) First meeting of Constituent Assembly — 9 December 1946; (iii) Objective Resolution moved by Nehru — 13 December 1946 (adopted 22 January 1947); (ii) Drafting Committee under Dr. Ambedkar appointed — 29 August 1947; (iv) Constitution adopted — 26 November 1949."},
+{id:115,type:"chronological",question:"Arrange the following in chronological order in the context of Right to Property:\n(i) Right to Property removed from Fundamental Rights\n(ii) First Amendment Act restricts Right to Property for land reforms\n(iii) Bank Nationalisation case — adequate compensation required\n(iv) Article 300A — Property right as legal right\n\nSelect the correct order:",options:["A) (ii) → (iii) → (i) → (iv)","B) (i) → (ii) → (iii) → (iv)","C) (iii) → (ii) → (i) → (iv)","D) (ii) → (i) → (iv) → (iii)"],answer:"A",explanation:"Chronological: (ii) First Amendment Act 1951 — restricted right to property to protect land reform laws; (iii) Bank Nationalisation case 1970 — compensation must be fair/adequate; (i) 44th Amendment 1978 — removed right to property from Fundamental Rights; (iv) Article 300A — created as a legal (not fundamental) right to property."},
+{id:116,type:"chronological",question:"Arrange the following in the order they were added to the Constitution as Fundamental Duties:\n(i) Duty to provide opportunities for education to child (6-14 years)\n(ii) Duty to protect and improve natural environment\n(iii) Duty to uphold and protect sovereignty, unity and integrity\n(iv) Duty to value and preserve the rich heritage of composite culture\n\nSelect the correct order:",options:["A) (ii), (iii) and (iv) simultaneously, then (i) later","B) (i) first, then (ii), (iii), (iv)","C) All four were added simultaneously","D) (iii), (iv) first; then (ii); then (i)"],answer:"A",explanation:"The original 10 Fundamental Duties including duties (ii), (iii), and (iv) were all added together by the 42nd Amendment Act 1976. The 11th Fundamental Duty — duty (i) (providing educational opportunities to children 6-14 years) was added later by the 86th Amendment Act 2002. So (ii), (iii), (iv) came first simultaneously in 1976, and (i) was added in 2002."},
+{id:117,type:"chronological",question:"Arrange the following Fundamental Rights cases in chronological order:\n(i) K.S. Puttaswamy v. UOI (Right to Privacy)\n(ii) Olga Tellis v. Bombay Municipal Corporation (Right to Livelihood)\n(iii) Hussainara Khatoon v. State of Bihar (Speedy Trial)\n(iv) Vishaka v. State of Rajasthan (Sexual Harassment at Workplace)\n\nSelect the correct order:",options:["A) (iii) → (ii) → (iv) → (i)","B) (ii) → (iii) → (iv) → (i)","C) (iii) → (iv) → (ii) → (i)","D) (iv) → (iii) → (ii) → (i)"],answer:"A",explanation:"Chronological: (iii) Hussainara Khatoon 1979; (ii) Olga Tellis 1985; (iv) Vishaka 1997; (i) K.S. Puttaswamy 2017. This shows the progressive judicial expansion of Article 21's scope over decades."},
+{id:118,type:"chronological",question:"Arrange the following events relating to Emergency Provisions chronologically:\n(i) 44th Amendment replaces 'internal disturbance' with 'armed rebellion'\n(ii) First National Emergency proclaimed (China War)\n(iii) Third National Emergency proclaimed (Internal Disturbance — Indira Gandhi)\n(iv) S.R. Bommai case — SC guidelines on Article 356\n\nSelect the correct order:",options:["A) (ii) → (iii) → (i) → (iv)","B) (iii) → (ii) → (i) → (iv)","C) (ii) → (i) → (iii) → (iv)","D) (i) → (ii) → (iii) → (iv)"],answer:"A",explanation:"(ii) First National Emergency — October 1962 (Sino-Indian War); (iii) Third National Emergency — June 1975 (Internal Emergency, 'Indira Gandhi Emergency'); (i) 44th Amendment — 1978 (post-emergency reforms); (iv) S.R. Bommai case — 1994."},
+{id:119,type:"chronological",question:"Arrange the following in the order they appear in the Constitution:\n(i) Directive Principles of State Policy\n(ii) Fundamental Rights\n(iii) Fundamental Duties\n(iv) Emergency Provisions\n\nSelect the correct order:",options:["A) (ii) → (i) → (iii) → (iv)","B) (i) → (ii) → (iii) → (iv)","C) (ii) → (iii) → (i) → (iv)","D) (iii) → (ii) → (i) → (iv)"],answer:"A",explanation:"In the Constitution: (ii) Fundamental Rights — Part III (Articles 12-35); (i) Directive Principles — Part IV (Articles 36-51); (iii) Fundamental Duties — Part IVA (Article 51A); (iv) Emergency Provisions — Part XVIII (Articles 352-360). They appear in this exact order in the Constitution."},
+{id:120,type:"chronological",question:"Arrange the following Judges' Transfer/Appointment cases in chronological order:\n(i) Second Judges case — Collegium system formalized\n(ii) Third Judges case — Collegium expanded to CJI + 4 senior judges\n(iii) First Judges case — Executive has primacy in appointments\n(iv) NJAC case — 99th Amendment struck down\n\nSelect the correct order:",options:["A) (iii) → (i) → (ii) → (iv)","B) (i) → (iii) → (ii) → (iv)","C) (iii) → (ii) → (i) → (iv)","D) (ii) → (i) → (iii) → (iv)"],answer:"A",explanation:"(iii) First Judges case (S.P. Gupta v. UOI) — 1981: Executive primacy in appointments; (i) Second Judges case (SC Advocates-on-Record v. UOI) — 1993: Collegium system (CJI + 2 senior judges); (ii) Third Judges case (Presidential Reference) — 1998: Collegium expanded to CJI + 4 senior SC judges; (iv) NJAC case — 2015: 99th Amendment and NJAC Act struck down."},
+{id:121,type:"chronological",question:"Arrange the following parts of the Constitution-making process in chronological order:\n(i) Cabinet Mission Plan — framework for Constituent Assembly\n(ii) Indian Independence Act — grants sovereignty\n(iii) Constituent Assembly completes its work in 2 years 11 months 18 days\n(iv) Interim Government formed with Nehru as PM\n\nSelect the correct order:",options:["A) (i) → (iv) → (ii) → (iii)","B) (iv) → (i) → (ii) → (iii)","C) (i) → (ii) → (iv) → (iii)","D) (ii) → (i) → (iv) → (iii)"],answer:"A",explanation:"(i) Cabinet Mission Plan — May 1946 (framework for Constituent Assembly); (iv) Interim Government formed with Nehru as PM — September 1946; (ii) Indian Independence Act — July 1947; (iii) Constituent Assembly completed its work — November 1949 (total duration: 2 years, 11 months, 18 days; 11 sessions)."},
+{id:122,type:"chronological",question:"Arrange the following Articles in the order they appear in Part III (Fundamental Rights):\n(i) Right against Exploitation\n(ii) Right to Equality\n(iii) Right to Freedom of Religion\n(iv) Right to Constitutional Remedies\n\nSelect the correct order:",options:["A) (ii) → (i) → (iii) → (iv)","B) (i) → (ii) → (iii) → (iv)","C) (ii) → (iii) → (i) → (iv)","D) (iii) → (ii) → (i) → (iv)"],answer:"A",explanation:"Order in Part III: (ii) Right to Equality — Articles 14-18; (i) Right against Exploitation — Articles 23-24; (iii) Right to Freedom of Religion — Articles 25-28; (iv) Right to Constitutional Remedies — Article 32. (Note: Right to Freedom is Articles 19-22; Cultural/Educational Rights are Articles 29-31, between exploitation and religion in sequence)."},
+{id:123,type:"chronological",question:"Arrange the following in chronological order with respect to Panchayati Raj:\n(i) Balwantrai Mehta Committee Report\n(ii) 73rd Constitutional Amendment Act\n(iii) Asoka Mehta Committee Report\n(iv) First Panchayati Raj institutions established in Nagaur, Rajasthan\n\nSelect the correct order:",options:["A) (i) → (iv) → (iii) → (ii)","B) (iv) → (i) → (iii) → (ii)","C) (i) → (iii) → (iv) → (ii)","D) (iii) → (i) → (iv) → (ii)"],answer:"A",explanation:"(i) Balwantrai Mehta Committee Report — 1957 (recommended 3-tier Panchayati Raj); (iv) First PRI established in Nagaur, Rajasthan — 2 October 1959 (by PM Nehru); (iii) Asoka Mehta Committee — 1977-78 (recommended 2-tier system); (ii) 73rd Amendment Act — 1992 (gave constitutional status to PRIs, added Part IX and 11th Schedule)."},
+{id:124,type:"chronological",question:"Arrange the following in chronological order with respect to the concept of 'Socialism' in India:\n(i) Avadi Resolution — declared India's goal as 'Socialistic Pattern of Society'\n(ii) 'Socialist' added to the Preamble\n(iii) Directive Principles included in Constitution directing reduction of inequality\n(iv) NITI Aayog replaces Planning Commission\n\nSelect the correct order:",options:["A) (iii) → (i) → (ii) → (iv)","B) (i) → (iii) → (ii) → (iv)","C) (iii) → (ii) → (i) → (iv)","D) (ii) → (iii) → (i) → (iv)"],answer:"A",explanation:"(iii) DPSPs in Constitution (Articles 38, 39 etc.) — 1950; (i) Avadi Resolution of Indian National Congress declared 'Socialistic Pattern of Society' — 1955; (ii) 'Socialist' added to Preamble by 42nd Amendment — 1976; (iv) NITI Aayog replaced Planning Commission — 2015."},
+{id:125,type:"chronological",question:"Arrange the following Constitutional Amendments in chronological order:\n(i) 52nd Amendment (Anti-defection)\n(ii) 61st Amendment (Voting age reduced to 18)\n(iii) 91st Amendment (Council of Ministers size capped)\n(iv) 99th Amendment (NJAC — struck down)\n\nSelect the correct order:",options:["A) (i) → (ii) → (iii) → (iv)","B) (ii) → (i) → (iii) → (iv)","C) (i) → (iii) → (ii) → (iv)","D) (iv) → (iii) → (ii) → (i)"],answer:"A",explanation:"(i) 52nd Amendment — 1985 (Anti-defection law, Tenth Schedule); (ii) 61st Amendment — 1989 (voting age 21→18); (iii) 91st Amendment — 2003 (Council of Ministers at Centre and States capped at 15% of House strength); (iv) 99th Amendment — 2014 (NJAC, struck down by SC in 2015)."},
+
+// ---- ODD ONE OUT / INCORRECT STATEMENT (Q126–140) ----
+{id:126,type:"oddone",question:"Which of the following is NOT a feature of the Indian federal system?",options:["A) Division of powers between Centre and States","B) Written Constitution","C) Dual citizenship (Central and State)","D) Single integrated judiciary"],answer:"C",explanation:"India does NOT have dual citizenship. India has a single citizenship — all citizens are citizens of India, not of any particular state. This is unlike the USA where citizens have both federal and state citizenship. The other three options — division of powers, written Constitution, and integrated judiciary — are all features of the Indian constitutional setup."},
+{id:127,type:"oddone",question:"Which of the following is NOT a Fundamental Right under the Indian Constitution?",options:["A) Right to Equality (Article 14)","B) Right against Exploitation (Article 23)","C) Right to Work (Employment Guarantee)","D) Right to Freedom of Religion (Article 25)"],answer:"C",explanation:"The Right to Work is NOT a Fundamental Right in India. It is a Directive Principle under Article 41 (DPSP). The other three — Right to Equality (Art. 14-18), Right against Exploitation (Art. 23-24), and Right to Freedom of Religion (Art. 25-28) — are all Fundamental Rights under Part III."},
+{id:128,type:"oddone",question:"Which of the following is NOT a Directive Principle of State Policy?",options:["A) Equal pay for equal work (Article 39d)","B) Promotion of educational and economic interests of SC/ST (Article 46)","C) Abolition of untouchability (Article 17)","D) Uniform Civil Code (Article 44)"],answer:"C",explanation:"Abolition of untouchability (Article 17) is a Fundamental Right under Part III, not a Directive Principle. It is justiciable and enforceable. The Protection of Civil Rights Act 1955 was passed to implement it. The other three (equal pay, promotion of SC/ST interests, UCC) are all DPSPs from Part IV."},
+{id:129,type:"oddone",question:"Which of the following writs CANNOT be issued against a private individual?",options:["A) Habeas Corpus","B) Mandamus","C) Certiorari","D) Habeas Corpus can be issued against private individuals in custody cases"],answer:"B",explanation:"Mandamus cannot be issued against a private individual. Mandamus can only be issued against a public official or public body to perform a public duty. In contrast, Habeas Corpus can be issued against anyone (state or private individual) who has illegally detained a person. Certiorari and Prohibition are issued to inferior courts/quasi-judicial bodies."},
+{id:130,type:"oddone",question:"Identify the INCORRECT statement about the Preamble of the Indian Constitution:",options:["A) The Preamble begins with the words 'We, the People of India'","B) The Preamble was adopted on 26 January 1950","C) The Preamble declares India to be a Sovereign, Socialist, Secular, Democratic Republic","D) The Preamble sets out the objectives of the Constitution"],answer:"B",explanation:"Statement (B) is INCORRECT. The Preamble was adopted on 26 November 1949 (along with the rest of the Constitution), not 26 January 1950. The Constitution came into force on 26 January 1950. Statement (A) is correct — it begins with 'We, the People'. Statement (C) is correct — after 42nd Amendment 1976. Statement (D) is correct — it outlines the objectives."},
+{id:131,type:"oddone",question:"Which of the following is NOT part of the Basic Structure of the Indian Constitution as recognized by the Supreme Court?",options:["A) Supremacy of the Constitution","B) Republican form of government","C) Bicameral legislature","D) Judicial Review"],answer:"C",explanation:"Bicameral legislature is NOT a recognized basic structure element. While India has a bicameral Parliament, the SC has not specifically identified it as part of the basic structure. Parliament could theoretically convert to unicameral by special majority + state ratification without violating basic structure. The other three — supremacy of Constitution, republican form, and judicial review — are established basic structure elements."},
+{id:132,type:"oddone",question:"Which of the following statements about Universal Adult Franchise is INCORRECT?",options:["A) Every citizen of India who is 18 years or above is entitled to vote","B) The right to vote is given under Article 326 of the Constitution","C) Literacy is a qualification for exercising the right to vote","D) The 61st Amendment Act reduced the voting age from 21 to 18 years"],answer:"C",explanation:"Statement (C) is INCORRECT. Literacy is NOT a qualification for voting in India. The Indian Constitution guarantees Universal Adult Franchise — the right to vote is NOT conditioned on literacy, property, religion, race, caste, or sex. Every citizen above 18 years can vote regardless of education level. This was a conscious decision to make Indian democracy truly universal."},
+{id:133,type:"oddone",question:"Which of the following is NOT a feature borrowed from the Government of India Act, 1935 by the Indian Constitution?",options:["A) Federal Scheme","B) Office of Governor","C) Fundamental Rights","D) Public Service Commissions"],answer:"C",explanation:"Fundamental Rights were NOT borrowed from the Government of India Act 1935. The 1935 Act did not contain a bill of fundamental rights. Fundamental Rights in the Indian Constitution were primarily inspired by the US Bill of Rights (US Constitution). Features borrowed from GoI Act 1935 include federal scheme, provincial autonomy, Governor's office, emergency provisions, public service commissions, judiciary, and administrative details."},
+{id:134,type:"oddone",question:"Which of the following is NOT a correct statement about Article 368?",options:["A) Article 368 deals with amendment procedure of the Constitution","B) All parts of the Constitution can be amended only by the procedure in Article 368","C) Some provisions require special majority plus state ratification","D) The President's assent is required for Constitutional amendments"],answer:"B",explanation:"Statement (B) is INCORRECT. Not all parts of the Constitution require Article 368 procedure. Some provisions can be amended by simple majority of Parliament without following Art. 368 procedure — e.g., admitting new states, changing names of states, Second Schedule matters, and certain procedural provisions. The Article 368 procedure (special majority) covers most important provisions, while some need state ratification additionally."},
+{id:135,type:"oddone",question:"Identify the INCORRECT statement about freedom of religion under Articles 25-28:",options:["A) Article 25 is subject to public order, morality and health","B) Article 26 gives every religious denomination the right to establish religious institutions","C) Article 27 provides freedom from taxation for promotion of a particular religion","D) Article 28 completely prohibits all religious instruction in all educational institutions in India"],answer:"D",explanation:"Statement (D) is INCORRECT. Article 28 does NOT completely prohibit religious instruction in all educational institutions. It only prohibits religious instruction in institutions 'wholly maintained out of State funds'. It does NOT apply to institutions administered by the State but established under endowments/trusts for religious instruction, or institutions recognized by the State, where attendance at religious instruction is voluntary."},
+{id:136,type:"oddone",question:"Which of the following is an INCORRECT statement about the Constituent Assembly of India?",options:["A) The Constituent Assembly was set up under the Cabinet Mission Plan, 1946","B) Dr. B.R. Ambedkar was the Chairman of the Drafting Committee","C) The Constituent Assembly took exactly 5 years to draft the Constitution","D) Dr. Rajendra Prasad was the President of the Constituent Assembly"],answer:"C",explanation:"Statement (C) is INCORRECT. The Constituent Assembly did NOT take 5 years. It took 2 years, 11 months, and 18 days (from 9 December 1946 to 26 November 1949). It held 11 sessions in this period. The total expenditure was about ₹64 lakhs. All other statements are correct — Cabinet Mission Plan 1946, Dr. Ambedkar as Drafting Committee Chairman, and Dr. Rajendra Prasad as Constituent Assembly President."},
+{id:137,type:"oddone",question:"Which of the following is NOT included in the list of 11 Fundamental Duties under Article 51A?",options:["A) To abide by the Constitution and respect its ideals","B) To pay taxes honestly and promptly","C) To defend the country and render national service when called upon","D) To safeguard public property and abjure violence"],answer:"B",explanation:"'To pay taxes honestly' is NOT a Fundamental Duty under Article 51A. Paying taxes is a legal obligation under tax laws, not a Fundamental Duty. The 11 actual Fundamental Duties include: abiding by Constitution, following freedom struggle ideals, defending country, protecting sovereignty, harmony among citizens, preserving heritage, protecting environment, developing scientific temper, safeguarding public property, striving for excellence, and providing education to children."},
+{id:138,type:"oddone",question:"Which of the following is NOT a characteristic of the Parliamentary system of government in India?",options:["A) Existence of a nominal/constitutional head","B) Collective responsibility of Council of Ministers to the lower house","C) Fixed tenure of the Prime Minister for 5 years","D) Bicameral legislature at the Centre"],answer:"C",explanation:"'Fixed tenure of PM for 5 years' is NOT a feature of Parliamentary government in India. The Prime Minister and Council of Ministers serve at the pleasure of the Lok Sabha — they can be removed by a vote of no-confidence. The PM has no fixed tenure. In a Presidential system (like USA), the President has a fixed 4-year term. Other options are correct features of Indian parliamentary system."},
+{id:139,type:"oddone",question:"Which of the following Articles does NOT deal with Fundamental Rights?",options:["A) Article 14","B) Article 21","C) Article 31A","D) Article 44"],answer:"D",explanation:"Article 44 is NOT a Fundamental Right. Article 44 is a Directive Principle of State Policy (Part IV) directing the State to secure a Uniform Civil Code. Article 14 (equality before law) and Article 21 (right to life) are Fundamental Rights. Article 31A (saving of laws providing for acquisition of estates) is also in Part III but is a constitutional provision protecting certain state laws from FR challenge."},
+{id:140,type:"oddone",question:"Which of the following is NOT a unitary feature of the Indian Constitution?",options:["A) Single citizenship","B) Integrated judiciary","C) Division of powers between Centre and States","D) All-India Services"],answer:"C",explanation:"Division of powers between Centre and States is a FEDERAL feature, not a unitary feature. The existence of a Union List, State List, and Concurrent List (Seventh Schedule) reflecting division of legislative powers is a federal characteristic. Unitary features include: single citizenship, integrated judiciary, all-India services, strong Centre, single Constitution, unified election commission, emergency provisions, Governor appointed by President, etc."},
+
+// ---- FILL IN THE BLANK (Q141–150) ----
+{id:141,type:"fillblank",question:"The Preamble to the Indian Constitution declares India to be a Sovereign, Socialist, Secular, Democratic Republic to secure to all citizens: Justice, Liberty, Equality, and _______ among them.",options:["A) Fraternity","B) Harmony","C) Unity","D) Brotherhood"],answer:"A",explanation:"The Preamble promises to secure to all citizens: Justice (social, economic, political); Liberty (of thought, expression, belief, faith and worship); Equality (of status and opportunity); and Fraternity (assuring the dignity of the individual and the unity and integrity of the Nation). 'Fraternity' is the correct answer."},
+{id:142,type:"fillblank",question:"According to Article 12, the definition of 'State' for Fundamental Rights includes the Government and Parliament of India, Government and Legislature of each State, all local authorities, and _______.",options:["A) All private companies","B) All other authorities within the territory of India or under the control of the Government of India","C) All citizens of India","D) Only Central Government bodies"],answer:"B",explanation:"Article 12 defines 'State' to include: (i) Government and Parliament of India; (ii) Government and Legislature of each State; (iii) All local or other authorities within the territory of India or under the control of the Government of India. The last category covers statutory bodies, public corporations, and government companies."},
+{id:143,type:"fillblank",question:"The _______ Amendment Act added the word 'Secular' to the Preamble of the Indian Constitution.",options:["A) 40th","B) 42nd","C) 44th","D) 46th"],answer:"B",explanation:"The 42nd Constitutional Amendment Act 1976 amended the Preamble to add the words 'Socialist' and 'Secular', and also changed 'unity of the nation' to 'unity and integrity of the nation'. The amendment was made during the Emergency period."},
+{id:144,type:"fillblank",question:"Article 51A was added to the Indian Constitution by the _______ Amendment Act, 1976, incorporating Fundamental Duties.",options:["A) 40th","B) 41st","C) 42nd","D) 44th"],answer:"C",explanation:"Article 51A containing Fundamental Duties was inserted in the Constitution as Part IVA by the 42nd Constitutional Amendment Act 1976 during the Emergency period. It was based on the recommendations of the Swaran Singh Committee (1976) which recommended inclusion of Fundamental Duties in the Constitution."},
+{id:145,type:"fillblank",question:"The Supreme Court in the famous _______ case (1978) held that Articles 14, 19, and 21 are interconnected and constitute a 'Golden Triangle' of Fundamental Rights.",options:["A) Golaknath","B) Kesavananda Bharati","C) Maneka Gandhi","D) Minerva Mills"],answer:"C",explanation:"In Maneka Gandhi v. Union of India (1978), the Supreme Court under Justice P.N. Bhagwati (for a 7-judge bench) held that Articles 14, 19, and 21 are interconnected — the famous 'Golden Triangle'. Any law that deprives personal liberty (Art. 21) must also satisfy Articles 14 (reasonableness) and 19 (freedoms). This expanded the scope of Art. 21 to include 'due process'."},
+{id:146,type:"fillblank",question:"The President of India can proclaim Financial Emergency under Article _______ if the financial stability or credit of India or any State is threatened.",options:["A) 352","B) 356","C) 360","D) 365"],answer:"C",explanation:"Financial Emergency is provided under Article 360. It can be proclaimed when the President is satisfied that the financial stability or credit of India or of any part thereof is threatened. Once proclaimed, the Centre can give directions to States to reduce salaries and allowances, and Money Bills of States need Central approval. So far, no Financial Emergency has been declared in India."},
+{id:147,type:"fillblank",question:"According to the Constitution, India is described as a 'Union of States' in Article _______.",options:["A) Article 1","B) Article 2","C) Article 3","D) Article 4"],answer:"A",explanation:"Article 1 describes India as 'India, that is Bharat, shall be a Union of States'. The use of 'Union' instead of 'Federation' was deliberate — it emphasizes that the Indian Union is indestructible (unlike a federation where states might have a right to secede). The territory of India comprises States, Union Territories, and territories acquired by India."},
+{id:148,type:"fillblank",question:"The Directive Principle under Article _______ directs the State to 'separate the judiciary from the executive in public services'.",options:["A) Article 46","B) Article 48","C) Article 50","D) Article 51"],answer:"C",explanation:"Article 50 of the Constitution directs the State to take steps to separate the judiciary from the executive in public services of the State. This DPSP has been substantially achieved through the Code of Criminal Procedure and similar reforms separating judicial and executive functions at the district level."},
+{id:149,type:"fillblank",question:"The _______ case of 1973 established that the Preamble is a part of the Constitution and can be amended under Article 368.",options:["A) A.K. Gopalan v. State of Madras","B) Kesavananda Bharati v. State of Kerala","C) S.R. Bommai v. UOI","D) Berubari Union case"],answer:"B",explanation:"Kesavananda Bharati v. State of Kerala (1973), decided by a 13-judge Constitutional Bench, held that the Preamble IS a part of the Constitution (overruling the Berubari case 1960 which said it was not) and CAN be amended under Article 368, subject to the basic structure doctrine. The 42nd Amendment 1976 subsequently amended the Preamble based on this judgment."},
+{id:150,type:"fillblank",question:"The Right of citizens to vote in elections is guaranteed under Article _______ of the Indian Constitution.",options:["A) Article 324","B) Article 325","C) Article 326","D) Article 327"],answer:"C",explanation:"Article 326 guarantees the elections to the House of the People and to the Legislative Assembly of every State to be on the basis of adult suffrage — every person who is a citizen of India and who is not less than 18 years of age shall be entitled to be registered as a voter. Article 324 deals with superintendence of elections by Election Commission, and Article 325 guarantees one general electoral roll."}
+];
+
+// ============================================================
+// APP STATE
+// ============================================================
+let userAnswers = {};
+let currentQuestion = 1;
+let timerInterval = null;
+let timeRemaining = 150 * 60; // 150 minutes in seconds
+let timerActive = false;
+let testSubmitted = false;
+let reviewMode = false;
+
+// ============================================================
+// RENDER QUESTIONS
+// ============================================================
+function renderQuestions() {
+  const container = document.getElementById('questionsContainer');
+  const reviewBanner = document.getElementById('reviewBanner');
+  container.innerHTML = '';
+  container.appendChild(reviewBanner);
+
+  questions.forEach(q => {
+    const card = document.createElement('div');
+    card.className = 'question-card' + (q.id === currentQuestion ? ' current' : '');
+    card.id = `q${q.id}`;
+
+    const typeLabels = {
+      mcq: 'MCQ', statement: 'Statement', match: 'Match', assertion: 'Assertion & Reason',
+      chronological: 'Chronological', oddone: 'Odd One Out', fillblank: 'Fill in Blank'
+    };
+
+    card.innerHTML = `
+      <div class="q-header">
+        <span class="q-num">Q.${q.id}</span>
+        <span class="q-type-badge">${typeLabels[q.type] || q.type}</span>
+      </div>
+      <div class="q-text">${q.question.replace(/\n/g, '<br>')}</div>
+      <div class="options-grid" id="opts${q.id}">
+        ${q.options.map((opt, i) => {
+          const letter = ['A','B','C','D'][i];
+          const isSelected = userAnswers[q.id] === letter;
+          const instantOn = document.getElementById('instantToggle').checked;
+          let cls = isSelected ? 'selected' : '';
+          if (testSubmitted || reviewMode) {
+            if (letter === q.answer) cls = 'show-correct';
+            else if (isSelected) cls = 'wrong';
+          } else if (instantOn && isSelected) {
+            if (letter === q.answer) cls = 'correct';
+            else cls = 'wrong';
+          }
+          return `<button class="option-btn ${cls}" onclick="selectAnswer(${q.id}, '${letter}')" ${(testSubmitted||reviewMode)?'disabled':''}>
+            <span class="opt-label">${letter}</span>
+            <span>${opt.replace(/^[A-D]\)\s?/,'')}</span>
+          </button>`;
+        }).join('')}
+      </div>
+      <div class="explanation-box${(testSubmitted || reviewMode || (document.getElementById('instantToggle').checked && userAnswers[q.id])) ? ' visible' : ''}" id="exp${q.id}">
+        <div class="exp-label">Explanation</div>
+        ${q.explanation}
+      </div>
+      <div class="q-nav">
+        ${q.id > 1 ? `<button class="nav-btn" onclick="goToQuestion(${q.id-1})">← Prev</button>` : ''}
+        ${q.id < 150 ? `<button class="nav-btn primary" onclick="goToQuestion(${q.id+1})">Next →</button>` : ''}
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// ============================================================
+// SELECT ANSWER
+// ============================================================
+function selectAnswer(qId, letter) {
+  if (testSubmitted || reviewMode) return;
+  userAnswers[qId] = letter;
+  updateProgress();
+  updatePalette();
+
+  // Re-render this specific question's options
+  const q = questions.find(x => x.id === qId);
+  const optsDiv = document.getElementById(`opts${qId}`);
+  const expDiv = document.getElementById(`exp${qId}`);
+  const instantOn = document.getElementById('instantToggle').checked;
+
+  optsDiv.innerHTML = q.options.map((opt, i) => {
+    const l = ['A','B','C','D'][i];
+    const isSelected = l === letter;
+    let cls = isSelected ? 'selected' : '';
+    if (instantOn && isSelected) cls = l === q.answer ? 'correct' : 'wrong';
+    else if (instantOn && l === q.answer && userAnswers[qId]) cls = 'show-correct';
+    return `<button class="option-btn ${cls}" onclick="selectAnswer(${q.id}, '${l}')">
+      <span class="opt-label">${l}</span>
+      <span>${opt.replace(/^[A-D]\)\s?/,'')}</span>
+    </button>`;
+  }).join('');
+
+  if (instantOn) {
+    expDiv.classList.add('visible');
+  }
+}
+
+// ============================================================
+// NAVIGATE
+// ============================================================
+function goToQuestion(n) {
+  currentQuestion = n;
+  updatePalette();
+  const el = document.getElementById(`q${n}`);
+  if (el) {
+    document.querySelectorAll('.question-card').forEach(c => c.classList.remove('current'));
+    el.classList.add('current');
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+// ============================================================
+// PALETTE
+// ============================================================
+function buildPalette() {
+  const grid = document.getElementById('paletteGrid');
+  grid.innerHTML = '';
+  questions.forEach(q => {
+    const btn = document.createElement('button');
+    btn.className = 'palette-btn';
+    btn.textContent = q.id;
+    btn.id = `pb${q.id}`;
+    btn.onclick = () => goToQuestion(q.id);
+    grid.appendChild(btn);
+  });
+}
+
+function updatePalette() {
+  const instantOn = document.getElementById('instantToggle').checked;
+  questions.forEach(q => {
+    const btn = document.getElementById(`pb${q.id}`);
+    if (!btn) return;
+    btn.className = 'palette-btn';
+    if (q.id === currentQuestion) btn.classList.add('p-current');
+    else if (userAnswers[q.id]) {
+      if (testSubmitted || (instantOn)) {
+        if (userAnswers[q.id] === q.answer) btn.classList.add('p-correct');
+        else btn.classList.add('p-wrong');
+      } else {
+        btn.classList.add('p-answered');
+      }
+    }
+  });
+}
+
+// ============================================================
+// PROGRESS
+// ============================================================
+function updateProgress() {
+  const count = Object.keys(userAnswers).length;
+  document.getElementById('answeredCount').textContent = count;
+  document.getElementById('progressFill').style.width = (count/150*100) + '%';
+}
+
+// ============================================================
+// TIMER
+// ============================================================
+function toggleTimer() {
+  timerActive = document.getElementById('timerToggle').checked;
+  const display = document.getElementById('timerDisplay');
+  if (timerActive) {
+    display.classList.add('visible');
+    startTimer();
+  } else {
+    display.classList.remove('visible');
+    if (timerInterval) clearInterval(timerInterval);
+  }
+}
+
+function startTimer() {
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    timeRemaining--;
+    updateTimerDisplay();
+    if (timeRemaining <= 0) {
+      clearInterval(timerInterval);
+      document.getElementById('timeUpModal').classList.add('visible');
+    }
+    if (timeRemaining <= 300) {
+      document.getElementById('timerDisplay').classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(timeRemaining / 60);
+  const s = timeRemaining % 60;
+  document.getElementById('timerDisplay').textContent =
+    String(m).padStart(3,'0') + ':' + String(s).padStart(2,'0');
+}
+
+// ============================================================
+// SUBMIT TEST
+// ============================================================
+function submitTest() {
+  testSubmitted = true;
+  if (timerInterval) clearInterval(timerInterval);
+
+  const answered = Object.keys(userAnswers).length;
+  const correct = questions.filter(q => userAnswers[q.id] === q.answer).length;
+  const wrong = answered - correct;
+  const unanswered = 150 - answered;
+  const pct = ((correct/150)*100).toFixed(1);
+
+  // Time taken
+  const elapsed = (150*60) - timeRemaining;
+  const em = Math.floor(elapsed/60), es = elapsed%60;
+  const timeTaken = timerActive ? `${em}m ${es}s` : 'N/A';
+
+  // Score block
+  document.getElementById('scoreBlock').innerHTML = `
+    <div class="score-card"><span class="sc-val">${correct}/150</span><span class="sc-label">Score</span></div>
+    <div class="score-card"><span class="sc-val">${pct}%</span><span class="sc-label">Percentage</span></div>
+    <div class="score-card"><span class="sc-val green">${correct}</span><span class="sc-label">Correct</span></div>
+    <div class="score-card"><span class="sc-val red">${wrong}</span><span class="sc-label">Wrong</span></div>
+    <div class="score-card"><span class="sc-val blue">${unanswered}</span><span class="sc-label">Unanswered</span></div>
+    <div class="score-card"><span class="sc-val" style="font-size:18px">${timeTaken}</span><span class="sc-label">Time Taken</span></div>
+  `;
+
+  // Type-wise breakdown
+  const typeNames = {mcq:'Simple MCQ',statement:'Statement',match:'Match Following',assertion:'Assertion-Reason',chronological:'Chronological',oddone:'Odd One Out',fillblank:'Fill in Blank'};
+  const breakdown = {};
+  questions.forEach(q => {
+    if (!breakdown[q.type]) breakdown[q.type] = {total:0,correct:0};
+    breakdown[q.type].total++;
+    if (userAnswers[q.id] === q.answer) breakdown[q.type].correct++;
+  });
+  let bHtml = '<div style="font-family:\'Syne\',sans-serif;font-size:14px;font-weight:700;color:var(--text);margin-bottom:10px;">Type-wise Performance</div>';
+  bHtml += '<table class="breakdown-table"><thead><tr><th>Question Type</th><th>Total</th><th>Correct</th><th>Wrong</th><th>%</th></tr></thead><tbody>';
+  Object.entries(breakdown).forEach(([t,d]) => {
+    const tp = ((d.correct/d.total)*100).toFixed(0);
+    bHtml += `<tr><td>${typeNames[t]||t}</td><td>${d.total}</td><td style="color:var(--green)">${d.correct}</td><td style="color:var(--red)">${d.total-d.correct}</td><td style="color:var(--gold)">${tp}%</td></tr>`;
+  });
+  bHtml += '</tbody></table>';
+  document.getElementById('breakdownSection').innerHTML = bHtml;
+
+  // Wrong answers table
+  const tbody = document.getElementById('resultsBody');
+  tbody.innerHTML = '';
+  questions.forEach(q => {
+    const ua = userAnswers[q.id] || '—';
+    const isCorrect = ua === q.answer;
+    if (!isCorrect) {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td class="q-no">${q.id}</td>
+        <td style="${ua!=='—'?'color:var(--red)':''}">${ua}</td>
+        <td style="color:var(--green)">${q.answer}</td>
+        <td class="${isCorrect?'status-correct':'status-wrong'}">${isCorrect?'✓':'✗'}</td>`;
+      tbody.appendChild(tr);
+    }
+  });
+
+  document.getElementById('resultsModal').classList.add('visible');
+  updatePalette();
+  renderQuestions();
+}
+
+// ============================================================
+// RETRY
+// ============================================================
+function retryTest() {
+  userAnswers = {};
+  testSubmitted = false;
+  reviewMode = false;
+  currentQuestion = 1;
+  timeRemaining = 150 * 60;
+  if (timerInterval) clearInterval(timerInterval);
+  timerActive = false;
+  document.getElementById('timerToggle').checked = false;
+  document.getElementById('timerDisplay').classList.remove('visible','warning');
+  document.getElementById('instantToggle').checked = false;
+  document.getElementById('reviewBanner').classList.remove('visible');
+  document.getElementById('resultsModal').classList.remove('visible');
+  updateProgress();
+  renderQuestions();
+  updatePalette();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ============================================================
+// REVIEW
+// ============================================================
+function reviewAnswers() {
+  reviewMode = true;
+  document.getElementById('resultsModal').classList.remove('visible');
+  document.getElementById('reviewBanner').classList.add('visible');
+  renderQuestions();
+  updatePalette();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ============================================================
+// INIT
+// ============================================================
+buildPalette();
+renderQuestions();
+updateProgress();
+updatePalette();
+
+// Instant toggle handler
+document.getElementById('instantToggle').addEventListener('change', () => {
+  renderQuestions();
+  updatePalette();
+});
+
+// Observe scroll to update currentQuestion
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
+      const id = parseInt(entry.target.id.replace('q',''));
+      if (!isNaN(id) && id !== currentQuestion) {
+        currentQuestion = id;
+        updatePalette();
+      }
+    }
+  });
+}, { threshold: 0.3 });
+
+questions.forEach(q => {
+  const el = document.getElementById(`q${q.id}`);
+  if (el) observer.observe(el);
+});
+</script>
+</body>
+</html>
