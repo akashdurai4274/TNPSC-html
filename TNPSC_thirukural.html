@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="ta">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>திருக்குறள் — புதிய உரை</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Anek+Tamil:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    /* ═══════════════════════════════════════
+   CSS VARIABLES & RESET
+═══════════════════════════════════════ */
+    :root {
+      --bg-dark: #0d0f14;
+      --gold: #f5c842;
+      --gold-dim: #c9a030;
+      --card-bg: #13161e;
+      --card-border: #1e2230;
+      --text-main: #e8e8e8;
+      --text-muted: #8b9ab0;
+      --sidebar-w: 280px;
+
+      /* callout colours */
+      --c-critical-bg: #2a0a0a;
+      --c-critical-bd: #dc2626;
+      --c-trap-bg: #1a1200;
+      --c-trap-bd: #f5c842;
+      --c-tip-bg: #0a1a0a;
+      --c-tip-bd: #16a34a;
+      --c-pyq-bg: #0a0f1a;
+      --c-pyq-bd: #2563eb;
+      --c-gem-bg: #150a1a;
+      --c-gem-bd: #7c3aed;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      background: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Anek Tamil', sans-serif;
+      font-weight: 400;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* ═══════════════════════════════════════
+   HERO HEADER
+═══════════════════════════════════════ */
+    .hero {
+      background: linear-gradient(135deg, #1a1200 0%, #0d0f14 40%, #0a0d18 100%);
+      border-bottom: 2px solid var(--gold);
+      text-align: center;
+      padding: 3.5rem 1.5rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(245, 200, 66, 0.12) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(245, 200, 66, 0.12);
+      border: 1px solid var(--gold-dim);
+      color: var(--gold);
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      padding: .3rem .9rem;
+      border-radius: 2rem;
+      margin-bottom: 1.2rem;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1.15;
+      text-shadow: 0 0 40px rgba(245, 200, 66, 0.3);
+      margin-bottom: .6rem;
+    }
+
+    .hero .subtitle {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      margin-bottom: 1.8rem;
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-stats span {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      padding: .4rem 1rem;
+      border-radius: .4rem;
+      font-size: .9rem;
+      color: var(--text-muted);
+    }
+
+    /* ═══════════════════════════════════════
+   LEGEND ROW
+═══════════════════════════════════════ */
+    .legend-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: .75rem 1.4rem;
+      padding: .9rem 1.5rem;
+      background: rgba(255, 255, 255, 0.02);
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .legend {
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      padding: .25rem .7rem;
+      border-radius: 3px;
+      border-left: 3px solid;
+      cursor: default;
+    }
+
+    .legend.critical {
+      color: #ef4444;
+      border-color: var(--c-critical-bd);
+      background: var(--c-critical-bg);
+    }
+
+    .legend.trap {
+      color: var(--gold);
+      border-color: var(--c-trap-bd);
+      background: var(--c-trap-bg);
+    }
+
+    .legend.tip {
+      color: #4ade80;
+      border-color: var(--c-tip-bd);
+      background: var(--c-tip-bg);
+    }
+
+    .legend.pyq {
+      color: #60a5fa;
+      border-color: var(--c-pyq-bd);
+      background: var(--c-pyq-bg);
+    }
+
+    .legend.gem {
+      color: #a78bfa;
+      border-color: var(--c-gem-bd);
+      background: var(--c-gem-bg);
+    }
+
+    /* ═══════════════════════════════════════
+   LAYOUT — SIDEBAR + CONTENT
+═══════════════════════════════════════ */
+    .layout {
+      display: flex;
+      min-height: calc(100vh - 200px);
+    }
+
+    /* ── TOC Sidebar ── */
+    .toc {
+      width: var(--sidebar-w);
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      background: #0f111a;
+      border-right: 1px solid var(--card-border);
+      padding: 1rem 0 2rem;
+      scrollbar-width: thin;
+      scrollbar-color: var(--card-border) transparent;
+    }
+
+    .toc::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .toc::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .toc::-webkit-scrollbar-thumb {
+      background: var(--card-border);
+      border-radius: 2px;
+    }
+
+    .toc-title {
+      font-size: .85rem;
+      font-weight: 700;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      padding: .5rem 1.2rem 1rem;
+      border-bottom: 1px solid var(--card-border);
+      margin-bottom: .5rem;
+    }
+
+    .toc-pal {
+      margin-bottom: .75rem;
+    }
+
+    .toc-pal-title {
+      font-size: .78rem;
+      font-weight: 700;
+      color: var(--gold);
+      padding: .5rem 1.2rem .3rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      background: rgba(245, 200, 66, 0.05);
+      margin: .4rem 0 .2rem;
+    }
+
+    .toc-iyal {
+      font-size: .72rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      padding: .4rem 1.2rem .2rem 1.6rem;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      border-left: 2px solid var(--card-border);
+      margin-left: 1rem;
+    }
+
+    .toc a {
+      display: block;
+      font-size: .8rem;
+      color: #6b7a91;
+      padding: .3rem 1.2rem .3rem 2.2rem;
+      transition: color .15s, background .15s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .toc a:hover,
+    .toc a.active {
+      color: var(--gold);
+      background: rgba(245, 200, 66, 0.06);
+      text-decoration: none;
+    }
+
+    .toc a.active {
+      border-left: 2px solid var(--gold);
+      padding-left: calc(2.2rem - 2px);
+    }
+
+    /* ── Hamburger (mobile) ── */
+    .toc-toggle {
+      display: none;
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 999;
+      background: var(--gold);
+      color: #0d0f14;
+      border: none;
+      border-radius: 50%;
+      width: 3rem;
+      height: 3rem;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(245, 200, 66, 0.4);
+      font-weight: 700;
+    }
+
+    /* ── Main Content ── */
+    .content {
+      flex: 1;
+      min-width: 0;
+      padding: 2rem clamp(1rem, 3vw, 2.5rem) 4rem;
+      max-width: 900px;
+    }
+
+    /* ═══════════════════════════════════════
+   PAL SECTION DIVIDER
+═══════════════════════════════════════ */
+    .pal-divider {
+      margin: 3rem 0 2rem;
+      padding: 1.2rem 1.5rem;
+      background: linear-gradient(90deg, rgba(245, 200, 66, 0.12), transparent);
+      border-left: 4px solid var(--gold);
+      border-radius: 0 .5rem .5rem 0;
+    }
+
+    .pal-divider h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: .2rem;
+    }
+
+    .pal-divider p {
+      color: var(--text-muted);
+      font-size: .9rem;
+    }
+
+    /* ═══════════════════════════════════════
+   ATHIGARAM SECTION
+═══════════════════════════════════════ */
+    .athigaram {
+      margin-bottom: 3.5rem;
+      border: 1px solid var(--card-border);
+      border-radius: .75rem;
+      overflow: hidden;
+      background: var(--card-bg);
+    }
+
+    .athigaram-header {
+      padding: 1.4rem 1.6rem 1.2rem;
+      background: linear-gradient(135deg, #191d2a, #13161e);
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .athigaram-meta {
+      display: flex;
+      gap: .6rem;
+      flex-wrap: wrap;
+      margin-bottom: .7rem;
+    }
+
+    .pal-tag,
+    .iyal-tag {
+      font-size: .7rem;
+      font-weight: 600;
+      padding: .18rem .7rem;
+      border-radius: 2rem;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+    }
+
+    .pal-tag {
+      background: rgba(245, 200, 66, 0.15);
+      color: var(--gold);
+      border: 1px solid rgba(245, 200, 66, 0.3);
+    }
+
+    .iyal-tag {
+      background: rgba(139, 154, 176, 0.12);
+      color: var(--text-muted);
+      border: 1px solid var(--card-border);
+    }
+
+    .athigaram-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.3;
+    }
+
+    .athi-num {
+      color: var(--gold);
+      margin-right: .3rem;
+    }
+
+    .athigaram-intro {
+      font-size: .82rem;
+      color: var(--text-muted);
+      margin-top: .35rem;
+    }
+
+    /* ═══════════════════════════════════════
+   KURAL CARDS
+═══════════════════════════════════════ */
+    .kural-list {
+      padding: 1.2rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+
+    .kural-card {
+      background: #0f1219;
+      border: 1px solid var(--card-border);
+      border-radius: .55rem;
+      overflow: hidden;
+      transition: border-color .2s;
+    }
+
+    .kural-card:hover {
+      border-color: rgba(245, 200, 66, 0.25);
+    }
+
+    .kural-number {
+      background: rgba(245, 200, 66, 0.08);
+      border-bottom: 1px solid var(--card-border);
+      padding: .4rem 1rem;
+      font-size: .75rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: .08em;
+    }
+
+    .kural-lines {
+      padding: 1rem 1.2rem .8rem;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .kural-line1,
+    .kural-line2 {
+      font-size: 1.02rem;
+      font-weight: 600;
+      color: #f0e8d0;
+      line-height: 1.8;
+    }
+
+    .kural-line2 {
+      padding-left: 0;
+    }
+
+    .kural-porul {
+      padding: .9rem 1.2rem;
+      font-size: .88rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+    }
+
+    .porul-label {
+      font-weight: 700;
+      color: var(--gold-dim);
+      margin-right: .4rem;
+    }
+
+    /* ═══════════════════════════════════════
+   CALLOUTS
+═══════════════════════════════════════ */
+    .callout {
+      margin: .8rem 1.2rem 1rem;
+      padding: .75rem 1rem;
+      border-radius: .4rem;
+      border-left: 4px solid;
+      font-size: .85rem;
+      line-height: 1.65;
+    }
+
+    .callout strong {
+      font-weight: 700;
+      display: block;
+      margin-bottom: .25rem;
+    }
+
+    .callout.critical {
+      background: var(--c-critical-bg);
+      border-color: var(--c-critical-bd);
+      color: #fca5a5;
+    }
+
+    .callout.trap {
+      background: var(--c-trap-bg);
+      border-color: var(--c-trap-bd);
+      color: #fde68a;
+    }
+
+    .callout.tip {
+      background: var(--c-tip-bg);
+      border-color: var(--c-tip-bd);
+      color: #86efac;
+    }
+
+    .callout.pyq {
+      background: var(--c-pyq-bg);
+      border-color: var(--c-pyq-bd);
+      color: #93c5fd;
+    }
+
+    .callout.gem {
+      background: var(--c-gem-bg);
+      border-color: var(--c-gem-bd);
+      color: #c4b5fd;
+    }
+
+    /* ═══════════════════════════════════════
+   EXAM QUESTIONS
+═══════════════════════════════════════ */
+    .exam-questions {
+      padding: 1.4rem 1.4rem 1.6rem;
+      border-top: 2px solid var(--card-border);
+      background: #0c0e16;
+    }
+
+    .exam-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: .2rem;
+    }
+
+    .exam-subtitle {
+      font-size: .78rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .question-card {
+      border: 1px solid var(--card-border);
+      border-radius: .45rem;
+      margin-bottom: .6rem;
+      overflow: hidden;
+      cursor: pointer;
+      background: #0f1219;
+      transition: border-color .15s;
+    }
+
+    .question-card:hover {
+      border-color: rgba(245, 200, 66, 0.3);
+    }
+
+    .q-header {
+      display: flex;
+      align-items: flex-start;
+      gap: .75rem;
+      padding: .75rem 1rem;
+    }
+
+    .q-num {
+      font-size: .7rem;
+      font-weight: 700;
+      color: var(--gold);
+      background: rgba(245, 200, 66, 0.1);
+      padding: .15rem .5rem;
+      border-radius: .25rem;
+      white-space: nowrap;
+      margin-top: .1rem;
+    }
+
+    .q-text {
+      flex: 1;
+      font-size: .88rem;
+      color: var(--text-main);
+      line-height: 1.55;
+    }
+
+    .question-card.open {
+      border-color: rgba(245, 200, 66, 0.35);
+    }
+
+    /* ═══════════════════════════════════════
+   KURAL / PORUL CONTENT TOGGLES
+═══════════════════════════════════════ */
+    .kural-content {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1),
+                  opacity 0.25s ease;
+    }
+
+    .kural-content.visible {
+      max-height: 400px;
+      opacity: 1;
+    }
+
+    /* Gold border ring around arrow */
+    .toggle-ring {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.5rem;
+      height: 1.5rem;
+      border: 1.5px solid rgba(245,200,66,0.55);
+      border-radius: 50%;
+      color: var(--gold);
+      font-size: .6rem;
+      line-height: 1;
+      transition: transform 0.25s ease, background 0.2s;
+      flex-shrink: 0;
+    }
+
+    .toggle-btn.open .toggle-ring,
+    .question-card.open .q-toggle-btn .toggle-ring {
+      background: rgba(245,200,66,0.15);
+    }
+
+    /* Right-aligned row that holds the toggle pill */
+    .toggle-row,
+    .q-toggle-row {
+      display: flex;
+      justify-content: flex-end;
+      padding: .45rem 1rem .5rem;
+    }
+
+    /* Pill-shaped toggle button */
+    .toggle-btn,
+    .q-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      padding: .3rem .85rem;
+      background: rgba(245, 200, 66, 0.06);
+      border: 1px solid rgba(245, 200, 66, 0.38);
+      border-radius: 2rem;
+      cursor: pointer;
+      color: var(--gold);
+      font-size: .78rem;
+      font-family: 'Anek Tamil', sans-serif;
+      font-weight: 600;
+      letter-spacing: .04em;
+      transition: background .15s, border-color .15s;
+    }
+
+    .toggle-btn:hover,
+    .q-toggle-btn:hover {
+      background: rgba(245, 200, 66, 0.13);
+      border-color: rgba(245, 200, 66, 0.7);
+    }
+
+    .toggle-btn.open .toggle-ring,
+    .question-card.open .q-toggle-btn .toggle-ring {
+      transform: rotate(180deg);
+    }
+
+    .question-card {
+      cursor: default;
+    }
+
+    .q-answer {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      padding: 0 1rem;
+      transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1),
+                  padding 0.25s ease,
+                  opacity 0.25s ease;
+    }
+
+    .q-answer.visible {
+      max-height: 2400px;
+      padding: .75rem 1rem 1rem;
+      opacity: 1;
+    }
+
+    .answer-text {
+      font-size: .86rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+      padding-top: .75rem;
+    }
+
+    /* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      border-top: 1px solid var(--card-border);
+      color: var(--text-muted);
+      font-size: .82rem;
+      background: #0a0c12;
+    }
+
+    footer span {
+      color: var(--gold);
+    }
+
+    /* ═══════════════════════════════════════
+   LOADER
+═══════════════════════════════════════ */
+    #loader {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--text-muted);
+    }
+
+    #loader .spinner {
+      width: 2.5rem;
+      height: 2.5rem;
+      border: 3px solid var(--card-border);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* ═══════════════════════════════════════
+   RESPONSIVE — MOBILE
+═══════════════════════════════════════ */
+    @media (max-width: 768px) {
+      .toc {
+        position: fixed;
+        left: -100%;
+        top: 0;
+        bottom: 0;
+        z-index: 900;
+        width: min(var(--sidebar-w), 85vw);
+        transition: left .28s ease;
+        box-shadow: 4px 0 30px rgba(0, 0, 0, .6);
+      }
+
+      .toc.open {
+        left: 0;
+      }
+
+      .toc-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .toc-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, .5);
+        z-index: 899;
+      }
+
+      .toc-overlay.open {
+        display: block;
+      }
+
+      .layout {
+        flex-direction: column;
+      }
+
+      .content {
+        padding: 1rem 1rem 3rem;
+      }
+
+      .hero {
+        padding: 2.5rem 1rem 2rem;
+      }
+
+      .kural-lines {
+        padding: .8rem .9rem .6rem;
+      }
+
+      .kural-line1,
+      .kural-line2 {
+        font-size: .93rem;
+      }
+    }
+
+    @media (min-width: 769px) {
+      .toc-overlay {
+        display: none !important;
+      }
+    }
+
+    /* ═══════════════════════════════════════
+   SCROLLBAR (desktop)
+═══════════════════════════════════════ */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-dark);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--card-border);
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #2e3448;
+    }
+
+    /* Focus styles for accessibility */
+    a:focus-visible,
+    button:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ══════════════════════════════
+     HERO HEADER
+══════════════════════════════ -->
+  <header class="hero">
+    <div class="hero-badge">திருக்குறள் • புதிய உரை</div>
+    <h1>திருக்குறள்</h1>
+    <p class="subtitle">வள்ளுவர் அருளிய 1330 குறள்களும் — விளக்க உரையுடன்</p>
+    <div class="hero-stats">
+      <span>📚 3 பால்கள்</span>
+      <span>📖 133 அதிகாரங்கள்</span>
+      <span>✍️ 1330 குறள்கள்</span>
+    </div>
+  </header>
+
+  <!-- ══════════════════════════════
+     LEGEND ROW
+══════════════════════════════ -->
+  <div class="legend-row">
+    <span class="legend critical">● CRITICAL — மிக முக்கியமான குறள்</span>
+    <span class="legend trap">● TRAP — தவறாக புரிந்துகொள்ளப்படும்</span>
+    <span class="legend tip">● TIP — நினைவில் வைத்துக்கொள்ள</span>
+    <span class="legend pyq">● PYQ — தேர்வில் வந்த கேள்விகள்</span>
+    <span class="legend gem">● GEM — சிறப்பு கருத்துக்கள்</span>
+  </div>
+
+  <!-- ══════════════════════════════
+     MOBILE TOC OVERLAY
+══════════════════════════════ -->
+  <div class="toc-overlay" id="tocOverlay" onclick="closeToc()"></div>
+  <button class="toc-toggle" id="tocToggle" onclick="toggleToc()" aria-label="உள்ளடக்கம் திற">☰</button>
+
+  <!-- ══════════════════════════════
+     MAIN LAYOUT
+══════════════════════════════ -->
+  <div class="layout">
+
+    <!-- TOC sidebar — built by JS from KURAL_DATA -->
+    <nav class="toc" id="toc">
+      <div class="toc-title">📋 உள்ளடக்கம்</div>
+      <div id="tocBody">
+        <div id="loader" style="padding:2rem 1.2rem;color:var(--text-muted);font-size:.82rem;">தரவு ஏற்றுகிறோம்…</div>
+      </div>
+    </nav>
+
+    <!-- Main content — built by JS from KURAL_DATA -->
+    <main class="content" id="mainContent">
+      <div id="loader">
+        <div class="spinner"></div>
+        <p>திருக்குறள் தரவு ஏற்றுகிறோம்…</p>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- ══════════════════════════════
+     FOOTER
+══════════════════════════════ -->
+  <footer>
+    <span>திருவள்ளுவர்</span> • திருக்குறள் • தமிழ் இலக்கியம்<br>
+    <small style="opacity:.5;font-size:.72rem;margin-top:.4rem;display:block">
+      முதல் 330 குறள்கள் | அறத்துப்பால் முழுமை
+    </small>
+  </footer>
+
+  <!-- ══════════════════════════════
+     DATA FILE
+══════════════════════════════ -->
+  <script src="thirukural-data.js"></script>
+
+  <!-- ══════════════════════════════
+     RENDERER
+══════════════════════════════ -->
+  <script>
+    /* ─────────────────────────────────────────
+       CALLOUT RENDERER HELPERS
+    ───────────────────────────────────────── */
+    function calloutHTML(type, title, body) {
+      const icons = { critical: '🔴', trap: '⚠️', tip: '💡', pyq: '📝', gem: '💎' };
+      return `<div class="callout ${type}"><strong>${icons[type]} ${title}</strong>${body}</div>`;
+    }
+
+    /* ─────────────────────────────────────────
+       BUILD KURAL CARD HTML
+    ───────────────────────────────────────── */
+    function kuralCardHTML(k) {
+      let callouts = '';
+      if (k.callouts) {
+        k.callouts.forEach(c => {
+          callouts += calloutHTML(c.type, c.title, c.body);
+        });
+      }
+      return `
+<div class="kural-card" id="kural-${k.num}">
+  <div class="kural-number">குறள் ${k.num}</div>
+  <div class="kural-lines">
+    <p class="kural-line1">${k.line1}</p>
+    <p class="kural-line2">${k.line2}</p>
+  </div>
+  <div class="kural-porul kural-content" id="kporul-${k.num}">
+    <span class="porul-label">பொருள்:</span> ${k.porul}
+  </div>
+  <div class="toggle-row">
+    <button class="toggle-btn" data-target="kporul-${k.num}" data-show="பொருள் காட்டு" data-hide="பொருள் மறை" onclick="toggleContent(this)">
+      <span class="toggle-label">பொருள் காட்டு</span>
+      <span class="toggle-ring">▼</span>
+    </button>
+  </div>
+  ${callouts}
+</div>`;
+    }
+
+    /* ─────────────────────────────────────────
+       BUILD QUESTION CARD HTML
+    ───────────────────────────────────────── */
+    function questionCardHTML(q, idx) {
+      let gem = '';
+      if (q.gem) gem = calloutHTML('gem', 'Live Gem:', q.gem);
+      let pyqBadge = q.pyq ? calloutHTML('pyq', 'PYQ — தேர்வில் வந்த வினா:', 'இந்த வினா தேர்வில் கேட்கப்பட்டுள்ளது.') : '';
+      return `
+<div class="question-card">
+  <div class="q-header">
+    <span class="q-num">வி. ${idx + 1}</span>
+    <span class="q-text">${q.q}</span>
+  </div>
+  <div class="q-toggle-row">
+    <button class="q-toggle-btn" onclick="toggleAnswer(this.closest('.question-card'))">
+      <span class="q-toggle-text">விடை காண்க</span>
+      <span class="toggle-ring">▼</span>
+    </button>
+  </div>
+  <div class="q-answer">
+    <p class="answer-text">${q.a}</p>
+    ${pyqBadge}${gem}
+  </div>
+</div>`;
+    }
+
+    /* ─────────────────────────────────────────
+       BUILD ATHIGARAM SECTION HTML
+    ───────────────────────────────────────── */
+    function athigaramHTML(athi) {
+      const kuralStart = (athi.num - 1) * 10 + 1;
+      const kuralEnd = athi.num * 10;
+      const kurals = athi.kurals.map(k => kuralCardHTML(k)).join('');
+      const questions = athi.questions.map((q, i) => questionCardHTML(q, i)).join('');
+
+      return `
+<section class="athigaram" id="athi-${athi.num}">
+  <div class="athigaram-header">
+    <div class="athigaram-meta">
+      <span class="pal-tag">${athi.pal}</span>
+      <span class="iyal-tag">${athi.iyal}</span>
+    </div>
+    <h2 class="athigaram-title">
+      <span class="athi-num">${athi.num}.</span> ${athi.title}
+    </h2>
+    <p class="athigaram-intro">குறள்கள் ${kuralStart}–${kuralEnd}</p>
+  </div>
+  <div class="kural-list">${kurals}</div>
+  <div class="exam-questions">
+    <h3 class="exam-title">🎯 தேர்வு வினாக்கள் — ${athi.title}</h3>
+    <p class="exam-subtitle">இந்த அதிகாரத்திலிருந்து தேர்வில் கேட்கப்படக்கூடிய வினாக்கள்</p>
+    ${questions}
+  </div>
+</section>`;
+    }
+
+    /* ─────────────────────────────────────────
+       BUILD TOC HTML
+    ───────────────────────────────────────── */
+    function buildTOC(data) {
+      let html = '';
+      let currentPal = '', currentIyal = '';
+
+      data.forEach(athi => {
+        if (athi.pal !== currentPal) {
+          if (currentPal) html += '</div>';
+          html += `<div class="toc-pal"><div class="toc-pal-title">${athi.pal}</div>`;
+          currentPal = athi.pal;
+          currentIyal = '';
+        }
+        if (athi.iyal !== currentIyal) {
+          html += `<div class="toc-iyal">${athi.iyal}</div>`;
+          currentIyal = athi.iyal;
+        }
+        html += `<a href="#athi-${athi.num}" onclick="closeToc()">${athi.num}. ${athi.title}</a>`;
+      });
+      if (currentPal) html += '</div>';
+      return html;
+    }
+
+    /* ─────────────────────────────────────────
+       BUILD PAL DIVIDERS + CONTENT
+    ───────────────────────────────────────── */
+    function buildContent(data) {
+      let html = '';
+      let currentPal = '';
+
+      data.forEach(athi => {
+        if (athi.pal !== currentPal) {
+          const palDesc = {
+            'அறத்துப்பால்': 'நீதி, கடமை, ஒழுக்கம் — வாழ்க்கையின் அறப்பண்புகள்',
+            'பொருட்பால்': 'அரசியல், பொருளாதாரம், நட்பு — நடைமுறை வாழ்க்கை',
+            'காமத்துப்பால்': 'காதல், இல்லறம், உணர்வுகள் — அன்பின் வெளிப்பாடு'
+          };
+          html += `
+<div class="pal-divider">
+  <h2>${athi.pal}</h2>
+  <p>${palDesc[athi.pal] || ''}</p>
+</div>`;
+          currentPal = athi.pal;
+        }
+        html += athigaramHTML(athi);
+      });
+      return html;
+    }
+
+    /* ─────────────────────────────────────────
+       MAIN RENDER (runs after data.js loaded)
+    ───────────────────────────────────────── */
+    function renderAll() {
+      if (typeof KURAL_DATA === 'undefined') {
+        document.getElementById('mainContent').innerHTML =
+          '<p style="color:#ef4444;padding:2rem">தரவு கோப்பு கண்டறியவில்லை — thirukural-data.js பரிசோதிக்கவும்.</p>';
+        return;
+      }
+      document.getElementById('tocBody').innerHTML = buildTOC(KURAL_DATA);
+      document.getElementById('mainContent').innerHTML = buildContent(KURAL_DATA);
+      initObserver();
+    }
+
+    /* ─────────────────────────────────────────
+       TOGGLE ANSWER
+    ───────────────────────────────────────── */
+    function toggleAnswer(card) {
+      const ans = card.querySelector('.q-answer');
+      const btn = card.querySelector('.q-toggle-btn');
+      const text = btn.querySelector('.q-toggle-text');
+      const ring = btn.querySelector('.toggle-ring');
+      const open = card.classList.contains('open');
+      if (open) {
+        card.classList.remove('open');
+        ans.classList.remove('visible');
+        text.textContent = 'விடை காண்க';
+        ring.textContent = '▼';
+      } else {
+        card.classList.add('open');
+        ans.classList.add('visible');
+        text.textContent = 'விடை மறை';
+        ring.textContent = '▲';
+      }
+    }
+
+    function toggleContent(btn) {
+      const target = document.getElementById(btn.dataset.target);
+      const label = btn.querySelector('.toggle-label');
+      const ring = btn.querySelector('.toggle-ring');
+      const isOpen = btn.classList.contains('open');
+      if (isOpen) {
+        target.classList.remove('visible');
+        label.textContent = btn.dataset.show;
+        ring.textContent = '▼';
+        btn.classList.remove('open');
+      } else {
+        target.classList.add('visible');
+        label.textContent = btn.dataset.hide;
+        ring.textContent = '▲';
+        btn.classList.add('open');
+      }
+    }
+
+    /* ─────────────────────────────────────────
+       TOC MOBILE
+    ───────────────────────────────────────── */
+    function toggleToc() {
+      document.getElementById('toc').classList.toggle('open');
+      document.getElementById('tocOverlay').classList.toggle('open');
+    }
+    function closeToc() {
+      document.getElementById('toc').classList.remove('open');
+      document.getElementById('tocOverlay').classList.remove('open');
+    }
+
+    /* ─────────────────────────────────────────
+       INTERSECTION OBSERVER — active TOC link
+    ───────────────────────────────────────── */
+    function initObserver() {
+      const sections = document.querySelectorAll('.athigaram');
+      const links = document.querySelectorAll('.toc a');
+      const map = {};
+      links.forEach(l => { map[l.getAttribute('href').slice(1)] = l; });
+
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            links.forEach(l => l.classList.remove('active'));
+            const link = map[e.target.id];
+            if (link) {
+              link.classList.add('active');
+              link.scrollIntoView({ block: 'nearest' });
+            }
+          }
+        });
+      }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+
+      sections.forEach(s => obs.observe(s));
+    }
+
+    /* ─────────────────────────────────────────
+       INIT — wait for DOM + data script
+    ───────────────────────────────────────── */
+    window.addEventListener('load', renderAll);
+  </script>
+
+</body>
+
+</html>
