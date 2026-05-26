@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Green Revolution — TNPSC Complete Lecture Notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Orbitron:wght@400;600;700;900&family=IBM+Plex+Mono:wght@400;500;600&family=Andika:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0f14;
+  --gold: #f5c842;
+  --body-text: #e0e0e0;
+  --card-bg: #13161e;
+  --border: #1e2130;
+  --red: #e05252;
+  --green: #52c97a;
+  --blue: #5294e0;
+  --purple: #9b59b6;
+  --gold-dim: rgba(245,200,66,0.12);
+  --red-dim: rgba(224,82,82,0.12);
+  --green-dim: rgba(82,201,122,0.12);
+  --blue-dim: rgba(82,148,224,0.12);
+  --purple-dim: rgba(155,89,182,0.12);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--body-text);
+  font-family: 'Andika', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* ── LAYOUT ── */
+.layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  grid-template-rows: auto auto 1fr;
+  min-height: 100vh;
+}
+.hero { grid-column: 1 / -1; }
+.legend-bar { grid-column: 1 / -1; }
+.sidebar {
+  grid-column: 1;
+  grid-row: 3;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  background: #0d0f14;
+  border-right: 1px solid var(--border);
+  padding: 1.5rem 1rem;
+}
+.main-content {
+  grid-column: 2;
+  grid-row: 3;
+  padding: 2.5rem 3rem 4rem;
+  max-width: 960px;
+}
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(135deg, #0a0c10 0%, #12161f 50%, #0d1018 100%);
+  border-bottom: 2px solid var(--border);
+  padding: 3.5rem 3rem 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(245,200,66,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-unit-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--gold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.7rem;
+  opacity: 0.85;
+}
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  background: linear-gradient(135deg, #f5c842 0%, #ffdf6b 40%, #c8941a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+}
+.hero-subtitle {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
+  color: #8899aa;
+  letter-spacing: 0.05em;
+  margin-bottom: 1.4rem;
+}
+.hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+.badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+.badge-exam { background: rgba(245,200,66,0.15); color: var(--gold); border: 1px solid rgba(245,200,66,0.3); }
+.badge-topic { background: rgba(82,148,224,0.15); color: var(--blue); border: 1px solid rgba(82,148,224,0.3); }
+.badge-diff { background: rgba(224,82,82,0.15); color: var(--red); border: 1px solid rgba(224,82,82,0.3); }
+
+/* ── LEGEND BAR ── */
+.legend-bar {
+  background: #0f1119;
+  border-bottom: 1px solid var(--border);
+  padding: 0.9rem 3rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  align-items: center;
+}
+.legend-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.68rem;
+  color: #556;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-right: 0.4rem;
+}
+.legend-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.2rem 0.75rem;
+  border-radius: 999px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.pill-critical { background: var(--red-dim); color: var(--red); border: 1px solid rgba(224,82,82,0.35); }
+.pill-trap { background: var(--gold-dim); color: var(--gold); border: 1px solid rgba(245,200,66,0.35); }
+.pill-tip { background: var(--green-dim); color: var(--green); border: 1px solid rgba(82,201,122,0.35); }
+.pill-pyq { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(82,148,224,0.35); }
+.pill-gem { background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(155,89,182,0.35); }
+
+/* ── SIDEBAR ── */
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-track { background: transparent; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.toc-header {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.68rem;
+  color: #556677;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.toc-list { list-style: none; }
+.toc-list li { margin-bottom: 0.15rem; }
+.toc-list a {
+  display: block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  color: #667788;
+  text-decoration: none;
+  padding: 0.35rem 0.6rem;
+  border-radius: 5px;
+  border-left: 2px solid transparent;
+  transition: all 0.2s;
+  line-height: 1.4;
+}
+.toc-list a:hover { color: var(--body-text); background: var(--card-bg); }
+.toc-list a.active { color: var(--gold); border-left-color: var(--gold); background: var(--gold-dim); }
+.toc-list .toc-h3 a { padding-left: 1.2rem; font-size: 0.68rem; }
+
+/* ── SECTION HEADINGS ── */
+.section-block { margin-bottom: 3rem; }
+h2 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--gold);
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 0.6rem;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.01em;
+}
+h2 .section-num {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.8rem;
+  color: #444d60;
+  margin-right: 0.7rem;
+}
+h3 {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #c8d8e8;
+  margin: 1.5rem 0 0.8rem;
+  letter-spacing: 0.03em;
+}
+h4 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.8rem;
+  color: #8899aa;
+  margin: 1rem 0 0.5rem;
+  letter-spacing: 0.04em;
+}
+
+p { margin-bottom: 0.9rem; }
+strong { color: #ffffff; font-weight: 700; }
+
+/* ── CALLOUT BOXES ── */
+.callout {
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+  border-left: 4px solid;
+}
+.callout-header {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+.callout-critical { background: var(--red-dim); border-color: var(--red); }
+.callout-critical .callout-header { color: var(--red); }
+.callout-trap { background: var(--gold-dim); border-color: var(--gold); }
+.callout-trap .callout-header { color: var(--gold); }
+.callout-tip { background: var(--green-dim); border-color: var(--green); }
+.callout-tip .callout-header { color: var(--green); }
+.callout-pyq { background: var(--blue-dim); border-color: var(--blue); }
+.callout-pyq .callout-header { color: var(--blue); }
+.callout-gem { background: #1e1030; border-color: var(--purple); }
+.callout-gem .callout-header { color: var(--purple); }
+
+/* ── STAT NUMBER ── */
+.stat {
+  font-family: 'Orbitron', monospace;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+/* ── CARDS ── */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.3rem 1.5rem;
+  margin-bottom: 1rem;
+  position: relative;
+}
+.card-tag {
+  position: absolute;
+  top: 0.8rem;
+  right: 0.9rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+.card-critical { border-left: 4px solid var(--red); }
+.card-critical .card-tag { background: var(--red-dim); color: var(--red); }
+.card-gold { border-left: 4px solid var(--gold); }
+.card-gold .card-tag { background: var(--gold-dim); color: var(--gold); }
+.card-blue { border-left: 4px solid var(--blue); }
+.card-blue .card-tag { background: var(--blue-dim); color: var(--blue); }
+.card-green { border-left: 4px solid var(--green); }
+.card-green .card-tag { background: var(--green-dim); color: var(--green); }
+.card-purple { border-left: 4px solid var(--purple); }
+.card-purple .card-tag { background: var(--purple-dim); color: var(--purple); }
+
+.card h4 { margin-top: 0; }
+.card-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #fff;
+  margin-bottom: 0.3rem;
+}
+.card-role {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+/* ── COMPARISON TABLE ── */
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.2rem 0;
+  font-size: 0.9rem;
+}
+.compare-table th {
+  background: var(--gold);
+  color: #0d0f14;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.7rem 1rem;
+  text-align: left;
+  letter-spacing: 0.04em;
+}
+.compare-table td {
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.compare-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+.compare-table tr:hover td { background: rgba(245,200,66,0.04); }
+.compare-table .td-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  color: #8899aa;
+  width: 180px;
+}
+.compare-table .td-before { color: #cc7777; }
+.compare-table .td-after { color: var(--green); }
+
+/* ── QUESTION CARDS ── */
+.question-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+.question-card summary {
+  padding: 1.1rem 1.4rem;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  list-style: none;
+  border-left: 4px solid var(--blue);
+  transition: background 0.2s;
+}
+.question-card summary::-webkit-details-marker { display: none; }
+.question-card summary:hover { background: rgba(255,255,255,0.03); }
+.question-card[open] summary { border-left-color: var(--gold); background: rgba(245,200,66,0.04); }
+.q-icon {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.7rem;
+  color: var(--blue);
+  font-weight: 700;
+  padding-top: 0.1rem;
+  flex-shrink: 0;
+}
+.question-card[open] .q-icon { color: var(--gold); }
+.q-text {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.82rem;
+  color: var(--gold);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+}
+.q-badges { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.3rem; }
+.question-card .answer {
+  padding: 1.2rem 1.4rem 1.4rem;
+  border-top: 1px solid var(--border);
+  animation: fadeIn 0.2s ease;
+}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── GEM BOX ── */
+.gem-box {
+  background: #1e1030;
+  border: 1px solid rgba(155,89,182,0.3);
+  border-left: 4px solid var(--purple);
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+  margin-top: 1rem;
+}
+.gem-box-header {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--purple);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.5rem;
+}
+
+/* ── GLOSSARY ── */
+.glossary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.glossary-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+}
+.glossary-term {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.04em;
+}
+.glossary-def { font-size: 0.88rem; color: #b0c0d0; }
+
+/* ── ANALOGY BLOCK ── */
+.analogy-block {
+  background: linear-gradient(135deg, #12160e 0%, #151a10 100%);
+  border: 1px solid rgba(82,201,122,0.25);
+  border-top: 4px solid var(--gold);
+  border-radius: 10px;
+  padding: 2rem 2rem;
+  margin: 1.5rem 0;
+}
+.analogy-header {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--gold);
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.analogy-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.analogy-row:last-child { border-bottom: none; }
+.analogy-real {
+  flex: 1;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--gold);
+  font-weight: 600;
+}
+.analogy-arrow { color: #445; font-size: 1rem; padding-top: 0.1rem; }
+.analogy-equiv { flex: 1.4; font-size: 0.88rem; color: #a0c8a0; }
+
+/* ── TIMELINE ── */
+.timeline { position: relative; padding-left: 2rem; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0.45rem; top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--gold) 0%, var(--border) 100%);
+}
+.timeline-item {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+.timeline-dot {
+  position: absolute;
+  left: -1.72rem;
+  top: 0.25rem;
+  width: 12px; height: 12px;
+  background: var(--gold);
+  border-radius: 50%;
+  border: 2px solid var(--bg);
+}
+.timeline-year {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 0.3rem;
+}
+.timeline-desc { font-size: 0.9rem; }
+
+/* ── LIST STYLES ── */
+ul.content-list { padding-left: 1.4rem; margin-bottom: 0.9rem; }
+ul.content-list li { margin-bottom: 0.4rem; }
+ul.content-list li::marker { color: var(--gold); }
+
+/* ── FOOTER ── */
+footer {
+  grid-column: 1 / -1;
+  background: #0a0c10;
+  border-top: 1px solid var(--border);
+  padding: 2rem 3rem;
+  text-align: center;
+}
+footer p {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  color: #445566;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.8rem;
+}
+.footer-legend { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; margin-top: 0.8rem; }
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  .layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto 1fr auto;
+  }
+  .hero { grid-column: 1; }
+  .legend-bar { grid-column: 1; padding: 0.8rem 1rem; }
+  .sidebar {
+    grid-column: 1;
+    grid-row: 3;
+    position: static;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 0;
+  }
+  .sidebar-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.8rem 1.2rem;
+    cursor: pointer;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--gold);
+  }
+  .sidebar-nav { display: none; padding: 0 1rem 1rem; }
+  .sidebar-nav.open { display: block; }
+  .main-content {
+    grid-column: 1;
+    grid-row: 4;
+    padding: 1.5rem 1.2rem 3rem;
+  }
+  footer { grid-column: 1; grid-row: 5; padding: 1.5rem 1rem; }
+  .hero { padding: 2rem 1.2rem 1.5rem; }
+  .legend-bar { padding: 0.8rem 1rem; }
+  .glossary-grid { grid-template-columns: 1fr; }
+  .analogy-row { flex-direction: column; gap: 0.4rem; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<!-- ══════════════════════════════════════════════ HERO -->
+<header class="hero" id="top">
+  <div class="hero-unit-tag">GS Unit 5 · Tamil Nadu Administration &amp; Indian Economics</div>
+  <h1>Green Revolution</h1>
+  <div class="hero-subtitle">// TNPSC Complete Lecture Notes — பசுமை புரட்சி</div>
+  <div class="hero-badges">
+    <span class="badge badge-exam">TNPSC GROUP I / II / IV</span>
+    <span class="badge badge-topic">Indian Economy · Agriculture</span>
+    <span class="badge badge-diff">HIGH PRIORITY TOPIC</span>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════════ LEGEND -->
+<div class="legend-bar">
+  <span class="legend-label">Legend:</span>
+  <span class="legend-pill pill-critical">⚡ CRITICAL</span>
+  <span class="legend-pill pill-trap">⚠ TRAP</span>
+  <span class="legend-pill pill-tip">💡 TIP</span>
+  <span class="legend-pill pill-pyq">📋 PYQ</span>
+  <span class="legend-pill pill-gem">💎 GEM</span>
+</div>
+
+<!-- ══════════════════════════════════════════════ SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-toggle" onclick="toggleNav()" id="nav-toggle">
+    📖 TABLE OF CONTENTS <span id="nav-arrow">▼</span>
+  </div>
+  <div class="sidebar-nav" id="nav-menu">
+    <div class="toc-header">Contents</div>
+    <ul class="toc-list" id="toc"></ul>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════ MAIN CONTENT -->
+<main class="main-content" id="main">
+
+  <!-- 1. BACKGROUND -->
+  <section class="section-block" id="s1">
+    <h2><span class="section-num">01</span>Background &amp; Historical Context</h2>
+
+    <div class="callout callout-critical">
+      <div class="callout-header">⚡ CRITICAL — Root Cause</div>
+      <p>In <span class="stat">1960</span>, India faced a severe food shortage. The country was importing wheat from other nations — a sign of extreme agricultural backwardness. Famines were widespread, and the production of food crops like rice and wheat was critically inadequate.</p>
+    </div>
+
+    <p><strong>Pre-Green Revolution India</strong> was characterised by traditional farming methods with no modern technology. The government realised that without a dramatic intervention, food insecurity would be permanent.</p>
+
+    <div class="callout callout-trap">
+      <div class="callout-header">⚠ TRAP — Common Mistake</div>
+      <p>Students often assume the Green Revolution was announced by that name from the beginning. <strong>It was NOT.</strong> The programme was first launched as a different scheme, and the name "Green Revolution" came LATER — in <span class="stat">1966</span>.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">1959–1960</div>
+        <div class="timeline-desc">Severe famine and food shortage in India. Wheat imported from foreign countries. Crisis triggers need for agricultural revolution.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">1960</div>
+        <div class="timeline-desc"><strong>Intensive Agricultural Development Programme (IADP)</strong> — "Vazhi Nadatthum Thittam" (வழிநடத்தும் திட்டம்) — launched in <span class="stat">7</span> pilot districts only.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">1966</div>
+        <div class="timeline-desc">The process proved successful. <strong>William Gaud</strong> used the term "Green Revolution" in a speech/article. The name was adopted officially and the programme extended to all of India.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2006–2007</div>
+        <div class="timeline-desc"><strong>Second Green Revolution</strong> launched due to resurgence of food insecurity. Target: increase food grain output from <span class="stat">214 million tonnes</span> to <span class="stat">400 million tonnes</span> by <span class="stat">2020</span>. Agricultural growth rate target: <span class="stat">5%</span> to <span class="stat">6%</span>.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. KEY PEOPLE -->
+  <section class="section-block" id="s2">
+    <h2><span class="section-num">02</span>Key Scientists &amp; Contributors</h2>
+
+    <div class="callout callout-critical">
+      <div class="callout-header">⚡ CRITICAL — Must Know All Four Names</div>
+      <p>All four names below are examinable. Know EXACTLY what role each person played — they are frequently confused.</p>
+    </div>
+
+    <div class="card card-critical">
+      <div class="card-tag">CRITICAL</div>
+      <div class="card-name">Dr. M. S. Swaminathan</div>
+      <div class="card-role">🇮🇳 Father of Indian Green Revolution</div>
+      <p>An agricultural scientist who conceptualised and implemented the Green Revolution in India. He adapted Norman Borlaug's global ideas to suit Indian conditions. Later served as a <strong>Rajya Sabha MP</strong> — nominated during President <strong>A.P.J. Abdul Kalam's</strong> tenure in <span class="stat">2002</span>. During the second Green Revolution (2006–07), he was in Rajya Sabha, giving him additional influence.</p>
+    </div>
+
+    <div class="card card-critical">
+      <div class="card-tag">CRITICAL</div>
+      <div class="card-name">Norman Borlaug</div>
+      <div class="card-role">🌍 Father of World Green Revolution</div>
+      <p>An <strong>American scientist</strong> who first developed the ideology of the Green Revolution globally. His concepts were studied and adapted by Swaminathan for India. It was Borlaug's framework that Swaminathan modified and applied with changes suited to Indian agriculture.</p>
+    </div>
+
+    <div class="card card-blue">
+      <div class="card-tag">PYQ</div>
+      <div class="card-name">William Gaud</div>
+      <div class="card-role">🗣️ Person who coined the term "Green Revolution"</div>
+      <p>An <strong>American</strong> who, in a speech/article in <span class="stat">1967–68</span>, used the phrase "Green Revolution" while describing the agricultural transformation. The term was then officially adopted. <strong>He did not implement the programme</strong> — he only named it.</p>
+      <div class="callout callout-trap" style="margin-top:0.8rem">
+        <div class="callout-header">⚠ TRAP</div>
+        <p>William Gaud coined the <em>term</em>. He did NOT implement the Green Revolution. Do not confuse him with Swaminathan or Borlaug.</p>
+      </div>
+    </div>
+
+    <div class="card card-green">
+      <div class="card-tag">KEY FIGURE</div>
+      <div class="card-name">C. Subramaniam</div>
+      <div class="card-role">🏛️ Agriculture Minister of India (at the time of Green Revolution)</div>
+      <p>Served as the <strong>Agriculture Minister</strong> when the Green Revolution was being implemented. He provided the governmental and political support needed to execute Swaminathan's vision. Without his backing, the programme could not have been implemented at scale.</p>
+    </div>
+
+    <div class="callout callout-tip">
+      <div class="callout-header">💡 TIP — Memory Trick for the Four Names</div>
+      <p><strong>B</strong>orlaug = <strong>B</strong>ig world idea → <strong>S</strong>waminathan = <strong>S</strong>uited it to India → <strong>G</strong>aud = <strong>G</strong>ave it the name → <strong>S</strong>ubramaniam = <strong>S</strong>tate support (Minister)</p>
+    </div>
+
+    <div class="callout callout-pyq">
+      <div class="callout-header">📋 PYQ — Frequently Asked</div>
+      <p>"Father of Indian Green Revolution" = <strong>Dr. M. S. Swaminathan</strong><br>
+      "Father of World Green Revolution" = <strong>Norman Borlaug</strong><br>
+      "Who coined the term Green Revolution" = <strong>William Gaud</strong></p>
+    </div>
+  </section>
+
+  <!-- 3. SCHEMES & PROGRAMMES -->
+  <section class="section-block" id="s3">
+    <h2><span class="section-num">03</span>Government Schemes &amp; Programmes</h2>
+
+    <div class="card card-gold">
+      <div class="card-tag">KEY SCHEME</div>
+      <h4>Intensive Agricultural Development Programme (IADP)</h4>
+      <p><strong>Tamil Name:</strong> வழிநடத்தும் திட்டம் (Vazhi Nadatthum Thittam — "Guiding/Pilot Programme")</p>
+      <p><strong>Year:</strong> <span class="stat">1960</span></p>
+      <p><strong>Scope:</strong> Only <span class="stat">7 districts</span> (pilot/trial)</p>
+      <ul class="content-list">
+        <li>HYV seeds distributed to farmers in these 7 districts</li>
+        <li>Chemical fertilisers (nitrogen-based) provided</li>
+        <li>Irrigation facilities expanded</li>
+        <li>Modern equipment (tractors, pump sets) introduced</li>
+        <li>Pesticides provided</li>
+      </ul>
+      <p><strong>Rationale for limiting to 7 districts:</strong> If the experiment failed across all of India, losses would be catastrophic. Limiting to 7 districts contained the risk.</p>
+    </div>
+
+    <div class="callout callout-trap">
+      <div class="callout-header">⚠ TRAP — IADP ≠ Green Revolution</div>
+      <p>The IADP (1960) was the <em>programme</em>. "Green Revolution" is the <em>name given to the process/outcome</em> in 1966. IADP was not renamed Green Revolution — the term Green Revolution was coined for the agricultural transformation process triggered by IADP.</p>
+    </div>
+
+    <div class="card card-gold">
+      <div class="card-tag">KEY SCHEME</div>
+      <h4>Second Green Revolution (இரண்டாவது பசுமை புரட்சி)</h4>
+      <p><strong>Year:</strong> <span class="stat">2006–2007</span></p>
+      <p><strong>Context:</strong> Food insecurity resurfaced. India risked dependence on foreign countries again for food crops.</p>
+      <ul class="content-list">
+        <li><strong>Target 1:</strong> Increase food grain production from <span class="stat">214 million tonnes</span> → <span class="stat">400 million tonnes</span> by <span class="stat">2020</span></li>
+        <li><strong>Target 2:</strong> Raise agricultural growth rate from <span class="stat">5%</span> → <span class="stat">6%</span></li>
+      </ul>
+      <p>M. S. Swaminathan was serving as <strong>Rajya Sabha MP</strong> during this period (nominated during Abdul Kalam's presidency), giving the movement expert legislative backing.</p>
+    </div>
+  </section>
+
+  <!-- 4. HYV SEEDS -->
+  <section class="section-block" id="s4">
+    <h2><span class="section-num">04</span>HYV Seeds — High Yielding Variety</h2>
+
+    <div class="callout callout-critical">
+      <div class="callout-header">⚡ CRITICAL — Core Concept</div>
+      <p>HYV (High Yielding Variety) Seeds are the backbone of the Green Revolution. Understanding what they are and their limitations is essential.</p>
+    </div>
+
+    <h3>What are HYV Seeds?</h3>
+    <p>Two different varieties of the same crop (e.g., rice) are selected — each with a distinct superior quality (one may have high disease resistance; another high yield capacity). These two are <strong>cross-bred</strong> to produce a single hybrid seed that carries both qualities. This hybrid seed is called an <strong>HYV seed</strong>.</p>
+
+    <div class="card card-critical">
+      <div class="card-tag">CRITICAL</div>
+      <h4>Key Properties of HYV Seeds</h4>
+      <ul class="content-list">
+        <li>High yield — significantly more output per area</li>
+        <li>Quick maturation — grows faster than normal seeds</li>
+        <li>Requires <strong>large amounts of water</strong> (4× more than normal seeds)</li>
+        <li>Requires chemical/nitrogen fertilisers to thrive</li>
+        <li>More susceptible to pest attacks than natural seeds</li>
+        <li><strong>Cannot be saved and reused</strong> — seeds from HYV harvest do NOT produce the same quality in the next season</li>
+      </ul>
+    </div>
+
+    <h3>Crops Where HYV Seeds Were Introduced</h3>
+    <ul class="content-list">
+      <li><strong>Rice (Arisi / நெல்)</strong> — Primary focus</li>
+      <li><strong>Wheat (Kodumai / கோதுமை)</strong> — Primary focus</li>
+      <li><strong>Maize / Corn (Makka Cholam / மக்காச் சோளம்)</strong> — Secondary focus</li>
+    </ul>
+
+    <div class="callout callout-critical">
+      <div class="callout-header">⚡ CRITICAL — What HYV Seeds were NOT used for</div>
+      <p>HYV seeds were <strong>NOT developed</strong> for: Oil seeds (எண்ணெய் வித்துக்கள்), Pulses (பருப்பு வகைகள்), or other non-food crops. The entire focus was on <strong>food crops only</strong> — specifically rice and wheat.</p>
+    </div>
+
+    <div class="callout callout-gem">
+      <div class="callout-header">💎 GEM — Insight from Lecture</div>
+      <p>The concept of HYV seeds came from Norman Borlaug as "Nutritive Seeds." Swaminathan studied Borlaug's concept and adapted it to Indian conditions with modifications. That's why Borlaug is "Father of World" and Swaminathan is "Father of India" — the latter made it work HERE.</p>
+    </div>
+
+    <div class="callout callout-trap">
+      <div class="callout-header">⚠ TRAP — The Seed Reuse Problem</div>
+      <p>A farmer who grows a crop from HYV seeds cannot take seeds from that harvest and replant them to get the same yield. The cross-bred advantage disappears in the second generation. Farmers had to keep buying new HYV seeds every season — this created <strong>economic dependence</strong> and was a major limitation of the Green Revolution.</p>
+    </div>
+  </section>
+
+  <!-- 5. COMPONENTS -->
+  <section class="section-block" id="s5">
+    <h2><span class="section-num">05</span>Components of the Green Revolution</h2>
+
+    <div class="card card-gold">
+      <div class="card-tag">COMPONENT 1</div>
+      <h4>HYV Seeds (அதிக மகசூல் விதைகள்)</h4>
+      <p>Cross-bred hybrid seeds introduced for rice, wheat, and maize. Provided high and rapid yield.</p>
+    </div>
+
+    <div class="card card-gold">
+      <div class="card-tag">COMPONENT 2</div>
+      <h4>Chemical Fertilisers — Nitrogen-Based (ரசாயன உரங்கள்)</h4>
+      <p>Synthetic nitrogen fertilisers applied to accelerate crop growth. Nitrogen causes rapid growth and higher yields. However, prolonged use degraded soil quality.</p>
+    </div>
+
+    <div class="card card-gold">
+      <div class="card-tag">COMPONENT 3</div>
+      <h4>Pesticides / Insecticides (பூச்சி கொல்லிகள்)</h4>
+      <p>Chemical pesticides used to protect HYV crops from pests (HYV seeds are more vulnerable to pest attacks than natural seeds).</p>
+    </div>
+
+    <div class="card card-gold">
+      <div class="card-tag">COMPONENT 4</div>
+      <h4>Irrigation &amp; Water Supply (பாசன வசதி)</h4>
+      <p>HYV crops require <strong>4× more water</strong> than traditional crops. Extensive canal irrigation systems and pump sets were deployed. This led to a significant fall in groundwater levels.</p>
+    </div>
+
+    <div class="card card-gold">
+      <div class="card-tag">COMPONENT 5</div>
+      <h4>Modern Machinery (நவீன இயந்திரங்கள்)</h4>
+      <p>Tractors, threshers (கதிரடிப்பான்கள்), pump sets and other modern agricultural equipment introduced. This boosted both speed and scale of farming. Manufacturing of these machines also increased, generating secondary economic activity.</p>
+    </div>
+
+    <div class="card card-gold">
+      <div class="card-tag">COMPONENT 6</div>
+      <h4>Livestock Rearing (கால்நடை வளர்ப்பு)</h4>
+      <p>Cattle, goats, and poultry rearing increased to support the agricultural ecosystem — for food, strength (draught animals), and utility.</p>
+    </div>
+  </section>
+
+  <!-- 6. ACHIEVEMENTS -->
+  <section class="section-block" id="s6">
+    <h2><span class="section-num">06</span>Achievements of the Green Revolution</h2>
+
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Aspect</th>
+          <th>Before Green Revolution</th>
+          <th>After Green Revolution</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-label">Wheat &amp; Rice Production</td>
+          <td class="td-before">Low; India importing wheat</td>
+          <td class="td-after">Multiple-fold increase; self-sufficient</td>
+        </tr>
+        <tr>
+          <td class="td-label">Seed Technology</td>
+          <td class="td-before">Traditional local seeds</td>
+          <td class="td-after">HYV seeds — higher &amp; faster yield</td>
+        </tr>
+        <tr>
+          <td class="td-label">Farm Machinery</td>
+          <td class="td-before">Manual / bullock-driven</td>
+          <td class="td-after">Tractors, threshers, pump sets</td>
+        </tr>
+        <tr>
+          <td class="td-label">Fertiliser Use</td>
+          <td class="td-before">Organic / natural manure</td>
+          <td class="td-after">Synthetic nitrogen fertilisers</td>
+        </tr>
+        <tr>
+          <td class="td-label">Rural Employment</td>
+          <td class="td-before">Limited agricultural jobs</td>
+          <td class="td-after">Increased village-level employment</td>
+        </tr>
+        <tr>
+          <td class="td-label">Food Security</td>
+          <td class="td-before">Famines; foreign dependence</td>
+          <td class="td-after">Self-reliance; no wheat imports needed</td>
+        </tr>
+        <tr>
+          <td class="td-label">Tractor Manufacturing</td>
+          <td class="td-before">Minimal</td>
+          <td class="td-after">Grew significantly to meet demand</td>
+        </tr>
+        <tr>
+          <td class="td-label">Food Production Target (2nd GR)</td>
+          <td class="td-before"><span class="stat">214 million tonnes</span> (2006)</td>
+          <td class="td-after">Target: <span class="stat">400 million tonnes</span> by 2020</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-critical">
+      <div class="callout-header">⚡ CRITICAL — Key Achievement</div>
+      <p>After the Green Revolution, India achieved <strong>food self-reliance</strong> — it no longer needed to import wheat from foreign countries. The production of rice and wheat increased manifold. Rural living standards improved due to higher farm income and employment.</p>
+    </div>
+  </section>
+
+  <!-- 7. LIMITATIONS / CRITICISM -->
+  <section class="section-block" id="s7">
+    <h2><span class="section-num">07</span>Limitations &amp; Criticism</h2>
+
+    <div class="callout callout-gem">
+      <div class="callout-header">💎 GEM — Lecturer's Insight</div>
+      <p>The Green Revolution was not without negatives. While it solved the immediate food crisis, it created long-term environmental and socio-economic damage. A complete answer in interviews must acknowledge BOTH its achievements AND its failures.</p>
+    </div>
+
+    <div class="card card-critical">
+      <div class="card-tag">CRITICAL</div>
+      <h4>1. Loss of Biodiversity (பல்லுயிர் இல்லாமை)</h4>
+      <p>Farmers grew only rice and wheat — a <strong>monoculture</strong>. Diverse crops like oil seeds, pulses, and other food varieties were neglected. This extreme dependence on single crops is considered a major ecological failure.</p>
+    </div>
+
+    <div class="card card-critical">
+      <div class="card-tag">CRITICAL</div>
+      <h4>2. Soil Degradation (மண் வளம் குறைதல்)</h4>
+      <p>Continuous planting of the same crop (no crop rotation) exhausted soil nutrients. Repeated use of chemical fertilisers raised soil alkalinity (pH levels), destroying soil micronutrients and microbial life. The soil "forgot" how to support other crops.</p>
+      <div class="gem-box">
+        <div class="gem-box-header">💎 Live Gem — Lecturer's Analogy</div>
+        <p>The lecturer compared soil degradation to a skilled person who hasn't practised a skill for 10 years — they lose the ability. "Touch விட்டுட்டா" (lost touch). Similarly, soil that only grew rice/wheat lost its capacity to support other crops.</p>
+      </div>
+    </div>
+
+    <div class="card card-critical">
+      <div class="card-tag">CRITICAL</div>
+      <h4>3. Groundwater Depletion (நிலத்தடி நீர்மட்டம் குறைதல்)</h4>
+      <p>HYV crops needed far more water than traditional crops. Farmers dug deep borewells and used pump sets aggressively, causing a severe fall in groundwater levels. This eventually led to <strong>water scarcity</strong>.</p>
+    </div>
+
+    <div class="card card-blue">
+      <div class="card-tag">LIMITATION</div>
+      <h4>4. HYV Seeds Cannot Be Reused (விதை மலட்டுத்தன்மை)</h4>
+      <p>Seeds saved from HYV harvests do NOT produce the same high yield in the next season. Farmers had to buy new seeds every season from the government/suppliers, creating economic dependence and added cost.</p>
+    </div>
+
+    <div class="card card-blue">
+      <div class="card-tag">LIMITATION</div>
+      <h4>5. Health Impact from Chemicals (உணவின் மீதான தாக்கம்)</h4>
+      <p>Crops grown with heavy use of pesticides and synthetic fertilisers were found to have negative impacts on human health. Before the Green Revolution, only organic/natural manure was used.</p>
+    </div>
+
+    <div class="card card-blue">
+      <div class="card-tag">LIMITATION</div>
+      <h4>6. Income Inequality (வருமான ஏற்றத்தாழ்வு)</h4>
+      <p>HYV seeds, chemical fertilisers, and modern machinery were expensive. Wealthy farmers could afford them easily; poor farmers could not. This widened the economic gap between rich and poor farmers.</p>
+    </div>
+
+    <div class="card card-blue">
+      <div class="card-tag">LIMITATION</div>
+      <h4>7. Increased Pest Vulnerability</h4>
+      <p>HYV crops are more susceptible to pest attacks than natural seed varieties. This meant more pesticides were needed, creating a cycle of chemical use and associated environmental damage.</p>
+    </div>
+
+    <div class="card card-blue">
+      <div class="card-tag">LIMITATION</div>
+      <h4>8. No Crop Rotation (பயிர் சுழற்சி இல்லாமை)</h4>
+      <p>Farmers planted only rice or only wheat repeatedly on the same land without rotating with other crops. This depleted soil nutrients as the soil lacked the diverse inputs from varied crops.</p>
+    </div>
+
+    <div class="card card-blue">
+      <div class="card-tag">LIMITATION</div>
+      <h4>9. Lack of Farmer Awareness</h4>
+      <p>Many farmers lacked proper guidance on how to correctly use chemical fertilisers and pesticides. Improper application led to additional environmental and yield problems.</p>
+    </div>
+  </section>
+
+  <!-- 8. COMPARISON TABLE (DETAILED) -->
+  <section class="section-block" id="s8">
+    <h2><span class="section-num">08</span>Detailed Before vs. After Comparison</h2>
+
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Parameter</th>
+          <th>Before GR (Pre-1960)</th>
+          <th>After GR (Post-1966)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-label">Seed Type</td>
+          <td class="td-before">Traditional / natural seeds</td>
+          <td class="td-after">HYV (High Yielding Variety) hybrid seeds</td>
+        </tr>
+        <tr>
+          <td class="td-label">Fertiliser</td>
+          <td class="td-before">Natural / organic manure</td>
+          <td class="td-after">Synthetic nitrogen-based chemical fertilisers</td>
+        </tr>
+        <tr>
+          <td class="td-label">Pest Control</td>
+          <td class="td-before">Minimal / natural</td>
+          <td class="td-after">Heavy use of chemical pesticides</td>
+        </tr>
+        <tr>
+          <td class="td-label">Water Requirement</td>
+          <td class="td-before">Normal irrigation needs</td>
+          <td class="td-after"><span class="stat">4×</span> more water required for HYV crops</td>
+        </tr>
+        <tr>
+          <td class="td-label">Groundwater Level</td>
+          <td class="td-before">Stable</td>
+          <td class="td-after">Significantly reduced due to over-extraction</td>
+        </tr>
+        <tr>
+          <td class="td-label">Crop Diversity</td>
+          <td class="td-before">Varied crops grown</td>
+          <td class="td-after">Monoculture — only rice &amp; wheat</td>
+        </tr>
+        <tr>
+          <td class="td-label">Soil Quality</td>
+          <td class="td-before">Naturally rich and diverse</td>
+          <td class="td-after">Degraded; pH altered; nutrients depleted</td>
+        </tr>
+        <tr>
+          <td class="td-label">Seed Reusability</td>
+          <td class="td-before">Seeds could be saved &amp; reused</td>
+          <td class="td-after">HYV seeds cannot be reused next season</td>
+        </tr>
+        <tr>
+          <td class="td-label">Food Import</td>
+          <td class="td-before">Wheat imported from abroad</td>
+          <td class="td-after">Self-sufficient; no imports needed</td>
+        </tr>
+        <tr>
+          <td class="td-label">Farm Equipment</td>
+          <td class="td-before">Bullock ploughs</td>
+          <td class="td-after">Tractors, threshers, pump sets</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 9. DEFINITION -->
+  <section class="section-block" id="s9">
+    <h2><span class="section-num">09</span>Definition &amp; Key Terms</h2>
+
+    <div class="card card-critical">
+      <div class="card-tag">CRITICAL</div>
+      <h4>Official Definition — Green Revolution</h4>
+      <p style="font-style:italic; color: #c8d8e8;">"The period during which new technologies were used to increase agricultural production worldwide is called the Green Revolution."</p>
+      <p>In India specifically: the use of HYV seeds, chemical fertilisers, pesticides, irrigation, and modern machinery to dramatically increase the production of rice and wheat.</p>
+    </div>
+
+    <div class="glossary-grid">
+      <div class="glossary-card">
+        <div class="glossary-term">HYV Seeds</div>
+        <div class="glossary-def">High Yielding Variety seeds — hybrid seeds created by cross-breeding two varieties with distinct superior qualities to combine both in one seed.</div>
+      </div>
+      <div class="glossary-card">
+        <div class="glossary-term">IADP</div>
+        <div class="glossary-def">Intensive Agricultural Development Programme — the pilot scheme launched in 1960 in 7 districts that formed the foundation of the Green Revolution.</div>
+      </div>
+      <div class="glossary-card">
+        <div class="glossary-term">Monoculture</div>
+        <div class="glossary-def">Growing the same crop repeatedly on the same land without rotation — a criticism of Green Revolution agriculture.</div>
+      </div>
+      <div class="glossary-card">
+        <div class="glossary-term">Crop Rotation</div>
+        <div class="glossary-def">Alternating different types of crops on the same land across seasons to maintain soil nutrients — this was largely absent during the Green Revolution.</div>
+      </div>
+      <div class="glossary-card">
+        <div class="glossary-term">Nitrogen Fertiliser</div>
+        <div class="glossary-def">Synthetic fertiliser rich in nitrogen that accelerates crop growth. Overuse leads to increased soil alkalinity and degradation.</div>
+      </div>
+      <div class="glossary-card">
+        <div class="glossary-term">Groundwater Depletion</div>
+        <div class="glossary-def">Reduction of underground water levels due to excessive extraction via borewells and pump sets to meet HYV irrigation needs.</div>
+      </div>
+      <div class="glossary-card">
+        <div class="glossary-term">Biodiversity Loss</div>
+        <div class="glossary-def">Reduction in the variety of species cultivated; in the context of GR, the neglect of pulses, oil seeds, and other diverse food crops.</div>
+      </div>
+      <div class="glossary-card">
+        <div class="glossary-term">Cross-Breeding</div>
+        <div class="glossary-def">The process of combining two different plant varieties to produce offspring with the desirable traits of both parents — the mechanism behind HYV seed creation.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. ANALOGY -->
+  <section class="section-block" id="s10">
+    <h2><span class="section-num">10</span>💡 Analogy — Understanding the Green Revolution</h2>
+
+    <div class="analogy-block">
+      <div class="analogy-header">💡 Analogy: Upgrading from an Old Feature Phone to a Smartphone</div>
+      <p style="color:#8899aa; font-size:0.85rem; margin-bottom:1.2rem;">Imagine India's agriculture in 1960 as someone using a very old, basic feature phone. It barely makes calls. Then the Green Revolution happened — like upgrading to a smartphone. Here's how every part maps:</p>
+
+      <div class="analogy-row">
+        <div class="analogy-real">India's 1960 food crisis</div>
+        <div class="analogy-arrow">→</div>
+        <div class="analogy-equiv">Your old phone dying — can't even make calls anymore. You're borrowing someone else's phone (importing wheat from foreign countries).</div>
+      </div>
+      <div class="analogy-row">
+        <div class="analogy-real">Traditional seeds</div>
+        <div class="analogy-arrow">→</div>
+        <div class="analogy-equiv">Old phone battery — works, but slowly, barely holds charge.</div>
+      </div>
+      <div class="analogy-row">
+        <div class="analogy-real">HYV Seeds</div>
+        <div class="analogy-arrow">→</div>
+        <div class="analogy-equiv">New high-performance battery — charges fast, lasts long, handles heavy usage. But if you try to copy it into another phone, it doesn't work the same (seeds can't be reused).</div>
+      </div>
+      <div class="analogy-row">
+        <div class="analogy-real">Chemical fertilisers (nitrogen)</div>
+        <div class="analogy-arrow">→</div>
+        <div class="analogy-equiv">Turbo-charger or performance booster app — makes everything faster. But overuse drains the device long-term (soil degradation).</div>
+      </div>
+      <div class="analogy-row">
+        <div class="analogy-real">Pesticides</div>
+        <div class="analogy-arrow">→</div>
+        <div class="analogy-equiv">Antivirus software — protects from threats. But powerful antivirus also deletes good files (kills beneficial microorganisms in soil).</div>
+      </div>
+      <div class="analogy-row">
+        <div class="analogy-real">Tractors &amp; modern machinery</div>
+        <div class="analogy-arrow">→</div>
+        <div class="analogy-equiv">Upgrading from manually typing to using voice commands and AI — everything is faster and more efficient.</div>
+      </div>
+      <div class="analogy-row">
+        <div class="analogy-real">IADP — 7 pilot districts</div>
+        <div class="analogy-arrow">→</div>
+        <div class="analogy-equiv">Beta testing the new phone OS on 7 selected users before rolling out to all 1.4 billion people.</div>
+      </div>
+      <div class="analogy-row">
+        <div class="analogy-real">1966 — Official Green Revolution launch</div>
+        <div class="analogy-arrow">→</div>
+        <div class="analogy-equiv">Official public release of the new OS — now everyone gets the upgrade.</div>
+      </div>
+      <div class="analogy-row">
+        <div class="analogy-real">Monoculture (only rice/wheat)</div>
+        <div class="analogy-arrow">→</div>
+        <div class="analogy-equiv">Only ever running one app (WhatsApp) — all phone resources dedicated to it. Other apps (skills) atrophy.</div>
+      </div>
+      <div class="analogy-row">
+        <div class="analogy-real">Groundwater depletion</div>
+        <div class="analogy-arrow">→</div>
+        <div class="analogy-equiv">Leaving your new smartphone on max brightness and 5G constantly — great performance short-term, but battery health deteriorates permanently.</div>
+      </div>
+      <div class="analogy-row">
+        <div class="analogy-real">Second Green Revolution (2006–07)</div>
+        <div class="analogy-arrow">→</div>
+        <div class="analogy-equiv">Your upgraded phone started slowing down after years of heavy use — so you do a major OS update (v2.0) to restore performance.</div>
+      </div>
+      <div class="analogy-row">
+        <div class="analogy-real">Income inequality in GR</div>
+        <div class="analogy-arrow">→</div>
+        <div class="analogy-equiv">New smartphones are expensive — rich people get the best model; poor people stuck with budget versions or can't afford them at all.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. QUESTION CARDS -->
+  <section class="section-block" id="s11">
+    <h2><span class="section-num">11</span>Expected Exam Questions</h2>
+
+    <details class="question-card">
+      <summary>
+        <span class="q-icon">Q →</span>
+        <div>
+          <div class="q-text">Who is called the Father of the Indian Green Revolution?</div>
+          <div class="q-badges">
+            <span class="legend-pill pill-critical">⚡ CRITICAL</span>
+            <span class="legend-pill pill-pyq">📋 PYQ</span>
+          </div>
+        </div>
+      </summary>
+      <div class="answer">
+        <p><strong>Dr. M. S. Swaminathan</strong> is called the Father of the Indian Green Revolution. He was an agricultural scientist who introduced and adapted the Green Revolution concept for India, building on Norman Borlaug's global framework.</p>
+        <p>Additional facts: He also served as a <strong>Rajya Sabha MP</strong>, nominated during President <strong>A.P.J. Abdul Kalam's</strong> tenure in <span class="stat">2002</span>.</p>
+        <div class="gem-box">
+          <div class="gem-box-header">💎 Live Gem</div>
+          <p>There are TWO fathers to remember: <strong>Norman Borlaug</strong> (World) and <strong>M.S. Swaminathan</strong> (India). The distinction: Borlaug invented the ideology globally; Swaminathan adapted and executed it specifically for India.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="question-card">
+      <summary>
+        <span class="q-icon">Q →</span>
+        <div>
+          <div class="q-text">Who coined the term "Green Revolution"?</div>
+          <div class="q-badges">
+            <span class="legend-pill pill-critical">⚡ CRITICAL</span>
+            <span class="legend-pill pill-trap">⚠ TRAP</span>
+          </div>
+        </div>
+      </summary>
+      <div class="answer">
+        <p><strong>William Gaud</strong> (an American) coined the term "Green Revolution" in <span class="stat">1967–68</span> in an article/speech. He used this phrase to describe the agricultural transformation that had already taken place. The name was then officially adopted in <span class="stat">1966</span>.</p>
+        <div class="gem-box">
+          <div class="gem-box-header">💎 Live Gem — TRAP Warning</div>
+          <p>William Gaud did NOT implement the Green Revolution. He only NAMED it. Don't confuse him with Swaminathan (implementer) or Borlaug (originator of the concept). This distinction is a classic exam trap.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="question-card">
+      <summary>
+        <span class="q-icon">Q →</span>
+        <div>
+          <div class="q-text">What is the IADP? What was its purpose?</div>
+          <div class="q-badges">
+            <span class="legend-pill pill-pyq">📋 PYQ</span>
+          </div>
+        </div>
+      </summary>
+      <div class="answer">
+        <p><strong>IADP = Intensive Agricultural Development Programme</strong> (Tamil: வழிநடத்தும் திட்டம் — Guiding/Pilot Programme)</p>
+        <p>Launched in <span class="stat">1960</span> in <span class="stat">7 pilot districts</span> of India. It was the first step of what later became known as the Green Revolution. HYV seeds, chemical fertilisers, irrigation support, and modern machinery were provided exclusively to these 7 districts as a trial.</p>
+        <p>The rationale for limiting to 7 districts: if the experiment failed, losses would be contained; if successful, it could be scaled nationally.</p>
+      </div>
+    </details>
+
+    <details class="question-card">
+      <summary>
+        <span class="q-icon">Q →</span>
+        <div>
+          <div class="q-text">What are HYV seeds? What are their limitations?</div>
+          <div class="q-badges">
+            <span class="legend-pill pill-critical">⚡ CRITICAL</span>
+          </div>
+        </div>
+      </summary>
+      <div class="answer">
+        <p><strong>HYV (High Yielding Variety) seeds</strong> are hybrid seeds created by cross-breeding two varieties of the same crop, each with a distinct superior trait, to produce a single seed carrying both qualities.</p>
+        <p><strong>Benefits:</strong> High yield, rapid growth, increased food production.</p>
+        <p><strong>Limitations:</strong></p>
+        <ul class="content-list">
+          <li>Require <span class="stat">4×</span> more water than traditional seeds</li>
+          <li>Seeds from HYV harvests <strong>cannot be reused</strong> — farmers must buy new seeds every season</li>
+          <li>More susceptible to pest attacks</li>
+          <li>Were developed only for rice, wheat, and maize — NOT for oil seeds or pulses</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="question-card">
+      <summary>
+        <span class="q-icon">Q →</span>
+        <div>
+          <div class="q-text">What were the main criticisms / limitations of the Green Revolution?</div>
+          <div class="q-badges">
+            <span class="legend-pill pill-critical">⚡ CRITICAL</span>
+          </div>
+        </div>
+      </summary>
+      <div class="answer">
+        <ul class="content-list">
+          <li><strong>Loss of biodiversity</strong> — monoculture; only rice &amp; wheat grown</li>
+          <li><strong>Soil degradation</strong> — no crop rotation, chemical overuse, increased soil pH</li>
+          <li><strong>Groundwater depletion</strong> — excessive irrigation lowered water tables</li>
+          <li><strong>HYV seed sterility</strong> — seeds can't be reused; dependency on annual purchase</li>
+          <li><strong>Health risks</strong> — food grown with heavy chemicals impacts human health</li>
+          <li><strong>Income inequality</strong> — only wealthy farmers could afford the inputs</li>
+          <li><strong>Increased pest vulnerability</strong> — HYV crops attacked more easily</li>
+          <li><strong>Neglected crops</strong> — oil seeds and pulses were entirely ignored</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="question-card">
+      <summary>
+        <span class="q-icon">Q →</span>
+        <div>
+          <div class="q-text">What is the Second Green Revolution? When was it launched and what were its targets?</div>
+          <div class="q-badges">
+            <span class="legend-pill pill-pyq">📋 PYQ</span>
+          </div>
+        </div>
+      </summary>
+      <div class="answer">
+        <p>The <strong>Second Green Revolution</strong> was launched in <span class="stat">2006–2007</span> by the Indian government to address resurging food insecurity and dependence on foreign nations for food crops.</p>
+        <p><strong>Targets set:</strong></p>
+        <ul class="content-list">
+          <li>Increase food grain production from <span class="stat">214 million tonnes</span> to <span class="stat">400 million tonnes</span> by <span class="stat">2020</span></li>
+          <li>Raise the agricultural growth rate from <span class="stat">5%</span> to <span class="stat">6%</span></li>
+        </ul>
+        <p>Dr. <strong>M. S. Swaminathan</strong> was serving as Rajya Sabha MP during this period, providing expert legislative support to the second wave.</p>
+      </div>
+    </details>
+
+    <details class="question-card">
+      <summary>
+        <span class="q-icon">Q →</span>
+        <div>
+          <div class="q-text">Why was the Green Revolution needed in 1960?</div>
+          <div class="q-badges">
+            <span class="legend-pill pill-gem">💎 GEM</span>
+          </div>
+        </div>
+      </summary>
+      <div class="answer">
+        <p>In the late <span class="stat">1950s</span> and <span class="stat">1960</span>, India faced a severe food shortage. Rice and wheat production was critically low. India was importing wheat from foreign countries — a sign of extreme vulnerability. Famines were a real and present danger. There was no modern technology in agriculture.</p>
+        <p>Dr. M. S. Swaminathan, then an agricultural scientist, recommended a structured approach to the government. His solution — the IADP — was piloted in 7 districts, proved successful, and was scaled nationally as the Green Revolution.</p>
+        <div class="gem-box">
+          <div class="gem-box-header">💎 Live Gem — Interview Insight</div>
+          <p>In an interview or Group-1 exam, connect the background story: "What if the Green Revolution had NOT happened?" Answer: India would have remained permanently dependent on foreign wheat imports, famines would have continued, and agricultural backwardness would have stunted India's entire economic growth path. The Green Revolution wasn't just about food — it was about national sovereignty and self-reliance.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="question-card">
+      <summary>
+        <span class="q-icon">Q →</span>
+        <div>
+          <div class="q-text">Who was the Agriculture Minister who supported the Green Revolution's implementation?</div>
+          <div class="q-badges">
+            <span class="legend-pill pill-critical">⚡ CRITICAL</span>
+          </div>
+        </div>
+      </summary>
+      <div class="answer">
+        <p><strong>C. Subramaniam</strong> was the Agriculture Minister of India when the Green Revolution was being implemented. He provided government backing for Swaminathan's scientific vision, enabling the programme to be executed administratively.</p>
+        <p>The successful implementation of the Green Revolution in India is attributed to BOTH: <strong>Dr. M. S. Swaminathan</strong> (scientific vision) and <strong>C. Subramaniam</strong> (administrative &amp; political support).</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- 12. QUICK REFERENCE CARDS -->
+  <section class="section-block" id="s12">
+    <h2><span class="section-num">12</span>Quick Reference — All Key Facts</h2>
+
+    <table class="compare-table">
+      <thead>
+        <tr><th>Item</th><th>Detail</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="td-label">Green Revolution Year</td><td><span class="stat">1960</span> (IADP pilot) → <span class="stat">1966</span> (official name &amp; national rollout)</td></tr>
+        <tr><td class="td-label">Father of Indian GR</td><td><strong>Dr. M. S. Swaminathan</strong></td></tr>
+        <tr><td class="td-label">Father of World GR</td><td><strong>Norman Borlaug</strong> (American scientist)</td></tr>
+        <tr><td class="td-label">Who coined "Green Revolution"</td><td><strong>William Gaud</strong> (American), <span class="stat">1967–68</span></td></tr>
+        <tr><td class="td-label">Agriculture Minister (GR era)</td><td><strong>C. Subramaniam</strong></td></tr>
+        <tr><td class="td-label">Pilot Scheme Name</td><td>IADP — Intensive Agricultural Development Programme</td></tr>
+        <tr><td class="td-label">Tamil name of IADP</td><td>வழிநடத்தும் திட்டம்</td></tr>
+        <tr><td class="td-label">Pilot Districts</td><td><span class="stat">7</span> districts</td></tr>
+        <tr><td class="td-label">Main Focus Crops</td><td>Rice, Wheat (primary); Maize (secondary)</td></tr>
+        <tr><td class="td-label">Crops NOT focused on</td><td>Oil seeds, pulses, other non-food crops</td></tr>
+        <tr><td class="td-label">Key Technology</td><td>HYV Seeds + Nitrogen fertilisers + Irrigation + Tractors + Pesticides</td></tr>
+        <tr><td class="td-label">Water need of HYV crops</td><td><span class="stat">4×</span> more than traditional crops</td></tr>
+        <tr><td class="td-label">Second Green Revolution</td><td><span class="stat">2006–2007</span></td></tr>
+        <tr><td class="td-label">2nd GR Target (production)</td><td><span class="stat">214 MT</span> → <span class="stat">400 MT</span> by <span class="stat">2020</span></td></tr>
+        <tr><td class="td-label">2nd GR Target (growth rate)</td><td><span class="stat">5%</span> → <span class="stat">6%</span></td></tr>
+        <tr><td class="td-label">Swaminathan's Rajya Sabha term</td><td>Nominated during <strong>Abdul Kalam's</strong> presidency (<span class="stat">2002</span>); active during 2nd GR (2006–07)</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+</main>
+
+<!-- ══════════════════════════════════════════════ FOOTER -->
+<footer>
+  <p>Prepared from Lecture Transcript · TNPSC Prep · GS Unit 5 — Tamil Nadu Administration &amp; Indian Economics</p>
+  <p>All content extracted from live lecture. Every data point is potentially examinable.</p>
+  <div class="footer-legend">
+    <span class="legend-pill pill-critical">⚡ CRITICAL — Must-know exam facts</span>
+    <span class="legend-pill pill-trap">⚠ TRAP — Common mistakes</span>
+    <span class="legend-pill pill-tip">💡 TIP — Memory tricks</span>
+    <span class="legend-pill pill-pyq">📋 PYQ — Previous year questions</span>
+    <span class="legend-pill pill-gem">💎 GEM — Live discussion insights</span>
+  </div>
+</footer>
+
+</div><!-- end layout -->
+
+<script>
+// ── Build TOC from headings ──────────────────────────────
+(function buildTOC() {
+  const toc = document.getElementById('toc');
+  const headings = document.querySelectorAll('.main-content h2, .main-content h3');
+  headings.forEach(h => {
+    if (!h.id) {
+      h.id = 'h-' + h.textContent.replace(/[^a-zA-Z0-9]/g,'').substring(0,20) + Math.random().toString(36).substr(2,4);
+    }
+    const li = document.createElement('li');
+    li.className = h.tagName === 'H3' ? 'toc-h3' : '';
+    const a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent.replace(/^\d+\s*/, '').replace(/^[💡⚡⚠📋💎]\s*/,'');
+    a.addEventListener('click', () => {
+      // on mobile, close nav after click
+      const nav = document.getElementById('nav-menu');
+      if (nav.classList.contains('open') && window.innerWidth < 769) {
+        nav.classList.remove('open');
+        document.getElementById('nav-arrow').textContent = '▼';
+      }
+    });
+    li.appendChild(a);
+    toc.appendChild(li);
+  });
+})();
+
+// ── Active TOC on scroll ─────────────────────────────────
+(function setupIntersection() {
+  const links = document.querySelectorAll('#toc a');
+  const sections = [];
+  links.forEach(a => {
+    const id = a.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (el) sections.push({ el, a });
+  });
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const match = sections.find(s => s.el === entry.target);
+        if (match) match.a.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-10% 0px -80% 0px', threshold: 0 });
+
+  sections.forEach(s => observer.observe(s.el));
+})();
+
+// ── Mobile sidebar toggle ────────────────────────────────
+function toggleNav() {
+  const nav = document.getElementById('nav-menu');
+  const arrow = document.getElementById('nav-arrow');
+  const open = nav.classList.toggle('open');
+  arrow.textContent = open ? '▲' : '▼';
+}
+
+// ── Auto-open sidebar on desktop ─────────────────────────
+(function initSidebar() {
+  if (window.innerWidth >= 769) {
+    document.getElementById('nav-menu').classList.add('open');
+  }
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 769) {
+      document.getElementById('nav-menu').classList.add('open');
+    }
+  });
+})();
+</script>
+</body>
+</html>

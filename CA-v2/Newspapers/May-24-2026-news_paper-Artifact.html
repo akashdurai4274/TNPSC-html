@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body class="en-mode">
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">24 May 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">24 மே 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#scitech"><span class="lang-en">Sci-Tech</span><span class="lang-ta">அறிவியல் & தொழில்நுட்பம்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <!-- Sidebar TOC -->
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Finance</span><span class="lang-ta">பொருளாதாரம் & நிதி</span></a></li>
+                <li><a href="#scitech"><span class="lang-en">Science & Tech</span><span class="lang-ta">அறிவியல் & தொழில்நுட்பம்</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Social Issues · Prohibition</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">TASMAC: 436 Shops Closed So Far; Prohibition Minister Reviews Progress</span>
+                        <span class="lang-ta">டாஸ்மாக்: இதுவரை 436 கடைகள் மூடல்; மதுவிலக்குத் துறை அமைச்சர் ஆய்வு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Following Chief Minister Joseph Vijay's order to close 717 TASMAC retail liquor outlets near educational institutions and places of worship, Prohibition and Excise Minister K. Vignesh announced that 436 shops have been successfully closed so far. The Minister also directed officials to strictly enforce the rule to close all operational shops by 10 PM and warned against selling liquor above the MRP.</p>
+                    <p class="lang-ta">கல்வி நிறுவனங்கள் மற்றும் வழிபாட்டுத் தலங்களுக்கு அருகிலுள்ள 717 டாஸ்மாக் சில்லறை மதுபானக் கடைகளை மூட முதலமைச்சர் ஜோசப் விஜய் உத்தரவிட்டதைத் தொடர்ந்து, இதுவரை 436 கடைகள் வெற்றிகரமாக மூடப்பட்டுள்ளதாக மதுவிலக்கு மற்றும் ஆயத்தீர்வைத் துறை அமைச்சர் க. விக்னேஷ் அறிவித்தார். செயல்படும் அனைத்து கடைகளையும் இரவு 10 மணிக்குள் மூட வேண்டும் என்ற விதியை கண்டிப்பாக அமல்படுத்தவும், அதிக விலைக்கு மது விற்பனை செய்வதை தடுக்கவும் அதிகாரிகளுக்கு அமைச்சர் உத்தரவிட்டார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Constitutional Article:</strong> Article 47 of the DPSP (Directive Principles of State Policy) directs the State to endeavor to bring about prohibition of intoxicating drinks and drugs.</span><span class="lang-ta"><strong>அரசியலமைப்புச் சரத்து:</strong> வழிகாட்டு நெறிமுறைகளின் (DPSP) சரத்து 47, போதை தரும் பானங்கள் மற்றும் மருந்துகளைத் தடை செய்ய அரசு முயற்சிக்க வேண்டும் என்று அறிவுறுத்துகிறது.</span></li>
+                            <li><span class="lang-en"><strong>Static GK Hook:</strong> TASMAC (Tamil Nadu State Marketing Corporation) was established in 1983 under the Companies Act to wholesale liquor, and took over retail sales completely in 2003.</span><span class="lang-ta"><strong>நிலையான ஜிகே:</strong> டாஸ்மாக் (தமிழ்நாடு மாநில வாணிபக் கழகம்) 1983 இல் நிறுவனங்கள் சட்டத்தின் கீழ் மதுபானங்களை மொத்தமாக விற்பனை செய்வதற்காக நிறுவப்பட்டது, பின்னர் 2003 இல் சில்லறை விற்பனையை முழுமையாக ஏற்றுக்கொண்டது.</span></li>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en">Ensure you differentiate between the total shops *ordered* to be closed (717) and the ones *currently* closed (436).</span><span class="lang-ta">மூட *உத்தரவிடப்பட்ட* மொத்த கடைகளுக்கும் (717), *தற்போது* மூடப்பட்டுள்ள (436) கடைகளுக்கும் இடையிலான வேறுபாட்டைக் கவனிக்கவும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Tamil Language · Culture</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">World Tamil Research Conference to be Held in Toronto in October</span>
+                        <span class="lang-ta">உலகத் தமிழ் ஆராய்ச்சி மாநாடு கனடாவின் டொராண்டோவில் அக்டோபரில் நடைபெறுகிறது</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The World Tamil Research Conference is scheduled to be held in Toronto, Canada, from October 15 to 18, 2026. The theme for this year's conference is "Neyyarivu Ulagil Semmozhit Thamizhum Thamizharum" (Classical Tamil and Tamils in the World of Artificial Intelligence). The conference will invite 60 researchers globally, and will focus on the intersection of Tamil history, AI, economics, and cultural development.</p>
+                    <p class="lang-ta">உலகத் தமிழ் ஆராய்ச்சி மாநாடு 2026 அக்டோபர் 15 முதல் 18 வரை கனடாவின் டொராண்டோவில் நடைபெற உள்ளது. "மெய்யறிவு உலகில் செம்மொழித் தமிழும் தமிழரும்" (செயற்கை நுண்ணறிவு உலகில் செம்மொழித் தமிழும் தமிழரும்) என்பது இந்த ஆண்டு மாநாட்டின் கருப்பொருளாகும். இந்த மாநாட்டில் உலகளவில் 60 ஆராய்ச்சியாளர்கள் அழைக்கப்படுவார்கள், மேலும் தமிழ் வரலாறு, செயற்கை நுண்ணறிவு, பொருளாதாரம் மற்றும் பண்பாட்டு மேம்பாடு ஆகியவற்றின் குறுக்குவெட்டில் கவனம் செலுத்தப்படும்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Context:</strong> Tamil language conferences are highly recurring PYQ topics in Unit-8.</span><span class="lang-ta"><strong>பின்னணி:</strong> தமிழ் மொழி மாநாடுகள் யூனிட்-8 இல் முந்தைய ஆண்டு வினாக்களில் (PYQ) அதிகம் கேட்கப்படும் தலைப்பாகும்.</span></li>
+                            <li><span class="badge bg-tip">TIP</span><span class="lang-en">Memory Hook for previous conferences: 1st - Kuala Lumpur (1966), 2nd - Chennai (1968), 3rd - Paris (1970).</span><span class="lang-ta">முந்தைய மாநாடுகளுக்கான நினைவுக்குறிப்பு: 1 வது - கோலாலம்பூர் (1966), 2 வது - சென்னை (1968), 3 வது - பாரிஸ் (1970).</span></li>
+                            <li><span class="badge bg-gem">GEM</span><span class="lang-en"><strong>Exam Angle:</strong> You may be asked to match the conference location with the year or to identify the theme of the 2026 Toronto conference ("Neyyarivu Ulagil...").</span><span class="lang-ta"><strong>தேர்வு கோணம்:</strong> மாநாடு நடைபெற்ற இடத்தை ஆண்டுடன் பொருத்துமாறு அல்லது 2026 டொராண்டோ மாநாட்டின் கருப்பொருளை அடையாளம் காணுமாறு கேள்விகள் கேட்கப்படலாம்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Inter-State Issues</span>
+                        <span class="badge bg-tip">MODERATE</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Mekedatu Dam: Left Parties and MDMK Announce Protests</span>
+                        <span class="lang-ta">மேகதாது அணை: இடதுசாரிகள் மற்றும் மதிமுக போராட்டங்களை அறிவித்தன</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Condemning the Karnataka government's persistent efforts to build a dam across the Cauvery river at Mekedatu, the Left parties (CPI, CPM) have announced a protest in Thanjavur on May 29. Similarly, MDMK general secretary Vaiko has announced a protest in Chennai on June 2. They urged the Central Government not to grant permission for the project, warning it would severely affect the delta districts and bypass the Cauvery Water Disputes Tribunal's final order.</p>
+                    <p class="lang-ta">காவேரி ஆற்றின் குறுக்கே மேகதாதுவில் அணை கட்டும் கர்நாடக அரசின் தொடர் முயற்சிகளை கண்டித்து, மே 29-ஆம் தேதி தஞ்சாவூரில் போராட்டம் நடத்த இடதுசாரிகள் (சிபிஐ, சிபிஎம்) அறிவித்துள்ளன. அதேபோல், மதிமுக பொதுச்செயலாளர் வைகோ ஜூன் 2-ஆம் தேதி சென்னையில் போராட்டம் நடத்தப் போவதாக அறிவித்துள்ளார். இத்திட்டத்திற்கு மத்திய அரசு அனுமதி அளிக்கக் கூடாது என அவர்கள் வலியுறுத்தியுள்ளனர்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Geographical Context:</strong> Mekedatu is a gorge where the river Cauvery merges with its tributary Arkavathi.</span><span class="lang-ta"><strong>புவியியல்:</strong> மேகதாது என்பது காவேரி ஆறு அதன் துணை நதியான அர்க்காவதியுடன் கலக்கும் ஒரு ஆழமான பள்ளத்தாக்கு ஆகும்.</span></li>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en">Article 262 deals with the adjudication of inter-state water disputes.</span><span class="lang-ta">சரத்து 262 மாநிலங்களுக்கு இடையிலான நதி நீர் பிரச்சனைகளை தீர்ப்பது பற்றிக் கூறுகிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">International Relations</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">US Secretary of State Marco Rubio Visits India; Focus on Strategic Ties</span>
+                        <span class="lang-ta">அமெரிக்க வெளியுறவுத்துறை அமைச்சர் மார்கோ ரூபியோ இந்தியா வருகை; உத்திசார் உறவுகளில் கவனம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">US Secretary of State Marco Rubio met with Prime Minister Narendra Modi in New Delhi to discuss deepening the India-US strategic partnership. Prior to this, Rubio made a historic visit to Kolkata—the first by a US Secretary of State in 14 years—where he visited the Mother Teresa Missionaries of Charity headquarters. Rubio is set to participate in the Quad Foreign Ministers' meeting alongside India's S. Jaishankar.</p>
+                    <p class="lang-ta">அமெரிக்க வெளியுறவுத்துறை அமைச்சர் மார்கோ ரூபியோ, புது தில்லியில் பிரதமர் நரேந்திர மோடியை சந்தித்து இந்தியா-அமெரிக்க உத்திசார் கூட்டுறவை ஆழப்படுத்துவது குறித்து விவாதித்தார். இதற்கு முன்னதாக, ரூபியோ கொல்கத்தாவிற்கு வரலாற்று சிறப்புமிக்க பயணத்தை மேற்கொண்டார்—14 ஆண்டுகளில் அமெரிக்க வெளியுறவுத்துறை அமைச்சர் ஒருவர் அங்கு செல்வது இதுவே முதல்முறை—அங்கு அவர் அன்னை தெரசா மிஷனரிஸ் ஆஃப் சாரிட்டி தலைமையகத்தைப் பார்வையிட்டார். ரூபியோ, இந்தியாவின் எஸ். ஜெய்சங்கருடன் இணைந்து குவாட் வெளியுறவுத்துறை அமைச்சர்கள் கூட்டத்தில் பங்கேற்க உள்ளார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Static Hook:</strong> The Quad (Quadrilateral Security Dialogue) includes India, USA, Japan, and Australia. Its primary objective is ensuring a free and open Indo-Pacific.</span><span class="lang-ta"><strong>நிலையான ஜிகே:</strong> குவாட் (நாற்கர பாதுகாப்பு உரையாடல்) அமைப்பில் இந்தியா, அமெரிக்கா, ஜப்பான் மற்றும் ஆஸ்திரேலியா ஆகியவை அடங்கும். சுதந்திரமான மற்றும் திறந்த இந்தோ-பசிபிக் பிராந்தியத்தை உறுதி செய்வதே இதன் முக்கிய நோக்கமாகும்.</span></li>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en">Do not confuse the US Secretary of State with the Defense Secretary. The Secretary of State handles foreign affairs (equivalent to India's External Affairs Minister).</span><span class="lang-ta">அமெரிக்க வெளியுறவுத்துறை அமைச்சரை பாதுகாப்புத்துறை அமைச்சருடன் குழப்பிக் கொள்ள வேண்டாம். வெளியுறவுத்துறை அமைச்சர் வெளியுறவு விவகாரங்களைக் கையாளுகிறார் (இந்தியாவின் வெளியுறவுத்துறை அமைச்சருக்கு இணையானவர்).</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Government Schemes</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Draft Rules Released for the New 'VP-GRAM' 125-Day Employment Scheme</span>
+                        <span class="lang-ta">புதிய 125 நாள் 'விபி-கிராம்' வேலைவாய்ப்பு திட்டத்திற்கான வரைவு விதிகள் வெளியீடு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Union Government has published the draft rules for the new "VP-GRAM" rural employment scheme, set to roll out on July 1. This scheme replaces the 100-day MGNREGA with a 125-day work guarantee. Under the new funding formula, the financial burden will be shared in a 60:40 ratio (Centre:State) for normal states, and 90:10 for North-Eastern, Himalayan states, and Jammu & Kashmir. The public is invited to provide feedback on these rules.</p>
+                    <p class="lang-ta">ஜூலை 1-ஆம் தேதி தொடங்கப்பட உள்ள புதிய "விபி-கிராம்" ஊரக வேலைவாய்ப்பு திட்டத்திற்கான வரைவு விதிகளை மத்திய அரசு வெளியிட்டுள்ளது. இத்திட்டம் 100 நாள் மகாத்மா காந்தி தேசிய ஊரக வேலை உறுதித் திட்டத்திற்குப் பதிலாக 125 நாள் வேலை உத்தரவாதத்தை வழங்குகிறது. புதிய நிதிப் பகிர்வு சூத்திரத்தின் கீழ், சாதாரண மாநிலங்களுக்கு 60:40 (மத்திய:மாநில) விகிதத்திலும், வடகிழக்கு, இமயமலை மாநிலங்கள் மற்றும் ஜம்மு காஷ்மீருக்கு 90:10 விகிதத்திலும் நிதிச்சுமை பகிரப்படும்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Constitutional Angle:</strong> Article 41 (Right to Work).</span><span class="lang-ta"><strong>அரசியலமைப்பு கோணம்:</strong> சரத்து 41 (வேலை செய்வதற்கான உரிமை).</span></li>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en">The funding pattern (60:40 vs 90:10) is a highly repeated TNPSC question format for centrally sponsored schemes.</span><span class="lang-ta">மத்திய அரசின் நிதியுதவி பெறும் திட்டங்களுக்கான நிதிப் பகிர்வு முறை (60:40 vs 90:10) டிஎன்பிஎஸ்சி தேர்வுகளில் அதிகம் கேட்கப்படும் கேள்வி வடிவமாகும்.</span></li>
+                            <li><span class="badge bg-gem">GEM</span><span class="lang-en"><strong>Exam Angle:</strong> Be prepared to identify the scheme that replaced MGNREGA and note the jump from 100 to 125 assured work days.</span><span class="lang-ta"><strong>தேர்வு கோணம்:</strong> MGNREGA-வுக்குப் பதிலாக வந்த திட்டத்தை அடையாளம் காணவும், 100 லிருந்து 125 உறுதி செய்யப்பட்ட வேலை நாட்களாக அதிகரித்துள்ளதைக் கவனிக்கவும் தயாராக இருங்கள்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+            </section>
+
+            <!-- ECONOMY & FINANCE -->
+            <section id="economy">
+                <h2>
+                    <span class="lang-en">Economy & Finance</span>
+                    <span class="lang-ta">பொருளாதாரம் & நிதி</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Macro Economy</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">India's Forex Reserves Decline by $2 Billion to $688.89 Billion</span>
+                        <span class="lang-ta">இந்தியாவின் அந்நிய செலாவணி கையிருப்பு $2 பில்லியன் குறைந்து $688.89 பில்லியனாக சரிவு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">India's foreign exchange (forex) reserves dropped by $8.09 billion (₹68,889 crore) to settle at $688.89 billion for the week ending May 15. The decline is attributed to global economic fluctuations stemming from Middle-Eastern conflicts. The RBI has been actively intervening in the market to stabilize the Rupee, which recently hit an all-time low against the US Dollar.</p>
+                    <p class="lang-ta">மே 15-ஆம் தேதியுடன் முடிவடைந்த வாரத்தில் இந்தியாவின் அந்நிய செலாவணி (forex) கையிருப்பு $8.09 பில்லியன் (ரூ. 68,889 கோடி) குறைந்து $688.89 பில்லியனாக சரிந்தது. மத்திய கிழக்கு மோதல்களால் ஏற்படும் உலகளாவிய பொருளாதார ஏற்ற இறக்கங்களே இந்த சரிவுக்குக் காரணமாகும். அமெரிக்க டாலருக்கு எதிரான ரூபாயின் மதிப்பு சமீபத்தில் வரலாறு காணாத சரிவைச் சந்தித்த நிலையில், ரூபாயை நிலைநிறுத்த ரிசர்வ் வங்கி சந்தையில் தீவிரமாகத் தலையிட்டு வருகிறது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Components of Forex:</strong> Foreign Currency Assets (FCA), Gold reserves, Special Drawing Rights (SDRs), and Reserve Position in the IMF. FCA forms the largest component.</span><span class="lang-ta"><strong>அந்நிய செலாவணியின் கூறுகள்:</strong> அந்நிய நாணய சொத்துக்கள் (FCA), தங்க இருப்புக்கள், சிறப்பு வரைதல் உரிமைகள் (SDRs) மற்றும் சர்வதேச நாணய நிதியத்தில் (IMF) இருப்பு நிலை. FCA மிகப்பெரிய கூறாக உள்ளது.</span></li>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en">Do not confuse Forex reserves total with the RBI's annual dividend transfer (which was ₹2.87 Lakh Crore).</span><span class="lang-ta">அந்நிய செலாவணி கையிருப்பு மொத்தத்தை, ரிசர்வ் வங்கியின் ஆண்டு ஈவுத்தொகை மாற்றத்துடன் (இது ₹2.87 லட்சம் கோடியாக இருந்தது) குழப்பிக் கொள்ள வேண்டாம்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Industrial Development</span>
+                        <span class="badge bg-tip">MODERATE</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Centre Plans 50 New Industrial Parks in 40 Days</span>
+                        <span class="lang-ta">40 நாட்களில் 50 புதிய தொழில் பூங்காக்களை அமைக்க மத்திய அரசு திட்டம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Union Minister Piyush Goyal announced that the Central Government has asked states to submit proposals within 40 days to set up 50 new industrial parks. This is the first phase of a larger scheme approved to create 100 world-class industrial parks under the PM Gati Shakti plan. An allocation of ₹33,600 crore has been made for the first 50 parks, offering ₹1 crore per acre for infrastructure development.</p>
+                    <p class="lang-ta">50 புதிய தொழில் பூங்காக்களை அமைப்பதற்காக 40 நாட்களுக்குள் கருத்துருக்களை சமர்ப்பிக்குமாறு மத்திய அரசு மாநிலங்களைக் கேட்டுக்கொண்டுள்ளதாக மத்திய அமைச்சர் பியூஷ் கோயல் அறிவித்தார். பிரதமர் கதி சக்தி திட்டத்தின் கீழ் 100 உலகத்தரம் வாய்ந்த தொழில் பூங்காக்களை உருவாக்குவதற்கு அங்கீகரிக்கப்பட்ட பெரிய திட்டத்தின் முதல் கட்டம் இதுவாகும். முதல் 50 பூங்காக்களுக்கு ₹33,600 கோடி ஒதுக்கீடு செய்யப்பட்டுள்ளது, உள்கட்டமைப்பு மேம்பாட்டிற்கு ஏக்கருக்கு ₹1 கோடி வழங்கப்படுகிறது.</p>
+                </div>
+            </section>
+            
+            <!-- SCIENCE & TECH -->
+            <section id="scitech">
+                <h2>
+                    <span class="lang-en">Science & Tech</span>
+                    <span class="lang-ta">அறிவியல் & தொழில்நுட்பம்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Defence · Manufacturing</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Defence Minister Inaugurates Ammunition Factory in Ahilyanagar</span>
+                        <span class="lang-ta">அகில்யாநகரில் வெடிமருந்து தொழிற்சாலையை பாதுகாப்புத்துறை அமைச்சர் திறந்து வைத்தார்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Defence Minister Rajnath Singh inaugurated a new ammunition and bullet manufacturing facility in Shirpur (Ahilyanagar district, Maharashtra). Emphasizing indigenization, he stated that no force can stop India from becoming the world's largest arms exporter in the next 25 to 30 years. The private sector's contribution in defence manufacturing is targeted to increase from the current 25-30% to 50%.</p>
+                    <p class="lang-ta">பாதுகாப்புத்துறை அமைச்சர் ராஜ்நாத் சிங், ஷிர்பூரில் (அகில்யாநகர் மாவட்டம், மகாராஷ்டிரா) புதிய வெடிமருந்து மற்றும் தோட்டா உற்பத்தி மையத்தை திறந்து வைத்தார். உள்நாட்டு உற்பத்தியை வலியுறுத்திய அவர், அடுத்த 25 முதல் 30 ஆண்டுகளில் உலகின் மிகப்பெரிய ஆயுத ஏற்றுமதியாளராக இந்தியா உருவெடுப்பதை எந்த சக்தியாலும் தடுக்க முடியாது என்று கூறினார். பாதுகாப்பு உற்பத்தியில் தனியார் துறையின் பங்களிப்பு தற்போதைய 25-30% இலிருந்து 50% ஆக அதிகரிக்க இலக்கு நிர்ணயிக்கப்பட்டுள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Static GK Hook:</strong> Ahmednagar district in Maharashtra was officially renamed as Ahilyanagar. Ahilyabai Holkar was the hereditary noble queen of the Maratha Empire.</span><span class="lang-ta"><strong>நிலையான ஜிகே:</strong> மகாராஷ்டிராவில் உள்ள அகமதுநகர் மாவட்டம் அதிகாரப்பூர்வமாக அகில்யாநகர் என பெயர் மாற்றப்பட்டது. அகில்யாபாய் ஹோல்கர் மராட்டியப் பேரரசியாவார்.</span></li>
+                            <li><span class="badge bg-gem">GEM</span><span class="lang-en"><strong>Exam Angle:</strong> India's defence exports have reached ₹38,000 crore currently. Self-reliance (Atmanirbhar Bharat) in defence is a core essay topic in Group 1 Mains.</span><span class="lang-ta"><strong>தேர்வு கோணம்:</strong> இந்தியாவின் பாதுகாப்பு ஏற்றுமதி தற்போது ₹38,000 கோடியை எட்டியுள்ளது. பாதுகாப்பில் தற்சார்பு (ஆத்மநிர்பார் பாரத்) என்பது குரூப் 1 முதன்மைத் தேர்வில் ஒரு முக்கிய கட்டுரைத் தலைப்பாகும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+            </section>
+
+            <!-- SPORTS -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports</span>
+                    <span class="lang-ta">விளையாட்டு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Cricket · Football</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Lens Wins French Cup; IPL Centurion Shreyas Iyer</span>
+                        <span class="lang-ta">பிரெஞ்சு கோப்பையை வென்றது லென்ஸ்; ஐபிஎல்-இல் ஸ்ரேயாஸ் ஐயர் சதம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In European football, Lens FC secured the French Cup title for the first time by defeating Nice FC 3-1 in the final held in Paris. In the IPL, Punjab Kings defeated Lucknow Super Giants to keep their playoff hopes alive, bolstered by an explosive unbeaten century (101*) from their captain Shreyas Iyer in just 51 balls.</p>
+                    <p class="lang-ta">ஐரோப்பிய கால்பந்தில், பாரிஸில் நடைபெற்ற இறுதிப் போட்டியில் நைஸ் எஃப்சி அணியை 3-1 என்ற கோல் கணக்கில் வீழ்த்தி லென்ஸ் எஃப்சி அணி முதல் முறையாக பிரெஞ்சு கோப்பை பட்டத்தை வென்றது. ஐபிஎல்-இல், லக்னோ சூப்பர் ஜெயன்ட்ஸ் அணியை வீழ்த்தி பஞ்சாப் கிங்ஸ் அணி பிளே ஆஃப் வாய்ப்பை தக்க வைத்துக் கொண்டுள்ளது, பஞ்சாப் அணியின் கேப்டன் ஸ்ரேயாஸ் ஐயர் வெறும் 51 பந்துகளில் ஆட்டமிழக்காமல் 101* ரன்கள் குவித்து சதமடித்தார்.</p>
+                </div>
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Which Article of the Directive Principles of State Policy directs the state to endeavour to bring about prohibition of intoxicating drinks?</span>
+                        <span class="lang-ta">கேள்வி: அரசு வழிகாட்டு நெறிமுறைகளின் எந்தச் சரத்து, போதை தரும் பானங்களைத் தடை செய்ய அரசு முயற்சிக்க வேண்டும் என்று அறிவுறுத்துகிறது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Article 47</span><br><br>
+                                <strong>Context:</strong> Prohibition Minister K. Vignesh stated that 436 out of 717 TASMAC shops near educational/religious places have been closed following the CM's orders.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">சரத்து 47</span><br><br>
+                                <strong>பின்னணி:</strong> கல்வி/வழிபாட்டுத் தலங்களுக்கு அருகிலுள்ள 717 டாஸ்மாக் கடைகளில் 436 கடைகள் முதலமைச்சரின் உத்தரவின் பேரில் மூடப்பட்டுள்ளதாக மதுவிலக்குத்துறை அமைச்சர் க. விக்னேஷ் தெரிவித்தார்.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Where was the first World Tamil Conference held?</span>
+                        <span class="lang-ta">கேள்வி: முதல் உலகத் தமிழ் மாநாடு எங்கு நடைபெற்றது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Kuala Lumpur, Malaysia (1966)</span><br><br>
+                                <strong>Context:</strong> The upcoming World Tamil Research Conference is scheduled to be held in Toronto, Canada in October 2026.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">கோலாலம்பூர், மலேசியா (1966)</span><br><br>
+                                <strong>பின்னணி:</strong> வரவிருக்கும் உலகத் தமிழ் ஆராய்ச்சி மாநாடு கனடாவின் டொராண்டோவில் அக்டோபர் 2026 இல் நடைபெற உள்ளது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">TASMAC Shops Closure</span><span class="lang-ta">டாஸ்மாக் கடைகள் மூடல்</span></td>
+                                <td><span class="lang-en">State/Prohibition</span><span class="lang-ta">மாநிலம்/மதுவிலக்கு</span></td>
+                                <td><span class="lang-en">436 shops closed. Rest to operate till 10 PM.</span><span class="lang-ta">436 கடைகள் மூடல். இரவு 10 மணி வரை மட்டுமே செயல்படும்.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">World Tamil Research Conference</span><span class="lang-ta">உலகத் தமிழ் ஆராய்ச்சி மாநாடு</span></td>
+                                <td><span class="lang-en">State/Culture</span><span class="lang-ta">மாநிலம்/கலாச்சாரம்</span></td>
+                                <td><span class="lang-en">Toronto, Canada (Oct 2026). Theme: Tamil & AI.</span><span class="lang-ta">டொராண்டோ, கனடா (அக். 2026). கருப்பொருள்: தமிழ் & AI.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">VP-GRAM Rules Released</span><span class="lang-ta">விபி-கிராம் விதிகள் வெளியீடு</span></td>
+                                <td><span class="lang-en">National/Scheme</span><span class="lang-ta">தேசியம்/திட்டம்</span></td>
+                                <td><span class="lang-en">Draft rules for 125-day work guarantee scheme.</span><span class="lang-ta">125 நாள் வேலை உத்தரவாத திட்ட வரைவு விதிகள்.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">Marco Rubio India Visit</span><span class="lang-ta">மார்கோ ரூபியோ வருகை</span></td>
+                                <td><span class="lang-en">International Rel</span><span class="lang-ta">சர்வதேச உறவுகள்</span></td>
+                                <td><span class="lang-en">US Secretary of State visits Kolkata & Delhi.</span><span class="lang-ta">அமெரிக்க வெளியுறவுத்துறை அமைச்சர் வருகை.</span></td>
+                                <td><span class="badge bg-trap">MED</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">Forex Reserves Drop</span><span class="lang-ta">அந்நிய செலாவணி சரிவு</span></td>
+                                <td><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></td>
+                                <td><span class="lang-en">Decreased by $2B to $688.89 Billion.</span><span class="lang-ta">$2 பில்லியன் குறைந்து $688.89 பில்லியனாக சரிவு.</span></td>
+                                <td><span class="badge bg-tip">MED</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani 24-05-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி 24-05-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source images contained Tamil text detailing state and national news for 24 May 2026. 
+State news prominently featured a tragic incident in Coimbatore involving a 10-year-old girl, with the CM assuring swift justice and the formation of the 'Singappen' task force from May 27. The Prohibition Minister reported that 436 out of 717 TASMAC shops targeted for closure have been shut down, and remaining shops must close by 10 PM. Left parties and MDMK plan protests over the Mekedatu dam. It was announced that the World Tamil Research Conference will happen in Toronto, Canada focusing on Tamil and AI.
+Nationally, draft rules for the new VP-GRAM 125-day rural employment scheme replacing MGNREGA were released. US Secretary of State Marco Rubio made a historic visit to Kolkata before meeting PM Modi in Delhi. A new ammunition factory was inaugurated by Rajnath Singh in Ahilyanagar.
+Economically, India's forex reserves fell to $688.89 billion. Globally, a coal mine blast in China killed 90 people.]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூலப் படங்கள் 24 மே 2026 க்கான மாநில மற்றும் தேசிய செய்திகளைக் கொண்டிருந்தன.
+மாநில செய்திகளில் கோவையில் 10 வயது சிறுமி வன்கொடுமைக்கு ஆளான துயர சம்பவம் இடம்பெற்றது. குற்றவாளிகளுக்கு கடும் தண்டனை வழங்கப்படும் என முதல்வர் உறுதியளித்தார்; மே 27 முதல் சிங்கப்பெண் அதிரடிப்படை உருவாக்கப்படும். மூடப்பட வேண்டிய 717 டாஸ்மாக் கடைகளில் 436 கடைகள் மூடப்பட்டுள்ளதாக மதுவிலக்குத்துறை அமைச்சர் தெரிவித்தார். மேகதாது அணைப் பிரச்சனை தொடர்பாக இடதுசாரிகளும் மதிமுகவும் போராட்டங்களை அறிவித்துள்ளன. உலகத் தமிழ் ஆராய்ச்சி மாநாடு கனடாவின் டொராண்டோவில் நடைபெறும் என அறிவிக்கப்பட்டுள்ளது.
+தேசிய அளவில், MGNREGA-க்கு மாற்றாக புதிய விபி-கிராம் 125 நாள் ஊரக வேலைவாய்ப்பு திட்டத்திற்கான வரைவு விதிகள் வெளியிடப்பட்டன. அமெரிக்க வெளியுறவுத்துறை அமைச்சர் மார்கோ ரூபியோ கொல்கத்தாவிற்கு வருகை புரிந்தார். அகில்யாநகரில் புதிய வெடிமருந்து தொழிற்சாலையை ராஜ்நாத் சிங் திறந்து வைத்தார்.
+பொருளாதார ரீதியாக, இந்தியாவின் அந்நிய செலாவணி கையிருப்பு $688.89 பில்லியனாக சரிந்தது. சீனாவில் நிலக்கரி சுரங்க வெடிவிபத்தில் 90 பேர் உயிரிழந்தனர்.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 24 May 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+    </script>
+</body>
+</html>

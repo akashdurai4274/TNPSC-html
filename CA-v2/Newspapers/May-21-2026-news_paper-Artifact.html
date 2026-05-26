@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body class="en-mode">
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">21 May 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">21 மே 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <!-- Sidebar TOC -->
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Finance</span><span class="lang-ta">பொருளாதாரம் & நிதி</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Education · State</span>
+                        <span class="badge bg-critical">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">TN 10th Standard Public Exam Results Declared: 94.31% Pass</span>
+                        <span class="lang-ta">தமிழக 10-ஆம் வகுப்பு பொதுத்தேர்வு முடிவுகள் வெளியீடு: 94.31% தேர்ச்சி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Tamil Nadu School Education Department announced the 10th standard public exam results for 2026. The state recorded an overall pass percentage of 94.31%, which is an increase of 0.51% from the previous year (2025: 93.80%). Girls outperformed boys significantly (Girls: 96.47%, Boys: 92.15%). Pudukkottai district secured the first position state-wide with a 97.57% pass rate, followed closely by Sivaganga (97.54%). A total of 1,931 Government schools achieved a 100% pass rate. Chennai district stood at the 29th position with 92.34%.</p>
+                    <p class="lang-ta">பள்ளிக் கல்வித்துறை 2026-ஆம் ஆண்டுக்கான 10-ஆம் வகுப்பு பொதுத்தேர்வு முடிவுகளை வெளியிட்டது. ஒட்டுமொத்த தேர்ச்சி 94.31% ஆக பதிவாகியுள்ளது, இது முந்தைய ஆண்டை (2025: 93.80%) விட 0.51% அதிகமாகும். மாணவர்களை விட மாணவிகள் அதிக அளவில் தேர்ச்சி பெற்றுள்ளனர் (மாணவிகள்: 96.47%, மாணவர்கள்: 92.15%). புதுக்கோட்டை மாவட்டம் 97.57% தேர்ச்சியுடன் மாநில அளவில் முதலிடம் பிடித்துள்ளது, சிவகங்கை (97.54%) இரண்டாமிடம் பிடித்துள்ளது. மொத்தம் 1,931 அரசுப் பள்ளிகள் 100% தேர்ச்சி பெற்றுள்ளன. சென்னை மாவட்டம் 92.34% தேர்ச்சியுடன் 29-வது இடத்தில் உள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Nodal Ministry:</strong> Department of School Education, Govt of Tamil Nadu. Minister: Raj Mohan.</span><span class="lang-ta"><strong>அமைச்சகம்:</strong> பள்ளிக் கல்வித்துறை, தமிழ்நாடு அரசு. அமைச்சர்: ராஜ் மோகன்.</span></li>
+                            <li><span class="lang-en"><strong>Static GK Hook:</strong> HDI and Education metrics are crucial in Unit 9 (Development Administration in TN). Pass percentages and top districts are frequent matching questions.</span><span class="lang-ta"><strong>நிலையான ஜிகே:</strong> யூனிட் 9 (தமிழ்நாட்டில் வளர்ச்சி நிர்வாகம்) இல் மனிதவள மேம்பாட்டு குறியீடு மற்றும் கல்வி அளவீடுகள் முக்கியம். சிறந்த மாவட்டங்கள் பொருத்துக கேள்விகளாக வரலாம்.</span></li>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en">Do not confuse the top district for 10th (Pudukkottai) with typical top districts like Kanyakumari or Tiruppur which topped in previous years.</span><span class="lang-ta">10-ம் வகுப்பு சிறந்த மாவட்டத்தை (புதுக்கோட்டை) முந்தைய ஆண்டுகளில் முதலிடம் பிடித்த கன்னியாகுமரி அல்லது திருப்பூர் போன்ற மாவட்டங்களுடன் குழப்பிக் கொள்ள வேண்டாம்.</span></li>
+                            <li><span class="badge bg-gem">GEM</span><span class="lang-en"><strong>Exam Angle:</strong> Arrange the top 3 districts in descending order of pass percentage: 1. Pudukkottai, 2. Sivaganga, 3. Thanjavur.</span><span class="lang-ta"><strong>தேர்வு கோணம்:</strong> தேர்ச்சி விகிதத்தின் அடிப்படையில் முதல் 3 மாவட்டங்களை இறங்கு வரிசையில் வரிசைப்படுத்துக: 1. புதுக்கோட்டை, 2. சிவகங்கை, 3. தஞ்சாவூர்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · Governance</span>
+                        <span class="badge bg-critical">MUST KNOW</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Historic Cabinet Expansion: Coalition Government Formed in TN</span>
+                        <span class="lang-ta">வரலாற்றுச் சிறப்புமிக்க அமைச்சரவை விரிவாக்கம்: தமிழகத்தில் கூட்டணி அரசு அமைப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Chief Minister Vijay (TVK) expanded his cabinet by inducting 21 TVK MLAs and 2 Congress MLAs (Rajeshkumar and P. Viswanathan), bringing the total cabinet strength to 33. This marks the first time in Tamil Nadu's political history that a coalition government has been formed where allied parties share cabinet berths. Notably, after 59 years, Congress ministers are part of the TN cabinet. P. Viswanathan's induction is highlighted as a milestone for social justice, as he won from a general constituency (Melur) despite belonging to the SC community.</p>
+                    <p class="lang-ta">முதலமைச்சர் விஜய் (தவெக) தனது அமைச்சரவையை 21 தவெக எம்எல்ஏக்கள் மற்றும் 2 காங்கிரஸ் எம்எல்ஏக்கள் (ராஜேஷ்குமார் மற்றும் பெ. விஸ்வநாதன்) ஆகியோரைச் சேர்த்து விரிவுபடுத்தினார், இதனால் அமைச்சரவையின் மொத்த எண்ணிக்கை 33 ஆக உயர்ந்துள்ளது. தமிழக அரசியல் வரலாற்றில் கூட்டணி கட்சிகள் அமைச்சரவையை பகிர்ந்துகொள்ளும் கூட்டணி அரசு அமைவது இதுவே முதல்முறையாகும். குறிப்பிடத்தக்க வகையில், 59 ஆண்டுகளுக்குப் பிறகு, காங்கிரஸ் அமைச்சர்கள் தமிழக அமைச்சரவையில் அங்கம் வகிக்கின்றனர். பெ. விஸ்வநாதன் பட்டியலின சமூகத்தைச் சேர்ந்தவராக இருந்தாலும் பொதுத் தொகுதியில் (மேலூர்) வென்றதால், அவரது பதவியேற்பு சமூக நீதிக்கான மைல்கல்லாகக் கருதப்படுகிறது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Constitutional Article:</strong> Article 164 (1A) - The total number of Ministers, including the Chief Minister, in the Council of Ministers in a State shall not exceed 15% of the total number of members of the Legislative Assembly.</span><span class="lang-ta"><strong>அரசியலமைப்புச் சரத்து:</strong> சரத்து 164 (1A) - ஒரு மாநிலத்தில் முதலமைச்சர் உட்பட அமைச்சரவையின் மொத்த அமைச்சர்களின் எண்ணிக்கை, சட்டமன்றத்தின் மொத்த உறுப்பினர்களின் எண்ணிக்கையில் 15% ஐ தாண்டக்கூடாது.</span></li>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en">91st Constitutional Amendment Act, 2003 established this 15% ceiling. For TN (234 seats), the maximum cabinet size is 35.</span><span class="lang-ta">91-வது அரசியலமைப்பு திருத்தச் சட்டம், 2003 இந்த 15% உச்சவரம்பை நிர்ணயித்தது. தமிழகத்திற்கு (234 இடங்கள்), அதிகபட்ச அமைச்சரவை அளவு 35 ஆகும்.</span></li>
+                            <li><span class="badge bg-gem">GEM</span><span class="lang-en"><strong>Exam Angle:</strong> Questions on Delimitation Commission and reserved vs. general constituencies are likely given the historic win of an SC candidate in a general constituency.</span><span class="lang-ta"><strong>தேர்வு கோணம்:</strong> பொதுத் தொகுதியில் பட்டியலின வேட்பாளர் வரலாற்று வெற்றி பெற்றதைக் கருத்தில் கொண்டு தொகுதி மறுசீரமைப்பு ஆணையம் மற்றும் தனி/பொதுத் தொகுதிகள் குறித்த கேள்விகள் வர வாய்ப்புள்ளது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Social Issues · State</span>
+                        <span class="badge bg-tip">MODERATE</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Closure of 717 TASMAC Shops Uphold by High Court</span>
+                        <span class="lang-ta">717 டாஸ்மாக் கடைகளை மூடும் அரசின் முடிவை உயர்நீதிமன்றம் பாராட்டு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Madras High Court has dismissed petitions filed by building owners challenging the Tamil Nadu government's decision to close 717 TASMAC liquor shops located within 500 meters of educational institutions and places of worship. Justice G.R. Swaminathan praised the state government's decision as a "good move" and stated that the TASMAC administration must abide by the Chief Minister's policy decision.</p>
+                    <p class="lang-ta">கல்வி நிறுவனங்கள் மற்றும் வழிபாட்டுத் தலங்களில் இருந்து 500 மீட்டருக்குள் அமைந்துள்ள 717 டாஸ்மாக் மதுபானக் கடைகளை மூடும் தமிழக அரசின் முடிவை எதிர்த்து கட்டட உரிமையாளர்கள் தொடர்ந்த வழக்குகளை சென்னை உயர்நீதிமன்றம் தள்ளுபடி செய்தது. நீதிபதி ஜி.ஆர். சுவாமிநாதன், மாநில அரசின் முடிவை ஒரு "நல்ல முடிவு" என்று பாராட்டியதோடு, முதலமைச்சரின் கொள்கை முடிவுக்கு டாஸ்மாக் நிர்வாகம் கட்டுப்பட வேண்டும் என்றும் கூறினார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Constitutional Link:</strong> Article 47 (Directive Principles of State Policy) - Duty of the State to raise the level of nutrition and the standard of living and to improve public health, including the prohibition of intoxicating drinks and drugs.</span><span class="lang-ta"><strong>அரசியலமைப்பு தொடர்பு:</strong> சரத்து 47 (அரசு வழிகாட்டு நெறிமுறைகள்) - போதை தரும் பானங்கள் மற்றும் மருந்துகளைத் தடை செய்தல் உள்ளிட்ட பொது சுகாதாரத்தை மேம்படுத்துவது மற்றும் மக்களின் வாழ்க்கைத் தரத்தை உயர்த்துவது அரசின் கடமையாகும்.</span></li>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en">Article 47 is a Directive Principle, meaning it is non-justiciable in court, but guides state policy.</span><span class="lang-ta">சரத்து 47 என்பது அரசு வழிகாட்டு நெறிமுறை, அதாவது இது நீதிமன்றத்தால் நிலைநாட்ட முடியாதது, ஆனால் அரசின் கொள்கைகளை வழிநடத்துகிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Women Empowerment</span>
+                        <span class="badge bg-gem">HIGH PROBABILITY</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">K. Bhavaneeswari Appointed First IG of 'Singappen' Special Task Force</span>
+                        <span class="lang-ta">'சிங்கப்பெண்' சிறப்பு அதிரடிப்படையின் முதல் ஐஜியாக கே. பவானீஸ்வரி நியமனம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Fulfilling an election manifesto promise within 10 days of taking office, the Tamil Nadu government has formed the 'Singappen Special Task Force' dedicated to women's safety. IPS officer K. Bhavaneeswari has been appointed as the first Inspector General (IG) of this newly formed special unit.</p>
+                    <p class="lang-ta">பதவியேற்ற 10 நாட்களுக்குள் தேர்தல் அறிக்கை வாக்குறுதியை நிறைவேற்றும் வகையில், பெண்களின் பாதுகாப்பிற்காக 'சிங்கப்பெண் சிறப்பு அதிரடிப்படையை' தமிழக அரசு உருவாக்கியுள்ளது. புதிதாக உருவாக்கப்பட்ட இந்த சிறப்புப் பிரிவின் முதல் காவல்துறைத் தலைவராக (ஐஜி) ஐபிஎஸ் அதிகாரி கே. பவானீஸ்வரி நியமிக்கப்பட்டுள்ளார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Nodal Department:</strong> Home Department, Tamil Nadu Police.</span><span class="lang-ta"><strong>துறை:</strong> உள்துறை, தமிழ்நாடு காவல்துறை.</span></li>
+                            <li><span class="lang-en"><strong>Context:</strong> Relates to Unit 9 (Social Justice and Social Harmony) and women empowerment schemes like Kavalan SOS app, Nirbhaya Fund.</span><span class="lang-ta"><strong>பின்னணி:</strong> யூனிட் 9 (சமூக நீதி மற்றும் சமூக நல்லிணக்கம்) மற்றும் காவளன் எஸ்ஓஎஸ் செயலி, நிர்பயா நிதி போன்ற பெண்கள் மேம்பாட்டுத் திட்டங்களுடன் தொடர்புடையது.</span></li>
+                            <li><span class="badge bg-gem">GEM</span><span class="lang-en">Direct question format: "Who was appointed as the first IG of the Singappen Special Task Force?" Answer: K. Bhavaneeswari.</span><span class="lang-ta">நேரடி கேள்வி: "சிங்கப்பெண் சிறப்பு அதிரடிப்படையின் முதல் ஐஜியாக நியமிக்கப்பட்டவர் யார்?" விடை: கே. பவானீஸ்வரி.</span></li>
+                        </ul>
+                    </details>
+                </div>
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Governance · Parliament</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">"One Nation, One Election" JPC Review; Expected to Save ₹7 Lakh Crore</span>
+                        <span class="lang-ta">"ஒரே நாடு, ஒரே தேர்தல்" நாடாளுமன்ற கூட்டுக்குழு ஆய்வு; ₹7 லட்சம் கோடி மிச்சமாகும் என தகவல்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">A Joint Parliamentary Committee (JPC) headed by P.P. Chaudhary is currently reviewing the two constitution amendment bills related to the "One Nation, One Election" initiative, based on the recommendations of the Ram Nath Kovind committee. Implementing simultaneous elections for the Lok Sabha and State Assemblies is projected to save ₹7 lakh crore and boost the national GDP by 1.6%.</p>
+                    <p class="lang-ta">ராம் நாத் கோவிந்த் குழுவின் பரிந்துரைகளின் அடிப்படையில், "ஒரே நாடு, ஒரே தேர்தல்" தொடர்பான இரண்டு அரசியலமைப்பு திருத்த மசோதாக்களை பி.பி. சவுத்ரி தலைமையிலான நாடாளுமன்றக் கூட்டுக்குழு (JPC) தற்போது ஆய்வு செய்து வருகிறது. மக்களவை மற்றும் மாநில சட்டமன்றங்களுக்கு ஒரே நேரத்தில் தேர்தல் நடத்துவதன் மூலம் ₹7 லட்சம் கோடி மிச்சமாகும் என்றும், தேசிய மொத்த உள்நாட்டு உற்பத்தி 1.6% அதிகரிக்கும் என்றும் கணிக்கப்பட்டுள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Constitutional Context:</strong> Requires amendments to Article 83 (Duration of Houses of Parliament), Art 85 (Dissolution of Lok Sabha), Art 172 (Duration of State Legislatures), Art 174 (Dissolution of State Assemblies), and Art 356 (President's Rule).</span><span class="lang-ta"><strong>அரசியலமைப்பு பின்னணி:</strong> சரத்து 83 (நாடாளுமன்ற அவைகளின் பதவிக்காலம்), சரத்து 85 (மக்களவை கலைப்பு), சரத்து 172 (மாநில சட்டமன்றங்களின் பதவிக்காலம்), சரத்து 174 (மாநில சட்டமன்றங்கள் கலைப்பு) மற்றும் சரத்து 356 (குடியரசுத் தலைவர் ஆட்சி) ஆகியவற்றில் திருத்தங்கள் தேவை.</span></li>
+                            <li><span class="badge bg-tip">TIP</span><span class="lang-en">Remember the committee heads: Main report = Ram Nath Kovind. JPC review = P.P. Chaudhary.</span><span class="lang-ta">குழுத் தலைவர்களை நினைவில் கொள்க: முக்கிய அறிக்கை = ராம் நாத் கோவிந்த். JPC ஆய்வு = பி.பி. சவுத்ரி.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Welfare Schemes · Economy</span>
+                        <span class="badge bg-critical">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">125-Day Rural Employment Scheme (VP-GRAM) Replaces MGNREGA from July 1</span>
+                        <span class="lang-ta">ஜூலை 1 முதல் மகாத்மா காந்தி வேலைவாய்ப்பு திட்டத்திற்கு பதிலாக 125 நாள் வேலை திட்டம் (VP-GRAM)</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Central Government has announced the rollout of the new 125-day rural employment scheme (VP-GRAM) replacing the 100-day MGNREGA scheme starting July 1. 25 states have already allocated funds. Under the new act passed last December, the fund-sharing ratio is 60:40 (Centre:State) for normal states, and 90:10 for North-Eastern and Himalayan states. The scheme introduces smart job cards with facial recognition for transparency, with an estimated central wage budget of ₹95,692 crore.</p>
+                    <p class="lang-ta">100 நாள் மகாத்மா காந்தி தேசிய ஊரக வேலை உறுதித் திட்டத்திற்கு பதிலாக புதிய 125 நாள் ஊரக வேலைவாய்ப்பு திட்டத்தை (VP-GRAM) ஜூலை 1 முதல் செயல்படுத்துவதாக மத்திய அரசு அறிவித்துள்ளது. 25 மாநிலங்கள் ஏற்கனவே நிதியை ஒதுக்கீடு செய்துள்ளன. கடந்த டிசம்பரில் நிறைவேற்றப்பட்ட புதிய சட்டத்தின் கீழ், நிதிப் பகிர்வு விகிதம் சாதாரண மாநிலங்களுக்கு 60:40 (மத்தியம்:மாநிலம்) ஆகவும், வடகிழக்கு மற்றும் இமயமலை மாநிலங்களுக்கு 90:10 ஆகவும் உள்ளது. வெளிப்படைத்தன்மைக்காக முக அங்கீகாரத்துடன் கூடிய ஸ்மார்ட் வேலை அட்டைகளை இத்திட்டம் அறிமுகப்படுத்துகிறது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Constitutional Hook:</strong> DPSP Article 41 (Right to work, to education and to public assistance in certain cases) and Article 43 (Living wage, etc., for workers).</span><span class="lang-ta"><strong>அரசியலமைப்பு தொடர்பு:</strong> DPSP சரத்து 41 (வேலை செய்வதற்கான உரிமை) மற்றும் சரத்து 43 (தொழிலாளர்களுக்கான வாழ்வாதார ஊதியம்).</span></li>
+                            <li><span class="lang-en"><strong>Previous Scheme:</strong> MGNREGA was enacted in 2005. The shift from 100 to 125 days is a significant policy shift.</span><span class="lang-ta"><strong>முந்தைய திட்டம்:</strong> MGNREGA 2005 இல் இயற்றப்பட்டது. 100 இலிருந்து 125 நாட்களாக மாற்றப்பட்டது ஒரு குறிப்பிடத்தக்க கொள்கை மாற்றமாகும்.</span></li>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en">Pay attention to the funding ratio: It is NOT 100% centrally funded. 60:40 for general states, 90:10 for special category states.</span><span class="lang-ta">நிதி பகிர்வு விகிதத்தில் கவனம் செலுத்தவும்: இது 100% மத்திய அரசால் நிதியளிக்கப்படுவதில்லை. பொது மாநிலங்களுக்கு 60:40, சிறப்பு வகை மாநிலங்களுக்கு 90:10.</span></li>
+                        </ul>
+                    </details>
+                </div>
+            </section>
+
+            <!-- INTERNATIONAL NEWS -->
+            <section id="international">
+                <h2>
+                    <span class="lang-en">International News</span>
+                    <span class="lang-ta">சர்வதேச செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">International Relations</span>
+                        <span class="badge bg-tip">MODERATE</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">PM Modi visits Italy; Strengthens Bilateral Ties</span>
+                        <span class="lang-ta">பிரதமர் மோடியின் இத்தாலி பயணம்; இருதரப்பு உறவுகள் வலுப்பெற்றன</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Concluding his 5-nation tour, Prime Minister Narendra Modi visited Rome, Italy, where he held bilateral talks with Italian PM Giorgia Meloni. The leaders reaffirmed the "India-Italy Joint Action Plan 2025-2029" to multi-fold their bilateral relations. Currently, over 400 Italian companies operate in India, contributing to a bilateral trade nearing 20 billion Euros. The two nations also discussed defense cooperation, AI, and countering terrorism financing.</p>
+                    <p class="lang-ta">தனது 5-நாடுகளின் சுற்றுப்பயணத்தின் நிறைவாக, பிரதமர் நரேந்திர மோடி இத்தாலியின் ரோம் நகருக்குச் சென்று இத்தாலியப் பிரதமர் ஜார்ஜியா மெலோனியுடன் இருதரப்புப் பேச்சுவார்த்தை நடத்தினார். இருதரப்பு உறவுகளை பன்மடங்கு பெருக்குவதற்காக "இந்தியா-இத்தாலி கூட்டு செயல் திட்டம் 2025-2029" ஐ தலைவர்கள் உறுதிப்படுத்தினர். தற்போது, 400-க்கும் மேற்பட்ட இத்தாலிய நிறுவனங்கள் இந்தியாவில் செயல்பட்டு வருகின்றன, இருதரப்பு வர்த்தகம் 20 பில்லியன் யூரோக்களை நெருங்குகிறது. பாதுகாப்பு ஒத்துழைப்பு, செயற்கை நுண்ணறிவு குறித்தும் விவாதிக்கப்பட்டது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Static Hook:</strong> Italy's capital is Rome. Currency: Euro. Current PM: Giorgia Meloni.</span><span class="lang-ta"><strong>நிலையான ஜிகே:</strong> இத்தாலியின் தலைநகரம் ரோம். நாணயம்: யூரோ. தற்போதைய பிரதமர்: ஜார்ஜியா மெலோனி.</span></li>
+                            <li><span class="badge bg-gem">GEM</span><span class="lang-en">In recent years, Italy has been a key European partner for India, especially regarding the India-Middle East-Europe Economic Corridor (IMEC).</span><span class="lang-ta">சமீபத்திய ஆண்டுகளில், குறிப்பாக இந்தியா-மத்திய கிழக்கு-ஐரோப்பா பொருளாதார வழித்தடம் (IMEC) தொடர்பாக இத்தாலி இந்தியாவின் முக்கிய ஐரோப்பிய பங்காளியாக உள்ளது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+            </section>
+
+            <!-- ECONOMY & FINANCE -->
+            <section id="economy">
+                <h2>
+                    <span class="lang-en">Economy & Finance</span>
+                    <span class="lang-ta">பொருளாதாரம் & நிதி</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Global Economy</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">UN Forecasts India's GDP Growth at 6.4% for 2026</span>
+                        <span class="lang-ta">2026-ஆம் ஆண்டில் இந்தியாவின் பொருளாதார வளர்ச்சி 6.4% ஆக இருக்கும் என ஐ.நா. கணிப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The United Nations has revised India's economic growth forecast for the current year (2026) to 6.4%, slightly down from its earlier projection of 6.6%. The downgrade is attributed to the global economic shock and supply chain disruptions caused by the US-Iran conflict in the Middle East. Despite the slight dip, India remains one of the fastest-growing major economies, far outpacing the global growth average, which is projected at a mere 2.5%.</p>
+                    <p class="lang-ta">நடப்பு ஆண்டிற்கான (2026) இந்தியாவின் பொருளாதார வளர்ச்சி குறித்த கணிப்பை ஐக்கிய நாடுகள் சபை 6.4% ஆக திருத்தியுள்ளது, இது முந்தைய கணிப்பான 6.6% இலிருந்து சற்றே குறைக்கப்பட்டுள்ளது. மத்திய கிழக்கில் அமெரிக்க-ஈரான் மோதலால் ஏற்பட்ட உலகளாவிய பொருளாதார அதிர்ச்சி மற்றும் விநியோக சங்கிலி சீர்குலைவுகளே இந்த குறைப்புக்கு காரணமாகும். உலகளாவிய வளர்ச்சி சராசரியான 2.5% ஐ விட இந்தியா மிக வேகமாக வளரும் முக்கிய பொருளாதாரங்களில் ஒன்றாகத் தொடர்கிறது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Trend:</strong> Previous year (2025) growth was 7.5%. The projected global growth is 2.5%.</span><span class="lang-ta"><strong>போக்கு:</strong> முந்தைய ஆண்டு (2025) வளர்ச்சி 7.5% ஆக இருந்தது. திட்டமிடப்பட்ட உலகளாவிய வளர்ச்சி 2.5% ஆகும்.</span></li>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en">TNPSC often asks for specific GDP forecasts by different bodies (UN, IMF, World Bank, RBI). Ensure you note this is the UN DESA forecast.</span><span class="lang-ta">டிஎன்பிஎஸ்சி அடிக்கடி பல்வேறு அமைப்புகளின் (UN, IMF, World Bank, RBI) ஜிடிபி கணிப்புகளை கேட்கிறது. இது ஐ.நா (UN) கணிப்பு என்பதை கவனத்தில் கொள்ளவும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Macro Economy</span>
+                        <span class="badge bg-tip">MODERATE</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Core Sectors Record 1.7% Growth in April</span>
+                        <span class="lang-ta">ஏப்ரல் மாதத்தில் 8 முக்கியத் துறைகளின் உற்பத்தி 1.7% வளர்ச்சி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">India's eight core infrastructure sectors grew by 1.7% in April, showing signs of recovery after slipping to 1.2% in March. The growth was primarily supported by the cement (9.4%) and steel (6.2%) sectors, which offset heavy contractions in coal (-8.7%), crude oil, natural gas, refinery products, and fertilizers (-8.6%). The conflict in the Middle East has heavily impacted energy supply chains.</p>
+                    <p class="lang-ta">மார்ச் மாதத்தில் 1.2% ஆக சரிந்த பிறகு, இந்தியாவின் எட்டு முக்கிய உள்கட்டமைப்புத் துறைகள் ஏப்ரல் மாதத்தில் 1.7% வளர்ச்சியைப் பதிவு செய்துள்ளன. சிமெண்ட் (9.4%) மற்றும் எஃகு (6.2%) துறைகளின் வளர்ச்சியே இதற்கு முக்கிய காரணமாக அமைந்தது, இது நிலக்கரி (-8.7%), கச்சா எண்ணெய், இயற்கை எரிவாயு மற்றும் உரங்கள் (-8.6%) ஆகியவற்றின் வீழ்ச்சியை ஈடுசெய்தது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-gem">GEM</span><span class="lang-en"><strong>Static GK:</strong> The 8 core sectors (Refinery Products, Electricity, Steel, Coal, Crude Oil, Natural Gas, Cement, Fertilizers) comprise 40.27% of the weight of items included in the Index of Industrial Production (IIP). Refinery products have the highest weight.</span><span class="lang-ta"><strong>நிலையான ஜிகே:</strong> 8 முக்கிய துறைகள் (சுத்திகரிப்பு தயாரிப்புகள், மின்சாரம், எஃகு, நிலக்கரி, கச்சா எண்ணெய், இயற்கை எரிவாயு, சிமெண்ட், உரங்கள்) தொழில்துறை உற்பத்தி குறியீட்டின் (IIP) எடையில் 40.27% ஐ கொண்டுள்ளன. சுத்திகரிப்பு தயாரிப்புகள் அதிக எடையைக் கொண்டுள்ளன.</span></li>
+                        </ul>
+                    </details>
+                </div>
+            </section>
+
+            <!-- SPORTS -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports</span>
+                    <span class="lang-ta">விளையாட்டு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Cricket</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Bangladesh sweeps Pakistan 2-0 in Test Series; Arsenal wins Premier League</span>
+                        <span class="lang-ta">பாகிஸ்தானுக்கு எதிரான டெஸ்ட் தொடரை 2-0 என முழுமையாகக் கைப்பற்றியது வங்கதேசம்; ஆர்சனல் சாம்பியன்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Bangladesh defeated Pakistan by 6 wickets in the 2nd Test at Rawalpindi to secure a historic 2-0 series whitewash. Mushfiqur Rahim was named Player of the Series. With this win, Bangladesh climbed to the 5th spot in the World Test Championship (WTC) points table. In football, Arsenal won the English Premier League title for the current season, lifting the trophy after a 22-year drought (last won in 2004), edging out Manchester City.</p>
+                    <p class="lang-ta">ராவல்பிண்டியில் நடந்த 2-வது டெஸ்டில் பாகிஸ்தானை 6 விக்கெட் வித்தியாசத்தில் வீழ்த்தி வங்கதேசம் 2-0 என வரலாற்றுச் சிறப்புமிக்க தொடரை வென்றது. முஷ்பிகுர் ரஹிம் தொடர் நாயகனாக தேர்வு செய்யப்பட்டார். உலக டெஸ்ட் சாம்பியன்ஷிப் (WTC) புள்ளிப்பட்டியலில் வங்கதேசம் 5-வது இடத்திற்கு முன்னேறியது. கால்பந்தில், ஆர்சனல் அணி மான்செஸ்டர் சிட்டியை பின்னுக்குத் தள்ளி 22 ஆண்டுகளுக்குப் பிறகு (கடைசியாக 2004 இல் வென்றது) இங்கிலீஷ் பிரீமியர் லீக் பட்டத்தை வென்றுள்ளது.</p>
+                </div>
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: According to the 91st Constitutional Amendment Act, the total number of Ministers in a State Council of Ministers shall not exceed what percentage of the total strength of the Legislative Assembly?</span>
+                        <span class="lang-ta">கேள்வி: 91-வது அரசியலமைப்பு திருத்தச் சட்டத்தின்படி, மாநில அமைச்சரவையில் உள்ள மொத்த அமைச்சர்களின் எண்ணிக்கை சட்டமன்றத்தின் மொத்த பலத்தில் எவ்வளவு சதவீதத்தை தாண்டக்கூடாது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">15%</span><br><br>
+                                <strong>Context:</strong> Seen in the current affairs context as CM Vijay expanded the TN cabinet to 33. Tamil Nadu has 234 assembly seats, so the constitutional maximum limit is 35 (15% of 234). Article 164 (1A) mandates this.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">15%</span><br><br>
+                                <strong>பின்னணி:</strong> முதலமைச்சர் விஜய் தமிழக அமைச்சரவையை 33 ஆக விரிவுபடுத்திய நடப்பு நிகழ்வுகள் சூழலில் காணப்படுகிறது. தமிழகத்தில் 234 சட்டமன்ற இடங்கள் உள்ளன, எனவே அரசியலமைப்பு உச்சவரம்பு 35 (234 இல் 15%) ஆகும். சரத்து 164 (1A) இதை கட்டாயமாக்குகிறது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Under which Article of the Directive Principles of State Policy (DPSP) is the State directed to endeavour to bring about prohibition of intoxicating drinks?</span>
+                        <span class="lang-ta">கேள்வி: அரசு வழிகாட்டு நெறிமுறைகளின் (DPSP) எந்தச் சரத்தின் கீழ், போதை தரும் பானங்களைத் தடை செய்ய அரசு முயற்சிக்க வேண்டும் என்று அறிவுறுத்தப்பட்டுள்ளது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Article 47</span><br><br>
+                                <strong>Context:</strong> Madras High Court upheld the TN Govt's decision to close 717 TASMAC shops near educational institutions.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">சரத்து 47</span><br><br>
+                                <strong>பின்னணி:</strong> கல்வி நிறுவனங்கள் அருகே 717 டாஸ்மாக் கடைகளை மூடும் தமிழக அரசின் முடிவை சென்னை உயர்நீதிமன்றம் உறுதி செய்தது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">TN 10th Public Exam Results</span><span class="lang-ta">10ஆம் வகுப்பு பொதுத்தேர்வு முடிவுகள்</span></td>
+                                <td><span class="lang-en">State/Education</span><span class="lang-ta">மாநிலம்/கல்வி</span></td>
+                                <td><span class="lang-en">94.31% overall. Pudukkottai (97.57%) topped.</span><span class="lang-ta">மொத்தம் 94.31%. புதுக்கோட்டை முதலிடம்.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">TN Cabinet Expansion</span><span class="lang-ta">தமிழக அமைச்சரவை விரிவாக்கம்</span></td>
+                                <td><span class="lang-en">State/Polity</span><span class="lang-ta">மாநிலம்/அரசியல்</span></td>
+                                <td><span class="lang-en">Strength reaches 33. First coalition govt.</span><span class="lang-ta">எண்ணிக்கை 33. முதல் கூட்டணி அரசு.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">Singappen Task Force</span><span class="lang-ta">சிங்கப்பெண் அதிரடிப்படை</span></td>
+                                <td><span class="lang-en">State/Women</span><span class="lang-ta">மாநிலம்/பெண்கள்</span></td>
+                                <td><span class="lang-en">K. Bhavaneeswari appointed first IG.</span><span class="lang-ta">முதல் ஐஜியாக பவானீஸ்வரி நியமனம்.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">VP-GRAM Scheme</span><span class="lang-ta">விபி-கிராம் திட்டம்</span></td>
+                                <td><span class="lang-en">National/Welfare</span><span class="lang-ta">தேசியம்/நலத்திட்டம்</span></td>
+                                <td><span class="lang-en">125-day work replaces MGNREGA.</span><span class="lang-ta">100 நாளுக்கு பதில் 125 நாள் வேலை.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">UN GDP Forecast</span><span class="lang-ta">ஐ.நா ஜிடிபி கணிப்பு</span></td>
+                                <td><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></td>
+                                <td><span class="lang-en">India 2026 forecast cut to 6.4%.</span><span class="lang-ta">2026 இந்தியா கணிப்பு 6.4% ஆக குறைப்பு.</span></td>
+                                <td><span class="badge bg-trap">MED</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani 21-05-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி 21-05-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source images contained highly encoded Tamil font glyphs requiring contextual translation. The text primarily details state politics, the 10th standard public exam results, cabinet reshuffling under CM Vijay's administration bringing in TVK and Congress MLAs, closure of TASMAC shops by order of the state and affirmed by HC, and the creation of a women's protection task force named Singappen headed by IG K. Bhavaneeswari. 
+It also covers national topics like the introduction of the 125-day VP-GRAM rural employment scheme replacing MGNREGA, simultaneous elections committee reviews, and international topics like PM Modi's meeting with Italian PM Giorgia Meloni. 
+Global economic parameters showed UN projections for India's GDP dropping to 6.4%, and domestic core sector growth ticking up to 1.7% in April despite declines in coal and crude oil.]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூலப் படங்களின் உரை மாநில அரசியல், 10-ஆம் வகுப்பு பொதுத்தேர்வு முடிவுகள், முதல்வர் விஜய் தலைமையிலான அரசில் தவெக மற்றும் காங்கிரஸ் எம்எல்ஏக்களை உள்ளடக்கிய அமைச்சரவை மாற்றம், டாஸ்மாக் கடைகளை மூடுதல் மற்றும் ஐஜி கே. பவானீஸ்வரி தலைமையிலான சிங்கப்பெண் பெண்கள் பாதுகாப்பு சிறப்பு அதிரடிப்படை உருவாக்கம் ஆகியவற்றை விவரிக்கிறது. 
+மகாத்மா காந்தி ஊரக வேலைவாய்ப்பு திட்டத்திற்கு பதிலாக 125 நாள் விபி-கிராம் ஊரக வேலைவாய்ப்பு திட்டம் அறிமுகப்படுத்தப்படுவது, ஒரே நாடு ஒரே தேர்தல் குழு ஆய்வுகள், இத்தாலிய பிரதமர் ஜார்ஜியா மெலோனியுடன் பிரதமர் மோடியின் சந்திப்பு போன்ற தேசிய மற்றும் சர்வதேச தலைப்புகளையும் இது உள்ளடக்கியுள்ளது.
+இந்தியாவின் ஜிடிபி 6.4% ஆக குறையும் என ஐநா கணித்துள்ளது. நிலக்கரி மற்றும் கச்சா எண்ணெய் சரிவு கண்டபோதிலும், ஏப்ரல் மாதத்தில் இந்தியாவின் 8 முக்கிய உள்கட்டமைப்புத் துறைகள் 1.7% வளர்ச்சியைப் பதிவு செய்துள்ளன.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 21 May 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TNPSC Group 1 – Evolution of Society in South India | 150 Q Practice Test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700&family=IBM+Plex+Mono:wght@400;600&family=Andika:wght@400;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-primary:#0d0f14;--bg-surface:#13161d;--bg-card:#1a1d26;--bg-input:#0f1118;
+  --gold:#f5c842;--gold-dim:#a07d1a;--gold-bg:#1f1e14;
+  --text-primary:#e8eaf0;--text-secondary:#888d9e;--text-muted:#4a5060;
+  --green:#22c55e;--green-bg:#0a1f12;--red:#ef4444;--red-bg:#1f0a0a;
+  --blue:#3b82f6;--purple:#a855f7;--orange:#f97316;
+  --border-base:#252830;--border-gold:#f5c842;
+  --sidenav-w:280px;--header-h:58px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg-primary);color:var(--text-primary);font-family:'Andika',sans-serif;overflow:hidden}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-thumb{background:#2a2d36;border-radius:4px}
+::-webkit-scrollbar-track{background:transparent}
+
+/* ── HEADER ── */
+#header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:var(--bg-primary);border-bottom:1px solid var(--border-base);display:flex;align-items:center;padding:0 16px;gap:12px;z-index:200}
+#header .brand{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
+#header .breadcrumb{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#header .progress-wrap{flex:1;display:flex;align-items:center;gap:8px;min-width:0}
+#header .prog-bar-track{flex:1;height:4px;background:var(--border-base);border-radius:2px;overflow:hidden}
+#header .prog-bar-fill{height:100%;background:var(--gold);border-radius:2px;transition:width .3s ease}
+#header .prog-label{font-family:'Orbitron',monospace;font-size:11px;color:var(--gold);white-space:nowrap}
+#header .timer-display{font-family:'Orbitron',monospace;font-size:18px;font-weight:700;color:var(--gold);white-space:nowrap;min-width:80px;text-align:right}
+#menu-toggle{display:none;background:none;border:none;color:var(--gold);font-size:20px;cursor:pointer;padding:4px 8px}
+
+/* ── LAYOUT ── */
+#layout{display:flex;height:100vh;padding-top:var(--header-h)}
+
+/* ── SIDENAV ── */
+#sidenav{width:var(--sidenav-w);min-width:var(--sidenav-w);height:100%;background:var(--bg-surface);border-right:2px solid var(--gold);overflow-y:auto;display:flex;flex-direction:column;flex-shrink:0}
+.sn-section{padding:14px 16px;border-bottom:1px solid #1e2028}
+.sn-title{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.sn-badge{display:inline-block;background:var(--gold);color:#0d0f14;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;text-transform:uppercase;margin-bottom:6px}
+.sn-topic{font-family:'Syne',sans-serif;font-size:12px;color:var(--text-primary);margin-bottom:2px}
+.sn-meta{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-secondary);line-height:1.8}
+
+/* toggles */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.toggle-label{font-family:'Andika',sans-serif;font-size:12px;color:var(--text-secondary)}
+.toggle-sub{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-muted)}
+.switch{position:relative;width:36px;height:20px;flex-shrink:0}
+.switch input{opacity:0;width:0;height:0}
+.slider{position:absolute;inset:0;background:#2a2d36;border-radius:20px;cursor:pointer;transition:.2s}
+.slider:before{content:'';position:absolute;width:14px;height:14px;left:3px;bottom:3px;background:#888;border-radius:50%;transition:.2s}
+input:checked+.slider{background:var(--gold)}
+input:checked+.slider:before{transform:translateX(16px);background:#0d0f14}
+
+/* live score */
+#score-display{font-family:'Orbitron',monospace;font-size:22px;font-weight:700;color:var(--gold);margin-bottom:6px}
+.score-row{display:flex;gap:12px;flex-wrap:wrap}
+.score-stat{font-family:'IBM Plex Mono',monospace;font-size:10px}
+.score-stat.g{color:var(--green)}.score-stat.r{color:var(--red)}.score-stat.m{color:var(--text-muted)}
+
+/* palette */
+#palette{display:grid;grid-template-columns:repeat(10,24px);gap:4px;padding:14px 16px}
+.pb{width:24px;height:24px;border-radius:4px;border:1px solid rgba(245,200,66,.3);background:#1a1d26;color:#888;font-family:'Orbitron',monospace;font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s ease;flex-shrink:0}
+.pb:hover{border-color:var(--gold);color:var(--gold)}
+.pb.visited{background:#2a2610;border-color:rgba(245,200,66,.6);color:#c8a82a}
+.pb.answered{background:var(--gold);border-color:var(--gold);color:#0d0f14}
+.pb.correct{background:#15391f;border-color:var(--green);color:var(--green)}
+.pb.wrong{background:#3a1212;border-color:var(--red);color:var(--red)}
+.pb.flagged{background:#2a1f10;border-color:var(--orange);color:var(--orange)}
+.pb.active{box-shadow:0 0 0 2px var(--gold)}
+
+/* legend */
+.legend-row{display:flex;gap:10px;flex-wrap:wrap;padding:10px 16px;border-bottom:1px solid #1e2028}
+.leg-item{display:flex;align-items:center;gap:4px;font-family:'Andika',sans-serif;font-size:10px;color:var(--text-secondary)}
+.leg-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+
+#submit-btn{margin:14px 16px;padding:12px;background:var(--gold);color:#0d0f14;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;border:none;border-radius:6px;cursor:pointer;width:calc(100% - 32px);transition:.2s}
+#submit-btn:hover{background:#e0b530}
+
+/* ── MAIN PANEL ── */
+#main{flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;align-items:center}
+.q-card{background:var(--bg-card);border:1px solid var(--border-base);border-radius:8px;width:100%;max-width:760px;overflow:hidden;margin-bottom:24px}
+.q-header{display:flex;align-items:center;gap:8px;padding:14px 20px;border-bottom:1px solid var(--border-base);flex-wrap:wrap}
+.q-num{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--gold)}
+.q-type-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;padding:2px 8px;border-radius:3px;text-transform:uppercase;border:1px solid}
+.tag-one_liner{color:#93c5fd;border-color:#3b82f6;background:#0f1520}
+.tag-assertion_reason{color:#d8b4fe;border-color:#a855f7;background:#190f25}
+.tag-statement_based{color:#fde68a;border-color:#f5c842;background:#1f1e14}
+.tag-match_following{color:#86efac;border-color:#22c55e;background:#0f1f14}
+.tag-chronological{color:#fca5a5;border-color:#ef4444;background:#1f1215}
+.tag-fill_blank{color:#fed7aa;border-color:#f97316;background:#1f1208}
+.tag-diagram_table{color:#a5f3fc;border-color:#06b6d4;background:#0a1f25}
+.tag-two_statement{color:#e9d5ff;border-color:#8b5cf6;background:#1a1030}
+.diff-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;padding:2px 8px;border-radius:3px;text-transform:uppercase}
+.diff-easy{background:#15391f;color:var(--green)}
+.diff-medium{background:#1f1e14;color:var(--gold)}
+.diff-hard{background:#3a1212;color:var(--red)}
+.q-stem{padding:18px 20px;font-family:'Andika',sans-serif;font-size:15px;line-height:1.75;color:var(--text-primary);white-space:pre-line}
+.options-wrap{padding:0 20px 16px}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:11px 14px;margin-bottom:8px;border:1px solid var(--border-base);border-radius:6px;background:var(--bg-input);cursor:pointer;transition:all .2s ease;font-family:'Andika',sans-serif;font-size:14px;color:var(--text-primary)}
+.opt:hover{border-color:var(--gold);background:var(--gold-bg)}
+.opt.selected{border:2px solid var(--gold);background:var(--gold-bg)}
+.opt.correct-ans{border:2px solid var(--green);background:var(--green-bg);color:var(--green)}
+.opt.wrong-ans{border:2px solid var(--red);background:var(--red-bg);color:var(--red)}
+.opt-radio{width:14px;height:14px;border-radius:50%;border:2px solid var(--text-muted);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:.2s}
+.opt.selected .opt-radio{border-color:var(--gold)}
+.opt.selected .opt-radio::after{content:'';width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.opt.correct-ans .opt-radio{border-color:var(--green)}
+.opt.correct-ans .opt-radio::after{content:'✓';font-size:10px;color:var(--green);width:auto;height:auto;border-radius:0;background:none}
+.opt.wrong-ans .opt-radio{border-color:var(--red)}
+.opt.wrong-ans .opt-radio::after{content:'✗';font-size:10px;color:var(--red);width:auto;height:auto;border-radius:0;background:none}
+.q-actions{display:flex;gap:10px;padding:0 20px 16px}
+.btn-flag{padding:7px 14px;border:1px solid var(--orange);background:transparent;color:var(--orange);border-radius:4px;font-family:'IBM Plex Mono',monospace;font-size:11px;cursor:pointer;transition:.2s}
+.btn-flag:hover{background:#2a1f10}
+.btn-flag.flagged{background:#2a1f10}
+.btn-clear{padding:7px 14px;border:1px solid var(--border-base);background:transparent;color:var(--text-secondary);border-radius:4px;font-family:'IBM Plex Mono',monospace;font-size:11px;cursor:pointer;transition:.2s}
+.btn-clear:hover{border-color:var(--red);color:var(--red)}
+
+/* explanation */
+.explain-zone{margin:0 20px 16px;border-radius:6px;overflow:hidden;max-height:0;opacity:0;transition:max-height .35s ease,opacity .3s ease}
+.explain-zone.show{max-height:1000px;opacity:1}
+.explain-header{padding:10px 14px;font-family:'Orbitron',monospace;font-size:13px;font-weight:700}
+.explain-header.corr{background:#0d2618;color:var(--green)}
+.explain-header.wrong{background:#200d0d;color:var(--red)}
+.callout{padding:10px 14px;border-left:3px solid;margin-top:1px}
+.callout .tag{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;text-transform:uppercase;margin-bottom:4px}
+.callout .body{font-family:'Andika',sans-serif;font-size:13px;line-height:1.7}
+.callout.critical{background:#1f1215;border-color:#ef4444}.callout.critical .tag{color:#ef4444}.callout.critical .body{color:#fca5a5}
+.callout.trap{background:#1f1c10;border-color:#f5c842}.callout.trap .tag{color:#f5c842}.callout.trap .body{color:#fde68a}
+.callout.tip{background:#0f1f14;border-color:#22c55e}.callout.tip .tag{color:#22c55e}.callout.tip .body{color:#86efac}
+.callout.pyq{background:#0f1520;border-color:#3b82f6}.callout.pyq .tag{color:#3b82f6}.callout.pyq .body{color:#93c5fd}
+.callout.gem{background:#190f25;border-color:#a855f7}.callout.gem .tag{color:#a855f7}.callout.gem .body{color:#d8b4fe}
+.btn-next{display:none;margin:0 20px 16px;padding:10px 20px;background:var(--gold);color:#0d0f14;border:none;border-radius:4px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer}
+.btn-next.show{display:block}
+
+/* nav bar */
+.q-nav{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-top:1px solid var(--border-base)}
+.nav-btn{padding:8px 18px;border:1px solid var(--border-base);background:transparent;color:var(--text-secondary);border-radius:4px;font-family:'IBM Plex Mono',monospace;font-size:12px;cursor:pointer;transition:.2s}
+.nav-btn:hover:not(:disabled){border-color:var(--gold);color:var(--gold)}
+.nav-btn:disabled{opacity:.3;cursor:not-allowed}
+.q-nav-label{font-family:'Orbitron',monospace;font-size:12px;color:var(--text-secondary)}
+
+/* ── RESULTS ── */
+#results{display:none;width:100%;max-width:900px}
+.res-hero{background:var(--bg-card);border:1px solid var(--border-base);border-radius:8px;padding:28px;margin-bottom:20px;text-align:center}
+.res-score{font-family:'Orbitron',monospace;font-size:48px;font-weight:700;color:var(--gold);margin-bottom:8px}
+.perf-badge{display:inline-block;padding:4px 16px;border-radius:20px;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;text-transform:uppercase;margin-bottom:16px}
+.metrics-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.metric-card{background:var(--bg-surface);border:1px solid var(--border-base);border-radius:6px;padding:12px 18px;text-align:center;min-width:90px}
+.metric-val{font-family:'Orbitron',monospace;font-size:20px;font-weight:700;color:var(--gold)}
+.metric-lbl{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-muted);text-transform:uppercase;margin-top:2px}
+
+.res-section{background:var(--bg-card);border:1px solid var(--border-base);border-radius:8px;padding:20px;margin-bottom:16px}
+.res-section-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border-base)}
+
+.diff-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.diff-bar-label{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text-secondary);width:60px}
+.diff-bar-track{flex:1;height:14px;background:var(--bg-input);border-radius:3px;overflow:hidden}
+.diff-bar-fill{height:100%;background:var(--gold);border-radius:3px;transition:width .5s ease}
+.diff-bar-pct{font-family:'Orbitron',monospace;font-size:11px;color:var(--gold);width:40px;text-align:right}
+
+.type-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.type-card{background:var(--bg-surface);border:1px solid var(--border-base);border-radius:6px;padding:10px 12px}
+.type-card-name{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;text-transform:uppercase;margin-bottom:6px}
+.type-card-bar{height:4px;background:var(--bg-input);border-radius:2px;margin-bottom:6px;overflow:hidden}
+.type-card-fill{height:100%;border-radius:2px}
+.type-card-stats{font-family:'Orbitron',monospace;font-size:12px}
+
+.heatmap-table{width:100%;border-collapse:collapse;font-family:'Andika',sans-serif;font-size:12px}
+.heatmap-table th{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;text-transform:uppercase;color:var(--text-muted);padding:6px 10px;text-align:left;border-bottom:1px solid var(--border-base)}
+.heatmap-table td{padding:7px 10px;border-bottom:1px solid #1a1d26}
+.heat-cell{border-radius:3px;padding:2px 8px;font-family:'Orbitron',monospace;font-size:11px;font-weight:700;text-align:center}
+.heat-g{background:#15391f;color:var(--green)}
+.heat-a{background:#1f1e14;color:var(--gold)}
+.heat-o{background:#2a1f10;color:var(--orange)}
+.heat-r{background:#3a1212;color:var(--red)}
+
+.neg-box{background:var(--bg-surface);border:1px solid var(--border-base);border-radius:6px;padding:14px 18px}
+.neg-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #1e2028;font-family:'IBM Plex Mono',monospace;font-size:12px}
+.neg-row:last-child{border-bottom:none;font-weight:600;color:var(--gold)}
+
+.review-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.rf{padding:5px 12px;border:1px solid var(--border-base);background:transparent;color:var(--text-secondary);border-radius:3px;font-family:'IBM Plex Mono',monospace;font-size:10px;cursor:pointer;transition:.2s}
+.rf:hover,.rf.active{border-color:var(--gold);color:var(--gold);background:var(--gold-bg)}
+
+.review-table{width:100%;border-collapse:collapse;font-size:12px}
+.review-table th{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;text-transform:uppercase;color:var(--text-muted);padding:6px 8px;text-align:left;border-bottom:1px solid var(--border-base)}
+.review-table td{padding:7px 8px;border-bottom:1px solid #1a1d26;font-family:'Andika',sans-serif;vertical-align:middle;cursor:pointer}
+.review-table tr:hover td{background:#1a1d26}
+.status-corr{color:var(--green);font-weight:700}
+.status-wrong{color:var(--red);font-weight:700}
+.status-skip{color:var(--text-muted)}
+.expand-row td{background:#0f1118;padding:14px;font-family:'Andika',sans-serif;font-size:12px;line-height:1.6}
+
+.feedback-box{background:var(--bg-surface);border:1px solid var(--border-base);border-radius:6px;padding:16px;font-family:'Andika',sans-serif;font-size:13px;line-height:1.7}
+.focus-badge{display:inline-block;background:#3a1212;color:var(--red);font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;padding:2px 6px;border-radius:2px;text-transform:uppercase;margin-left:6px;vertical-align:middle}
+
+.action-btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
+.action-btn{padding:10px 20px;border:1px solid var(--border-base);background:transparent;color:var(--text-secondary);border-radius:4px;font-family:'IBM Plex Mono',monospace;font-size:11px;cursor:pointer;transition:.2s}
+.action-btn:hover{border-color:var(--gold);color:var(--gold)}
+.action-btn.primary{background:var(--gold);color:#0d0f14;border-color:var(--gold);font-weight:600}
+.action-btn.primary:hover{background:#e0b530}
+
+/* ── MODAL ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;align-items:center;justify-content:center}
+.modal-overlay.show{display:flex}
+.modal-card{background:#13161d;border:1px solid var(--gold);border-radius:12px;padding:2rem;max-width:480px;width:90%}
+.modal-title{font-family:'Syne',sans-serif;font-size:18px;color:var(--text-primary);margin-bottom:12px}
+.modal-body{font-family:'Andika',sans-serif;font-size:14px;color:var(--text-secondary);line-height:1.7;margin-bottom:20px}
+.modal-body strong{color:var(--gold)}
+.modal-btns{display:flex;gap:10px;justify-content:flex-end}
+.mbtn-dark{padding:9px 20px;border:1px solid var(--border-base);background:transparent;color:var(--text-secondary);border-radius:4px;font-family:'IBM Plex Mono',monospace;font-size:12px;cursor:pointer}
+.mbtn-gold{padding:9px 20px;background:var(--gold);color:#0d0f14;border:none;border-radius:4px;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;cursor:pointer}
+
+/* ── MOBILE ── */
+@media(max-width:768px){
+  #sidenav{position:fixed;top:var(--header-h);left:0;height:calc(100vh - var(--header-h));transform:translateX(-100%);transition:transform .25s ease;z-index:150}
+  #sidenav.open{transform:translateX(0)}
+  #main{padding:16px 12px}
+  #menu-toggle{display:block}
+  #mob-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:140}
+  #mob-overlay.show{display:block}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div id="header">
+  <button id="menu-toggle" onclick="toggleSidenav()">☰</button>
+  <div class="brand">TNPSC G1</div>
+  <div class="breadcrumb">Indian History › Evolution of Society in South India</div>
+  <div class="progress-wrap">
+    <div class="prog-bar-track"><div class="prog-bar-fill" id="prog-fill" style="width:0%"></div></div>
+    <div class="prog-label" id="prog-label">0 / 150</div>
+  </div>
+  <div class="timer-display" id="timer-display">02:30:00</div>
+</div>
+
+<div id="mob-overlay" onclick="toggleSidenav()"></div>
+
+<!-- LAYOUT -->
+<div id="layout">
+
+<!-- SIDENAV -->
+<div id="sidenav">
+  <div class="sn-section">
+    <div class="sn-badge">Indian History</div>
+    <div class="sn-topic">Evolution of Society in South India</div>
+    <div class="sn-meta">
+      Standard: Class 11<br>
+      Total Questions: 150<br>
+      Total Marks: 150<br>
+      Negative Marking: −0.83 / wrong<br>
+      Time Allotted: 150 min
+    </div>
+  </div>
+
+  <div class="sn-section">
+    <div class="sn-title">Controls</div>
+    <div class="toggle-row">
+      <div><div class="toggle-label">⏱ Timer</div><div class="toggle-sub" id="timer-sub">150:00 countdown</div></div>
+      <label class="switch"><input type="checkbox" id="toggle-timer" checked onchange="toggleTimer()"><span class="slider"></span></label>
+    </div>
+    <div class="toggle-row">
+      <div><div class="toggle-label">⚡ Instant Eval</div><div class="toggle-sub" id="eval-sub">Explain after each answer</div></div>
+      <label class="switch"><input type="checkbox" id="toggle-eval" checked onchange="toggleEval()"><span class="slider"></span></label>
+    </div>
+  </div>
+
+  <div class="sn-section">
+    <div class="sn-title">Score</div>
+    <div id="score-display">0 / 150</div>
+    <div class="score-row">
+      <div class="score-stat g" id="s-corr">✓ 0</div>
+      <div class="score-stat r" id="s-wrong">✗ 0</div>
+      <div class="score-stat m" id="s-unatt">— 150</div>
+    </div>
+    <div class="score-row" style="margin-top:4px">
+      <div class="score-stat m" id="s-acc">Accuracy: 0%</div>
+    </div>
+  </div>
+
+  <div style="padding:10px 16px 4px;border-bottom:1px solid #1e2028">
+    <div class="sn-title">Question Palette</div>
+  </div>
+  <div id="palette"></div>
+
+  <div class="legend-row">
+    <div class="leg-item"><div class="leg-dot" style="background:var(--gold)"></div>Answered</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--green)"></div>Correct</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--red)"></div>Wrong</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--orange)"></div>Flagged</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#1a1d26;border:1px solid #444"></div>Not Visited</div>
+  </div>
+
+  <div style="padding:10px 0 16px">
+    <button id="submit-btn" onclick="confirmSubmit()">Submit Test</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+  <div id="q-panel" style="width:100%;max-width:760px">
+    <!-- question card rendered here -->
+  </div>
+  <div id="results"></div>
+</div>
+
+</div><!-- /layout -->
+
+<!-- MODALS -->
+<div class="modal-overlay" id="modal-submit">
+  <div class="modal-card">
+    <div class="modal-title">Submit Test?</div>
+    <div class="modal-body" id="modal-submit-body"></div>
+    <div class="modal-btns">
+      <button class="mbtn-dark" onclick="closeModal('modal-submit')">Cancel</button>
+      <button class="mbtn-gold" onclick="submitTest()">Submit</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-warn">
+  <div class="modal-card">
+    <div class="modal-title">⚠ 10 Minutes Remaining!</div>
+    <div class="modal-body" id="modal-warn-body"></div>
+    <div class="modal-btns"><button class="mbtn-gold" onclick="closeModal('modal-warn')">Continue</button></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-expired">
+  <div class="modal-card">
+    <div class="modal-title">⏰ Time's Up!</div>
+    <div class="modal-body">Your test has been automatically submitted.</div>
+    <div class="modal-btns"><button class="mbtn-gold" onclick="closeModal('modal-expired');renderResults()">View Results</button></div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+// QUESTION DATA — 150 QUESTIONS
+// ══════════════════════════════════════════════
+const questions = [
+// ─── EASY ─────────────────────────────────────────────────
+{id:1,type:"one_liner",difficulty:"easy",subtopic:"Sources",stem:"Which of the following is classified as a numismatic source for studying the history of South India?",options:["(a) Tholkappiyam","(b) Roman copper and silver coins","(c) Periplus of Erythrean Sea","(d) Tamil-Brahmi inscriptions in caves"],correct:1,explanation:"Numismatic sources relate to coins. Roman copper, silver and gold coins are explicitly listed under the Numismatic section as a source for studying South Indian history. The others are literary or epigraphic sources.",trap:"Students may confuse Tamil-Brahmi inscriptions (epigraphic) with numismatic sources.",gem:"The study of coins (numismatics) reveals trade routes, dynastic chronology, and iconographic preferences of rulers.",pyq:""},
+{id:2,type:"one_liner",difficulty:"easy",subtopic:"Sources",stem:"The Ashokan inscriptions found in the Andhra–Karnataka region were written in which language/script?",options:["(a) Tamil-Brahmi","(b) Sanskrit","(c) Prakrit","(d) Pali"],correct:2,explanation:"The textbook specifically states: 'The Ashokan inscriptions, written in Prakrit, found in Andhra-Karnataka regions.' Ashoka used Prakrit in Brahmi script for most of his edicts.",trap:"Many students confuse Prakrit with Pali (used in Sri Lankan Buddhist chronicles) or Sanskrit (used later).",gem:"Ashoka's choice of Prakrit—the spoken language—rather than Sanskrit shows his concern for mass communication.",pyq:""},
+{id:3,type:"one_liner",difficulty:"easy",subtopic:"Classical Tamil Literature",stem:"Which is the earliest extant Tamil grammatical text?",options:["(a) Natrinai","(b) Purananuru","(c) Tholkappiyam","(d) Maduraikanchi"],correct:2,explanation:"The textbook clearly states: 'Tholkappiyam is the earliest extant Tamil grammatical text dealing not only with poetry but also the society and culture of the times.'",trap:"Purananuru and Natrinai are Sangam anthologies, not grammatical texts. Maduraikanchi is one of the Ten Idylls.",gem:"Tholkappiyam's uniqueness lies in treating grammar alongside Akam (love) and Puram (war/public life) poetry conventions.",pyq:""},
+{id:4,type:"one_liner",difficulty:"easy",subtopic:"Classical Tamil Literature",stem:"Pathinen Kilkanakku consists of how many minor works?",options:["(a) Eight","(b) Ten","(c) Eighteen","(d) Twenty-four"],correct:2,explanation:"The textbook states: 'The Pathinen Kilkanakku (18 minor works) and the five epics belong to post-Sangam times (fourth to sixth century CE).'",trap:"'Eight' refers to Ettuthogai (Eight Anthologies) and 'Ten' refers to Paththupattu (Ten Idylls).",gem:"The most celebrated work in Pathinen Kilkanakku is the Thirukkural, composed possibly during the Kalabhra period.",pyq:""},
+{id:5,type:"one_liner",difficulty:"easy",subtopic:"Satavahanas",stem:"The greatest of the Satavahana kings who defeated the Shaka ruler Nahapana was:",options:["(a) Simuka","(b) Gautamiputra Satakarni","(c) Vasishthiputra Pulumayi","(d) Yagnashri Satakarni"],correct:1,explanation:"The textbook states: 'Gautamiputra Satakarni was the greatest of the Satavahana kings. He defeated the Shaka ruler Nahapana and reissued the coins of Nahapana with his own royal insignia.'",trap:"Simuka was the founder of the Satavahana dynasty, not the greatest ruler. Vasishthiputra expanded frontiers but was not described as 'greatest'.",gem:"Gautamiputra's mother Gautami Balashri composed the famous Nashik inscription—rare maternal praise in ancient India.",pyq:"TNPSC Group 2 2016-style"},
+{id:6,type:"one_liner",difficulty:"easy",subtopic:"Satavahanas",stem:"Yagnashri Satakarni issued coins with which motif, indicating the importance of overseas trade?",options:["(a) Tiger","(b) Fish","(c) Ship","(d) Elephant"],correct:2,explanation:"The textbook states: 'Yagnashri Satakarni was another famous ruler who issued coins with a ship motif, indicating the importance of the overseas trade during his reign.'",trap:"Tiger is the Chola emblem; Fish is the Pandya emblem; Elephant appears on Pandya coins (reverse side).",gem:"The ship motif on coins is one of the earliest Indian numismatic depictions of maritime trade awareness.",pyq:""},
+{id:7,type:"one_liner",difficulty:"easy",subtopic:"Satavahanas",stem:"King Hala of the Satavahanas is credited with writing which Prakrit text?",options:["(a) Arthasastra","(b) Mahavamsa","(c) Gaha Sattasai","(d) Gatha Saptasati"],correct:2,explanation:"The textbook states: 'King Hala is credited with the writing of Gaha Sattasai, a collection of 700 love poems. Written in Maharashtri Prakrit dialect.' (Note: also referred to as Gatha Saptasati in the literary sources list.)",trap:"Arthasastra is by Kautilya; Mahavamsa is a Buddhist chronicle from Sri Lanka.",gem:"Gaha Sattasai's themes parallel Tamil Sangam Akam poetry, showing shared literary culture across linguistic boundaries.",pyq:""},
+{id:8,type:"one_liner",difficulty:"easy",subtopic:"South India during Mauryan times",stem:"Which Ashokan Rock Edict lists Tamil ruling houses as neighbour rulers lying beyond the Mauryan domain?",options:["(a) Rock Edict XIII","(b) Rock Edict II","(c) Rock Edict V","(d) Rock Edict XII"],correct:1,explanation:"The textbook explicitly states: 'Rock Edict II lists the Tamil ruling houses Cholas, Pandyas, Keralaputras and Satiyaputra as neighbour rulers.'",trap:"Rock Edict XIII is about the Kalinga war. Students may confuse the edict numbers.",gem:"Rock Edict II mentions Ashoka's welfare measures—medical facilities for humans and animals—extended even to these independent southern neighbours.",pyq:"TNPSC Group 1 2023 pattern"},
+{id:9,type:"one_liner",difficulty:"easy",subtopic:"The Muvendar – Cholas",stem:"What was the capital of the Cholas during the Sangam Age?",options:["(a) Madurai","(b) Vanji","(c) Uraiyur","(d) Korkai"],correct:2,explanation:"The textbook states: 'Their capital was Uraiyur (near Thiruchirapalli town) and Puhar or Kaviripattinam was an alternative royal residence and chief port town.'",trap:"Madurai is the Pandya capital; Vanji is the Chera capital; Korkai is the Pandya port.",gem:"Uraiyur (modern Tiruchirapalli) was famous for fine cotton textiles exported to Rome—mentioned in the Periplus.",pyq:""},
+{id:10,type:"one_liner",difficulty:"easy",subtopic:"The Muvendar – Cholas",stem:"The emblem of the Cholas was the:",options:["(a) Fish","(b) Tiger","(c) Bow and Arrow","(d) Elephant"],correct:1,explanation:"The textbook explicitly states: 'Tiger was their emblem' while describing the Cholas.",trap:"Fish = Pandyas; Bow and Arrow = Cheras (found on their coins). Elephant appears on Pandya coins (obverse).",gem:"The tiger emblem reflected the Chola heartland's geography—the forested Kaveri delta was tiger territory.",pyq:""},
+{id:11,type:"one_liner",difficulty:"easy",subtopic:"The Muvendar – Pandyas",stem:"The emblem of the Pandyas was:",options:["(a) Tiger","(b) Bow and Arrow","(c) Fish","(d) Lion"],correct:2,explanation:"The textbook states: 'Fish was the emblem of the Pandyas. Their coins have elephant on one side and a stylised image of fish on the other.'",trap:"Tiger = Cholas; Bow and Arrow = Cheras. The Pandya coins have BOTH elephant and fish.",gem:"The fish symbol for Pandyas connects to their maritime identity; Korkai was renowned for pearl fishing.",pyq:""},
+{id:12,type:"one_liner",difficulty:"easy",subtopic:"The Muvendar – Cheras",stem:"What was the capital of the Cheras?",options:["(a) Uraiyur","(b) Korkai","(c) Vanji","(d) Puhar"],correct:2,explanation:"The textbook states: 'Vanji was their capital and the ports of the west coast, Musiri and Tondi, were under their control.'",trap:"Uraiyur = Chola capital; Korkai = Pandya port; Puhar = Chola port/alternative capital.",gem:"Vanji's identification remains debated—either Karur (Tamil Nadu) or Tiruvanchikkalam (Kerala). The Poraiya branch ruled from Karur.",pyq:""},
+{id:13,type:"one_liner",difficulty:"easy",subtopic:"The Muvendar – Pandyas",stem:"The main port of the Pandyas was Korkai, located near the confluence of which river with the Bay of Bengal?",options:["(a) Kaveri","(b) Vaigai","(c) Thamirabarani (Thampraparani)","(d) Periyar"],correct:2,explanation:"The textbook states: 'Korkai was their main port, located near the confluence of Thampraparani with the Bay of Bengal. It was famous for pearl fishery and chank diving.'",trap:"Kaveri flows through Chola territory ending at Kaviripattinam. Vaigai flows past Madurai.",gem:"Korkai is referred to as 'Kolkoi' in the Periplus of the Erythrean Sea—an important Indo-Roman trade port.",pyq:""},
+{id:14,type:"fill_blank",difficulty:"easy",subtopic:"Social Formation – Thinai",stem:"According to the thinai concept, Tamilagam was divided into ___ landscapes or eco-regions (Ainthinai).",options:["(a) Three","(b) Four","(c) Five","(d) Six"],correct:2,explanation:"The textbook clearly states: 'Tamilagam was divided into five landscapes or eco-regions, Ainthinai namely Kurinji, Mullai, Marutam, Neythal and Palai.'",trap:"Students may guess four (like the directions) or confuse with other Tamil literary classifications.",gem:"The Ainthinai system is unique to Tamil literary tradition; it functioned as an emotional geography mapping human feelings to landscapes.",pyq:""},
+{id:15,type:"one_liner",difficulty:"easy",subtopic:"Social Formation – Thinai",stem:"Which thinai (eco-zone) is associated with agriculture using plough and irrigation?",options:["(a) Kurinji","(b) Mullai","(c) Marutham","(d) Neythal"],correct:2,explanation:"The textbook specifies: 'Marutham: riverine tract: agriculture using plough and irrigation.'",trap:"Mullai = pastoralism + shifting cultivation; Kurinji = hunting and gathering; Neythal = fishing and salt making.",gem:"The Marutham zone's irrigated agriculture created the socioeconomic surplus that enabled state formation.",pyq:""},
+{id:16,type:"one_liner",difficulty:"easy",subtopic:"Social Formation – Thinai",stem:"The Palai eco-zone in the thinai classification is described as:",options:["(a) Coastal land with fishing","(b) Hilly region with hunting","(c) Parched land unsuitable for cultivation","(d) Forested region with pastoralism"],correct:2,explanation:"The textbook states: 'Palai: parched land: Unsuitable for cultivation and hence people took to cattle lifting and robbery.'",trap:"Students often confuse Palai with Kurinji (hills) or Mullai (forest).",gem:"Palai is the only thinai that is defined negatively—by what it lacks—reflecting its marginal status in the agrarian economy.",pyq:""},
+{id:17,type:"one_liner",difficulty:"easy",subtopic:"Tamil Polity",stem:"Kizhar in the Tamil political hierarchy were:",options:["(a) Kings controlling large fertile territories","(b) Heads of villages or small territories","(c) Chieftains of forest and hilly areas","(d) Poets in royal courts"],correct:1,explanation:"The textbook states: 'Kizhar were the heads of the villages or a small territory, later known as nadu. They were the chiefs of tribal communities living in specific areas.'",trap:"Kizhar ≠ Velir (who controlled intermediate territories). Vendar = kings of large fertile territories.",gem:"The Nadu system—village clusters under a Kizhar—persisted into medieval Tamil Nadu as the fundamental unit of local governance.",pyq:""},
+{id:18,type:"one_liner",difficulty:"easy",subtopic:"Sangam Age – Keeladi",stem:"The Keeladi excavation is located on the banks of which river?",options:["(a) Kaveri","(b) Vaigai","(c) Thamirabarani","(d) Palar"],correct:1,explanation:"The textbook describes Keeladi as: 'An Urban Settlement of Sangam Age on the Banks of River Vaigai.' The excavations are conducted by the Department of Archaeology, Government of Tamil Nadu.",trap:"Thamirabarani (Porunai) is associated with Adichanallur and Sivakalai excavations, not Keeladi.",gem:"Keeladi's AMS dating (580 BCE) pushes urban Tamil civilization back to the 6th century BCE, contemporaneous with the Gangetic urbanization.",pyq:"TNPSC 2019 current affairs"},
+{id:19,type:"one_liner",difficulty:"easy",subtopic:"Sangam Age – Keeladi",stem:"How many spindle whorls were discovered in the Keeladi excavation, revealing a weaving industry?",options:["(a) 80","(b) 100","(c) 150","(d) 180"],correct:3,explanation:"The textbook states: 'Discovery of 180 spindle whorls, 20 sharpened bone tips... hanging loom weights... copper needle, reveals the engagement of people in cloth making.'",trap:"The number 150 (total questions in this test) and 100 are plausible distractors.",gem:"The 20 sharpened bone tips were used in pre-historic times as needles to make designs on clothes—evidence of artistic textile production.",pyq:""},
+{id:20,type:"one_liner",difficulty:"easy",subtopic:"Porunai Civilisation",stem:"The first archaeological excavation in Adichanallur was done in 1876 by which explorer?",options:["(a) Alexander Rea","(b) Dr. Jagor","(c) Mortimer Wheeler","(d) R.E.M. Wheeler"],correct:1,explanation:"The textbook states: 'In Porunai river basin, the first archaeological excavation was done in Adichanallur (1876) by a German explorer named Dr. Jagor.'",trap:"Alexander Rea is the British archaeologist who conducted excavations later (1899–1905). Both names are associated with Adichanallur—date order matters.",gem:"Rea's artefacts were displayed in the Madras Government Museum, making them among the earliest systematically studied South Indian antiquities.",pyq:""},
+{id:21,type:"one_liner",difficulty:"easy",subtopic:"Porunai Civilisation",stem:"Thamirabarani (Porunai) is described in the textbook as:",options:["(a) The longest river in Tamil Nadu","(b) The only perennial river in Tamil Nadu","(c) The main river of Chola territory","(d) The sacred river mentioned in Tholkappiyam"],correct:1,explanation:"The textbook explicitly states: 'Porunai (Thamirabarani) is the only perennial river in Tamil Nadu. It flows through Thirunelveli and Thoothukudi districts.'",trap:"Students may confuse 'longest' with 'perennial'. The Kaveri is longer but originates in Karnataka.",gem:"Being the only perennial river made the Porunai basin a unique civilizational cradle, sustaining year-round agriculture and habitation.",pyq:""},
+{id:22,type:"one_liner",difficulty:"easy",subtopic:"Ideology and Religion",stem:"In Tamil Nadu, which two cities have evidence of Buddhist stupas?",options:["(a) Madurai and Korkai","(b) Kaviripattinam and Kanchipuram","(c) Uraiyur and Vanji","(d) Amaravathi and Nagarjunakonda"],correct:1,explanation:"The textbook states: 'In Tamil Nadu, Kaviripattinam and Kanchipuram have evidence of Buddhist Stupas.'",trap:"Amaravathi and Nagarjunakonda are major Buddhist sites but in Andhra, not Tamil Nadu.",gem:"Compared to Andhra, Buddhism had a limited geographical footprint in Tamil Nadu—Jainism was far more influential here.",pyq:""},
+{id:23,type:"one_liner",difficulty:"easy",subtopic:"Age of Kalabhras",stem:"The Age of Kalabhras in Tamizhagam is roughly placed between:",options:["(a) 100 BCE and 200 CE","(b) 200 CE and 400 CE","(c) 300 CE and 600 CE","(d) 400 CE and 700 CE"],correct:2,explanation:"The textbook states: 'The period between the Sangam Age and the Pallava-Pandya period, roughly between c. 300 CE and 600 CE, is known as the age of Kalabhras.'",trap:"200 CE–400 CE would overlap too much with the Sangam age. 400–700 CE would overlap with early Pallava period.",gem:"The 'dark age' label for this period is now rejected—Tirukkural, Silappathikaram and Manimekalai were composed in this 'dark' period.",pyq:"TNPSC Group 1 pattern question"},
+{id:24,type:"one_liner",difficulty:"easy",subtopic:"Satavahanas",stem:"The Satavahana Empire declined around which century CE and was replaced by the Ikshvakus in Andhra?",options:["(a) 1st century CE","(b) 2nd century CE","(c) 3rd century CE","(d) 4th century CE"],correct:2,explanation:"The textbook states: 'The Satavahana Empire declined around the 3rd century CE and was replaced by the Ikshvakus, followed by Pallavas in Andhra and the Kadambas in northern Karnataka.'",trap:"The Satavahanas rose in the 1st century BCE, so their 3rd-century CE decline is easy to confuse with their origin date.",gem:"The Ikshvakus who replaced the Satavahanas in Andhra were great patrons of Buddhism at Nagarjunakonda.",pyq:""},
+{id:25,type:"fill_blank",difficulty:"easy",subtopic:"The Muvendar – Cholas",stem:"The poem ___ composed by the poet Katiyalur Uruttirankannanar offers elaborate descriptions of the bustling trading activity in Kaviripattinam.",options:["(a) Natrinai","(b) Maduraikanchi","(c) Pattinappalai","(d) Purananuru"],correct:2,explanation:"The textbook states: 'Pattinappalai, composed by the poet Katiyalur Uruttirankannanar, offers elaborate descriptions of the bustling trading activity here during the rule of Karikalan.'",trap:"Maduraikanchi is a poem about Madurai (Pandya city). Natrinai is an Ettuthogai anthology.",gem:"Pattinappalai is the 9th poem in Paththupattu and remains a primary source for Chola Kaviripattinam's cosmopolitan maritime trade.",pyq:""},
+{id:26,type:"one_liner",difficulty:"easy",subtopic:"Sources",stem:"The Periplus of the Erythrean Sea is an ancient text of which century CE?",options:["(a) 1st century BCE","(b) 1st century CE","(c) 2nd century CE","(d) 3rd century CE"],correct:1,explanation:"The textbook lists: 'The Periplus of Erythrean Sea, an ancient Greek text of the first century CE.'",trap:"Ptolemy's Geography is 2nd century CE. Students may confuse the two.",gem:"The Periplus was written by an anonymous Greek merchant who had actually traded in the Indian Ocean—making it uniquely practical rather than theoretical.",pyq:""},
+{id:27,type:"one_liner",difficulty:"easy",subtopic:"The Muvendar – Pandyas",stem:"Which inscription mentions a Pandya king named Nedunchezhiyan of the second century BCE?",options:["(a) Nashik inscription","(b) Mangulam Tamil-Brahmi inscription","(c) Naneghat inscription","(d) Pugalur inscription"],correct:1,explanation:"The textbook states: 'The Mangulam Tamil-Brahmi inscription mentions a Pandya king by name Nedunchezhiyan of the second century BCE.'",trap:"Nashik inscription refers to Gautamiputra Satakarni. Naneghat inscription refers to Satavahana tax exemptions. Pugalur inscriptions are Chera-related.",pyq:""},
+{id:28,type:"one_liner",difficulty:"easy",subtopic:"The Muvendar – Cheras",stem:"Chenguttuvan of the Cheras is said to have ruled for how many years?",options:["(a) Thirty-two years","(b) Forty-four years","(c) Fifty-six years","(d) Sixty years"],correct:2,explanation:"The textbook states: 'He is said to have ruled for fifty-six years, patronising the orthodox and heterodox religions.'",trap:"The number 32 appears in the context of iron weapons at Adichanallur. Sixty is a common round-number trap.",pyq:""},
+{id:29,type:"one_liner",difficulty:"easy",subtopic:"Sangam Age – Keeladi",stem:"The Keeladi excavation sample sent for AMS dating was from which laboratory?",options:["(a) Bhabha Atomic Research Centre, Mumbai","(b) Beta Analytic Lab, Miami, Florida, USA","(c) Oxford University Radiocarbon Accelerator Unit","(d) Physical Research Laboratory, Ahmedabad"],correct:1,explanation:"The textbook states: 'Six carbon samples collected from the fourth season (2018) of excavations at Keeladi were sent to Beta Analytic Lab at Miami, Florida, USA for AMS dating.'",trap:"Oxford lab is associated with calibration standards. BARC is used in many Indian contexts.",pyq:"TNPSC current affairs pattern"},
+{id:30,type:"one_liner",difficulty:"easy",subtopic:"Society and Economy",stem:"The salt merchants who travelled in bullock carts for trade in Sangam times were called:",options:["(a) Vanikan","(b) Nigama","(c) Chattu","(d) Umanar"],correct:3,explanation:"The textbook states: 'Salt merchants called umanar, travelled in bullock carts along with their families for trade activities.'",trap:"Chattu = itinerary/mobile merchants; Vanikan = general trader; Nigama = trade guild term.",gem:"The mobility of umanar—travelling with entire families—shows a semi-nomadic mercantile lifestyle in Sangam Tamil Nadu.",pyq:""},
+{id:31,type:"one_liner",difficulty:"easy",subtopic:"Sangam Age – Overview",stem:"The last three centuries BCE and the first three centuries CE are widely accepted as which period?",options:["(a) Iron Age","(b) Sangam Period","(c) Kalabhra Period","(d) Pallava Period"],correct:1,explanation:"The textbook states: 'The last three centuries before the common Era and the first three centuries of the Common Era are widely accepted as the Sangam Period.'",trap:"The Iron Age in Tamil Nadu is c. 1100–300 BCE. The Kalabhra period is 300–600 CE.",gem:"Archaeological evidence suggests the Sangam era may have begun at least two centuries earlier than this literary-based dating.",pyq:""},
+{id:32,type:"one_liner",difficulty:"easy",subtopic:"The Muvendar – Cholas",stem:"Karikalan is described as the son of which Chola king?",options:["(a) Sengannan","(b) Perunarkilli","(c) Ilanjetchenni","(d) Kadungo"],correct:2,explanation:"The textbook states: 'Karikalan, son of Ilanjetchenni, is portrayed as the greatest Chola of the Sangam age.' This is also the answer to exercise Q.1.",trap:"Sengannan, Perunarkilli and Kadungo are all Chola-related names but none is Karikalan's father.",pyq:"TNPSC textbook exercise answer"},
+{id:33,type:"one_liner",difficulty:"easy",subtopic:"Women in Sangam Age",stem:"Of the over 450 poets who contributed to the Sangam corpus, approximately how many were women?",options:["(a) About ten","(b) About fifteen","(c) About thirty","(d) About fifty"],correct:2,explanation:"The textbook states: 'Of the over 450 poets who contributed to the corpus of Sangam poetry about thirty are women. They composed more than 150 poems.'",trap:"Students often under-estimate women's contribution; ten or fifteen are common under-estimates.",gem:"Avvaiyar (among the thirty) composed some of the most quoted Tamil aphorisms—her Aathichudi and Konraivendan are still taught in schools.",pyq:""},
+{id:34,type:"one_liner",difficulty:"easy",subtopic:"Satavahanas",stem:"The initial capital of the Satavahana kingdom (Prathistan) corresponds to which modern location?",options:["(a) Amaravathi in Andhra Pradesh","(b) Junagadh in Gujarat","(c) Paithan in Maharashtra","(d) Nasik in Maharashtra"],correct:2,explanation:"The textbook states: 'the Satavahanas...moved to Maharashtra to rule in the Godavari basin with Prathistan (Paithan in Maharashtra) as their capital.'",trap:"Nashik is also a Satavahana site (Gautami Balashri inscription) but was not their capital.",gem:"Paithan (Pratishthan) on the Godavari became a major textile and trade city; fine muslin from here was described by Pliny.",pyq:""},
+{id:35,type:"one_liner",difficulty:"easy",subtopic:"Age of Kalabhras",stem:"Two Kalabhra kings named Chendan and Kurran are identified from inscriptions found in which district?",options:["(a) Madurai district","(b) Sivagangai district","(c) Thirunelveli district","(d) Kanchipuram district"],correct:1,explanation:"The textbook states: 'A group of inscriptions found at Pulangurichi in Sivagangai district datable to about the middle of the fifth century, name two kings. They are Chendan and Kurran.'",trap:"Madurai is geographically close but incorrect. Thirunelveli is the Pandya heartland.",pyq:""},
+{id:36,type:"one_liner",difficulty:"easy",subtopic:"Satavahanas – Land Grants",stem:"The Naneghat inscription is associated with which Satavahana development?",options:["(a) Defeat of the Shakas","(b) Tax exemptions on land granted to Buddhist monks","(c) Overseas trade routes","(d) The asvamedha sacrifice"],correct:1,explanation:"The textbook states: 'The Naneghat inscription refers to tax exemptions given to the lands granted to Buddhist monks.'",trap:"The asvamedha sacrifice is mentioned in Gautamiputra's Nashik inscription. Naneghat is about land/tax policy.",gem:"The Naneghat pass inscription also records the first queen-mother to commission an epigraphic record in Deccan India.",pyq:""},
+{id:37,type:"one_liner",difficulty:"easy",subtopic:"Porunai Civilisation",stem:"What was the ratio of bricks unearthed at Keeladi, similar to other Sangam Age excavated sites?",options:["(a) 1:2:4","(b) 1:3:5","(c) 1:4:6","(d) 1:2:6"],correct:2,explanation:"The textbook states: 'Bricks unearthed in Keeladi are similar in sizes to that of other excavated sites of the Sangam Age with the ratio of 1:4:6.'",trap:"1:2:4 is the Indus Valley brick ratio. 1:4:8 is used in modern construction. 1:4:6 is specific to Keeladi/Sangam Age.",gem:"This brick standardisation across sites suggests inter-regional contact and shared technical knowledge during the Sangam Age.",pyq:""},
+{id:38,type:"one_liner",difficulty:"easy",subtopic:"The Muvendar – Cholas",stem:"After Karikalan's death, a succession dispute arose between which two branches of the Chola royal family?",options:["(a) Madurai and Korkai branches","(b) Puhar and Uraiyur branches","(c) Vanji and Madurai branches","(d) Uraiyur and Vanji branches"],correct:1,explanation:"The textbook states: 'Karikalan's death was followed by a succession dispute between the Puhar and Uraiyur branches of the Chola royal family.'",trap:"Vanji is the Chera capital, not a Chola town. Korkai is the Pandya port.",pyq:""},
+{id:39,type:"one_liner",difficulty:"easy",subtopic:"Sources – Literary",stem:"The Arthasastra, the treatise on economy and statecraft, was authored by:",options:["(a) Hala","(b) Kautilya","(c) Ilango Adigal","(d) Ptolemy"],correct:1,explanation:"The textbook lists: 'The Arthasastra, the treatise on economy and statecraft authored by Kautilya.'",trap:"Hala authored Gaha Sattasai. Ilango Adigal authored Silappathikaram.",pyq:""},
+{id:40,type:"one_liner",difficulty:"easy",subtopic:"Sangam Age – Keeladi",stem:"The potsherd at Keeladi dated to 580 BCE with Tamil-Brahmi script is significant because it:",options:["(a) Proves Aryan migration to Tamil Nadu","(b) Indicates high literacy among Tamils by the 6th century BCE","(c) Shows Sanskrit influence on Tamil","(d) Proves the Indus Valley people migrated to Tamil Nadu"],correct:1,explanation:"The textbook states: 'Potsherds inscribed with Tamil-Brahmi script have been unearthed. One of these dated to 580 BCE indicates the high literacy level of Tamil people by sixth century BCE.'",trap:"The graffiti shows similarities with Indus signs but this doesn't prove migration. Sanskrit influence is a separate later phenomenon.",pyq:""},
+
+// ─── MEDIUM ───────────────────────────────────────────────
+{id:41,type:"statement_based",difficulty:"medium",subtopic:"South India during Mauryan times",stem:"Consider the following statements about the Mauryan Empire's southern extent:\nI. The Mauryan empire at the time of Ashoka included northern parts of Karnataka and Andhra.\nII. The Tamil kingdoms were treated as integral parts of the Mauryan empire.\nIII. Rock Edict II mentions provision for medical treatment for both humans and animals in Tamil territories.\nIV. Satiyaputra is identified with Athiyaman in the Sangam poems.\nWhich of the above statements is/are correct?",options:["(a) I and III only","(b) I, III and IV only","(c) II and IV only","(d) I, II and III only"],correct:1,explanation:"Statement I is correct. Statement II is WRONG—Tamil kingdoms were treated as independent neighbours, not integral parts. Statement III is correct. Statement IV is correct—Satiyaputra (same as Athiyaman) in the Ashokan inscription is a Velir chief in Sangam poems.",trap:"Statement II is the trap. Students assume Ashoka's empire was pan-Indian, but the textbook clearly states Tamil kingdoms were independent neighbours.",gem:"Ashoka's outreach to independent south Indian kingdoms for welfare measures (medicine, wells) was a form of soft power diplomacy.",pyq:""},
+{id:42,type:"assertion_reason",difficulty:"medium",subtopic:"Satavahanas – Land Grants",stem:"Assertion (A): Land grants by the Satavahanas led to the development of land-based social hierarchy.\nReason (R): The beneficiaries of land grants were mostly Buddhists and Brahmins who did not cultivate but owned land.",options:["(a) Both A and R are true, and R is the correct explanation of A","(b) Both A and R are true, but R is NOT the correct explanation of A","(c) A is true but R is false","(d) A is false but R is true"],correct:0,explanation:"Both A and R are correct, and R directly explains A. The textbook states the land grants (to non-cultivating Buddhists and Brahmins) 'led to the development of land-based social hierarchy and divisions in the society.'",trap:"Option (b) is tempting if students think another explanation is needed. But R perfectly explains A—non-cultivating land owners = hierarchical society.",gem:"This process—land grants creating non-cultivating elites—accelerated dramatically under medieval South Indian dynasties, reshaping the entire agrarian structure.",pyq:"TNPSC Group 1 2019-style A&R"},
+{id:43,type:"match_following",difficulty:"medium",subtopic:"The Muvendar – Three Kingdoms",stem:"Match the following (List I: Kingdom / King — List II: Associated Item):\nList I:\nA. Cholas\nB. Pandyas\nC. Cheras\nD. Karikalan\nList II:\n1. Korkai port\n2. Defeat at Venni\n3. Bow and arrow emblem\n4. Tiger emblem",options:["(a) A-4, B-1, C-3, D-2","(b) A-1, B-4, C-2, D-3","(c) A-4, B-3, C-1, D-2","(d) A-2, B-1, C-4, D-3"],correct:0,explanation:"Cholas – Tiger emblem (A-4). Pandyas – Korkai port (B-1). Cheras – Bow and arrow emblem on coins (C-3). Karikalan – Defeat of Cheras and Pandyas at Venni (D-2). Option (a) is correct.",trap:"Option (c) swaps Pandya's Korkai with Chera's bow-arrow. The bow/arrow is clearly stated as the Chera emblem on their coins.",pyq:"TNPSC Group 2 match-type pattern"},
+{id:44,type:"chronological",difficulty:"medium",subtopic:"Dynasties – Sequence",stem:"Arrange the following in the correct chronological order of their emergence/prominence in South Indian history:\n1. Satavahanas\n2. Kalabhras\n3. Pallavas (succeeding Ikshvakus in Andhra)\n4. Sangam Age Tamil kingdoms (Muvendar)",options:["(a) 1 → 4 → 2 → 3","(b) 4 → 1 → 2 → 3","(c) 1 → 2 → 4 → 3","(d) 4 → 2 → 1 → 3"],correct:1,explanation:"The Sangam Muvendar were known to Ashoka (3rd century BCE). Satavahanas rose in 1st century BCE. Kalabhras dominated c. 300–600 CE. Pallavas rose from 6th century CE. Correct order: 4 → 1 → 2 → 3.",trap:"Option (a) places Satavahanas before Sangam kingdoms—incorrect since Sangam rulers appear in 3rd century BCE Ashokan records.",gem:"The Satavahanas and Sangam Muvendar were contemporaries for several centuries, both active between ~300 BCE and 300 CE.",pyq:""},
+{id:45,type:"two_statement",difficulty:"medium",subtopic:"Sangam Polity – Debate",stem:"Consider the following statements about the debate on Sangam polity:\nStatement 1: One school of thought holds that the Sangam Age society was a well-organised state society.\nStatement 2: Those who argue for the pre-state chiefdom view cite evidence of strong taxation as in North India.",options:["(a) Statement 1 is correct only","(b) Statement 2 is correct only","(c) Both statements are correct","(d) Neither statement is correct"],correct:0,explanation:"Statement 1 is CORRECT—it represents the 'earlier and dominant view'. Statement 2 is WRONG—those arguing for pre-state chiefdom cite the ABSENCE of taxation evidence as in North India, not its presence.",trap:"Statement 2 is a clever reversal trap. The pre-state chiefdom argument uses 'No evidence of taxation' as a supporting point.",gem:"The counter-argument cites taxation evidence at Kaviripattinam's port, suggesting state-like revenue extraction was indeed present.",pyq:"TNPSC Group 1 pattern – two-statement with reversal trap"},
+{id:46,type:"statement_based",difficulty:"medium",subtopic:"The Muvendar – Cheras",stem:"Consider the following about the Cheras:\nI. Their main ports were Musiri and Tondi on the west coast.\nII. The Patitruppathu speaks of eight Chera kings.\nIII. Chenguttuvan's great north Indian expedition is mentioned in both Silappathikaram and the Sangam poems.\nIV. Some Cheras issued copper and lead coins imitating Roman coins.\nWhich of the above statements is/are correct?",options:["(a) I, II and IV only","(b) I, II, III and IV","(c) II, III and IV only","(d) I and IV only"],correct:0,explanation:"Statement I: Correct. Statement II: Correct. Statement III: WRONG—the textbook states 'the great north Indian expedition of Chenguttuvan mentioned in Silappathikaram is however NOT mentioned in the Sangam poems.' Statement IV: Correct.",trap:"Statement III is a critical trap—the north Indian expedition appears in Silappathikaram but NOT in Sangam poems. Many students assume both sources agree.",gem:"This discrepancy between Silappathikaram and Sangam sources raises questions about historical reconstruction vs. epic elaboration.",pyq:""},
+{id:47,type:"one_liner",difficulty:"medium",subtopic:"Tamil Polity",stem:"The Velir in the Tamil political hierarchy mainly controlled territories of which type?",options:["(a) Large fertile river deltas","(b) Hilly and forest areas between the Muvendar's territories","(c) Coastal ports and maritime trade zones","(d) Village-level tribal territories"],correct:1,explanation:"The textbook states: 'The Velir...controlled the territories of varied geographical nature, mainly hilly and forest areas, that were in between the muvendar's fertile territories.' Chiefs like Athiyaman, Pari, Ay, Evvi and Irungo are examples.",trap:"Option (a) describes Vendar territories; option (d) describes Kizhar domains.",gem:"The Velir's resource-rich hill territories (minerals, forest products) made them indispensable trade partners, even as they remained politically subordinate.",pyq:""},
+{id:48,type:"assertion_reason",difficulty:"medium",subtopic:"Classical Tamil Literature",stem:"Assertion (A): Silappathikaram and Manimekalai are described as useful for insights into cultural and religious history.\nReason (R): Both epics belong to the Sangam period (3rd century BCE to 3rd century CE).",options:["(a) Both A and R are true, and R is the correct explanation of A","(b) Both A and R are true, but R is NOT the correct explanation of A","(c) A is true but R is false","(d) A is false but R is true"],correct:2,explanation:"A is CORRECT—the textbook explicitly says both epics are useful for cultural and religious history. R is WRONG—these epics belong to the POST-Sangam/Kalabhra period (4th to 6th century CE), not the Sangam period itself.",trap:"Students commonly assume all great Tamil classics are Sangam age. The textbook distinguishes Sangam (pre-3rd CE) from post-Sangam (4th–6th CE).",gem:"Silappathikaram and Manimekalai being Kalabhra-period works refutes the 'dark age' theory—great literature flourished precisely in the supposed dark period.",pyq:""},
+{id:49,type:"fill_blank",difficulty:"medium",subtopic:"The Muvendar – Cholas",stem:"The Chola king ___ defeated the Cheras and Pandyas, supported by eleven Velir chieftains, at the battle of Venni.",options:["(a) Perunarkilli","(b) Ilanjetchenni","(c) Karikalan","(d) Sengannan"],correct:2,explanation:"The textbook states: 'Karikalan's foremost military achievement was the defeat of the Cheras and the Pandyas, supported by as many as eleven Velir chieftains at Venni.'",trap:"Perunarkilli performed the Rajasuyam sacrifice—a different achievement. Ilanjetchenni was Karikalan's father.",gem:"The Battle of Venni, with eleven Velir chiefs allied against two major kingdoms, shows how Karikalan had built an unprecedented political coalition.",pyq:""},
+{id:50,type:"statement_based",difficulty:"medium",subtopic:"Ideology and Religion",stem:"Consider the following about religion in early South India:\nI. The Satavahanas supported Vedic sacrifices.\nII. The varnasrama ideology was well established in the Tamil region during the Sangam Age.\nIII. Jainism had more influence than Buddhism in Tamil Nadu based on cave inscription evidence.\nIV. Asoka's daughter is said to have taken a Bodhi tree sapling to Sri Lanka.\nWhich statements are correct?",options:["(a) I, III and IV only","(b) I, II and IV only","(c) II, III and IV only","(d) I, II, III and IV"],correct:0,explanation:"Statement I: Correct. Statement II: WRONG—the textbook says 'the varnasrama ideology was yet to take root in the Tamil region.' Statement III: Correct. Statement IV: Correct.",trap:"Statement II is the critical wrong statement. Many students assume varnashrama was widespread in ancient India generally.",gem:"The absence of varnashrama in Sangam Tamil society allowed for greater social mobility—women poets, non-Brahmin intellectuals, and merchant-heroes flourished.",pyq:"TNPSC Group 1 type"},
+{id:51,type:"diagram_table",difficulty:"medium",subtopic:"Social Formation – Thinai",stem:"Refer to the thinai table in the lesson. Which of the following correctly pairs all five eco-zones with their primary occupation?",options:["(a) Kurinji-hunting; Mullai-agriculture; Marutham-pastoralism; Neythal-fishing; Palai-cattle lifting","(b) Kurinji-hunting; Mullai-pastoralism+shifting cultivation; Marutham-agriculture; Neythal-fishing+salt; Palai-cattle lifting","(c) Kurinji-pastoralism; Mullai-hunting; Marutham-fishing; Neythal-agriculture; Palai-salt making","(d) Kurinji-agriculture; Mullai-pastoralism; Marutham-hunting; Neythal-salt making; Palai-fishing"],correct:1,explanation:"The table in the lesson specifies: Kurinji=hunting/gathering; Mullai=pastoralism+shifting cultivation; Marutham=agriculture with plough+irrigation; Neythal=fishing+salt making; Palai=cattle lifting+robbery. Only option (b) matches all five correctly.",trap:"Option (a) swaps Mullai and Marutham—a classic error. Option (c) is a complete scramble.",pyq:"TNPSC Group 1 table-based question pattern"},
+{id:52,type:"two_statement",difficulty:"medium",subtopic:"Society and Economy",stem:"Consider the following statements:\nStatement 1: Roman coins in Tamil Nadu circulated primarily as legal tender for daily transactions.\nStatement 2: Roman gold and silver coins have been found in hoards mainly in the Coimbatore region.",options:["(a) Statement 1 is correct only","(b) Statement 2 is correct only","(c) Both statements are correct","(d) Neither statement is correct"],correct:1,explanation:"Statement 1 is WRONG—the textbook says 'Roman coins circulated as bullion,' not as regular tender. Statement 2 is CORRECT—the textbook states: 'Roman gold and silver coins have been found in many hoards in the Coimbatore region and in many other places in south India.'",trap:"'Bullion' vs 'legal tender' is a crucial distinction. Roman coins were used for their metal weight value, not their official currency status.",gem:"Coimbatore's hoard concentration suggests it was a major inland redistribution centre for Roman trade goods—possibly the ancient Karur/Kongunad area.",pyq:""},
+{id:53,type:"one_liner",difficulty:"medium",subtopic:"Tamil Polity",stem:"The Satiyaputra found in Ashoka's inscriptions is identified as which Velir chief in Sangam poems?",options:["(a) Pari","(b) Irungo","(c) Athiyaman","(d) Ay"],correct:2,explanation:"The textbook states: 'the Satiyaputra (same as Athiyaman) found in the Ashokan inscription along with the above three houses is a Velir chief in the Sangam poems.'",trap:"Pari, Ay, and Irungo are all famous Velir chiefs but the textbook specifically equates Satiyaputra with Athiyaman.",gem:"This identification linking the Ashokan epigraph to Sangam literature provides a rare cross-reference that helps date Sangam-period chieftains.",pyq:"TNPSC Group 1 2018-type"},
+{id:54,type:"chronological",difficulty:"medium",subtopic:"Adichanallur Excavations",stem:"Arrange the Adichanallur excavations in chronological order:\n1. Archaeological Survey of India excavation\n2. Dr. Jagor's first excavation\n3. Tamil Nadu State Department of Archaeology excavations (2019–2021)\n4. Alexander Rea's excavation",options:["(a) 2 → 4 → 1 → 3","(b) 4 → 2 → 1 → 3","(c) 2 → 1 → 4 → 3","(d) 1 → 2 → 4 → 3"],correct:0,explanation:"Dr. Jagor (1876) → Alexander Rea (1899–1905) → ASI (2004) → TN State Archaeology Dept (2019–2021). Correct order: 2 → 4 → 1 → 3.",trap:"Option (b) swaps Jagor and Rea. The 1876 date for Jagor vs 1899 for Rea is the key data point.",gem:"The nearly 150-year gap between Jagor (1876) and the 2019 excavations reflects how Adichanallur was repeatedly rediscovered by each generation of archaeologists.",pyq:""},
+{id:55,type:"assertion_reason",difficulty:"medium",subtopic:"Age of Kalabhras",stem:"Assertion (A): The Age of Kalabhras was traditionally called an 'interregnum' or 'dark age'.\nReason (R): The Tirukkural, Silappathikaram, and Manimekalai were all composed during this period.",options:["(a) Both A and R are true, and R is the correct explanation of A","(b) Both A and R are true, but R is NOT the correct explanation of A","(c) A is true but R is false","(d) A is false but R is true"],correct:1,explanation:"Both A and R are TRUE. A is correct—the period was called 'dark age' by earlier historians. R is also correct—these great works were composed during this period. But R does NOT explain A; in fact, it contradicts the 'dark age' characterisation. Hence (b).",trap:"Students may choose (a) thinking R explains the dark age label. But R actually disproves the dark age concept—it's the counter-evidence, not the explanation.",gem:"The Kalabhra paradox: the supposedly darkest age produced the brightest literary achievements in Tamil history.",pyq:"TNPSC Group 1 A&R pattern"},
+{id:56,type:"match_following",difficulty:"medium",subtopic:"Sources",stem:"Match the foreign text with its century/author:\nList I:\nA. Periplus of Erythrean Sea\nB. Pliny the Elder's Natural History\nC. Ptolemy's Geography\nD. Peutingerian Table\nList II:\n1. Roman Map\n2. 2nd century CE\n3. 1st century CE (Greek)\n4. 1st century CE (Roman)",options:["(a) A-3, B-4, C-2, D-1","(b) A-4, B-3, C-1, D-2","(c) A-3, B-2, C-4, D-1","(d) A-1, B-4, C-2, D-3"],correct:0,explanation:"Periplus=1st century CE Greek text (A-3). Pliny the Elder's Natural History=1st century CE Roman (B-4). Ptolemy's Geography=2nd century CE (C-2). Peutingerian Table=Roman Map (D-1). Option (a) is correct.",trap:"Option (b) swaps Periplus and Pliny. Both are 1st century CE but Periplus is Greek and Pliny is Roman.",pyq:""},
+{id:57,type:"one_liner",difficulty:"medium",subtopic:"Satavahanas",stem:"The inscription of Gautami Balashri at Nashik describes Gautamiputra Satakarni as the conqueror of the:",options:["(a) Shakas only","(b) Pahlavas and Yavanas only","(c) Shakas, Pahlavas and Yavanas","(d) Shakas and Kushanas"],correct:2,explanation:"The textbook states: 'The inscription of his mother Gautami Balashri at Nashik mentions him as the conqueror of the Shakas, Pahlavas, and Yavanas.'",trap:"Option (a) mentions only Shakas—incomplete. Kushanas are not mentioned in this inscription.",gem:"Pahlavas (Parthians) and Yavanas (Greeks) being listed alongside Shakas shows the multi-ethnic character of northwestern rivals confronted by Gautamiputra.",pyq:"TNPSC Group 2 type"},
+{id:58,type:"fill_blank",difficulty:"medium",subtopic:"Society and Economy",stem:"According to Manimegalai, the text refers to ___ artisans, Maratha mechanics, Malva smiths and Yavana carpenters working with Tamil craftsmen.",options:["(a) Chola","(b) Pandya","(c) Magadha","(d) Ikshvaku"],correct:2,explanation:"The textbook states: 'Manimegalai refers to Magadha artisans, Maratha mechanics, Malva smiths and Yavana carpenters working in co-operation with Tamil craftsmen.'",trap:"Students may guess Chola or Pandya based on Tamil context. The textbook specifically mentions Magadha, a north Indian kingdom.",gem:"This passage from Manimegalai reveals Tamil cities as genuinely cosmopolitan centres where craftsmen from across the subcontinent worked together.",pyq:""},
+{id:59,type:"statement_based",difficulty:"medium",subtopic:"The Muvendar – Pandyas",stem:"Consider the following about Nedunchezhiyan (Pandya):\nI. He is praised for victory over the combined army of Chera, Chola and five Velir chieftains at Talayalanganam.\nII. He captured Milalai and Mutthuru from a Vel chief.\nIII. He is praised as the lord of Korkai and overlord of southern Paratavar.\nIV. He is mentioned in the Mangulam Tamil-Brahmi inscription.\nWhich statements are correct?",options:["(a) I and II only","(b) I, II and III only","(c) II, III and IV only","(d) I, II, III and IV"],correct:3,explanation:"All four are correct per the textbook. I: Correct. II: Correct—'He is also given credit for capturing Milalai and Mutthuru.' III: Correct—'He is praised as the lord of Korkai.' IV: Correct—the Mangulam inscription mentions Nedunchezhiyan of the 2nd century BCE.",trap:"Students may doubt statement IV, confusing two different Nedunchezhiyans—one in the 2nd century BCE inscription and one praised at Talayalanganam.",pyq:""},
+{id:60,type:"two_statement",difficulty:"medium",subtopic:"Sangam Age – Keeladi",stem:"Consider the following statements about Keeladi excavations:\nStatement 1: The Thamirabarani civilisation was found to be nearly 3200 years old based on radiocarbon dating of Sivakalai samples.\nStatement 2: Beads found at Keeladi include agate and carnelian, with raw materials possibly from north-west India via Maharashtra and Gujarat.",options:["(a) Statement 1 is correct only","(b) Statement 2 is correct only","(c) Both statements are correct","(d) Neither statement is correct"],correct:2,explanation:"Both are correct. Statement 1: 'radiocarbon dating...has come to the conclusion that it dates back to 1155 BCE. Which means Thamirabarani civilisation is nearly 3200 years old.' Statement 2: The textbook explicitly states beads of agate and carnelian were found, with raw materials from north-west India through Maharashtra and Gujarat.",trap:"Students may assume Statement 1 is about Keeladi (which dates to 580 BCE) but it refers to Sivakalai near Adichanallur.",pyq:""},
+{id:61,type:"one_liner",difficulty:"medium",subtopic:"Satavahanas",stem:"Vasishthiputra Pulumayi was the successor of which Satavahana king?",options:["(a) Simuka","(b) Hala","(c) Gautamiputra Satakarni","(d) Yagnashri Satakarni"],correct:2,explanation:"The textbook states: 'Vasishthiputra Pulumayi, the successor of Gautamiputra Satakarni, expanded the frontiers of the Satavahana Empire.'",trap:"Yagnashri Satakarni is a later famous ruler but not the immediate predecessor of Vasishthiputra Pulumayi. Hala authored Gaha Sattasai and is not directly linked as predecessor.",pyq:""},
+{id:62,type:"assertion_reason",difficulty:"medium",subtopic:"Sangam Polity",stem:"Assertion (A): The patronization of bards and poets by Sangam kings served to glorify their name, fame, and territories.\nReason (R): The Chola king Karikalan offered gold coins to the poet Uruttirankannanar who composed Pattinappalai.",options:["(a) Both A and R are true, and R is the correct explanation of A","(b) Both A and R are true, but R is NOT the correct explanation of A","(c) A is true but R is false","(d) A is false but R is true"],correct:1,explanation:"Both A and R are TRUE. R is a specific example that illustrates A, but R alone does not fully explain the political rationale (glorifying territories, building legitimacy). Hence (b)—R is a supporting example, not the full explanation.",trap:"Students may choose (a) thinking the example fully explains the assertion. But the explanation in the textbook is broader than just one instance.",pyq:""},
+{id:63,type:"one_liner",difficulty:"medium",subtopic:"Social Formation – Thinai",stem:"The thinai classification in Sangam poetry reflected which broader phenomenon?",options:["(a) The religious practices of different communities","(b) Uneven socio-economic developments of different localities","(c) The seasonal migration patterns of early Tamils","(d) The language dialects of the five regions"],correct:1,explanation:"The textbook states: 'In a way this thinai classification is said to reflect the uneven socio-economic developments of the different localities. That is seen in the political forms too.'",trap:"The thinai system is poetic/geographical but its socio-economic implications are what the textbook emphasises, not just ecology or dialect.",pyq:""},
+{id:64,type:"fill_blank",difficulty:"medium",subtopic:"Porunai Civilisation",stem:"The water and sewage management structure found in Korkai had ___ courses of bricks.",options:["(a) 19 courses","(b) 23 courses","(c) 29 courses","(d) 33 courses"],correct:2,explanation:"The textbook states about the water/sewage management system at Korkai: 'The raised brick structure...has 29 courses of bricks, terracotta pipes with perforations in 9 courses kept one above the other.'",trap:"19 and 23 are plausible but incorrect. The specific number 29 is given in the textbook.",gem:"A 29-course brick drainage structure dated to the Iron Age shows remarkable civil engineering sophistication in ancient Tamil society.",pyq:""},
+{id:65,type:"match_following",difficulty:"medium",subtopic:"Keeladi – Artefacts",stem:"Match the following Keeladi finds with what they reveal:\nList I:\nA. 180 spindle whorls\nB. Bricks with 1:4:6 ratio\nC. Tamil-Brahmi potsherd (580 BCE)\nD. Agate and carnelian beads\nList II:\n1. Commerce / trade connections\n2. Construction technology\n3. Literacy of Tamils\n4. Weaving industry",options:["(a) A-4, B-2, C-3, D-1","(b) A-1, B-3, C-4, D-2","(c) A-3, B-4, C-1, D-2","(d) A-4, B-1, C-2, D-3"],correct:0,explanation:"Spindle whorls = weaving (A-4). Brick ratio = construction technology (B-2). Tamil-Brahmi potsherd = literacy (C-3). Agate/carnelian beads = commerce (D-1). Option (a) is correct.",trap:"Option (b) swaps spindle whorls with beads. Option (c) confuses inscriptions with construction.",pyq:""},
+{id:66,type:"one_liner",difficulty:"medium",subtopic:"The Muvendar – Pandyas",stem:"Korkai, the Pandya port, is referred to as 'Kolkoi' in which ancient text?",options:["(a) Ptolemy's Geography","(b) Pliny's Natural History","(c) Periplus of the Erythrean Sea","(d) Peutingerian Table"],correct:2,explanation:"The textbook states: 'Korkai is referred to in the Periplus as Kolkoi.'",trap:"Ptolemy's Geography also mentions Indian ports but Korkai/Kolkoi is specifically linked to the Periplus.",gem:"The Greek 'Kolkoi' is a transliteration of Tamil 'Korkai'—reflecting how Greek traders phonetically recorded Tamil place names.",pyq:""},
+{id:67,type:"two_statement",difficulty:"medium",subtopic:"Ideology and Religion – Jainism",stem:"Consider the following about Jainism in South India:\nStatement 1: Jains contributed substantially to Tamil literature in the post-Sangam centuries.\nStatement 2: Jain monks provided rock shelters to merchants who were lay devotees.",options:["(a) Statement 1 is correct only","(b) Statement 2 is correct only","(c) Both statements are correct","(d) Neither statement is correct"],correct:0,explanation:"Statement 1 is CORRECT: 'In the post-Sangam centuries Jains contributed substantially to Tamil literature.' Statement 2 is WRONG—the textbook says merchants and lay devotees SUPPORTED Jain monks by providing rock shelters, not the reverse.",trap:"Statement 2 is a role reversal trap. It was merchants→Jain monks, not Jain monks→merchants.",pyq:""},
+{id:68,type:"assertion_reason",difficulty:"medium",subtopic:"Satavahanas – Trade",stem:"Assertion (A): Several rock-cut caves dedicated to the Buddha sangha were situated in trade routes linking the interior to the coastal parts of Konkan region.\nReason (R): The Satavahana period was a period of brisk Indo-Roman trade.",options:["(a) Both A and R are true, and R is the correct explanation of A","(b) Both A and R are true, but R is NOT the correct explanation of A","(c) A is true but R is false","(d) A is false but R is true"],correct:1,explanation:"Both A and R are true and stated in the textbook. However, R (Indo-Roman trade) does not directly explain why rock-cut caves were on trade routes—the reason is strategic placement on trade arteries for patronage from merchants. Hence (b).",trap:"The trade route placement of Buddhist caves and Indo-Roman trade are both facts but they have different causal relationships.",gem:"Merchants' donations to Buddhist caves along trade routes created a symbiotic relationship—Buddhist institutions served as rest stops, banking facilities, and moral anchors.",pyq:""},
+{id:69,type:"one_liner",difficulty:"medium",subtopic:"South India during Mauryan times",stem:"After the decline of Mauryan power, before the Satavahanas, many small principalities emerged. Their existence is primarily known through:",options:["(a) Sangam poetry only","(b) Puranic genealogies","(c) Their coins and inscriptions","(d) Buddhist chronicles like Mahavamsa"],correct:2,explanation:"The textbook states: 'Although not much information is available about their rulers, their coins and inscriptions reveal that they were chiefs who controlled small territories.'",trap:"Sangam poetry is a source for the Sangam age (after the Satavahanas). Puranas mention Satavahana genealogy specifically.",pyq:""},
+{id:70,type:"statement_based",difficulty:"medium",subtopic:"Adichanallur",stem:"Consider the following about Adichanallur burial urns:\nI. They were buried under a rocky surface at a depth of 3 to 12 feet.\nII. The urns contained bones, utensils, gold, high tin bronze and iron objects.\nIII. These objects are believed to have been used by the dead in their previous life.\nIV. Female figurines similar to those found in the Indus Civilisation were excavated here.\nWhich statements are correct?",options:["(a) I and II only","(b) I, II and III only","(c) I, II, III and IV","(d) II and IV only"],correct:2,explanation:"Statements I, II, III and IV are all correct based on the textbook. I: '3 to 12 feet'. II: Contents listed exactly. III: 'believed to have been used by the dead.' IV: 'Female figurines similar to those found in Indus Civilisation.'",trap:"Students may doubt III (it uses 'believed'—a qualification that some read as uncertain). But the textbook includes this statement as part of the description.",pyq:""},
+{id:71,type:"one_liner",difficulty:"medium",subtopic:"Women in Sangam Age",stem:"Which of the following is the most prominent and prolific woman poet of the Sangam Age?",options:["(a) Kavarpendu","(b) Nalveliyaar","(c) Avvaiyar","(d) Kaakkaipadiniyar"],correct:2,explanation:"The textbook states: 'The most prominent and prolific among them was Avvaiyar.'",trap:"All four are listed as women poets; only Avvaiyar is described as 'most prominent and prolific.'",gem:"Avvaiyar (meaning 'respectable woman') may refer to multiple poets across different eras; the Sangam Avvaiyar is distinct from the later Avvaiyar who composed Aathichudi.",pyq:""},
+{id:72,type:"fill_blank",difficulty:"medium",subtopic:"The Muvendar – Pandyas",stem:"The Pandya king Mudukudimi-Peruvazhuthi issued coins with the legend ___ to commemorate his performance of many Vedic sacrifices.",options:["(a) Pandyanadu","(b) Peruvazhuthi","(c) Madurai","(d) Korkai"],correct:1,explanation:"The textbook states: 'He seems to have issued coins with the legend Peruvazhuthi, to commemorate his performance of many Vedic sacrifices.'",trap:"The coin legend is the king's own name/title—not the city or territory name.",pyq:""},
+{id:73,type:"two_statement",difficulty:"medium",subtopic:"Satavahanas – Origins",stem:"Consider the following about Satavahana origins:\nStatement 1: The Satavahanas started to rule in the Telangana area and then moved to Maharashtra.\nStatement 2: The Satavahana capital Prathistan is identified with Paithan in present-day Andhra Pradesh.",options:["(a) Statement 1 is correct only","(b) Statement 2 is correct only","(c) Both statements are correct","(d) Neither statement is correct"],correct:0,explanation:"Statement 1 is CORRECT: 'Satavahanas started to rule in the Telengana area and then moved to Maharashtra.' Statement 2 is WRONG: Paithan is in Maharashtra, not Andhra Pradesh.",trap:"Students confuse Paithan's state; it is in Maharashtra (Marathwada region), not Andhra.",pyq:""},
+{id:74,type:"one_liner",difficulty:"medium",subtopic:"Society and Economy",stem:"Which Sangam text specifically speaks about day markets AND night markets selling craft goods?",options:["(a) Pattinappalai","(b) Maduraikanchi","(c) Purananuru","(d) Kurunthogai"],correct:1,explanation:"The textbook states: 'Maduraikanchi speaks about day markets as well as and night markets selling several craft goods.'",trap:"Pattinappalai describes Kaviripattinam's trade but specifically focuses on maritime trade, not day/night markets.",gem:"Night markets in ancient Madurai suggest sophisticated urban consumer culture with round-the-clock economic activity.",pyq:""},
+{id:75,type:"chronological",difficulty:"medium",subtopic:"Sangam literature – Eight Anthologies",stem:"Arrange the following Ettuthogai anthologies in their listed order:\n1. Akananuru\n2. Natrinai\n3. Paripadal\n4. Kalithogai",options:["(a) 2 → 3 → 4 → 1","(b) 2 → 4 → 3 → 1","(c) 1 → 2 → 3 → 4","(d) 3 → 2 → 4 → 1"],correct:0,explanation:"The Eight Anthologies (Ettuthogai) are listed in order: 1.Natrinai; 2.Kurunthogai; 3.Aingurunuru; 4.Patitruppathu; 5.Paripadal; 6.Kalithogai; 7.Akananuru; 8.Purananuru. So Natrinai(1)→Paripadal(3)→Kalithogai(4)→Akananuru(7). Only option (a) matches this relative order.",trap:"Students may arrange alphabetically or confuse Akananuru (7th) and Natrinai (1st).",pyq:""},
+{id:76,type:"assertion_reason",difficulty:"medium",subtopic:"Tamil Polity – Ascendancy",stem:"Assertion (A): The Athiyamans mentioned as Satiyaputra in Ashoka's inscriptions became weak and did not attain the status of kings.\nReason (R): The Athiyamans, unlike the Chola, Pandya and Chera families, could not effectively control pastoral and agricultural regions.",options:["(a) Both A and R are true, and R is the correct explanation of A","(b) Both A and R are true, but R is NOT the correct explanation of A","(c) A is true but R is false","(d) A is false but R is true"],correct:0,explanation:"Both A and R are correct. The textbook states that chiefs attained higher vendar status 'through the larger and effective control of pastoral and agricultural regions'—Athiyamans in 'marginal regions' remained chieftains. R is the explanation of A.",trap:"Students may think A is false—confusing the fact that Athiyaman WAS a prominent chief in Sangam poems but never became a king.",pyq:""},
+{id:77,type:"statement_based",difficulty:"medium",subtopic:"Society and Economy – Trade",stem:"Consider the following about long-distance trade in Sangam times:\nI. The primary mode of trade was coinage-based, with barter being minimal.\nII. Long distance trade connections with the Roman Empire and Southeast Asia are evident at many archaeological sites.\nIII. Southern India's coastal location on maritime trade routes connecting East and West helped in overseas trade.\nIV. Roman amphora, glassware and other materials are found at major early historic ports.\nWhich statements are correct?",options:["(a) I, II and III only","(b) II, III and IV only","(c) I, III and IV only","(d) I, II, III and IV"],correct:1,explanation:"Statement I is WRONG—'barter system was much in vogue, though coins were also in use.' The textbook makes barter primary. Statements II, III and IV are all correct.",trap:"Statement I reverses the relationship—barter was PRIMARY, coinage SECONDARY in Sangam trade. This is the critical trap.",gem:"The persistence of barter alongside coinage suggests a dual economy—with coinage used more for long-distance trade and barter for local exchange.",pyq:""},
+{id:78,type:"one_liner",difficulty:"medium",subtopic:"Sangam Age – Keeladi",stem:"The red earthenware unearthed in Keeladi is described as similar to which type of pottery used in Rome in 2nd century BCE?",options:["(a) Terra sigillata","(b) Arretineware","(c) Rouletted ware","(d) Amphora"],correct:1,explanation:"The textbook states: 'Red earthenware unearthed in Keeladi are akin to Arretineware used in Rome in 2nd century BCE.'",trap:"Terra sigillata is a later Roman fine ware. Rouletted ware is mentioned separately as Indigenous. Amphora are Roman storage containers.",gem:"Arretine ware similarity suggests either direct trade with Rome or that both cultures independently developed similar high-quality pottery techniques.",pyq:""},
+{id:79,type:"two_statement",difficulty:"medium",subtopic:"Satavahanas – Succession",stem:"Consider the following:\nStatement 1: After the Satavahanas, the Ikshvakus replaced them in Andhra and the Kadambas replaced them in northern Karnataka.\nStatement 2: The Pallavas replaced the Ikshvakus in Andhra.",options:["(a) Statement 1 is correct only","(b) Statement 2 is correct only","(c) Both statements are correct","(d) Neither statement is correct"],correct:2,explanation:"Both are correct per the textbook: 'replaced by the Ikshvakus, followed by Pallavas in Andhra and the Kadambas in northern Karnataka.'",trap:"Students may think Pallavas replaced Satavahanas directly—but the sequence is Satavahanas → Ikshvakus → Pallavas in Andhra.",pyq:""},
+{id:80,type:"fill_blank",difficulty:"medium",subtopic:"Porunai Civilisation",stem:"The sample from Sivakalai, after radiocarbon dating, was found to date back to ___ BCE, making the Thamirabarani civilisation nearly 3200 years old.",options:["(a) 580 BCE","(b) 800 BCE","(c) 1155 BCE","(d) 1500 BCE"],correct:2,explanation:"The textbook states: 'after radiocarbon dating analysis has come to the conclusion that it dates back to 1155 BCE. Which means Thamirabarani civilisation is nearly 3200 years old.'",trap:"580 BCE is the Keeladi date. Students confuse Keeladi (580 BCE) with Sivakalai (1155 BCE).",pyq:"TNPSC current affairs 2021"},
+{id:81,type:"one_liner",difficulty:"medium",subtopic:"Sangam literature",stem:"The Paththupattu (Ten Idylls) — which numbered poem is Pattinappalai?",options:["(a) 5th","(b) 7th","(c) 9th","(d) 10th"],correct:2,explanation:"The textbook lists Paththupattu: 1.Thirumurugatrupatai; 2.Porunaratrupatai; 3.Sirupanatruppatai; 4.Perumpanatruppatai; 5.Mullaipattu; 6.Maduraikanchi; 7.Nedunalvadai; 8.Kurinjipattu; 9.Pattinappalai; 10.Malaipadukadam. Pattinappalai is 9th.",trap:"Students may guess 5th or 7th. The exact listing requires careful reading of the Paththupattu sequence.",pyq:""},
+{id:82,type:"statement_based",difficulty:"medium",subtopic:"Political Ascendancy of Vendar",stem:"Consider the following about methods adopted by Sangam Age Vendar:\nI. Adoption of titles like Kadungo, Imayavaramban, Vanavaramban and PeruVazhuthi.\nII. Building of fortified cities and large temples.\nIII. Patronizing bards and poets and entertaining them in their courts (avaiyam).\nIV. Mobilizing their own warriors and seeking support of Velir chiefs.\nWhich of these were methods adopted by the Vendar per the textbook?",options:["(a) I, II and III only","(b) I, III and IV only","(c) II, III and IV only","(d) I, II, III and IV"],correct:1,explanation:"Statements I, III and IV are explicitly mentioned in the textbook. Statement II (building fortified cities and temples) is NOT mentioned as a method by Vendar in the textbook—this is a common addition students make.",trap:"Statement II sounds plausible—ancient kings did build cities. But the textbook does not include it among the methods described.",pyq:""},
+{id:83,type:"one_liner",difficulty:"medium",subtopic:"The Muvendar – Chola",stem:"According to the textbook, which Vedic sacrifice did Perunarkilli (Chola king) perform?",options:["(a) Asvamedha","(b) Vajapeya","(c) Rajasuyam","(d) Agnishtoma"],correct:2,explanation:"The textbook states: 'Another king, Perunarkilli is said to have performed the Vedic sacrifice Rajasuyam.'",trap:"Asvamedha was performed by Gautamiputra Satakarni. Mudukudumi Peruvazhuthi (Pandya) performed many Vedic sacrifices. The Rajasuyam is specifically linked to Perunarkilli.",gem:"Rajasuyam (royal consecration sacrifice) signified a claim to paramount kingship—performing it was a major political declaration.",pyq:"Textbook exercise Q.3 reference"},
+{id:84,type:"assertion_reason",difficulty:"medium",subtopic:"Age of Kalabhras",stem:"Assertion (A): The Kalabhra interregnum is 'no more accepted as correct' by modern historians.\nReason (R): Recent interpretation takes the Kalabhra period as a time of transition leading to enlarged state societies under the Pallavas and Pandyas.",options:["(a) Both A and R are true, and R is the correct explanation of A","(b) Both A and R are true, but R is NOT the correct explanation of A","(c) A is true but R is false","(d) A is false but R is true"],correct:1,explanation:"Both A and R are correct. A states the modern rejection of 'dark age.' R describes the positive reinterpretation. However, R is a consequence/alternative view, not the direct explanation for why the interregnum idea is rejected. Hence (b).",trap:"Students who choose (a) conflate the alternative interpretation with the reason for rejection. The reason is the cultural continuity and literary production—R describes the new narrative, not strictly the cause of rejecting the old one.",pyq:""},
+{id:85,type:"one_liner",difficulty:"medium",subtopic:"Society and Economy",stem:"The term 'Chattu' in Sangam trade refers to:",options:["(a) Tax collectors","(b) Mobile/itinerary merchants","(c) Ship builders","(d) Salt merchants"],correct:1,explanation:"The textbook states: 'Chattu referred to the itinerary or mobile merchants.'",trap:"Umanar = salt merchants; Vanikan = general trader. Chattu's specific meaning (itinerant/mobile) is easily confused.",pyq:""},
+{id:86,type:"statement_based",difficulty:"medium",subtopic:"Literary Sources",stem:"Consider the following about the Buddhist Chronicles as a source:\nI. Mahavamsa is a Buddhist chronicle listed as a literary source.\nII. The Puranas mention the genealogy of the Andhras/Satavahanas.\nIII. Gatha Saptasati is a Sanskrit text composed by Hala.\nIV. The Arthasastra deals with economy and statecraft.\nWhich statements are correct?",options:["(a) I, II and IV only","(b) II, III and IV only","(c) I, II, III and IV","(d) I and IV only"],correct:0,explanation:"I: Correct. II: Correct. III: WRONG—Gatha Saptasati is a PRAKRIT text (Maharashtri Prakrit), not Sanskrit. IV: Correct.",trap:"Statement III is the trap—confusing Prakrit with Sanskrit. The textbook explicitly says 'Written in Maharashtri Prakrit dialect.'",pyq:""},
+{id:87,type:"two_statement",difficulty:"medium",subtopic:"Sangam Age – Cheras",stem:"Consider the following:\nStatement 1: The Pugalur inscriptions near Karur mention Chera kings of three generations.\nStatement 2: Cheral Irumporai issued coins in his name.",options:["(a) Statement 1 is correct only","(b) Statement 2 is correct only","(c) Both statements are correct","(d) Neither statement is correct"],correct:2,explanation:"Both are explicitly stated in the textbook: 'The inscriptions of Pugalur near Karur mention Chera kings of three generations. Cheral Irumporai issued coins in his name.'",trap:"Students may confuse Pugalur (Chera) with Mangulam (Pandya inscription site).",pyq:""},
+{id:88,type:"one_liner",difficulty:"medium",subtopic:"Society and Economy – Crafts",stem:"Which of the following cities is described in the textbook as having craft production in the Sangam Age?",options:["(a) Amaravathi and Nagarjunakonda","(b) Arikamedu, Uraiyur, Kanchipuram and Kaviripattinam","(c) Junagadh, Nasik and Paithan","(d) Taxila and Pataliputra"],correct:1,explanation:"The textbook states: 'Craft production was common in the major urban centres such as Arikamedu, Uraiyur, Kanchipuram, Kaviripattinam, Madurai, Korkai, and Pattanam in Kerala.'",trap:"Amaravathi and Nagarjunakonda are Buddhist centres in Andhra; Junagadh is in Gujarat (Satavahana context).",pyq:""},
+{id:89,type:"fill_blank",difficulty:"medium",subtopic:"Sangam Age – Cheras",stem:"The Chera king Imayavaramban Neduncheralathan is identified as one of the prominent Chera kings, and the ___ speaks of eight Chera kings.",options:["(a) Akananuru","(b) Patitruppathu","(c) Paripadal","(d) Kurunthogai"],correct:1,explanation:"The textbook states: 'The Patitruppathu speaks of eight Chera kings, their territory and fame.'",trap:"Akananuru and Kurunthogai are Akam (love) anthologies with less political content. Paripadal is the 5th anthology.",gem:"Patitruppathu ('Ten Tens') is the 4th anthology in Ettuthogai and is exclusively about Chera kings—an unusual single-dynasty focus in Sangam literature.",pyq:""},
+{id:90,type:"one_liner",difficulty:"medium",subtopic:"Sangam Age – Keeladi",stem:"How many terracotta toys (excluding figurines and ear ornaments) were found in Keeladi?",options:["(a) 13","(b) 28","(c) 600","(d) 4000"],correct:2,explanation:"The textbook states: 'Figurines made of terracotta representing human beings (13), animals (3) gamesmen (chessman) and toys (600) and ear ornaments (28) have been found.'",trap:"13 = human figurines; 28 = ear ornaments; 4000+ = beads. 600 specifically refers to toys.",pyq:""},
+{id:91,type:"two_statement",difficulty:"medium",subtopic:"Satavahanas – Hala",stem:"Consider the following:\nStatement 1: Gaha Sattasai by King Hala has themes similar to those found in Tamil Sangam poetry.\nStatement 2: Gaha Sattasai was written in the Sanskrit language.",options:["(a) Statement 1 is correct only","(b) Statement 2 is correct only","(c) Both statements are correct","(d) Neither statement is correct"],correct:0,explanation:"Statement 1 is CORRECT: 'it has themes similar to those found in the Tamil Sangam poetry.' Statement 2 is WRONG: it was written in 'Maharashtri Prakrit dialect,' not Sanskrit.",trap:"Confusing Maharashtri Prakrit with Sanskrit is a common error. Both are ancient Indian languages but completely different.",pyq:""},
+{id:92,type:"one_liner",difficulty:"medium",subtopic:"Age of Kalabhras",stem:"Which of the following literary works was composed during the Age of Kalabhras?",options:["(a) Tholkappiyam","(b) Natrinai","(c) Tirukkural","(d) Pattinappalai"],correct:2,explanation:"The textbook states the Kalabhra period was 'the time when the greatest Tamil work Tirukkural was written along with many other works grouped as the eighteen minor works.'",trap:"Tholkappiyam and Natrinai are Sangam Age works. Pattinappalai is a Sangam Age poem (Paththupattu).",pyq:"TNPSC pattern question"},
+{id:93,type:"match_following",difficulty:"medium",subtopic:"Paththupattu",stem:"Match the following Paththupattu poem with its number in the list:\nList I:\nA. Maduraikanchi\nB. Mullaipattu\nC. Nedunalvadai\nD. Malaipadukadam\nList II:\n1. 7th\n2. 5th\n3. 6th\n4. 10th",options:["(a) A-3, B-2, C-1, D-4","(b) A-2, B-3, C-4, D-1","(c) A-3, B-4, C-2, D-1","(d) A-1, B-2, C-3, D-4"],correct:0,explanation:"Per the textbook list: Mullaipattu=5th; Maduraikanchi=6th; Nedunalvadai=7th; Malaipadukadam=10th. So A-3(6th), B-2(5th), C-1(7th), D-4(10th). Option (a) is correct.",trap:"Students confuse the numbering. Maduraikanchi (6th) and Nedunalvadai (7th) are adjacent and easily swapped.",pyq:""},
+{id:94,type:"statement_based",difficulty:"medium",subtopic:"Chera ports",stem:"Consider the following about the Chera kingdom's maritime connections:\nI. The ports of Musiri and Tondi were under Chera control on the west coast.\nII. Chenguttuvan ensured the safety of the great port Musiri by putting down piracy.\nIII. The Chera king received resources from the hills and the port of Musiri.\nIV. Vanji and Musiri were both located in present-day Tamil Nadu.\nWhich statements are correct?",options:["(a) I and II only","(b) I, II and III only","(c) I, II, III and IV","(d) II, III and IV only"],correct:1,explanation:"Statements I, II and III are correct per the textbook. Statement IV is WRONG—Vanji is debated (Karur in TN OR Tiruvanchikkalam in Kerala); the textbook notes TWO branches. Musiri was on Kerala coast.",trap:"Statement IV is the trap. Vanji's location is contested; the textbook does NOT definitively place both Vanji and Musiri in Tamil Nadu.",pyq:""},
+{id:95,type:"one_liner",difficulty:"medium",subtopic:"Society and Economy",stem:"The textbook mentions that the names of persons on inscriptions in craft centres reveal the presence of which community?",options:["(a) Buddhist monks who managed craft centres","(b) Non-Tamil speakers, mostly traders","(c) Brahmin priests who blessed the workshops","(d) Soldiers who protected trade routes"],correct:1,explanation:"The textbook states: 'The names of persons mentioned in inscriptions on pottery reveal the presence of non-Tamil speakers, mostly traders, in certain craft centres and towns.'",trap:"Students may assume the inscriptions reveal Buddhist or Brahmin presence, common in other contexts.",gem:"Non-Tamil inscriptions in Tamil craft centres prove that ancient Tamil urban centres were genuinely cosmopolitan and ethnically diverse.",pyq:""},
+{id:96,type:"assertion_reason",difficulty:"medium",subtopic:"Age of Kalabhras – Religion",stem:"Assertion (A): The scholars of the orthodox Vedic-Puranic school created the impression that the ruling Kalabhras were evil in nature.\nReason (R): During the Kalabhra period, non-orthodox religions—Jainism and Buddhism—became more influential.",options:["(a) Both A and R are true, and R is the correct explanation of A","(b) Both A and R are true, but R is NOT the correct explanation of A","(c) A is true but R is false","(d) A is false but R is true"],correct:0,explanation:"Both A and R are correct. R directly explains A—the Vedic scholars' negative portrayal of Kalabhras was motivated by the rise of Jainism and Buddhism during that period.",trap:"Some students may think the reason needs to be more specific (e.g., 'Kalabhras destroyed Brahmin land grants'). But R as stated in the textbook is given as the explanation.",pyq:""},
+{id:97,type:"two_statement",difficulty:"medium",subtopic:"Satavahanas – Pliny",stem:"Consider the following:\nStatement 1: Pliny's work mentions 30 walled towns in the Andhra country with a large army, cavalry and elephant force.\nStatement 2: Pliny the Elder's Natural History was composed in the 2nd century CE.",options:["(a) Statement 1 is correct only","(b) Statement 2 is correct only","(c) Both statements are correct","(d) Neither statement is correct"],correct:0,explanation:"Statement 1 is CORRECT: 'The work of Pliny talks about 30 walled towns, a large army, cavalry and elephant force in the Andhra country.' Statement 2 is WRONG: Pliny the Elder's Natural History is from the 1st century CE, not 2nd.",trap:"Ptolemy's Geography is 2nd century CE. Pliny is 1st century CE. This date confusion is a classic TNPSC trap.",pyq:""},
+{id:98,type:"one_liner",difficulty:"medium",subtopic:"Sangam Age – Keeladi",stem:"The local name for the smoothened rounded pieces of pottery shards used as game pieces at Keeladi is:",options:["(a) Sillu","(b) Hopscotch","(c) Gamesmen","(d) Terracotta toy"],correct:0,explanation:"The textbook states: 'The flat portions of the potsherds are generally grounded and the edges smoothened to bring a round shape locally called 'sillu'. They were used as game pieces.'",trap:"Hopscotch and gamesmen are also found at Keeladi but are separate artefact categories. 'Sillu' is the specific local name for potsherd game pieces.",pyq:""},
+{id:99,type:"fill_blank",difficulty:"medium",subtopic:"Sangam literature",stem:"The Ettuthogai and Paththupattu collections have about ___ poems in total, varying from 3 to 800 lines.",options:["(a) 1800","(b) 2400","(c) 3000","(d) 4500"],correct:1,explanation:"The textbook states: 'Ettuthogai and Paththupattu collections have about 2400 poems. These poems, varying in length from 3 to 800 lines, were composed by Panar and pulavar.'",trap:"1800 and 3000 are plausible estimates. The exact figure 2400 comes directly from the textbook.",pyq:""},
+{id:100,type:"one_liner",difficulty:"medium",subtopic:"The Muvendar – Pandyas",stem:"The Velvikkudi copper plates of the 8th century mention Mudukudimi-Peruvazhuthi for which reason?",options:["(a) His military victory at Talayalanganam","(b) His donation of land to Brahmans","(c) His performance of the asvamedha sacrifice","(d) His patronage of the Tamil Sangam"],correct:1,explanation:"The textbook states: 'Mudukudimi-Peruvazhuthi is referred to in the Velvikkudi copper plates of eighth century for donating land to Brahmans.'",trap:"Talayalanganam is linked to Nedunchezhiyan, not Mudukudimi. The asvamedha is a Satavahana association.",gem:"The 8th-century copper plates referencing a Sangam-age king shows the long memory of Tamil royal tradition and the importance of ancestor legitimation.",pyq:""},
+{id:101,type:"statement_based",difficulty:"medium",subtopic:"Sangam Age – Keeladi – Agriculture",stem:"Based on Keeladi excavation findings regarding agriculture and cattle rearing, which animals were identified from skeletal samples?\nI. Cow/Ox\nII. Horse\nIII. Blackbuck\nIV. Peacock\nV. Wild boar",options:["(a) I, III, IV and V only","(b) I, II, III and IV only","(c) I, II, III, IV and V","(d) I, III and V only"],correct:0,explanation:"From the textbook list (70 samples, Deccan College analysis): Cow/Ox, Buffalo, Sheep, Goat, Nilgai, Blackbuck, Wild boar and Peacock. Horse is NOT in the list. So I, III, IV and V are correct; II (Horse) is absent.",trap:"Horse is tempting since horses were significant in ancient India. But the Keeladi list specifically does not include horses.",pyq:""},
+{id:102,type:"one_liner",difficulty:"medium",subtopic:"Sangam Age – Keeladi",stem:"The water and sewage management system at Korkai used terracotta pipes with perforations kept one above the other in how many courses?",options:["(a) 5 courses","(b) 9 courses","(c) 15 courses","(d) 29 courses"],correct:1,explanation:"The textbook states: 'terracotta pipes with perforations in 9 courses kept one above the other is considered the cutting-edge technique of that period.'",trap:"29 courses refers to the number of BRICK courses in the structure. 9 courses is specifically for the perforated terracotta pipes.",pyq:""},
+{id:103,type:"two_statement",difficulty:"medium",subtopic:"Political Ascendancy – Vendar",stem:"Consider the following:\nStatement 1: The Vendar emerged from the chiefs of the Iron Age (c. 1100–300 BCE).\nStatement 2: The Iron Age chiefs in marginal regions who could not effectively control agricultural territories remained as Vendar.",options:["(a) Statement 1 is correct only","(b) Statement 2 is correct only","(c) Both statements are correct","(d) Neither statement is correct"],correct:0,explanation:"Statement 1 is CORRECT: 'From the chiefs of the Iron Age (c. 1100-300 BCE) emerged the Vendar of the early historic period.' Statement 2 is WRONG: those in marginal regions remained as VELIR (chieftains), not Vendar.",trap:"Statement 2 reverses the Velir-Vendar distinction. Marginal chiefs → Velir; powerful agricultural chiefs → Vendar.",pyq:""},
+{id:104,type:"assertion_reason",difficulty:"medium",subtopic:"Society and Economy – War",stem:"Assertion (A): Endemic warfare in the Sangam Age created conditions for social disparities.\nReason (R): The wars waged by the Vendar were aimed at expanding their territorial base by annexing enemy territories.",options:["(a) Both A and R are true, and R is the correct explanation of A","(b) Both A and R are true, but R is NOT the correct explanation of A","(c) A is true but R is false","(d) A is false but R is true"],correct:1,explanation:"Both A and R are true. R explains the nature/purpose of war (territorial expansion) but the textbook links social disparities to war through a separate mechanism—'endemic warfare presumably created conditions for social disparities.' R is a true fact but only partially explains A.",trap:"Students may think R fully explains A. But the causal mechanism (war→slavery/war captives→social disparities) is more specific than R's territorial explanation.",pyq:""},
+{id:105,type:"one_liner",difficulty:"medium",subtopic:"Ideology and Religion",stem:"What role did Chandragupta Maurya's movement to Karnataka have in early South Indian religion?",options:["(a) He introduced Buddhism to South India","(b) He is associated with a legend about movement to Karnataka before Ashoka's time (Jain tradition)","(c) He built the first Buddhist stupa in South India","(d) He composed the first Tamil-Brahmi inscriptions"],correct:1,explanation:"The textbook mentions: 'There is a legend associated with the movement of Chandragupta Maurya to Karnataka region before the time of Ashoka.' This is the Jain tradition of Chandragupta becoming a Jain monk.",trap:"Option (a) confuses Ashoka with Chandragupta. It was Ashoka who spread Buddhism; Chandragupta's Karnataka connection is the Jain tradition.",gem:"Jain tradition holds that Chandragupta abdicated, became a Jain monk under Bhadrabahu, and died at Shravanabelagola in Karnataka.",pyq:""},
+{id:106,type:"one_liner",difficulty:"medium",subtopic:"Chola agriculture",stem:"What development did Karikalan achieve with the Kaveri river for agriculture?",options:["(a) He built a dam across the Kaveri and drained it for farming","(b) He provided irrigation through embankment of the Kaveri and built reservoirs","(c) He diverted the Kaveri to Uraiyur for drinking water","(d) He cleared the Kaveri delta for pearl fishing"],correct:1,explanation:"The textbook states: 'He is credited with converting forest into habitable regions and developing agriculture by providing irrigation through the embankment of the Kaveri and building reservoirs.'",trap:"Option (a) has 'dam' which sounds similar but 'embankment' is different from a dam. Option (d) confuses pearl fishing (Pandya/Korkai).",gem:"Karikalan's irrigation works in the Kaveri delta are the earliest recorded large-scale hydraulic engineering in Tamil Nadu.",pyq:""},
+{id:107,type:"fill_blank",difficulty:"medium",subtopic:"Adichanallur",stem:"The iron weapons unearthed in Adichanallur total ___ in number, including lances, spears, and stilettos.",options:["(a) 12","(b) 18","(c) 27","(d) 32"],correct:3,explanation:"The textbook states: 'Iron weapons 32 in number, including lances, spears, stilettos.'",trap:"12, 18, and 27 are plausible numbers. The specific figure 32 is from the textbook description of Adichanallur iron weapons.",pyq:""},
+{id:108,type:"one_liner",difficulty:"medium",subtopic:"Ideology and Religion",stem:"The Krishna and Godavari delta of Andhra was significant for which religion?",options:["(a) Jainism","(b) Vedic Brahmanism","(c) Buddhism","(d) Shaivism"],correct:2,explanation:"The textbook states: 'The Krishna and Godavari delta of Andhra had many important Buddhist centres. Archaeological excavations conducted in Amaravathi, Nagarjunakonda, etc. show how deep-rooted was Buddhism.'",trap:"Jainism was influential in Tamil Nadu but Buddhism dominated the Andhra river deltas. Shaivism came much later.",pyq:""},
+{id:109,type:"two_statement",difficulty:"medium",subtopic:"Adichanallur – Beads",stem:"Consider the following about ornaments and beads at Keeladi:\nStatement 1: Gold ornaments found numbered seven pieces.\nStatement 2: The beads numbering over 4,000 include only agate, carnelian and glass types.",options:["(a) Statement 1 is correct only","(b) Statement 2 is correct only","(c) Both statements are correct","(d) Neither statement is correct"],correct:0,explanation:"Statement 1 is CORRECT: 'Gold ornaments (seven pieces).' Statement 2 is WRONG—the textbook lists glass, paste, quartz, faience, agate, carnelian AND terracotta beads—not just three types.",trap:"Statement 2 gives only some of the bead types. The textbook lists: glass, paste, quartz, faience, agate, carnelian and terracotta—seven types.",pyq:""},
+{id:110,type:"one_liner",difficulty:"medium",subtopic:"The Muvendar – Pandyas",stem:"The Paratavar are described in the textbook as a community of the Tirunelveli coast. What was their primary occupation?",options:["(a) Weaving","(b) Martial and fishing","(c) Agriculture and cattle rearing","(d) Trading and money lending"],correct:1,explanation:"The textbook describes Nedunchezhiyan as 'the overlord of the southern Paratavar, a martial and fishing community of the Tirunelveli coast.'",trap:"Cattle rearing is associated with Mullai; weaving is an urban craft occupation. The Paratavar are specifically described as martial AND fishing.",pyq:""},
+
+// ─── HARD ─────────────────────────────────────────────────
+{id:111,type:"statement_based",difficulty:"hard",subtopic:"Sangam Polity – Debate",stem:"Consider the following arguments FOR the view that Sangam polity was a 'pre-state chiefdom':\nI. No social stratification is noticed.\nII. Proper territorial association is absent.\nIII. Destructive warfare inhibited agricultural surplus production needed for state formation.\nIV. No evidence of taxation as in North Indian governments.\nV. Trade played an important role between late 1st century BCE and 3rd century CE.\nWhich of the above are arguments used by those who support the pre-state chiefdom view?",options:["(a) I, II, III and IV only","(b) I, III, IV and V only","(c) II, III, IV and V only","(d) I, II, III, IV and V"],correct:0,explanation:"The textbook lists exactly four arguments for the pre-state chiefdom view (I, II, III, IV). Statement V—'Trade played an important role'—is a COUNTER-ARGUMENT by those who oppose the pre-state view (it supports state formation).",trap:"Statement V sounds supportive of pre-state view but is actually given as a counter-argument supporting the state-society view.",gem:"The debate mirrors global discussions in archaeological theory about what constitutes a 'state' vs. a 'chiefdom'—criteria like surplus production, taxation, and territorial sovereignty.",pyq:"TNPSC Group 1 hardest pattern"},
+{id:112,type:"assertion_reason",difficulty:"hard",subtopic:"Sources – Epigraphic",stem:"Assertion (A): Short inscriptions found on pottery and rings in Tamil Nadu, and at sites like Berenike and Quseir al Qadhim in Egypt, are classified as epigraphic sources.\nReason (R): The presence of such inscriptions outside India proves that Tamil merchants settled permanently in Egypt.",options:["(a) Both A and R are true, and R is the correct explanation of A","(b) Both A and R are true, but R is NOT the correct explanation of A","(c) A is true but R is false","(d) A is false but R is true"],correct:2,explanation:"A is CORRECT—these inscriptions are listed under the Epigraphic sources section. R is WRONG—the inscriptions show trade connections/cultural contacts, not necessarily permanent settlement. The textbook says 'long distance cultural and commercial connections,' not permanent settlement.",trap:"'Long distance commercial connections' ≠ 'permanent settlement.' R makes an overclaim that the textbook does not support.",gem:"Berenike was a major Red Sea port; Tamil pottery found there shows that Indian Ocean trade networks extended deep into the Roman world.",pyq:"TNPSC Group 1 A&R analytical"},
+{id:113,type:"statement_based",difficulty:"hard",subtopic:"Age of Kalabhras",stem:"Consider the following complex statements about the Kalabhra period:\nI. The Kalabhras were a warlike group that occupied the territories of the three traditional Tamil kingdoms.\nII. The Kalabhra period is now accepted by modern historians as a genuine 'dark age' with cultural decline.\nIII. The Tirukkural and the epics Silappathikaram and Manimekalai were composed during the Kalabhra period.\nIV. The rulers of the new states (Pallavas and Pandyas from 6th century) initially patronised Jain and Buddhist religions.\nV. The Bhakti cults of Saivism and Vaishnavism emerged partly as a reaction to the strong Jain and Buddhist influence of the Kalabhra period.\nWhich statements are correct?",options:["(a) I, III, IV and V only","(b) I, II, III and IV only","(c) II, III and V only","(d) I, II, IV and V only"],correct:0,explanation:"Statement I: Correct. Statement II: WRONG—'This idea of the Kalabhra interregnum is no more accepted as correct.' Statement III: Correct. Statement IV: Correct. Statement V: Correct—the Bhakti saints had 'much aversion' to the Jain-Buddhist influence. Correct statements: I, III, IV and V.",trap:"Statement II is the critical wrong one—it states the REJECTED view as if it were accepted. This is a classic hard-level trap.",pyq:"TNPSC Group 1 2022-style five-statement"},
+{id:114,type:"match_following",difficulty:"hard",subtopic:"Complex Match – Dynasties and Successors",stem:"Match the ruling dynasty with its successor in the respective region:\nList I:\nA. Satavahanas in Andhra\nB. Satavahanas in northern Karnataka\nC. Sangam Chera, Chola, Pandya\nD. Ikshvakus in Andhra\nList II:\n1. Pallavas\n2. Disappeared due to Kalabhra invasion\n3. Kadambas\n4. Ikshvakus",options:["(a) A-4, B-3, C-2, D-1","(b) A-1, B-4, C-3, D-2","(c) A-4, B-2, C-3, D-1","(d) A-3, B-4, C-1, D-2"],correct:0,explanation:"Satavahanas in Andhra → Ikshvakus (A-4). Satavahanas in northern Karnataka → Kadambas (B-3). Sangam Tamil kingdoms → disappeared due to Kalabhras (C-2). Ikshvakus in Andhra → Pallavas (D-1). Option (a) is correct.",trap:"Options (b) and (c) mix up who replaced whom. The two-step Andhra succession (Satavahanas→Ikshvakus→Pallavas) is commonly confused.",pyq:"TNPSC Group 1 Hard Match"},
+{id:115,type:"statement_based",difficulty:"hard",subtopic:"Sangam Economy – Counter Arguments",stem:"Consider the following counter-arguments presented AGAINST the 'pre-state chiefdom' view of Sangam polity:\nI. Social differentiation is evident in the Marutham region.\nII. Territorial associations of Muvendar are corroborated by Greco-Roman texts from 1st century CE.\nIII. The Purathinai texts show warfare was only for cattle capture, not territorial expansion.\nIV. Evidence for taxation at Kaviripattinam's highways and port exists.\nV. Trade played an important role between late 1st century BCE and 3rd century CE.\nWhich of the above are counter-arguments per the textbook?",options:["(a) I, II, IV and V only","(b) I, III, IV and V only","(c) I, II, III and V only","(d) I, II, III, IV and V"],correct:0,explanation:"Counter-arguments listed are: I (social differentiation in Marutham), II (Greco-Roman corroboration), IV (taxation evidence), V (trade importance). Statement III is WRONG—the textbook says 'Warfare for TERRITORIAL EXPANSION was a major theme of Puratthinai'—the opposite of cattle capture only.",trap:"Statement III is a direct reversal of the textbook's counter-argument. Puratthinai is cited to PROVE territorial expansion, not to limit warfare to cattle raiding.",pyq:"TNPSC hardest type"},
+{id:116,type:"chronological",difficulty:"hard",subtopic:"Excavations – Complex Order",stem:"Arrange the following South Indian excavation events in chronological order:\n1. AMS dating result showing Keeladi sample goes back to 580 BCE (4th season)\n2. First excavation of Adichanallur by Dr. Jagor\n3. Tamil Nadu State Archaeology Dept excavation at Korkai (1968)\n4. ASI excavation at Adichanallur",options:["(a) 2 → 3 → 4 → 1","(b) 2 → 4 → 3 → 1","(c) 3 → 2 → 4 → 1","(d) 2 → 3 → 1 → 4"],correct:1,explanation:"Jagor excavated in 1876 (2). ASI excavated Adichanallur in 2004 (4). TN Archaeology excavated Korkai in 1968 (3). Keeladi 4th season (2018) AMS results (1). Order: 2(1876) → 3(1968) → 4(2004) → 1(2018). Option (b) is correct.",trap:"Option (a) places Korkai (1968) before ASI Adichanallur (2004) after Jagor (1876)—but Korkai's 1968 date makes it SECOND, not third.",pyq:""},
+{id:117,type:"assertion_reason",difficulty:"hard",subtopic:"Satavahanas – Society",stem:"Assertion (A): The Satavahana land grants were an important development as they created a group of people who owned land but did not cultivate.\nReason (R): This led to the development of land-based social hierarchy because the beneficiaries—mostly Buddhists and Brahmins—invested their surplus in long-distance trade.",options:["(a) Both A and R are true, and R is the correct explanation of A","(b) Both A and R are true, but R is NOT the correct explanation of A","(c) A is true but R is false","(d) A is false but R is true"],correct:2,explanation:"A is CORRECT per the textbook. R is WRONG—the textbook does NOT say the beneficiaries invested in long-distance trade. The textbook says the creation of non-cultivating landowners directly led to 'land-based social hierarchy and divisions in the society.' The trade connection is an addition not supported by the text.",trap:"R sounds academically plausible—a student familiar with medieval India might add the trade-investment angle. But the textbook's explanation focuses on non-cultivation creating hierarchy, not trade.",pyq:"TNPSC Hard A&R"},
+{id:118,type:"statement_based",difficulty:"hard",subtopic:"Tamil Polity – Complex",stem:"Consider these analytical statements about Tamil political hierarchy:\nI. Kizhar were heads of villages/small territories later known as Nadu.\nII. Velir were more numerous than both Kizhar and Vendar.\nIII. Vendar subjugated chieftains and fought with the other two Vendar families.\nIV. The Velir chiefs Athiyaman, Pari, Ay, Evvi and Irungo controlled areas poor in natural resources.\nV. The court of the king where bards were entertained was called 'avaiyam'.\nWhich statements are correct?",options:["(a) I, III and V only","(b) I, II, III and V only","(c) I, II and V only","(d) II, III, IV and V only"],correct:1,explanation:"I: Correct. II: Correct—'The Velir, who were many in number.' III: Correct. IV: WRONG—'Chiefs like Athiyaman, Pari, Ay, Evvi and Irungo each commanded a big area, RICH in natural resources.' V: Correct. Correct statements: I, II, III, V.",trap:"Statement IV is the critical trap—it reverses 'rich' to 'poor.' The Velir's hilly territories were actually RICH in natural resources (minerals, forest products).",pyq:"TNPSC Group 1 five-statement hard"},
+{id:119,type:"fill_blank",difficulty:"hard",subtopic:"Sangam literature – Detailed",stem:"The total number of poets who contributed to the Sangam corpus is over ___; the collection of poems ranges from ___ to ___ lines in length.",options:["(a) 400 poets; 3 to 500 lines","(b) 450 poets; 3 to 800 lines","(c) 500 poets; 5 to 1000 lines","(d) 600 poets; 3 to 800 lines"],correct:1,explanation:"The textbook states: 'Of the over 450 poets who contributed to the corpus of Sangam poetry about thirty are women.' And: 'These poems, varying in length from 3 to 800 lines, were composed by Panar and pulavar.'",trap:"Option (d) has the correct line range but wrong poet count (600 vs 450). Option (a) has wrong upper limit for lines.",pyq:""},
+{id:120,type:"match_following",difficulty:"hard",subtopic:"Velir Chiefs – Attributes",stem:"Match the following Velir chiefs with their description:\nList I:\nA. Athiyaman\nB. Chenguttuvan\nC. Pari, Ay, Evvi\nD. Nedunchezhiyan (Pandya at Talayalanganam)\nList II:\n1. Victory over combined Chera, Chola and five Velir forces\n2. Identified as Satiyaputra in Ashokan inscription\n3. Famous Velir chiefs who were generous patrons of poets\n4. Chera king who suppressed piracy at Musiri",options:["(a) A-2, B-4, C-3, D-1","(b) A-3, B-1, C-2, D-4","(c) A-2, B-3, C-4, D-1","(d) A-1, B-4, C-3, D-2"],correct:0,explanation:"Athiyaman = Satiyaputra in Ashoka (A-2). Chenguttuvan = suppressed piracy at Musiri (B-4). Pari, Ay, Evvi = generous patrons of poets (C-3). Nedunchezhiyan = victory at Talayalanganam (D-1). Option (a) is correct.",trap:"Option (c) incorrectly assigns 'patron of poets' to Chenguttuvan (who is famous for piracy suppression) and 'piracy' to Pari/Ay/Evvi.",pyq:""},
+{id:121,type:"statement_based",difficulty:"hard",subtopic:"Sources – Complex Multi-Source",stem:"Consider the following:\nI. The Purananuru is the 8th anthology in Ettuthogai.\nII. The Mahavamsa is listed under 'Literary Sources' for studying South Indian history.\nIII. The Gatha Saptasati was composed in Maharashtri Prakrit by Hala and contains 700 love poems.\nIV. The Tholkappiyam belongs to the Pathinen Kilkanakku (18 minor works).\nV. The Periplus of Erythrean Sea is categorised under 'Foreign Notices' (Greek/Latin sources).\nWhich statements are correct?",options:["(a) I, II, III and V only","(b) I, III, IV and V only","(c) II, III, IV and V only","(d) I, II, III, IV and V"],correct:0,explanation:"I: Correct (Purananuru is 8th). II: Correct (Mahavamsa listed under Literary sources). III: Correct. IV: WRONG—Tholkappiyam is NOT in Pathinen Kilkanakku; it is the earliest Tamil grammatical text forming part of the Classical Sangam corpus. Pathinen Kilkanakku contains ethical texts like Thirukkural. V: Correct.",trap:"Statement IV is the hard trap. Tholkappiyam is often misplaced into the 'minor works' category. The 18 minor works are post-Sangam ethical texts.",pyq:"TNPSC hard five-statement source analysis"},
+{id:122,type:"chronological",difficulty:"hard",subtopic:"Sangam literature – Paththupattu Order",stem:"Arrange the following Paththupattu (Ten Idylls) in their correct numbered order (1st to 10th):\n1. Kurinjipattu\n2. Sirupanatruppatai\n3. Mullaipattu\n4. Thirumurugatrupatai",options:["(a) 4 → 2 → 3 → 1","(b) 4 → 3 → 2 → 1","(c) 2 → 4 → 3 → 1","(d) 3 → 4 → 2 → 1"],correct:0,explanation:"Per the textbook: Thirumurugatrupatai=1st, Sirupanatruppatai=3rd, Mullaipattu=5th, Kurinjipattu=8th. So the order is 4(1st) → 2(3rd) → 3(5th) → 1(8th). Option (a) is correct.",trap:"Students may confuse Sirupanatruppatai (3rd) and Mullaipattu (5th). The prefix 'Siru' means small, 'Perum' means big—mnemonic for the 3rd and 4th positions.",pyq:""},
+{id:123,type:"assertion_reason",difficulty:"hard",subtopic:"Sangam Polity – Complex",stem:"Assertion (A): The Satiyaputra became weak and did not attain the status of Vendar like the Chola, Pandya and Chera families.\nReason (R): The Satiyaputra's marginal geographical location prevented effective control of pastoral and agricultural regions, keeping them at the Velir level.",options:["(a) Both A and R are true, and R is the correct explanation of A","(b) Both A and R are true, but R is NOT the correct explanation of A","(c) A is true but R is false","(d) A is false but R is true"],correct:0,explanation:"Both A and R are correct. The textbook explicitly states: 'While certain chiefs attained higher status (vendar) through the larger and effective control of pastoral and agricultural regions, others in the marginal regions remained as chieftains (velir). For example, Athiyamans [=Satiyaputra]...' R correctly explains A.",trap:"Students who think 'marginal location' is too simple an explanation may choose (b). But the textbook directly links location→agricultural control→political status.",pyq:"TNPSC Group 1 Hard A&R"},
+{id:124,type:"two_statement",difficulty:"hard",subtopic:"Ideology and Religion – Complex",stem:"Consider the following:\nStatement 1: The varnasrama ideology was well-established in the Tamil region during the Sangam Age, as evidenced by Brahmin domination.\nStatement 2: The evidence for Brahmin movement and Vedic ritual practices is found in the Sangam texts, even though varnasrama had not taken root.",options:["(a) Statement 1 is correct only","(b) Statement 2 is correct only","(c) Both statements are correct","(d) Neither statement is correct"],correct:1,explanation:"Statement 1 is WRONG—the textbook states 'the varnasrama ideology was yet to take root in the Tamil region.' Statement 2 is CORRECT—'The evidence for the movement of Brahmins and the performance of Vedic ritual practices is found in the Sangam texts. But the varnasrama ideology was yet to take root.'",trap:"The nuanced distinction: Brahmins WERE present (Statement 2 true) but varnashrama as a social system had NOT taken root (Statement 1 false). Students confuse Brahmin presence with varnashrama establishment.",pyq:"TNPSC Group 1 hard two-statement nuance"},
+{id:125,type:"statement_based",difficulty:"hard",subtopic:"Complex – Multiple Dynasties",stem:"Consider the following statements about the Satavahana period's importance:\nI. For the first time a big state covering a major part of the Deccan was established.\nII. Rock-cut caves dedicated to Buddha sangha were situated on trade routes linking interior to coastal Konkan.\nIII. The Naneghat inscription records tax collection from merchants and artisans.\nIV. Offering land grants was an important development, benefiting mostly Buddhists and Brahmins.\nV. It was a period of brisk Indo-Roman trade.\nWhich statements are correct?",options:["(a) I, II, IV and V only","(b) I, II, III and V only","(c) I, III, IV and V only","(d) I, II, III, IV and V"],correct:0,explanation:"I: Correct. II: Correct. III: WRONG—Naneghat records TAX EXEMPTIONS on Buddhist monk lands, not tax collection from merchants. IV: Correct. V: Correct. Correct statements: I, II, IV, V.",trap:"Statement III is a subtle reversal. The Naneghat inscription records TAX EXEMPTIONS (concessions), not tax collection. Students familiar with inscriptions may get this right, but it's a hard distinction.",pyq:"TNPSC Group 1 five-statement hard"},
+{id:126,type:"one_liner",difficulty:"hard",subtopic:"Complex – Not Correct",stem:"Which of the following statements is NOT correct according to the textbook?",options:["(a) Kalabhras were Saivites","(b) Ikshvakus supported Vedic sacrifices","(c) The Kalabhra kingdom was uprooted by Pandyas around the third quarter of sixth century CE","(d) Salt merchants were called umanar"],correct:0,explanation:"This is from the textbook exercise Q.5. The wrong statements are (i) Kalabhras were Saivites and (ii) Kalabhras defeated Pallavas and Pandyas. The textbook exercise answer (a) confirms 'i and ii' as wrong; within those, (i) 'Kalabhras were Saivites' = WRONG since Kalabhras patronised Jainism and Buddhism, not Saivism.",trap:"Students confuse Kalabhra religious affiliation. Kalabhras are associated with Jainism/Buddhism. The Bhakti (Saiva/Vaishnava) reaction came AFTER this period.",gem:"This question directly tests the textbook's exercise answer, converting it to a 'NOT correct' format—a common TNPSC transformation.",pyq:"Textbook Exercise Q.5 – TNPSC adapted"},
+{id:127,type:"statement_based",difficulty:"hard",subtopic:"Complex – Five Forces at Talayalanganam",stem:"Consider the following about the battle of Talayalanganam:\nI. The Pandya king Nedunchezhiyan won this battle against a combined force.\nII. The combined force included the Chera king, the Chola king and FIVE Velir chieftains.\nIII. The five Velir chieftains were: Thithiyan, Elini, Erumaiyuran, Irungovenman and Porunan.\nIV. After this victory, Nedunchezhiyan captured Milalai and Mutthuru from a Vel chief in Pudukottai district.\nV. He is praised as the lord of Korkai and overlord of Paratavar of the northern coast.\nWhich statements are correct?",options:["(a) I, II, III and IV only","(b) I, II, III, IV and V","(c) I, III, IV and V only","(d) I, II, IV and V only"],correct:0,explanation:"Statements I, II, III and IV are correct. Statement V is WRONG—he is the overlord of SOUTHERN Paratavar of the TIRUNELVELI coast (not northern coast). V replaces 'southern' and 'Tirunelveli' with 'northern'.",trap:"Statement V sounds right because Korkai is on the south coast. Students may not notice the 'northern' inversion.",pyq:"TNPSC hard five-statement with geographical trap"},
+{id:128,type:"two_statement",difficulty:"hard",subtopic:"Sangam Age – Complex Chera",stem:"Consider the following:\nStatement 1: Chenguttuvan is said to have defeated many chieftains but his great north Indian expedition is not mentioned in the Sangam poems—only in Silappathikaram.\nStatement 2: The two main branches of the Chera family were the Poraiya branch (ruling from Karur, Tamil Nadu) and the Tiruvanchikkalam branch.",options:["(a) Statement 1 is correct only","(b) Statement 2 is correct only","(c) Both statements are correct","(d) Neither statement is correct"],correct:2,explanation:"Both statements are correct. Statement 1: The textbook explicitly says the north Indian expedition 'is however not mentioned in the Sangam poems.' Statement 2: The textbook states 'two main branches of the Chera family and the Poraiya branch ruled from Karur of present-day Tamil Nadu'—implying the other is the Tiruvanchikkalam branch.",trap:"Statement 2 requires inference about the second branch. The textbook mentions Tiruvanchikkalam as one identification of Vanji—making the two-branch identification correct.",pyq:""},
+{id:129,type:"assertion_reason",difficulty:"hard",subtopic:"Keeladi – Indus Comparison",stem:"Assertion (A): Keeladi Excavation on the banks of Vaigai suggests that urbanization occurred in Tamil Nadu around the 6th century BCE, similar to the Gangetic plains.\nReason (R): Similarities between Keeladi graffiti and signs of the Indus Valley Civilisation prove that Tamil urbanization was a direct continuation of the Indus Civilisation.",options:["(a) Both A and R are true, and R is the correct explanation of A","(b) Both A and R are true, but R is NOT the correct explanation of A","(c) A is true but R is false","(d) A is false but R is true"],correct:2,explanation:"A is CORRECT—the textbook explicitly states 'Keeladi Excavation...suggests that urbanization occured in Tamil Nadu too around 6th century BCE like in the Gangetic plains.' R is WRONG—the textbook only notes similarities between graffiti signs; it does NOT claim Keeladi is a 'direct continuation' of Indus Civilisation. That is an over-interpretation.",trap:"The similarity in graffiti signs is shown in the textbook but is presented carefully as 'similarities'—not as proof of direct cultural inheritance or continuation.",gem:"The parallel urbanization (6th century BCE: Keeladi in Tamil Nadu, Gangetic cities in North India) supports a multi-regional model of South Asian urbanization rather than a single Gangetic origin narrative.",pyq:"TNPSC Group 1 A&R analytical hard"},
+{id:130,type:"statement_based",difficulty:"hard",subtopic:"Ideology and Religion – Complex",stem:"Consider the following about religion in South India:\nI. The earliest formal religious activity in South India is linked to Buddhism arriving in the time of Ashoka.\nII. The Satavahanas, Sangam kings AND Ikshvakus all supported Vedic sacrifices.\nIII. The cave shelters with Tamil Brahmi inscriptions in Tamil Nadu are evidence for Buddhism, not Jainism.\nIV. In the post-Sangam centuries, Jain contributions to Tamil literature were substantial.\nV. The movement of Chandragupta Maurya to Karnataka is connected to a Jain legend predating Ashoka.\nWhich statements are correct?",options:["(a) I, II, IV and V only","(b) I, III, IV and V only","(c) I, II, III and IV only","(d) I, II, III, IV and V"],correct:0,explanation:"I: Correct. II: Correct—all three groups supported Vedic sacrifices per the textbook. III: WRONG—cave shelters show JAINISM was influential, not Buddhism (the reverse). IV: Correct. V: Correct. Correct: I, II, IV, V.",trap:"Statement III is a critical reversal. Cave shelters with Tamil Brahmi inscriptions = Jainism, NOT Buddhism. Buddhism was limited to a few sites; Jainism was pervasive across Tamil Nadu.",pyq:"TNPSC Group 1 hard religious history"},
+{id:131,type:"fill_blank",difficulty:"hard",subtopic:"Sangam literature – Numerical",stem:"The eight Ettuthogai anthologies contain poems composed by Panar and pulavar. The total length of individual poems ranges from ___ to ___ lines. Of the total Sangam poets, women composed more than ___ poems.",options:["(a) 3 to 600 lines; 100 poems","(b) 3 to 800 lines; 150 poems","(c) 5 to 800 lines; 200 poems","(d) 3 to 1000 lines; 150 poems"],correct:1,explanation:"The textbook gives: '3 to 800 lines' (poem range) and 'more than 150 poems' (women poets). Only option (b) has BOTH correct values.",trap:"Option (d) has the right women's poems count but wrong upper line limit (1000 vs 800). Option (a) has wrong upper limit (600) and wrong women's poems count.",pyq:""},
+{id:132,type:"match_following",difficulty:"hard",subtopic:"Hard Match – Texts and Content",stem:"Match the following literary/epigraphic sources with their specific content:\nList I:\nA. Maduraikanchi\nB. Pattinappalai\nC. Naneghat inscription\nD. Nashik inscription (Gautami Balashri)\nList II:\n1. Describes Karikalan's reign and Kaviripattinam trade\n2. Refers to day markets and night markets in Madurai\n3. Mentions Gautamiputra as conqueror of Shakas, Pahlavas, Yavanas\n4. Refers to tax exemptions for Buddhist monk lands",options:["(a) A-2, B-1, C-4, D-3","(b) A-1, B-2, C-3, D-4","(c) A-2, B-3, C-1, D-4","(d) A-3, B-1, C-2, D-4"],correct:0,explanation:"Maduraikanchi=day/night markets (A-2). Pattinappalai=Karikalan/Kaviripattinam (B-1). Naneghat inscription=tax exemptions for Buddhist lands (C-4). Nashik inscription=Gautamiputra's conquests (D-3). Option (a) is correct.",trap:"Options (b) and (d) confuse Nashik with Naneghat. Nashik = Gautamiputra's victories; Naneghat = tax exemptions. These two sites are commonly confused.",pyq:"TNPSC Group 1 hard source-content match"},
+{id:133,type:"statement_based",difficulty:"hard",subtopic:"Sangam Polity – Analytical",stem:"Consider the following about the classification of the Muvendar as 'state' or 'pre-state':\nI. Greco-Roman texts from the 1st century CE corroborate the important position of the Muvendar.\nII. Warfare in Sangam poetry (Puratthinai) was exclusively for cattle capture, showing pre-state nature.\nIII. Social differentiation is evident in the Marutham (agricultural) region, countering the 'no stratification' argument.\nIV. Trade played an important role between late 1st century BCE and 3rd century CE—cited as a counter-argument for state formation.\nV. The Chera king receiving resources from hills and port of Musiri suggests proto-taxation.\nWhich of the above are COUNTER-ARGUMENTS against the 'pre-state chiefdom' view?",options:["(a) I, III, IV and V only","(b) I, II, III and V only","(c) I, II, IV and V only","(d) I, III, V only"],correct:0,explanation:"Counter-arguments against pre-state view (per textbook): I (Greco-Roman corroboration). III (Marutham social differentiation). IV (Trade importance). V (Chera taxation evidence). Statement II is WRONG as a counter-argument—Puratthinai is cited as showing TERRITORIAL EXPANSION warfare (counter-argument), not cattle capture warfare.",trap:"Statement II reverses the Puratthinai argument. The textbook uses Puratthinai to show warfare for TERRITORIAL EXPANSION as a counter-argument—not cattle capture.",pyq:"TNPSC Group 1 hardest analytical"},
+{id:134,type:"two_statement",difficulty:"hard",subtopic:"Complex – Chola succession",stem:"Consider the following:\nStatement 1: The succession dispute after Karikalan's death was between the Puhar and Uraiyur branches, and Uraiyur was the main capital while Puhar/Kaviripattinam was the chief port town.\nStatement 2: The poem Pattinappalai was composed by the poet Katiyalur Uruttirankannanar for the Chola king Karikalan, who gifted him a large amount of gold coins.",options:["(a) Statement 1 is correct only","(b) Statement 2 is correct only","(c) Both statements are correct","(d) Neither statement is correct"],correct:2,explanation:"Both are correct. Statement 1: Correct—Uraiyur=main capital; Puhar=alternative royal residence and chief port. Statement 2: Correct—'Pattinappalai, composed by the poet Katiyalur Uruttirankannanar' and 'Karikalan is said to have offered a huge amount of gold coins to Uruttirankannanar who composed Pattinappalai.'",trap:"Statement 1 uses 'main capital' vs 'alternative'—students may reverse these. Uraiyur is the CAPITAL; Puhar is ALTERNATIVE royal residence.",pyq:""},
+{id:135,type:"chronological",difficulty:"hard",subtopic:"Hard Chronology – Sangam texts and events",stem:"Arrange the following in correct chronological order based on the textbook:\n1. Ashoka's Rock Edict II mentioning Tamil kingdoms\n2. Satavahana Empire's decline\n3. Sangam Age (generally accepted beginning)\n4. Keeladi urbanisation (580 BCE dating)",options:["(a) 4 → 1 → 3 → 2","(b) 1 → 4 → 3 → 2","(c) 4 → 3 → 1 → 2","(d) 3 → 4 → 1 → 2"],correct:0,explanation:"Keeladi urbanisation (580 BCE)=earliest (4). Ashoka's edicts c. 270-230 BCE (1). Sangam Age generally accepted beginning = last 3 centuries BCE = c. 300 BCE, but archaeological evidence suggests 2 centuries earlier; the widely accepted literary start is 300 BCE—so Ashoka (c. 270-230 BCE) overlaps early Sangam. However per the textbook's sequence: Keeladi 580 BCE→ Ashoka 3rd century BCE→ Sangam period (last 3 BCE to 3 CE)→ Satavahanas declined 3rd century CE. Order: 4→1→3→2.",trap:"The Sangam period starts c. 300 BCE and Ashoka is c. 270 BCE—they nearly overlap. The key is Keeladi (580 BCE) comes before both.",pyq:"TNPSC hardest chronology"},
+{id:136,type:"assertion_reason",difficulty:"hard",subtopic:"Satavahanas – Trade and Buddhism",stem:"Assertion (A): Buddhist rock-cut caves in the Deccan were strategically situated on trade routes linking the interior to the Konkan coast.\nReason (R): Buddhist monks engaged in trade activities themselves to fund the construction of these caves.",options:["(a) Both A and R are true, and R is the correct explanation of A","(b) Both A and R are true, but R is NOT the correct explanation of A","(c) A is true but R is false","(d) A is false but R is true"],correct:2,explanation:"A is CORRECT. R is WRONG—the textbook does not state that Buddhist monks engaged in trade themselves. The caves were on trade routes to receive patronage FROM merchants, not because monks traded. Buddhist vinaya rules actually prohibited monks from trading.",trap:"R sounds historically plausible to students who conflate Buddhist institution finance with monk personal trade. The textbook's explanation is: caves on trade routes = strategic for receiving merchant donations.",pyq:"TNPSC Group 1 Hard A&R – factual accuracy"},
+{id:137,type:"statement_based",difficulty:"hard",subtopic:"Chola – Complex",stem:"Consider the following about the Chola kingdom:\nI. The core area of Chola rule was the Kaveri delta, later known as Cholamandalam.\nII. Kaviripattinam attracted merchants from various regions of the Indian Ocean.\nIII. Karikalan's military achievement of defeating eleven Velir chieftains at Venni is described in the Pattinappalai.\nIV. After Karikalan, the succession dispute was between three branches of the Chola family.\nV. The emblem of the Cholas was the tiger, and Uraiyur was both their capital and main port.\nWhich statements are correct?",options:["(a) I, II and III only","(b) I, II, III and V only","(c) I, II only","(d) I, II, III, IV and V"],correct:0,explanation:"I: Correct. II: Correct. III: Correct. IV: WRONG—'succession dispute between the PUHAR AND URAIYUR branches'—only TWO branches, not three. V: WRONG—Uraiyur was the capital but PUHAR/KAVIRIPATTINAM was the main port (alternative royal residence). Correct: I, II, III.",trap:"Statement V has two claims—'tiger emblem' (correct) and 'Uraiyur = main port' (wrong, Uraiyur = capital). The compound nature makes it hard.",pyq:""},
+{id:138,type:"fill_blank",difficulty:"hard",subtopic:"Hard – Satavahana Numerical",stem:"According to Pliny's work, the Andhra country under the Satavahanas had ___ walled towns.",options:["(a) 20","(b) 25","(c) 30","(d) 35"],correct:2,explanation:"The textbook states: 'The work of Pliny talks about 30 walled towns, a large army, cavalry and elephant force in the Andhra country.'",trap:"Twenty-five and thirty-five are close distractors. The exact number 30 is stated in the textbook.",pyq:"TNPSC Group 1 numerical"},
+{id:139,type:"two_statement",difficulty:"hard",subtopic:"Hard – Pandya Kingdom Complex",stem:"Consider the following:\nStatement 1: The Pandyas patronised the Tamil Sangams and facilitated the compilation of Sangam poems—this is confirmed by contemporaneous epigraphic evidence.\nStatement 2: The Sangam poems mention the names of several Pandya kings but their succession and regnal years are not clearly established.",options:["(a) Statement 1 is correct only","(b) Statement 2 is correct only","(c) Both statements are correct","(d) Neither statement is correct"],correct:1,explanation:"Statement 1 is WRONG in its second part: 'According to TRADITION, they patronized the Tamil Sangams'—this is traditional belief, NOT confirmed by contemporaneous epigraphic evidence. Statement 2 is CORRECT: 'The Sangam poems mention the names of several kings, but their succession and regnal years are not clear.'",trap:"Statement 1's first part (Pandyas patronised Sangams) is commonly accepted but the textbook qualifies it as 'tradition,' not epigraphic certainty. The claim of 'confirmed by contemporary epigraphy' makes Statement 1 wrong.",pyq:"TNPSC Group 1 hardest two-statement source criticism"},
+{id:140,type:"statement_based",difficulty:"hard",subtopic:"Hard – Keeladi Complex",stem:"Consider ALL the following claims about Keeladi excavations:\nI. The AMS dating (4th season, 2018) shows the sample at 353cm depth dates to 580 BCE.\nII. Keeladi bricks have the same ratio as Indus Valley bricks (1:4:6).\nIII. Red earthenware at Keeladi resembles Arretineware of Rome (2nd century BCE).\nIV. Among the species identified from Keeladi, Peacock (Pavo cristatus) was found.\nV. The total number of beads found at Keeladi exceeds 5,000.\nWhich statements are correct?",options:["(a) I, III and IV only","(b) I, II, III and IV only","(c) I, III, IV and V only","(d) I, II, III, IV and V"],correct:0,explanation:"I: Correct. II: WRONG—the brick ratio 1:4:6 is stated as 'similar to other Sangam Age excavated sites'—NOT specifically stated to match Indus Valley bricks (which have a different standard ratio of 1:2:4). III: Correct. IV: Correct (Peacock=Pavo cristatus is in the list). V: WRONG—the textbook says 'over 4,000' beads, not 5,000.",trap:"Statement II is a false Indus-Keeladi link (the similarity is between Sangam sites, not specifically Indus). Statement V inflates 4,000 to 5,000.",pyq:"TNPSC Group 1 hardest Keeladi five-statement"},
+{id:141,type:"assertion_reason",difficulty:"hard",subtopic:"Hard – Ideology Complex",stem:"Assertion (A): In the post-Sangam period, the rulers of the Pallava and Pandya states were initially patrons of Jain and Buddhist religions.\nReason (R): This was because Jain and Buddhist religions had such a strong influence on general society that the Bhakti saints developed 'much aversion' to them.",options:["(a) Both A and R are true, and R is the correct explanation of A","(b) Both A and R are true, but R is NOT the correct explanation of A","(c) A is true but R is false","(d) A is false but R is true"],correct:1,explanation:"Both A and R are stated in the textbook. A: Correct—early Pallavas and Pandyas were Jain/Buddhist patrons. R: The textbook says Jain/Buddhist influence on society was strong, evoking Bhakti saint 'aversion.' But R describes a CONSEQUENCE of A (why Bhakti reacted), not why the rulers BECAME Jain/Buddhist patrons. R is a true statement but doesn't explain A. Hence (b).",trap:"Students may think R explains why rulers chose Jain/Buddhism (popular religion = political patronage). But R specifically explains the reaction AGAINST these religions, not the initial adoption.",pyq:""},
+{id:142,type:"statement_based",difficulty:"hard",subtopic:"Hard – Sangam literary sources",stem:"Consider the following:\nI. Silappathikaram and Manimekalai are epics from the post-Sangam (Kalabhra) period.\nII. Silappathikaram is specifically useful for insights into cultural and religious history.\nIII. Patinen Kilkanakku texts include the Thirukkural and Naladiyar as most important.\nIV. Paththupattu poems were composed exclusively by Panar (bards), not Pulavar (scholars).\nV. The Classical Sangam corpus consists of Tholkappiyam, Ettuthogai and Paththupattu.\nWhich statements are correct?",options:["(a) I, II, III and V only","(b) I, III, IV and V only","(c) II, III, IV and V only","(d) I, II, III, IV and V"],correct:0,explanation:"I: Correct. II: Correct. III: Correct—the textbook says 'The most important of them are Thirukkural, and Naladiyar.' IV: WRONG—both Paththupattu AND Ettuthogai poems 'were composed by Panar and pulavar' (both types). V: Correct.",trap:"Statement IV is the trap—both Panar and Pulavar composed the poems. The textbook says 'composed by Panar and pulavar,' not exclusively Panar.",pyq:""},
+{id:143,type:"two_statement",difficulty:"hard",subtopic:"Hard – Complex Comparison",stem:"Consider the following:\nStatement 1: Sangam Age warfare by Vendar was for territorial expansion (as shown by Puratthinai), and also included war captives serving in cult centres, suggesting early forms of slavery.\nStatement 2: Women were not actively engaged in economic production during the Sangam Age, which explains the small number of women poets.",options:["(a) Statement 1 is correct only","(b) Statement 2 is correct only","(c) Both statements are correct","(d) Neither statement is correct"],correct:0,explanation:"Statement 1 is CORRECT: The textbook mentions both 'Warfare for territorial expansion was a major theme of Puratthinai' (counter-argument) AND 'War captives serving in some cult centres are mentioned. Some references to slaves are also found.' Statement 2 is WRONG: 'Women were actively engaged in economic production and there were a significant number of women poets in the Sangam Age.'",trap:"Statement 2 directly contradicts the textbook—it reverses the truth. Women WERE active in economic production AND poetry.",pyq:"TNPSC Group 1 hard two-statement"},
+{id:144,type:"assertion_reason",difficulty:"hard",subtopic:"Hard – Coins and Trade",stem:"Assertion (A): Roman coins in Tamil Nadu sites were used as regular legal currency alongside local coinage in everyday Sangam-period transactions.\nReason (R): The wealth brought by Romans and arrival of foreign merchants is evidenced both in archaeology and literature.",options:["(a) Both A and R are true, and R is the correct explanation of A","(b) Both A and R are true, but R is NOT the correct explanation of A","(c) A is true but R is false","(d) A is false but R is true"],correct:3,explanation:"A is WRONG—Roman coins 'circulated as bullion,' NOT as regular legal currency. R is CORRECT—the textbook says evidence of Roman wealth is found 'in archaeology as well as literature.' Hence (d): A is false but R is true.",trap:"Students may accept A as true because Roman coins were 'circulated' (implies currency). The key word is 'bullion'—they had metal value, not currency function. R is independently correct.",pyq:"TNPSC Group 1 hardest A&R where A is false"},
+{id:145,type:"statement_based",difficulty:"hard",subtopic:"Hard – Five-Statement Political",stem:"Consider the following about the three-level hierarchy in Tamil polity:\nI. Kizhar were the lowest level—heads of villages or small territories (Nadu).\nII. Velir controlled territories of varied geographical nature, mainly hilly and forest areas.\nIII. Vendar were kings controlling larger, fertile territories.\nIV. The Velir always submitted to the Muvendar and never formed alliances with them.\nV. The Velir had military power and there were frequent wars among them over cattle capture.\nWhich statements are correct?",options:["(a) I, II, III and V only","(b) I, II, IV and V only","(c) I, III, IV and V only","(d) I, II, III, IV and V"],correct:0,explanation:"I: Correct. II: Correct. III: Correct. IV: WRONG—'On many occasions they seem to have united and confronted one or other of the three kings.' The Velir DID sometimes ally against the Muvendar. V: Correct. Correct: I, II, III, V.",trap:"Statement IV contradicts the textbook explicitly. Velir chiefs united AGAINST the Muvendar on several occasions.",pyq:"TNPSC Group 1 hardest political five-statement"},
+{id:146,type:"chronological",difficulty:"hard",subtopic:"Hard – Complex Five-item Chronology",stem:"Arrange the following events in the correct chronological order:\n1. Kalabhra occupation of Tamil territories\n2. Satavahanas emerged in the Deccan\n3. Sangam Age (widely accepted end)\n4. Ashokan edicts mentioning Tamil kingdoms\n5. Decline of Satavahanas",options:["(a) 4 → 2 → 3 → 5 → 1","(b) 2 → 4 → 3 → 5 → 1","(c) 4 → 2 → 5 → 3 → 1","(d) 4 → 3 → 2 → 5 → 1"],correct:0,explanation:"Ashokan edicts (c. 270-230 BCE) = 4. Satavahanas emerged (1st century BCE) = 2. Sangam Age end (c. 300 CE) = 3 (the widely accepted end of the 'last 3 centuries BCE + first 3 centuries CE' = c. 300 CE). Satavahana decline (3rd century CE) = 5. Kalabhras (c. 300-600 CE) = 1. Order: 4 → 2 → 3 → 5 → 1.",trap:"Items 3 and 5 are nearly simultaneous (both 3rd century CE). The Satavahana decline and Sangam Age end both occur around 300 CE; Sangam end slightly precedes Satavahana collapse, hence 3 before 5.",pyq:"TNPSC Group 1 hardest five-item chronology"},
+{id:147,type:"two_statement",difficulty:"hard",subtopic:"Hard – Pandya Coins Complex",stem:"Consider the following:\nStatement 1: Pandya coins have a tiger on one side and a stylised image of fish on the other.\nStatement 2: The Pandyas invaded Southern Kerala and controlled the port of Nelkynda near Kottayam.",options:["(a) Statement 1 is correct only","(b) Statement 2 is correct only","(c) Both statements are correct","(d) Neither statement is correct"],correct:1,explanation:"Statement 1 is WRONG—Pandya coins have 'elephant on one side and a stylised image of fish on the other.' Tiger is the CHOLA emblem. Statement 2 is CORRECT—'They invaded Southern Kerala and controlled the port of Nelkynda, near Kottayam.'",trap:"Statement 1 substitutes 'tiger' (Chola emblem) for 'elephant' (Pandya coin obverse). This tests whether students know BOTH the Pandya coin imagery AND the Chola tiger emblem.",pyq:"TNPSC Group 1 hardest emblem trap"},
+{id:148,type:"statement_based",difficulty:"hard",subtopic:"Hard – Five Forces and Literature",stem:"Consider the following about the political structure and literature of Sangam age:\nI. The Muvendar were known as the 'three crowned kings' or Muvendar.\nII. The term Muvendar includes Cheras, Cholas, Pandyas AND Velir chiefs like Athiyaman.\nIII. The courts of kings where bards were entertained were called 'avaiyam.'\nIV. The Vendar adopted titles like Kadungo, Imayavaramban and Vanavaramban to display their power.\nV. After Karikalan, the Chola kingdom had no more significant kings till the classical period.\nWhich statements are correct?",options:["(a) I, III and IV only","(b) I, II, III and IV only","(c) I, III, IV and V only","(d) II, III and IV only"],correct:0,explanation:"I: Correct—'Known as muvendar, the three crowned kings.' II: WRONG—Muvendar means the THREE (Cheras, Cholas, Pandyas). Athiyaman/Satiyaputra was a Velir, NOT a Muvendar. III: Correct. IV: Correct. V: WRONG—the textbook does not state this; Perunarkilli is mentioned as another Chola king. Correct: I, III, IV.",trap:"Statement II conflates Muvendar (three kings) with Velir. Muvendar means literally 'three kings/crowned ones'—only Chera, Chola, Pandya.",pyq:""},
+{id:149,type:"assertion_reason",difficulty:"hard",subtopic:"Hard – Most Complex A&R",stem:"Assertion (A): The idea that the Kalabhra interregnum was a 'dark age' in which many good traits of earlier Tamil culture disappeared is no longer accepted as correct.\nReason (R): The Kalabhra period saw the emergence of Bhakti cults of Saivism and Vaishnavism, which revived Tamil culture.",options:["(a) Both A and R are true, and R is the correct explanation of A","(b) Both A and R are true, but R is NOT the correct explanation of A","(c) A is true but R is false","(d) A is false but R is true"],correct:2,explanation:"A is CORRECT—the textbook says the 'dark age' concept is 'no more accepted as correct.' R is WRONG—Bhakti cults (Saivism/Vaishnavism) emerged as a REACTION to the Kalabhra period's Jain/Buddhist dominance; they came AFTER the Kalabhra period, not during it. The reason the 'dark age' idea is rejected is the great literary output (Tirukkural, epics) DURING the Kalabhra period, not Bhakti cults.",trap:"R sounds plausible because Bhakti did revive Tamil culture—but it came chronologically AFTER the Kalabhra period, not during it. This temporal confusion makes this one of the hardest questions.",pyq:"TNPSC Group 1 hardest A&R – temporal confusion"},
+{id:150,type:"statement_based",difficulty:"hard",subtopic:"Hard – Master Synthesis",stem:"Consider the following synthesising statements about early South Indian society:\nI. The south Indian history can be traced clearly from about the 3rd century BCE when script was adopted for writing Tamil.\nII. The Cheras, Cholas and Pandyas were at the level of chiefdoms in the Iron Age but became Vendar (kings) in the Sangam Age.\nIII. Sea-borne trade in the Indian Ocean and with the Roman world was a feature of the Sangam Age.\nIV. The first big state in the Deccan was established by the Mauryas.\nV. Buddhism and Jainism both had equally strong presence across all of South India.\nWhich statements are correct?",options:["(a) I, II and III only","(b) I, II, III and IV only","(c) I, III and V only","(d) I, II, III, IV and V"],correct:0,explanation:"I: Correct. II: Correct. III: Correct. IV: WRONG—'For the first time a big state covering a major part of the Deccan was established' by the SATAVAHANAS, not the Mauryas. V: WRONG—'Buddhism and Jainism had a strong presence in south India' but Buddhism was more limited (few sites in Tamil Nadu) while Jainism was more widespread in Tamil Nadu. They were NOT equally strong across all of south India.",trap:"Statement IV is a classic Maurya-Satavahana confusion. The Satavahanas established the first big Deccan state. Statement V ignores the regional variation—Buddhism dominated Andhra; Jainism dominated Tamil Nadu.",pyq:"TNPSC Group 1 Final Synthesis – hardest five-statement"}
+];
+
+// ══════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════
+const state = {
+  currentQ: 0,
+  answers: new Array(150).fill(-1),
+  flagged: new Array(150).fill(false),
+  visited: new Array(150).fill(false),
+  timerOn: true,
+  instantEval: true,
+  timerRemaining: 150 * 60,
+  testSubmitted: false,
+  timerInterval: null,
+  warnShown: false,
+  expandedReviewRow: -1
+};
+
+// ══════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════
+function init(){
+  buildPalette();
+  goTo(0);
+  startTimer();
+}
+
+function buildPalette(){
+  const pal = document.getElementById('palette');
+  pal.innerHTML = '';
+  for(let i=0;i<150;i++){
+    const btn = document.createElement('button');
+    btn.className = 'pb';
+    btn.id = 'pb'+i;
+    btn.textContent = i+1;
+    btn.onclick = ()=>goTo(i);
+    pal.appendChild(btn);
+  }
+}
+
+// ══════════════════════════════════════════════
+// TIMER
+// ══════════════════════════════════════════════
+function startTimer(){
+  if(!state.timerOn) return;
+  clearInterval(state.timerInterval);
+  state.timerInterval = setInterval(()=>{
+    if(state.timerRemaining <= 0){
+      clearInterval(state.timerInterval);
+      showModal('modal-expired');
+      return;
+    }
+    if(!state.warnShown && state.timerRemaining === 600){
+      state.warnShown = true;
+      const un = state.answers.filter(a=>a===-1).length;
+      document.getElementById('modal-warn-body').innerHTML = `Pace yourself. <strong>${un}</strong> questions unanswered.`;
+      showModal('modal-warn');
+    }
+    state.timerRemaining--;
+    updateTimerDisplay();
+  },1000);
+}
+function stopTimer(){ clearInterval(state.timerInterval); }
+function updateTimerDisplay(){
+  const h = Math.floor(state.timerRemaining/3600);
+  const m = Math.floor((state.timerRemaining%3600)/60);
+  const s = state.timerRemaining%60;
+  const disp = state.timerOn
+    ? (h>0?pad(h)+':':'') + pad(m)+':'+pad(s)
+    : '∞';
+  document.getElementById('timer-display').textContent = disp;
+}
+function pad(n){ return String(n).padStart(2,'0'); }
+
+function toggleTimer(){
+  state.timerOn = document.getElementById('toggle-timer').checked;
+  if(state.timerOn){
+    document.getElementById('timer-sub').textContent='150:00 countdown';
+    startTimer();
+  } else {
+    stopTimer();
+    document.getElementById('timer-sub').textContent='No Time Limit';
+    document.getElementById('timer-display').textContent='∞';
+  }
+}
+function toggleEval(){
+  state.instantEval = document.getElementById('toggle-eval').checked;
+  document.getElementById('eval-sub').textContent = state.instantEval ? 'Explain after each answer' : 'Review after Submit';
+  renderQuestion(state.currentQ);
+}
+
+// ══════════════════════════════════════════════
+// RENDER QUESTION
+// ══════════════════════════════════════════════
+function goTo(idx){
+  if(idx<0||idx>=150) return;
+  state.currentQ = idx;
+  state.visited[idx] = true;
+  renderQuestion(idx);
+  updatePalette();
+  updateProgress();
+  updateLiveScore();
+  document.getElementById('main').scrollTo(0,0);
+}
+function prevQ(){ goTo(state.currentQ-1); }
+function nextQ(){ goTo(state.currentQ+1); }
+
+function renderQuestion(idx){
+  const q = questions[idx];
+  const ans = state.answers[idx];
+  const isFlagged = state.flagged[idx];
+  const isAnswered = ans !== -1;
+  const showExplain = state.instantEval && isAnswered;
+
+  const typeLabels = {
+    one_liner:'One-Liner MCQ',assertion_reason:'Assertion & Reason',
+    statement_based:'Statement-Based',match_following:'Match the Following',
+    chronological:'Chronological',fill_blank:'Fill in the Blank',
+    diagram_table:'Diagram / Table',two_statement:'Two-Statement'
+  };
+
+  const diffLabel = q.difficulty.charAt(0).toUpperCase()+q.difficulty.slice(1);
+
+  let optionsHTML = '';
+  q.options.forEach((opt,i)=>{
+    let cls = 'opt';
+    if(isAnswered){
+      if(i===q.correct) cls+=' correct-ans';
+      else if(i===ans && ans!==q.correct) cls+=' wrong-ans';
+    } else if(ans===i) cls+=' selected';
+    const radio = cls.includes('correct-ans')
+      ? '<div class="opt-radio"></div>'
+      : cls.includes('wrong-ans')
+        ? '<div class="opt-radio"></div>'
+        : `<div class="opt-radio"></div>`;
+    optionsHTML += `<div class="${cls}" onclick="selectOption(${idx},${i})">${radio}<span>${opt}</span></div>`;
+  });
+
+  let explainHTML = '';
+  if(showExplain){
+    const correct = ans===q.correct;
+    const corLabel = correct ? '✓ CORRECT' : '✗ WRONG';
+    const corCls = correct ? 'corr' : 'wrong';
+    const optLetter = String.fromCharCode(97+q.correct);
+    explainHTML = `
+      <div class="explain-zone show">
+        <div class="explain-header ${corCls}">${corLabel} — Correct answer: (${optLetter})</div>
+        <div class="callout critical"><div class="tag">Critical</div><div class="body">${q.explanation}</div></div>
+        <div class="callout trap"><div class="tag">Trap</div><div class="body">${q.trap}</div></div>
+        ${q.gem?`<div class="callout gem"><div class="tag">Gem</div><div class="body">${q.gem}</div></div>`:''}
+        ${q.pyq?`<div class="callout pyq"><div class="tag">PYQ Reference</div><div class="body">${q.pyq}</div></div>`:''}
+      </div>
+      <button class="btn-next show" onclick="nextQ()">Next Question →</button>
+    `;
+  }
+
+  const html = `
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q ${idx+1}</span>
+        <span class="q-type-tag tag-${q.type}">${typeLabels[q.type]}</span>
+        <span class="diff-tag diff-${q.difficulty}">${diffLabel}</span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-muted);margin-left:auto">${q.subtopic}</span>
+      </div>
+      <div class="q-stem">${q.stem}</div>
+      <div class="options-wrap">${optionsHTML}</div>
+      <div class="q-actions">
+        <button class="btn-flag${isFlagged?' flagged':''}" onclick="toggleFlag(${idx})">⚑ ${isFlagged?'Flagged':'Mark for Review'}</button>
+        <button class="btn-clear" onclick="clearResponse(${idx})">✕ Clear Response</button>
+      </div>
+      ${explainHTML}
+      <div class="q-nav">
+        <button class="nav-btn" onclick="prevQ()" ${idx===0?'disabled':''}>← Previous</button>
+        <span class="q-nav-label">Q ${idx+1} of 150</span>
+        <button class="nav-btn" onclick="nextQ()" ${idx===149?'disabled':''}>Next →</button>
+      </div>
+    </div>
+  `;
+  document.getElementById('q-panel').innerHTML = html;
+}
+
+function selectOption(qIdx, optIdx){
+  if(state.testSubmitted) return;
+  if(state.answers[qIdx]!==-1 && state.instantEval) return; // locked after answer in instant eval
+  state.answers[qIdx] = optIdx;
+  renderQuestion(qIdx);
+  updatePalette();
+  updateProgress();
+  updateLiveScore();
+}
+
+function toggleFlag(idx){
+  state.flagged[idx] = !state.flagged[idx];
+  renderQuestion(idx);
+  updatePalette();
+}
+
+function clearResponse(idx){
+  if(state.testSubmitted) return;
+  if(state.answers[idx]!==-1 && state.instantEval) return;
+  state.answers[idx] = -1;
+  renderQuestion(idx);
+  updatePalette();
+  updateProgress();
+  updateLiveScore();
+}
+
+// ══════════════════════════════════════════════
+// PALETTE & PROGRESS
+// ══════════════════════════════════════════════
+function updatePalette(){
+  for(let i=0;i<150;i++){
+    const btn = document.getElementById('pb'+i);
+    if(!btn) continue;
+    btn.className = 'pb';
+    const ans = state.answers[i];
+    if(state.testSubmitted){
+      if(ans===-1) btn.classList.add('visited');
+      else if(ans===questions[i].correct) btn.classList.add('correct');
+      else btn.classList.add('wrong');
+    } else {
+      if(state.flagged[i]) btn.classList.add('flagged');
+      else if(ans!==-1) btn.classList.add('answered');
+      else if(state.visited[i]) btn.classList.add('visited');
+    }
+    if(i===state.currentQ) btn.classList.add('active');
+  }
+}
+
+function updateProgress(){
+  const answered = state.answers.filter(a=>a!==-1).length;
+  const pct = answered/150*100;
+  document.getElementById('prog-fill').style.width = pct+'%';
+  document.getElementById('prog-label').textContent = answered+' / 150';
+}
+
+function updateLiveScore(){
+  const corr = state.answers.filter((a,i)=>a===questions[i].correct).length;
+  const wrong = state.answers.filter((a,i)=>a!==-1&&a!==questions[i].correct).length;
+  const unatt = state.answers.filter(a=>a===-1).length;
+  const acc = corr+wrong>0 ? Math.round(corr/(corr+wrong)*100) : 0;
+  if(state.instantEval){
+    document.getElementById('score-display').textContent = corr+' / 150';
+    document.getElementById('s-corr').textContent = '✓ '+corr;
+    document.getElementById('s-wrong').textContent = '✗ '+wrong;
+    document.getElementById('s-unatt').textContent = '— '+unatt;
+    document.getElementById('s-acc').textContent = 'Accuracy: '+acc+'%';
+  } else {
+    const ans = state.answers.filter(a=>a!==-1).length;
+    document.getElementById('score-display').textContent = ans+' / 150';
+    document.getElementById('s-corr').textContent = '✓ ?';
+    document.getElementById('s-wrong').textContent = '✗ ?';
+    document.getElementById('s-unatt').textContent = '— '+(150-ans);
+    document.getElementById('s-acc').textContent = 'Accuracy: ?';
+  }
+}
+
+// ══════════════════════════════════════════════
+// SUBMIT
+// ══════════════════════════════════════════════
+function confirmSubmit(){
+  const ans = state.answers.filter(a=>a!==-1).length;
+  const flagged = state.flagged.filter(Boolean).length;
+  const unatt = 150-ans;
+  document.getElementById('modal-submit-body').innerHTML =
+    `You have answered <strong>${ans} / 150</strong> questions.<br>
+     <strong>${flagged}</strong> question(s) are marked for review.<br>
+     <strong>${unatt}</strong> question(s) are unattempted.<br><br>
+     Are you sure you want to submit?`;
+  showModal('modal-submit');
+}
+
+function submitTest(){
+  closeModal('modal-submit');
+  stopTimer();
+  state.testSubmitted = true;
+  document.getElementById('q-panel').style.display='none';
+  document.getElementById('results').style.display='block';
+  renderResults();
+  updatePalette();
+}
+
+// ══════════════════════════════════════════════
+// RESULTS
+// ══════════════════════════════════════════════
+function renderResults(){
+  const corr = state.answers.filter((a,i)=>a===questions[i].correct).length;
+  const wrong = state.answers.filter((a,i)=>a!==-1&&a!==questions[i].correct).length;
+  const skip = state.answers.filter(a=>a===-1).length;
+  const pct = Math.round(corr/150*100);
+  const acc = corr+wrong>0?Math.round(corr/(corr+wrong)*100):0;
+  const negMarks = +(wrong*0.83).toFixed(2);
+  const netScore = +(corr - negMarks).toFixed(2);
+
+  // Difficulty breakdown
+  const easy = questions.filter(q=>q.difficulty==='easy');
+  const med = questions.filter(q=>q.difficulty==='medium');
+  const hard = questions.filter(q=>q.difficulty==='hard');
+  const ec = easy.filter(q=>state.answers[q.id-1]===q.correct).length;
+  const mc = med.filter(q=>state.answers[q.id-1]===q.correct).length;
+  const hc = hard.filter(q=>state.answers[q.id-1]===q.correct).length;
+
+  // Type breakdown
+  const types = ['one_liner','assertion_reason','statement_based','match_following','chronological','fill_blank','diagram_table','two_statement'];
+  const typeNames = {'one_liner':'One-Liner','assertion_reason':'A&R','statement_based':'Statement','match_following':'Match','chronological':'Chrono','fill_blank':'Fill Blank','diagram_table':'Table/Diag','two_statement':'Two-Statement'};
+
+  // Subtopic heatmap
+  const subtopics = [...new Set(questions.map(q=>q.subtopic))];
+
+  // Performance band
+  let band='',bandColor='';
+  if(pct>=90){band='EXCEPTIONAL';bandColor='background:#1f1e14;color:var(--gold)'}
+  else if(pct>=75){band='EXCELLENT';bandColor='background:#0a1f12;color:var(--green)'}
+  else if(pct>=60){band='GOOD';bandColor='background:#0f1520;color:#3b82f6'}
+  else if(pct>=45){band='AVERAGE';bandColor='background:#2a1f10;color:var(--orange)'}
+  else{band='NEEDS WORK';bandColor='background:#3a1212;color:var(--red)'}
+
+  // Time taken
+  const elapsed = 9000 - state.timerRemaining;
+  const eh=Math.floor(elapsed/3600), em=Math.floor((elapsed%3600)/60), es=elapsed%60;
+  const timeTaken = pad(eh)+':'+pad(em)+':'+pad(es);
+
+  // Weak subtopics
+  const stAccuracy = subtopics.map(st=>{
+    const stQs = questions.filter(q=>q.subtopic===st);
+    const stCorr = stQs.filter(q=>state.answers[q.id-1]===q.correct).length;
+    return {st, pct: stQs.length>0?Math.round(stCorr/stQs.length*100):0, total:stQs.length, corr:stCorr};
+  }).sort((a,b)=>a.pct-b.pct);
+  const weakTopics = stAccuracy.slice(0,3);
+
+  let feedbackText = `You scored <strong>${corr}/150 (${pct}%)</strong> — ${band.toLowerCase()} performance. `;
+  if(pct>=75) feedbackText += 'Excellent command of South Indian history! Focus on nuanced topics to reach the top tier. ';
+  else if(pct>=45) feedbackText += 'Solid foundation. Targeted revision of weak areas will boost your score significantly. ';
+  else feedbackText += 'More revision needed. Revisit the textbook sections systematically, focusing on Sangam polity and Keeladi findings. ';
+
+  const html = `
+    <div class="res-hero">
+      <div class="res-score">${corr} / 150</div>
+      <div class="perf-badge" style="${bandColor}">${band}</div>
+      <div style="font-family:'Orbitron',monospace;font-size:20px;color:var(--text-secondary);margin-bottom:16px">${pct}%</div>
+      <div class="metrics-row">
+        <div class="metric-card"><div class="metric-val" style="color:var(--green)">${corr}</div><div class="metric-lbl">Correct</div></div>
+        <div class="metric-card"><div class="metric-val" style="color:var(--red)">${wrong}</div><div class="metric-lbl">Wrong</div></div>
+        <div class="metric-card"><div class="metric-val" style="color:var(--text-muted)">${skip}</div><div class="metric-lbl">Skipped</div></div>
+        <div class="metric-card"><div class="metric-val">${acc}%</div><div class="metric-lbl">Accuracy</div></div>
+        <div class="metric-card"><div class="metric-val" style="font-size:14px">${timeTaken}</div><div class="metric-lbl">Time Taken</div></div>
+      </div>
+    </div>
+
+    <div class="action-btns">
+      <button class="action-btn primary" onclick="resetTest()">🔄 Retry Full Test</button>
+      <button class="action-btn" onclick="filterReview('flagged')">⚑ Review Marked</button>
+      <button class="action-btn" onclick="downloadReport()">⬇ Download Report</button>
+    </div>
+
+    <div class="res-section">
+      <div class="res-section-title">Difficulty Analysis</div>
+      ${diffBar('Easy',ec,40)}${diffBar('Medium',mc,70)}${diffBar('Hard',hc,40)}
+    </div>
+
+    <div class="res-section">
+      <div class="res-section-title">Question Type Performance</div>
+      <div class="type-grid">${types.map(t=>{
+        const tQs=questions.filter(q=>q.type===t);
+        const tC=tQs.filter(q=>state.answers[q.id-1]===q.correct).length;
+        const tPct=tQs.length>0?Math.round(tC/tQs.length*100):0;
+        const clr=tPct>=70?'var(--green)':tPct>=50?'var(--gold)':'var(--red)';
+        return `<div class="type-card">
+          <div class="type-card-name" style="color:${clr}">${typeNames[t]}</div>
+          <div class="type-card-bar"><div class="type-card-fill" style="width:${tPct}%;background:${clr}"></div></div>
+          <div class="type-card-stats" style="color:${clr}">${tC}/${tQs.length} (${tPct}%)</div>
+        </div>`;
+      }).join('')}</div>
+    </div>
+
+    <div class="res-section">
+      <div class="res-section-title">Subtopic Heatmap</div>
+      <table class="heatmap-table">
+        <tr><th>Subtopic</th><th>Total</th><th>Correct</th><th>Accuracy</th></tr>
+        ${stAccuracy.map(s=>{
+          const cls=s.pct>=80?'heat-g':s.pct>=60?'heat-a':s.pct>=40?'heat-o':'heat-r';
+          return `<tr><td>${s.st}</td><td>${s.total}</td><td>${s.corr}</td><td><span class="heat-cell ${cls}">${s.pct}%</span></td></tr>`;
+        }).join('')}
+      </table>
+    </div>
+
+    <div class="res-section">
+      <div class="res-section-title">Score with Negative Marking</div>
+      <div class="neg-box">
+        <div class="neg-row"><span>Raw correct marks</span><span style="color:var(--green)">+${corr}</span></div>
+        <div class="neg-row"><span>Negative marks (0.83 × ${wrong})</span><span style="color:var(--red)">-${negMarks}</span></div>
+        <div class="neg-row"><span>Net Estimated Score</span><span>${netScore} / 150</span></div>
+      </div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-muted);margin-top:8px">TNPSC Group 1 applies 1/3 negative marking on wrong answers (≈ 0.83 per wrong).</div>
+    </div>
+
+    <div class="res-section">
+      <div class="res-section-title">Personalised Feedback</div>
+      <div class="feedback-box">
+        <p>${feedbackText}</p>
+        <p style="margin-top:10px"><strong>Focus Areas:</strong>
+        ${weakTopics.map(w=>`<span>${w.st} (${w.pct}%)<span class="focus-badge">FOCUS HERE</span></span>`).join(', ')}
+        </p>
+      </div>
+    </div>
+
+    <div class="res-section">
+      <div class="res-section-title">Question-wise Review</div>
+      <div class="review-filters">
+        <button class="rf active" onclick="filterReview('all',this)">All</button>
+        <button class="rf" onclick="filterReview('correct',this)">Correct</button>
+        <button class="rf" onclick="filterReview('wrong',this)">Wrong</button>
+        <button class="rf" onclick="filterReview('skipped',this)">Skipped</button>
+        <button class="rf" onclick="filterReview('flagged',this)">Marked</button>
+        <button class="rf" onclick="filterReview('hard',this)">Hard Only</button>
+      </div>
+      <div id="review-table-wrap" style="overflow-x:auto"></div>
+    </div>
+  `;
+  document.getElementById('results').innerHTML = html;
+  filterReview('all');
+}
+
+function diffBar(label,corr,total){
+  const pct=Math.round(corr/total*100);
+  return `<div class="diff-bar-row">
+    <div class="diff-bar-label">${label}</div>
+    <div class="diff-bar-track"><div class="diff-bar-fill" style="width:${pct}%"></div></div>
+    <div class="diff-bar-pct">${corr}/${total}</div>
+    <div class="diff-bar-pct">${pct}%</div>
+  </div>`;
+}
+
+let currentFilter='all';
+function filterReview(filter, btn){
+  currentFilter=filter;
+  document.querySelectorAll('.rf').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+
+  let rows = questions.map(q=>{
+    const ans=state.answers[q.id-1];
+    const status = ans===-1?'skipped': ans===q.correct?'correct':'wrong';
+    return {q,ans,status};
+  });
+
+  if(filter==='correct') rows=rows.filter(r=>r.status==='correct');
+  else if(filter==='wrong') rows=rows.filter(r=>r.status==='wrong');
+  else if(filter==='skipped') rows=rows.filter(r=>r.status==='skipped');
+  else if(filter==='flagged') rows=rows.filter(r=>state.flagged[r.q.id-1]);
+  else if(filter==='hard') rows=rows.filter(r=>r.q.difficulty==='hard');
+
+  const optL = i=>i===-1?'—':String.fromCharCode(97+i);
+
+  const tableHTML=`<table class="review-table">
+    <tr><th>Q#</th><th>Type</th><th>Diff</th><th>Your Ans</th><th>Correct</th><th>Status</th></tr>
+    ${rows.map(r=>{
+      const sc=r.status==='correct'?'status-corr':r.status==='wrong'?'status-wrong':'status-skip';
+      const sym=r.status==='correct'?'✓':r.status==='wrong'?'✗':'—';
+      return `<tr onclick="toggleExpandRow(${r.q.id-1})">
+        <td>${r.q.id}</td>
+        <td>${r.q.type}</td>
+        <td>${r.q.difficulty}</td>
+        <td>(${optL(r.ans)})</td>
+        <td>(${optL(r.q.correct)})</td>
+        <td class="${sc}">${sym}</td>
+      </tr>
+      <tr id="expand-${r.q.id-1}" style="display:none"><td colspan="6" class="expand-row"><strong>Q${r.q.id}.</strong> ${r.q.stem.replace(/\n/g,'<br>')}<br><br><strong>Explanation:</strong> ${r.q.explanation}</td></tr>`;
+    }).join('')}
+  </table>`;
+  document.getElementById('review-table-wrap').innerHTML=tableHTML;
+}
+
+function toggleExpandRow(idx){
+  const row=document.getElementById('expand-'+idx);
+  if(row) row.style.display=row.style.display==='none'?'table-row':'none';
+}
+
+function downloadReport(){
+  const corr=state.answers.filter((a,i)=>a===questions[i].correct).length;
+  const wrong=state.answers.filter((a,i)=>a!==-1&&a!==questions[i].correct).length;
+  const skip=150-corr-wrong;
+  const pct=Math.round(corr/150*100);
+  let report=`TNPSC GROUP 1 PRACTICE TEST REPORT\nEvolution of Society in South India – Class 11\n${'='.repeat(50)}\n`;
+  report+=`Score: ${corr}/150 (${pct}%)\nCorrect: ${corr} | Wrong: ${wrong} | Skipped: ${skip}\nNet Score (with neg marking): ${(corr-wrong*0.83).toFixed(2)}/150\n\n`;
+  report+=`QUESTION-WISE SUMMARY\n${'-'.repeat(40)}\n`;
+  questions.forEach((q,i)=>{
+    const a=state.answers[i];
+    const st=a===-1?'SKIPPED':a===q.correct?'CORRECT':'WRONG';
+    report+=`Q${i+1} [${q.difficulty.toUpperCase()}] ${st}\n`;
+  });
+  const blob=new Blob([report],{type:'text/plain'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='TNPSC_SouthIndia_Report.txt';
+  a.click();
+}
+
+function resetTest(){
+  stopTimer();
+  state.answers.fill(-1);
+  state.flagged.fill(false);
+  state.visited.fill(false);
+  state.timerRemaining = 150*60;
+  state.testSubmitted = false;
+  state.warnShown = false;
+  document.getElementById('results').style.display='none';
+  document.getElementById('q-panel').style.display='block';
+  updateTimerDisplay();
+  goTo(0);
+  if(state.timerOn) startTimer();
+}
+
+// ══════════════════════════════════════════════
+// MODALS
+// ══════════════════════════════════════════════
+function showModal(id){ document.getElementById(id).classList.add('show'); }
+function closeModal(id){ document.getElementById(id).classList.remove('show'); }
+
+// ══════════════════════════════════════════════
+// MOBILE SIDENAV
+// ══════════════════════════════════════════════
+function toggleSidenav(){
+  const sn=document.getElementById('sidenav');
+  const ov=document.getElementById('mob-overlay');
+  sn.classList.toggle('open');
+  ov.classList.toggle('show');
+}
+
+// ══════════════════════════════════════════════
+// START
+// ══════════════════════════════════════════════
+init();
+</script>
+</body>
+</html>
