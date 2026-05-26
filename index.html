@@ -1396,6 +1396,57 @@
     }
 
 
+    /* ─────────────── CA INJECTION ─────────────── */
+    function injectCACards(caData) {
+      const TOPIC_STYLE = {
+        science:       { icon: '🔬', accent: '#22d3ee' },
+        environment:   { icon: '🌿', accent: '#4ecb7a' },
+        tn:            { icon: '🏛️', accent: '#f97316' },
+        international: { icon: '🌍', accent: '#0891b2' },
+        polity:        { icon: '⚖️', accent: '#a78bfa' },
+        economy:       { icon: '📈', accent: '#f5c842' },
+      };
+      const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+      function makeCard(entry, extraTags) {
+        const style = TOPIC_STYLE[entry.topic] || { icon: '📰', accent: '#6b7280' };
+        const [yr, mo, dy] = entry.date.split('-').map(Number);
+        const mon = MONTHS[mo - 1];
+        const shortTitle = entry.title.replace(/^[A-Za-z]+ \d+, \d+ [—\-] /, '');
+        const tagStr = ['current affairs', ...entry.tags.map(t => t.toLowerCase()), 'ready', extraTags || ''].join(' ').trim();
+        return {
+          href: `CA-v2/${entry.file}`,
+          accent: style.accent,
+          icon: style.icon,
+          tags: tagStr,
+          sub: `Current Affairs · ${mon} ${dy}, ${yr}`,
+          title: shortTitle,
+          desc: entry.desc,
+          badges: [
+            { cls: 'badge-new', text: 'New' },
+            { cls: 'badge-ready', text: 'Ready' }
+          ],
+          meta: [
+            { v: String(entry.mcqs), l: 'MCQs' },
+            { v: `${mon} ${dy}`, l: String(yr) }
+          ],
+          locked: false
+        };
+      }
+
+      for (const exam of Object.values(EXAMS)) {
+        for (const subject of (exam.subjects || [])) {
+          for (const [secId, sec] of Object.entries(subject.sections || {})) {
+            if (!Array.isArray(sec.cards) || !sec.cards.length) continue;
+            if (sec.cards[0].href !== 'CA-v2/index.html') continue;
+            const extraTags = secId.includes('gs-current-affairs') ? 'grp1' : '';
+            sec.cards = [sec.cards[0], ...caData.map(e => makeCard(e, extraTags))];
+            sec.count = `${caData.length} Days`;
+          }
+        }
+      }
+    }
+
     /* ─────────────── INIT ─────────────── */
     async function init() {
       // Show loading indicator while fetching data
@@ -1420,6 +1471,12 @@
           EXAMS = await res.json();
           sessionStorage.setItem('arivoam_exams', JSON.stringify(EXAMS));
         }
+
+        try {
+          const caRes = await fetch('CA-v2/ca.json');
+          if (caRes.ok) injectCACards(await caRes.json());
+        } catch (_) {}
+
         const lastTab = (function(){ try { return localStorage.getItem('arivoam_last_tab') || 'ssc'; } catch(e){ return 'ssc'; } })();
         switchExam(lastTab, null, null, null);
       } catch (err) {
