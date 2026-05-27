@@ -1463,18 +1463,24 @@
 
       try {
         const cached = sessionStorage.getItem('arivoam_exams');
-        if (cached) {
+        const cacheDate = sessionStorage.getItem('arivoam_exams_date');
+        const today = new Date().toDateString();
+        if (cached && cacheDate === today) {
           EXAMS = JSON.parse(cached);
         } else {
-          const res = await fetch('exams.json');
+          const res = await fetch('exams.json', { cache: 'no-store' });
           if (!res.ok) throw new Error('HTTP ' + res.status);
           EXAMS = await res.json();
           sessionStorage.setItem('arivoam_exams', JSON.stringify(EXAMS));
+          sessionStorage.setItem('arivoam_exams_date', today);
         }
 
         try {
-          const caRes = await fetch('CA-v2/ca.json');
-          if (caRes.ok) injectCACards(await caRes.json());
+          const caRes = await fetch('CA-v2/ca.json', { cache: 'no-store' });
+          if (caRes.ok) {
+            const caData = await caRes.json();
+            injectCACards(caData);
+          }
         } catch (_) {}
 
         const lastTab = (function(){ try { return localStorage.getItem('arivoam_last_tab') || 'ssc'; } catch(e){ return 'ssc'; } })();
