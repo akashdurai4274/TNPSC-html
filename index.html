@@ -9,12 +9,12 @@
   <style>
     :root {
       /* File-specific overrides / additions */
-      --surface:  #12151e;
+      --surface: #12151e;
       --surface2: #181c28;
-      --green:    #4ecb7a;
-      --blue:     #5b9cf6;
-      --purple:   #a78bfa;
-      --pink:     #f472b6;
+      --green: #4ecb7a;
+      --blue: #5b9cf6;
+      --purple: #a78bfa;
+      --pink: #f472b6;
     }
 
     body {
@@ -186,8 +186,6 @@
 
     /* ── EXAM SWITCHER TABS ── */
     .exam-switcher {
-      position: relative;
-      z-index: 10;
       max-width: 1200px;
       margin: 0 auto 0;
       padding: 32px 24px 0;
@@ -197,6 +195,7 @@
     .exam-tabs {
       display: flex;
       gap: 0;
+      align-items: flex-start;
       background: var(--surface);
       border: 1px solid var(--border2);
       border-radius: 12px;
@@ -238,8 +237,6 @@
 
     /* ── SUBJECT NAV SIDEBAR ── */
     .main-layout {
-      position: relative;
-      z-index: 1;
       max-width: 1200px;
       margin: 0 auto;
       padding: 28px 24px 80px;
@@ -247,6 +244,10 @@
       grid-template-columns: 240px 1fr;
       gap: 28px;
       align-items: start;
+    }
+
+    .main-layout.tests-mode {
+      grid-template-columns: 1fr;
     }
 
     .subject-nav {
@@ -973,56 +974,500 @@
       animation-delay: .25s
     }
 
-    .card:nth-child(6)  { animation-delay: .30s }
-    .card:nth-child(7)  { animation-delay: .35s }
-    .card:nth-child(8)  { animation-delay: .40s }
-    .card:nth-child(9)  { animation-delay: .45s }
-    .card:nth-child(10) { animation-delay: .50s }
-    .card:nth-child(11) { animation-delay: .55s }
-    .card:nth-child(12) { animation-delay: .60s }
+    .card:nth-child(6) {
+      animation-delay: .30s
+    }
 
-    body.anim-paused::before { animation-play-state: paused; }
+    .card:nth-child(7) {
+      animation-delay: .35s
+    }
 
-    /* ── MOBILE ── */
+    .card:nth-child(8) {
+      animation-delay: .40s
+    }
+
+    .card:nth-child(9) {
+      animation-delay: .45s
+    }
+
+    .card:nth-child(10) {
+      animation-delay: .50s
+    }
+
+    .card:nth-child(11) {
+      animation-delay: .55s
+    }
+
+    .card:nth-child(12) {
+      animation-delay: .60s
+    }
+
+    body.anim-paused::before {
+      animation-play-state: paused;
+    }
+
+    /* ── MOBILE NAV TRIGGER ── */
+    .mobile-nav-trigger {
+      display: none;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px 24px 0;
+    }
+
+    .mobile-nav-trigger.hidden {
+      display: none !important;
+    }
+
+    #hamburgerBtn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      color: var(--muted);
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      letter-spacing: .04em;
+      cursor: pointer;
+      transition: border-color .2s, color .2s;
+    }
+
+    #hamburgerBtn:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    #hamburgerBtn svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      flex-shrink: 0;
+    }
+
+    /* ── DRAWER OVERLAY ── */
+    .drawer-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      z-index: 200;
+    }
+
+    .drawer-overlay.open {
+      display: block;
+    }
+
+    /* ── TESTS SECTION ── */
+    .tests-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .test-subject-card {
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: 10px;
+      padding: 22px 20px;
+      cursor: pointer;
+      transition: border-color .2s, transform .2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .test-subject-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--tsc-color, var(--gold));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .25s;
+    }
+
+    .test-subject-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+    }
+
+    .test-subject-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .tsc-icon {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .tsc-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .tsc-desc {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .tsc-count {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--gold);
+      margin-top: 8px;
+      letter-spacing: .05em;
+    }
+
+    .test-topic-card {
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      padding: 18px 20px;
+      cursor: pointer;
+      transition: border-color .2s, transform .2s;
+      position: relative;
+    }
+
+    .test-topic-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    .ttc-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .ttc-meta {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .ttc-badge {
+      display: inline-block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 3px;
+      margin-top: 8px;
+    }
+
+    .ttc-badge.in-progress {
+      background: rgba(245, 200, 66, 0.15);
+      color: var(--gold);
+      border: 1px solid rgba(245, 200, 66, 0.3);
+    }
+
+    .ttc-badge.completed {
+      background: rgba(78, 203, 122, 0.12);
+      color: var(--green);
+      border: 1px solid rgba(78, 203, 122, 0.3);
+    }
+
+    /* MCQ Test Session */
+    .test-session {
+      max-width: 680px;
+    }
+
+    .test-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .test-back-btn {
+      background: none;
+      border: 1px solid var(--border2);
+      color: var(--muted);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all .15s;
+    }
+
+    .test-back-btn:hover {
+      color: var(--gold);
+      border-color: rgba(245, 200, 66, 0.4);
+    }
+
+    .test-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .test-progress-bar {
+      height: 4px;
+      background: var(--border2);
+      border-radius: 2px;
+      margin-bottom: 28px;
+      overflow: hidden;
+    }
+
+    .test-progress-fill {
+      height: 100%;
+      background: var(--gold);
+      border-radius: 2px;
+      transition: width .3s;
+    }
+
+    .question-card {
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: 10px;
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+
+    .q-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .q-text {
+      font-family: 'Lora', serif;
+      font-size: 15px;
+      color: var(--text);
+      line-height: 1.7;
+      margin-bottom: 18px;
+    }
+
+    .q-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .q-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: transparent;
+      border: 1px solid var(--border2);
+      border-radius: 6px;
+      padding: 11px 16px;
+      cursor: pointer;
+      font-family: 'Lora', serif;
+      font-size: 14px;
+      color: var(--text);
+      transition: border-color .15s, background .15s;
+      text-align: left;
+    }
+
+    .q-option:hover:not(:disabled) {
+      border-color: var(--gold);
+      background: rgba(245, 200, 66, 0.04);
+    }
+
+    .q-option.selected {
+      border-color: var(--gold);
+      background: rgba(245, 200, 66, 0.08);
+      color: #fff;
+    }
+
+    .q-option.correct {
+      border-color: var(--green);
+      background: rgba(78, 203, 122, 0.1);
+      color: var(--green);
+    }
+
+    .q-option.wrong {
+      border-color: var(--red);
+      background: rgba(224, 92, 92, 0.1);
+      color: var(--red);
+    }
+
+    .q-option:disabled {
+      cursor: default;
+    }
+
+    .opt-letter {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      width: 20px;
+      flex-shrink: 0;
+      color: var(--gold);
+    }
+
+    .test-nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .test-nav-btn {
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      color: var(--text);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      padding: 9px 18px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all .15s;
+    }
+
+    .test-nav-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .test-nav-btn.primary {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--bg);
+      font-weight: 600;
+    }
+
+    .test-nav-btn.primary:hover {
+      background: var(--gold-dim);
+    }
+
+    .test-nav-btn:disabled {
+      opacity: .35;
+      cursor: default;
+    }
+
+    .q-dot-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 0 auto 0 auto;
+    }
+
+    .q-dot {
+      width: 26px;
+      height: 26px;
+      border-radius: 4px;
+      border: 1px solid var(--border2);
+      background: var(--surface2);
+      cursor: pointer;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .15s;
+    }
+
+    .q-dot.answered {
+      background: rgba(245, 200, 66, 0.15);
+      border-color: rgba(245, 200, 66, 0.4);
+      color: var(--gold);
+    }
+
+    .q-dot.current {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .test-result {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .result-score {
+      font-family: 'Syne', sans-serif;
+      font-size: 64px;
+      font-weight: 800;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .result-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      color: var(--muted);
+      margin: 8px 0 28px;
+    }
+
+    .result-retry-btn {
+      background: none;
+      border: 1px solid var(--border2);
+      color: var(--text);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      padding: 9px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all .15s;
+      margin: 0 6px;
+    }
+
+    .result-retry-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* ── MOBILE DRAWER ── */
     @media(max-width:900px) {
+      .mobile-nav-trigger {
+        display: block;
+      }
+
       .main-layout {
         grid-template-columns: 1fr;
       }
 
-      .subject-nav {
-        position: static;
-        display: flex;
-        overflow-x: auto;
-        padding: 8px;
-        gap: 0;
-        border-radius: 10px;
+      .exam-tabs {
+        flex-wrap: wrap;
+        width: 100%;
       }
 
-      .nav-header,
-      .nav-group-label,
-      .nav-divider {
-        display: none;
+      .exam-tab {
+        flex: 1 1 auto;
+        justify-content: center;
+        min-width: 0;
+        padding: 10px 12px;
       }
 
       .subject-nav {
-        flex-direction: row;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 280px;
+        z-index: 210;
+        overflow-y: auto;
+        overflow-x: hidden;
+        transform: translateX(-100%);
+        transition: transform .3s cubic-bezier(.4, 0, .2, 1);
+        padding-top: 16px;
+        border-radius: 0;
+        border-right: 1px solid var(--border2);
       }
 
-      .nav-item {
-        white-space: nowrap;
-        border-left: none;
-        border-bottom: 3px solid transparent;
-        flex-shrink: 0;
-        padding: 8px 14px;
-      }
-
-      .nav-item.active {
-        border-bottom-color: var(--gold);
-        border-left-color: transparent;
-      }
-
-      .nav-item .nav-count {
-        display: none;
+      .subject-nav.open {
+        transform: translateX(0);
       }
     }
 
@@ -1114,13 +1559,29 @@
       <button class="exam-tab" data-action="switchExam" data-exam="overview">
         <span class="tab-icon">🗂️</span> All Subjects
       </button>
+      <button class="exam-tab" data-action="switchExam" data-exam="tests">
+        <span class="tab-icon">📝</span> Tests
+      </button>
     </div>
   </div>
+
+  <!-- MOBILE NAV TRIGGER (inline, above content) -->
+  <div class="mobile-nav-trigger" id="mobileNavTrigger">
+    <button id="hamburgerBtn" aria-label="Open navigation">
+      <!--  <svg viewBox="0 0 24 24">
+        <line x1="3" y1="6" x2="21" y2="6" />
+        <line x1="3" y1="12" x2="21" y2="12" />
+        <line x1="3" y1="18" x2="21" y2="18" />
+      </svg> -->
+      ☰ Subjects
+    </button>
+  </div>
+  <div class="drawer-overlay" id="drawerOverlay"></div>
 
   <!-- MAIN LAYOUT -->
   <div class="main-layout">
 
-    <!-- LEFT NAV -->
+    <!-- LEFT NAV (drawer on mobile) -->
     <div class="subject-nav" id="subjectNav">
       <!-- populated by JS -->
     </div>
@@ -1148,7 +1609,7 @@
         border:1px solid var(--border2); border-radius:4px; padding:3px 10px;
         transition:all 0.2s; display:inline-flex; align-items:center; gap:5px;
       " onmouseover="this.style.color='var(--gold)';this.style.borderColor='rgba(245,200,66,0.4)'"
-         onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border2)'">
+        onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border2)'">
         🔐 Admin
       </a>
     </div>
@@ -1343,7 +1804,7 @@
         localStorage.setItem('arivoam_last_tab', currentExam);
         localStorage.setItem('arivoam_last_subject_' + currentExam, subjectId);
         localStorage.setItem('arivoam_last_section_' + currentExam, sectionId);
-      } catch(e) {}
+      } catch (e) { }
       const exam = EXAMS[currentExam];
       const subject = exam.subjects.find(s => s.id === subjectId);
       renderNav(exam, subject);
@@ -1352,19 +1813,32 @@
 
     function switchExam(examId, btn, targetSubjectId, targetSectionId) {
       currentExam = examId;
-      try { localStorage.setItem('arivoam_last_tab', examId); } catch(e) {}
-      // update tab buttons
+      try { localStorage.setItem('arivoam_last_tab', examId); } catch (e) { }
       document.querySelectorAll('.exam-tab').forEach(t => t.classList.remove('active'));
-      const tabMap = { ssc: 0, tnpsc: 1, overview: 2 };
+      const tabMap = { ssc: 0, tnpsc: 1, overview: 2, tests: 3 };
       const tabs = document.querySelectorAll('.exam-tab');
       if (tabs[tabMap[examId]]) tabs[tabMap[examId]].classList.add('active');
 
+      const mainLayout = document.querySelector('.main-layout');
+      const trigger = document.getElementById('mobileNavTrigger');
+
       if (examId === 'overview') {
+        mainLayout.classList.remove('tests-mode');
+        document.getElementById('subjectNav').style.display = '';
+        if (trigger) trigger.classList.remove('hidden');
         renderOverview();
+      } else if (examId === 'tests') {
+        mainLayout.classList.add('tests-mode');
+        document.getElementById('subjectNav').style.display = 'none';
+        if (trigger) trigger.classList.add('hidden');
+        closeDrawer();
+        renderTests();
       } else {
-        // Use explicit target, or fall back to saved state
-        const subId = targetSubjectId || (function(){ try { return localStorage.getItem('arivoam_last_subject_' + examId); } catch(e){ return null; } })();
-        const secId = targetSectionId || (function(){ try { return localStorage.getItem('arivoam_last_section_' + examId); } catch(e){ return null; } })();
+        mainLayout.classList.remove('tests-mode');
+        document.getElementById('subjectNav').style.display = '';
+        if (trigger) trigger.classList.remove('hidden');
+        const subId = targetSubjectId || (function () { try { return localStorage.getItem('arivoam_last_subject_' + examId); } catch (e) { return null; } })();
+        const secId = targetSectionId || (function () { try { return localStorage.getItem('arivoam_last_section_' + examId); } catch (e) { return null; } })();
         renderExam(examId, subId, secId);
       }
     }
@@ -1396,17 +1870,246 @@
     }
 
 
+    /* ─────────────── HAMBURGER DRAWER ─────────────── */
+    function openDrawer() {
+      document.getElementById('subjectNav').classList.add('open');
+      document.getElementById('drawerOverlay').classList.add('open');
+    }
+    function closeDrawer() {
+      document.getElementById('subjectNav').classList.remove('open');
+      document.getElementById('drawerOverlay').classList.remove('open');
+    }
+    document.getElementById('hamburgerBtn').addEventListener('click', openDrawer);
+    document.getElementById('drawerOverlay').addEventListener('click', closeDrawer);
+
+    /* ─────────────── TESTS ─────────────── */
+    let TESTS_DATA = null;
+
+    function saveTestState(subjectId, topicId, state) {
+      try { localStorage.setItem('arivoam_test_' + subjectId + '_' + topicId, JSON.stringify(state)); } catch (e) { }
+    }
+    function loadTestState(subjectId, topicId) {
+      try {
+        const s = localStorage.getItem('arivoam_test_' + subjectId + '_' + topicId);
+        return s ? JSON.parse(s) : null;
+      } catch (e) { return null; }
+    }
+    function clearTestState(subjectId, topicId) {
+      try { localStorage.removeItem('arivoam_test_' + subjectId + '_' + topicId); } catch (e) { }
+    }
+
+    async function renderTests() {
+      const content = document.getElementById('contentArea');
+      content.innerHTML = `<div style="padding:40px 0;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:13px;">
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold);animation:pulse 2s ease-in-out infinite;display:inline-block;margin-right:10px;vertical-align:middle;"></div>
+        Loading tests…</div>`;
+
+      if (!TESTS_DATA) {
+        try {
+          const res = await fetch('tests.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          TESTS_DATA = await res.json();
+        } catch (err) {
+          content.innerHTML = `<div style="padding:40px 0;color:var(--red);font-family:'IBM Plex Mono',monospace;font-size:13px;">⚠ Could not load tests.json: ${err.message}</div>`;
+          return;
+        }
+      }
+      renderTestSubjects();
+    }
+
+    function renderTestSubjects() {
+      const content = document.getElementById('contentArea');
+      const subjects = TESTS_DATA.subjects || [];
+      let html = `<div class="section-header" style="margin-bottom:24px">
+        <div><div class="section-label">Topic-wise Practice</div><div class="section-title">📝 Tests — Choose a Subject</div></div>
+      </div><div class="tests-grid">`;
+      subjects.forEach(sub => {
+        const totalTopics = sub.topics.length;
+        const inProgress = sub.topics.filter(t => { const s = loadTestState(sub.id, t.id); return s && !s.completed; }).length;
+        const completed = sub.topics.filter(t => { const s = loadTestState(sub.id, t.id); return s && s.completed; }).length;
+        let statusLine = totalTopics + ' topic' + (totalTopics !== 1 ? 's' : '');
+        if (inProgress) statusLine += ' · ' + inProgress + ' in progress';
+        if (completed) statusLine += ' · ' + completed + ' done';
+        html += `<div class="test-subject-card" style="--tsc-color:${sub.color || 'var(--gold)'}" data-action="testSubject" data-subject="${sub.id}">
+          <div class="tsc-icon">${sub.icon}</div>
+          <div class="tsc-label">${sub.label}</div>
+          <div class="tsc-desc">${sub.desc || ''}</div>
+          <div class="tsc-count">${statusLine}</div>
+        </div>`;
+      });
+      html += `</div>`;
+      content.innerHTML = html;
+    }
+
+    function renderTestTopics(subjectId) {
+      const content = document.getElementById('contentArea');
+      const sub = (TESTS_DATA.subjects || []).find(s => s.id === subjectId);
+      if (!sub) return;
+      let html = `<div class="section-header" style="margin-bottom:8px">
+        <div><div class="section-label">${sub.label}</div><div class="section-title">${sub.icon} Choose a Topic</div></div>
+        <button class="test-back-btn" data-action="testBack">← Back</button>
+      </div>
+      <div style="margin-bottom:24px"></div>
+      <div class="tests-grid">`;
+      sub.topics.forEach(t => {
+        const state = loadTestState(subjectId, t.id);
+        let badge = '';
+        if (state && state.completed) {
+          badge = `<div class="ttc-badge completed">✓ ${state.score}/${t.questions.length} Score</div>`;
+        } else if (state && Object.keys(state.answers || {}).length) {
+          badge = `<div class="ttc-badge in-progress">⏸ In Progress</div>`;
+        }
+        html += `<div class="test-topic-card" data-action="testTopic" data-subject="${subjectId}" data-topic="${t.id}">
+          <div class="ttc-label">${t.icon || '📄'} ${t.label}</div>
+          <div class="ttc-meta">${t.questions.length} questions</div>
+          ${badge}
+        </div>`;
+      });
+      html += `</div>`;
+      content.innerHTML = html;
+    }
+
+    function renderTestSession(subjectId, topicId) {
+      const content = document.getElementById('contentArea');
+      const sub = (TESTS_DATA.subjects || []).find(s => s.id === subjectId);
+      const topic = sub && sub.topics.find(t => t.id === topicId);
+      if (!topic) return;
+
+      const qs = topic.questions;
+      let state = loadTestState(subjectId, topicId) || { answers: {}, completed: false, score: 0 };
+      if (state.completed) { renderTestResult(subjectId, topicId, state, sub, topic); return; }
+
+      let currentQ = 0;
+
+      function renderQuestion() {
+        const q = qs[currentQ];
+        const answered = state.answers[currentQ] !== undefined;
+        const pct = Math.round((Object.keys(state.answers).length / qs.length) * 100);
+
+        let dotsHtml = qs.map((_, i) => {
+          const cls = i === currentQ ? 'current' : (state.answers[i] !== undefined ? 'answered' : '');
+          return `<button class="q-dot ${cls}" data-qi="${i}">${i + 1}</button>`;
+        }).join('');
+
+        const LABELS = ['A', 'B', 'C', 'D'];
+        let optHtml = q.options.map((opt, i) => {
+          const sel = state.answers[currentQ] === i ? ' selected' : '';
+          return `<button class="q-option${sel}" data-opt="${i}"><span class="opt-letter">${LABELS[i]}</span>${opt}</button>`;
+        }).join('');
+
+        const isLast = currentQ === qs.length - 1;
+        const allAnswered = Object.keys(state.answers).length === qs.length;
+
+        content.innerHTML = `<div class="test-session">
+          <div class="test-header">
+            <button class="test-back-btn" id="testBackBtn">← ${sub.label}</button>
+            <div class="test-title">${topic.icon || '📄'} ${topic.label}</div>
+          </div>
+          <div class="test-progress-bar"><div class="test-progress-fill" style="width:${pct}%"></div></div>
+          <div class="question-card">
+            <div class="q-num">Question ${currentQ + 1} of ${qs.length}</div>
+            <div class="q-text">${q.q}</div>
+            <div class="q-options">${optHtml}</div>
+          </div>
+          <div class="q-dot-row">${dotsHtml}</div>
+          <div class="test-nav">
+            <button class="test-nav-btn" id="prevBtn" ${currentQ === 0 ? 'disabled' : ''}>← Prev</button>
+            <button class="test-nav-btn" id="nextBtn" ${isLast ? 'style="display:none"' : ''}>Next →</button>
+            ${allAnswered ? `<button class="test-nav-btn primary" id="submitBtn">Submit Test</button>` : ''}
+          </div>
+        </div>`;
+
+        content.querySelector('#testBackBtn').addEventListener('click', () => renderTestTopics(subjectId));
+
+        content.querySelectorAll('.q-option').forEach(btn => {
+          btn.addEventListener('click', () => {
+            state.answers[currentQ] = parseInt(btn.dataset.opt, 10);
+            saveTestState(subjectId, topicId, state);
+            renderQuestion();
+          });
+        });
+
+        content.querySelectorAll('.q-dot').forEach(dot => {
+          dot.addEventListener('click', () => { currentQ = parseInt(dot.dataset.qi, 10); renderQuestion(); });
+        });
+
+        const prevBtn = content.querySelector('#prevBtn');
+        if (prevBtn) prevBtn.addEventListener('click', () => { if (currentQ > 0) { currentQ--; renderQuestion(); } });
+
+        const nextBtn = content.querySelector('#nextBtn');
+        if (nextBtn) nextBtn.addEventListener('click', () => { if (currentQ < qs.length - 1) { currentQ++; renderQuestion(); } });
+
+        const submitBtn = content.querySelector('#submitBtn');
+        if (submitBtn) submitBtn.addEventListener('click', () => {
+          let score = 0;
+          qs.forEach((q, i) => { if (state.answers[i] === q.answer) score++; });
+          state.completed = true; state.score = score;
+          saveTestState(subjectId, topicId, state);
+          renderTestResult(subjectId, topicId, state, sub, topic);
+        });
+      }
+
+      renderQuestion();
+    }
+
+    function renderTestResult(subjectId, topicId, state, sub, topic) {
+      const content = document.getElementById('contentArea');
+      const qs = topic.questions;
+      const pct = Math.round((state.score / qs.length) * 100);
+      const msg = pct >= 80 ? '🏆 Excellent!' : pct >= 60 ? '👍 Good effort!' : '📖 Keep practising!';
+
+      let reviewHtml = '';
+      const LABELS = ['A', 'B', 'C', 'D'];
+      qs.forEach((q, i) => {
+        const userAns = state.answers[i];
+        const correct = q.answer;
+        let optHtml = q.options.map((opt, j) => {
+          let cls = '';
+          if (j === correct) cls = ' correct';
+          else if (j === userAns && userAns !== correct) cls = ' wrong';
+          return `<button class="q-option${cls}" disabled><span class="opt-letter">${LABELS[j]}</span>${opt}</button>`;
+        }).join('');
+        reviewHtml += `<div class="question-card" style="margin-bottom:12px">
+          <div class="q-num">Q${i + 1}</div>
+          <div class="q-text">${q.q}</div>
+          <div class="q-options">${optHtml}</div>
+        </div>`;
+      });
+
+      content.innerHTML = `<div class="test-session">
+        <div class="test-header">
+          <button class="test-back-btn" id="backToTopics">← ${sub.label}</button>
+          <div class="test-title">${topic.icon || '📄'} ${topic.label}</div>
+        </div>
+        <div class="test-result">
+          <div class="result-score">${state.score}/${qs.length}</div>
+          <div class="result-label">${pct}% · ${msg}</div>
+          <button class="result-retry-btn" id="retryBtn">↺ Retry</button>
+          <button class="result-retry-btn" id="backBtn2">← Back to Topics</button>
+        </div>
+        <div style="margin-top:32px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;">Answer Review</div>
+        ${reviewHtml}
+      </div>`;
+
+      content.querySelector('#backToTopics').addEventListener('click', () => renderTestTopics(subjectId));
+      content.querySelector('#backBtn2').addEventListener('click', () => renderTestTopics(subjectId));
+      content.querySelector('#retryBtn').addEventListener('click', () => {
+        clearTestState(subjectId, topicId);
+        renderTestSession(subjectId, topicId);
+      });
+    }
+
     /* ─────────────── CA INJECTION ─────────────── */
     function injectCACards(caData) {
       const TOPIC_STYLE = {
-        science:       { icon: '🔬', accent: '#22d3ee' },
-        environment:   { icon: '🌿', accent: '#4ecb7a' },
-        tn:            { icon: '🏛️', accent: '#f97316' },
+        science: { icon: '🔬', accent: '#22d3ee' },
+        environment: { icon: '🌿', accent: '#4ecb7a' },
+        tn: { icon: '🏛️', accent: '#f97316' },
         international: { icon: '🌍', accent: '#0891b2' },
-        polity:        { icon: '⚖️', accent: '#a78bfa' },
-        economy:       { icon: '📈', accent: '#f5c842' },
+        polity: { icon: '⚖️', accent: '#a78bfa' },
+        economy: { icon: '📈', accent: '#f5c842' },
       };
-      const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
       function makeCard(entry, extraTags) {
         const style = TOPIC_STYLE[entry.topic] || { icon: '📰', accent: '#6b7280' };
@@ -1481,9 +2184,9 @@
             const caData = await caRes.json();
             injectCACards(caData);
           }
-        } catch (_) {}
+        } catch (_) { }
 
-        const lastTab = (function(){ try { return localStorage.getItem('arivoam_last_tab') || 'ssc'; } catch(e){ return 'ssc'; } })();
+        const lastTab = (function () { try { return localStorage.getItem('arivoam_last_tab') || 'ssc'; } catch (e) { return 'ssc'; } })();
         switchExam(lastTab, null, null, null);
       } catch (err) {
         document.getElementById('subjectNav').innerHTML = '';
@@ -1500,10 +2203,13 @@
     document.addEventListener('click', e => {
       const el = e.target.closest('[data-action]');
       if (!el) return;
-      const { action, exam, subject, section, filter } = el.dataset;
+      const { action, exam, subject, section, filter, topic } = el.dataset;
       if (action === 'switchExam') switchExam(exam, null, subject || null);
-      else if (action === 'navigate') navigateTo(subject, section);
+      else if (action === 'navigate') { navigateTo(subject, section); closeDrawer(); }
       else if (action === 'filter') filterBy(filter, el);
+      else if (action === 'testSubject') renderTestTopics(subject);
+      else if (action === 'testTopic') renderTestSession(subject, topic);
+      else if (action === 'testBack') renderTestSubjects();
     });
 
     document.addEventListener('input', e => {

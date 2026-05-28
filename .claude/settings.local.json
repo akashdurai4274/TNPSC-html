@@ -21,7 +21,10 @@
       "Bash(dir /s /b \"C:\\\\TNPSC\\\\Software\\\\TNPSC-v2\\\\Live-QA\")",
       "Bash(dir *)",
       "Bash(Select-String \"QA_\")",
-      "Bash(powershell *)"
+      "Bash(powershell *)",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\TNPSC\\\\Software\\\\TNPSC-v2\" | Select-Object Name, @{Name=\"Type\";Expression={if\\($_.PSIsContainer\\){\"Directory\"}else{\"File\"}}})",
+      "PowerShell(head *)",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\TNPSC\\\\Software\\\\TNPSC-v2\" -File | Where-Object {$_.Extension -eq \".html\" -or $_.Extension -eq \".js\" -or $_.Extension -eq \".json\"} | Select-Object Name)"
     ]
   }
 }

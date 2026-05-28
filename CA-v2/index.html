@@ -111,7 +111,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:
 .card:hover::before{transform:scaleX(1)}
 .card-top{padding:18px 20px 14px}
 .card-meta{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
-.card-date{font-family:var(--font-m);font-size:30px;letter-spacing:0.1em;color:var(--gold-dim)}
+.card-date{font-family:var(--font-m);font-size:38px;font-weight:700;letter-spacing:0.1em;color:var(--gold)}
 .card-dot{width:3px;height:3px;border-radius:50%;background:var(--muted2);flex-shrink:0}
 .card-unit{font-family:var(--font-m);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:2px 8px;border-radius:2px;border:1px solid}
 .card h3{font-family:var(--font-h);font-size:15px;font-weight:700;color:#fff;line-height:1.35;margin-bottom:8px;letter-spacing:-0.01em}
@@ -231,6 +231,30 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:
   .quick-row{margin:0 0 28px}
 }
 .card.hidden{display:none}
+
+/* ══ NEWSPAPER SECTION ══ */
+#newspaperSection{display:none}
+.np-hero{max-width:960px;margin:0 auto;padding:40px 40px 24px;border-bottom:1px solid var(--border)}
+.np-hero h2{font-family:var(--font-h);font-size:28px;font-weight:800;color:#fff;letter-spacing:-0.02em;margin-bottom:6px}
+.np-hero p{font-family:var(--font-b);font-size:14px;color:var(--muted)}
+.np-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;max-width:960px;margin:0 auto;padding:32px 40px 80px}
+.np-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:0;display:flex;flex-direction:column;text-decoration:none;cursor:pointer;transition:border-color .2s,transform .2s;position:relative;overflow:hidden}
+.np-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .25s ease}
+.np-card:hover{border-color:var(--border-hover);transform:translateY(-2px)}
+.np-card:hover::before{transform:scaleX(1)}
+.np-card-top{padding:20px 20px 14px}
+.np-date-badge{font-family:var(--font-m);font-size:36px;font-weight:700;letter-spacing:0.05em;color:var(--gold);line-height:1;margin-bottom:10px}
+.np-card-title{font-family:var(--font-h);font-size:15px;font-weight:700;color:#fff;margin-bottom:8px;letter-spacing:-0.01em}
+.np-card-desc{font-family:var(--font-b);font-size:13px;color:var(--muted);line-height:1.6}
+.np-card-footer{padding:10px 20px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;margin-top:auto}
+.np-topics{display:flex;flex-wrap:wrap;gap:6px}
+.np-topic{font-family:var(--font-m);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:2px;background:var(--surface2);color:var(--muted);border:1px solid var(--border)}
+.np-arrow{font-family:var(--font-m);font-size:11px;color:var(--gold);opacity:0;transition:opacity .2s}
+.np-card:hover .np-arrow{opacity:1}
+@media(max-width:720px){
+  .np-hero{padding:28px 20px 18px}
+  .np-grid{padding:24px 20px 60px}
+}
 </style>
 </head>
 <body>
@@ -246,11 +270,12 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:
   <div class="topbar-sep"></div>
   <span class="topbar-tag">TNPSC Group 1 · Current Affairs</span>
   <nav class="topbar-nav">
-    <a href="#browse" class="tnav active">Browse</a>
+    <a href="#browse" class="tnav active" id="navBrowse">Browse</a>
     <a href="#units" class="tnav">Units</a>
     <a href="#mains" class="tnav">Mains Bank</a>
     <a href="#mcq" class="tnav">MCQ Drill</a>
     <a href="#about" class="tnav">About</a>
+    <a href="#" class="tnav" id="navNewspapers">🗞️ Newspapers</a>
   </nav>
   <a href="#" class="topbar-cta">+ Add Notes</a>
 </header>
@@ -310,7 +335,19 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:
   </div>
 </section>
 
+<!-- ═══════ NEWSPAPER SECTION ═══════ -->
+<div id="newspaperSection">
+  <div class="np-hero">
+    <h2>🗞️ Newspaper Artifacts</h2>
+    <p>Full-page newspaper summaries — key headlines structured for TNPSC revision.</p>
+  </div>
+  <div class="np-grid" id="npGrid">
+    <div class="loading-state"><div class="loading-spinner"></div><p>Loading newspapers…</p></div>
+  </div>
+</div>
+
 <!-- ═══════ MAIN CONTENT ═══════ -->
+<div id="mainSection">
 <main>
   <div class="content-wrap">
 
@@ -373,6 +410,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:
 
   </div>
 </main>
+
+</div><!-- /#mainSection -->
 
 <!-- ═══════ FOOTER ═══════ -->
 <footer class="footer">
@@ -971,6 +1010,95 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:
       }
     ];
   }
+
+  /* ════════════════════════════════
+     NEWSPAPERS SECTION
+  ════════════════════════════════ */
+  var npLoaded = false;
+
+  function showSection(which) {
+    var mainSec = document.getElementById('mainSection');
+    var npSec   = document.getElementById('newspaperSection');
+    var browseNav = document.getElementById('navBrowse');
+    var npNav   = document.getElementById('navNewspapers');
+
+    if (which === 'newspapers') {
+      mainSec.style.display = 'none';
+      npSec.style.display   = 'block';
+      browseNav.classList.remove('active');
+      npNav.classList.add('active');
+      if (!npLoaded) loadNewspapers();
+    } else {
+      mainSec.style.display = 'block';
+      npSec.style.display   = 'none';
+      browseNav.classList.add('active');
+      npNav.classList.remove('active');
+    }
+  }
+
+  function loadNewspapers() {
+    npLoaded = true;
+    var npGrid = document.getElementById('npGrid');
+    fetch('newspapers.json?_=' + Date.now())
+      .then(function(r) {
+        if (!r.ok) throw new Error('newspapers.json not found');
+        return r.json();
+      })
+      .then(function(data) {
+        npGrid.innerHTML = '';
+        if (!data || !data.length) {
+          npGrid.innerHTML = '<div class="empty"><div class="empty-icon">◈</div><h3>No newspapers yet</h3><p>Check back soon.</p></div>';
+          return;
+        }
+        data.sort(function(a, b) { return (b.date || '').localeCompare(a.date || ''); });
+        data.forEach(function(np) { npGrid.appendChild(buildNpCard(np)); });
+      })
+      .catch(function(err) {
+        console.warn('Newspapers error:', err);
+        npGrid.innerHTML = '<div class="empty"><div class="empty-icon">◈</div><h3>Could not load newspapers</h3><p>Ensure newspapers.json exists in the CA-v2 folder.</p></div>';
+      });
+  }
+
+  function buildNpCard(np) {
+    var card = document.createElement('div');
+    card.className = 'np-card';
+
+    var parts = (np.date || '').split('-');
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var dispDate = parts.length === 3
+      ? parseInt(parts[2], 10) + ' ' + (months[parseInt(parts[1],10)-1] || '') + ' ' + parts[0]
+      : (np.date || '');
+
+    var topicsHtml = (np.topics || []).map(function(t) {
+      return '<span class="np-topic">' + esc(t) + '</span>';
+    }).join('');
+
+    card.innerHTML =
+      '<div class="np-card-top">' +
+        '<div class="np-date-badge">' + esc(dispDate) + '</div>' +
+        '<div class="np-card-title">' + esc(np.title || '') + '</div>' +
+        '<p class="np-card-desc">' + esc(np.desc || '') + '</p>' +
+      '</div>' +
+      '<div class="np-card-footer">' +
+        '<div class="np-topics">' + topicsHtml + '</div>' +
+        '<span class="np-arrow">Open →</span>' +
+      '</div>';
+
+    card.addEventListener('click', function() {
+      if (np.file) window.location.href = np.file;
+    });
+    return card;
+  }
+
+  document.getElementById('navNewspapers').addEventListener('click', function(e) {
+    e.preventDefault();
+    showSection('newspapers');
+  });
+
+  document.getElementById('navBrowse').addEventListener('click', function(e) {
+    e.preventDefault();
+    showSection('browse');
+  });
 
   /* ════════════════════════════════
      BOOT
