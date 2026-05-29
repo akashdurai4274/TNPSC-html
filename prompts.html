@@ -573,6 +573,68 @@ body::before {
 
 </div>
 
+<!-- ─────────────────────────────
+     RESET CACHE SECTION
+───────────────────────────── -->
+<div id="resetSection" style="display:none; position:relative; z-index:1;">
+
+  <div class="viewer-topbar">
+    <button class="btn-back-viewer" onclick="backToHubFromReset()">← All Prompts</button>
+    <div class="viewer-title">🗑️ <span>Reset Cache</span></div>
+    <div class="viewer-actions">
+      <button class="btn-action" onclick="nuclearReset()"
+        style="color:var(--red);border-color:rgba(232,85,85,0.4);background:rgba(232,85,85,0.06);">
+        🔥 Nuke &amp; Reload
+      </button>
+    </div>
+  </div>
+
+  <div class="viewer-wrap">
+    <div style="background:rgba(232,85,85,0.06);border:1px solid rgba(232,85,85,0.25);border-radius:10px;padding:16px 20px;margin-bottom:28px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);line-height:1.8;">
+      ⚠ Use when production shows stale content after a deploy. Each button below targets a specific persistence layer. <strong style="color:var(--text)">Nuke &amp; Reload</strong> clears everything and hard-refreshes.
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:28px;">
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;">Local Storage</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:14px;">Clears all <code style="background:var(--surface2);padding:1px 5px;border-radius:3px;color:var(--gold);font-size:11px;">localStorage</code> keys for this origin.</div>
+        <button class="btn-action" onclick="resetLocalStorage()" style="color:var(--blue);border-color:rgba(91,156,246,0.4);background:rgba(91,156,246,0.06);">Clear localStorage</button>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;">Session Storage</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:14px;">Clears <code style="background:var(--surface2);padding:1px 5px;border-radius:3px;color:var(--gold);font-size:11px;">sessionStorage</code> — you will need to log in again.</div>
+        <button class="btn-action" onclick="resetSessionStorage()" style="color:var(--blue);border-color:rgba(91,156,246,0.4);background:rgba(91,156,246,0.06);">Clear sessionStorage</button>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;">Cookies</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:14px;">Expires all cookies accessible via <code style="background:var(--surface2);padding:1px 5px;border-radius:3px;color:var(--gold);font-size:11px;">document.cookie</code>.</div>
+        <button class="btn-action" onclick="resetCookies()" style="color:var(--blue);border-color:rgba(91,156,246,0.4);background:rgba(91,156,246,0.06);">Clear Cookies</button>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;">Service Worker + Cache API</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:14px;">Unregisters all SW registrations and deletes all Cache Storage buckets.</div>
+        <button class="btn-action" onclick="resetServiceWorkerAndCache()" style="color:var(--blue);border-color:rgba(91,156,246,0.4);background:rgba(91,156,246,0.06);">Clear SW &amp; Caches</button>
+      </div>
+
+    </div>
+
+    <div style="background:rgba(232,85,85,0.08);border:1px solid rgba(232,85,85,0.35);border-radius:10px;padding:22px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+      <div>
+        <div style="font-family:'Syne',sans-serif;font-weight:800;color:var(--red);font-size:16px;margin-bottom:6px;">🔥 Nuclear Reset</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.6;">Clears <strong style="color:var(--text)">everything</strong> — localStorage, sessionStorage, cookies, service workers &amp; all caches — then hard-reloads.</div>
+      </div>
+      <button class="btn-action" onclick="nuclearReset()" style="color:#fff;border-color:var(--red);background:var(--red);flex-shrink:0;">🔥 Nuke &amp; Reload</button>
+    </div>
+
+    <div id="reset-log" style="margin-top:20px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px 20px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--green);line-height:2;min-height:48px;display:none;white-space:pre-wrap;"></div>
+
+  </div>
+</div>
+
 <!-- ── COPY TOAST ── -->
 <div class="copy-toast" id="copyToast">✓ Copied to clipboard!</div>
 
@@ -644,6 +706,16 @@ const PROMPTS = [
     accent: '#fb923c',
     type:   'notepad',
     desc:   'Scratch pad for freeform notes. Auto-saved to browser storage. Ctrl+F to find · Ctrl+H to find & replace.',
+  },
+  {
+    id:     'reset-cache',
+    icon:   '🗑️',
+    title:  'Reset Cache',
+    folder: 'system/',
+    file:   null,
+    accent: '#e85555',
+    type:   'reset',
+    desc:   'Clear browser persistence — localStorage, sessionStorage, cookies, service workers, and Cache API — so users load the latest production version.',
   },
 ];
 
@@ -735,6 +807,7 @@ async function openPrompt(id) {
   const p = PROMPTS.find(x => x.id === id);
   if (!p) return;
   if (p.type === 'notepad') { openNotepad(); return; }
+  if (p.type === 'reset')   { openReset();   return; }
   currentPrompt = p;
 
   document.getElementById('mainHub').style.display    = 'none';
@@ -1087,6 +1160,105 @@ function npRebuildAndSync() {
   npBuildMatches();
   if (npCurrentMatch >= npMatches.length) npCurrentMatch = npMatches.length - 1;
   npUpdateCountDisplay();
+}
+
+/* ─────────────────────────────────────────
+   RESET CACHE
+───────────────────────────────────────── */
+function openReset() {
+  document.getElementById('mainHub').style.display      = 'none';
+  document.getElementById('resetSection').style.display = 'block';
+  document.getElementById('reset-log').style.display    = 'none';
+  document.getElementById('reset-log').textContent      = '';
+}
+
+function backToHubFromReset() {
+  document.getElementById('resetSection').style.display = 'none';
+  document.getElementById('mainHub').style.display      = 'block';
+}
+
+function logReset(msg) {
+  const el = document.getElementById('reset-log');
+  el.style.display = 'block';
+  el.textContent  += (el.textContent ? '\n' : '') + msg;
+}
+
+function resetLocalStorage() {
+  const count = localStorage.length;
+  localStorage.clear();
+  showToast('localStorage cleared (' + count + ' keys)');
+  logReset('✓ localStorage cleared — ' + count + ' keys removed');
+}
+
+function resetSessionStorage() {
+  const count = sessionStorage.length;
+  sessionStorage.clear();
+  showToast('sessionStorage cleared — logging out…');
+  logReset('✓ sessionStorage cleared — ' + count + ' keys removed. Reloading…');
+  setTimeout(() => location.reload(), 800);
+}
+
+function resetCookies() {
+  const cookies = document.cookie.split(';');
+  cookies.forEach(c => {
+    const name = c.split('=')[0].trim();
+    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/';
+    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;domain=' + location.hostname;
+  });
+  showToast('Cookies cleared (' + cookies.length + ' entries)');
+  logReset('✓ Cookies cleared — ' + cookies.length + ' entries expired');
+}
+
+async function resetServiceWorkerAndCache() {
+  let swCount = 0, cacheCount = 0;
+  if ('serviceWorker' in navigator) {
+    const regs = await navigator.serviceWorker.getRegistrations();
+    swCount = regs.length;
+    await Promise.all(regs.map(r => r.unregister()));
+  }
+  if ('caches' in window) {
+    const keys = await caches.keys();
+    cacheCount = keys.length;
+    await Promise.all(keys.map(k => caches.delete(k)));
+  }
+  showToast('SW & caches cleared (' + swCount + ' SW, ' + cacheCount + ' caches)');
+  logReset('✓ Service workers unregistered: ' + swCount + ' — Cache buckets deleted: ' + cacheCount);
+}
+
+async function nuclearReset() {
+  if (!confirm('Clear ALL browser persistence for this origin and hard-reload. Continue?')) return;
+  const el = document.getElementById('reset-log');
+  el.style.display = 'block';
+  el.textContent   = '';
+
+  localStorage.clear();
+  logReset('✓ localStorage cleared');
+
+  const ssCount = sessionStorage.length;
+  sessionStorage.clear();
+  logReset('✓ sessionStorage cleared (' + ssCount + ' keys)');
+
+  const cookies = document.cookie.split(';');
+  cookies.forEach(c => {
+    const name = c.split('=')[0].trim();
+    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/';
+    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;domain=' + location.hostname;
+  });
+  logReset('✓ Cookies expired (' + cookies.length + ')');
+
+  if ('serviceWorker' in navigator) {
+    const regs = await navigator.serviceWorker.getRegistrations();
+    await Promise.all(regs.map(r => r.unregister()));
+    logReset('✓ Service workers unregistered: ' + regs.length);
+  }
+  if ('caches' in window) {
+    const keys = await caches.keys();
+    await Promise.all(keys.map(k => caches.delete(k)));
+    logReset('✓ Cache buckets deleted: ' + keys.length);
+  }
+
+  logReset('↺ Hard reloading…');
+  setTimeout(() => location.href = location.href.split('?')[0] + '?nocache=' + Date.now(), 600);
 }
 
 /* ─────────────────────────────────────────
