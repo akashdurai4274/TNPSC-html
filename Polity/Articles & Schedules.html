@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indian Constitution — TNpSC Group 1 Master Study Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Orbitron:wght@400;600;700&family=Andika:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14;
+    --gold: #f5c842;
+    --text: #e8e6e0;
+    --card: #13161e;
+    --border: #1e2230;
+    --critical-color: #ff4f4f;
+    --critical-bg: #2a1010;
+    --trap-color: #f5c842;
+    --trap-bg: #2a2210;
+    --tip-color: #4caf7d;
+    --tip-bg: #0e2018;
+    --pyq-color: #4a9eff;
+    --pyq-bg: #0e1a2a;
+    --gem-color: #b57bee;
+    --gem-bg: #1a1028;
+    --gold-dim: #c9a730;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Andika', sans-serif; line-height: 1.7; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0d0f14 0%, #111420 50%, #0d0f14 100%);
+    border-bottom: 2px solid var(--gold);
+    padding: 60px 24px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(245,200,66,0.08) 0%, transparent 70%);
+  }
+  .chakra { font-size: 5rem; color: var(--gold); animation: spin 20s linear infinite; display: inline-block; line-height: 1; margin-bottom: 16px; }
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  .hero h1 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(1.8rem, 5vw, 3rem); color: var(--gold); letter-spacing: -1px; position: relative; }
+  .hero-underline { height: 3px; width: 200px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 12px auto 20px; animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:0.5;width:150px;} 50%{opacity:1;width:280px;} }
+  .hero-sub { font-family: 'Orbitron', monospace; font-size: 0.85rem; color: #aaa; letter-spacing: 2px; margin-bottom: 20px; }
+  .tag-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+  .tag { background: var(--card); border: 1px solid var(--gold); color: var(--gold); font-family: 'Orbitron', monospace; font-size: 0.7rem; padding: 4px 12px; border-radius: 20px; letter-spacing: 1px; }
+
+  /* LAYOUT */
+  .page-wrap { display: flex; max-width: 1400px; margin: 0 auto; }
+  .main-content { flex: 1; padding: 32px 24px; min-width: 0; }
+
+  /* TOC SIDEBAR */
+  .toc-sidebar {
+    width: 260px; min-width: 260px;
+    background: var(--card);
+    border-right: 1px solid var(--border);
+    padding: 24px 0;
+    position: sticky; top: 0;
+    height: 100vh; overflow-y: auto;
+    font-family: 'Orbitron', monospace;
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold) var(--bg);
+  }
+  .toc-sidebar::-webkit-scrollbar { width: 4px; }
+  .toc-sidebar::-webkit-scrollbar-track { background: var(--bg); }
+  .toc-sidebar::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+  .toc-title { font-size: 0.65rem; color: var(--gold); letter-spacing: 2px; padding: 0 20px 16px; border-bottom: 1px solid var(--border); }
+  .toc-list { list-style: none; padding: 12px 0; }
+  .toc-list li a { display: block; padding: 6px 20px; font-size: 0.6rem; color: #888; text-decoration: none; letter-spacing: 1px; transition: all 0.2s; border-left: 2px solid transparent; }
+  .toc-list li a:hover, .toc-list li a.active { color: var(--gold); border-left-color: var(--gold); background: rgba(245,200,66,0.05); }
+  .toc-mobile-toggle { display: none; background: var(--card); border: 1px solid var(--gold); color: var(--gold); font-family: 'Orbitron', monospace; font-size: 0.7rem; padding: 8px 16px; cursor: pointer; width: 100%; text-align: left; }
+
+  /* LEGEND */
+  .legend {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 16px 20px; margin-bottom: 32px;
+    display: flex; gap: 16px; flex-wrap: wrap; align-items: center;
+  }
+  .legend-label { font-family: 'Orbitron', monospace; font-size: 0.65rem; color: #888; margin-right: 4px; letter-spacing: 1px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  /* SECTIONS */
+  .section { margin-bottom: 64px; }
+  h2 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(1.4rem, 3vw, 2rem); color: var(--gold); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
+  h2 .sec-num { font-family: 'Orbitron', monospace; font-size: 0.7rem; background: var(--gold); color: var(--bg); padding: 2px 8px; border-radius: 4px; }
+  h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.2rem; color: #fff; margin: 24px 0 12px; }
+  h4 { font-family: 'Orbitron', monospace; font-size: 0.85rem; color: var(--gold); margin: 16px 0 8px; }
+  p { margin-bottom: 12px; }
+  .art-num { font-family: 'Orbitron', monospace; font-weight: 700; color: var(--gold); }
+
+  /* CALLOUT BLOCKS */
+  .callout {
+    border-radius: 8px; padding: 16px 20px; margin: 16px 0;
+    border-left: 4px solid;
+    font-size: 0.95rem;
+  }
+  .callout .callout-label { font-family: 'Orbitron', monospace; font-size: 0.7rem; letter-spacing: 2px; margin-bottom: 6px; font-weight: 700; }
+  .critical { background: var(--critical-bg); border-color: var(--critical-color); }
+  .critical .callout-label { color: var(--critical-color); }
+  .trap { background: var(--trap-bg); border-color: var(--trap-color); }
+  .trap .callout-label { color: var(--trap-color); }
+  .tip { background: var(--tip-bg); border-color: var(--tip-color); }
+  .tip .callout-label { color: var(--tip-color); }
+  .pyq-callout { background: var(--pyq-bg); border-color: var(--pyq-color); }
+  .pyq-callout .callout-label { color: var(--pyq-color); }
+  .gem { background: var(--gem-bg); border-color: var(--gem-color); box-shadow: 0 0 20px rgba(181,123,238,0.15); }
+  .gem .callout-label { color: var(--gem-color); }
+
+  /* TABLES */
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 8px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; min-width: 500px; }
+  thead tr { background: var(--gold); color: var(--bg); }
+  thead th { font-family: 'Orbitron', monospace; font-size: 0.7rem; padding: 10px 14px; text-align: left; letter-spacing: 1px; }
+  tbody tr:nth-child(even) { background: var(--card); }
+  tbody tr:nth-child(odd) { background: var(--bg); }
+  tbody td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tbody tr:hover { background: rgba(245,200,66,0.04); }
+  .freq-high { color: var(--gold); font-weight: bold; }
+
+  /* MNEMONIC CARDS */
+  .mnemonic-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-left: 4px solid var(--gold); border-radius: 8px;
+    padding: 20px; margin: 16px 0;
+  }
+  .mnemonic-text { font-family: 'Orbitron', monospace; font-size: 1.1rem; color: var(--gold); margin-bottom: 12px; }
+  .mnemonic-expand { display: grid; gap: 4px; }
+  .mnemonic-row { display: flex; gap: 12px; align-items: baseline; }
+  .mnemonic-letter { font-family: 'Orbitron', monospace; font-weight: 700; color: var(--gold); min-width: 24px; }
+  .mnemonic-meaning { font-size: 0.9rem; color: var(--text); }
+
+  /* PYQ CARDS */
+  .pyq-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 20px; margin: 16px 0;
+    border-left: 4px solid var(--pyq-color);
+  }
+  .pyq-badge { font-family: 'Orbitron', monospace; font-size: 0.65rem; color: var(--pyq-color); letter-spacing: 2px; margin-bottom: 10px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .badge-tag { border: 1px solid; border-radius: 4px; padding: 1px 6px; font-size: 0.6rem; }
+  .badge-critical { color: var(--critical-color); border-color: var(--critical-color); }
+  .badge-trap { color: var(--trap-color); border-color: var(--trap-color); }
+  .badge-tip { color: var(--tip-color); border-color: var(--tip-color); }
+  .badge-gem { color: var(--gem-color); border-color: var(--gem-color); }
+  .badge-pyq { color: var(--pyq-color); border-color: var(--pyq-color); }
+  .pyq-question { font-size: 0.95rem; margin-bottom: 14px; font-weight: 700; color: #fff; }
+  .pyq-toggle { background: none; border: 1px solid var(--gold); color: var(--gold); font-family: 'Orbitron', monospace; font-size: 0.7rem; padding: 6px 14px; cursor: pointer; border-radius: 4px; transition: all 0.2s; }
+  .pyq-toggle:hover { background: var(--gold); color: var(--bg); }
+  .pyq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+  .pyq-answer.open { max-height: 500px; }
+  .pyq-answer-inner { padding-top: 14px; border-top: 1px solid var(--border); margin-top: 14px; font-size: 0.9rem; }
+  .answer-correct { color: var(--tip-color); font-family: 'Orbitron', monospace; font-size: 0.8rem; margin-bottom: 8px; }
+
+  /* COMPARISON GRID */
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+  .compare-col { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+  .compare-col h4 { text-align: center; border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-bottom: 12px; }
+  .compare-col ul { list-style: none; }
+  .compare-col ul li { padding: 5px 0; border-bottom: 1px solid var(--border); font-size: 0.88rem; }
+  .compare-col ul li:last-child { border-bottom: none; }
+
+  /* SECTION DIVIDER */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
+
+  /* FOOTER */
+  footer { background: var(--card); border-top: 2px solid var(--gold); text-align: center; padding: 28px; font-family: 'Orbitron', monospace; font-size: 0.65rem; color: #666; letter-spacing: 1px; margin-top: 64px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .toc-sidebar { display: none; }
+    .toc-sidebar.mobile-open { display: block; position: fixed; top: 0; left: 0; z-index: 1000; height: 100vh; width: 260px; }
+    .toc-mobile-toggle { display: block; }
+    .compare-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .hero { padding: 40px 16px; }
+    .main-content { padding: 20px 14px; }
+    h2 { font-size: 1.4rem; }
+    .chakra { font-size: 3.5rem; }
+  }
+
+  /* PREAMBLE BOX */
+  .preamble-box {
+    background: linear-gradient(135deg, #111420, #13161e);
+    border: 1px solid var(--gold);
+    border-radius: 12px; padding: 28px; margin: 20px 0;
+    font-size: 1rem; line-height: 2;
+    box-shadow: 0 0 30px rgba(245,200,66,0.08);
+  }
+  .preamble-box strong { color: var(--gold); }
+
+  /* LANDMARK CASE CARD */
+  .case-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin: 10px 0; }
+  .case-name { font-family: 'Orbitron', monospace; font-size: 0.8rem; color: var(--gold); margin-bottom: 6px; }
+  .case-year { color: #888; font-size: 0.8rem; }
+  .case-principle { font-size: 0.88rem; margin-top: 8px; }
+
+  /* ARTICLE ITEM */
+  .article-item { padding: 8px 0; border-bottom: 1px solid var(--border); display: flex; gap: 12px; }
+  .article-item:last-child { border-bottom: none; }
+  .art-badge { font-family: 'Orbitron', monospace; font-size: 0.7rem; color: var(--gold); font-weight: 700; min-width: 70px; }
+  .art-desc { font-size: 0.88rem; }
+</style>
+</head>
+<body>
+
+<!-- MOBILE TOC TOGGLE -->
+<button class="toc-mobile-toggle" onclick="document.getElementById('tocSidebar').classList.toggle('mobile-open')">☰ TABLE OF CONTENTS</button>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="chakra">☸</div>
+  <h1>CONSTITUTION OF INDIA</h1>
+  <div class="hero-underline"></div>
+  <div class="hero-sub">MASTER STUDY GUIDE · TNpSC GROUP 1 PREPARATION</div>
+  <div class="tag-row">
+    <span class="tag">TNpSC GROUP 1</span>
+    <span class="tag">CONSTITUTION OF INDIA</span>
+    <span class="tag">EXAM READY</span>
+    <span class="tag">106 AMENDMENTS</span>
+    <span class="tag">AS ON MAY 2024</span>
+  </div>
+</div>
+
+<div class="page-wrap">
+  <!-- SIDEBAR TOC -->
+  <nav class="toc-sidebar" id="tocSidebar">
+    <div class="toc-title">CONTENTS</div>
+    <ul class="toc-list">
+      <li><a href="#preamble">01 · PREAMBLE</a></li>
+      <li><a href="#parts">02 · PARTS (I–XXII)</a></li>
+      <li><a href="#schedules">03 · SCHEDULES (1–12)</a></li>
+      <li><a href="#fundamental-rights">04 · FUNDAMENTAL RIGHTS</a></li>
+      <li><a href="#dpsp">05 · DPSP (Art. 36–51)</a></li>
+      <li><a href="#duties">06 · FUNDAMENTAL DUTIES</a></li>
+      <li><a href="#union-exec">07 · UNION EXECUTIVE</a></li>
+      <li><a href="#parliament">08 · PARLIAMENT</a></li>
+      <li><a href="#state-govt">09 · STATE GOVERNMENT</a></li>
+      <li><a href="#emergency">10 · EMERGENCY PROVISIONS</a></li>
+      <li><a href="#amendments">11 · TOP 20 AMENDMENTS</a></li>
+      <li><a href="#landmark">12 · LANDMARK CASES</a></li>
+      <li><a href="#mnemonics">13 · MNEMONICS</a></li>
+      <li><a href="#comparisons">14 · COMPARISON TABLES</a></li>
+      <li><a href="#pyq">15 · PYQ QUESTION CARDS</a></li>
+      <li><a href="#gems">16 · LIVE GEM BOXES</a></li>
+    </ul>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- LEGEND -->
+    <div class="legend">
+      <span class="legend-label">CALLOUT TYPES:</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--critical-color)"></span>🔴 CRITICAL</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--trap-color)"></span>🟡 TRAP</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--tip-color)"></span>🟢 TIP</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--pyq-color)"></span>🔵 PYQ</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--gem-color)"></span>💎 GEM</span>
+    </div>
+
+    <!-- =========================================================
+         SECTION 1: PREAMBLE
+    ========================================================== -->
+    <section id="preamble" class="section">
+      <h2><span class="sec-num">01</span> THE PREAMBLE</h2>
+
+      <div class="preamble-box">
+        <strong>WE, THE PEOPLE OF INDIA,</strong> having solemnly resolved to constitute India into a
+        <strong>SOVEREIGN SOCIALIST SECULAR DEMOCRATIC REPUBLIC</strong>
+        and to secure to all its citizens:<br><br>
+        <strong>JUSTICE,</strong> social, economic and political;<br>
+        <strong>LIBERTY</strong> of thought, expression, belief, faith and worship;<br>
+        <strong>EQUALITY</strong> of status and of opportunity; and to promote among them all<br>
+        <strong>FRATERNITY</strong> assuring the dignity of the individual and the <strong>unity and integrity of the Nation;</strong><br><br>
+        IN OUR CONSTITUENT ASSEMBLY this twenty-sixth day of November, 1949, do
+        <strong>HEREBY ADOPT, ENACT AND GIVE TO OURSELVES THIS CONSTITUTION.</strong>
+      </div>
+
+      <h3>Word-by-Word Breakdown</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>KEYWORD</th><th>MEANING / SIGNIFICANCE</th><th>ADDED BY</th></tr></thead>
+          <tbody>
+            <tr><td class="art-num">Sovereign</td><td>India is independent; not under any foreign power. Final authority rests with the people.</td><td>Original (1949)</td></tr>
+            <tr><td class="art-num freq-high">Socialist 🔥</td><td>Commitment to social and economic equality; no extreme concentration of wealth.</td><td><strong>42nd Amendment (1976)</strong></td></tr>
+            <tr><td class="art-num freq-high">Secular 🔥</td><td>State has no official religion; equal respect and protection for all religions.</td><td><strong>42nd Amendment (1976)</strong></td></tr>
+            <tr><td class="art-num">Democratic</td><td>Government elected by the people; adult franchise.</td><td>Original (1949)</td></tr>
+            <tr><td class="art-num">Republic</td><td>Elected Head of State (President), not hereditary monarchy.</td><td>Original (1949)</td></tr>
+            <tr><td class="art-num">Justice</td><td>Social, economic & political; borrowed from Russian Revolution ideals.</td><td>Original (1949)</td></tr>
+            <tr><td class="art-num">Liberty</td><td>5 aspects: thought, expression, belief, faith, worship.</td><td>Original (1949)</td></tr>
+            <tr><td class="art-num">Equality</td><td>Equal status and opportunity for all citizens.</td><td>Original (1949)</td></tr>
+            <tr><td class="art-num">Fraternity</td><td>Brotherhood among citizens; ensures dignity and national unity.</td><td>Original (1949)</td></tr>
+            <tr><td class="art-num freq-high">Integrity 🔥</td><td>Unity and integrity of the nation added to emphasize national cohesion.</td><td><strong>42nd Amendment (1976)</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout critical">
+        <div class="callout-label">🔴 CRITICAL</div>
+        The Preamble was amended ONLY ONCE — by the <strong>42nd Amendment Act, 1976</strong> (during Emergency). Three words were inserted: <strong>Socialist, Secular, Integrity</strong>. The Preamble is NOT enforceable in court but is a key interpretive tool.
+      </div>
+
+      <div class="callout trap">
+        <div class="callout-label">🟡 TRAP</div>
+        The Preamble is <strong>NOT a source of power nor a limitation</strong> on legislative power. In <em>Kesavananda Bharati (1973)</em>, the Supreme Court held that the Preamble is part of the Constitution and can be amended but its basic structure cannot be destroyed.
+      </div>
+
+      <div class="mnemonic-card">
+        <div class="mnemonic-text">S · S · D · R — "SOME STATES DO REFORM"</div>
+        <div class="mnemonic-expand">
+          <div class="mnemonic-row"><span class="mnemonic-letter">S</span><span class="mnemonic-meaning">Sovereign — independent authority</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">S</span><span class="mnemonic-meaning">Socialist — equal wealth distribution (42nd Amend.)</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">S</span><span class="mnemonic-meaning">Secular — no state religion (42nd Amend.)</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">D</span><span class="mnemonic-meaning">Democratic — elected government</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">R</span><span class="mnemonic-meaning">Republic — elected Head of State</span></div>
+        </div>
+      </div>
+
+      <div class="mnemonic-card">
+        <div class="mnemonic-text">J · L · E · F — "JUST LIKE EQUAL FRIENDS"</div>
+        <div class="mnemonic-expand">
+          <div class="mnemonic-row"><span class="mnemonic-letter">J</span><span class="mnemonic-meaning">Justice — social, economic, political</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">L</span><span class="mnemonic-meaning">Liberty — thought, expression, belief, faith, worship</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">E</span><span class="mnemonic-meaning">Equality — status and opportunity</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">F</span><span class="mnemonic-meaning">Fraternity — dignity + unity + integrity</span></div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- =========================================================
+         SECTION 2: PARTS
+    ========================================================== -->
+    <section id="parts" class="section">
+      <h2><span class="sec-num">02</span> PARTS OF THE CONSTITUTION (I–XXII)</h2>
+
+      <div class="callout tip">
+        <div class="callout-label">🟢 TIP</div>
+        Most-tested parts in TNpSC Group 1: <strong>Part III (Fundamental Rights), Part IV (DPSP), Part IVA (Fundamental Duties), Part V (Union), Part VI (States), Part XIV (Services), Part XVIII (Emergency), Part XX (Amendment)</strong>.
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>PART</th><th>TITLE</th><th>ARTICLES</th><th>KEY EXAM FOCUS</th></tr></thead>
+          <tbody>
+            <tr><td class="art-num">I</td><td>The Union and its Territory</td><td>1–4</td><td>Formation of states, Art. 3</td></tr>
+            <tr><td class="art-num">II</td><td>Citizenship</td><td>5–11</td><td>Citizenship at commencement</td></tr>
+            <tr><td class="art-num freq-high">III 🔥</td><td>Fundamental Rights</td><td>12–35</td><td>Art. 13, 14, 17, 19, 21, 32 — HIGHEST PRIORITY</td></tr>
+            <tr><td class="art-num freq-high">IV 🔥</td><td>Directive Principles of State Policy</td><td>36–51</td><td>Art. 44 (UCC), Art. 39A, Art. 45</td></tr>
+            <tr><td class="art-num freq-high">IVA 🔥</td><td>Fundamental Duties</td><td>51A</td><td>All 11 duties (added by 42nd & 86th Amendments)</td></tr>
+            <tr><td class="art-num freq-high">V 🔥</td><td>The Union</td><td>52–151</td><td>President, PM, Parliament, CAG</td></tr>
+            <tr><td class="art-num freq-high">VI 🔥</td><td>The States</td><td>152–237</td><td>Governor, CM, State Legislature</td></tr>
+            <tr><td class="art-num">VII</td><td>States in Part B (Repealed)</td><td>238</td><td>Repealed by 7th Amendment 1956</td></tr>
+            <tr><td class="art-num">VIII</td><td>Union Territories</td><td>239–242</td><td>UT administration</td></tr>
+            <tr><td class="art-num">IX</td><td>Panchayats</td><td>243–243O</td><td>73rd Amendment, 3-tier Panchayati Raj</td></tr>
+            <tr><td class="art-num">IXA</td><td>Municipalities</td><td>243P–243ZG</td><td>74th Amendment, Urban Local Bodies</td></tr>
+            <tr><td class="art-num">IXB</td><td>Co-operative Societies</td><td>243ZH–243ZT</td><td>97th Amendment</td></tr>
+            <tr><td class="art-num">X</td><td>Scheduled and Tribal Areas</td><td>244–244A</td><td>5th & 6th Schedule areas</td></tr>
+            <tr><td class="art-num">XI</td><td>Centre-State Relations (Legislative)</td><td>245–255</td><td>Distribution of legislative power</td></tr>
+            <tr><td class="art-num">XII</td><td>Finance, Property, Contracts, Suits</td><td>264–300A</td><td>Finance Commission, Art. 280</td></tr>
+            <tr><td class="art-num">XIII</td><td>Trade, Commerce and Intercourse</td><td>301–307</td><td>Art. 301 — freedom of trade</td></tr>
+            <tr><td class="art-num freq-high">XIV 🔥</td><td>Services under the Union and States</td><td>308–323</td><td>UPSC, SPSC, Art. 311</td></tr>
+            <tr><td class="art-num">XIVA</td><td>Tribunals</td><td>323A–323B</td><td>Administrative Tribunals</td></tr>
+            <tr><td class="art-num">XV</td><td>Elections</td><td>324–329A</td><td>Election Commission, Art. 324</td></tr>
+            <tr><td class="art-num">XVI</td><td>Special Provisions for Certain Classes</td><td>330–342A</td><td>SC/ST/OBC reservations</td></tr>
+            <tr><td class="art-num">XVII</td><td>Official Language</td><td>343–351</td><td>Hindi as official language, Art. 343</td></tr>
+            <tr><td class="art-num freq-high">XVIII 🔥</td><td>Emergency Provisions</td><td>352–360</td><td>Art. 352, 356, 360 — National/State/Financial Emergency</td></tr>
+            <tr><td class="art-num">XIX</td><td>Miscellaneous</td><td>361–367</td><td>Art. 361 — immunity of President/Governor</td></tr>
+            <tr><td class="art-num freq-high">XX 🔥</td><td>Amendment of the Constitution</td><td>368</td><td>Amendment procedure — very high frequency</td></tr>
+            <tr><td class="art-num">XXI</td><td>Temporary, Transitional and Special Provisions</td><td>369–392</td><td>Art. 370 (J&K — now abrogated)</td></tr>
+            <tr><td class="art-num">XXII</td><td>Short Title, Commencement, Authoritative Texts</td><td>393–395</td><td>Art. 394 — commencement date</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- =========================================================
+         SECTION 3: SCHEDULES
+    ========================================================== -->
+    <section id="schedules" class="section">
+      <h2><span class="sec-num">03</span> SCHEDULES (1–12)</h2>
+
+      <div class="mnemonic-card">
+        <div class="mnemonic-text">Mnemonic: "STAY SAFE ON ROADS — ALWAYS CHECK LEFT SIDE EVERY NIGHT"</div>
+        <div class="mnemonic-expand">
+          <div class="mnemonic-row"><span class="mnemonic-letter">1</span><span class="mnemonic-meaning">States & UTs</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">2</span><span class="mnemonic-meaning">Salaries — President, Governors, Judges, etc.</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">3</span><span class="mnemonic-meaning">Oaths & Affirmations forms</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">4</span><span class="mnemonic-meaning">Rajya Sabha — Allocation of seats</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">5</span><span class="mnemonic-meaning">Scheduled Areas administration</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">6</span><span class="mnemonic-meaning">Tribal Areas (NE States) administration</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">7</span><span class="mnemonic-meaning">Three Lists — Union, State, Concurrent</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">8</span><span class="mnemonic-meaning">22 Official Languages</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">9</span><span class="mnemonic-meaning">Acts protected from Judicial Review</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">10</span><span class="mnemonic-meaning">Anti-Defection Law</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">11</span><span class="mnemonic-meaning">Panchayats — 29 subjects</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">12</span><span class="mnemonic-meaning">Municipalities — 18 subjects</span></div>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>SCH.</th><th>SUBJECT</th><th>RELATED ARTICLES</th><th>TNpSC FREQUENCY</th></tr></thead>
+          <tbody>
+            <tr><td class="art-num">1st</td><td>Names of States & Union Territories</td><td>Art. 1, 4</td><td>🔥 High</td></tr>
+            <tr><td class="art-num">2nd</td><td>Provisions for President, Governors, Rajya Sabha Chairman, Lok Sabha Speaker, Supreme Court & HC Judges, CAG</td><td>Art. 59, 65, 75, 97, 125, 148, 158, 164, 186, 221</td><td>Medium</td></tr>
+            <tr><td class="art-num">3rd</td><td>Forms of Oaths and Affirmations</td><td>Art. 75, 84, 99, 124, 146, 173, 188, 219</td><td>Low</td></tr>
+            <tr><td class="art-num freq-high">4th 🔥</td><td>Allocation of seats in the Council of States (Rajya Sabha)</td><td>Art. 4, 80</td><td>High</td></tr>
+            <tr><td class="art-num freq-high">5th 🔥</td><td>Administration and control of Scheduled Areas and Scheduled Tribes</td><td>Art. 244(1)</td><td>High</td></tr>
+            <tr><td class="art-num freq-high">6th 🔥</td><td>Administration of Tribal Areas in Assam, Meghalaya, Tripura, Mizoram</td><td>Art. 244(2), 275(1)</td><td>High</td></tr>
+            <tr><td class="art-num freq-high">7th 🔥</td><td>Three Lists: Union (99), State (61), Concurrent (52)</td><td>Art. 246</td><td>🔥🔥 Very High</td></tr>
+            <tr><td class="art-num freq-high">8th 🔥</td><td>22 Official Languages (originally 14; Sindhi added by 21st Amend; Konkani, Manipuri, Nepali by 71st Amend; Bodo, Dogri, Maithili, Santhali by 92nd Amend)</td><td>Art. 344(1), 351</td><td>🔥🔥 Very High</td></tr>
+            <tr><td class="art-num freq-high">9th 🔥</td><td>Acts & Regulations beyond judicial review (land reforms, etc.) — added by 1st Amendment 1951</td><td>Art. 31B</td><td>High</td></tr>
+            <tr><td class="art-num freq-high">10th 🔥</td><td>Anti-Defection Law — added by 52nd Amendment 1985</td><td>Art. 102(2), 191(2)</td><td>🔥 High</td></tr>
+            <tr><td class="art-num freq-high">11th 🔥</td><td>29 subjects under Panchayats — added by 73rd Amendment 1992</td><td>Art. 243G</td><td>🔥 High</td></tr>
+            <tr><td class="art-num freq-high">12th 🔥</td><td>18 subjects under Municipalities — added by 74th Amendment 1992</td><td>Art. 243W</td><td>High</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout critical">
+        <div class="callout-label">🔴 CRITICAL</div>
+        <strong>7th Schedule: Union List (List I)</strong> — 99 subjects; only Parliament can legislate. <strong>State List (List II)</strong> — 61 subjects; only State Legislature. <strong>Concurrent List (List III)</strong> — 52 subjects; both can legislate, but Union prevails in conflict (Art. 254). <em>Original counts were 97, 66, 47 — reduced over amendments.</em>
+      </div>
+
+      <div class="callout trap">
+        <div class="callout-label">🟡 TRAP</div>
+        The <strong>9th Schedule</strong> was originally thought to be totally immune from judicial review. But in <em>I.R. Coelho v. State of Tamil Nadu (2007)</em>, the SC held that Acts inserted in the 9th Schedule after <strong>24th April 1973</strong> (Kesavananda Bharati date) can be challenged if they violate the Basic Structure doctrine.
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- =========================================================
+         SECTION 4: FUNDAMENTAL RIGHTS
+    ========================================================== -->
+    <section id="fundamental-rights" class="section">
+      <h2><span class="sec-num">04</span> FUNDAMENTAL RIGHTS (Art. 12–35)</h2>
+
+      <div class="callout tip">
+        <div class="callout-label">🟢 TIP</div>
+        Originally 7 Fundamental Rights. <strong>Right to Property (Art. 31)</strong> was removed as a Fundamental Right by the <strong>44th Amendment (1978)</strong> and made a legal right under <strong>Art. 300A</strong>. Now only <strong>6 Fundamental Rights</strong> remain.
+      </div>
+
+      <h3>Right to Equality (Art. 14–18)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>ARTICLE</th><th>RIGHT</th><th>KEY NOTES</th></tr></thead>
+          <tbody>
+            <tr><td class="art-num freq-high">14 🔥</td><td>Equality before law AND equal protection of laws</td><td>Two concepts from English & American law. "Reasonable classification" is permitted.</td></tr>
+            <tr><td class="art-num">15</td><td>Prohibition of discrimination on grounds of religion, race, caste, sex, place of birth</td><td>Art. 15(3) allows special provisions for women & children. Art. 15(4) & 15(5) for socially/educationally backward classes.</td></tr>
+            <tr><td class="art-num">16</td><td>Equality of opportunity in public employment</td><td>Art. 16(4) allows reservations for backward classes. Art. 16(4A) — SC/ST promotion reservation.</td></tr>
+            <tr><td class="art-num freq-high">17 🔥</td><td>Abolition of Untouchability</td><td>Untouchability abolished and its practice is a punishable offence. Art. 17 is enforceable against private individuals too.</td></tr>
+            <tr><td class="art-num">18</td><td>Abolition of Titles</td><td>No title except military/academic. State shall not confer titles. Bharat Ratna etc. are NOT "titles" — clarified by SC.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Right to Freedom (Art. 19–22)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>ARTICLE</th><th>RIGHT</th><th>KEY NOTES</th></tr></thead>
+          <tbody>
+            <tr><td class="art-num freq-high">19 🔥</td><td>6 Freedoms: (a) Speech & Expression (b) Assembly (c) Association (d) Movement (e) Residence (f) Profession</td><td>Originally 7; Art. 19(1)(f) — Property was deleted by 44th Amendment. All subject to reasonable restrictions.</td></tr>
+            <tr><td class="art-num">20</td><td>Protection in respect of conviction for offences</td><td>No ex-post facto law, no double jeopardy, no self-incrimination. Cannot be suspended even during Emergency.</td></tr>
+            <tr><td class="art-num freq-high">21 🔥</td><td>Protection of life and personal liberty</td><td>"Heart of the Constitution." Extended by Maneka Gandhi case (1978) — includes right to live with dignity, education, health, privacy etc.</td></tr>
+            <tr><td class="art-num">21A</td><td>Right to Education (6–14 years)</td><td>Added by <strong>86th Amendment (2002)</strong>. Free and compulsory education.</td></tr>
+            <tr><td class="art-num">22</td><td>Protection against arrest and detention</td><td>Right to be informed of grounds, consult lawyer, produced before magistrate within 24 hours. MISA, COFEPOSA, NSA are preventive detention laws.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Right against Exploitation (Art. 23–24)</h3>
+      <div class="article-item"><span class="art-badge">Art. 23</span><span class="art-desc">Prohibition of traffic in human beings and forced labour (begar). Enforceable against private individuals too.</span></div>
+      <div class="article-item"><span class="art-badge">Art. 24</span><span class="art-desc">Prohibition of employment of children below 14 years in factories, mines or hazardous employment.</span></div>
+
+      <h3>Right to Freedom of Religion (Art. 25–28)</h3>
+      <div class="article-item"><span class="art-badge">Art. 25</span><span class="art-desc">Freedom of conscience and free profession, practice and propagation of religion. Subject to public order, morality, health.</span></div>
+      <div class="article-item"><span class="art-badge">Art. 26</span><span class="art-desc">Freedom to manage religious affairs. Right to establish & maintain institutions for religious & charitable purposes.</span></div>
+      <div class="article-item"><span class="art-badge">Art. 27</span><span class="art-desc">No person shall be compelled to pay taxes for promotion of any particular religion.</span></div>
+      <div class="article-item"><span class="art-badge">Art. 28</span><span class="art-desc">No religious instruction in State-funded educational institutions. Students in aided institutions cannot be compelled to attend religious instruction.</span></div>
+
+      <h3>Cultural and Educational Rights (Art. 29–30)</h3>
+      <div class="article-item"><span class="art-badge">Art. 29</span><span class="art-desc">Right of any section to conserve its language, script, culture. No denial of admission on grounds of religion, race, caste, language.</span></div>
+      <div class="article-item"><span class="art-badge">Art. 30</span><span class="art-desc">Right of minorities (religious or linguistic) to establish and administer educational institutions. State shall not discriminate in granting aid.</span></div>
+
+      <h3>Right to Constitutional Remedies (Art. 32–35)</h3>
+      <div class="article-item"><span class="art-badge freq-high">Art. 32 🔥</span><span class="art-desc"><strong>Right to move Supreme Court</strong> for enforcement of Fundamental Rights. Dr. Ambedkar called it "the heart and soul of the Constitution." Cannot be suspended except during Emergency under Art. 359.</span></div>
+      <div class="article-item"><span class="art-badge">Art. 33</span><span class="art-desc">Parliament may modify FRs for armed forces, police, intelligence.</span></div>
+      <div class="article-item"><span class="art-badge">Art. 35</span><span class="art-desc">Parliament (not state) has exclusive power to legislate on FRs under Arts. 16(3), 17, 23, 24.</span></div>
+
+      <h3>Five Writs under Art. 32 & Art. 226</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>WRIT</th><th>MEANING</th><th>PURPOSE</th><th>AGAINST WHOM</th></tr></thead>
+          <tbody>
+            <tr><td class="art-num freq-high">Habeas Corpus 🔥</td><td>"You shall have the body"</td><td>To release a person from illegal detention</td><td>Any authority or private person</td></tr>
+            <tr><td class="art-num freq-high">Mandamus 🔥</td><td>"We command"</td><td>To direct a public authority to perform its legal duty</td><td>Public authority, NOT against President/Governor</td></tr>
+            <tr><td class="art-num">Prohibition</td><td>"To forbid"</td><td>To prevent inferior court from exceeding jurisdiction</td><td>Judicial/quasi-judicial bodies only</td></tr>
+            <tr><td class="art-num">Certiorari</td><td>"To be certified"</td><td>To quash order of inferior court/tribunal</td><td>Judicial/quasi-judicial bodies</td></tr>
+            <tr><td class="art-num">Quo Warranto</td><td>"By what authority"</td><td>To challenge unlawful occupation of a public office</td><td>Persons holding public office</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout critical">
+        <div class="callout-label">🔴 CRITICAL — ART. 13</div>
+        <strong>Art. 13</strong> declares any pre-constitutional law and post-constitutional law that is inconsistent with or takes away/abridges Fundamental Rights to be void. It establishes the <strong>doctrine of judicial review</strong>. "State" includes Government, Parliament, Legislature of States, and all local or other authorities within India.
+      </div>
+
+      <div class="callout gem">
+        <div class="callout-label">💎 LIVE GEM — THE EVOLUTION OF ART. 21</div>
+        In <em>A.K. Gopalan v. State of Madras (1950)</em>, SC held Art. 21 had a narrow meaning — procedure of any law, even harsh. But in <em>Maneka Gandhi v. Union of India (1978)</em>, SC overruled Gopalan and held that procedure must be <strong>just, fair and reasonable</strong> (importing due process). Since then, Art. 21 has been expanded to include: right to privacy, right to education, right to livelihood, right to a clean environment, right to speedy trial, right to die with dignity, and over 30 other rights. This is why Art. 21 is called the <strong>"expanding universe"</strong> of the Constitution.
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- =========================================================
+         SECTION 5: DPSP
+    ========================================================== -->
+    <section id="dpsp" class="section">
+      <h2><span class="sec-num">05</span> DIRECTIVE PRINCIPLES OF STATE POLICY (Art. 36–51)</h2>
+
+      <div class="callout tip">
+        <div class="callout-label">🟢 TIP</div>
+        DPSPs are borrowed from the <strong>Irish Constitution</strong>. They are <strong>non-justiciable</strong> (cannot be enforced by courts) but <strong>fundamental in governance</strong>. Art. 37 says they are "fundamental in the governance of the country and it shall be the duty of the State to apply these principles in making laws."
+      </div>
+
+      <h3>Socialistic DPSPs</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>ARTICLE</th><th>DIRECTIVE</th></tr></thead>
+          <tbody>
+            <tr><td class="art-num">38</td><td>State to promote welfare by securing a social order with justice (social, economic, political)</td></tr>
+            <tr><td class="art-num freq-high">39 🔥</td><td>Adequate means of livelihood, equal pay for equal work (39d), no concentration of wealth (39c), right to work, education, public assistance (added by 42nd Amend)</td></tr>
+            <tr><td class="art-num">39A</td><td>Equal justice and free legal aid — added by <strong>42nd Amendment</strong></td></tr>
+            <tr><td class="art-num">41</td><td>Right to work, education and public assistance in old age, sickness, disablement</td></tr>
+            <tr><td class="art-num">42</td><td>Just and humane conditions of work, maternity relief</td></tr>
+            <tr><td class="art-num">43</td><td>Living wage, decent standard of life, worker participation in management</td></tr>
+            <tr><td class="art-num">43A</td><td>Participation of workers in management of industries — added by <strong>42nd Amendment</strong></td></tr>
+            <tr><td class="art-num">43B</td><td>Promotion of co-operative societies — added by <strong>97th Amendment</strong></td></tr>
+            <tr><td class="art-num">47</td><td>Raise level of nutrition, standard of living; prohibition of drugs and alcohol</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Gandhian DPSPs</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>ARTICLE</th><th>DIRECTIVE</th></tr></thead>
+          <tbody>
+            <tr><td class="art-num">40</td><td>Organisation of village panchayats</td></tr>
+            <tr><td class="art-num">43</td><td>Cottage industries in rural areas</td></tr>
+            <tr><td class="art-num">46</td><td>Promotion of educational and economic interests of SCs, STs and other weaker sections</td></tr>
+            <tr><td class="art-num">47</td><td>Prohibition of consumption of intoxicating drinks and drugs</td></tr>
+            <tr><td class="art-num">48</td><td>Organisation of agriculture and animal husbandry; prohibition of cow slaughter</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Liberal-Intellectual DPSPs</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>ARTICLE</th><th>DIRECTIVE</th></tr></thead>
+          <tbody>
+            <tr><td class="art-num freq-high">44 🔥</td><td><strong>Uniform Civil Code (UCC)</strong> — State shall endeavour to secure a uniform civil code for all citizens throughout the territory of India</td></tr>
+            <tr><td class="art-num">45</td><td>Early childhood care and education for children below 6 years (amended by 86th Amendment; originally was 6–14 years free education)</td></tr>
+            <tr><td class="art-num">48</td><td>Organisation of agriculture, animal husbandry on modern scientific lines</td></tr>
+            <tr><td class="art-num">48A</td><td>Protection and improvement of environment; safeguarding forests & wildlife — added by <strong>42nd Amendment</strong></td></tr>
+            <tr><td class="art-num">49</td><td>Protection of monuments, places and objects of national importance</td></tr>
+            <tr><td class="art-num freq-high">50 🔥</td><td><strong>Separation of Judiciary from Executive</strong> in public services of the State</td></tr>
+            <tr><td class="art-num">51</td><td>Promotion of international peace and security; respect for international law and treaty obligations</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout trap">
+        <div class="callout-label">🟡 TRAP — FRs vs DPSPs CONFLICT</div>
+        Originally, FRs prevailed over DPSPs. But after <em>Kesavananda Bharati (1973)</em> and the <em>42nd Amendment</em>, Parliament added Art. 31C to protect laws implementing Arts. 39(b) and (c). Later in <em>Minerva Mills (1980)</em>, SC held that harmony between FRs and DPSPs is part of the <strong>Basic Structure</strong>. Neither can completely abrogate the other.
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- =========================================================
+         SECTION 6: FUNDAMENTAL DUTIES
+    ========================================================== -->
+    <section id="duties" class="section">
+      <h2><span class="sec-num">06</span> FUNDAMENTAL DUTIES (Art. 51A)</h2>
+
+      <div class="callout critical">
+        <div class="callout-label">🔴 CRITICAL</div>
+        Fundamental Duties added by <strong>42nd Amendment (1976)</strong> on recommendation of <strong>Swaran Singh Committee</strong>. Originally <strong>10 duties</strong>. The <strong>11th duty</strong> (provide opportunities for education to children aged 6–14) was added by the <strong>86th Amendment (2002)</strong>. Borrowed from the <strong>Soviet Constitution</strong>. Non-justiciable but Parliament can enforce them.
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>#</th><th>DUTY</th><th>KEY NOTES</th></tr></thead>
+          <tbody>
+            <tr><td class="art-num">1</td><td>Abide by the Constitution and respect its ideals, institutions, the National Flag and the National Anthem</td><td>Civics basics</td></tr>
+            <tr><td class="art-num">2</td><td>Cherish and follow the noble ideals which inspired our national struggle for freedom</td><td>Freedom movement legacy</td></tr>
+            <tr><td class="art-num">3</td><td>Uphold and protect sovereignty, unity and integrity of India</td><td>National security</td></tr>
+            <tr><td class="art-num">4</td><td>Defend the country and render national service when called upon to do so</td><td>Defence duty</td></tr>
+            <tr><td class="art-num">5</td><td>Promote harmony and the spirit of common brotherhood among all people transcending religious, linguistic, regional or sectional diversities</td><td>Fraternity duty</td></tr>
+            <tr><td class="art-num">6</td><td>Value and preserve the rich heritage of our composite culture</td><td>Cultural preservation</td></tr>
+            <tr><td class="art-num">7</td><td>Protect and improve the natural environment including forests, lakes, rivers and wildlife</td><td>Environmental duty</td></tr>
+            <tr><td class="art-num">8</td><td>Develop the scientific temper, humanism and the spirit of inquiry and reform</td><td>Scientific mindset</td></tr>
+            <tr><td class="art-num">9</td><td>Safeguard public property and abjure violence</td><td>Property + non-violence</td></tr>
+            <tr><td class="art-num">10</td><td>Strive towards excellence in all spheres of individual and collective activity</td><td>Excellence goal</td></tr>
+            <tr><td class="art-num freq-high">11 🔥</td><td>Parent or guardian to provide opportunities for education to his child/ward between age 6–14</td><td><strong>Added by 86th Amendment, 2002</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mnemonic-card">
+        <div class="mnemonic-text">Mnemonic: "A CUNNING DEFENCE PROMOTES VALUES PROTECTING DEVELOPMENT — STILL EXCELLENT PARENTS"</div>
+        <div class="mnemonic-expand">
+          <div class="mnemonic-row"><span class="mnemonic-letter">A</span><span class="mnemonic-meaning">Abide by the Constitution</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">C</span><span class="mnemonic-meaning">Cherish noble ideals of freedom struggle</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">U</span><span class="mnemonic-meaning">Uphold sovereignty & integrity</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">D</span><span class="mnemonic-meaning">Defend the country</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">P</span><span class="mnemonic-meaning">Promote harmony among all citizens</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">V</span><span class="mnemonic-meaning">Value & preserve composite culture</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">P</span><span class="mnemonic-meaning">Protect natural environment</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">D</span><span class="mnemonic-meaning">Develop scientific temper</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">S</span><span class="mnemonic-meaning">Safeguard public property, abjure violence</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">E</span><span class="mnemonic-meaning">Strive towards Excellence</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">P</span><span class="mnemonic-meaning">Parents to educate children (86th Amend.)</span></div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- =========================================================
+         SECTION 7: UNION EXECUTIVE
+    ========================================================== -->
+    <section id="union-exec" class="section">
+      <h2><span class="sec-num">07</span> UNION EXECUTIVE (Art. 52–78)</h2>
+
+      <h3>The President (Art. 52–62)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>ARTICLE</th><th>PROVISION</th></tr></thead>
+          <tbody>
+            <tr><td class="art-num">52</td><td>There shall be a President of India</td></tr>
+            <tr><td class="art-num freq-high">54 🔥</td><td>Election by Electoral College — elected members of both Houses + elected members of State Legislative Assemblies (+ UT assemblies after 70th Amendment)</td></tr>
+            <tr><td class="art-num">55</td><td>Manner of election — proportional representation, single transferable vote</td></tr>
+            <tr><td class="art-num">56</td><td>Term of office: 5 years. Can resign to Vice-President.</td></tr>
+            <tr><td class="art-num freq-high">61 🔥</td><td>Impeachment: for violation of the Constitution — by both Houses with <strong>2/3 majority of total membership</strong>. No judicial immunity during impeachment.</td></tr>
+            <tr><td class="art-num">72</td><td>Pardoning powers: Pardon, Reprieve, Respite, Remission, Commutation. In cases of death sentence, court martial, union executive offences.</td></tr>
+            <tr><td class="art-num">74</td><td>Council of Ministers headed by PM to aid and advise the President. President shall act on such advice. (44th Amend — "shall" replaced "may")</td></tr>
+            <tr><td class="art-num">78</td><td>Duties of Prime Minister — to communicate to the President all decisions of Council of Ministers, inform President of matters relating to administration.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout critical">
+        <div class="callout-label">🔴 CRITICAL — PRESIDENT'S VETO POWER</div>
+        The President has THREE types of veto:
+        <ol style="padding-left:20px; margin-top:8px;">
+          <li><strong>Absolute Veto</strong> — Withhold assent to a bill (used on advice of Cabinet or for private member bills)</li>
+          <li><strong>Suspensive Veto</strong> — Return bill for reconsideration (cannot do for Money Bills); must assent if re-passed</li>
+          <li><strong>Pocket Veto</strong> — Takes no action, keeps the bill pending indefinitely. India has this power unlike USA where 10-day limit applies.</li>
+        </ol>
+      </div>
+
+      <h3>Vice-President (Art. 63–71)</h3>
+      <div class="article-item"><span class="art-badge freq-high">Art. 63 🔥</span><span class="art-desc">There shall be a Vice-President of India. Ex-officio Chairman of Rajya Sabha.</span></div>
+      <div class="article-item"><span class="art-badge">Art. 66</span><span class="art-desc">Election: by members of both Houses of Parliament in joint sitting. Elected by proportional representation with single transferable vote.</span></div>
+      <div class="article-item"><span class="art-badge">Art. 67</span><span class="art-desc">Term: 5 years. Can resign to President. Removal by Rajya Sabha by majority and agreed by Lok Sabha.</span></div>
+
+      <h3>Prime Minister & Council of Ministers (Art. 74–75)</h3>
+      <div class="article-item"><span class="art-badge">Art. 75</span><span class="art-desc">PM appointed by President. Other Ministers appointed on advice of PM. Council of Ministers collectively responsible to Lok Sabha (Art. 75(3)).</span></div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- =========================================================
+         SECTION 8: PARLIAMENT
+    ========================================================== -->
+    <section id="parliament" class="section">
+      <h2><span class="sec-num">08</span> PARLIAMENT (Art. 79–122)</h2>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>ARTICLE</th><th>PROVISION</th></tr></thead>
+          <tbody>
+            <tr><td class="art-num">79</td><td>Constitution of Parliament: President + Rajya Sabha + Lok Sabha</td></tr>
+            <tr><td class="art-num freq-high">80 🔥</td><td>Rajya Sabha: max 250 members (238 elected + 12 nominated by President for arts, literature, science, social service). Currently 245.</td></tr>
+            <tr><td class="art-num freq-high">81 🔥</td><td>Lok Sabha: max 552 members (530 States + 20 UTs + 2 Anglo-Indian nominated — 2 Anglo-Indians abolished by 104th Amendment 2020)</td></tr>
+            <tr><td class="art-num">83</td><td>Duration: Lok Sabha — 5 years (can be extended during Emergency). Rajya Sabha — permanent (1/3rd retire every 2 years, 6-year term)</td></tr>
+            <tr><td class="art-num freq-high">85 🔥</td><td>Sessions: President summons/prorogues. Gap between sessions cannot exceed 6 months. Lok Sabha dissolved by President on advice of PM.</td></tr>
+            <tr><td class="art-num">100</td><td>Quorum: 1/10th of total membership</td></tr>
+            <tr><td class="art-num freq-high">108 🔥</td><td>Joint sitting of both Houses — called by President to resolve deadlock. Presided by Lok Sabha Speaker. <em>Not applicable for Money Bills or Constitutional Amendment Bills.</em></td></tr>
+            <tr><td class="art-num freq-high">109 🔥</td><td>Special procedure for Money Bills — Rajya Sabha has only 14 days to recommend; Lok Sabha may accept or reject recommendations. Lok Sabha has ultimate say.</td></tr>
+            <tr><td class="art-num">110</td><td>Definition of Money Bill: deals only with taxation, borrowing, appropriation, etc. Certified by Lok Sabha Speaker.</td></tr>
+            <tr><td class="art-num freq-high">112 🔥</td><td>Annual Financial Statement (Union Budget) — presented to both Houses by President</td></tr>
+            <tr><td class="art-num">117</td><td>Special provisions for Financial Bills</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout trap">
+        <div class="callout-label">🟡 TRAP — RAJYA SABHA SPECIAL POWERS</div>
+        Rajya Sabha is a permanent body. It has two exclusive powers:
+        (1) <strong>Art. 249</strong> — can by 2/3 majority empower Parliament to legislate on a State List subject for national interest.
+        (2) <strong>Art. 312</strong> — can by 2/3 majority create new All India Services.
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- =========================================================
+         SECTION 9: STATE GOVERNMENT
+    ========================================================== -->
+    <section id="state-govt" class="section">
+      <h2><span class="sec-num">09</span> STATE GOVERNMENT (Art. 153–212)</h2>
+
+      <h3>Governor (Art. 153–167)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>ASPECT</th><th>GOVERNOR</th><th>PRESIDENT</th></tr></thead>
+          <tbody>
+            <tr><td>Appointment</td><td>By President (Art. 155)</td><td>Elected (Art. 54)</td></tr>
+            <tr><td>Term</td><td>5 years "during pleasure of President" (Art. 156)</td><td>5 years fixed (Art. 56)</td></tr>
+            <tr><td>Removal</td><td>By President, no set procedure</td><td>Impeachment by Parliament</td></tr>
+            <tr><td>Eligibility</td><td>Indian citizen, 35+ years (Art. 157)</td><td>Indian citizen, 35+ years (Art. 58)</td></tr>
+            <tr><td>Pardoning Power</td><td>Art. 161 — cannot pardon death sentences (only President can)</td><td>Art. 72 — including death sentences</td></tr>
+            <tr><td>Discretion</td><td>Has discretionary powers (Art. 163); can reserve bill for President</td><td>Largely acts on Cabinet advice</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout critical">
+        <div class="callout-label">🔴 CRITICAL — ART. 356 (PRESIDENT'S RULE)</div>
+        Under Art. 356, President's Rule can be imposed if the constitutional machinery of a state has failed. After <em>SR Bommai v. Union of India (1994)</em>, the SC held: (1) Imposition subject to judicial review; (2) Floor test must be conducted before dismissal of government; (3) Proclamation must be ratified by Parliament within <strong>2 months</strong> (prior to SR Bommai it was not justiciable).
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- =========================================================
+         SECTION 10: EMERGENCY PROVISIONS
+    ========================================================== -->
+    <section id="emergency" class="section">
+      <h2><span class="sec-num">10</span> EMERGENCY PROVISIONS (Art. 352, 356, 360)</h2>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>ASPECT</th><th>NATIONAL EMERGENCY (Art. 352)</th><th>STATE EMERGENCY (Art. 356)</th><th>FINANCIAL EMERGENCY (Art. 360)</th></tr></thead>
+          <tbody>
+            <tr><td class="art-num">Grounds</td><td>War, External Aggression, Armed Rebellion (44th Amend changed "Internal Disturbance" to "Armed Rebellion")</td><td>Failure of Constitutional Machinery in State</td><td>Threat to financial stability/credit of India or any part</td></tr>
+            <tr><td class="art-num">Proclaimed by</td><td>President on written advice of Cabinet</td><td>President on Governor's report or suo motu</td><td>President</td></tr>
+            <tr><td class="art-num">Parliament Approval</td><td>Special majority (2/3 present + voting AND majority of total membership) within 1 month</td><td>Simple majority within 2 months</td><td>Simple majority within 2 months</td></tr>
+            <tr><td class="art-num">Duration</td><td>6 months + renewable</td><td>6 months + max 3 years</td><td>No maximum period specified</td></tr>
+            <tr><td class="art-num">Revocation</td><td>Lok Sabha can by simple majority pass disapproval</td><td>President can revoke at any time</td><td>President can revoke at any time</td></tr>
+            <tr><td class="art-num">Effect on FRs</td><td>Art. 19 suspended. Art. 20 & 21 — CANNOT be suspended.</td><td>State List legislative power shifts to Parliament</td><td>No automatic suspension of FRs</td></tr>
+            <tr><td class="art-num">Declared times</td><td>3 times: 1962 (China), 1971 (Pakistan), 1975 (Internal — controversial)</td><td>100+ times — Manipur most (10 times)</td><td>Never declared in India so far</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout critical">
+        <div class="callout-label">🔴 CRITICAL — 44th AMENDMENT CHANGES</div>
+        The <strong>44th Amendment (1978)</strong> of Janata government reversed Emergency-related changes of 42nd Amendment:
+        (1) "Internal disturbance" → "Armed rebellion" (harder to impose)
+        (2) President MUST act on written advice of Cabinet
+        (3) Lok Sabha can revoke Emergency by simple majority special session
+        (4) Art. 20 and Art. 21 cannot be suspended even during Emergency
+        (5) Freedom of press restored (removed during 1975 Emergency)
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- =========================================================
+         SECTION 11: TOP 20 AMENDMENTS
+    ========================================================== -->
+    <section id="amendments" class="section">
+      <h2><span class="sec-num">11</span> TOP 20 AMENDMENTS</h2>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>AMEND. NO.</th><th>YEAR</th><th>KEY CHANGES</th><th>ARTICLES AFFECTED</th></tr></thead>
+          <tbody>
+            <tr><td class="art-num freq-high">1st 🔥</td><td>1951</td><td>Added 9th Schedule; Art. 15(4) backward class reservation; validated land reform laws</td><td>15, 19, 31, 31A, 31B, 85, 87, 174, 176, 341, 342, 372, 376</td></tr>
+            <tr><td class="art-num">7th</td><td>1956</td><td>Reorganisation of states on linguistic basis; abolished Part A, B, C, D states; created UTs</td><td>1, 3, 49, 80, 81, 82, 131, 153, 158, 168, 170, 171, 216, 217, 220, 222, 224, 230, 231, 232</td></tr>
+            <tr><td class="art-num freq-high">24th 🔥</td><td>1971</td><td>Parliament can amend any part of Constitution including FRs (overruling Golaknath). Art. 13 does not apply to Art. 368.</td><td>13, 368</td></tr>
+            <tr><td class="art-num freq-high">25th 🔥</td><td>1971</td><td>Art. 31C — laws implementing DPSPs under 39(b)(c) shall not be void for infringing Art. 14, 19, or 31</td><td>31, 31C</td></tr>
+            <tr><td class="art-num freq-high">42nd 🔥</td><td>1976</td><td>"Mini Constitution" — added Socialist, Secular, Integrity in Preamble; FDs (51A); Art. 31D; Art. 39A, 43A, 48A; Emergency changes; Anti-national activities Act; 10 FDs; extended Parliament & Assembly term to 6 years; added Part XIV-A</td><td>31D, 39A, 43A, 48A, 51A, Preamble, 74, 77, 83, 103, 105, 118, 145, 150, 166, 170, 172, 189, 191, 192, 194, 208, 217, 225, 226, 228, 311, 312, 330, 352, 353, 356, 357, 358, 359, 366, 368</td></tr>
+            <tr><td class="art-num freq-high">44th 🔥</td><td>1978</td><td>Restored several democratic provisions; removed Right to Property from FRs (now Art. 300A); "Armed rebellion" for internal disturbance; Art. 20, 21 non-suspendable; Cabinet must give written advice for Emergency</td><td>19, 22, 30, 31, 38, 71, 74, 77, 83, 103, 105, 123, 132, 133, 134, 139, 150, 166, 172, 189, 191, 192, 194, 213, 226, 227, 239B, 329A, 352, 356, 358, 359, 360, 371F</td></tr>
+            <tr><td class="art-num">52nd</td><td>1985</td><td>Anti-defection law — 10th Schedule added</td><td>101, 102, 190, 191</td></tr>
+            <tr><td class="art-num">61st</td><td>1989</td><td>Voting age reduced from 21 to 18 years</td><td>326</td></tr>
+            <tr><td class="art-num freq-high">73rd 🔥</td><td>1992</td><td>Panchayati Raj — Part IX, 11th Schedule; 3-tier system; 1/3 reservation for women</td><td>243-243O + 11th Schedule</td></tr>
+            <tr><td class="art-num freq-high">74th 🔥</td><td>1992</td><td>Urban Local Bodies — Part IXA, 12th Schedule; Municipalities</td><td>243P-243ZG + 12th Schedule</td></tr>
+            <tr><td class="art-num">76th</td><td>1994</td><td>Tamil Nadu reservation for SCs/STs/OBCs up to 69% placed in 9th Schedule</td><td>31B + 9th Schedule</td></tr>
+            <tr><td class="art-num freq-high">86th 🔥</td><td>2002</td><td>Free and compulsory education (Art. 21A) for 6–14 years; 11th FD; Art. 45 amended for <6 years childcare</td><td>21A, 45, 51A</td></tr>
+            <tr><td class="art-num">91st</td><td>2003</td><td>Council of Ministers — max 15% of Lok Sabha strength; anti-defection amended</td><td>75, 164, 361B</td></tr>
+            <tr><td class="art-num">92nd</td><td>2003</td><td>Added Bodo, Dogri, Maithili, Santhali to 8th Schedule (now 22 languages)</td><td>8th Schedule</td></tr>
+            <tr><td class="art-num freq-high">97th 🔥</td><td>2011</td><td>Right to form co-operative societies (Art. 19(1)(c)); Art. 43B DPSP; Part IXB added</td><td>19, 43B, Part IXB</td></tr>
+            <tr><td class="art-num freq-high">100th 🔥</td><td>2015</td><td>Land Boundary Agreement with Bangladesh — exchange of enclaves</td><td>1st Schedule</td></tr>
+            <tr><td class="art-num freq-high">101st 🔥</td><td>2016</td><td>Goods and Services Tax (GST) — Art. 246A, 269A, 279A; GST Council</td><td>246A, 269A, 270, 271, 279A, 286, 366, 368</td></tr>
+            <tr><td class="art-num freq-high">102nd 🔥</td><td>2018</td><td>Constitutional status to National Commission for Backward Classes (Art. 338B); Art. 342A for OBCs</td><td>338B, 342A, 366</td></tr>
+            <tr><td class="art-num freq-high">103rd 🔥</td><td>2019</td><td>10% reservation for Economically Weaker Sections (EWS) — Art. 15(6) and Art. 16(6)</td><td>15, 16</td></tr>
+            <tr><td class="art-num freq-high">106th 🔥</td><td>2023</td><td>33% reservation for women in Lok Sabha and State Assemblies (Nari Shakti Vandan Adhiniyam) — Art. 330A, 332A. Effective after delimitation post next census.</td><td>239AA, 330, 330A, 332, 332A, 334</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout critical">
+        <div class="callout-label">🔴 CRITICAL — ART. 368: AMENDMENT PROCEDURE</div>
+        <strong>Three types of amendment procedures:</strong>
+        <ol style="padding-left:20px; margin-top:8px;">
+          <li><strong>Simple Majority</strong> — Ordinary laws (not under Art. 368); e.g., creating new states (Art. 3), admission of new states</li>
+          <li><strong>Special Majority</strong> — By 2/3 majority of members present & voting AND majority of total membership of each House</li>
+          <li><strong>Special Majority + State Ratification</strong> — For provisions relating to federal structure (e.g., Art. 54, 55, 73, 162, 241, Chapter IV of Part V, Chapter V of Part VI, any list of 7th Schedule, representation in Parliament, Art. 368 itself)</li>
+        </ol>
+        No joint sitting for constitutional amendment bills. SC cannot be enlarged by amendment.
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- =========================================================
+         SECTION 12: LANDMARK CASES
+    ========================================================== -->
+    <section id="landmark" class="section">
+      <h2><span class="sec-num">12</span> LANDMARK CASES</h2>
+
+      <div class="case-card">
+        <div class="case-name">KESAVANANDA BHARATI v. STATE OF KERALA <span class="case-year">| 1973 | 13-judge bench</span></div>
+        <div class="case-principle">Established the <strong>Basic Structure Doctrine</strong> — Parliament can amend any provision of the Constitution but cannot destroy its basic structure. Basic structure includes: supremacy of Constitution, secular character, democratic republic, federal character, separation of powers, rule of law, judicial review, free and fair elections, individual freedoms. <em>Overruled I.C. Golak Nath case.</em> Most important constitutional case ever decided.</div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-name">GOLAKNATH v. STATE OF PUNJAB <span class="case-year">| 1967 | SC</span></div>
+        <div class="case-principle">Held that Parliament cannot amend Fundamental Rights. Overruled by <em>Kesavananda Bharati (1973)</em> after 24th Constitutional Amendment.</div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-name">MANEKA GANDHI v. UNION OF INDIA <span class="case-year">| 1978 | SC</span></div>
+        <div class="case-principle">Expanded Art. 21 — procedure affecting personal liberty must be just, fair and reasonable (due process). Established inter-connection between Art. 14, 19, and 21. Overruled narrow A.K. Gopalan interpretation.</div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-name">MINERVA MILLS v. UNION OF INDIA <span class="case-year">| 1980 | SC</span></div>
+        <div class="case-principle">Struck down the 42nd Amendment provisions making Art. 31C absolute. Held that harmony between Fundamental Rights and DPSP is part of the Basic Structure. Parliament cannot give absolute primacy to DPSPs over FRs.</div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-name">SR BOMMAI v. UNION OF INDIA <span class="case-year">| 1994 | 9-judge bench</span></div>
+        <div class="case-principle">Federalism is part of Basic Structure. Imposition of President's Rule under Art. 356 is subject to judicial review. Floor test must be conducted before dismissing a state government. Proclamation must be approved by Parliament within 2 months.</div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-name">INDRA SAWHNEY v. UNION OF INDIA (MANDAL CASE) <span class="case-year">| 1992 | 9-judge bench</span></div>
+        <div class="case-principle">Upheld 27% OBC reservation but struck down 10% EWS reservation (at that time). Laid down <strong>50% ceiling</strong> on total reservations (can be exceeded in extraordinary circumstances — Tamil Nadu). Creamy layer exclusion mandatory for OBCs but not SC/ST.</div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-name">VISHAKA v. STATE OF RAJASTHAN <span class="case-year">| 1997 | SC</span></div>
+        <div class="case-principle">Issued Vishaka Guidelines on prevention of sexual harassment at workplace, filling legislative vacuum. Basis for the POSH Act 2013. Held that right to work with dignity under Art. 14, 19, 21 includes freedom from sexual harassment.</div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-name">JUSTICE K.S. PUTTASWAMY v. UNION OF INDIA <span class="case-year">| 2017 | 9-judge bench</span></div>
+        <div class="case-principle"><strong>Right to Privacy</strong> declared a fundamental right under Art. 21. Overruled M.P. Sharma and Kharak Singh judgments. Privacy includes bodily integrity, personal choices, informational privacy, and dignity.</div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-name">NAVTEJ SINGH JOHAR v. UNION OF INDIA <span class="case-year">| 2018 | SC</span></div>
+        <div class="case-principle">Decriminalised consensual same-sex relations (Sec. 377 IPC partially struck down). Held that sexual orientation is a fundamental right under Art. 14, 15, 19, 21. Overruled Suresh Kumar Koushal (2013).</div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-name">A.K. GOPALAN v. STATE OF MADRAS <span class="case-year">| 1950 | SC</span></div>
+        <div class="case-principle">First major constitutional case. Held Art. 21 to mean mere procedure established by law (even if unfair). <em>Overruled by Maneka Gandhi (1978)</em>.</div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-name">STATE OF MADRAS v. CHAMPAKAM DORAIRAJAN <span class="case-year">| 1951 | SC</span></div>
+        <div class="case-principle">First case to be decided under FR (Art. 15). State's communal reservation in educational admissions held unconstitutional. Led to 1st Constitutional Amendment adding Art. 15(4).</div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-name">I.C. GOLAK NATH v. STATE OF PUNJAB <span class="case-year">| 1967 | 11-judge bench</span></div>
+        <div class="case-principle">Held Parliament cannot amend Fundamental Rights. Applied doctrine of prospective overruling for the first time. <em>Overruled by Kesavananda Bharati (1973).</em></div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-name">BERUBARI UNION CASE <span class="case-year">| 1960 | SC</span></div>
+        <div class="case-principle">SC held that Preamble is NOT part of the Constitution and is merely a key to open the minds of framers. <em>Overruled in Kesavananda Bharati (1973)</em> where SC held Preamble IS part of the Constitution.</div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-name">M. NAGARAJ v. UNION OF INDIA <span class="case-year">| 2006 | SC</span></div>
+        <div class="case-principle">Upheld Art. 16(4A) & 16(4B) on SC/ST promotion reservations but added conditions: the State must demonstrate backwardness, inadequacy of representation, and that efficiency is maintained.</div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-name">JANHIT ABHIYAN v. UNION OF INDIA <span class="case-year">| 2022 | 5-judge bench</span></div>
+        <div class="case-principle">Upheld 10% EWS reservation (103rd Constitutional Amendment) as constitutionally valid. Held that economic criterion alone can be basis for reservation and does not violate Basic Structure despite exceeding 50% ceiling.</div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-name">SUBHASH KASHINATH MAHAJAN v. STATE OF MAHARASHTRA <span class="case-year">| 2018 | SC</span></div>
+        <div class="case-principle">Diluted SC/ST (Prevention of Atrocities) Act protections by introducing preliminary enquiry before FIR. Later reviewed and overruled by a larger bench upholding original Act's stringent provisions.</div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- =========================================================
+         SECTION 13: MNEMONICS
+    ========================================================== -->
+    <section id="mnemonics" class="section">
+      <h2><span class="sec-num">13</span> SHORTCUTS & MNEMONICS</h2>
+
+      <h3>6 Fundamental Rights — "RELIEF"</h3>
+      <div class="mnemonic-card">
+        <div class="mnemonic-text">R · E · L · I · E · F</div>
+        <div class="mnemonic-expand">
+          <div class="mnemonic-row"><span class="mnemonic-letter">R</span><span class="mnemonic-meaning">Right to Equality (Art. 14–18)</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">E</span><span class="mnemonic-meaning">Right to Education (Art. 21A)</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">L</span><span class="mnemonic-meaning">Right to Life & Personal Liberty (Art. 19–22)</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">I</span><span class="mnemonic-meaning">Right against Exploitation (Art. 23–24)</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">E</span><span class="mnemonic-meaning">Right to Freedom of Religion (Art. 25–28)</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">F</span><span class="mnemonic-meaning">Right to Cultural & Educational Rights + Constitutional Remedies (Art. 29–35)</span></div>
+        </div>
+      </div>
+
+      <h3>5 Writs — "HMPCQ"</h3>
+      <div class="mnemonic-card">
+        <div class="mnemonic-text">"HAPPY MONKEYS PLAY CRICKET QUIETLY"</div>
+        <div class="mnemonic-expand">
+          <div class="mnemonic-row"><span class="mnemonic-letter">H</span><span class="mnemonic-meaning">Habeas Corpus — Release from illegal detention</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">M</span><span class="mnemonic-meaning">Mandamus — Command to do public duty</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">P</span><span class="mnemonic-meaning">Prohibition — Prevent inferior court from exceeding jurisdiction</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">C</span><span class="mnemonic-meaning">Certiorari — Quash lower court order</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">Q</span><span class="mnemonic-meaning">Quo Warranto — Challenge unlawful public office</span></div>
+        </div>
+      </div>
+
+      <h3>3 Emergency Provisions — "NSF"</h3>
+      <div class="mnemonic-card">
+        <div class="mnemonic-text">"NATIONAL STATES FEAR" — 352 · 356 · 360</div>
+        <div class="mnemonic-expand">
+          <div class="mnemonic-row"><span class="mnemonic-letter">352</span><span class="mnemonic-meaning">National Emergency (War/Armed Rebellion)</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">356</span><span class="mnemonic-meaning">State Emergency / President's Rule</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">360</span><span class="mnemonic-meaning">Financial Emergency (Never declared)</span></div>
+        </div>
+      </div>
+
+      <h3>Key Articles Mnemonic — "1-4-9-14-19-21-32-44-51A-368"</h3>
+      <div class="mnemonic-card">
+        <div class="mnemonic-text">"ONE FINE NIGHT IN YOUR HEART, THREE JOLLY FIVE STUDENTS ENDED THEIR JOURNEY"</div>
+        <div class="mnemonic-expand">
+          <div class="mnemonic-row"><span class="mnemonic-letter">Art. 1</span><span class="mnemonic-meaning">Name and territory of India</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">Art. 14</span><span class="mnemonic-meaning">Equality before law</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">Art. 19</span><span class="mnemonic-meaning">Six Freedoms</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">Art. 21</span><span class="mnemonic-meaning">Right to Life (most important!)</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">Art. 32</span><span class="mnemonic-meaning">Constitutional Remedies (Heart & Soul)</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">Art. 44</span><span class="mnemonic-meaning">Uniform Civil Code</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">Art. 51A</span><span class="mnemonic-meaning">11 Fundamental Duties</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">Art. 368</span><span class="mnemonic-meaning">Amendment of Constitution</span></div>
+        </div>
+      </div>
+
+      <h3>DPSP Classification Acronym</h3>
+      <div class="mnemonic-card">
+        <div class="mnemonic-text">SGL — "SOME GOOD LIBERALS"</div>
+        <div class="mnemonic-expand">
+          <div class="mnemonic-row"><span class="mnemonic-letter">S</span><span class="mnemonic-meaning">Socialistic DPSPs — welfare state, equal pay, free legal aid</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">G</span><span class="mnemonic-meaning">Gandhian DPSPs — panchayats, cottage industries, cow protection</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">L</span><span class="mnemonic-meaning">Liberal-Intellectual DPSPs — UCC, environment, international peace</span></div>
+        </div>
+      </div>
+
+      <h3>7th Schedule Lists</h3>
+      <div class="mnemonic-card">
+        <div class="mnemonic-text">"UNION-99, STATE-61, CONCURRENT-52" → "US NINE PIES, SIX ONE, C FIVE TWO"</div>
+        <div class="mnemonic-expand">
+          <div class="mnemonic-row"><span class="mnemonic-letter">List I</span><span class="mnemonic-meaning">Union List — 99 subjects — Defence, Atomic Energy, Railways, Foreign Affairs</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">List II</span><span class="mnemonic-meaning">State List — 61 subjects — Police, Public Health, Agriculture, Land</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">List III</span><span class="mnemonic-meaning">Concurrent List — 52 subjects — Education, Marriage, Criminal Law, Forests</span></div>
+        </div>
+      </div>
+
+      <h3>8th Schedule — 22 Languages</h3>
+      <div class="mnemonic-card">
+        <div class="mnemonic-text">"ASSAM BOAT DOCKS — GUJARATI HINDI KANNADA KASHMIRI MALAYAM MANIPURI MARATHI NEPALI ODIA PUNJABI SANSKRIT SANTALI SINDHI TAMIL TELUGU URDU BODO DOGRI MAITHILI"</div>
+        <div class="mnemonic-expand">
+          <div class="mnemonic-row"><span class="mnemonic-letter">Original (1950)</span><span class="mnemonic-meaning">14 languages: Assamese, Bengali, Gujarati, Hindi, Kannada, Kashmiri, Malayalam, Marathi, Oriya, Punjabi, Sanskrit, Tamil, Telugu, Urdu</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">21st Amend (1967)</span><span class="mnemonic-meaning">Added Sindhi (15th)</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">71st Amend (1992)</span><span class="mnemonic-meaning">Added Konkani, Manipuri, Nepali (16–18th)</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">92nd Amend (2003)</span><span class="mnemonic-meaning">Added Bodo, Dogri, Maithili, Santhali (19–22nd)</span></div>
+        </div>
+      </div>
+
+      <h3>Borrowed Features of Indian Constitution</h3>
+      <div class="mnemonic-card">
+        <div class="mnemonic-text">"BAG CAS IFJ" — Britain, Australia, Germany, Canada, America, South Africa, Ireland, France, Japan</div>
+        <div class="mnemonic-expand">
+          <div class="mnemonic-row"><span class="mnemonic-letter">Britain</span><span class="mnemonic-meaning">Parliamentary government, Rule of Law, Single Citizenship, Cabinet System, Writs</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">America (USA)</span><span class="mnemonic-meaning">Judicial Review, Fundamental Rights, Preamble, Supreme Court, Removal of SC judges, Vice-President as Presiding Officer of Upper House</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">Ireland</span><span class="mnemonic-meaning">DPSP, Nomination of members to Rajya Sabha, Method of election of President</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">Canada</span><span class="mnemonic-meaning">Quasi-federal structure with strong centre, Distribution of powers, Residuary powers with Centre</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">Australia</span><span class="mnemonic-meaning">Concurrent List, Freedom of trade, Joint sitting of Parliament</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">USSR/Russia</span><span class="mnemonic-meaning">Fundamental Duties, Five Year Plans, Social & Economic Rights</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">Germany</span><span class="mnemonic-meaning">Suspension of FRs during Emergency</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">South Africa</span><span class="mnemonic-meaning">Procedure for amendment (special majority), Election of members of Rajya Sabha</span></div>
+          <div class="mnemonic-row"><span class="mnemonic-letter">Japan</span><span class="mnemonic-meaning">Procedure established by law</span></div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- =========================================================
+         SECTION 14: COMPARISON TABLES
+    ========================================================== -->
+    <section id="comparisons" class="section">
+      <h2><span class="sec-num">14</span> COMPARISON TABLES</h2>
+
+      <h3>Lok Sabha vs. Rajya Sabha</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>ASPECT</th><th>LOK SABHA</th><th>RAJYA SABHA</th></tr></thead>
+          <tbody>
+            <tr><td>Nature</td><td>Lower House / House of the People</td><td>Upper House / Council of States</td></tr>
+            <tr><td>Max Strength</td><td>552 (543 elected + 2 nominated — but Anglo-Indian abolished by 104th Amend 2020; now 543)</td><td>250 (238 elected + 12 nominated)</td></tr>
+            <tr><td>Current Strength</td><td>543</td><td>245</td></tr>
+            <tr><td>Duration</td><td>5 years (can be dissolved earlier)</td><td>Permanent; 1/3 retire every 2 years</td></tr>
+            <tr><td>Member Term</td><td>5 years</td><td>6 years</td></tr>
+            <tr><td>Minimum Age</td><td>25 years</td><td>30 years</td></tr>
+            <tr><td>Elected by</td><td>People directly (adult franchise)</td><td>Elected members of State Legislative Assemblies</td></tr>
+            <tr><td>Presiding Officer</td><td>Speaker (elected by members)</td><td>Vice-President (ex-officio)</td></tr>
+            <tr><td>Money Bills</td><td>Introduced only here; Rajya Sabha has 14 days</td><td>Cannot originate Money Bills</td></tr>
+            <tr><td>Joint Sitting</td><td>Numbers advantage; Speaker presides</td><td>Called by President; Lok Sabha dominates</td></tr>
+            <tr><td>Special Powers</td><td>Vote of No-Confidence; can remove PM/Cabinet</td><td>Art. 249 (State List legislation); Art. 312 (new All India Services)</td></tr>
+            <tr><td>Council of Ministers</td><td>Collectively responsible to Lok Sabha</td><td>Council NOT responsible to Rajya Sabha</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>President vs. Governor</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>ASPECT</th><th>PRESIDENT (Art. 52–62)</th><th>GOVERNOR (Art. 153–162)</th></tr></thead>
+          <tbody>
+            <tr><td>Appointment</td><td>Elected by Electoral College (Art. 54)</td><td>Appointed by President (Art. 155)</td></tr>
+            <tr><td>Eligibility</td><td>Indian citizen, 35 years, not holding profit office</td><td>Indian citizen, 35 years, not from that state</td></tr>
+            <tr><td>Term</td><td>5 years (Art. 56)</td><td>5 years during pleasure of President (Art. 156)</td></tr>
+            <tr><td>Removal</td><td>Impeachment by 2/3 of Parliament (Art. 61)</td><td>By President; no fixed procedure</td></tr>
+            <tr><td>Pardon</td><td>Includes death sentence, court martial, union offences</td><td>Cannot pardon death sentence</td></tr>
+            <tr><td>Veto on Bills</td><td>Absolute, Suspensive, Pocket veto</td><td>Can reserve bill for President's consideration</td></tr>
+            <tr><td>Emergency</td><td>Can proclaim Art. 352, 356, 360</td><td>Recommends Art. 356 (President's Rule)</td></tr>
+            <tr><td>Immunity</td><td>Criminal proceedings during tenure (Art. 361)</td><td>Same immunity (Art. 361)</td></tr>
+            <tr><td>Discretion</td><td>Very limited; acts on CoM advice</td><td>Has discretionary powers (Art. 163)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Fundamental Rights vs. Directive Principles</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>ASPECT</th><th>FUNDAMENTAL RIGHTS (Part III)</th><th>DIRECTIVE PRINCIPLES (Part IV)</th></tr></thead>
+          <tbody>
+            <tr><td>Nature</td><td>Justiciable — enforceable by courts</td><td>Non-justiciable — cannot be enforced in courts</td></tr>
+            <tr><td>Source</td><td>American Bill of Rights</td><td>Irish Constitution</td></tr>
+            <tr><td>Purpose</td><td>Protect individuals from state action</td><td>Guide the State in governance</td></tr>
+            <tr><td>Negative/Positive</td><td>Mostly negative (state shall NOT)</td><td>Positive (state SHALL do)</td></tr>
+            <tr><td>Priority</td><td>Originally FRs prevailed over DPSPs</td><td>After Kesavananda & Minerva Mills — harmony</td></tr>
+            <tr><td>Suspension</td><td>Some can be suspended during Emergency</td><td>Not suspended; still guide governance</td></tr>
+            <tr><td>Dr. Ambedkar</td><td>"Fundamental Rights" — individual liberties</td><td>"Instrument of Instructions" — governmental obligations</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- =========================================================
+         SECTION 15: PYQ CARDS
+    ========================================================== -->
+    <section id="pyq" class="section">
+      <h2><span class="sec-num">15</span> PYQ QUESTION CARDS</h2>
+
+      <!-- Q1 -->
+      <div class="pyq-card">
+        <div class="pyq-badge">🔵 PYQ <span class="badge-tag badge-critical">CRITICAL</span></div>
+        <div class="pyq-question">Q1. Which amendment inserted the words "Socialist", "Secular" and "Integrity" in the Preamble of the Constitution?</div>
+        <button class="pyq-toggle" onclick="toggleAnswer(this)">Show Answer ▼</button>
+        <div class="pyq-answer">
+          <div class="pyq-answer-inner">
+            <div class="answer-correct">✅ ANSWER: 42nd Constitutional Amendment Act, 1976</div>
+            <p>The 42nd Amendment (1976), passed during the Emergency period under PM Indira Gandhi, added three words: <strong>Socialist, Secular, Integrity</strong>. It is sometimes called the "Mini Constitution" as it made the most sweeping changes to the Constitution. The Preamble has been amended only once in India's constitutional history.</p>
+            <div class="callout gem"><div class="callout-label">💎 GEM</div>Remember: Only 42nd Amendment changed the Preamble. The three new words make up the phrase "<strong>S-S-I</strong>" — Socialist Secular Integrity. These reflect India's socialist welfare state goals, religious neutrality, and national unity priorities of that era.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="pyq-card">
+        <div class="pyq-badge">🔵 PYQ <span class="badge-tag badge-trap">TRAP</span></div>
+        <div class="pyq-question">Q2. How many Fundamental Duties are currently there in the Indian Constitution?</div>
+        <button class="pyq-toggle" onclick="toggleAnswer(this)">Show Answer ▼</button>
+        <div class="pyq-answer">
+          <div class="pyq-answer-inner">
+            <div class="answer-correct">✅ ANSWER: 11 Fundamental Duties</div>
+            <p><strong>TRAP ALERT:</strong> Many candidates answer 10. Originally 10 duties were added by the 42nd Amendment (1976). The <strong>11th duty</strong> was added by the <strong>86th Amendment (2002)</strong>: "It shall be the duty of every citizen who is a parent or guardian to provide opportunities for education to his child or ward between the age of six and fourteen years." Currently 11 Fundamental Duties.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="pyq-card">
+        <div class="pyq-badge">🔵 PYQ <span class="badge-tag badge-critical">CRITICAL</span></div>
+        <div class="pyq-question">Q3. Which article of the Indian Constitution is called the "Heart and Soul of the Constitution" by Dr. B.R. Ambedkar?</div>
+        <button class="pyq-toggle" onclick="toggleAnswer(this)">Show Answer ▼</button>
+        <div class="pyq-answer">
+          <div class="pyq-answer-inner">
+            <div class="answer-correct">✅ ANSWER: Article 32 — Right to Constitutional Remedies</div>
+            <p>Dr. Ambedkar called <strong>Article 32</strong> (Right to move the Supreme Court for enforcement of FRs) the "Heart and Soul of the Constitution." Without this article, all other FRs would be meaningless as there would be no mechanism to enforce them. Article 32 itself is a Fundamental Right and cannot be suspended during Emergency under Art. 352 (though Art. 358-359 suspends other FRs).</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="pyq-card">
+        <div class="pyq-badge">🔵 PYQ <span class="badge-tag badge-trap">TRAP</span></div>
+        <div class="pyq-question">Q4. A Money Bill can be introduced in which house of Parliament and what is Rajya Sabha's role?</div>
+        <button class="pyq-toggle" onclick="toggleAnswer(this)">Show Answer ▼</button>
+        <div class="pyq-answer">
+          <div class="pyq-answer-inner">
+            <div class="answer-correct">✅ ANSWER: Only Lok Sabha; Rajya Sabha has 14 days to return it</div>
+            <p><strong>TRAP:</strong> Rajya Sabha cannot introduce or reject Money Bills. Under Art. 109, a Money Bill can only be introduced in Lok Sabha on the recommendation of the President. After passing in Lok Sabha, it is transmitted to Rajya Sabha which has <strong>only 14 days</strong> to return it with recommendations (which Lok Sabha may or may not accept). If Rajya Sabha holds it beyond 14 days, the bill is deemed passed by both Houses.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="pyq-card">
+        <div class="pyq-badge">🔵 PYQ <span class="badge-tag badge-gem">GEM</span></div>
+        <div class="pyq-question">Q5. What is the "Basic Structure Doctrine" and which case established it?</div>
+        <button class="pyq-toggle" onclick="toggleAnswer(this)">Show Answer ▼</button>
+        <div class="pyq-answer">
+          <div class="pyq-answer-inner">
+            <div class="answer-correct">✅ ANSWER: Kesavananda Bharati v. State of Kerala (1973)</div>
+            <p>The Basic Structure Doctrine holds that while Parliament has wide power to amend the Constitution under Art. 368, it <strong>cannot alter or destroy</strong> the "basic structure" of the Constitution. Elements of Basic Structure include: Supremacy of Constitution, Republican & Democratic form of government, Secular character, Federal structure, Separation of powers, Judicial Review, Rule of Law, Parliamentary system, Free & fair elections, and Unity & integrity of India.</p>
+            <div class="callout gem"><div class="callout-label">💎 GEM</div>This was decided by a 13-judge bench by a slim 7-6 majority. It is arguably the most significant constitutional decision in Indian legal history. Justice H.R. Khanna's concurring opinion later became the majority position. The doctrine was used to strike down parts of the 42nd and 39th Amendments and continues to be the ultimate check on Parliament's amending power.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q6 -->
+      <div class="pyq-card">
+        <div class="pyq-badge">🔵 PYQ <span class="badge-tag badge-critical">CRITICAL</span></div>
+        <div class="pyq-question">Q6. How many times has National Emergency been proclaimed in India, and under what circumstances?</div>
+        <button class="pyq-toggle" onclick="toggleAnswer(this)">Show Answer ▼</button>
+        <div class="pyq-answer">
+          <div class="pyq-answer-inner">
+            <div class="answer-correct">✅ ANSWER: Three times — 1962, 1971, 1975</div>
+            <p>
+            <strong>1st Emergency (1962):</strong> October 26 – January 10, 1968 — during Chinese aggression (still in force during 1965 Indo-Pak war)<br>
+            <strong>2nd Emergency (1971):</strong> December 3–March 21, 1977 — during Bangladesh Liberation War (Pakistani aggression)<br>
+            <strong>3rd Emergency (1975):</strong> June 25–March 21, 1977 — "Internal disturbance"; most controversial; led to suspension of FRs, press censorship, political arrests. Led to 44th Amendment to prevent abuse.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q7 -->
+      <div class="pyq-card">
+        <div class="pyq-badge">🔵 PYQ <span class="badge-tag badge-tip">TIP</span></div>
+        <div class="pyq-question">Q7. Which article provides for the right to education, and what amendment inserted it?</div>
+        <button class="pyq-toggle" onclick="toggleAnswer(this)">Show Answer ▼</button>
+        <div class="pyq-answer">
+          <div class="pyq-answer-inner">
+            <div class="answer-correct">✅ ANSWER: Article 21A, inserted by 86th Amendment (2002)</div>
+            <p>The <strong>86th Amendment Act, 2002</strong> inserted Art. 21A making free and compulsory education a Fundamental Right for children aged <strong>6 to 14 years</strong>. This led to the Right to Education (RTE) Act, 2009. The same amendment also: (1) amended Art. 45 (DPSP) for early childhood care for children below 6 years; (2) added the 11th Fundamental Duty requiring parents to provide education to children aged 6–14.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q8 -->
+      <div class="pyq-card">
+        <div class="pyq-badge">🔵 PYQ <span class="badge-tag badge-trap">TRAP</span></div>
+        <div class="pyq-question">Q8. The Right to Property was removed as a Fundamental Right by which amendment? Where does it stand now?</div>
+        <button class="pyq-toggle" onclick="toggleAnswer(this)">Show Answer ▼</button>
+        <div class="pyq-answer">
+          <div class="pyq-answer-inner">
+            <div class="answer-correct">✅ ANSWER: 44th Amendment (1978); now a Legal/Constitutional Right under Art. 300A</div>
+            <p>The <strong>44th Amendment Act, 1978</strong> under Janata government deleted the Right to Property from Part III (Fundamental Rights). Originally Art. 19(1)(f) and Art. 31 gave property rights. Now Art. 300A provides: "No person shall be deprived of his property save by authority of law" — a legal right, not a FR. This means property disputes go to civil courts, not directly to Supreme Court under Art. 32.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q9 -->
+      <div class="pyq-card">
+        <div class="pyq-badge">🔵 PYQ <span class="badge-tag badge-critical">CRITICAL</span></div>
+        <div class="pyq-question">Q9. What is the meaning and significance of Article 17 of the Indian Constitution?</div>
+        <button class="pyq-toggle" onclick="toggleAnswer(this)">Show Answer ▼</button>
+        <div class="pyq-answer">
+          <div class="pyq-answer-inner">
+            <div class="answer-correct">✅ ANSWER: Abolition of Untouchability — enforceable against private individuals</div>
+            <p><strong>Art. 17</strong> abolishes "Untouchability" and forbids its practice in any form. Enforcement of any disability arising from untouchability is an offence punishable by law. The <strong>Protection of Civil Rights Act, 1955</strong> and <strong>SC/ST (Prevention of Atrocities) Act, 1989</strong> give legal teeth to Art. 17. Unique significance: most FRs are against the State, but Art. 17 is directly enforceable against private individuals too, making it a horizontal right.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q10 -->
+      <div class="pyq-card">
+        <div class="pyq-badge">🔵 PYQ <span class="badge-tag badge-gem">GEM</span></div>
+        <div class="pyq-question">Q10. What are the exclusive special powers of Rajya Sabha that Lok Sabha does not have?</div>
+        <button class="pyq-toggle" onclick="toggleAnswer(this)">Show Answer ▼</button>
+        <div class="pyq-answer">
+          <div class="pyq-answer-inner">
+            <div class="answer-correct">✅ ANSWER: Art. 249 and Art. 312</div>
+            <p>Rajya Sabha has two exclusive powers:
+            <br><strong>Art. 249:</strong> By a resolution supported by not less than 2/3 of its members present and voting, Rajya Sabha can authorise Parliament to make laws on a State List subject if it is in the national interest. Such resolution is valid for 1 year and can be renewed.
+            <br><strong>Art. 312:</strong> Rajya Sabha can create new All India Services (like IAS, IPS) common to both Centre and States by a 2/3 majority resolution.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q11 -->
+      <div class="pyq-card">
+        <div class="pyq-badge">🔵 PYQ <span class="badge-tag badge-critical">CRITICAL</span></div>
+        <div class="pyq-question">Q11. Under Article 352, what is the required majority for Parliamentary approval of National Emergency?</div>
+        <button class="pyq-toggle" onclick="toggleAnswer(this)">Show Answer ▼</button>
+        <div class="pyq-answer">
+          <div class="pyq-answer-inner">
+            <div class="answer-correct">✅ ANSWER: Special Majority — 2/3 of members present & voting + absolute majority of total membership</div>
+            <p>After the 44th Amendment (1978), National Emergency proclamation must be approved by both Houses within <strong>one month</strong> by <strong>special majority</strong>: not less than 2/3 of the members of each House present and voting AND a majority of the total membership of each House. The Lok Sabha can also revoke it by a simple majority passed through a special session called when at least 1/10th of Lok Sabha members requisition it.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q12 -->
+      <div class="pyq-card">
+        <div class="pyq-badge">🔵 PYQ <span class="badge-tag badge-tip">TIP</span></div>
+        <div class="pyq-question">Q12. What are the Socialistic, Gandhian, and Liberal-Intellectual DPSPs? Give one example each.</div>
+        <button class="pyq-toggle" onclick="toggleAnswer(this)">Show Answer ▼</button>
+        <div class="pyq-answer">
+          <div class="pyq-answer-inner">
+            <div class="answer-correct">✅ ANSWER: Three categories of DPSPs</div>
+            <p><strong>Socialistic DPSPs</strong> (welfare state): Art. 39 — equal pay for equal work, Art. 41 — right to work, Art. 42 — maternity relief, Art. 47 — raising standard of living.
+            <br><strong>Gandhian DPSPs</strong> (Gram Swaraj): Art. 40 — panchayats, Art. 43 — cottage industries, Art. 46 — upliftment of SCs/STs, Art. 48 — cow protection.
+            <br><strong>Liberal-Intellectual DPSPs</strong>: Art. 44 — Uniform Civil Code, Art. 45 — early childhood care, Art. 48A — environmental protection, Art. 51 — international peace.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q13 -->
+      <div class="pyq-card">
+        <div class="pyq-badge">🔵 PYQ <span class="badge-tag badge-trap">TRAP</span></div>
+        <div class="pyq-question">Q13. The election of the Vice-President of India is conducted by whom?</div>
+        <button class="pyq-toggle" onclick="toggleAnswer(this)">Show Answer ▼</button>
+        <div class="pyq-answer">
+          <div class="pyq-answer-inner">
+            <div class="answer-correct">✅ ANSWER: Electoral College of both Houses of Parliament (elected + nominated members) — NOT just elected members</div>
+            <p><strong>TRAP:</strong> Many confuse Vice-President's election with President's election.
+            <br><strong>President's election (Art. 54):</strong> Elected members of Lok Sabha + Rajya Sabha + State Assemblies + UT Assemblies (elected members only)
+            <br><strong>Vice-President's election (Art. 66):</strong> Members of BOTH Houses of Parliament — both elected AND nominated members — in a JOINT SITTING. State Assemblies do NOT participate. Single transferable vote system.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q14 -->
+      <div class="pyq-card">
+        <div class="pyq-badge">🔵 PYQ <span class="badge-tag badge-critical">CRITICAL</span></div>
+        <div class="pyq-question">Q14. The Uniform Civil Code is mentioned in which article? What is its current status?</div>
+        <button class="pyq-toggle" onclick="toggleAnswer(this)">Show Answer ▼</button>
+        <div class="pyq-answer">
+          <div class="pyq-answer-inner">
+            <div class="answer-correct">✅ ANSWER: Article 44 — DPSP; not implemented nationwide; Goa has a partial UCC</div>
+            <p>Art. 44 directs the State to secure a Uniform Civil Code (UCC) for all citizens. Being a DPSP, it is non-justiciable. Supreme Court in Shah Bano case (1985), Sarla Mudgal case (1995), and John Vallamattom case (2003) urged Parliament to enact UCC. <strong>Uttarakhand</strong> became the first state to enact a UCC (2024). <strong>Goa</strong> is cited as the only state with a partial UCC through the Portuguese Civil Code still in operation.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q15 -->
+      <div class="pyq-card">
+        <div class="pyq-badge">🔵 PYQ <span class="badge-tag badge-gem">GEM</span></div>
+        <div class="pyq-question">Q15. What is the SR Bommai case (1994) and why is it significant for Indian federalism?</div>
+        <button class="pyq-toggle" onclick="toggleAnswer(this)">Show Answer ▼</button>
+        <div class="pyq-answer">
+          <div class="pyq-answer-inner">
+            <div class="answer-correct">✅ ANSWER: SR Bommai v. Union of India — landmark for federalism and Art. 356</div>
+            <p>SR Bommai (CM of Karnataka) challenged dismissal of his government under Art. 356. The 9-judge bench held:
+            <br>1. <strong>Federalism is part of Basic Structure</strong> — States are not mere agents of Centre
+            <br>2. Art. 356 is subject to <strong>judicial review</strong>
+            <br>3. Before dismissal, <strong>floor test must be conducted</strong>
+            <br>4. The President acts on Cabinet's written advice
+            <br>5. Proclamation must be ratified by Parliament
+            <br>This case practically stopped rampant misuse of Art. 356 which was used 100+ times before 1994 for political reasons.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- =========================================================
+         SECTION 16: LIVE GEM BOXES
+    ========================================================== -->
+    <section id="gems" class="section">
+      <h2><span class="sec-num">16</span> LIVE GEM BOXES</h2>
+
+      <div class="callout gem">
+        <div class="callout-label">💎 LIVE GEM 1 — WHY THE BASIC STRUCTURE DOCTRINE MATTERS</div>
+        <p>Before 1973, Parliament could amend any part of the Constitution, including Fundamental Rights. The Indira Gandhi government used this to remove property rights, curtail freedoms, and concentrate power. The Basic Structure Doctrine of Kesavananda Bharati (1973) created an <strong>unwritten limit on Parliament's amending power</strong>. It has since been used to:
+        <br>• Strike down the 39th Amendment (1975) which immunized PM's election from challenge
+        <br>• Strike down parts of the 42nd Amendment (1976) — Minerva Mills
+        <br>• Uphold federalism and judicial independence against legislative encroachment
+        <br>India is unique globally — while most democracies allow complete constitutional revision, India has this judge-made doctrine ensuring constitutional continuity beyond any Parliament's political will.</p>
+      </div>
+
+      <div class="callout gem">
+        <div class="callout-label">💎 LIVE GEM 2 — HOW SR BOMMAI TRANSFORMED INDIAN FEDERALISM</div>
+        <p>Between 1950–1994, Article 356 (President's Rule) was imposed over <strong>100 times</strong>, often for blatant political reasons — to dismiss opposition-run governments. The Sarkaria Commission (1988) recommended reforms. When SR Bommai's government was dismissed in 1989, the case took 5 years to reach its landmark verdict. Post-1994, impositions of Article 356 dropped dramatically. The doctrine of floor test before dismissal, judicial review of proclamations, and Parliament's mandatory ratification created robust checks. India's federal democracy became substantially more stable — not through constitutional amendment but through judicial interpretation.</p>
+      </div>
+
+      <div class="callout gem">
+        <div class="callout-label">💎 LIVE GEM 3 — ART. 21 — THE EXPANDING UNIVERSE OF RIGHTS</div>
+        <p>Article 21 simply reads: "No person shall be deprived of his life or personal liberty except according to procedure established by law." Yet through judicial interpretation — especially post-Maneka Gandhi (1978) — it has become the most expansive article in the Constitution. The Supreme Court has read into Art. 21:
+        <br>• Right to privacy (Puttaswamy, 2017)
+        <br>• Right to live with dignity
+        <br>• Right to a clean environment
+        <br>• Right to speedy trial
+        <br>• Right to free legal aid
+        <br>• Right to livelihood
+        <br>• Right to education (later given express FR status by Art. 21A)
+        <br>• Right to health and medical care
+        <br>• Right to die with dignity
+        <br>This expansive reading is unique — the US has struggled with implied rights, but India's SC has been willing to find them through purposive interpretation, making Art. 21 truly the "heart of the Constitution."</p>
+      </div>
+
+      <div class="callout gem">
+        <div class="callout-label">💎 LIVE GEM 4 — THE CURIOUS CASE OF INDIA'S FEDERALISM</div>
+        <p>India is not a classical federation like the USA (where states came together) nor a unitary state like the UK. It has been called a "quasi-federal" state, a "federation with a unitary bias," or "cooperative federalism." Key features that show India's unique federal character:
+        <br>• <strong>Single citizenship</strong> (unlike USA's dual citizenship)
+        <br>• Residuary powers with Centre (unlike USA where they're with states)
+        <br>• Single Constitution for Centre and States
+        <br>• Union List has defence, foreign affairs, atomic energy
+        <br>• But: States have their own legislatures, High Courts, and budget
+        <br>• Seventh Schedule gives States real areas of governance
+        <br>• GST (101st Amend) created shared financial governance
+        <br>The term "Union of States" (not "Federation of States") in Art. 1 was deliberate — Ambedkar noted that states had no role in creating the Union, unlike American states.</p>
+      </div>
+
+      <div class="callout gem">
+        <div class="callout-label">💎 LIVE GEM 5 — THE DPSP-FRs TENSION AND ITS RESOLUTION</div>
+        <p>The Constitutional drafters envisioned FRs and DPSPs as complementary — individual liberty and state welfare. But clashes were inevitable:
+        <br>• <em>State of Madras v. Champakam</em> (1951) — FRs prevail → 1st Amendment added Art. 15(4) for backward class reservations
+        <br>• <em>Golaknath</em> (1967) — FRs cannot be abridged even for DPSPs
+        <br>• <em>Kesavananda</em> (1973) + 24th Amendment — Parliament can amend FRs
+        <br>• <em>42nd Amendment</em> (1976) — Art. 31C gave total primacy to DPSPs
+        <br>• <em>Minerva Mills</em> (1980) — SC held that the balance between FRs and DPSPs is itself part of Basic Structure. Neither can be sacrificed for the other.
+        <br>Today's understanding: the Constitution envisions a welfare state that also respects individual liberty — the tension itself keeps the constitutional dialogue alive.</p>
+      </div>
+
+      <div class="callout gem">
+        <div class="callout-label">💎 LIVE GEM 6 — PANCHAYATI RAJ: THE THIRD TIER OF DEMOCRACY</div>
+        <p>Gandhi's vision of village swaraj finally found constitutional status through the 73rd Amendment (1992). Key constitutional innovations:
+        <br>• Mandatory 3-tier structure: Gram Panchayat, Panchayat Samiti, Zila Parishad
+        <br>• Mandatory 1/3 reservation for women (some states 50%)
+        <br>• State Finance Commission + State Election Commission mandatory
+        <br>• 11th Schedule: 29 functions devolved (agriculture, primary education, drinking water, sanitation, etc.)
+        <br>• Direct elections at all 3 tiers
+        <br>India now has the world's largest democratic institution at the grassroots — over 30 lakh elected representatives, with 10+ lakh women, making it the biggest experiment in participatory democracy globally. Yet "devolution without resources" remains a challenge — most Panchayats lack financial autonomy.</p>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div style="border-top:1px solid var(--gold);padding-top:20px;">
+        ☸ REFERENCE: CONSTITUTION OF INDIA (OFFICIAL, AS ON 1ST MAY 2024) | 106 AMENDMENTS INCORPORATED
+        <br><br>PREPARED FOR TNpSC GROUP 1 · COMPETITIVE EXAM PREPARATION
+        <br><br>
+        <span style="color:var(--gold)">Arts. 12–35 · 36–51 · 51A · 52–151 · 152–237 · 352–360 · 368</span>
+      </div>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  // PYQ Toggle
+  function toggleAnswer(btn) {
+    const answer = btn.nextElementSibling;
+    if (answer.classList.contains('open')) {
+      answer.classList.remove('open');
+      btn.textContent = 'Show Answer ▼';
+    } else {
+      answer.classList.add('open');
+      btn.textContent = 'Hide Answer ▲';
+    }
+  }
+
+  // Active TOC highlighting
+  const sections = document.querySelectorAll('section[id]');
+  const tocLinks = document.querySelectorAll('.toc-list a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        tocLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { threshold: 0.2, rootMargin: '-80px 0px -60% 0px' });
+
+  sections.forEach(sec => observer.observe(sec));
+
+  // Close mobile TOC on link click
+  tocLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      document.getElementById('tocSidebar').classList.remove('mobile-open');
+    });
+  });
+</script>
+
+</body>
+</html>
