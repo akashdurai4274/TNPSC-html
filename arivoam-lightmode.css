@@ -1,0 +1,305 @@
+/*
+  arivoam-lightmode.css
+  Light / bright mode overrides.
+  Applied when <html class="light-mode"> is set.
+  Link this in every page; theme script toggles the class on <html>.
+*/
+
+/* ── CSS Variable Overrides ── */
+html.light-mode {
+  --bg:          #f5f6fa;
+  --bg2:         #eceef5;
+  --bg3:         #e4e6f0;
+  --bg4:         #dcdfe8;
+  --surface:     #ffffff;
+  --surface2:    #f0f2f8;
+  --surface3:    #e8eaf3;
+  --border:      #d4d8e8;
+  --border2:     #c0c4d8;
+  --border-hover:#a8aec8;
+  --card:        #ffffff;
+  --panel:       #ffffff;
+  --panel2:      #f0f2f8;
+  --text:        #1a1c2e;
+  --muted:       #4e5478;
+  --muted2:      #6e7498;
+  --gold:        #b8840a;
+  --gold2:       #a07208;
+  --gold-dim:    rgba(184,132,10,0.18);
+  --gold-glow:   rgba(184,132,10,0.08);
+  /* Sidebar-specific text variables */
+  --text-dim:    #3e4060;
+  --text-muted:  #5e6480;
+  --input-bg:    #f0f2f8;
+  /* Accent colors — darkened for white backgrounds */
+  --blue:        #2563b8;
+  --green:       #1e7a4a;
+  --red:         #c02020;
+  --purple:      #6b3fbf;
+  --cyan:        #1078a8;
+  --teal:        #0a7a60;
+  --orange:      #b85c10;
+  --pink:        #b83070;
+}
+
+/* ── Body & Background ── */
+html.light-mode body {
+  background: var(--bg) !important;
+  color: var(--text) !important;
+}
+
+/* Animated grid overlay — very subtle in bright mode */
+html.light-mode body::before {
+  background-image:
+    linear-gradient(rgba(0,0,20,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,20,0.035) 1px, transparent 1px) !important;
+  opacity: 0.5 !important;
+}
+
+/* ── Topbar / Header ── */
+html.light-mode .topbar,
+html.light-mode .topbar-wrap,
+html.light-mode header,
+html.light-mode .header {
+  background: #ffffff !important;
+  border-bottom-color: var(--border) !important;
+  box-shadow: 0 1px 0 var(--border) !important;
+}
+
+html.light-mode .topbar-tag,
+html.light-mode .tnav { color: var(--muted) !important; }
+
+html.light-mode .tnav:hover,
+html.light-mode .tnav.active {
+  color: var(--gold) !important;
+  border-color: rgba(184,132,10,0.25) !important;
+}
+
+html.light-mode .logo-mark,
+html.light-mode .footer-logo-mark { background: var(--gold) !important; }
+
+html.light-mode .logo-mark svg,
+html.light-mode .footer-logo-mark svg { fill: #fff !important; }
+
+html.light-mode .logo-text { color: var(--text) !important; }
+html.light-mode .logo-text span { color: var(--gold) !important; }
+
+/* ── SIDEBAR / TOC — Comprehensive overrides ── */
+html.light-mode .toc-sidebar,
+html.light-mode .sidebar,
+html.light-mode nav.toc-sidebar {
+  background: #ffffff !important;
+  border-right-color: var(--border) !important;
+  box-shadow: 2px 0 12px rgba(0,0,0,0.08) !important;
+  backdrop-filter: none !important;
+}
+
+/* All text descendants of sidebar default to dark */
+html.light-mode .toc-sidebar *,
+html.light-mode .sidebar * {
+  color: var(--text-dim) !important;
+  border-color: var(--border) !important;
+}
+
+/* Sidebar header / logo */
+html.light-mode .toc-sidebar .toc-title,
+html.light-mode .sidebar .sidebar-logo,
+html.light-mode .toc-title { color: var(--gold) !important; }
+
+html.light-mode .sidebar .sidebar-sub,
+html.light-mode .toc-section-label { color: var(--muted2) !important; }
+
+/* TOC links */
+html.light-mode .toc-list li a,
+html.light-mode .toc-item,
+html.light-mode .toc-link { color: var(--muted) !important; }
+
+html.light-mode .toc-list li a:hover,
+html.light-mode .toc-list li a.active,
+html.light-mode .toc-item:hover,
+html.light-mode .toc-item.active,
+html.light-mode .toc-link:hover,
+html.light-mode .toc-link.active {
+  color: var(--gold) !important;
+  background: rgba(184,132,10,0.06) !important;
+  border-left-color: var(--gold) !important;
+}
+
+/* Special/highlighted TOC items */
+html.light-mode .toc-item.special { color: var(--teal) !important; }
+html.light-mode .toc-item.special:hover { color: var(--teal) !important; }
+
+/* Sidebar scrollbar */
+html.light-mode .toc-sidebar::-webkit-scrollbar-track,
+html.light-mode .sidebar::-webkit-scrollbar-track { background: #f0f2f8 !important; }
+html.light-mode .toc-sidebar::-webkit-scrollbar-thumb,
+html.light-mode .sidebar::-webkit-scrollbar-thumb { background: var(--border2) !important; }
+
+/* ── Inputs & Form ── */
+html.light-mode input,
+html.light-mode select,
+html.light-mode textarea,
+html.light-mode .search-input,
+html.light-mode .date-select,
+html.light-mode .sort-select {
+  background: var(--surface) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+}
+
+html.light-mode .search-input::placeholder,
+html.light-mode input::placeholder { color: var(--muted2) !important; }
+
+/* ── Filter chips ── */
+html.light-mode .chip {
+  background: var(--surface) !important;
+  border-color: var(--border) !important;
+  color: var(--muted) !important;
+}
+html.light-mode .chip:hover {
+  border-color: var(--border-hover) !important;
+  color: var(--text) !important;
+}
+
+/* ── Cards (CA section) ── */
+html.light-mode .card,
+html.light-mode .np-card,
+html.light-mode .quick-card {
+  background: var(--surface) !important;
+  border-color: var(--border) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+}
+
+html.light-mode .card:hover,
+html.light-mode .np-card:hover { border-color: var(--border-hover) !important; }
+
+html.light-mode .card h3,
+html.light-mode .np-card h3 { color: var(--text) !important; }
+
+html.light-mode .card-desc,
+html.light-mode .np-card-desc { color: var(--muted) !important; }
+
+html.light-mode .card-footer { border-top-color: var(--border) !important; }
+html.light-mode .card-pillars { color: var(--muted2) !important; }
+html.light-mode .card-date { color: var(--gold) !important; }
+
+html.light-mode .ctag {
+  background: var(--bg3) !important;
+  border-color: var(--border) !important;
+  color: var(--muted) !important;
+}
+
+/* ── Pagination ── */
+html.light-mode .page-btn {
+  background: var(--surface) !important;
+  border-color: var(--border) !important;
+  color: var(--muted) !important;
+}
+html.light-mode .page-btn:hover {
+  border-color: var(--border-hover) !important;
+  color: var(--text) !important;
+}
+html.light-mode .page-btn.active {
+  background: var(--gold) !important;
+  border-color: var(--gold) !important;
+  color: #fff !important;
+}
+
+/* ── Hero section ── */
+html.light-mode .hero {
+  border-bottom-color: var(--border) !important;
+}
+html.light-mode .hero-overline,
+html.light-mode .hero-sub,
+html.light-mode .topbar-tag { color: var(--muted) !important; }
+
+html.light-mode .hero h1 { color: var(--text) !important; }
+html.light-mode .hero h1 em { color: var(--gold) !important; }
+
+/* ── Stats ── */
+html.light-mode .hero-stats {
+  background: var(--surface) !important;
+  border-color: var(--border) !important;
+}
+html.light-mode .stat { border-right-color: var(--border) !important; }
+html.light-mode .stat-n { color: var(--gold) !important; }
+html.light-mode .stat-l { color: var(--muted) !important; }
+
+/* ── Search & results bar ── */
+html.light-mode .results-bar-line,
+html.light-mode .section-divider::before,
+html.light-mode .section-divider::after { background: var(--border) !important; }
+html.light-mode .results-count { color: var(--muted) !important; }
+html.light-mode .results-count strong { color: var(--gold) !important; }
+
+/* ── Quick row ── */
+html.light-mode .quick-n { color: var(--text) !important; }
+html.light-mode .quick-l { color: var(--muted) !important; }
+
+/* ── Footer ── */
+html.light-mode .footer {
+  background: var(--surface2) !important;
+  border-top-color: var(--border) !important;
+}
+html.light-mode .footer-copy,
+html.light-mode .footer-links li a,
+html.light-mode .footer-desc,
+html.light-mode .footer-col-head { color: var(--muted) !important; }
+html.light-mode .footer-col-head { color: var(--gold) !important; }
+html.light-mode .footer-badge-strip .fbadge {
+  border-color: var(--border) !important;
+  color: var(--muted2) !important;
+}
+
+/* ── Callouts & Legend ── */
+html.light-mode .callout { background: var(--bg2) !important; }
+html.light-mode .legend {
+  background: var(--bg2) !important;
+  border-color: var(--border) !important;
+}
+
+/* ── General question/note cards ── */
+html.light-mode .kural-card,
+html.light-mode .q-card,
+html.light-mode .qa-card,
+html.light-mode .question-card,
+html.light-mode .answer-card,
+html.light-mode .flash-card,
+html.light-mode .qb-card,
+html.light-mode .ncard,
+html.light-mode .topic-card,
+html.light-mode .plan-card,
+html.light-mode .section-card,
+html.light-mode .section-result {
+  background: var(--surface) !important;
+  border-color: var(--border) !important;
+}
+
+/* ── Floating action buttons — adapt to light background ── */
+html.light-mode #bttBtn,
+html.light-mode #backBtn,
+html.light-mode #themeToggle {
+  background: rgba(255,255,255,0.92) !important;
+  border-color: rgba(184,132,10,0.4) !important;
+  color: #b8840a !important;
+  box-shadow: 0 2px 14px rgba(0,0,0,0.12) !important;
+}
+
+html.light-mode #bttBtn:hover,
+html.light-mode #backBtn:hover,
+html.light-mode #themeToggle:hover {
+  background: rgba(184,132,10,0.10) !important;
+}
+
+/* ── Scrollbar in light mode ── */
+html.light-mode ::-webkit-scrollbar-track { background: var(--bg) !important; }
+html.light-mode ::-webkit-scrollbar-thumb { background: var(--border2) !important; }
+
+/* ── Topbar separator ── */
+html.light-mode .topbar-sep { background: var(--border) !important; }
+
+/* ── Main content text — only where color variables are used ── */
+html.light-mode .main-content h2,
+html.light-mode .main-content h3,
+html.light-mode .main h2,
+html.light-mode .main h3 { color: var(--text) !important; }
