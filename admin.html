@@ -202,6 +202,10 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
         <div class="nav-label">Output</div>
         <button class="nav-item" onclick="showSection('export')"><span class="nav-icon">⬇️</span><span>Export index.html</span></button>
       </div>
+      <div class="nav-group">
+        <div class="nav-label">System</div>
+        <button class="nav-item" onclick="showSection('reset')"><span class="nav-icon">🗑️</span><span>Reset Cache</span></button>
+      </div>
     </nav>
     <div class="sidebar-bottom">
       <button class="export-btn" onclick="showSection('export')">⬇ Export index.html</button>
@@ -267,6 +271,47 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
       <div class="section-panel" id="panel-tnpsc-tamil"></div>
       <div class="section-panel" id="panel-tnpsc-gk"></div>
       <div class="section-panel" id="panel-tnpsc-aptitude"></div>
+
+      <!-- RESET -->
+      <div class="section-panel" id="panel-reset">
+        <div class="panel-header">
+          <div><div class="panel-title">Reset &amp; Clear Persistence</div><div class="panel-sub">Erase cached data so users get the latest version</div></div>
+        </div>
+        <div style="background:rgba(255,71,87,.06);border:1px solid rgba(255,71,87,.25);border-radius:8px;padding:18px 20px;margin-bottom:20px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted2);line-height:1.8">
+          ⚠ Use this when production shows stale content. Each action below targets a specific layer of browser persistence.
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+          <div style="background:var(--panel2);border:1px solid var(--border);border-radius:7px;padding:16px">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:8px">Local Storage</div>
+            <div style="font-size:12px;color:var(--muted2);margin-bottom:12px;line-height:1.6">Clears all <code style="background:var(--bg2);padding:1px 4px;border-radius:3px;color:var(--gold)">localStorage</code> keys for this origin.</div>
+            <button class="btn btn-secondary" onclick="resetLocalStorage()">Clear localStorage</button>
+          </div>
+          <div style="background:var(--panel2);border:1px solid var(--border);border-radius:7px;padding:16px">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:8px">Session Storage</div>
+            <div style="font-size:12px;color:var(--muted2);margin-bottom:12px;line-height:1.6">Clears <code style="background:var(--bg2);padding:1px 4px;border-radius:3px;color:var(--gold)">sessionStorage</code> (re-login required after).</div>
+            <button class="btn btn-secondary" onclick="resetSessionStorage()">Clear sessionStorage</button>
+          </div>
+          <div style="background:var(--panel2);border:1px solid var(--border);border-radius:7px;padding:16px">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:8px">Cookies</div>
+            <div style="font-size:12px;color:var(--muted2);margin-bottom:12px;line-height:1.6">Expires all cookies accessible via <code style="background:var(--bg2);padding:1px 4px;border-radius:3px;color:var(--gold)">document.cookie</code>.</div>
+            <button class="btn btn-secondary" onclick="resetCookies()">Clear Cookies</button>
+          </div>
+          <div style="background:var(--panel2);border:1px solid var(--border);border-radius:7px;padding:16px">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:8px">Service Worker + Cache API</div>
+            <div style="font-size:12px;color:var(--muted2);margin-bottom:12px;line-height:1.6">Unregisters all SW registrations and deletes all Cache Storage buckets.</div>
+            <button class="btn btn-secondary" onclick="resetServiceWorkerAndCache()">Clear SW &amp; Caches</button>
+          </div>
+        </div>
+        <hr class="divider">
+        <div style="background:rgba(255,71,87,.08);border:1px solid rgba(255,71,87,.35);border-radius:8px;padding:20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+          <div>
+            <div style="font-family:'Syne',sans-serif;font-weight:700;color:var(--red);font-size:15px;margin-bottom:4px">Nuclear Reset</div>
+            <div style="font-size:12px;color:var(--muted2);line-height:1.6">Clears <strong>everything</strong> — localStorage, sessionStorage, cookies, service workers &amp; caches — then hard-reloads the page.</div>
+          </div>
+          <button class="btn" style="background:var(--red);color:#fff;border:none;padding:10px 20px;font-size:10px;flex-shrink:0" onclick="nuclearReset()">🔥 Nuke &amp; Reload</button>
+        </div>
+        <div id="reset-log" style="margin-top:16px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--green);line-height:1.8;min-height:24px"></div>
+      </div>
 
       <!-- EXPORT -->
       <div class="section-panel" id="panel-export">
@@ -939,6 +984,89 @@ function toast(msg,isErr=false){
   clearTimeout(toastTimer);
   toastTimer=setTimeout(()=>el.classList.add('hidden'),2400);
   document.getElementById('saveStatus').textContent=msg;
+}
+
+// ═══════════ RESET HELPERS ═══════════
+function logReset(msg){
+  const el=document.getElementById('reset-log');
+  if(el) el.textContent=(el.textContent?el.textContent+'\n':'')+msg;
+}
+
+function resetLocalStorage(){
+  const count=localStorage.length;
+  localStorage.clear();
+  toast('localStorage cleared ('+count+' keys)');
+  logReset('✓ localStorage cleared — '+count+' keys removed');
+}
+
+function resetSessionStorage(){
+  const count=sessionStorage.length;
+  sessionStorage.clear();
+  toast('sessionStorage cleared — you will need to re-login');
+  logReset('✓ sessionStorage cleared — '+count+' keys removed. Reloading…');
+  setTimeout(()=>location.reload(),800);
+}
+
+function resetCookies(){
+  const cookies=document.cookie.split(';');
+  cookies.forEach(c=>{
+    const name=c.split('=')[0].trim();
+    document.cookie=name+'=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/';
+    document.cookie=name+'=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;domain='+location.hostname;
+  });
+  toast('Cookies cleared ('+cookies.length+' entries)');
+  logReset('✓ Cookies cleared — '+cookies.length+' entries expired');
+}
+
+async function resetServiceWorkerAndCache(){
+  let swCount=0, cacheCount=0;
+  if('serviceWorker' in navigator){
+    const regs=await navigator.serviceWorker.getRegistrations();
+    swCount=regs.length;
+    await Promise.all(regs.map(r=>r.unregister()));
+  }
+  if('caches' in window){
+    const keys=await caches.keys();
+    cacheCount=keys.length;
+    await Promise.all(keys.map(k=>caches.delete(k)));
+  }
+  toast('SW & caches cleared ('+swCount+' SW, '+cacheCount+' caches)');
+  logReset('✓ Service workers unregistered: '+swCount+' — Cache buckets deleted: '+cacheCount);
+}
+
+async function nuclearReset(){
+  if(!confirm('This will clear ALL browser persistence for this origin and hard-reload. Continue?')) return;
+  const log=document.getElementById('reset-log');
+  if(log) log.textContent='';
+
+  localStorage.clear();
+  logReset('✓ localStorage cleared');
+
+  const ssCount=sessionStorage.length;
+  sessionStorage.clear();
+  logReset('✓ sessionStorage cleared ('+ssCount+' keys)');
+
+  const cookies=document.cookie.split(';');
+  cookies.forEach(c=>{
+    const name=c.split('=')[0].trim();
+    document.cookie=name+'=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/';
+    document.cookie=name+'=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;domain='+location.hostname;
+  });
+  logReset('✓ Cookies expired ('+cookies.length+')');
+
+  if('serviceWorker' in navigator){
+    const regs=await navigator.serviceWorker.getRegistrations();
+    await Promise.all(regs.map(r=>r.unregister()));
+    logReset('✓ Service workers unregistered: '+regs.length);
+  }
+  if('caches' in window){
+    const keys=await caches.keys();
+    await Promise.all(keys.map(k=>caches.delete(k)));
+    logReset('✓ Cache buckets deleted: '+keys.length);
+  }
+
+  logReset('↺ Hard reloading…');
+  setTimeout(()=>location.href=location.href.split('?')[0]+'?nocache='+Date.now(),600);
 }
 
 // ═══════════ INIT ═══════════
