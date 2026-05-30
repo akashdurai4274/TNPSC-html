@@ -3151,164 +3151,166 @@
        RAG ENGINE  — fetches + indexes actual HTML files
     ══════════════════════════════════════════════════════════ */
     const RAG = (() => {
-      let chunks = [];   // [{id, src, title, section, text, terms, tf}]
-      let idf = {};      // {term: number}
-      let ready = false;
-      let building = false;
+      let chunks    = [];
+      let idf       = {};
+      let sysPrompt = '';
+      let ready     = false;
+      let building  = false;
 
-      const STOP = new Set('a an the is are was were be been being have has had do does did will would could should may might must can of in on at to for with by from up about into through during before after above below between out off over under again further then once here there when where why how all both each few more most other some such no nor not only same so than too very s t just don and or but if as'.split(' '));
-
+      /* ── tokeniser (matches build-rag.js) ── */
+      const STOP = new Set(
+        ('a an the is are was were be been being have has had do does did will would could should may might must ' +
+         'can of in on at to for with by from up about into through during before after above below between out ' +
+         'off over under again further then once here there when where why how all both each few more most other ' +
+         'some such no nor not only same so than too very s t just don and or but if as also its it this that ' +
+         'which these those their they them we our your answer option select correct following').split(' ')
+      );
       function tokenize(text) {
-        return text.toLowerCase().replace(/[^\w\s]/g, ' ').split(/\s+/).filter(t => t.length > 2 && !STOP.has(t));
+        return text.toLowerCase().replace(/[^\w\s]/g,' ').split(/\s+/)
+          .filter(t => t.length > 2 && !STOP.has(t) && !/^\d{1,2}$/.test(t));
       }
 
-      function computeTF(tokens) {
-        const freq = {};
-        tokens.forEach(t => { freq[t] = (freq[t] || 0) + 1; });
-        const len = tokens.length || 1;
-        Object.keys(freq).forEach(t => { freq[t] /= len; });
-        return freq;
-      }
-
-      function computeIDF() {
-        const N = chunks.length || 1;
-        const df = {};
-        chunks.forEach(c => Object.keys(c.tf).forEach(t => { df[t] = (df[t] || 0) + 1; }));
-        Object.entries(df).forEach(([t, d]) => { idf[t] = Math.log((N - d + 0.5) / (d + 0.5) + 1); });
-      }
-
-      function extractChunks(html, src, title) {
-        const doc = new DOMParser().parseFromString(html, 'text/html');
-        ['script', 'style', 'nav', 'header', 'footer', '#bttBtn', '#themeToggle', '#backBtn',
-          '#chatBotBtn', '#chatPanel', '.anchor-nav', '.topbar', '.sticky-top'].forEach(sel => {
-            doc.querySelectorAll(sel).forEach(el => el.remove());
-          });
-        const body = doc.querySelector('main, article, .content, body') || doc.body;
-        const result = [];
-        let section = title;
-        let buf = '';
-
-        function flush() {
-          if (buf.trim().length < 60) { buf = ''; return; }
-          const tokens = tokenize(buf);
-          if (tokens.length < 8) { buf = ''; return; }
-          result.push({
-            id: 0, src, title, section, text: buf.trim().slice(0, 600),
-            terms: tokens, tf: computeTF(tokens)
-          });
-          buf = '';
-        }
-
-        body.querySelectorAll('h1,h2,h3,h4,p,li,td,th,.card-title,.card-desc,.pillar-title,.news-card h3,ul.bl li').forEach(el => {
-          const tag = el.tagName;
-          const txt = el.textContent.replace(/\s+/g, ' ').trim();
-          if (!txt || txt.length < 10) return;
-          if (/^H[1-4]$/.test(tag)) { flush(); section = txt; }
-          else { buf += ' ' + txt; if (buf.length > 500) flush(); }
-        });
-        flush();
-        return result;
-      }
-
-      async function fetchFile(url) {
+      /* ── Load pre-built index (primary path) ── */
+      async function loadPrebuilt(setStatus) {
         try {
-          const r = await fetch(url, { cache: 'force-cache' });
-          return r.ok ? await r.text() : null;
-        } catch (e) { return null; }
+          if (setStatus) setStatus('📖 Loading knowledge base…');
+          const res = await fetch('rag-index.json', { cache: 'force-cache' });
+          if (!res.ok) return false;
+          const data = await res.json();
+          if (!data.chunks || !data.idf) return false;
+          chunks    = data.chunks;
+          idf       = data.idf;
+          sysPrompt = data.systemPrompt || '';
+          return true;
+        } catch (e) { return false; }
       }
 
-      // Files to index (CA files loaded from caData; static files hardcoded)
-      const STATIC_FILES = [
-        { url: 'traveller_accounts/tnpsc_travellers.html', title: 'Foreign Travellers to India' },
-        { url: 'SSC_Nouns_CrackSheet.html', title: 'Nouns Crack Sheet' },
-        { url: 'SSC_Pronouns_CrackSheet.html', title: 'Pronouns Crack Sheet' },
-      ];
+      /* ── Dynamic fallback (no pre-built file) ── */
+      function dynamicTokenize(text) { return tokenize(text); }
+      function computeTF(tokens) {
+        const freq = {}; tokens.forEach(t => { freq[t] = (freq[t]||0)+1; });
+        const len = tokens.length || 1;
+        const tf = {};
+        Object.keys(freq).forEach(t => { const v=freq[t]/len; if(v>=0.002) tf[t]=+v.toFixed(4); });
+        return tf;
+      }
+      function computeIDF() {
+        const N = chunks.length || 1, df = {};
+        chunks.forEach(c => Object.keys(c.tf).forEach(t => { df[t]=(df[t]||0)+1; }));
+        Object.entries(df).forEach(([t,d]) => { idf[t] = +Math.log((N-d+0.5)/(d+0.5)+1).toFixed(4); });
+      }
+      async function buildDynamic(setStatus) {
+        if (setStatus) setStatus('📚 Indexing study files…');
+        const files = [
+          { url:'traveller_accounts/tnpsc_travellers.html', title:'Foreign Travellers to India' },
+          { url:'SSC_Nouns_CrackSheet.html',   title:'Nouns Crack Sheet'   },
+          { url:'SSC_Pronouns_CrackSheet.html', title:'Pronouns Crack Sheet' },
+          { url:'Polity/Schemes.html',           title:'Government Schemes'   },
+          { url:'Economics/tnpsc_five_year_plans.html', title:'Five Year Plans' },
+        ];
+        try {
+          const r = await fetch('CA-v2/ca.json', { cache:'force-cache' });
+          if (r.ok) {
+            const ca = await r.json();
+            ca.slice(0,15).forEach(e => files.push({ url:'CA-v2/'+e.file, title:e.title }));
+          }
+        } catch(e){}
+        for (let i = 0; i < files.length; i += 3) {
+          await Promise.all(files.slice(i, i+3).map(async ({url, title}) => {
+            try {
+              const res = await fetch(url, { cache:'force-cache' });
+              if (!res.ok) return;
+              const html = await res.text();
+              const doc = new DOMParser().parseFromString(html, 'text/html');
+              doc.querySelectorAll('script,style,nav,header,footer').forEach(el=>el.remove());
+              const body = doc.querySelector('main,article,body') || doc.body;
+              let sec = title, buf = '';
+              const flush = () => {
+                const t = buf.trim(); if (t.length < 60) { buf=''; return; }
+                const toks = dynamicTokenize(t);
+                if (toks.length >= 8) chunks.push({ src:url, title, section:sec, text:t.slice(0,500), tc:toks.length, tf:computeTF(toks) });
+                buf = '';
+              };
+              body.querySelectorAll('h1,h2,h3,h4,p,li,td').forEach(el => {
+                const tag = el.tagName, txt = el.textContent.replace(/\s+/g,' ').trim();
+                if (!txt || txt.length<10) return;
+                if (/^H[1-4]$/.test(tag)) { flush(); sec=txt; } else { buf+=' '+txt; if(buf.length>480) flush(); }
+              });
+              flush();
+            } catch(e){}
+          }));
+        }
+        chunks.forEach((c,i) => { c.id=i; });
+        computeIDF();
+      }
 
+      /* ── Main build ── */
       async function build(setStatus) {
         if (ready || building) return;
         building = true;
 
-        // Try sessionStorage cache first
+        /* 1. Try sessionStorage cache (same-session reload) */
         try {
-          const cached = sessionStorage.getItem('arivoam-rag-v2');
-          if (cached) {
-            const data = JSON.parse(cached);
-            chunks = data.chunks; idf = data.idf;
-            ready = true; building = false;
-            if (setStatus) setStatus('● Online · Study Assistant');
-            return;
-          }
-        } catch (e) { }
-
-        if (setStatus) setStatus('📚 Indexing study files…');
-
-        const filesToFetch = [...STATIC_FILES];
-
-        // Add CA files from ca.json
-        try {
-          const r = await fetch('CA-v2/ca.json', { cache: 'force-cache' });
-          if (r.ok) {
-            const caData = await r.json();
-            caData.slice(0, 20).forEach(e => {
-              filesToFetch.push({ url: 'CA-v2/' + e.file, title: e.title });
-            });
-          }
-        } catch (e) { }
-
-        // Fetch and parse in small parallel batches
-        for (let i = 0; i < filesToFetch.length; i += 3) {
-          const batch = filesToFetch.slice(i, i + 3);
-          await Promise.all(batch.map(async ({ url, title }) => {
-            const html = await fetchFile(url);
-            if (html) {
-              const c = extractChunks(html, url, title);
-              chunks.push(...c);
+          const raw = sessionStorage.getItem('arivoam-rag-v3');
+          if (raw) {
+            const d = JSON.parse(raw);
+            if (d.v === 3 && d.chunks?.length) {
+              chunks = d.chunks; idf = d.idf; sysPrompt = d.sp || '';
+              ready = true; building = false;
+              if (setStatus) setStatus('● Online · Study Assistant');
+              return;
             }
-          }));
-        }
+          }
+        } catch(e){}
 
-        // Assign sequential IDs and compute IDF
-        chunks.forEach((c, i) => { c.id = i; });
-        computeIDF();
-        ready = true;
-        building = false;
+        /* 2. Load pre-built rag-index.json (fast — generated by build-rag.js) */
+        const loaded = await loadPrebuilt(setStatus);
 
-        // Cache
+        /* 3. Fall back to dynamic build if file missing */
+        if (!loaded) await buildDynamic(setStatus);
+
+        ready = true; building = false;
+
+        /* Save to sessionStorage for fast same-session reloads */
         try {
-          sessionStorage.setItem('arivoam-rag-v2', JSON.stringify({ chunks, idf }));
-        } catch (e) { }
+          sessionStorage.setItem('arivoam-rag-v3',
+            JSON.stringify({ v:3, chunks, idf, sp: sysPrompt }));
+        } catch(e){}
 
-        if (setStatus) setStatus(`● Online · ${chunks.length} chunks indexed`);
-        setTimeout(() => { if (setStatus) setStatus('● Online · Study Assistant'); }, 3000);
+        const n = chunks.length;
+        if (setStatus) {
+          setStatus(`● Online · ${n} chunks ready`);
+          setTimeout(() => setStatus('● Online · Study Assistant'), 2500);
+        }
       }
 
-      function search(query, topK = 4) {
+      /* ── BM25 search ── */
+      function search(query, topK = 5) {
         if (!ready || !chunks.length) return [];
         const qTerms = tokenize(query);
         if (!qTerms.length) return [];
 
-        // BM25-style scoring
         const K1 = 1.5, B = 0.75;
-        const avgLen = chunks.reduce((a, c) => a + c.terms.length, 0) / chunks.length;
+        /* c.tc is set by build-rag.js; fallback to c.terms?.length for dynamic chunks */
+        const avgLen = chunks.reduce((a,c) => a + (c.tc || c.terms?.length || 40), 0) / chunks.length;
 
-        return chunks.map(c => {
-          let score = 0;
-          qTerms.forEach(qt => {
-            const tf = c.tf[qt] || 0;
-            if (!tf) return;
-            const idfVal = idf[qt] || 1;
-            const num = tf * (K1 + 1);
-            const den = tf + K1 * (1 - B + B * c.terms.length / avgLen);
-            score += idfVal * (num / den);
-          });
-          return { ...c, score };
-        })
-          .filter(c => c.score > 0)
-          .sort((a, b) => b.score - a.score)
+        return chunks
+          .map(c => {
+            let score = 0;
+            const docLen = c.tc || c.terms?.length || 40;
+            qTerms.forEach(qt => {
+              const tf = c.tf[qt] || 0; if (!tf) return;
+              const idfVal = idf[qt] || 1;
+              score += idfVal * (tf * (K1+1)) / (tf + K1*(1 - B + B*docLen/avgLen));
+            });
+            return score > 0 ? { ...c, score } : null;
+          })
+          .filter(Boolean)
+          .sort((a,b) => b.score - a.score)
           .slice(0, topK);
       }
 
-      return { build, search, isReady: () => ready };
+      return { build, search, isReady: () => ready, getSystemPrompt: () => sysPrompt };
     })();
 
     /* ══════════════════════════════════════════════════════════
@@ -3830,23 +3832,18 @@
 
       /* ─── System prompt with RAG context injected ─── */
       function buildPrompt(context, kbLinks) {
+        /* Use the system prompt baked into rag-index.json; fallback to compact inline */
+        const base = RAG.getSystemPrompt() ||
+          'You are Arivoam AI, a TNPSC & SSC exam assistant. Answer in 150-280 words. **Bold** key facts. Use bullets. Flag traps with ⚠. Add memory tricks. Stay within exam syllabus.';
+
         const ctx = context
-          ? `Relevant context from Arivoam study materials:\n---\n${context}\n---\n\n`
+          ? `\n\nRetrieved context from Arivoam study materials:\n---\n${context}\n---`
           : '';
         const links = kbLinks.length
-          ? 'Related study sheets: ' + kbLinks.map(h => `${h.title} (${h.href})`).join(', ') + '\n\n'
+          ? '\n\nRelated study sheets: ' + kbLinks.map(h => `${h.title} → ${h.href}`).join(', ')
           : '';
-        return `You are Arivoam AI, a sharp and concise TNPSC (Tamil Nadu PSC — Groups 1/2/4) and SSC (CGL/CHSL) exam assistant built for Indian competitive exams.
 
-${ctx}${links}Rules:
-• Answer in 150–280 words max (be punchy, exam-focused)
-• **Bold** every key fact, name, year, number, or article
-• Use "• " bullet points for lists
-• Prefix common exam traps with "⚠ Trap:"
-• Add a mnemonic or memory trick if one fits
-• Tag PYQs with the year if known
-• If context above covers the question, prefer it; otherwise use your training data
-• Stay firmly within TNPSC/SSC syllabus scope`;
+        return base + ctx + links;
       }
 
       /* ─── Create a live streaming bubble ─── */
