@@ -3328,7 +3328,7 @@
           label: 'Groq — Llama 3.3 70B',
           url: 'https://api.groq.com/openai/v1/chat/completions',
           model: 'llama-3.3-70b-versatile',
-          headers: (key) => ({ 'Authorization': `Bearer ${GROQ_KEY_REMOVED}`, 'Content-Type': 'application/json' }),
+          headers: (key) => ({ 'Authorization': `Bearer ${key}`, 'Content-Type': 'application/json' }),
           body: (msgs, stream) => JSON.stringify({ model: 'llama-3.3-70b-versatile', messages: msgs, max_tokens: 600, temperature: 0.35, stream }),
           token: (line) => {
             if (!line.startsWith('data: ') || line.includes('[DONE]')) return null;
@@ -3339,7 +3339,7 @@
         },
         gemini: {
           label: 'Gemini 2.0 Flash',
-          url: (key) => `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY_REMOVED}`,
+          url: (key) => `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`,
           headers: () => ({ 'Content-Type': 'application/json' }),
           body: (msgs) => {
             const sys = msgs.find(m => m.role === 'system');
