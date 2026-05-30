@@ -123,6 +123,85 @@
             aside { display: none; }
             .nav-links { display: none; }
         }
+        @media (max-width: 768px) {
+            header { padding: 1.5rem 1rem 1.2rem; }
+            header h1 { font-size: 1.5rem; letter-spacing: 0; line-height: 1.2; }
+            .tagline { font-size: 0.9rem; }
+
+            nav.sticky-top {
+                padding: 0.6rem 1rem;
+                flex-wrap: nowrap;
+                justify-content: space-between;
+                gap: 0.5rem;
+            }
+            .toggle-btn { padding: 0.35rem 0.75rem; font-size: 0.78rem; white-space: nowrap; }
+
+            .layout-container { padding: 0.75rem; gap: 0; }
+            main { width: 100%; min-width: 0; }
+            section { margin-bottom: 2.5rem; scroll-margin-top: 80px; }
+
+            .legend-row { padding: 0.75rem; gap: 0.4rem; }
+            .legend-item { font-size: 0.72rem; gap: 0.3rem; }
+            .legend-color { width: 11px; height: 11px; }
+
+            .news-card { padding: 1rem; margin-bottom: 1rem; }
+            .news-card:hover { transform: none; }
+            .news-card h3 { font-size: 1.1rem; margin-bottom: 0.6rem; }
+            .card-meta { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
+            .category-pill { font-size: 0.75rem; }
+            .badge { font-size: 0.68rem; padding: 0.15rem 0.45rem; margin-right: 0.3rem; }
+
+            details { padding: 0.75rem; }
+            details li { margin-bottom: 0.4rem; padding-left: 1.2rem; }
+
+            table { font-size: 0.78rem; display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            th, td { padding: 0.5rem 0.6rem; }
+
+            .raw-text-panel { font-size: 0.78rem; padding: 1rem; }
+            .answer-reveal { padding: 0.75rem; }
+
+            footer { padding: 1.5rem 1rem; font-size: 0.8rem; }
+            h2 { font-size: 1.3rem; }
+            h3 { font-size: 1.05rem; }
+        }
+
+        @media (max-width: 480px) {
+            header h1 { font-size: 1.2rem; }
+            header { padding: 1.2rem 0.75rem 1rem; }
+            .layout-container { padding: 0.5rem; }
+            .news-card { padding: 0.85rem; border-left-width: 3px; }
+            .legend-row { flex-direction: column; }
+            nav.sticky-top { padding: 0.5rem 0.75rem; }
+            .toggle-btn { font-size: 0.73rem; padding: 0.3rem 0.6rem; }
+        }
+
+        /* ── LIGHT / BRIGHT MODE ── */
+        html.light-mode {
+            --bg-page: #f5f6fa;
+            --bg-card: #ffffff;
+            --text-body: #1a1c2e;
+            --text-muted: #4e5478;
+        }
+        html.light-mode body { background: var(--bg-page) !important; color: var(--text-body) !important; }
+        html.light-mode header { border-bottom-color: rgba(184,132,10,0.35) !important; }
+        html.light-mode nav.sticky-top { background: rgba(245,246,250,0.97) !important; border-bottom-color: #d4d8e8 !important; }
+        html.light-mode .nav-links a { color: var(--text-body) !important; }
+        html.light-mode aside a { color: var(--text-muted) !important; }
+        html.light-mode aside a:hover, html.light-mode aside a.active { color: var(--accent-gold) !important; }
+        html.light-mode .news-card { background: var(--bg-card) !important; box-shadow: 0 2px 8px rgba(0,0,0,0.07) !important; }
+        html.light-mode .legend-row { background: var(--bg-card) !important; border: 1px solid #d4d8e8 !important; }
+        html.light-mode details { background: rgba(0,0,0,0.02) !important; border-color: #d4d8e8 !important; }
+        html.light-mode hr { border-top-color: rgba(0,0,0,0.1) !important; }
+        html.light-mode td { border-bottom-color: rgba(0,0,0,0.08) !important; }
+        html.light-mode tr:nth-child(even) { background: rgba(0,0,0,0.02) !important; }
+        html.light-mode .raw-text-panel { background: #f0f2f8 !important; color: var(--text-muted) !important; }
+        html.light-mode footer { background: var(--bg-card) !important; border-top-color: #d4d8e8 !important; }
+        html.light-mode #themeToggle, html.light-mode #backBtn, html.light-mode #bttBtn {
+            background: rgba(255,255,255,0.92) !important;
+            border-color: rgba(184,132,10,0.4) !important;
+            color: #b8840a !important;
+            box-shadow: 0 2px 14px rgba(0,0,0,0.12) !important;
+        }
     </style>
 <link rel="stylesheet" href="../../arivoam-lightmode.css">
 <script>(function(){if(localStorage.getItem('arivoam-theme')=='light'){document.documentElement.classList.add('light-mode');}})()</script>
@@ -575,5 +654,6 @@ In Sports, R Praggnanandhaa beat Magnus Carlsen in Norway chess. Four Indian wom
         }
     </script>
 <button id="themeToggle" onclick="(function(){var l=document.documentElement.classList.toggle('light-mode');localStorage.setItem('arivoam-theme',l?'light':'dark');var b=document.getElementById('themeToggle');if(b)b.innerHTML=l?'&#9790;':'&#9728;';})()" title="Toggle light/dark mode" style="position:fixed;bottom:76px;right:24px;z-index:9998;width:42px;height:42px;border-radius:50%;background:rgba(13,15,20,0.92);border:1px solid rgba(245,200,66,0.35);color:#f5c842;font-size:16px;line-height:1;cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 2px 14px rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;transition:all .2s;">&#9728;</button><script>(function(){var b=document.getElementById('themeToggle');if(!b)return;if(document.documentElement.classList.contains('light-mode')){b.innerHTML='&#9790;';}})()</script>
+<a href="../../index.html" id="backBtn" onclick="if(history.length>1){event.preventDefault();history.back();}" title="Back to Hub" style="position:fixed;bottom:24px;left:24px;z-index:9998;width:42px;height:42px;border-radius:50%;background:rgba(13,15,20,0.92);border:1px solid rgba(245,200,66,0.35);color:#f5c842;font-size:20px;text-decoration:none;backdrop-filter:blur(8px);box-shadow:0 2px 14px rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;transition:all .2s;" onmouseover="this.style.background='rgba(245,200,66,0.12)';" onmouseout="this.style.background='rgba(13,15,20,0.92)';">&#8592;</a>
 </body>
 </html>

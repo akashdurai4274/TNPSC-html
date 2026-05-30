@@ -6,7 +6,7 @@
 <title>Admin · Prompts Hub — Arivoam</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Rajdhani:wght@400;600;700&family=Andika:wght@400;700&family=Poppins:wght@400;500;600&family=Sofia+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <script src="prompts-config.js"></script>
 <style>
 :root {
@@ -411,6 +411,60 @@ body::before {
   font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--muted2);
 }
 
+/* ── BOT CONFIG PANEL ── */
+.bc-field { display:flex; flex-direction:column; }
+.bc-label {
+  font-family:'IBM Plex Mono',monospace; font-size:10px; font-weight:600;
+  letter-spacing:1.5px; text-transform:uppercase; color:var(--muted);
+  margin-bottom:8px;
+}
+.bc-input {
+  background:var(--surface2); border:1px solid var(--border2);
+  border-radius:8px; padding:10px 14px;
+  font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--text);
+  outline:none; transition:border-color 0.2s, box-shadow 0.2s;
+  width:100%;
+}
+.bc-input:focus { border-color:rgba(245,200,66,0.5); box-shadow:0 0 0 3px rgba(245,200,66,0.07); }
+.bc-textarea { resize:vertical; min-height:80px; line-height:1.6; }
+.bc-hint { font-family:'Lora',serif; font-size:11.5px; color:var(--muted); margin-top:5px; font-style:italic; }
+.bc-radio {
+  display:inline-flex; align-items:center; gap:6px; cursor:pointer;
+  font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted2);
+  background:var(--surface2); border:1px solid var(--border2);
+  border-radius:20px; padding:5px 12px; transition:all 0.15s;
+}
+.bc-radio:has(input:checked) { border-color:var(--gold); color:var(--gold); background:rgba(245,200,66,0.07); }
+.bc-radio input { display:none; }
+.bc-check {
+  display:inline-flex; align-items:center; gap:6px; cursor:pointer;
+  font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted2);
+  background:var(--surface2); border:1px solid var(--border2);
+  border-radius:6px; padding:5px 12px; transition:all 0.15s;
+}
+.bc-check:has(input:checked) { border-color:var(--gold); color:var(--gold); background:rgba(245,200,66,0.07); }
+.bc-check input { display:none; }
+.bc-save-btn {
+  font-family:'Syne',sans-serif; font-size:13px; font-weight:700;
+  background:var(--gold); color:var(--bg); border:none;
+  padding:10px 24px; border-radius:8px; cursor:pointer;
+  transition:all 0.2s; letter-spacing:0.5px;
+}
+.bc-save-btn:hover { background:var(--gold-dim); box-shadow:0 0 20px rgba(245,200,66,0.3); }
+.bc-reset-btn {
+  font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted);
+  background:transparent; border:1px solid var(--border2);
+  padding:9px 18px; border-radius:8px; cursor:pointer; transition:all 0.2s;
+}
+.bc-reset-btn:hover { border-color:var(--red); color:var(--red); }
+
+.bc-color-swatch {
+  width:28px; height:28px; border-radius:50%; border:3px solid transparent;
+  cursor:pointer; transition:all 0.2s; outline:none; flex-shrink:0;
+}
+.bc-color-swatch:hover { transform:scale(1.15); }
+.bc-color-swatch.selected { border-color:#fff; box-shadow:0 0 0 2px rgba(255,255,255,0.4); transform:scale(1.15); }
+
 /* ── RESPONSIVE ── */
 @media(max-width:640px) {
   .hub-hero { padding:40px 16px 28px; }
@@ -418,6 +472,7 @@ body::before {
   .topbar, .viewer-topbar { padding:10px 16px; }
   .hub-grid { grid-template-columns:1fr; }
   .prompt-textarea { font-size:11px; padding:16px; }
+  #botConfigSection > div:first-of-type + p + div { grid-template-columns:1fr !important; }
 }
 </style>
   <link rel="stylesheet" href="orbitron-numbers.css">
@@ -425,7 +480,7 @@ body::before {
 <script>(function(){if(localStorage.getItem('arivoam-theme')=='light'){document.documentElement.classList.add('light-mode');}})()</script>
 </head>
 <body>
-<a href="index.html" id="backBtn" title="Back" style="position:fixed;bottom:24px;left:24px;z-index:9998;width:42px;height:42px;border-radius:50%;background:rgba(13,15,20,0.92);border:1px solid rgba(245,200,66,0.35);color:#f5c842;font-size:20px;line-height:1;text-decoration:none;backdrop-filter:blur(8px);box-shadow:0 2px 14px rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;transition:all .2s;" onmouseover="this.style.background='rgba(245,200,66,0.12)';" onmouseout="this.style.background='rgba(13,15,20,0.92)';">&#8592;</a>
+<a href="index.html" id="backBtn" onclick="if(history.length>1){event.preventDefault();history.back();}" title="Back" style="position:fixed;bottom:24px;left:24px;z-index:9998;width:42px;height:42px;border-radius:50%;background:rgba(13,15,20,0.92);border:1px solid rgba(245,200,66,0.35);color:#f5c842;font-size:20px;line-height:1;text-decoration:none;backdrop-filter:blur(8px);box-shadow:0 2px 14px rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;transition:all .2s;" onmouseover="this.style.background='rgba(245,200,66,0.12)';" onmouseout="this.style.background='rgba(13,15,20,0.92)';">&#8592;</a>
 
 <!-- ─────────────────────────────
      LOGIN OVERLAY
@@ -479,6 +534,142 @@ body::before {
     <div class="hub-grid" id="promptsGrid">
       <!-- cards injected by JS -->
     </div>
+
+    <!-- ── CHATBOT CUSTOMISATION ── -->
+    <div id="botConfigSection" style="margin-top:48px;border-top:1px solid var(--border);padding-top:40px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
+        <span style="font-size:24px;">🤖</span>
+        <div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:3px;">Admin Panel</div>
+          <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--text);">Chatbot Customisation</div>
+        </div>
+        <span id="botSaveStatus" style="margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--green);opacity:0;transition:opacity 0.4s;">✓ Saved</span>
+      </div>
+      <p style="font-family:'Lora',serif;font-size:13px;color:var(--muted);margin-bottom:28px;font-style:italic;">Customise how Arivoam AI behaves across the study hub. Changes are saved to the browser and take effect immediately.</p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+
+        <!-- Bot Name -->
+        <div class="bc-field">
+          <label class="bc-label">Bot Name</label>
+          <input class="bc-input" id="bc_name" type="text" maxlength="32" placeholder="Arivoam AI">
+          <div class="bc-hint">Displayed in the chat header on all pages.</div>
+        </div>
+
+        <!-- Personality Style -->
+        <div class="bc-field">
+          <label class="bc-label">Personality Style</label>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;">
+            <label class="bc-radio"><input type="radio" name="bc_style" value="tutor" checked> <span>🎓 Tutor</span></label>
+            <label class="bc-radio"><input type="radio" name="bc_style" value="friendly"> <span>😊 Friendly</span></label>
+            <label class="bc-radio"><input type="radio" name="bc_style" value="formal"> <span>🧳 Formal</span></label>
+          </div>
+          <div class="bc-hint">Controls tone of greeting and tip messages.</div>
+        </div>
+
+        <!-- Greeting Message -->
+        <div class="bc-field" style="grid-column:1/-1;">
+          <label class="bc-label">Greeting Message</label>
+          <textarea class="bc-input bc-textarea" id="bc_greeting" rows="3" placeholder="Hi! I'm Arivoam AI 👋 Your personal TNPSC & SSC study assistant…"></textarea>
+          <div class="bc-hint">First message shown when user opens the chat. Supports <code style="background:var(--surface2);padding:1px 5px;border-radius:3px;font-size:11px;">&lt;strong&gt;</code> HTML tags.</div>
+        </div>
+
+        <!-- Custom Study Tip -->
+        <div class="bc-field" style="grid-column:1/-1;">
+          <label class="bc-label">Custom Study Tips</label>
+          <textarea class="bc-input bc-textarea" id="bc_tip" rows="4" placeholder="1. Focus on PYQ patterns — 60% questions repeat&#10;2. Do Current Affairs daily — 20+ marks&#10;3. …"></textarea>
+          <div class="bc-hint">Shown when user asks "study tips". Each tip on a new line (HTML <code style="background:var(--surface2);padding:1px 5px;border-radius:3px;font-size:11px;">&lt;br&gt;</code> supported).</div>
+        </div>
+
+        <!-- Focus Topics -->
+        <div class="bc-field" style="grid-column:1/-1;">
+          <label class="bc-label">Quick Reply Focus Topics</label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;" id="bc_topics_wrap">
+            <label class="bc-check"><input type="checkbox" name="bc_topics" value="Current Affairs" checked> Current Affairs</label>
+            <label class="bc-check"><input type="checkbox" name="bc_topics" value="SSC subjects" checked> SSC Subjects</label>
+            <label class="bc-check"><input type="checkbox" name="bc_topics" value="TNPSC subjects" checked> TNPSC Subjects</label>
+            <label class="bc-check"><input type="checkbox" name="bc_topics" value="Mock tests" checked> Mock Tests</label>
+            <label class="bc-check"><input type="checkbox" name="bc_topics" value="Traveller Accounts"> Traveller Accounts</label>
+            <label class="bc-check"><input type="checkbox" name="bc_topics" value="Study tips"> Study Tips</label>
+            <label class="bc-check"><input type="checkbox" name="bc_topics" value="Newspaper Artifacts"> Newspapers</label>
+          </div>
+          <div class="bc-hint">These chips appear as initial quick replies when the chat opens.</div>
+        </div>
+
+        <!-- Chat Bubble Position -->
+        <div class="bc-field">
+          <label class="bc-label">Chat Button Position</label>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;">
+            <label class="bc-radio"><input type="radio" name="bc_pos" value="right" checked> <span>Right</span></label>
+            <label class="bc-radio"><input type="radio" name="bc_pos" value="left"> <span>Left</span></label>
+          </div>
+          <div class="bc-hint">Position of the 🤖 floating chat button.</div>
+        </div>
+
+        <!-- Response Speed -->
+        <div class="bc-field">
+          <label class="bc-label">Typing Speed</label>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;">
+            <label class="bc-radio"><input type="radio" name="bc_speed" value="fast"> <span>⚡ Fast</span></label>
+            <label class="bc-radio"><input type="radio" name="bc_speed" value="normal" checked> <span>✦ Normal</span></label>
+            <label class="bc-radio"><input type="radio" name="bc_speed" value="slow"> <span>🐢 Slow</span></label>
+          </div>
+          <div class="bc-hint">Controls how long the typing indicator shows before the reply appears.</div>
+        </div>
+
+        <!-- Chat Font -->
+        <div class="bc-field">
+          <label class="bc-label">Chat Font</label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;" id="bc_font_wrap">
+            <label class="bc-radio bc-font-opt" data-font="Andika"><input type="radio" name="bc_font" value="Andika" checked> <span style="font-family:'Andika',sans-serif;">Andika</span></label>
+            <label class="bc-radio bc-font-opt" data-font="Rajdhani"><input type="radio" name="bc_font" value="Rajdhani"> <span style="font-family:'Rajdhani',sans-serif;font-weight:600;">Rajdhani</span></label>
+            <label class="bc-radio bc-font-opt" data-font="Poppins"><input type="radio" name="bc_font" value="Poppins"> <span style="font-family:'Poppins',sans-serif;">Poppins</span></label>
+            <label class="bc-radio bc-font-opt" data-font="Sofia Sans"><input type="radio" name="bc_font" value="Sofia Sans"> <span style="font-family:'Sofia Sans',sans-serif;font-weight:600;">Sofia Sans</span></label>
+          </div>
+          <div class="bc-hint">Applies to message bubbles in the chat panel. <strong id="fontPreviewLabel" style="color:var(--gold);font-size:12px;"></strong></div>
+        </div>
+
+        <!-- Accent Color -->
+        <div class="bc-field">
+          <label class="bc-label">Chat Accent Color</label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:6px;">
+            <button class="bc-color-swatch" data-color="#f5c842" style="background:#f5c842;" title="Gold (default)" onclick="selectChatColor('#f5c842',this)"></button>
+            <button class="bc-color-swatch" data-color="#5b9cf6" style="background:#5b9cf6;" title="Blue" onclick="selectChatColor('#5b9cf6',this)"></button>
+            <button class="bc-color-swatch" data-color="#4ecb7a" style="background:#4ecb7a;" title="Green" onclick="selectChatColor('#4ecb7a',this)"></button>
+            <button class="bc-color-swatch" data-color="#a78bfa" style="background:#a78bfa;" title="Purple" onclick="selectChatColor('#a78bfa',this)"></button>
+            <button class="bc-color-swatch" data-color="#fb923c" style="background:#fb923c;" title="Orange" onclick="selectChatColor('#fb923c',this)"></button>
+            <button class="bc-color-swatch" data-color="#f472b6" style="background:#f472b6;" title="Pink" onclick="selectChatColor('#f472b6',this)"></button>
+            <button class="bc-color-swatch" data-color="#22d3ee" style="background:#22d3ee;" title="Cyan" onclick="selectChatColor('#22d3ee',this)"></button>
+            <label style="display:flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);cursor:pointer;">
+              Custom: <input type="color" id="bc_color_custom" value="#f5c842"
+                style="width:30px;height:30px;border-radius:50%;border:2px solid var(--border2);cursor:pointer;padding:0;background:none;"
+                oninput="selectChatColor(this.value,null)">
+            </label>
+          </div>
+          <div class="bc-hint">Colour used for the bot avatar, button gradients, and active message borders. Current: <span id="bc_color_preview" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gold);">#f5c842</span></div>
+        </div>
+
+        <!-- Chat Background Style -->
+        <div class="bc-field">
+          <label class="bc-label">Chat Panel Background</label>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;">
+            <label class="bc-radio"><input type="radio" name="bc_bg" value="default" checked> <span>◼ Default Dark</span></label>
+            <label class="bc-radio"><input type="radio" name="bc_bg" value="glass"> <span>🪟 Glass</span></label>
+            <label class="bc-radio"><input type="radio" name="bc_bg" value="midnight"> <span>🌑 Midnight</span></label>
+            <label class="bc-radio"><input type="radio" name="bc_bg" value="warm"> <span>🌅 Warm</span></label>
+          </div>
+          <div class="bc-hint">Changes the visual style of the chat window.</div>
+        </div>
+
+      </div>
+
+      <div style="display:flex;gap:12px;margin-top:24px;align-items:center;">
+        <button class="bc-save-btn" onclick="saveBotConfig()">💾 Save Config</button>
+        <button class="bc-reset-btn" onclick="resetBotConfig()">↺ Reset to Defaults</button>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-left:8px;">Config stored in browser localStorage</span>
+      </div>
+    </div>
+
   </div>
 
 </div>
@@ -779,6 +970,7 @@ function logout() {
 function showHub() {
   document.getElementById('mainHub').style.display = 'block';
   renderGrid();
+  setTimeout(loadBotConfigUI, 50);
 }
 
 function renderGrid() {
@@ -1264,12 +1456,88 @@ async function nuclearReset() {
 }
 
 /* ─────────────────────────────────────────
+   BOT CONFIG — save / load / reset
+───────────────────────────────────────── */
+/* ── Color swatch helper ── */
+window.selectChatColor = function(color, swatchEl) {
+  document.querySelectorAll('.bc-color-swatch').forEach(s => s.classList.remove('selected'));
+  if (swatchEl) swatchEl.classList.add('selected');
+  const preview = document.getElementById('bc_color_preview');
+  if (preview) { preview.textContent = color; preview.style.color = color; }
+  const custom = document.getElementById('bc_color_custom');
+  if (custom) custom.value = color;
+  window._selectedChatColor = color;
+};
+
+function loadBotConfigUI() {
+  try {
+    const c = JSON.parse(localStorage.getItem('arivoam-bot-cfg') || '{}');
+    if (c.name) document.getElementById('bc_name').value = c.name;
+    if (c.greeting) document.getElementById('bc_greeting').value = c.greeting;
+    if (c.customTip) document.getElementById('bc_tip').value = c.customTip;
+    if (c.style) document.querySelectorAll('input[name="bc_style"]').forEach(r => { r.checked = r.value === c.style; });
+    if (c.pos)   document.querySelectorAll('input[name="bc_pos"]').forEach(r => { r.checked = r.value === c.pos; });
+    if (c.speed) document.querySelectorAll('input[name="bc_speed"]').forEach(r => { r.checked = r.value === c.speed; });
+    if (c.font)  document.querySelectorAll('input[name="bc_font"]').forEach(r => { r.checked = r.value === c.font; });
+    if (c.bg)    document.querySelectorAll('input[name="bc_bg"]').forEach(r => { r.checked = r.value === c.bg; });
+    if (Array.isArray(c.topics)) {
+      document.querySelectorAll('input[name="bc_topics"]').forEach(cb => { cb.checked = c.topics.includes(cb.value); });
+    }
+    const color = c.accentColor || '#f5c842';
+    window._selectedChatColor = color;
+    document.querySelectorAll('.bc-color-swatch').forEach(s => {
+      if (s.dataset.color === color) s.classList.add('selected');
+    });
+    const preview = document.getElementById('bc_color_preview');
+    if (preview) { preview.textContent = color; preview.style.color = color; }
+    const custom = document.getElementById('bc_color_custom');
+    if (custom) custom.value = color;
+  } catch(e) {}
+}
+
+window.saveBotConfig = function() {
+  const cfg = {
+    name:        document.getElementById('bc_name').value.trim() || 'Arivoam AI',
+    greeting:    document.getElementById('bc_greeting').value.trim(),
+    customTip:   document.getElementById('bc_tip').value.trim(),
+    style:       (document.querySelector('input[name="bc_style"]:checked') || {}).value || 'tutor',
+    pos:         (document.querySelector('input[name="bc_pos"]:checked') || {}).value || 'right',
+    speed:       (document.querySelector('input[name="bc_speed"]:checked') || {}).value || 'normal',
+    font:        (document.querySelector('input[name="bc_font"]:checked') || {}).value || 'Andika',
+    bg:          (document.querySelector('input[name="bc_bg"]:checked') || {}).value || 'default',
+    accentColor: window._selectedChatColor || '#f5c842',
+    topics: Array.from(document.querySelectorAll('input[name="bc_topics"]:checked')).map(cb => cb.value),
+  };
+  try { localStorage.setItem('arivoam-bot-cfg', JSON.stringify(cfg)); } catch(e) {}
+  const status = document.getElementById('botSaveStatus');
+  if (status) { status.style.opacity = '1'; setTimeout(() => status.style.opacity = '0', 2500); }
+};
+
+window.resetBotConfig = function() {
+  if (!confirm('Reset chatbot config to defaults?')) return;
+  localStorage.removeItem('arivoam-bot-cfg');
+  document.getElementById('bc_name').value = '';
+  document.getElementById('bc_greeting').value = '';
+  document.getElementById('bc_tip').value = '';
+  document.querySelectorAll('input[name="bc_style"]').forEach(r => { r.checked = r.value === 'tutor'; });
+  document.querySelectorAll('input[name="bc_pos"]').forEach(r => { r.checked = r.value === 'right'; });
+  document.querySelectorAll('input[name="bc_speed"]').forEach(r => { r.checked = r.value === 'normal'; });
+  document.querySelectorAll('input[name="bc_font"]').forEach(r => { r.checked = r.value === 'Andika'; });
+  document.querySelectorAll('input[name="bc_bg"]').forEach(r => { r.checked = r.value === 'default'; });
+  document.querySelectorAll('input[name="bc_topics"]').forEach(cb => { cb.checked = ['Current Affairs','SSC subjects','TNPSC subjects','Mock tests'].includes(cb.value); });
+  selectChatColor('#f5c842', document.querySelector('.bc-color-swatch[data-color="#f5c842"]'));
+  const status = document.getElementById('botSaveStatus');
+  if (status) { status.style.color='var(--muted)'; status.textContent='↺ Reset'; status.style.opacity='1'; setTimeout(()=>{status.style.opacity='0';status.style.color='var(--green)';status.textContent='✓ Saved';},2000); }
+};
+
+/* ─────────────────────────────────────────
    INIT — check session
 ───────────────────────────────────────── */
 (function() {
   if (sessionStorage.getItem('ph_auth') === '1') {
     document.getElementById('loginOverlay').style.display = 'none';
     showHub();
+    loadBotConfigUI();
   }
 })();
 </script>
