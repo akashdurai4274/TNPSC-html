@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -425,53 +425,93 @@
       }
     }
 
-    /* ── CHATBOT ── */
-    #chatBotBtn {
+    /* ── FLOATING BUTTON GROUP ── */
+    .float-group {
       position: fixed;
-      bottom: 128px;
-      right: 24px;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
       z-index: 9997;
-      width: 46px;
-      height: 46px;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      background: rgba(13, 15, 20, 0.88);
+      border: 1px solid rgba(245, 200, 66, 0.32);
+      border-radius: 48px;
+      padding: 4px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 4px 28px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(245, 200, 66, 0.08);
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: none;
+    }
+
+    .fg-hl {
+      position: absolute;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--gold), var(--orange));
+      background: rgba(245, 200, 66, 0.14);
+      border: 1px solid rgba(245, 200, 66, 0.38);
+      transition: left 0.28s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.18s;
+      pointer-events: none;
+      opacity: 0;
+      top: 4px;
+    }
+
+    .fg-hl.fg-pulse {
+      animation: fgPulse 0.55s ease;
+    }
+
+    @keyframes fgPulse {
+      0% {
+        transform: scale(1);
+      }
+
+      40% {
+        transform: scale(1.5);
+        opacity: 0.5;
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .float-btn {
+      position: relative;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
       border: none;
+      background: transparent;
+      color: var(--gold);
       cursor: pointer;
-      box-shadow: 0 4px 20px rgba(245, 200, 66, 0.4);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
-      transition: all 0.25s;
-      animation: botGlow 3s ease-in-out infinite;
+      font-size: 17px;
+      transition: color 0.18s;
+      z-index: 1;
+      flex-shrink: 0;
     }
 
-    #chatBotBtn:hover {
-      transform: scale(1.1);
+    .float-btn:hover {
+      color: #fff;
     }
 
-    #chatBotBtn .chat-notif {
+    .float-btn .chat-notif {
       position: absolute;
-      top: -2px;
-      right: -2px;
-      width: 12px;
-      height: 12px;
+      top: 0px;
+      right: 0px;
+      width: 11px;
+      height: 11px;
       border-radius: 50%;
       background: var(--green);
-      border: 2px solid var(--bg);
-      animation: notifPop 0.4s ease both;
-    }
-
-    @keyframes botGlow {
-
-      0%,
-      100% {
-        box-shadow: 0 4px 20px rgba(245, 200, 66, 0.35)
-      }
-
-      50% {
-        box-shadow: 0 4px 32px rgba(245, 200, 66, 0.65)
-      }
+      border: 2px solid rgba(13, 15, 20, 0.88);
     }
 
     @keyframes notifPop {
@@ -484,13 +524,15 @@
       }
     }
 
+    /* ── CHATBOT ── */
+
     #chatPanel {
       position: fixed;
-      bottom: 182px;
+      bottom: 88px;
       right: 24px;
       z-index: 9996;
       width: 360px;
-      height: 510px;
+      height: 520px;
       background: var(--surface);
       border: 1px solid var(--border2);
       border-radius: 18px;
@@ -582,13 +624,15 @@
     }
 
     .chat-messages {
-      flex: 1;
+      flex: 1 1 0;
+      min-height: 0;
       overflow-y: auto;
       padding: 14px 12px;
       display: flex;
       flex-direction: column;
       gap: 10px;
-      scrollbar-width: none;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border2) transparent;
     }
 
     .chat-messages::-webkit-scrollbar {
@@ -889,13 +933,23 @@
       }
     }
 
-    @media(max-width: 480px) {
+    @media(max-width: 640px) {
       #chatPanel {
-        width: calc(100vw - 30px);
-        right: 8px;
-        left: 20px;
-        bottom: 170px;
-        height: 560px;
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        max-height: 100%;
+        border-radius: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        top: 0;
+        z-index: 9996;
+      }
+
+      #chatPanel.open {
+        transform: none;
       }
     }
 
@@ -2015,6 +2069,46 @@
       }
     }
 
+    /* ── MOBILE DROPDOWN TRIGGER ── */
+    .exam-tabs-trigger {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--gold);
+      background: linear-gradient(135deg, rgba(245, 200, 66, 0.12), rgba(251, 146, 60, 0.08));
+      border: 1px solid rgba(245, 200, 66, 0.35);
+      border-radius: 10px;
+      padding: 11px 18px;
+      cursor: pointer;
+      transition: all 0.2s;
+      gap: 8px;
+    }
+
+    .exam-tabs-trigger:hover {
+      background: linear-gradient(135deg, rgba(245, 200, 66, 0.18), rgba(251, 146, 60, 0.12));
+    }
+
+    .exam-tabs-trigger .trigger-content {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .trigger-arrow {
+      font-size: 10px;
+      color: var(--muted2);
+      transition: transform 0.25s;
+      flex-shrink: 0;
+    }
+
+    .exam-switcher.dd-open .trigger-arrow {
+      transform: rotate(180deg);
+    }
+
     @media(max-width:640px) {
       .hero {
         padding: 48px 20px 28px;
@@ -2037,11 +2131,6 @@
         text-align: center;
       }
 
-      .exam-tabs {
-        flex-direction: column;
-        width: 100%;
-      }
-
       .exam-banner {
         flex-direction: column;
         align-items: flex-start;
@@ -2049,6 +2138,42 @@
 
       .exam-banner-tags {
         margin-left: 0;
+      }
+
+      /* Dropdown tab switcher */
+      .exam-switcher {
+        position: relative;
+      }
+
+      .exam-tabs-trigger {
+        display: flex;
+      }
+
+      .exam-tabs {
+        display: none;
+        position: absolute;
+        top: calc(100% + 6px);
+        left: 0;
+        right: 0;
+        z-index: 300;
+        flex-direction: column;
+        gap: 3px;
+        background: var(--surface);
+        border: 1px solid var(--border2);
+        border-radius: 12px;
+        padding: 6px;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+        width: 100%;
+      }
+
+      .exam-switcher.dd-open .exam-tabs {
+        display: flex;
+      }
+
+      .exam-tab {
+        width: 100%;
+        justify-content: flex-start;
+        border-radius: 8px;
       }
     }
   </style>
@@ -2094,8 +2219,13 @@
   </div>
 
   <!-- EXAM SWITCHER -->
-  <div class="exam-switcher">
-    <div class="exam-tabs">
+  <div class="exam-switcher" id="examSwitcher">
+    <!-- Mobile dropdown trigger -->
+    <div class="exam-tabs-trigger" id="tabTrigger" onclick="toggleTabDropdown()">
+      <span class="trigger-content" id="triggerContent"><span class="tab-icon">🏛️</span> SSC (CGL / CHSL)</span>
+      <span class="trigger-arrow">▼</span>
+    </div>
+    <div class="exam-tabs" id="examTabs">
       <button class="exam-tab active" data-action="switchExam" data-exam="ssc">
         <span class="tab-icon">🏛️</span> SSC (CGL / CHSL)
       </button>
@@ -2108,6 +2238,9 @@
       <button class="exam-tab" data-action="switchExam" data-exam="tests">
         <span class="tab-icon">📝</span> Tests
       </button>
+      <a class="exam-tab" href="gallery.html" style="text-decoration:none">
+        <span class="tab-icon">🖼️</span> Gallery
+      </a>
     </div>
   </div>
 
@@ -2639,12 +2772,29 @@
       document.body.classList.toggle('anim-paused', document.hidden);
     });
 
+    /* ── Mobile tab dropdown ── */
+    window.toggleTabDropdown = function () {
+      document.getElementById('examSwitcher').classList.toggle('dd-open');
+    };
+    /* Close on outside click */
+    document.addEventListener('click', e => {
+      const sw = document.getElementById('examSwitcher');
+      if (sw && !sw.contains(e.target)) sw.classList.remove('dd-open');
+    });
+    /* Update trigger label when a tab is switched */
+    const _origSwitchExam = window.switchExam;
+    window.switchExam = function (examId, btn, subjectId, sectionId) {
+      if (typeof _origSwitchExam === 'function') _origSwitchExam(examId, btn, subjectId, sectionId);
+      const sw = document.getElementById('examSwitcher');
+      if (sw) sw.classList.remove('dd-open');
+      const activeTab = document.querySelector(`.exam-tab[data-exam="${examId}"]`);
+      const tc = document.getElementById('triggerContent');
+      if (activeTab && tc) tc.innerHTML = activeTab.innerHTML;
+    };
+
     init();
   </script>
   <!-- ── CHATBOT WIDGET ── -->
-  <button id="chatBotBtn" title="Ask Arivoam AI" onclick="toggleChat()">
-    🤖<span class="chat-notif" id="chatNotif"></span>
-  </button>
   <div id="chatPanel">
     <div class="chat-header">
       <div class="chat-avatar">🤖</div>
@@ -2653,6 +2803,9 @@
         <div class="chat-status" id="chatStatusText">● Online · Study Assistant</div>
       </div>
       <div style="display:flex;gap:4px;margin-left:auto;align-items:center;">
+        <button id="aiSetupBtn" onclick="toggleAISetup()" title="AI Settings"
+          style="background:none;border:none;font-size:14px;cursor:pointer;padding:4px 6px;border-radius:6px;color:var(--muted);transition:all 0.2s;"
+          title="Configure AI">🔑</button>
         <button id="chatTTSBtn" onclick="toggleTTS()" title="Toggle voice replies"
           style="background:none;border:none;font-size:16px;cursor:pointer;padding:4px 6px;border-radius:6px;color:var(--muted);transition:all 0.2s;">🔕</button>
         <button onclick="clearChatHistory()" title="Clear chat"
@@ -2661,6 +2814,66 @@
         <button class="chat-close" onclick="toggleChat()" title="Close">✕</button>
       </div>
     </div>
+
+    <!-- AI SETUP PANEL (slides over chat) -->
+    <div id="aiSetupPanel" style="
+      position:absolute; inset:0; z-index:50;
+      background:var(--surface); display:none; flex-direction:column;
+      padding:20px; gap:14px; overflow-y:auto;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+        <span style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:var(--gold)">🔑 AI
+          Configuration</span>
+        <button onclick="toggleAISetup()"
+          style="background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;line-height:1;">✕</button>
+      </div>
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted2);line-height:1.6;">
+        Connect a free LLM API for real AI answers. Your key is stored locally in the browser only — never sent anywhere
+        except the AI provider.
+      </p>
+
+      <div>
+        <label
+          style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:6px;">Provider</label>
+        <select id="aiProvider"
+          style="width:100%;background:var(--bg);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:12px;padding:9px 12px;outline:none;">
+          <option value="groq">Groq — Llama 3.3 70B (Free · Fastest)</option>
+          <option value="gemini">Google Gemini 2.0 Flash (Free · Smart)</option>
+        </select>
+      </div>
+
+      <div>
+        <label
+          style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:6px;">API
+          Key</label>
+        <input id="aiKeyInput" type="password" placeholder="Paste your API key here…"
+          style="width:100%;background:var(--bg);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:12px;padding:9px 12px;outline:none;">
+      </div>
+
+      <div style="display:flex;gap:8px;">
+        <button onclick="saveAIConfig()"
+          style="flex:1;background:var(--gold);color:#0d0f14;border:none;border-radius:7px;padding:9px;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;cursor:pointer;">Save
+          &amp; Connect</button>
+        <button onclick="clearAIConfig()"
+          style="background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.2);border-radius:7px;padding:9px 14px;font-family:'IBM Plex Mono',monospace;font-size:11px;cursor:pointer;">Clear</button>
+      </div>
+
+      <div id="aiSetupStatus"
+        style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--green);min-height:16px;"></div>
+
+      <div style="border-top:1px solid var(--border);padding-top:12px;">
+        <p style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);line-height:1.7;">
+          <strong style="color:var(--gold)">Get a free Groq key:</strong><br>
+          1. Visit <a href="https://console.groq.com" target="_blank" style="color:var(--blue)">console.groq.com</a><br>
+          2. Sign up → API Keys → Create Key<br>
+          3. Paste above · Free: 14,400 req/day<br><br>
+          <strong style="color:var(--gold)">Get a free Gemini key:</strong><br>
+          1. Visit <a href="https://aistudio.google.com/apikey" target="_blank"
+            style="color:var(--blue)">aistudio.google.com/apikey</a><br>
+          2. Create API Key · Free: 1M tokens/min
+        </p>
+      </div>
+    </div>
+
     <div class="chat-messages" id="chatMessages"></div>
     <div class="chat-quick-replies" id="chatQR"></div>
     <div class="chat-input-row">
@@ -3099,6 +3312,134 @@
     })();
 
     /* ══════════════════════════════════════════════════════════
+       AI ENGINE — Groq (Llama 3.3 70B) + Google Gemini Flash
+       Free-tier, browser-direct, streaming output.
+    ══════════════════════════════════════════════════════════ */
+    const AI = (() => {
+      const K_KEY = 'arivoam-ai-key';
+      const K_PROV = 'arivoam-ai-provider';
+
+      const ls = (k, v) => { try { if (v === undefined) return localStorage.getItem(k) || ''; localStorage.setItem(k, v); } catch (e) { } return ''; };
+
+      const PROVIDERS = {
+        groq: {
+          label: 'Groq — Llama 3.3 70B',
+          url: 'https://api.groq.com/openai/v1/chat/completions',
+          model: 'llama-3.3-70b-versatile',
+          headers: (key) => ({ 'Authorization': `Bearer ${GROQ_KEY_REMOVED}`, 'Content-Type': 'application/json' }),
+          body: (msgs, stream) => JSON.stringify({ model: 'llama-3.3-70b-versatile', messages: msgs, max_tokens: 600, temperature: 0.35, stream }),
+          token: (line) => {
+            if (!line.startsWith('data: ') || line.includes('[DONE]')) return null;
+            try { return JSON.parse(line.slice(6)).choices?.[0]?.delta?.content ?? null; } catch (e) { return null; }
+          },
+          json: (j) => j.choices?.[0]?.message?.content || '',
+          stream: true,
+        },
+        gemini: {
+          label: 'Gemini 2.0 Flash',
+          url: (key) => `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY_REMOVED}`,
+          headers: () => ({ 'Content-Type': 'application/json' }),
+          body: (msgs) => {
+            const sys = msgs.find(m => m.role === 'system');
+            const rest = msgs.filter(m => m.role !== 'system');
+            const contents = rest.map(m => ({ role: m.role === 'assistant' ? 'model' : 'user', parts: [{ text: m.content }] }));
+            const req = { contents, generationConfig: { maxOutputTokens: 600, temperature: 0.35 } };
+            if (sys) req.systemInstruction = { parts: [{ text: sys.content }] };
+            return JSON.stringify(req);
+          },
+          json: (j) => j.candidates?.[0]?.content?.parts?.[0]?.text || '',
+          stream: false,
+        }
+      };
+
+      async function* _streamGroq(url, headers, body) {
+        const res = await fetch(url, { method: 'POST', headers, body });
+        if (!res.ok) { const e = await res.json().catch(() => ({ error: { message: res.statusText } })); throw new Error(e.error?.message || `HTTP ${res.status}`); }
+        const reader = res.body.getReader();
+        const dec = new TextDecoder();
+        let buf = '';
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buf += dec.decode(value, { stream: true });
+          const lines = buf.split('\n'); buf = lines.pop();
+          for (const line of lines) { const t = PROVIDERS.groq.token(line.trim()); if (t) yield t; }
+        }
+      }
+
+      async function call(msgs, onToken) {
+        const key = ls(K_KEY);
+        const prov = ls(K_PROV) || 'groq';
+        const p = PROVIDERS[prov];
+        if (!key || !p) throw new Error('No API key — click 🔑 to configure');
+
+        if (p.stream && onToken) {
+          let full = '';
+          for await (const t of _streamGroq(p.url, p.headers(key), p.body(msgs, true))) {
+            full += t; onToken(t, full);
+          }
+          return full;
+        }
+        /* Non-streaming */
+        const url = typeof p.url === 'function' ? p.url(key) : p.url;
+        const res = await fetch(url, { method: 'POST', headers: p.headers(key), body: p.body(msgs, false) });
+        if (!res.ok) { const e = await res.json().catch(() => ({ error: { message: res.statusText } })); throw new Error(e.error?.message || `HTTP ${res.status}`); }
+        return p.json(await res.json());
+      }
+
+      return {
+        call,
+        configured: () => !!ls(K_KEY),
+        getProvider: () => ls(K_PROV) || 'groq',
+        setConfig: (key, prov) => { ls(K_KEY, key); ls(K_PROV, prov); },
+        clear: () => { ls(K_KEY, ''); ls(K_PROV, 'groq'); },
+        PROVIDERS,
+      };
+    })();
+
+    /* ── AI UI helpers (global so onclick="" can reach them) ── */
+    window.toggleAISetup = function () {
+      const p = document.getElementById('aiSetupPanel');
+      if (!p) return;
+      const showing = p.style.display === 'flex';
+      p.style.display = showing ? 'none' : 'flex';
+      if (!showing) {
+        const provSel = document.getElementById('aiProvider');
+        const keyInp = document.getElementById('aiKeyInput');
+        if (provSel) provSel.value = AI.getProvider();
+        if (keyInp) { try { keyInp.value = localStorage.getItem('arivoam-ai-key') || ''; } catch (e) { } }
+        _updateAIStatus();
+      }
+    };
+    function _updateAIStatus() {
+      const el = document.getElementById('aiSetupStatus');
+      if (!el) return;
+      const btn = document.getElementById('aiSetupBtn');
+      if (AI.configured()) {
+        el.style.color = 'var(--green)';
+        el.textContent = '✅ AI connected — ' + (AI.PROVIDERS[AI.getProvider()]?.label || AI.getProvider());
+        if (btn) { btn.style.color = 'var(--green)'; btn.title = 'AI connected'; }
+      } else {
+        el.style.color = 'var(--muted)';
+        el.textContent = '⚪ Not configured — responses use keyword search';
+        if (btn) { btn.style.color = 'var(--muted)'; btn.title = 'Configure AI'; }
+      }
+    }
+    window.saveAIConfig = function () {
+      const key = (document.getElementById('aiKeyInput')?.value || '').trim();
+      const prov = document.getElementById('aiProvider')?.value || 'groq';
+      if (!key) { const el = document.getElementById('aiSetupStatus'); if (el) { el.style.color = 'var(--red)'; el.textContent = '⚠ Please enter your API key'; } return; }
+      AI.setConfig(key, prov);
+      _updateAIStatus();
+      setTimeout(() => toggleAISetup(), 800);
+    };
+    window.clearAIConfig = function () {
+      AI.clear();
+      const ki = document.getElementById('aiKeyInput'); if (ki) ki.value = '';
+      _updateAIStatus();
+    };
+
+    /* ══════════════════════════════════════════════════════════
        CHATBOT ENGINE
     ══════════════════════════════════════════════════════════ */
     (function () {
@@ -3461,58 +3802,172 @@
         return null;
       }
 
-      /* ─── RAG-powered query processor ─── */
+      /* ─── Markdown → safe HTML ─── */
+      function md2html(t) {
+        return t
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+          .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+          .replace(/\*(.+?)\*/g, '<em>$1</em>')
+          .replace(/`([^`]+)`/g, '<code style="background:rgba(255,255,255,.1);padding:1px 5px;border-radius:3px;font-size:.88em">$1</code>')
+          .replace(/^#{1,3} (.+)$/gm, '<strong style="font-size:1.05em">$1</strong>')
+          .replace(/^[-•*] (.+)$/gm, '&nbsp;• $1')
+          .replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br>');
+      }
+
+      /* ─── Get last N turns for multi-turn context ─── */
+      function chatHistory(maxTurns = 5) {
+        const wrap = document.getElementById('chatMessages');
+        if (!wrap) return [];
+        const out = [];
+        [...wrap.querySelectorAll('.msg')].slice(-maxTurns * 2).forEach(el => {
+          const role = el.classList.contains('bot') ? 'assistant' : 'user';
+          const bubble = el.querySelector('.msg-bubble');
+          const text = bubble ? bubble.textContent.trim().slice(0, 400) : '';
+          if (text) out.push({ role, content: text });
+        });
+        return out;
+      }
+
+      /* ─── System prompt with RAG context injected ─── */
+      function buildPrompt(context, kbLinks) {
+        const ctx = context
+          ? `Relevant context from Arivoam study materials:\n---\n${context}\n---\n\n`
+          : '';
+        const links = kbLinks.length
+          ? 'Related study sheets: ' + kbLinks.map(h => `${h.title} (${h.href})`).join(', ') + '\n\n'
+          : '';
+        return `You are Arivoam AI, a sharp and concise TNPSC (Tamil Nadu PSC — Groups 1/2/4) and SSC (CGL/CHSL) exam assistant built for Indian competitive exams.
+
+${ctx}${links}Rules:
+• Answer in 150–280 words max (be punchy, exam-focused)
+• **Bold** every key fact, name, year, number, or article
+• Use "• " bullet points for lists
+• Prefix common exam traps with "⚠ Trap:"
+• Add a mnemonic or memory trick if one fits
+• Tag PYQs with the year if known
+• If context above covers the question, prefer it; otherwise use your training data
+• Stay firmly within TNPSC/SSC syllabus scope`;
+      }
+
+      /* ─── Create a live streaming bubble ─── */
+      function createStreamBubble() {
+        const wrap = document.getElementById('chatMessages');
+        if (!wrap) return null;
+        const d = document.createElement('div');
+        d.className = 'msg bot';
+        d.innerHTML = '<div class="msg-avatar">🤖</div><div class="msg-bubble" id="__sb"></div>';
+        wrap.appendChild(d);
+        scrollBottom();
+        return document.getElementById('__sb');
+      }
+
+      /* ─── Main query processor — AI-first, keyword fallback ─── */
       async function processQuery(query) {
         if (!query.trim()) return;
-        stopTTS();
-        _chatMicStop();
+        stopTTS(); _chatMicStop();
         const statusEl = document.getElementById('chatStatusText');
-        if (statusEl) statusEl.textContent = '● Thinking…';
 
-        // 1 — FAQ intercept (fast, for known patterns)
+        /* 1 — FAQ fast-path */
         const faq = matchFAQ(query);
         if (faq) {
           const html = typeof faq.ans === 'function' ? faq.ans() : faq.ans;
           await botReply(html);
-          if (faq.qr && faq.qr.length) setQR(faq.qr);
+          if (faq.qr?.length) setQR(faq.qr);
           if (faq.post) faq.post();
+          return;
+        }
+
+        /* 2 — AI path (when API key is configured) */
+        if (AI.configured()) {
+          if (statusEl) statusEl.textContent = '● Thinking…';
+
+          /* Retrieve context */
+          const ragHits = RAG.search(query, 3);
+          const kbHits = searchKB(query).slice(0, 3);
+
+          const context = ragHits.map(h =>
+            `[${h.title} › ${h.section !== h.title ? h.section : ''}]\n${h.text.slice(0, 500)}`
+          ).join('\n\n');
+
+          const messages = [
+            { role: 'system', content: buildPrompt(context, kbHits) },
+            ...chatHistory(4),
+            { role: 'user', content: query }
+          ];
+
+          try {
+            const prov = AI.getProvider();
+
+            if (prov === 'groq') {
+              /* ── Streaming (Groq) ── */
+              showTyping();
+              let bubble = null; let full = '';
+              await AI.call(messages, (token, accumulated) => {
+                if (!bubble) { removeTyping(); bubble = createStreamBubble(); }
+                full = accumulated;
+                if (bubble) { bubble.innerHTML = md2html(full); bubble.id = ''; bubble = document.getElementById('__sb') || bubble; }
+                scrollBottom();
+              });
+              if (bubble) bubble.id = '';
+              saveHistory();
+              speakText(full.replace(/<[^>]+>/g, ''));
+            } else {
+              /* ── Non-streaming (Gemini) ── */
+              showTyping();
+              const reply = await AI.call(messages, null);
+              removeTyping();
+              appendMsg('bot', md2html(reply));
+              speakText(reply);
+            }
+
+            /* Append source links if RAG found something */
+            if (ragHits.length) {
+              const linksHtml = ragHits.map(h =>
+                `<a href="${h.src}" style="font-size:11px;color:var(--gold)">→ ${escHtml(h.title)}</a>`
+              ).join('  ');
+              appendMsg('bot', `📄 Sources: ${linksHtml}`);
+            }
+
+            setQR(['Ask a follow-up', 'Related topics', 'Give me a PYQ', 'Study tip']);
+
+          } catch (err) {
+            removeTyping();
+            appendMsg('bot', `⚠ <strong>AI error:</strong> ${escHtml(err.message)}<br><small style="color:var(--muted)">Click 🔑 to check your API key, or try again.</small>`);
+          }
+
           if (statusEl) statusEl.textContent = '● Online · Study Assistant';
           return;
         }
 
-        // 2 — RAG search across actual HTML files
+        /* 3 — Keyword fallback (no AI key configured) */
+        if (statusEl) statusEl.textContent = '● Searching…';
+
         const hits = RAG.search(query);
         if (hits.length) {
           let html = `📄 Found in <strong>${hits.length}</strong> source${hits.length > 1 ? 's' : ''}:<br><br>`;
           hits.forEach((h, i) => {
             const label = h.section !== h.title ? `<span style="font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:.5px;">${escHtml(h.section)}</span><br>` : '';
-            const excerpt = h.text.slice(0, 180).replace(/\s+/g, ' ');
-            const link = `<a href="${h.src}" style="font-size:11px;">→ Open: ${escHtml(h.title)}</a>`;
-            html += `${label}${escHtml(excerpt)}${h.text.length > 180 ? '…' : ''}<br>${link}`;
+            html += `${label}${escHtml(h.text.slice(0, 180).replace(/\s+/g, ' '))}${h.text.length > 180 ? '…' : ''}<br><a href="${h.src}" style="font-size:11px;">→ Open: ${escHtml(h.title)}</a>`;
             if (i < hits.length - 1) html += '<br><br>';
           });
           await botReply(html);
-          setQR(['More topics', 'Current Affairs', 'Mock tests', 'Study tips']);
-
-          // 3 — Fallback to exams.json KB
+          setQR(['More topics', 'Current Affairs', 'Mock tests', '🔑 Add AI key for smarter answers']);
         } else {
           if (KB.length === 0) buildKB();
           const kbHits = searchKB(query);
           if (kbHits.length) {
             let html = `Found <strong>${kbHits.length}</strong> sheet${kbHits.length > 1 ? 's' : ''}:<br><br>`;
             kbHits.forEach((h, i) => {
-              const link = h.locked ? '' : ` — <a href="${h.href}">→ Open</a>`;
-              html += `<strong>${escHtml(h.title)}</strong>${link}<br><span style="font-size:11px;color:var(--muted2)">${h.desc.slice(0, 100)}${h.desc.length > 100 ? '…' : ''}</span>`;
+              html += `<strong>${escHtml(h.title)}</strong>${h.locked ? '' : ` — <a href="${h.href}">→ Open</a>`}<br><span style="font-size:11px;color:var(--muted2)">${h.desc.slice(0, 100)}${h.desc.length > 100 ? '…' : ''}</span>`;
               if (i < kbHits.length - 1) html += '<br><br>';
             });
             await botReply(html);
-            setQR(['More topics', 'Study tips', 'Mock tests']);
+            setQR(['More topics', 'Study tips', '🔑 Add AI key for smarter answers']);
           } else {
-            const fb = RAG.isReady()
-              ? 'I searched all study files but couldn\'t find a match. Try rephrasing or use a simpler keyword:'
-              : 'Still indexing files — try again in a moment, or choose a topic:';
-            await botReply(fb);
-            setQR(['SSC subjects', 'TNPSC subjects', 'Current Affairs', 'Mock tests', 'Study tips']);
+            await botReply(RAG.isReady()
+              ? '🔍 No match found. Try a simpler keyword — or click 🔑 to add an AI key for intelligent answers!'
+              : '⏳ Still indexing files — try again in a moment, or choose a topic:');
+            setQR(['SSC subjects', 'TNPSC subjects', 'Current Affairs', '🔑 Add AI key']);
           }
         }
 
@@ -3523,13 +3978,17 @@
       async function greet() {
         const c = getBotCfg();
         const name = c.name || 'Arivoam AI';
+        const aiLine = AI.configured()
+          ? `<br><span class="bot-chip">🤖 ${AI.PROVIDERS[AI.getProvider()]?.label || 'AI'} connected</span>`
+          : `<br><span class="bot-chip" style="cursor:pointer" onclick="toggleAISetup()">🔑 Add free AI key for smarter answers</span>`;
         const msg = c.greeting ||
-          `Hi! I'm <strong>${name}</strong> 👋<br>Your TNPSC & SSC study assistant — powered by your actual study files.<br>Ask me anything or tap 🎤 to speak!`;
-        await botReply(msg, 800);
+          `Hi! I'm <strong>${name}</strong> 👋<br>Your TNPSC &amp; SSC study assistant — ask me anything!${aiLine}`;
+        await botReply(msg, 700);
         const chips = (Array.isArray(c.topics) && c.topics.length)
           ? c.topics.slice(0, 5)
           : ['SSC subjects', 'TNPSC subjects', 'Current Affairs', 'Study tips', 'Mock tests'];
         setQR(chips);
+        _updateAIStatus();
       }
 
       /* ─── Chat mic ─── */
@@ -3655,29 +4114,7 @@
       applyBotCfg();
       updateSpeakerBtn();
 
-      // Auto-open chatbot on page load with chime
-      window.addEventListener('load', () => {
-        setTimeout(() => {
-          const panel = document.getElementById('chatPanel');
-          const msgs = document.getElementById('chatMessages');
-          if (!panel) return;
-          chatOpen = true;
-          panel.classList.add('open');
-          const notif = document.getElementById('chatNotif');
-          if (notif) notif.style.display = 'none';
-          playChime();
-          if (msgs && msgs.children.length === 0) {
-            const restored = restoreHistory();
-            if (!restored) setTimeout(() => greet(), 600);
-            else setQR(['SSC subjects', 'TNPSC subjects', 'Current Affairs', 'Study tips']);
-          }
-          // Build RAG index in background
-          RAG.build(t => {
-            const s = document.getElementById('chatStatusText');
-            if (s) s.textContent = t;
-          });
-        }, 2000);
-      });
+      // Auto-open disabled — user opens chat manually
 
       // Also build KB from exams.json after EXAMS loads
       setTimeout(() => buildKB(), 3500);
@@ -3685,14 +4122,165 @@
     })();
   </script>
 
-  <button id="bttBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top"
-    style="position:fixed;bottom:24px;right:24px;z-index:9998;width:42px;height:42px;border-radius:50%;background:rgba(13,15,20,0.92);border:1px solid rgba(245,200,66,0.35);color:#f5c842;font-size:18px;line-height:1;cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 2px 14px rgba(0,0,0,0.45);opacity:0;transition:opacity .25s,transform .2s;pointer-events:none;display:flex;align-items:center;justify-content:center;">↑</button>
-  <script>(function () { var b = document.getElementById('bttBtn'); if (!b) return; window.addEventListener('scroll', function () { var s = window.scrollY || document.documentElement.scrollTop; if (s > 240) { b.style.opacity = '1'; b.style.pointerEvents = 'auto'; b.style.transform = 'translateY(0)'; } else { b.style.opacity = '0'; b.style.pointerEvents = 'none'; b.style.transform = 'translateY(6px)'; } }, { passive: true }); })();</script>
-  <button id="themeToggle"
-    onclick="(function(){var l=document.documentElement.classList.toggle('light-mode');localStorage.setItem('arivoam-theme',l?'light':'dark');var b=document.getElementById('themeToggle');if(b)b.innerHTML=l?'&#9790;':'&#9728;';})()"
-    title="Toggle light/dark mode"
-    style="position:fixed;bottom:76px;right:24px;z-index:9998;width:42px;height:42px;border-radius:50%;background:rgba(13,15,20,0.92);border:1px solid rgba(245,200,66,0.35);color:#f5c842;font-size:16px;line-height:1;cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 2px 14px rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;transition:all .2s;">&#9728;</button>
-  <script>(function () { var b = document.getElementById('themeToggle'); if (!b) return; if (document.documentElement.classList.contains('light-mode')) { b.innerHTML = '&#9790;'; } })()</script>
+  <!-- ── FLOATING BUTTON GROUP: Chat · Theme · Top ── -->
+  <div class="float-group" id="floatGroup">
+    <div class="fg-hl" id="fgHL"></div>
+    <button class="float-btn" id="chatBotBtn" title="Ask Arivoam AI" onclick="toggleChat()">
+      🤖<span class="chat-notif" id="chatNotif"></span>
+    </button>
+    <button class="float-btn" id="themeToggle" title="Toggle dark / light mode"
+      onclick="(function(){var l=document.documentElement.classList.toggle('light-mode');localStorage.setItem('arivoam-theme',l?'light':'dark');var b=document.getElementById('themeToggle');if(b)b.textContent=l?'🌙':'☀️';})()">☀️</button>
+    <button class="float-btn" id="bttBtn" title="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})"
+      style="opacity:0.35;pointer-events:none;">↑</button>
+  </div>
+  <script>
+    (function () {
+      var grp = document.getElementById('floatGroup');
+      var hl = document.getElementById('fgHL');
+      var btt = document.getElementById('bttBtn');
+      var tm = document.getElementById('themeToggle');
+
+      /* ── Scroll: show/hide back-to-top ── */
+      window.addEventListener('scroll', function () {
+        var s = window.scrollY || document.documentElement.scrollTop;
+        if (!btt) return;
+        btt.style.opacity = s > 240 ? '1' : '0.35';
+        btt.style.pointerEvents = s > 240 ? 'auto' : 'none';
+      }, { passive: true });
+
+      /* ── Theme restore ── */
+      if (tm && document.documentElement.classList.contains('light-mode')) tm.textContent = '🌙';
+
+      /* ── Sliding gold highlight ── */
+      if (grp && hl) {
+        var btns = grp.querySelectorAll('.float-btn');
+        btns.forEach(function (btn) {
+          btn.addEventListener('mouseenter', function () {
+            if (_dragging) return;
+            var gr = grp.getBoundingClientRect();
+            var br = btn.getBoundingClientRect();
+            hl.style.left = (br.left - gr.left) + 'px';
+            hl.style.opacity = '1';
+          });
+          btn.addEventListener('click', function () {
+            if (_dragging) return;
+            hl.classList.remove('fg-pulse');
+            void hl.offsetWidth;
+            hl.classList.add('fg-pulse');
+            setTimeout(function () { hl.classList.remove('fg-pulse'); }, 560);
+          });
+        });
+        grp.addEventListener('mouseleave', function () { hl.style.opacity = '0'; });
+      }
+
+      /* ════════════════════════════════════════
+         LONG-PRESS DRAG — move float-group anywhere
+         Hold 500ms → drag freely → release to drop.
+         Position saved to localStorage.
+      ════════════════════════════════════════ */
+      if (!grp) return;
+
+      var _dragging = false;
+      var _longTimer = null;
+      var _startPX = 0, _startPY = 0;   // pointer start coords
+      var _startEL = 0, _startET = 0;   // element start left/top
+      var _THRESHOLD = 8;                 // px of movement before cancelling long-press
+      var _moved = false;
+
+      /* Restore saved position */
+      try {
+        var _pos = JSON.parse(localStorage.getItem('arivoam_fg_pos') || 'null');
+        if (_pos && typeof _pos.left === 'number' && typeof _pos.top === 'number') {
+          _applyPos(_pos.left, _pos.top);
+        }
+      } catch (e) { }
+
+      function _applyPos(left, top) {
+        var maxL = Math.max(0, window.innerWidth - grp.offsetWidth - 8);
+        var maxT = Math.max(0, window.innerHeight - grp.offsetHeight - 8);
+        left = Math.max(8, Math.min(left, maxL));
+        top = Math.max(8, Math.min(top, maxT));
+        grp.style.left = left + 'px';
+        grp.style.top = top + 'px';
+        grp.style.bottom = 'auto';
+        grp.style.transform = 'none';
+      }
+
+      function _beginDrag(e) {
+        _dragging = true;
+        _moved = false;
+        var rect = grp.getBoundingClientRect();
+        _startPX = e.clientX;
+        _startPY = e.clientY;
+        _startEL = rect.left;
+        _startET = rect.top;
+
+        /* Snap from bottom/center anchor to top/left absolute */
+        grp.style.left = rect.left + 'px';
+        grp.style.top = rect.top + 'px';
+        grp.style.bottom = 'auto';
+        grp.style.transform = 'none';
+        grp.style.transition = 'box-shadow 0.2s, opacity 0.2s';
+        grp.style.boxShadow = '0 8px 40px rgba(245,200,66,0.45)';
+        grp.style.opacity = '0.92';
+        grp.style.cursor = 'grabbing';
+        grp.setPointerCapture && grp.setPointerCapture(e.pointerId);
+      }
+
+      grp.addEventListener('pointerdown', function (e) {
+        /* Only start for touch or primary mouse button */
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+        _moved = false;
+        _startPX = e.clientX; _startPY = e.clientY;
+        _longTimer = setTimeout(function () {
+          _beginDrag(e);
+        }, 480);
+      });
+
+      grp.addEventListener('pointermove', function (e) {
+        if (!_longTimer && !_dragging) return;
+        var dx = e.clientX - _startPX;
+        var dy = e.clientY - _startPY;
+        /* Cancel long-press if pointer moved too much before 480ms */
+        if (!_dragging && (Math.abs(dx) > _THRESHOLD || Math.abs(dy) > _THRESHOLD)) {
+          clearTimeout(_longTimer); _longTimer = null;
+          return;
+        }
+        if (!_dragging) return;
+        e.preventDefault();
+        _moved = true;
+        _applyPos(_startEL + dx, _startET + dy);
+      }, { passive: false });
+
+      function _endDrag(e) {
+        clearTimeout(_longTimer); _longTimer = null;
+        if (!_dragging) return;
+        _dragging = false;
+        grp.style.transition = '';
+        grp.style.boxShadow = '';
+        grp.style.opacity = '';
+        grp.style.cursor = '';
+        /* Save position */
+        try {
+          var r = grp.getBoundingClientRect();
+          localStorage.setItem('arivoam_fg_pos', JSON.stringify({ left: r.left, top: r.top }));
+        } catch (ex) { }
+      }
+
+      grp.addEventListener('pointerup', _endDrag);
+      grp.addEventListener('pointercancel', _endDrag);
+
+      /* Prevent click from firing after a drag */
+      grp.addEventListener('click', function (e) {
+        if (_moved) { e.stopPropagation(); e.preventDefault(); _moved = false; }
+      }, true);
+
+      /* Add grab cursor hint in CSS */
+      grp.style.cursor = 'grab';
+      grp.title = 'Hold to move';
+
+    })();
+  </script>
 </body>
 
 </html>

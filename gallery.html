@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arivoam — Study Gallery</title>
+  <link rel="stylesheet" href="arivoam-shared.css">
+  <style>
+    body { display: flex; flex-direction: column; min-height: 100vh; }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      padding: 0 20px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      flex-shrink: 0;
+    }
+    .topbar-logo {
+      font-family: var(--font-h);
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--gold);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+    .topbar-sep { color: var(--border2); font-size: 1.1rem; user-select: none; }
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--font-m);
+      font-size: 0.68rem;
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+    }
+    .bc-item {
+      color: var(--muted);
+      cursor: pointer;
+      transition: color .15s;
+      white-space: nowrap;
+    }
+    .bc-item:hover { color: var(--gold); }
+    .bc-item.active { color: var(--text); cursor: default; }
+    .bc-sep { color: var(--border2); flex-shrink: 0; }
+    .topbar-btn {
+      margin-left: auto;
+      font-family: var(--font-m);
+      font-size: 0.62rem;
+      background: var(--gold);
+      color: var(--bg);
+      border: none;
+      padding: 6px 14px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all .2s;
+      letter-spacing: .4px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .topbar-btn:hover { background: var(--gold2); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(245,200,66,.3); }
+
+    /* ── HERO (subjects view) ── */
+    .g-hero {
+      background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 50%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 36px 24px 26px;
+      position: relative;
+      overflow: hidden;
+    }
+    .g-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, var(--gold-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .g-hero-inner { max-width: 1100px; margin: 0 auto; position: relative; }
+    .g-title {
+      font-family: var(--font-h);
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      font-weight: 800;
+      background: linear-gradient(90deg, #f5c842, #ffe88a, #f5c842);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .g-sub {
+      font-family: var(--font-m);
+      font-size: 0.69rem;
+      color: var(--muted2);
+      margin-top: 7px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .g-stats {
+      display: flex;
+      gap: 22px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+    .g-stat-v { font-family: var(--font-n); font-size: 1.4rem; color: var(--gold); line-height: 1; }
+    .g-stat-l { font-family: var(--font-m); font-size: 0.58rem; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
+
+    /* ── TOOLBAR ── */
+    .g-toolbar {
+      padding: 12px 24px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .g-toolbar-inner { max-width: 1100px; margin: 0 auto; width: 100%; display: flex; align-items: center; gap: 10px; }
+    .srch-wrap { position: relative; flex: 1; min-width: 180px; max-width: 380px; }
+    .srch-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 0.78rem; pointer-events: none; }
+    .srch-input {
+      width: 100%;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-family: var(--font-m);
+      font-size: 0.7rem;
+      padding: 7px 10px 7px 30px;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .srch-input:focus { border-color: var(--gold); }
+    .srch-input::placeholder { color: var(--muted); }
+
+    /* ── MAIN ── */
+    .g-main {
+      flex: 1;
+      padding: 28px 24px 72px;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .g-section-head {
+      font-family: var(--font-h);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .g-count {
+      font-family: var(--font-n);
+      font-size: 0.57rem;
+      color: var(--muted);
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+
+    /* ── SUBJECT CARDS ── */
+    .subjects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .subj-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--accent, #f5c842);
+      border-radius: 10px;
+      padding: 20px;
+      cursor: pointer;
+      transition: border-color .2s, box-shadow .2s, transform .18s;
+      position: relative;
+      overflow: hidden;
+    }
+    .subj-card:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,.35); }
+    .subj-card-icon { font-size: 2rem; line-height: 1; margin-bottom: 10px; display: block; }
+    .subj-card-name { font-family: var(--font-h); font-size: 1rem; font-weight: 700; color: var(--text); }
+    .subj-card-meta { display: flex; gap: 12px; margin-top: 10px; }
+    .subj-meta-chip { font-family: var(--font-m); font-size: 0.6rem; color: var(--muted); }
+    .subj-meta-chip strong { font-family: var(--font-n); font-size: 0.72rem; margin-right: 3px; }
+    .card-actions {
+      position: absolute; top: 10px; right: 10px;
+      display: flex; gap: 3px;
+      opacity: 0; transition: opacity .15s;
+    }
+    .subj-card:hover .card-actions,
+    .topic-card:hover .card-actions { opacity: 1; }
+    .ic-btn {
+      width: 26px; height: 26px;
+      border-radius: 4px; border: none;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.72rem;
+      transition: all .15s;
+    }
+    .ic-btn-ed { background: var(--bg3); color: var(--muted2); }
+    .ic-btn-ed:hover { background: var(--border2); color: var(--text); }
+    .ic-btn-dl { background: rgba(239,68,68,.1); color: var(--red); }
+    .ic-btn-dl:hover { background: rgba(239,68,68,.22); }
+
+    /* ── TOPIC CARDS ── */
+    .topics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 12px;
+    }
+    .topic-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--accent, #f5c842);
+      border-radius: 8px;
+      padding: 16px;
+      cursor: pointer;
+      transition: border-color .2s, box-shadow .15s, transform .15s;
+      position: relative;
+    }
+    .topic-card:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,.3); }
+    .topic-label { font-family: var(--font-m); font-size: 0.56rem; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+    .topic-name { font-family: var(--font-h); font-size: 0.88rem; font-weight: 600; color: var(--text); line-height: 1.3; }
+    .topic-count { font-family: var(--font-n); font-size: 1.1rem; margin-top: 12px; }
+    .topic-count-l { font-family: var(--font-m); font-size: 0.56rem; color: var(--muted); letter-spacing: .5px; }
+
+    /* ── IMAGE CARDS ── */
+    .images-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+    }
+    .img-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: border-color .2s, box-shadow .2s;
+      position: relative;
+    }
+    .img-card:hover { border-color: var(--border2); box-shadow: 0 4px 20px rgba(0,0,0,.4); }
+    .img-thumb-wrap {
+      width: 100%; aspect-ratio: 4/3;
+      overflow: hidden; background: var(--bg3); position: relative;
+    }
+    .img-thumb { width: 100%; height: 100%; object-fit: cover; transition: transform .3s; display: block; }
+    .img-card:hover .img-thumb { transform: scale(1.05); }
+    .img-overlay {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,.55);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      opacity: 0; transition: opacity .2s;
+    }
+    .img-card:hover .img-overlay { opacity: 1; }
+    .img-info { padding: 9px 12px; display: flex; align-items: flex-start; justify-content: space-between; gap: 6px; }
+    .img-name { font-family: var(--font-h); font-size: 0.78rem; font-weight: 600; color: var(--text); line-height: 1.3; flex: 1; }
+    .img-date { font-family: var(--font-m); font-size: 0.55rem; color: var(--muted); flex-shrink: 0; padding-top: 1px; }
+    .img-actions { padding: 0 10px 10px; display: flex; gap: 4px; }
+
+    /* ── ADD / UPLOAD PLACEHOLDER CARD ── */
+    .add-ph {
+      background: transparent;
+      border: 2px dashed var(--border2);
+      border-radius: 8px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 8px; cursor: pointer;
+      transition: all .2s;
+      padding: 24px;
+      color: var(--muted);
+      font-family: var(--font-m);
+      font-size: 0.63rem;
+      letter-spacing: .5px;
+      aspect-ratio: 4/3;
+    }
+    .add-ph.tall { aspect-ratio: unset; min-height: 110px; }
+    .add-ph:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-glow); }
+    .add-ph-icon { font-size: 1.6rem; line-height: 1; }
+
+    /* ── SMALL BUTTONS ── */
+    .btn { font-family: var(--font-m); font-size: 0.63rem; padding: 6px 13px; border-radius: 5px; border: none; cursor: pointer; transition: all .2s; letter-spacing: .4px; }
+    .btn-pr { background: var(--gold); color: var(--bg); font-weight: 700; }
+    .btn-pr:hover { background: var(--gold2); }
+    .btn-ou { background: transparent; color: var(--muted2); border: 1px solid var(--border); }
+    .btn-ou:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-dk { background: rgba(239,68,68,.1); color: var(--red); border: 1px solid rgba(239,68,68,.2); }
+    .btn-dk:hover { background: rgba(239,68,68,.2); }
+    .btn-sm { padding: 4px 10px; font-size: 0.58rem; border-radius: 4px; }
+    .btn-icon { padding: 5px 10px; font-size: 0.7rem; background: rgba(255,255,255,.08); color: white; border: none; border-radius: 4px; cursor: pointer; transition: background .15s; }
+    .btn-icon:hover { background: rgba(255,255,255,.18); }
+
+    /* ── MODAL ── */
+    .modal-ov {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.72);
+      z-index: 1000;
+      display: flex; align-items: center; justify-content: center;
+      padding: 16px;
+      backdrop-filter: blur(4px);
+    }
+    .modal-ov.hidden { display: none; }
+    .modal-box {
+      background: var(--bg2);
+      border: 1px solid var(--border2);
+      border-radius: 12px;
+      padding: 26px;
+      max-width: 460px;
+      width: 100%;
+      box-shadow: 0 24px 64px rgba(0,0,0,.65);
+    }
+    .modal-title { font-family: var(--font-h); font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .modal-sub { font-family: var(--font-m); font-size: 0.63rem; color: var(--muted); letter-spacing: .3px; margin-bottom: 20px; }
+    .form-grp { margin-bottom: 14px; }
+    .form-lbl { font-family: var(--font-m); font-size: 0.6rem; color: var(--muted2); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; display: block; }
+    .form-inp {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-family: var(--font-b);
+      font-size: 0.86rem;
+      padding: 9px 12px;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .form-inp:focus { border-color: var(--gold); }
+    .form-inp::placeholder { color: var(--muted); }
+    .clr-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .clr-sw {
+      width: 30px; height: 30px;
+      border-radius: 50%; cursor: pointer;
+      border: 2px solid transparent;
+      transition: border-color .15s, transform .12s;
+    }
+    .clr-sw:hover, .clr-sw.active { border-color: white; transform: scale(1.12); }
+    .icon-row2 { display: flex; gap: 7px; flex-wrap: wrap; }
+    .ic-sel {
+      width: 40px; height: 40px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      transition: all .15s;
+    }
+    .ic-sel:hover { border-color: var(--gold); background: var(--gold-glow); }
+    .ic-sel.active { border-color: var(--gold); background: var(--gold-dim); }
+    .upload-z {
+      border: 2px dashed var(--border2);
+      border-radius: 8px;
+      padding: 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: all .2s;
+      position: relative;
+    }
+    .upload-z:hover { border-color: var(--gold); background: var(--gold-glow); }
+    .upload-z input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+    .upload-z-icon { font-size: 1.8rem; margin-bottom: 6px; }
+    .upload-z-txt { font-family: var(--font-m); font-size: 0.66rem; color: var(--muted2); }
+    .upload-prev { display: none; margin-top: 10px; border-radius: 6px; overflow: hidden; }
+    .upload-prev img { width: 100%; max-height: 140px; object-fit: cover; }
+    .modal-acts { display: flex; justify-content: flex-end; gap: 8px; margin-top: 22px; }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 2000;
+      background: rgba(0,0,0,.93);
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+      backdrop-filter: blur(6px);
+    }
+    .lightbox.hidden { display: none; }
+    .lb-img { max-width: 100%; max-height: 85vh; border-radius: 8px; box-shadow: 0 20px 80px rgba(0,0,0,.8); }
+    .lb-close {
+      position: absolute; top: 16px; right: 16px;
+      background: rgba(255,255,255,.1); border: none; border-radius: 50%;
+      width: 38px; height: 38px; color: white; font-size: 1.1rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background .15s;
+    }
+    .lb-close:hover { background: rgba(255,255,255,.2); }
+    .lb-cap {
+      position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+      font-family: var(--font-m); font-size: 0.68rem; color: rgba(255,255,255,.75);
+      background: rgba(0,0,0,.55); padding: 5px 16px; border-radius: 20px; letter-spacing: .5px;
+      white-space: nowrap; max-width: 90%; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    /* ── EMPTY STATE ── */
+    .empty-st { text-align: center; padding: 56px 20px; }
+    .empty-ico { font-size: 2.8rem; margin-bottom: 10px; }
+    .empty-ttl { font-family: var(--font-h); font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .empty-sub { font-family: var(--font-m); font-size: 0.66rem; color: var(--muted); margin-bottom: 22px; line-height: 1.6; }
+
+    @media (max-width: 640px) {
+      .g-main { padding: 18px 14px 56px; }
+      .g-hero { padding: 24px 14px 18px; }
+      .g-toolbar { padding: 10px 14px; }
+      .topbar { padding: 0 14px; }
+      .subjects-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
+      .images-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+      .topics-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <a href="index.html" class="topbar-logo">ARIVOAM</a>
+  <span class="topbar-sep">|</span>
+  <nav class="breadcrumb" id="breadcrumb"></nav>
+  <button class="topbar-btn" id="addBtn">+ Add Subject</button>
+</header>
+
+<!-- HERO (shown on subjects view) -->
+<div class="g-hero" id="gHero">
+  <div class="g-hero-inner">
+    <div class="g-title">Study Image Gallery</div>
+    <div class="g-sub">Educational Materials · Notes · Diagrams · Charts</div>
+    <div class="g-stats" id="gStats"></div>
+  </div>
+</div>
+
+<!-- TOOLBAR -->
+<div class="g-toolbar">
+  <div class="g-toolbar-inner">
+    <div class="srch-wrap">
+      <span class="srch-icon">🔍</span>
+      <input type="text" class="srch-input" id="srchInput" placeholder="Search…" oninput="handleSearch()">
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<main class="g-main" id="gMain"></main>
+
+<!-- LIGHTBOX -->
+<div class="lightbox hidden" id="lightbox">
+  <button class="lb-close" id="lbClose">✕</button>
+  <img class="lb-img" id="lbImg" src="" alt="">
+  <div class="lb-cap" id="lbCap"></div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-ov hidden" id="modalOv">
+  <div class="modal-box" id="modalBox"></div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   ARIVOAM GALLERY  —  localStorage-backed CRUD, 3-level nav
+═══════════════════════════════════════════════════════ */
+
+const LS_KEY = 'arivoam_gallery_v3';
+const ACCENTS = ['#a855f7','#3b82f6','#22c55e','#f5c842','#ef4444','#fb923c','#22d3ee','#e879f9'];
+const ICONS   = ['📚','⚖️','🏛️','🌍','🔬','💰','📐','🧪','📖','🔭','🗺️','🧬'];
+
+/* uuid — regular function so it's hoisted */
+function uuid() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+}
+
+/* ── SVG placeholder generator ── */
+function makeSVG(label, accent) {
+  const lines = label.match(/.{1,22}/g) || [label];
+  const lineY = 175 - (lines.length - 1) * 12;
+  const linesHTML = lines.map((l, i) =>
+    `<text x="200" y="${lineY + i * 26}" font-family="serif" font-size="15" fill="${accent}" text-anchor="middle">${l}</text>`
+  ).join('');
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300">
+    <rect width="400" height="300" fill="#0d0f14"/>
+    <rect width="4" height="300" fill="${accent}"/>
+    <rect x="0" y="0" width="400" height="50" fill="#13161e"/>
+    <text x="200" y="32" font-family="monospace" font-size="10" fill="${accent}" text-anchor="middle" letter-spacing="2">ARIVOAM STUDY NOTES</text>
+    ${linesHTML}
+    <rect x="0" y="270" width="400" height="30" fill="#13161e"/>
+    <text x="200" y="289" font-family="monospace" font-size="9" fill="#6b7599" text-anchor="middle">arivoam.in · TNPSC &amp; SSC 2026</text>
+  </svg>`;
+  return 'data:image/svg+xml,' + encodeURIComponent(svg);
+}
+
+/* ── Build mock image entry ── */
+function mkImg(name, accent) {
+  return { id: uuid(), name, src: makeSVG(name, accent), date: '2026-05-' + String(Math.ceil(Math.random()*28)).padStart(2,'0') };
+}
+
+/* ── Initial mock data ── */
+function buildMockData() {
+  return {
+    subjects: [
+      {
+        id: uuid(), name: 'Polity', icon: '⚖️', accent: '#a855f7',
+        topics: [
+          { id: uuid(), name: 'Constitution Basics', images: [
+            mkImg('Preamble of India','#a855f7'),
+            mkImg('Fundamental Rights Chart','#a855f7'),
+            mkImg('DPSP vs Fundamental Rights','#a855f7'),
+            mkImg('Constitutional Amendments','#a855f7'),
+          ]},
+          { id: uuid(), name: 'Government Schemes', images: [
+            mkImg('PM-KISAN Summary','#a855f7'),
+            mkImg('Ayushman Bharat Notes','#a855f7'),
+            mkImg('Jal Jeevan Mission Chart','#a855f7'),
+          ]},
+          { id: uuid(), name: 'Parliament & Judiciary', images: [
+            mkImg('Lok Sabha vs Rajya Sabha','#a855f7'),
+            mkImg('Supreme Court Structure','#a855f7'),
+          ]},
+        ]
+      },
+      {
+        id: uuid(), name: 'History', icon: '🏛️', accent: '#f59e0b',
+        topics: [
+          { id: uuid(), name: 'Ancient India', images: [
+            mkImg('Indus Valley Civilisation','#f59e0b'),
+            mkImg('Vedic Period Timeline','#f59e0b'),
+            mkImg('Mauryan Empire Map','#f59e0b'),
+          ]},
+          { id: uuid(), name: 'Medieval India', images: [
+            mkImg('Delhi Sultanate Timeline','#f59e0b'),
+            mkImg('Mughal Rulers Chart','#f59e0b'),
+            mkImg('Bhakti & Sufi Movement','#f59e0b'),
+          ]},
+        ]
+      },
+      {
+        id: uuid(), name: 'Geography', icon: '🌍', accent: '#22c55e',
+        topics: [
+          { id: uuid(), name: 'India — Rivers', images: [
+            mkImg('Himalayan Rivers System','#22c55e'),
+            mkImg('Peninsular Rivers Chart','#22c55e'),
+            mkImg('River Valley Projects','#22c55e'),
+          ]},
+          { id: uuid(), name: 'Monsoon & Climate', images: [
+            mkImg('SW Monsoon Diagram','#22c55e'),
+            mkImg('Climate Zones of India','#22c55e'),
+          ]},
+        ]
+      },
+      {
+        id: uuid(), name: 'Economics', icon: '💰', accent: '#3b82f6',
+        topics: [
+          { id: uuid(), name: 'Five Year Plans', images: [
+            mkImg('Five Year Plans Overview','#3b82f6'),
+            mkImg('NITI Aayog vs Plan Comm.','#3b82f6'),
+          ]},
+          { id: uuid(), name: 'Budget & Finance', images: [
+            mkImg('Union Budget Structure','#3b82f6'),
+            mkImg('Finance Commission Roles','#3b82f6'),
+          ]},
+        ]
+      },
+      {
+        id: uuid(), name: 'Science', icon: '🔬', accent: '#22d3ee',
+        topics: [
+          { id: uuid(), name: 'Biology', images: [
+            mkImg('Cell Structure Diagram','#22d3ee'),
+            mkImg('Digestive System Notes','#22d3ee'),
+            mkImg('Human Blood Groups','#22d3ee'),
+          ]},
+          { id: uuid(), name: 'Physics', images: [
+            mkImg('Laws of Motion Summary','#22d3ee'),
+            mkImg('Electricity & Circuits','#22d3ee'),
+          ]},
+        ]
+      }
+    ]
+  };
+}
+
+/* ══════════════════ STATE ══════════════════ */
+let st = { view: 'subjects', sid: null, tid: null };
+let data = { subjects: [] };
+let pick = { accent: ACCENTS[0], icon: ICONS[0], file: null };
+let q = '';
+
+function save() { localStorage.setItem(LS_KEY, JSON.stringify(data)); }
+function load() {
+  try {
+    const r = localStorage.getItem(LS_KEY);
+    if (r) { data = JSON.parse(r); return; }
+  } catch(e) {}
+  data = buildMockData();
+  save();
+}
+function getS(id) { return data.subjects.find(s => s.id === id); }
+function getT(sid, tid) { const s = getS(sid); return s ? s.topics.find(t => t.id === tid) : null; }
+function totalImgs() { return data.subjects.reduce((a,s) => a + s.topics.reduce((b,t) => b + t.images.length, 0), 0); }
+function totalTopics() { return data.subjects.reduce((a,s) => a + s.topics.length, 0); }
+
+/* ══════════════════ RENDER ══════════════════ */
+function render() {
+  renderBreadcrumb();
+  renderHero();
+  renderBtn();
+  const el = document.getElementById('gMain');
+  if (st.view === 'subjects') el.innerHTML = renderSubjects();
+  else if (st.view === 'topics') el.innerHTML = renderTopics();
+  else el.innerHTML = renderImages();
+}
+
+function renderBreadcrumb() {
+  const bc = document.getElementById('breadcrumb');
+  let h = `<span class="bc-item${st.view==='subjects'?' active':''}" onclick="go('subjects')">Gallery</span>`;
+  if (st.sid) {
+    const s = getS(st.sid);
+    if (s) {
+      h += `<span class="bc-sep">›</span>`;
+      h += `<span class="bc-item${st.view==='topics'?' active':''}" onclick="go('topics','${s.id}')">${s.name}</span>`;
+    }
+  }
+  if (st.tid) {
+    const t = getT(st.sid, st.tid);
+    if (t) h += `<span class="bc-sep">›</span><span class="bc-item active">${t.name}</span>`;
+  }
+  bc.innerHTML = h;
+}
+
+function renderHero() {
+  const h = document.getElementById('gHero');
+  if (st.view !== 'subjects') { h.style.display = 'none'; return; }
+  h.style.display = '';
+  document.getElementById('gStats').innerHTML = `
+    <div><div class="g-stat-v">${data.subjects.length}</div><div class="g-stat-l">Subjects</div></div>
+    <div><div class="g-stat-v">${totalTopics()}</div><div class="g-stat-l">Topics</div></div>
+    <div><div class="g-stat-v">${totalImgs()}</div><div class="g-stat-l">Images</div></div>
+  `;
+}
+
+function renderBtn() {
+  const b = document.getElementById('addBtn');
+  if (st.view === 'images') { b.textContent = '+ Upload Image'; b.onclick = () => openUpload(); }
+  else if (st.view === 'topics') { b.textContent = '+ Add Topic'; b.onclick = () => openAddTopic(); }
+  else { b.textContent = '+ Add Subject'; b.onclick = () => openAddSubject(); }
+}
+
+function go(view, sid, tid) {
+  st.view = view; st.sid = sid||null; st.tid = tid||null;
+  q = ''; document.getElementById('srchInput').value = '';
+  render();
+}
+
+function handleSearch() {
+  q = document.getElementById('srchInput').value.toLowerCase();
+  render();
+}
+
+/* ── Subjects ── */
+function renderSubjects() {
+  const list = data.subjects.filter(s => !q || s.name.toLowerCase().includes(q));
+  if (!list.length) return emptyHTML('📁','No subjects found','Add your first subject or try a different search.');
+  return `
+    <div class="g-section-head">Subjects <span class="g-count">${list.length}</span></div>
+    <div class="subjects-grid">
+      ${list.map(s => `
+        <div class="subj-card" style="--accent:${s.accent}" onclick="go('topics','${s.id}')">
+          <div class="card-actions">
+            <button class="ic-btn ic-btn-ed" onclick="event.stopPropagation();editSubject('${s.id}')" title="Rename">✏️</button>
+            <button class="ic-btn ic-btn-dl" onclick="event.stopPropagation();confirmDel('subject','${s.id}')" title="Delete">🗑</button>
+          </div>
+          <span class="subj-card-icon">${s.icon}</span>
+          <div class="subj-card-name">${s.name}</div>
+          <div class="subj-card-meta">
+            <div class="subj-meta-chip"><strong>${s.topics.length}</strong> Topics</div>
+            <div class="subj-meta-chip"><strong>${s.topics.reduce((a,t)=>a+t.images.length,0)}</strong> Images</div>
+          </div>
+        </div>
+      `).join('')}
+      <div class="add-ph tall" onclick="openAddSubject()">
+        <div class="add-ph-icon">+</div>
+        <div>Add Subject</div>
+      </div>
+    </div>`;
+}
+
+/* ── Topics ── */
+function renderTopics() {
+  const s = getS(st.sid); if (!s) return '';
+  const list = s.topics.filter(t => !q || t.name.toLowerCase().includes(q));
+  return `
+    <div class="g-section-head" style="color:${s.accent}">${s.icon} ${s.name} <span class="g-count">${list.length} topics</span></div>
+    <div class="topics-grid">
+      ${list.map(t => `
+        <div class="topic-card" style="--accent:${s.accent}" onclick="go('images','${s.id}','${t.id}')">
+          <div class="card-actions">
+            <button class="ic-btn ic-btn-ed" onclick="event.stopPropagation();editTopic('${s.id}','${t.id}')" title="Rename">✏️</button>
+            <button class="ic-btn ic-btn-dl" onclick="event.stopPropagation();confirmDel('topic','${s.id}','${t.id}')" title="Delete">🗑</button>
+          </div>
+          <div class="topic-label">Topic</div>
+          <div class="topic-name">${t.name}</div>
+          <div class="topic-count" style="color:${s.accent}">${t.images.length}</div>
+          <div class="topic-count-l">Images</div>
+        </div>
+      `).join('')}
+      <div class="add-ph tall" onclick="openAddTopic()">
+        <div class="add-ph-icon">+</div>
+        <div>Add Topic</div>
+      </div>
+    </div>`;
+}
+
+/* ── Images ── */
+function renderImages() {
+  const s = getS(st.sid); const t = getT(st.sid, st.tid);
+  if (!s || !t) return '';
+  const list = t.images.filter(i => !q || i.name.toLowerCase().includes(q));
+  return `
+    <div class="g-section-head" style="color:${s.accent}">${s.icon} ${t.name} <span class="g-count">${list.length} images</span></div>
+    <div class="images-grid">
+      ${list.map(img => `
+        <div class="img-card">
+          <div class="img-thumb-wrap">
+            <img class="img-thumb" src="${img.src}" alt="${img.name}" onerror="this.src='${makeSVG(img.name, s.accent)}'">
+            <div class="img-overlay">
+              <button class="btn-icon" onclick="openLightbox('${img.id}')">👁 View</button>
+            </div>
+          </div>
+          <div class="img-info">
+            <div class="img-name">${img.name}</div>
+            <div class="img-date">${img.date}</div>
+          </div>
+          <div class="img-actions">
+            <button class="ic-btn ic-btn-ed btn-sm" onclick="editImg('${img.id}')" title="Rename">✏️</button>
+            <button class="ic-btn ic-btn-dl btn-sm" onclick="confirmDel('image','${st.sid}','${st.tid}','${img.id}')" title="Delete">🗑</button>
+          </div>
+        </div>
+      `).join('')}
+      <div class="add-ph" onclick="openUpload()">
+        <div class="add-ph-icon">📤</div>
+        <div>Upload Image</div>
+      </div>
+    </div>`;
+}
+
+function emptyHTML(ic, ttl, sub) {
+  return `<div class="empty-st">
+    <div class="empty-ico">${ic}</div>
+    <div class="empty-ttl">${ttl}</div>
+    <div class="empty-sub">${sub}</div>
+    <button class="btn btn-pr" onclick="openAddSubject()">+ Add Now</button>
+  </div>`;
+}
+
+/* ══════════════════ LIGHTBOX ══════════════════ */
+function openLightbox(imgId) {
+  const t = getT(st.sid, st.tid);
+  const img = t && t.images.find(i => i.id === imgId);
+  if (!img) return;
+  const s = getS(st.sid);
+  document.getElementById('lbImg').src = img.src;
+  document.getElementById('lbImg').onerror = function() { this.src = makeSVG(img.name, s.accent); };
+  document.getElementById('lbCap').textContent = img.name;
+  document.getElementById('lightbox').classList.remove('hidden');
+}
+document.getElementById('lbClose').onclick = () => document.getElementById('lightbox').classList.add('hidden');
+document.getElementById('lightbox').addEventListener('click', e => {
+  if (e.target === document.getElementById('lightbox')) document.getElementById('lightbox').classList.add('hidden');
+});
+
+/* ══════════════════ MODAL ══════════════════ */
+function openModal(html) {
+  document.getElementById('modalBox').innerHTML = html;
+  document.getElementById('modalOv').classList.remove('hidden');
+  setTimeout(() => { const inp = document.querySelector('#modalBox .form-inp'); if (inp) inp.focus(); }, 80);
+}
+function closeModal() { document.getElementById('modalOv').classList.add('hidden'); pick.file = null; }
+document.getElementById('modalOv').addEventListener('click', e => { if (e.target === document.getElementById('modalOv')) closeModal(); });
+
+/* ── Add Subject ── */
+function openAddSubject() {
+  pick.accent = ACCENTS[0]; pick.icon = ICONS[0];
+  openModal(`
+    <div class="modal-title">Add Subject</div>
+    <div class="modal-sub">Create a new subject category</div>
+    <div class="form-grp">
+      <label class="form-lbl">Subject Name</label>
+      <input class="form-inp" id="mInp" placeholder="e.g. Tamil History, Current Affairs…">
+    </div>
+    <div class="form-grp">
+      <label class="form-lbl">Icon</label>
+      <div class="icon-row2">${ICONS.map((ic,i)=>`<button class="ic-sel${i===0?' active':''}" onclick="pickIcon(this,'${ic}')">${ic}</button>`).join('')}</div>
+    </div>
+    <div class="form-grp">
+      <label class="form-lbl">Accent Color</label>
+      <div class="clr-row">${ACCENTS.map((c,i)=>`<div class="clr-sw${i===0?' active':''}" style="background:${c}" onclick="pickAccent(this,'${c}')"></div>`).join('')}</div>
+    </div>
+    <div class="modal-acts">
+      <button class="btn btn-ou" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-pr" onclick="doAddSubject()">Add Subject</button>
+    </div>`);
+}
+function pickAccent(el, c) {
+  document.querySelectorAll('.clr-sw').forEach(e=>e.classList.remove('active'));
+  el.classList.add('active'); pick.accent = c;
+}
+function pickIcon(el, ic) {
+  document.querySelectorAll('.ic-sel').forEach(e=>e.classList.remove('active'));
+  el.classList.add('active'); pick.icon = ic;
+}
+function doAddSubject() {
+  const n = document.getElementById('mInp').value.trim(); if (!n) return;
+  data.subjects.push({ id: uuid(), name: n, icon: pick.icon, accent: pick.accent, topics: [] });
+  save(); closeModal(); render();
+}
+
+/* ── Edit Subject ── */
+function editSubject(sid) {
+  const s = getS(sid); if (!s) return;
+  openModal(`
+    <div class="modal-title">Rename Subject</div>
+    <div class="form-grp" style="margin-top:18px">
+      <label class="form-lbl">Subject Name</label>
+      <input class="form-inp" id="mInp" value="${s.name}">
+    </div>
+    <div class="modal-acts">
+      <button class="btn btn-ou" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-pr" onclick="doEditSubject('${sid}')">Save</button>
+    </div>`);
+}
+function doEditSubject(sid) {
+  const s = getS(sid); const v = document.getElementById('mInp').value.trim();
+  if (s && v) { s.name = v; save(); closeModal(); render(); }
+}
+
+/* ── Add Topic ── */
+function openAddTopic() {
+  openModal(`
+    <div class="modal-title">Add Topic</div>
+    <div class="form-grp" style="margin-top:18px">
+      <label class="form-lbl">Topic Name</label>
+      <input class="form-inp" id="mInp" placeholder="e.g. Fundamental Rights, Monsoon…">
+    </div>
+    <div class="modal-acts">
+      <button class="btn btn-ou" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-pr" onclick="doAddTopic()">Add Topic</button>
+    </div>`);
+}
+function doAddTopic() {
+  const s = getS(st.sid); const n = document.getElementById('mInp').value.trim();
+  if (s && n) { s.topics.push({ id: uuid(), name: n, images: [] }); save(); closeModal(); render(); }
+}
+
+/* ── Edit Topic ── */
+function editTopic(sid, tid) {
+  const t = getT(sid, tid); if (!t) return;
+  openModal(`
+    <div class="modal-title">Rename Topic</div>
+    <div class="form-grp" style="margin-top:18px">
+      <label class="form-lbl">Topic Name</label>
+      <input class="form-inp" id="mInp" value="${t.name}">
+    </div>
+    <div class="modal-acts">
+      <button class="btn btn-ou" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-pr" onclick="doEditTopic('${sid}','${tid}')">Save</button>
+    </div>`);
+}
+function doEditTopic(sid, tid) {
+  const t = getT(sid, tid); const v = document.getElementById('mInp').value.trim();
+  if (t && v) { t.name = v; save(); closeModal(); render(); }
+}
+
+/* ── Upload Image ── */
+function openUpload() {
+  pick.file = null;
+  openModal(`
+    <div class="modal-title">Upload Image</div>
+    <div class="modal-sub">Add an educational note, diagram, or chart</div>
+    <div class="form-grp">
+      <label class="form-lbl">Image Name</label>
+      <input class="form-inp" id="mInp" placeholder="e.g. Preamble Summary…">
+    </div>
+    <div class="form-grp">
+      <label class="form-lbl">Select File</label>
+      <div class="upload-z" id="upZone">
+        <input type="file" accept="image/*" id="fileInp" onchange="handleFile(event)">
+        <div class="upload-z-icon">📤</div>
+        <div class="upload-z-txt">Click or drag · JPG, PNG, SVG, WebP</div>
+      </div>
+      <div class="upload-prev" id="upPrev"><img id="upPrevImg" src="" alt="preview"></div>
+    </div>
+    <div class="modal-acts">
+      <button class="btn btn-ou" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-pr" onclick="doUpload()">Upload</button>
+    </div>`);
+}
+function handleFile(e) {
+  const f = e.target.files[0]; if (!f) return;
+  pick.file = f;
+  const r = new FileReader();
+  r.onload = ev => {
+    document.getElementById('upPrevImg').src = ev.target.result;
+    document.getElementById('upPrev').style.display = 'block';
+    if (!document.getElementById('mInp').value)
+      document.getElementById('mInp').value = f.name.replace(/\.[^/.]+$/,'');
+  };
+  r.readAsDataURL(f);
+}
+function doUpload() {
+  const n = document.getElementById('mInp').value.trim();
+  const t = getT(st.sid, st.tid);
+  if (!t || !n) return;
+  if (!pick.file) { alert('Please select an image file.'); return; }
+  const r = new FileReader();
+  r.onload = ev => {
+    t.images.push({ id: uuid(), name: n, src: ev.target.result, date: new Date().toISOString().slice(0,10) });
+    save(); closeModal(); render();
+  };
+  r.readAsDataURL(pick.file);
+}
+
+/* ── Edit Image ── */
+function editImg(imgId) {
+  const t = getT(st.sid, st.tid);
+  const img = t && t.images.find(i => i.id === imgId); if (!img) return;
+  openModal(`
+    <div class="modal-title">Rename Image</div>
+    <div class="form-grp" style="margin-top:18px">
+      <label class="form-lbl">Image Name</label>
+      <input class="form-inp" id="mInp" value="${img.name}">
+    </div>
+    <div class="modal-acts">
+      <button class="btn btn-ou" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-pr" onclick="doEditImg('${imgId}')">Save</button>
+    </div>`);
+}
+function doEditImg(imgId) {
+  const t = getT(st.sid, st.tid);
+  const img = t && t.images.find(i => i.id === imgId);
+  const v = document.getElementById('mInp').value.trim();
+  if (img && v) { img.name = v; save(); closeModal(); render(); }
+}
+
+/* ── Delete (universal) ── */
+function confirmDel(type, ...args) {
+  const [sid, tid, imgId] = args;
+  let ttl = '', sub = '', action = '';
+  if (type === 'subject') {
+    const s = getS(sid);
+    ttl = `Delete "${s.name}"?`;
+    sub = `This will permanently delete the subject and all ${s.topics.reduce((a,t)=>a+t.images.length,0)} images inside it.`;
+    action = `doDel('subject','${sid}')`;
+  } else if (type === 'topic') {
+    const t = getT(sid, tid);
+    ttl = `Delete "${t.name}"?`;
+    sub = `This will delete the topic and all ${t.images.length} images.`;
+    action = `doDel('topic','${sid}','${tid}')`;
+  } else {
+    const t = getT(sid, tid);
+    const img = t && t.images.find(i => i.id === imgId);
+    ttl = `Delete "${img.name}"?`;
+    sub = 'This cannot be undone.';
+    action = `doDel('image','${sid}','${tid}','${imgId}')`;
+  }
+  openModal(`
+    <div class="modal-title" style="color:var(--red)">${ttl}</div>
+    <div class="modal-sub">${sub}</div>
+    <div class="modal-acts">
+      <button class="btn btn-ou" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-dk" onclick="${action}">Delete</button>
+    </div>`);
+}
+
+function doDel(type, sid, tid, imgId) {
+  if (type === 'subject') {
+    data.subjects = data.subjects.filter(s => s.id !== sid);
+    save(); closeModal();
+    if (st.sid === sid) go('subjects');
+    else render();
+  } else if (type === 'topic') {
+    const s = getS(sid); if (s) s.topics = s.topics.filter(t => t.id !== tid);
+    save(); closeModal();
+    if (st.tid === tid) go('topics', sid);
+    else render();
+  } else {
+    const t = getT(sid, tid); if (t) t.images = t.images.filter(i => i.id !== imgId);
+    save(); closeModal(); render();
+  }
+}
+
+/* ── Keyboard shortcuts ── */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (!document.getElementById('lightbox').classList.contains('hidden'))
+      document.getElementById('lightbox').classList.add('hidden');
+    else closeModal();
+  }
+});
+
+/* ── Init ── */
+load();
+render();
+</script>
+</body>
+</html>
