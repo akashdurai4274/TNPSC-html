@@ -401,180 +401,410 @@
       justify-content: center;
       line-height: 1;
     }
-    .voice-btn:hover { color: var(--gold); background: rgba(245,200,66,0.08); }
+
+    .voice-btn:hover {
+      color: var(--gold);
+      background: rgba(245, 200, 66, 0.08);
+    }
+
     .voice-btn.listening {
       color: var(--red);
-      background: rgba(232,85,85,0.1);
+      background: rgba(232, 85, 85, 0.1);
       animation: voicePulse 0.9s ease-in-out infinite;
     }
+
     @keyframes voicePulse {
-      0%,100%{ transform:translateY(-50%) scale(1); }
-      50%{ transform:translateY(-50%) scale(1.18); }
+
+      0%,
+      100% {
+        transform: translateY(-50%) scale(1);
+      }
+
+      50% {
+        transform: translateY(-50%) scale(1.18);
+      }
     }
 
     /* ── CHATBOT ── */
     #chatBotBtn {
-      position: fixed; bottom: 128px; right: 24px; z-index: 9997;
-      width: 46px; height: 46px; border-radius: 50%;
+      position: fixed;
+      bottom: 128px;
+      right: 24px;
+      z-index: 9997;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
       background: linear-gradient(135deg, var(--gold), var(--orange));
-      border: none; cursor: pointer;
-      box-shadow: 0 4px 20px rgba(245,200,66,0.4);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 20px; transition: all 0.25s;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(245, 200, 66, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      transition: all 0.25s;
       animation: botGlow 3s ease-in-out infinite;
     }
-    #chatBotBtn:hover { transform: scale(1.1); }
+
+    #chatBotBtn:hover {
+      transform: scale(1.1);
+    }
+
     #chatBotBtn .chat-notif {
-      position: absolute; top: -2px; right: -2px;
-      width: 12px; height: 12px; border-radius: 50%;
-      background: var(--green); border: 2px solid var(--bg);
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--green);
+      border: 2px solid var(--bg);
       animation: notifPop 0.4s ease both;
     }
-    @keyframes botGlow { 0%,100%{box-shadow:0 4px 20px rgba(245,200,66,0.35)} 50%{box-shadow:0 4px 32px rgba(245,200,66,0.65)} }
-    @keyframes notifPop { from{transform:scale(0)} to{transform:scale(1)} }
+
+    @keyframes botGlow {
+
+      0%,
+      100% {
+        box-shadow: 0 4px 20px rgba(245, 200, 66, 0.35)
+      }
+
+      50% {
+        box-shadow: 0 4px 32px rgba(245, 200, 66, 0.65)
+      }
+    }
+
+    @keyframes notifPop {
+      from {
+        transform: scale(0)
+      }
+
+      to {
+        transform: scale(1)
+      }
+    }
 
     #chatPanel {
-      position: fixed; bottom: 182px; right: 24px; z-index: 9996;
-      width: 360px; height: 510px;
+      position: fixed;
+      bottom: 182px;
+      right: 24px;
+      z-index: 9996;
+      width: 360px;
+      height: 510px;
       background: var(--surface);
       border: 1px solid var(--border2);
       border-radius: 18px;
-      display: flex; flex-direction: column;
-      box-shadow: 0 24px 64px rgba(0,0,0,0.55);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55);
       transform: translateY(24px) scale(0.94);
       opacity: 0;
       pointer-events: none;
-      transition: all 0.32s cubic-bezier(0.34,1.56,0.64,1);
+      transition: all 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
       overflow: hidden;
     }
+
     #chatPanel.open {
       transform: translateY(0) scale(1);
       opacity: 1;
       pointer-events: all;
     }
+
     .chat-header {
-      background: linear-gradient(135deg, rgba(245,200,66,0.1), rgba(251,146,60,0.07));
+      background: linear-gradient(135deg, rgba(245, 200, 66, 0.1), rgba(251, 146, 60, 0.07));
       border-bottom: 1px solid var(--border2);
       padding: 13px 16px;
-      display: flex; align-items: center; gap: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
       flex-shrink: 0;
     }
+
     .chat-avatar {
-      width: 36px; height: 36px; border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
       background: linear-gradient(135deg, var(--gold), var(--orange));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px; flex-shrink: 0; position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+      position: relative;
     }
+
     .chat-avatar::after {
-      content: ''; position: absolute; bottom: 1px; right: 1px;
-      width: 9px; height: 9px; border-radius: 50%;
-      background: var(--green); border: 2px solid var(--surface);
+      content: '';
+      position: absolute;
+      bottom: 1px;
+      right: 1px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--green);
+      border: 2px solid var(--surface);
     }
+
     .chat-name {
-      font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700;
+      font-family: 'Syne', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
       color: var(--text);
     }
+
     .chat-status {
-      font-family: 'IBM Plex Mono', monospace; font-size: 10px;
-      color: var(--green); letter-spacing: 0.4px; margin-top: 1px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--green);
+      letter-spacing: 0.4px;
+      margin-top: 1px;
     }
+
     .chat-close {
-      margin-left: auto; background: none; border: none;
-      color: var(--muted); cursor: pointer; font-size: 17px;
-      width: 28px; height: 28px; border-radius: 6px;
-      display: flex; align-items: center; justify-content: center;
+      margin-left: auto;
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 17px;
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       transition: all 0.2s;
     }
-    .chat-close:hover { color: var(--text); background: rgba(255,255,255,0.06); }
+
+    .chat-close:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.06);
+    }
 
     .chat-messages {
-      flex: 1; overflow-y: auto; padding: 14px 12px;
-      display: flex; flex-direction: column; gap: 10px;
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
       scrollbar-width: none;
     }
-    .chat-messages::-webkit-scrollbar { display: none; }
 
-    .msg { display: flex; gap: 7px; align-items: flex-end; animation: msgIn 0.28s ease both; }
-    .msg.user { flex-direction: row-reverse; }
-    @keyframes msgIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }
+    .chat-messages::-webkit-scrollbar {
+      display: none;
+    }
+
+    .msg {
+      display: flex;
+      gap: 7px;
+      align-items: flex-end;
+      animation: msgIn 0.28s ease both;
+    }
+
+    .msg.user {
+      flex-direction: row-reverse;
+    }
+
+    @keyframes msgIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
 
     .msg-avatar {
-      width: 24px; height: 24px; border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
       background: linear-gradient(135deg, var(--gold), var(--orange));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 11px; flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      flex-shrink: 0;
     }
+
     .msg-bubble {
-      max-width: 80%; padding: 9px 13px;
-      border-radius: 14px; font-size: 12.5px; line-height: 1.6;
+      max-width: 80%;
+      padding: 9px 13px;
+      border-radius: 14px;
+      font-size: 12.5px;
+      line-height: 1.6;
       font-family: 'Lora', serif;
     }
+
     .msg.bot .msg-bubble {
-      background: var(--surface2); color: var(--text);
+      background: var(--surface2);
+      color: var(--text);
       border-bottom-left-radius: 4px;
     }
+
     .msg.user .msg-bubble {
-      background: linear-gradient(135deg, rgba(245,200,66,0.15), rgba(251,146,60,0.1));
-      border: 1px solid rgba(245,200,66,0.22);
-      color: var(--text); border-bottom-right-radius: 4px;
+      background: linear-gradient(135deg, rgba(245, 200, 66, 0.15), rgba(251, 146, 60, 0.1));
+      border: 1px solid rgba(245, 200, 66, 0.22);
+      color: var(--text);
+      border-bottom-right-radius: 4px;
     }
-    .msg-bubble strong { color: var(--gold); font-family: 'Syne', sans-serif; font-size: 12px; }
-    .msg-bubble a { color: var(--gold); font-size: 11px; text-decoration: none; }
-    .msg-bubble a:hover { text-decoration: underline; }
+
+    .msg-bubble strong {
+      color: var(--gold);
+      font-family: 'Syne', sans-serif;
+      font-size: 12px;
+    }
+
+    .msg-bubble a {
+      color: var(--gold);
+      font-size: 11px;
+      text-decoration: none;
+    }
+
+    .msg-bubble a:hover {
+      text-decoration: underline;
+    }
+
     .msg-bubble .bot-chip {
-      display: inline-block; font-family: 'IBM Plex Mono', monospace;
-      font-size: 9px; padding: 2px 7px; border-radius: 10px;
-      background: rgba(245,200,66,0.1); border: 1px solid rgba(245,200,66,0.25);
-      color: var(--gold); margin: 2px 2px 0 0; letter-spacing: 0.4px;
+      display: inline-block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      padding: 2px 7px;
+      border-radius: 10px;
+      background: rgba(245, 200, 66, 0.1);
+      border: 1px solid rgba(245, 200, 66, 0.25);
+      color: var(--gold);
+      margin: 2px 2px 0 0;
+      letter-spacing: 0.4px;
     }
 
     .typing-indicator {
-      display: flex; gap: 4px; align-items: center; padding: 10px 14px;
-      background: var(--surface2); border-radius: 14px; border-bottom-left-radius: 4px;
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      padding: 10px 14px;
+      background: var(--surface2);
+      border-radius: 14px;
+      border-bottom-left-radius: 4px;
       width: fit-content;
     }
+
     .typing-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--muted); animation: tdot 1.2s ease-in-out infinite;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--muted);
+      animation: tdot 1.2s ease-in-out infinite;
     }
-    .typing-dot:nth-child(2) { animation-delay: 0.22s; }
-    .typing-dot:nth-child(3) { animation-delay: 0.44s; }
-    @keyframes tdot { 0%,60%,100%{transform:translateY(0);opacity:0.45} 30%{transform:translateY(-6px);opacity:1} }
+
+    .typing-dot:nth-child(2) {
+      animation-delay: 0.22s;
+    }
+
+    .typing-dot:nth-child(3) {
+      animation-delay: 0.44s;
+    }
+
+    @keyframes tdot {
+
+      0%,
+      60%,
+      100% {
+        transform: translateY(0);
+        opacity: 0.45
+      }
+
+      30% {
+        transform: translateY(-6px);
+        opacity: 1
+      }
+    }
 
     .chat-quick-replies {
-      padding: 6px 12px 4px; display: flex; gap: 5px; flex-wrap: wrap; flex-shrink: 0;
+      padding: 6px 12px 4px;
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      flex-shrink: 0;
     }
+
     .qr-btn {
-      font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: 0.4px;
-      padding: 4px 10px; border-radius: 12px;
-      border: 1px solid var(--border2); background: transparent;
-      color: var(--muted2); cursor: pointer; transition: all 0.15s; white-space: nowrap;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: 0.4px;
+      padding: 4px 10px;
+      border-radius: 12px;
+      border: 1px solid var(--border2);
+      background: transparent;
+      color: var(--muted2);
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
     }
-    .qr-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(245,200,66,0.06); }
+
+    .qr-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(245, 200, 66, 0.06);
+    }
 
     .chat-input-row {
       padding: 10px 12px;
       border-top: 1px solid var(--border);
-      display: flex; gap: 8px; align-items: center; flex-shrink: 0;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-shrink: 0;
     }
+
     #chatInput {
-      flex: 1; background: var(--surface2); border: 1px solid var(--border2);
-      border-radius: 20px; padding: 8px 14px;
-      font-family: 'Lora', serif; font-size: 13px;
-      color: var(--text); outline: none; transition: border-color 0.2s;
+      flex: 1;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: 20px;
+      padding: 8px 14px;
+      font-family: 'Lora', serif;
+      font-size: 13px;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
     }
-    #chatInput:focus { border-color: rgba(245,200,66,0.4); }
-    #chatInput::placeholder { color: var(--muted); font-size: 12px; }
+
+    #chatInput:focus {
+      border-color: rgba(245, 200, 66, 0.4);
+    }
+
+    #chatInput::placeholder {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
     #chatSend {
-      width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
-      background: var(--gold); border: none; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 13px; color: var(--bg); transition: all 0.2s;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: var(--gold);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: var(--bg);
+      transition: all 0.2s;
     }
-    #chatSend:hover { background: var(--gold-dim); transform: scale(1.08); }
+
+    #chatSend:hover {
+      background: var(--gold-dim);
+      transform: scale(1.08);
+    }
 
     #chatMicBtn.listening {
-      background: rgba(232,85,85,0.12) !important;
+      background: rgba(232, 85, 85, 0.12) !important;
       border-color: var(--red) !important;
       color: var(--red) !important;
       animation: voicePulse 0.9s ease-in-out infinite;
@@ -583,36 +813,90 @@
     /* ── Live-voice input state ── */
     .voice-recording {
       border-color: var(--red) !important;
-      box-shadow: 0 0 0 3px rgba(232,85,85,0.15) !important;
+      box-shadow: 0 0 0 3px rgba(232, 85, 85, 0.15) !important;
       caret-color: var(--red);
       animation: voiceInputGlow 1.2s ease-in-out infinite;
     }
+
     @keyframes voiceInputGlow {
-      0%,100% { box-shadow: 0 0 0 2px rgba(232,85,85,0.12); }
-      50%      { box-shadow: 0 0 0 5px rgba(232,85,85,0.28); }
+
+      0%,
+      100% {
+        box-shadow: 0 0 0 2px rgba(232, 85, 85, 0.12);
+      }
+
+      50% {
+        box-shadow: 0 0 0 5px rgba(232, 85, 85, 0.28);
+      }
     }
+
     /* Blinking mic wave indicator shown before first word */
     .voice-wave {
-      display: inline-flex; align-items: flex-end; gap: 2px;
-      position: absolute; right: 50px; top: 50%;
-      transform: translateY(-50%); pointer-events: none;
+      display: inline-flex;
+      align-items: flex-end;
+      gap: 2px;
+      position: absolute;
+      right: 50px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
     }
+
     .voice-wave span {
-      display: inline-block; width: 3px; background: var(--red);
-      border-radius: 2px; animation: waveBar 0.8s ease-in-out infinite;
+      display: inline-block;
+      width: 3px;
+      background: var(--red);
+      border-radius: 2px;
+      animation: waveBar 0.8s ease-in-out infinite;
     }
-    .voice-wave span:nth-child(1) { height: 6px; animation-delay: 0s; }
-    .voice-wave span:nth-child(2) { height: 12px; animation-delay: 0.1s; }
-    .voice-wave span:nth-child(3) { height: 9px; animation-delay: 0.2s; }
-    .voice-wave span:nth-child(4) { height: 14px; animation-delay: 0.3s; }
-    .voice-wave span:nth-child(5) { height: 7px; animation-delay: 0.4s; }
+
+    .voice-wave span:nth-child(1) {
+      height: 6px;
+      animation-delay: 0s;
+    }
+
+    .voice-wave span:nth-child(2) {
+      height: 12px;
+      animation-delay: 0.1s;
+    }
+
+    .voice-wave span:nth-child(3) {
+      height: 9px;
+      animation-delay: 0.2s;
+    }
+
+    .voice-wave span:nth-child(4) {
+      height: 14px;
+      animation-delay: 0.3s;
+    }
+
+    .voice-wave span:nth-child(5) {
+      height: 7px;
+      animation-delay: 0.4s;
+    }
+
     @keyframes waveBar {
-      0%,100% { transform: scaleY(0.4); opacity: 0.5; }
-      50%      { transform: scaleY(1);   opacity: 1; }
+
+      0%,
+      100% {
+        transform: scaleY(0.4);
+        opacity: 0.5;
+      }
+
+      50% {
+        transform: scaleY(1);
+        opacity: 1;
+      }
     }
 
     @media(max-width: 480px) {
-      #chatPanel { width: calc(100vw - 16px); right: 8px; bottom: 170px; height: 460px; }
+      #chatPanel {
+        width: calc(100vw - 30px);
+        right: 8px;
+        left: 20px;
+        bottom: 170px;
+        height: 600px;
+      }
     }
 
     .search-icon {
@@ -1768,8 +2052,8 @@
       }
     }
   </style>
-<link rel="stylesheet" href="arivoam-lightmode.css">
-<script>(function(){if(localStorage.getItem('arivoam-theme')=='light'){document.documentElement.classList.add('light-mode');}})()</script>
+  <link rel="stylesheet" href="arivoam-lightmode.css">
+  <script>(function () { if (localStorage.getItem('arivoam-theme') == 'light') { document.documentElement.classList.add('light-mode'); } })()</script>
 </head>
 
 <body>
@@ -2357,486 +2641,489 @@
 
     init();
   </script>
-<!-- ── CHATBOT WIDGET ── -->
-<button id="chatBotBtn" title="Ask Arivoam AI" onclick="toggleChat()">
-  🤖<span class="chat-notif" id="chatNotif"></span>
-</button>
-<div id="chatPanel">
-  <div class="chat-header">
-    <div class="chat-avatar">🤖</div>
-    <div>
-      <div class="chat-name" id="chatBotName">Arivoam AI</div>
-      <div class="chat-status" id="chatStatusText">● Online · Study Assistant</div>
+  <!-- ── CHATBOT WIDGET ── -->
+  <button id="chatBotBtn" title="Ask Arivoam AI" onclick="toggleChat()">
+    🤖<span class="chat-notif" id="chatNotif"></span>
+  </button>
+  <div id="chatPanel">
+    <div class="chat-header">
+      <div class="chat-avatar">🤖</div>
+      <div>
+        <div class="chat-name" id="chatBotName">Arivoam AI</div>
+        <div class="chat-status" id="chatStatusText">● Online · Study Assistant</div>
+      </div>
+      <div style="display:flex;gap:4px;margin-left:auto;align-items:center;">
+        <button id="chatTTSBtn" onclick="toggleTTS()" title="Toggle voice replies"
+          style="background:none;border:none;font-size:16px;cursor:pointer;padding:4px 6px;border-radius:6px;color:var(--muted);transition:all 0.2s;">🔕</button>
+        <button onclick="clearChatHistory()" title="Clear chat"
+          style="background:none;border:none;font-size:14px;cursor:pointer;padding:4px 6px;border-radius:6px;color:var(--muted);transition:all 0.2s;"
+          onmouseover="this.style.color='var(--red)'" onmouseout="this.style.color='var(--muted)'">🗑️</button>
+        <button class="chat-close" onclick="toggleChat()" title="Close">✕</button>
+      </div>
     </div>
-    <div style="display:flex;gap:4px;margin-left:auto;align-items:center;">
-      <button id="chatTTSBtn" onclick="toggleTTS()" title="Toggle voice replies"
-        style="background:none;border:none;font-size:16px;cursor:pointer;padding:4px 6px;border-radius:6px;color:var(--muted);transition:all 0.2s;">🔕</button>
-      <button onclick="clearChatHistory()" title="Clear chat"
-        style="background:none;border:none;font-size:14px;cursor:pointer;padding:4px 6px;border-radius:6px;color:var(--muted);transition:all 0.2s;" onmouseover="this.style.color='var(--red)'" onmouseout="this.style.color='var(--muted)'">🗑️</button>
-      <button class="chat-close" onclick="toggleChat()" title="Close">✕</button>
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="chat-quick-replies" id="chatQR"></div>
+    <div class="chat-input-row">
+      <button id="chatMicBtn" onclick="toggleChatMic()" title="Speak your question"
+        style="background:none;border:1px solid var(--border2);border-radius:50%;width:34px;height:34px;flex-shrink:0;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;color:var(--muted);">🎤</button>
+      <input id="chatInput" placeholder="Ask about TNPSC / SSC topics…" autocomplete="off"
+        onkeydown="if(event.key==='Enter'){event.preventDefault();sendChat();}">
+      <button id="chatSend" onclick="sendChat()" title="Send">➤</button>
     </div>
   </div>
-  <div class="chat-messages" id="chatMessages"></div>
-  <div class="chat-quick-replies" id="chatQR"></div>
-  <div class="chat-input-row">
-    <button id="chatMicBtn" onclick="toggleChatMic()" title="Speak your question"
-      style="background:none;border:1px solid var(--border2);border-radius:50%;width:34px;height:34px;flex-shrink:0;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;color:var(--muted);">🎤</button>
-    <input id="chatInput" placeholder="Ask about TNPSC / SSC topics…" autocomplete="off"
-      onkeydown="if(event.key==='Enter'){event.preventDefault();sendChat();}">
-    <button id="chatSend" onclick="sendChat()" title="Send">➤</button>
-  </div>
-</div>
 
-<script>
-/* ══════════════════════════════════════════════════════════
-   VOICE — CORE
-   KEY FIX: continuous:true causes immediate "network" error
-   in Chrome because it holds an open server connection.
-   Solution: continuous:false + manual restart loop.
-   We also pre-check mic permission with getUserMedia first.
-══════════════════════════════════════════════════════════ */
-const SR = window.SpeechRecognition || window.webkitSpeechRecognition || null;
+  <script>
+    /* ══════════════════════════════════════════════════════════
+       VOICE — CORE
+       KEY FIX: continuous:true causes immediate "network" error
+       in Chrome because it holds an open server connection.
+       Solution: continuous:false + manual restart loop.
+       We also pre-check mic permission with getUserMedia first.
+    ══════════════════════════════════════════════════════════ */
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition || null;
 
-/* Active recognition state */
-let _vsActive  = false; // voice search running
-let _vcActive  = false; // voice chat running
-let _vsRec     = null;
-let _vcRec     = null;
-let _vsStream  = null;  // MediaStream (kept open to preserve permission)
+    /* Active recognition state */
+    let _vsActive = false; // voice search running
+    let _vcActive = false; // voice chat running
+    let _vsRec = null;
+    let _vcRec = null;
+    let _vsStream = null;  // MediaStream (kept open to preserve permission)
 
-function _newRec() {
-  if (!SR) return null;
-  const r = new SR();
-  r.lang = 'en-IN';
-  r.continuous = false;     // ← CRITICAL: false prevents "network" error
-  r.interimResults = true;
-  r.maxAlternatives = 1;
-  return r;
-}
+    function _newRec() {
+      if (!SR) return null;
+      const r = new SR();
+      r.lang = 'en-IN';
+      r.continuous = false;     // ← CRITICAL: false prevents "network" error
+      r.interimResults = true;
+      r.maxAlternatives = 1;
+      return r;
+    }
 
-/* ── Permission pre-check ── */
-async function _getMicPermission() {
-  try {
-    if (_vsStream) return true; // already have it
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
-    _vsStream = stream;         // keep alive so browser remembers permission
-    return true;
-  } catch(e) {
-    return false;
-  }
-}
-
-/* ══════════════════════════════════════════════════════════
-   VOICE SEARCH  (search bar 🎤)
-══════════════════════════════════════════════════════════ */
-window.startVoiceSearch = async function() {
-  const btn = document.getElementById('voiceBtn');
-  const inp = document.getElementById('searchInput');
-  if (!inp) return;
-
-  /* --- Toggle OFF --- */
-  if (_vsActive) {
-    _vsActive = false;
-    if (_vsRec) { try { _vsRec.stop(); } catch(e){} _vsRec = null; }
-    if (btn) { btn.classList.remove('listening'); btn.textContent = '🎤'; btn.style.color = ''; }
-    inp.placeholder = 'Search topics… or 🎤 speak';
-    return;
-  }
-
-  /* --- No SR support --- */
-  if (!SR) {
-    inp.placeholder = '⚠ Voice needs Chrome or Edge browser';
-    setTimeout(() => { inp.placeholder = 'Search topics… or 🎤 speak'; }, 3000);
-    return;
-  }
-
-  /* --- Request mic permission first --- */
-  if (btn) { btn.textContent = '…'; }
-  inp.placeholder = '🔐 Requesting mic permission…';
-  const ok = await _getMicPermission();
-  if (!ok) {
-    inp.placeholder = '🔒 Mic blocked — click the lock icon in the browser address bar to allow';
-    if (btn) { btn.textContent = '🎤'; }
-    setTimeout(() => { inp.placeholder = 'Search topics… or 🎤 speak'; }, 5000);
-    return;
-  }
-
-  /* --- Start listening --- */
-  _vsActive = true;
-  if (btn) { btn.classList.add('listening'); btn.textContent = '⏹'; btn.style.color = 'var(--red)'; }
-  inp.placeholder = '🔴 Listening… speak now (⏹ to stop)';
-
-  let accumulated = '';
-
-  function _startOnce() {
-    if (!_vsActive) return;
-    const r = _newRec();
-    if (!r) return;
-    _vsRec = r;
-
-    r.onresult = e => {
-      let interim = '';
-      for (let i = e.resultIndex; i < e.results.length; i++) {
-        if (e.results[i].isFinal) accumulated += e.results[i][0].transcript + ' ';
-        else interim += e.results[i][0].transcript;
+    /* ── Permission pre-check ── */
+    async function _getMicPermission() {
+      try {
+        if (_vsStream) return true; // already have it
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+        _vsStream = stream;         // keep alive so browser remembers permission
+        return true;
+      } catch (e) {
+        return false;
       }
-      inp.value = (accumulated + interim).trim();
-      inp.dispatchEvent(new Event('input', { bubbles: true }));
-    };
+    }
 
-    r.onerror = e => {
-      if (e.error === 'not-allowed') {
-        _vsActive = false;
-        inp.placeholder = '🔒 Mic blocked — allow in browser settings';
-        if (btn) { btn.classList.remove('listening'); btn.textContent = '🎤'; btn.style.color = ''; }
-        setTimeout(() => { inp.placeholder = 'Search topics… or 🎤 speak'; }, 4000);
-        return;
-      }
-      if (e.error === 'audio-capture') {
-        _vsActive = false;
-        inp.placeholder = '🎙 No microphone detected';
-        if (btn) { btn.classList.remove('listening'); btn.textContent = '🎤'; btn.style.color = ''; }
-        setTimeout(() => { inp.placeholder = 'Search topics… or 🎤 speak'; }, 4000);
-        return;
-      }
-      /* 'no-speech' and 'network' — just restart the session */
-      console.info('Voice search error (will restart):', e.error);
-    };
+    /* ══════════════════════════════════════════════════════════
+       VOICE SEARCH  (search bar 🎤)
+    ══════════════════════════════════════════════════════════ */
+    window.startVoiceSearch = async function () {
+      const btn = document.getElementById('voiceBtn');
+      const inp = document.getElementById('searchInput');
+      if (!inp) return;
 
-    r.onend = () => {
-      _vsRec = null;
+      /* --- Toggle OFF --- */
       if (_vsActive) {
-        /* Restart after tiny gap — this is how we get "continuous" without the bug */
-        setTimeout(_startOnce, 120);
-      } else {
+        _vsActive = false;
+        if (_vsRec) { try { _vsRec.stop(); } catch (e) { } _vsRec = null; }
         if (btn) { btn.classList.remove('listening'); btn.textContent = '🎤'; btn.style.color = ''; }
         inp.placeholder = 'Search topics… or 🎤 speak';
-        if (accumulated.trim()) {
-          inp.value = accumulated.trim();
-          inp.dispatchEvent(new Event('input', { bubbles: true }));
-        }
-      }
-    };
-
-    try { r.start(); }
-    catch(err) {
-      _vsActive = false;
-      inp.placeholder = '⚠ Could not start mic — reload and try again';
-      if (btn) { btn.classList.remove('listening'); btn.textContent = '🎤'; btn.style.color = ''; }
-      setTimeout(() => { inp.placeholder = 'Search topics… or 🎤 speak'; }, 4000);
-    }
-  }
-
-  _startOnce();
-};
-
-/* ══════════════════════════════════════════════════════════
-   CHIME  (Web Audio API — no external file needed)
-══════════════════════════════════════════════════════════ */
-function playChime() {
-  try {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    // Resume context (browsers need user gesture for audio; catch silently if blocked)
-    const resume = ctx.state === 'suspended' ? ctx.resume() : Promise.resolve();
-    resume.then(() => {
-      [[523.25, 0], [659.25, 0.18], [783.99, 0.36], [1046.5, 0.54]].forEach(([freq, t]) => {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.connect(gain); gain.connect(ctx.destination);
-        osc.type = 'sine'; osc.frequency.value = freq;
-        const st = ctx.currentTime + t;
-        gain.gain.setValueAtTime(0, st);
-        gain.gain.linearRampToValueAtTime(0.25, st + 0.06);
-        gain.gain.exponentialRampToValueAtTime(0.001, st + 0.55);
-        osc.start(st); osc.stop(st + 0.6);
-      });
-    }).catch(() => {});
-  } catch(e) {}
-}
-
-/* ══════════════════════════════════════════════════════════
-   TEXT-TO-SPEECH  (bot reads replies aloud)
-══════════════════════════════════════════════════════════ */
-let ttsEnabled = false;
-let ttsSpeaking = false;
-let ttsVoiceTa = null; // Tamil voice
-let ttsVoiceEn = null; // English fallback
-
-function loadTTSVoices() {
-  const voices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
-  /* Tamil voices — prefer native ta-IN, accept any Tamil */
-  ttsVoiceTa = voices.find(v => v.lang === 'ta-IN')
-    || voices.find(v => v.lang.startsWith('ta'))
-    || null;
-  /* English Indian fallback */
-  ttsVoiceEn = voices.find(v => v.lang === 'en-IN')
-    || voices.find(v => v.lang.startsWith('en'))
-    || voices[0] || null;
-}
-if (window.speechSynthesis) {
-  speechSynthesis.onvoiceschanged = loadTTSVoices;
-  loadTTSVoices();
-  /* Chrome loads voices async — retry */
-  setTimeout(loadTTSVoices, 500);
-  setTimeout(loadTTSVoices, 1500);
-}
-
-/* Detect if text contains significant Tamil characters */
-function _isTamil(text) {
-  const tamilChars = (text.match(/[஀-௿]/g) || []).length;
-  return tamilChars > 3;
-}
-
-function speakText(text) {
-  if (!ttsEnabled || !window.speechSynthesis) return;
-  speechSynthesis.cancel();
-  /* Strip HTML tags and emoji */
-  const clean = text
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/[→•📚👋🤖🌍📰🗞️💡🔤📝🏺🚀😊💪⚖️💰🔬🌿🎤🔴🔒📡🎙]/gu, '')
-    .replace(/\s+/g, ' ')
-    .trim();
-  if (!clean || clean.length < 3) return;
-
-  const utt = new SpeechSynthesisUtterance(clean);
-  /* Use Tamil voice when text has Tamil content, else English */
-  if (_isTamil(clean) && ttsVoiceTa) {
-    utt.voice = ttsVoiceTa;
-    utt.lang = 'ta-IN';
-    utt.rate = 0.88;
-    utt.pitch = 1.05;
-  } else {
-    utt.voice = ttsVoiceEn;
-    utt.lang = 'en-IN';
-    utt.rate = 0.92;
-    utt.pitch = 1.0;
-  }
-  utt.volume = 1.0;
-  utt.onstart = () => { ttsSpeaking = true; updateSpeakerBtn(); };
-  utt.onend = utt.onerror = () => { ttsSpeaking = false; updateSpeakerBtn(); };
-  /* Chrome bug: long utterances get cut off — split at sentence boundaries */
-  if (clean.length > 200) {
-    const sentences = clean.match(/[^.!?]+[.!?]*/g) || [clean];
-    let i = 0;
-    function speakNext() {
-      if (i >= sentences.length || !ttsEnabled) return;
-      const u = new SpeechSynthesisUtterance(sentences[i++].trim());
-      u.voice = utt.voice; u.lang = utt.lang; u.rate = utt.rate; u.pitch = utt.pitch; u.volume = 1;
-      u.onend = speakNext;
-      u.onerror = () => { ttsSpeaking = false; updateSpeakerBtn(); };
-      if (i === 1) { u.onstart = () => { ttsSpeaking = true; updateSpeakerBtn(); }; }
-      speechSynthesis.speak(u);
-    }
-    speakNext();
-    return;
-  }
-  speechSynthesis.speak(utt);
-}
-
-function stopTTS() { speechSynthesis && speechSynthesis.cancel(); ttsSpeaking = false; updateSpeakerBtn(); }
-
-function updateSpeakerBtn() {
-  const btn = document.getElementById('chatTTSBtn');
-  if (!btn) return;
-  btn.textContent = ttsEnabled ? (ttsSpeaking ? '🔊' : '🔔') : '🔕';
-  btn.title = ttsEnabled ? 'Voice replies ON — click to mute' : 'Voice replies OFF — click to enable';
-}
-
-window.toggleTTS = function() {
-  ttsEnabled = !ttsEnabled;
-  if (!ttsEnabled) stopTTS();
-  updateSpeakerBtn();
-  try { localStorage.setItem('arivoam-tts', ttsEnabled ? '1' : '0'); } catch(e){}
-};
-
-/* ══════════════════════════════════════════════════════════
-   RAG ENGINE  — fetches + indexes actual HTML files
-══════════════════════════════════════════════════════════ */
-const RAG = (() => {
-  let chunks = [];   // [{id, src, title, section, text, terms, tf}]
-  let idf = {};      // {term: number}
-  let ready = false;
-  let building = false;
-
-  const STOP = new Set('a an the is are was were be been being have has had do does did will would could should may might must can of in on at to for with by from up about into through during before after above below between out off over under again further then once here there when where why how all both each few more most other some such no nor not only same so than too very s t just don and or but if as'.split(' '));
-
-  function tokenize(text) {
-    return text.toLowerCase().replace(/[^\w\s]/g,' ').split(/\s+/).filter(t => t.length > 2 && !STOP.has(t));
-  }
-
-  function computeTF(tokens) {
-    const freq = {};
-    tokens.forEach(t => { freq[t] = (freq[t]||0) + 1; });
-    const len = tokens.length || 1;
-    Object.keys(freq).forEach(t => { freq[t] /= len; });
-    return freq;
-  }
-
-  function computeIDF() {
-    const N = chunks.length || 1;
-    const df = {};
-    chunks.forEach(c => Object.keys(c.tf).forEach(t => { df[t] = (df[t]||0)+1; }));
-    Object.entries(df).forEach(([t,d]) => { idf[t] = Math.log((N - d + 0.5)/(d + 0.5) + 1); });
-  }
-
-  function extractChunks(html, src, title) {
-    const doc = new DOMParser().parseFromString(html, 'text/html');
-    ['script','style','nav','header','footer','#bttBtn','#themeToggle','#backBtn',
-     '#chatBotBtn','#chatPanel','.anchor-nav','.topbar','.sticky-top'].forEach(sel => {
-      doc.querySelectorAll(sel).forEach(el => el.remove());
-    });
-    const body = doc.querySelector('main, article, .content, body') || doc.body;
-    const result = [];
-    let section = title;
-    let buf = '';
-
-    function flush() {
-      if (buf.trim().length < 60) { buf = ''; return; }
-      const tokens = tokenize(buf);
-      if (tokens.length < 8) { buf = ''; return; }
-      result.push({ id: 0, src, title, section, text: buf.trim().slice(0, 600),
-                    terms: tokens, tf: computeTF(tokens) });
-      buf = '';
-    }
-
-    body.querySelectorAll('h1,h2,h3,h4,p,li,td,th,.card-title,.card-desc,.pillar-title,.news-card h3,ul.bl li').forEach(el => {
-      const tag = el.tagName;
-      const txt = el.textContent.replace(/\s+/g,' ').trim();
-      if (!txt || txt.length < 10) return;
-      if (/^H[1-4]$/.test(tag)) { flush(); section = txt; }
-      else { buf += ' ' + txt; if (buf.length > 500) flush(); }
-    });
-    flush();
-    return result;
-  }
-
-  async function fetchFile(url) {
-    try {
-      const r = await fetch(url, { cache: 'force-cache' });
-      return r.ok ? await r.text() : null;
-    } catch(e) { return null; }
-  }
-
-  // Files to index (CA files loaded from caData; static files hardcoded)
-  const STATIC_FILES = [
-    { url: 'traveller_accounts/tnpsc_travellers.html', title: 'Foreign Travellers to India' },
-    { url: 'SSC_Nouns_CrackSheet.html',    title: 'Nouns Crack Sheet' },
-    { url: 'SSC_Pronouns_CrackSheet.html', title: 'Pronouns Crack Sheet' },
-  ];
-
-  async function build(setStatus) {
-    if (ready || building) return;
-    building = true;
-
-    // Try sessionStorage cache first
-    try {
-      const cached = sessionStorage.getItem('arivoam-rag-v2');
-      if (cached) {
-        const data = JSON.parse(cached);
-        chunks = data.chunks; idf = data.idf;
-        ready = true; building = false;
-        if (setStatus) setStatus('● Online · Study Assistant');
         return;
       }
-    } catch(e) {}
 
-    if (setStatus) setStatus('📚 Indexing study files…');
-
-    const filesToFetch = [...STATIC_FILES];
-
-    // Add CA files from ca.json
-    try {
-      const r = await fetch('CA-v2/ca.json', { cache: 'force-cache' });
-      if (r.ok) {
-        const caData = await r.json();
-        caData.slice(0, 20).forEach(e => {
-          filesToFetch.push({ url: 'CA-v2/' + e.file, title: e.title });
-        });
+      /* --- No SR support --- */
+      if (!SR) {
+        inp.placeholder = '⚠ Voice needs Chrome or Edge browser';
+        setTimeout(() => { inp.placeholder = 'Search topics… or 🎤 speak'; }, 3000);
+        return;
       }
-    } catch(e) {}
 
-    // Fetch and parse in small parallel batches
-    for (let i = 0; i < filesToFetch.length; i += 3) {
-      const batch = filesToFetch.slice(i, i+3);
-      await Promise.all(batch.map(async ({url, title}) => {
-        const html = await fetchFile(url);
-        if (html) {
-          const c = extractChunks(html, url, title);
-          chunks.push(...c);
+      /* --- Request mic permission first --- */
+      if (btn) { btn.textContent = '…'; }
+      inp.placeholder = '🔐 Requesting mic permission…';
+      const ok = await _getMicPermission();
+      if (!ok) {
+        inp.placeholder = '🔒 Mic blocked — click the lock icon in the browser address bar to allow';
+        if (btn) { btn.textContent = '🎤'; }
+        setTimeout(() => { inp.placeholder = 'Search topics… or 🎤 speak'; }, 5000);
+        return;
+      }
+
+      /* --- Start listening --- */
+      _vsActive = true;
+      if (btn) { btn.classList.add('listening'); btn.textContent = '⏹'; btn.style.color = 'var(--red)'; }
+      inp.placeholder = '🔴 Listening… speak now (⏹ to stop)';
+
+      let accumulated = '';
+
+      function _startOnce() {
+        if (!_vsActive) return;
+        const r = _newRec();
+        if (!r) return;
+        _vsRec = r;
+
+        r.onresult = e => {
+          let interim = '';
+          for (let i = e.resultIndex; i < e.results.length; i++) {
+            if (e.results[i].isFinal) accumulated += e.results[i][0].transcript + ' ';
+            else interim += e.results[i][0].transcript;
+          }
+          inp.value = (accumulated + interim).trim();
+          inp.dispatchEvent(new Event('input', { bubbles: true }));
+        };
+
+        r.onerror = e => {
+          if (e.error === 'not-allowed') {
+            _vsActive = false;
+            inp.placeholder = '🔒 Mic blocked — allow in browser settings';
+            if (btn) { btn.classList.remove('listening'); btn.textContent = '🎤'; btn.style.color = ''; }
+            setTimeout(() => { inp.placeholder = 'Search topics… or 🎤 speak'; }, 4000);
+            return;
+          }
+          if (e.error === 'audio-capture') {
+            _vsActive = false;
+            inp.placeholder = '🎙 No microphone detected';
+            if (btn) { btn.classList.remove('listening'); btn.textContent = '🎤'; btn.style.color = ''; }
+            setTimeout(() => { inp.placeholder = 'Search topics… or 🎤 speak'; }, 4000);
+            return;
+          }
+          /* 'no-speech' and 'network' — just restart the session */
+          console.info('Voice search error (will restart):', e.error);
+        };
+
+        r.onend = () => {
+          _vsRec = null;
+          if (_vsActive) {
+            /* Restart after tiny gap — this is how we get "continuous" without the bug */
+            setTimeout(_startOnce, 120);
+          } else {
+            if (btn) { btn.classList.remove('listening'); btn.textContent = '🎤'; btn.style.color = ''; }
+            inp.placeholder = 'Search topics… or 🎤 speak';
+            if (accumulated.trim()) {
+              inp.value = accumulated.trim();
+              inp.dispatchEvent(new Event('input', { bubbles: true }));
+            }
+          }
+        };
+
+        try { r.start(); }
+        catch (err) {
+          _vsActive = false;
+          inp.placeholder = '⚠ Could not start mic — reload and try again';
+          if (btn) { btn.classList.remove('listening'); btn.textContent = '🎤'; btn.style.color = ''; }
+          setTimeout(() => { inp.placeholder = 'Search topics… or 🎤 speak'; }, 4000);
         }
-      }));
+      }
+
+      _startOnce();
+    };
+
+    /* ══════════════════════════════════════════════════════════
+       CHIME  (Web Audio API — no external file needed)
+    ══════════════════════════════════════════════════════════ */
+    function playChime() {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        // Resume context (browsers need user gesture for audio; catch silently if blocked)
+        const resume = ctx.state === 'suspended' ? ctx.resume() : Promise.resolve();
+        resume.then(() => {
+          [[523.25, 0], [659.25, 0.18], [783.99, 0.36], [1046.5, 0.54]].forEach(([freq, t]) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain); gain.connect(ctx.destination);
+            osc.type = 'sine'; osc.frequency.value = freq;
+            const st = ctx.currentTime + t;
+            gain.gain.setValueAtTime(0, st);
+            gain.gain.linearRampToValueAtTime(0.25, st + 0.06);
+            gain.gain.exponentialRampToValueAtTime(0.001, st + 0.55);
+            osc.start(st); osc.stop(st + 0.6);
+          });
+        }).catch(() => { });
+      } catch (e) { }
     }
 
-    // Assign sequential IDs and compute IDF
-    chunks.forEach((c, i) => { c.id = i; });
-    computeIDF();
-    ready = true;
-    building = false;
+    /* ══════════════════════════════════════════════════════════
+       TEXT-TO-SPEECH  (bot reads replies aloud)
+    ══════════════════════════════════════════════════════════ */
+    let ttsEnabled = false;
+    let ttsSpeaking = false;
+    let ttsVoiceTa = null; // Tamil voice
+    let ttsVoiceEn = null; // English fallback
 
-    // Cache
-    try {
-      sessionStorage.setItem('arivoam-rag-v2', JSON.stringify({ chunks, idf }));
-    } catch(e) {}
+    function loadTTSVoices() {
+      const voices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
+      /* Tamil voices — prefer native ta-IN, accept any Tamil */
+      ttsVoiceTa = voices.find(v => v.lang === 'ta-IN')
+        || voices.find(v => v.lang.startsWith('ta'))
+        || null;
+      /* English Indian fallback */
+      ttsVoiceEn = voices.find(v => v.lang === 'en-IN')
+        || voices.find(v => v.lang.startsWith('en'))
+        || voices[0] || null;
+    }
+    if (window.speechSynthesis) {
+      speechSynthesis.onvoiceschanged = loadTTSVoices;
+      loadTTSVoices();
+      /* Chrome loads voices async — retry */
+      setTimeout(loadTTSVoices, 500);
+      setTimeout(loadTTSVoices, 1500);
+    }
 
-    if (setStatus) setStatus(`● Online · ${chunks.length} chunks indexed`);
-    setTimeout(() => { if (setStatus) setStatus('● Online · Study Assistant'); }, 3000);
-  }
+    /* Detect if text contains significant Tamil characters */
+    function _isTamil(text) {
+      const tamilChars = (text.match(/[஀-௿]/g) || []).length;
+      return tamilChars > 3;
+    }
 
-  function search(query, topK = 4) {
-    if (!ready || !chunks.length) return [];
-    const qTerms = tokenize(query);
-    if (!qTerms.length) return [];
+    function speakText(text) {
+      if (!ttsEnabled || !window.speechSynthesis) return;
+      speechSynthesis.cancel();
+      /* Strip HTML tags and emoji */
+      const clean = text
+        .replace(/<[^>]+>/g, ' ')
+        .replace(/[→•📚👋🤖🌍📰🗞️💡🔤📝🏺🚀😊💪⚖️💰🔬🌿🎤🔴🔒📡🎙]/gu, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+      if (!clean || clean.length < 3) return;
 
-    // BM25-style scoring
-    const K1 = 1.5, B = 0.75;
-    const avgLen = chunks.reduce((a,c) => a + c.terms.length, 0) / chunks.length;
+      const utt = new SpeechSynthesisUtterance(clean);
+      /* Use Tamil voice when text has Tamil content, else English */
+      if (_isTamil(clean) && ttsVoiceTa) {
+        utt.voice = ttsVoiceTa;
+        utt.lang = 'ta-IN';
+        utt.rate = 0.88;
+        utt.pitch = 1.05;
+      } else {
+        utt.voice = ttsVoiceEn;
+        utt.lang = 'en-IN';
+        utt.rate = 0.92;
+        utt.pitch = 1.0;
+      }
+      utt.volume = 1.0;
+      utt.onstart = () => { ttsSpeaking = true; updateSpeakerBtn(); };
+      utt.onend = utt.onerror = () => { ttsSpeaking = false; updateSpeakerBtn(); };
+      /* Chrome bug: long utterances get cut off — split at sentence boundaries */
+      if (clean.length > 200) {
+        const sentences = clean.match(/[^.!?]+[.!?]*/g) || [clean];
+        let i = 0;
+        function speakNext() {
+          if (i >= sentences.length || !ttsEnabled) return;
+          const u = new SpeechSynthesisUtterance(sentences[i++].trim());
+          u.voice = utt.voice; u.lang = utt.lang; u.rate = utt.rate; u.pitch = utt.pitch; u.volume = 1;
+          u.onend = speakNext;
+          u.onerror = () => { ttsSpeaking = false; updateSpeakerBtn(); };
+          if (i === 1) { u.onstart = () => { ttsSpeaking = true; updateSpeakerBtn(); }; }
+          speechSynthesis.speak(u);
+        }
+        speakNext();
+        return;
+      }
+      speechSynthesis.speak(utt);
+    }
 
-    return chunks.map(c => {
-      let score = 0;
-      qTerms.forEach(qt => {
-        const tf = c.tf[qt] || 0;
-        if (!tf) return;
-        const idfVal = idf[qt] || 1;
-        const num = tf * (K1 + 1);
-        const den = tf + K1 * (1 - B + B * c.terms.length / avgLen);
-        score += idfVal * (num / den);
-      });
-      return { ...c, score };
-    })
-    .filter(c => c.score > 0)
-    .sort((a,b) => b.score - a.score)
-    .slice(0, topK);
-  }
+    function stopTTS() { speechSynthesis && speechSynthesis.cancel(); ttsSpeaking = false; updateSpeakerBtn(); }
 
-  return { build, search, isReady: () => ready };
-})();
+    function updateSpeakerBtn() {
+      const btn = document.getElementById('chatTTSBtn');
+      if (!btn) return;
+      btn.textContent = ttsEnabled ? (ttsSpeaking ? '🔊' : '🔔') : '🔕';
+      btn.title = ttsEnabled ? 'Voice replies ON — click to mute' : 'Voice replies OFF — click to enable';
+    }
 
-/* ══════════════════════════════════════════════════════════
-   CHATBOT ENGINE
-══════════════════════════════════════════════════════════ */
-(function() {
+    window.toggleTTS = function () {
+      ttsEnabled = !ttsEnabled;
+      if (!ttsEnabled) stopTTS();
+      updateSpeakerBtn();
+      try { localStorage.setItem('arivoam-tts', ttsEnabled ? '1' : '0'); } catch (e) { }
+    };
 
-/* ─── Config ─── */
-function getBotCfg() {
-  try { return JSON.parse(localStorage.getItem('arivoam-bot-cfg') || '{}'); } catch(e){ return {}; }
-}
+    /* ══════════════════════════════════════════════════════════
+       RAG ENGINE  — fetches + indexes actual HTML files
+    ══════════════════════════════════════════════════════════ */
+    const RAG = (() => {
+      let chunks = [];   // [{id, src, title, section, text, terms, tf}]
+      let idf = {};      // {term: number}
+      let ready = false;
+      let building = false;
 
-function applyBotCfg() {
-  const c = getBotCfg();
-  if (c.name) { const el = document.getElementById('chatBotName'); if (el) el.textContent = c.name; }
+      const STOP = new Set('a an the is are was were be been being have has had do does did will would could should may might must can of in on at to for with by from up about into through during before after above below between out off over under again further then once here there when where why how all both each few more most other some such no nor not only same so than too very s t just don and or but if as'.split(' '));
 
-  const panel = document.getElementById('chatPanel');
-  const msgs  = document.getElementById('chatMessages');
-  if (!panel) return;
+      function tokenize(text) {
+        return text.toLowerCase().replace(/[^\w\s]/g, ' ').split(/\s+/).filter(t => t.length > 2 && !STOP.has(t));
+      }
 
-  /* ── Accent color ── */
-  const accent = c.accentColor || '#f5c842';
-  panel.style.setProperty('--chat-accent', accent);
-  /* Apply to avatar, send button, chat-bot button */
-  const styleId = 'arivoam-chat-dyn-style';
-  let sEl = document.getElementById(styleId);
-  if (!sEl) { sEl = document.createElement('style'); sEl.id = styleId; document.head.appendChild(sEl); }
-  sEl.textContent = `
+      function computeTF(tokens) {
+        const freq = {};
+        tokens.forEach(t => { freq[t] = (freq[t] || 0) + 1; });
+        const len = tokens.length || 1;
+        Object.keys(freq).forEach(t => { freq[t] /= len; });
+        return freq;
+      }
+
+      function computeIDF() {
+        const N = chunks.length || 1;
+        const df = {};
+        chunks.forEach(c => Object.keys(c.tf).forEach(t => { df[t] = (df[t] || 0) + 1; }));
+        Object.entries(df).forEach(([t, d]) => { idf[t] = Math.log((N - d + 0.5) / (d + 0.5) + 1); });
+      }
+
+      function extractChunks(html, src, title) {
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        ['script', 'style', 'nav', 'header', 'footer', '#bttBtn', '#themeToggle', '#backBtn',
+          '#chatBotBtn', '#chatPanel', '.anchor-nav', '.topbar', '.sticky-top'].forEach(sel => {
+            doc.querySelectorAll(sel).forEach(el => el.remove());
+          });
+        const body = doc.querySelector('main, article, .content, body') || doc.body;
+        const result = [];
+        let section = title;
+        let buf = '';
+
+        function flush() {
+          if (buf.trim().length < 60) { buf = ''; return; }
+          const tokens = tokenize(buf);
+          if (tokens.length < 8) { buf = ''; return; }
+          result.push({
+            id: 0, src, title, section, text: buf.trim().slice(0, 600),
+            terms: tokens, tf: computeTF(tokens)
+          });
+          buf = '';
+        }
+
+        body.querySelectorAll('h1,h2,h3,h4,p,li,td,th,.card-title,.card-desc,.pillar-title,.news-card h3,ul.bl li').forEach(el => {
+          const tag = el.tagName;
+          const txt = el.textContent.replace(/\s+/g, ' ').trim();
+          if (!txt || txt.length < 10) return;
+          if (/^H[1-4]$/.test(tag)) { flush(); section = txt; }
+          else { buf += ' ' + txt; if (buf.length > 500) flush(); }
+        });
+        flush();
+        return result;
+      }
+
+      async function fetchFile(url) {
+        try {
+          const r = await fetch(url, { cache: 'force-cache' });
+          return r.ok ? await r.text() : null;
+        } catch (e) { return null; }
+      }
+
+      // Files to index (CA files loaded from caData; static files hardcoded)
+      const STATIC_FILES = [
+        { url: 'traveller_accounts/tnpsc_travellers.html', title: 'Foreign Travellers to India' },
+        { url: 'SSC_Nouns_CrackSheet.html', title: 'Nouns Crack Sheet' },
+        { url: 'SSC_Pronouns_CrackSheet.html', title: 'Pronouns Crack Sheet' },
+      ];
+
+      async function build(setStatus) {
+        if (ready || building) return;
+        building = true;
+
+        // Try sessionStorage cache first
+        try {
+          const cached = sessionStorage.getItem('arivoam-rag-v2');
+          if (cached) {
+            const data = JSON.parse(cached);
+            chunks = data.chunks; idf = data.idf;
+            ready = true; building = false;
+            if (setStatus) setStatus('● Online · Study Assistant');
+            return;
+          }
+        } catch (e) { }
+
+        if (setStatus) setStatus('📚 Indexing study files…');
+
+        const filesToFetch = [...STATIC_FILES];
+
+        // Add CA files from ca.json
+        try {
+          const r = await fetch('CA-v2/ca.json', { cache: 'force-cache' });
+          if (r.ok) {
+            const caData = await r.json();
+            caData.slice(0, 20).forEach(e => {
+              filesToFetch.push({ url: 'CA-v2/' + e.file, title: e.title });
+            });
+          }
+        } catch (e) { }
+
+        // Fetch and parse in small parallel batches
+        for (let i = 0; i < filesToFetch.length; i += 3) {
+          const batch = filesToFetch.slice(i, i + 3);
+          await Promise.all(batch.map(async ({ url, title }) => {
+            const html = await fetchFile(url);
+            if (html) {
+              const c = extractChunks(html, url, title);
+              chunks.push(...c);
+            }
+          }));
+        }
+
+        // Assign sequential IDs and compute IDF
+        chunks.forEach((c, i) => { c.id = i; });
+        computeIDF();
+        ready = true;
+        building = false;
+
+        // Cache
+        try {
+          sessionStorage.setItem('arivoam-rag-v2', JSON.stringify({ chunks, idf }));
+        } catch (e) { }
+
+        if (setStatus) setStatus(`● Online · ${chunks.length} chunks indexed`);
+        setTimeout(() => { if (setStatus) setStatus('● Online · Study Assistant'); }, 3000);
+      }
+
+      function search(query, topK = 4) {
+        if (!ready || !chunks.length) return [];
+        const qTerms = tokenize(query);
+        if (!qTerms.length) return [];
+
+        // BM25-style scoring
+        const K1 = 1.5, B = 0.75;
+        const avgLen = chunks.reduce((a, c) => a + c.terms.length, 0) / chunks.length;
+
+        return chunks.map(c => {
+          let score = 0;
+          qTerms.forEach(qt => {
+            const tf = c.tf[qt] || 0;
+            if (!tf) return;
+            const idfVal = idf[qt] || 1;
+            const num = tf * (K1 + 1);
+            const den = tf + K1 * (1 - B + B * c.terms.length / avgLen);
+            score += idfVal * (num / den);
+          });
+          return { ...c, score };
+        })
+          .filter(c => c.score > 0)
+          .sort((a, b) => b.score - a.score)
+          .slice(0, topK);
+      }
+
+      return { build, search, isReady: () => ready };
+    })();
+
+    /* ══════════════════════════════════════════════════════════
+       CHATBOT ENGINE
+    ══════════════════════════════════════════════════════════ */
+    (function () {
+
+      /* ─── Config ─── */
+      function getBotCfg() {
+        try { return JSON.parse(localStorage.getItem('arivoam-bot-cfg') || '{}'); } catch (e) { return {}; }
+      }
+
+      function applyBotCfg() {
+        const c = getBotCfg();
+        if (c.name) { const el = document.getElementById('chatBotName'); if (el) el.textContent = c.name; }
+
+        const panel = document.getElementById('chatPanel');
+        const msgs = document.getElementById('chatMessages');
+        if (!panel) return;
+
+        /* ── Accent color ── */
+        const accent = c.accentColor || '#f5c842';
+        panel.style.setProperty('--chat-accent', accent);
+        /* Apply to avatar, send button, chat-bot button */
+        const styleId = 'arivoam-chat-dyn-style';
+        let sEl = document.getElementById(styleId);
+        if (!sEl) { sEl = document.createElement('style'); sEl.id = styleId; document.head.appendChild(sEl); }
+        sEl.textContent = `
     #chatBotBtn { background: linear-gradient(135deg, ${accent}, ${accent}cc) !important; }
     .chat-avatar, .msg-avatar { background: linear-gradient(135deg, ${accent}, ${accent}99) !important; }
     #chatSend { background: ${accent} !important; }
@@ -2850,521 +3137,562 @@ function applyBotCfg() {
     #chatMicBtn.listening { border-color: var(--red) !important; }
   `;
 
-  /* ── Font ── */
-  const fontMap = {
-    'Andika': "'Andika', sans-serif",
-    'Rajdhani': "'Rajdhani', sans-serif",
-    'Poppins': "'Poppins', sans-serif",
-    'Sofia Sans': "'Sofia Sans', sans-serif"
-  };
-  const font = fontMap[c.font] || fontMap['Andika'];
-  if (msgs) msgs.style.fontFamily = font;
-  /* Ensure the font is loaded */
-  if (c.font && c.font !== 'Andika') {
-    const linkId = 'chat-font-link';
-    if (!document.getElementById(linkId)) {
-      const lk = document.createElement('link');
-      lk.id = linkId; lk.rel = 'stylesheet';
-      const slug = c.font.replace(' ', '+');
-      lk.href = `https://fonts.googleapis.com/css2?family=${slug}:wght@400;600;700&display=swap`;
-      document.head.appendChild(lk);
-    }
-  }
+        /* ── Font ── */
+        const fontMap = {
+          'Andika': "'Andika', sans-serif",
+          'Rajdhani': "'Rajdhani', sans-serif",
+          'Poppins': "'Poppins', sans-serif",
+          'Sofia Sans': "'Sofia Sans', sans-serif"
+        };
+        const font = fontMap[c.font] || fontMap['Andika'];
+        if (msgs) msgs.style.fontFamily = font;
+        /* Ensure the font is loaded */
+        if (c.font && c.font !== 'Andika') {
+          const linkId = 'chat-font-link';
+          if (!document.getElementById(linkId)) {
+            const lk = document.createElement('link');
+            lk.id = linkId; lk.rel = 'stylesheet';
+            const slug = c.font.replace(' ', '+');
+            lk.href = `https://fonts.googleapis.com/css2?family=${slug}:wght@400;600;700&display=swap`;
+            document.head.appendChild(lk);
+          }
+        }
 
-  /* ── Background style ── */
-  const bgStyles = {
-    default: '',
-    glass:   'background: rgba(18,21,30,0.85) !important; backdrop-filter: blur(20px) !important;',
-    midnight:'background: #05070d !important;',
-    warm:    'background: #1a1208 !important;'
-  };
-  const bgStyle = bgStyles[c.bg] || '';
-  if (bgStyle) panel.style.cssText += bgStyle;
-}
+        /* ── Background style ── */
+        const bgStyles = {
+          default: '',
+          glass: 'background: rgba(18,21,30,0.85) !important; backdrop-filter: blur(20px) !important;',
+          midnight: 'background: #05070d !important;',
+          warm: 'background: #1a1208 !important;'
+        };
+        const bgStyle = bgStyles[c.bg] || '';
+        if (bgStyle) panel.style.cssText += bgStyle;
+      }
 
-/* ─── Chat history (persisted in localStorage) ─── */
-const HIST_KEY = 'arivoam-chat-history';
-const HIST_MAX = 60;
+      /* ─── Chat history (persisted in localStorage) ─── */
+      const HIST_KEY = 'arivoam-chat-history';
+      const HIST_MAX = 60;
 
-function saveHistory() {
-  const msgs = document.getElementById('chatMessages');
-  if (!msgs) return;
-  const items = [];
-  msgs.querySelectorAll('.msg').forEach(el => {
-    const type = el.classList.contains('bot') ? 'bot' : 'user';
-    const bubble = el.querySelector('.msg-bubble');
-    if (bubble) items.push({ type, html: bubble.innerHTML });
-  });
-  try { localStorage.setItem(HIST_KEY, JSON.stringify(items.slice(-HIST_MAX))); } catch(e){}
-}
+      function saveHistory() {
+        const msgs = document.getElementById('chatMessages');
+        if (!msgs) return;
+        const items = [];
+        msgs.querySelectorAll('.msg').forEach(el => {
+          const type = el.classList.contains('bot') ? 'bot' : 'user';
+          const bubble = el.querySelector('.msg-bubble');
+          if (bubble) items.push({ type, html: bubble.innerHTML });
+        });
+        try { localStorage.setItem(HIST_KEY, JSON.stringify(items.slice(-HIST_MAX))); } catch (e) { }
+      }
 
-function restoreHistory() {
-  try {
-    const items = JSON.parse(localStorage.getItem(HIST_KEY) || '[]');
-    if (!items.length) return false;
-    items.forEach(({ type, html }) => appendMsgRaw(type, html));
-    scrollBottom();
-    return true;
-  } catch(e) { return false; }
-}
+      function restoreHistory() {
+        try {
+          const items = JSON.parse(localStorage.getItem(HIST_KEY) || '[]');
+          if (!items.length) return false;
+          items.forEach(({ type, html }) => appendMsgRaw(type, html));
+          scrollBottom();
+          return true;
+        } catch (e) { return false; }
+      }
 
-window.clearChatHistory = function() {
-  try { localStorage.removeItem(HIST_KEY); } catch(e){}
-  const msgs = document.getElementById('chatMessages');
-  if (msgs) msgs.innerHTML = '';
-  document.getElementById('chatQR').innerHTML = '';
-  setTimeout(() => greet(), 200);
-};
+      window.clearChatHistory = function () {
+        try { localStorage.removeItem(HIST_KEY); } catch (e) { }
+        const msgs = document.getElementById('chatMessages');
+        if (msgs) msgs.innerHTML = '';
+        document.getElementById('chatQR').innerHTML = '';
+        setTimeout(() => greet(), 200);
+      };
 
-/* ─── UI helpers ─── */
-let chatOpen = false;
+      /* ─── UI helpers ─── */
+      let chatOpen = false;
 
-window.toggleChat = function() {
-  chatOpen = !chatOpen;
-  document.getElementById('chatPanel').classList.toggle('open', chatOpen);
-  const notif = document.getElementById('chatNotif');
-  if (notif) notif.style.display = 'none';
-  if (chatOpen) {
-    const msgs = document.getElementById('chatMessages');
-    if (msgs && msgs.children.length === 0) {
-      const restored = restoreHistory();
-      if (!restored) setTimeout(() => greet(), 300);
-      else setQR(['SSC subjects','TNPSC subjects','Current Affairs','Study tips']);
-    }
-    setTimeout(scrollBottom, 50);
-  } else {
-    stopTTS();
-  }
-};
+      window.toggleChat = function () {
+        chatOpen = !chatOpen;
+        document.getElementById('chatPanel').classList.toggle('open', chatOpen);
+        const notif = document.getElementById('chatNotif');
+        if (notif) notif.style.display = 'none';
+        if (chatOpen) {
+          const msgs = document.getElementById('chatMessages');
+          if (msgs && msgs.children.length === 0) {
+            const restored = restoreHistory();
+            if (!restored) setTimeout(() => greet(), 300);
+            else setQR(['SSC subjects', 'TNPSC subjects', 'Current Affairs', 'Study tips']);
+          }
+          setTimeout(scrollBottom, 50);
+        } else {
+          stopTTS();
+        }
+      };
 
-function scrollBottom() {
-  const el = document.getElementById('chatMessages');
-  if (el) el.scrollTop = el.scrollHeight;
-}
+      function scrollBottom() {
+        const el = document.getElementById('chatMessages');
+        if (el) el.scrollTop = el.scrollHeight;
+      }
 
-function appendMsgRaw(type, html) {
-  const wrap = document.getElementById('chatMessages');
-  if (!wrap) return;
-  const d = document.createElement('div');
-  d.className = 'msg ' + type;
-  if (type === 'bot')
-    d.innerHTML = '<div class="msg-avatar">🤖</div><div class="msg-bubble">' + html + '</div>';
-  else
-    d.innerHTML = '<div class="msg-bubble">' + html + '</div><div class="msg-avatar" style="background:linear-gradient(135deg,#5b9cf6,#a78bfa);font-size:11px;">👤</div>';
-  wrap.appendChild(d);
-}
+      function appendMsgRaw(type, html) {
+        const wrap = document.getElementById('chatMessages');
+        if (!wrap) return;
+        const d = document.createElement('div');
+        d.className = 'msg ' + type;
+        if (type === 'bot')
+          d.innerHTML = '<div class="msg-avatar">🤖</div><div class="msg-bubble">' + html + '</div>';
+        else
+          d.innerHTML = '<div class="msg-bubble">' + html + '</div><div class="msg-avatar" style="background:linear-gradient(135deg,#5b9cf6,#a78bfa);font-size:11px;">👤</div>';
+        wrap.appendChild(d);
+      }
 
-function appendMsg(type, html) {
-  appendMsgRaw(type, type === 'user' ? escHtml(html) : html);
-  scrollBottom();
-  saveHistory();
-}
+      function appendMsg(type, html) {
+        appendMsgRaw(type, type === 'user' ? escHtml(html) : html);
+        scrollBottom();
+        saveHistory();
+      }
 
-function escHtml(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
+      function escHtml(s) {
+        return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      }
 
-function showTyping() {
-  const wrap = document.getElementById('chatMessages');
-  if (!wrap) return;
-  const d = document.createElement('div');
-  d.className = 'msg bot'; d.id = 'typingIndicator';
-  d.innerHTML = '<div class="msg-avatar">🤖</div><div class="typing-indicator"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div>';
-  wrap.appendChild(d);
-  scrollBottom();
-}
+      function showTyping() {
+        const wrap = document.getElementById('chatMessages');
+        if (!wrap) return;
+        const d = document.createElement('div');
+        d.className = 'msg bot'; d.id = 'typingIndicator';
+        d.innerHTML = '<div class="msg-avatar">🤖</div><div class="typing-indicator"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div>';
+        wrap.appendChild(d);
+        scrollBottom();
+      }
 
-function removeTyping() {
-  const el = document.getElementById('typingIndicator');
-  if (el) el.remove();
-}
+      function removeTyping() {
+        const el = document.getElementById('typingIndicator');
+        if (el) el.remove();
+      }
 
-function typingDelay(text) {
-  const c = getBotCfg();
-  const speed = c.speed || 'normal';
-  const wc = text.split(/\s+/).length;
-  const base = wc * (speed === 'fast' ? 22 : speed === 'slow' ? 65 : 40);
-  return Math.min(Math.max(base, speed === 'fast' ? 400 : 600), speed === 'slow' ? 3000 : 2200);
-}
+      function typingDelay(text) {
+        const c = getBotCfg();
+        const speed = c.speed || 'normal';
+        const wc = text.split(/\s+/).length;
+        const base = wc * (speed === 'fast' ? 22 : speed === 'slow' ? 65 : 40);
+        return Math.min(Math.max(base, speed === 'fast' ? 400 : 600), speed === 'slow' ? 3000 : 2200);
+      }
 
-function botReply(html, fixedDelay) {
-  showTyping();
-  const plain = html.replace(/<[^>]+>/g, '');
-  const d = fixedDelay !== undefined ? fixedDelay : typingDelay(plain);
-  return new Promise(res => setTimeout(() => {
-    removeTyping();
-    appendMsg('bot', html);
-    speakText(plain);
-    res();
-  }, d));
-}
+      function botReply(html, fixedDelay) {
+        showTyping();
+        const plain = html.replace(/<[^>]+>/g, '');
+        const d = fixedDelay !== undefined ? fixedDelay : typingDelay(plain);
+        return new Promise(res => setTimeout(() => {
+          removeTyping();
+          appendMsg('bot', html);
+          speakText(plain);
+          res();
+        }, d));
+      }
 
-function setQR(chips) {
-  const el = document.getElementById('chatQR');
-  if (!el) return;
-  const c = getBotCfg();
-  const focus = Array.isArray(c.topics) && c.topics.length ? c.topics : chips;
-  const final = chips.some(ch => focus.includes(ch)) ? chips : focus.slice(0, 4);
-  el.innerHTML = final.map(ch =>
-    `<button class="qr-btn" onclick="handleQR(this)">${escHtml(ch)}</button>`
-  ).join('');
-}
+      function setQR(chips) {
+        const el = document.getElementById('chatQR');
+        if (!el) return;
+        const c = getBotCfg();
+        const focus = Array.isArray(c.topics) && c.topics.length ? c.topics : chips;
+        const final = chips.some(ch => focus.includes(ch)) ? chips : focus.slice(0, 4);
+        el.innerHTML = final.map(ch =>
+          `<button class="qr-btn" onclick="handleQR(this)">${escHtml(ch)}</button>`
+        ).join('');
+      }
 
-window.handleQR = function(btn) {
-  const text = btn.textContent.trim();
-  document.getElementById('chatQR').innerHTML = '';
-  appendMsg('user', text);
-  processQuery(text);
-};
+      window.handleQR = function (btn) {
+        const text = btn.textContent.trim();
+        document.getElementById('chatQR').innerHTML = '';
+        appendMsg('user', text);
+        processQuery(text);
+      };
 
-/* ─── Knowledge Base ─── */
-let KB = [];
+      /* ─── Knowledge Base ─── */
+      let KB = [];
 
-function buildKB() {
-  if (typeof EXAMS === 'undefined' || !EXAMS || KB.length) return;
-  for (const [, exam] of Object.entries(EXAMS)) {
-    for (const subj of (exam.subjects || [])) {
-      for (const [, sec] of Object.entries(subj.sections || {})) {
-        for (const card of (sec.cards || [])) {
-          if (!card.title) continue;
-          const kws = [
-            subj.label, exam.label, sec.sectionTitle, card.title,
-            card.sub || '', card.desc || '', ...(card.tags || '').split(/\s+/)
-          ].map(k => k.toLowerCase().trim()).filter(k => k.length > 1);
-          KB.push({ kws, title: card.title, desc: card.desc || '', href: card.href || '#', subject: subj.label, locked: !!card.locked });
+      function buildKB() {
+        if (typeof EXAMS === 'undefined' || !EXAMS || KB.length) return;
+        for (const [, exam] of Object.entries(EXAMS)) {
+          for (const subj of (exam.subjects || [])) {
+            for (const [, sec] of Object.entries(subj.sections || {})) {
+              for (const card of (sec.cards || [])) {
+                if (!card.title) continue;
+                const kws = [
+                  subj.label, exam.label, sec.sectionTitle, card.title,
+                  card.sub || '', card.desc || '', ...(card.tags || '').split(/\s+/)
+                ].map(k => k.toLowerCase().trim()).filter(k => k.length > 1);
+                KB.push({ kws, title: card.title, desc: card.desc || '', href: card.href || '#', subject: subj.label, locked: !!card.locked });
+              }
+            }
+          }
         }
       }
-    }
-  }
-}
 
-function searchKB(query) {
-  if (KB.length === 0) buildKB();
-  const tokens = query.toLowerCase().split(/\W+/).filter(t => t.length > 2);
-  if (!tokens.length) return [];
-  return KB
-    .map(e => ({ ...e, score: tokens.reduce((a, t) => a + e.kws.filter(k => k.includes(t) || t.includes(k)).length, 0) }))
-    .filter(e => e.score > 0)
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 4);
-}
-
-/* ─── FAQ ─── */
-const FAQ = [
-  { re: /^(hi|hello|hey|helo|hai|good (morning|evening|afternoon))\b/i,
-    ans() {
-      const style = getBotCfg().style || 'tutor';
-      const g = { tutor:'Hello! Ready to ace your exam? 📚', friendly:'Hey there! 👋 What topic shall we explore today?', formal:'Good day. How may I assist your exam preparation?' };
-      return (g[style]||g.tutor) + ' Ask me anything about <strong>TNPSC</strong> or <strong>SSC</strong>!';
-    }, qr:['SSC subjects','TNPSC subjects','Current Affairs','Study tips'] },
-
-  { re: /help|what.*(can|do) you|capabilities/i,
-    ans: () => 'I can help you:<br>• <strong>Find crack sheets</strong> — "tell me about pronouns"<br>• <strong>List subjects</strong> — "SSC subjects"<br>• <strong>Exam tips</strong> — "how to prepare for TNPSC"<br>• <strong>Search any topic</strong> — just type a keyword!<br><br>You can also speak to me using the 🎤 button!',
-    qr:['SSC subjects','TNPSC subjects','Mock tests','Study tips'] },
-
-  { re: /ssc subjects|ssc topics|what.*ssc/i,
-    ans() {
-      if (typeof EXAMS==='undefined') return 'Still loading data — try in a moment!';
-      return '<strong>SSC Subjects</strong><br>' + EXAMS.ssc.subjects.map(s=>`<span class="bot-chip">${s.icon} ${s.label}</span>`).join('') + '<br><br>Which one would you like to explore?';
-    }, qr:['English Grammar','Quantitative Aptitude','General Knowledge','Mock tests'] },
-
-  { re: /tnpsc subjects|tnpsc topics|what.*tnpsc/i,
-    ans() {
-      if (typeof EXAMS==='undefined') return 'Still loading data — try in a moment!';
-      return '<strong>TNPSC Subjects</strong><br>' + EXAMS.tnpsc.subjects.map(s=>`<span class="bot-chip">${s.icon} ${s.label}</span>`).join('') + '<br><br>What would you like to study?';
-    }, qr:['Tamil Grammar','Indian History','Current Affairs','Traveller Accounts'] },
-
-  { re: /current affairs|ca vault|daily ca|news/i,
-    ans: () => '📰 <strong>Current Affairs Vault</strong><br>Daily notes covering Economy, Polity, Environment, Science, International & TN Affairs — each with MCQs and mains questions.<br><br><a href="CA-v2/index.html">→ Open CA Vault</a>',
-    qr:['Newspaper Artifacts','TNPSC subjects','Study tips'] },
-
-  { re: /newspaper|artifact/i,
-    ans: () => '🗞️ <strong>Newspaper Artifacts</strong><br>Full daily newspaper analysis with Critical/Trap/Tip/PYQ/GEM badges, MCQs, and Tamil translations. Open the <strong>CA Vault → Newspaper Vault</strong> section.',
-    qr:['Current Affairs','Open CA Vault','SSC subjects'] },
-
-  { re: /mock test|simulation|practice test|test/i,
-    ans: () => '📝 <strong>Tests & Simulations</strong><br>Practice tests for History, TN History, Geography, Polity and Economics — real exam-style questions.<br><br>Switch to the <strong>📝 Tests</strong> tab at the top.',
-    qr:['History tests','Geography tests','Polity tests','Economics tests'] },
-
-  { re: /travell?er|foreign.*(visitor|travell)|megasthenes|ibn battuta|fa.?hien|huen tsang/i,
-    ans: () => '🌍 <strong>Foreign Traveller Accounts</strong><br>18+ travellers covered: Megasthenes, Fa-Hien, Huen Tsang, Al-Biruni, Ibn Battuta, Marco Polo and more — with historical significance and exam angles.<br><br><a href="traveller_accounts/tnpsc_travellers.html">→ Open Traveller Notes</a>',
-    qr:['TNPSC History','SSC GK','Indian History'] },
-
-  { re: /pronoun/i,
-    ans: () => '🔤 <strong>Pronouns Crack Sheet</strong><br>All 8 types — Personal, Possessive, Reflexive, Reciprocal, Relative, Demonstrative, Distributive & Indefinite. Who/Whom trap, 231-order rule included.<br><br><a href="SSC_Pronouns_CrackSheet.html">→ Open Sheet</a>',
-    qr:['Nouns','Grammar sheets','SSC English'] },
-
-  { re: /\bnoun\b/i,
-    ans: () => '📝 <strong>Nouns Crack Sheet</strong><br>Proper, Common, Collective, Abstract, Material nouns. Traps: Data/Datum, Criteria/Criterion, Countable vs uncountable.<br><br><a href="SSC_Nouns_CrackSheet.html">→ Open Sheet</a>',
-    qr:['Pronouns','Tenses & Verbs','SSC English'] },
-
-  { re: /study tip|how to (study|prepare|crack)|preparation strategy/i,
-    ans() {
-      const t = getBotCfg().customTip || '1. Focus on PYQ patterns — 60% of questions repeat<br>2. Do Current Affairs daily — 20+ marks at stake<br>3. Use Crack Sheets for 48-hour revision sprints<br>4. Practice MCQs after every topic<br>5. Revise TN-specific events specially for TNPSC';
-      return '💡 <strong>Study Tips</strong><br>' + t;
-    }, qr:['Current Affairs','Mock tests','TNPSC subjects'] },
-
-  { re: /indus valley|harappa|mohenjo/i,
-    ans: () => '🏺 <strong>Indus Valley Civilisation</strong><br>3 full practice tests (50 Qs each) available — Discovery, Sites, Town Planning, Drainage, Trade, Script.<br><br>Switch to <strong>📝 Tests → History</strong> to attempt them.',
-    qr:['History tests','Vedas test','TNPSC History'] },
-
-  { re: /gaganyaan|isro|space mission|chandrayaan/i,
-    ans: () => '🚀 <strong>ISRO & Space Missions</strong><br>Covered in the CA Vault — May 12 (Gaganyaan TV-D2, Vyommitra), May 25 (Chandrayaan-3 Goddard Award), May 26 (Shenzhou-23).<br><br><a href="CA-v2/index.html">→ Open CA Vault</a>',
-    qr:['Current Affairs','Science topics','Environment'] },
-
-  { re: /polity|constitution|article|parliament/i,
-    ans: () => '⚖️ <strong>Polity & Constitution</strong><br>4 test sets available: Articles, Constitution Test-1, Test-2, and Salient Features. Also covered in CA Vault for current amendments.<br><br>Switch to <strong>📝 Tests → Polity</strong>.',
-    qr:['Polity tests','Current Affairs','TNPSC subjects'] },
-
-  { re: /economy|economic|gdp|rbi|budget/i,
-    ans: () => '💰 <strong>Indian Economy</strong><br>150Q master test available. Topics: GDP, Five Year Plans, RBI, Budget, FRBM, schemes. Also covered daily in the CA Vault under Economy.<br><br>Switch to <strong>📝 Tests → Economics</strong>.',
-    qr:['Economics tests','Current Affairs','TNPSC subjects'] },
-
-  { re: /environment|ecology|western ghats|biodiversity/i,
-    ans: () => '🌿 <strong>Environment & Ecology</strong><br>Topics: Western Ghats ESZ, National Parks, COP negotiations, IBCA, SDG 15, SMILE scheme. All in CA Vault May 2026 editions.',
-    qr:['Current Affairs','TNPSC subjects','Science topics'] },
-
-  { re: /clear (chat|history)|reset chat|new conversation/i,
-    ans: () => '🗑️ Sure! Clearing chat history now…',
-    qr:[], post: () => setTimeout(window.clearChatHistory, 600) },
-
-  { re: /thank|thanks|great|awesome|nice|good bot|perfect|well done/i,
-    ans: () => '😊 Happy to help! Keep going — you\'ve got this! 💪<br>Anything else I can help with?',
-    qr:['SSC subjects','TNPSC subjects','Mock tests'] },
-];
-
-function matchFAQ(q) {
-  for (const f of FAQ) if (f.re.test(q)) return f;
-  return null;
-}
-
-/* ─── RAG-powered query processor ─── */
-async function processQuery(query) {
-  if (!query.trim()) return;
-  stopTTS();
-  _chatMicStop();
-  const statusEl = document.getElementById('chatStatusText');
-  if (statusEl) statusEl.textContent = '● Thinking…';
-
-  // 1 — FAQ intercept (fast, for known patterns)
-  const faq = matchFAQ(query);
-  if (faq) {
-    const html = typeof faq.ans === 'function' ? faq.ans() : faq.ans;
-    await botReply(html);
-    if (faq.qr && faq.qr.length) setQR(faq.qr);
-    if (faq.post) faq.post();
-    if (statusEl) statusEl.textContent = '● Online · Study Assistant';
-    return;
-  }
-
-  // 2 — RAG search across actual HTML files
-  const hits = RAG.search(query);
-  if (hits.length) {
-    let html = `📄 Found in <strong>${hits.length}</strong> source${hits.length>1?'s':''}:<br><br>`;
-    hits.forEach((h, i) => {
-      const label = h.section !== h.title ? `<span style="font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:.5px;">${escHtml(h.section)}</span><br>` : '';
-      const excerpt = h.text.slice(0, 180).replace(/\s+/g,' ');
-      const link = `<a href="${h.src}" style="font-size:11px;">→ Open: ${escHtml(h.title)}</a>`;
-      html += `${label}${escHtml(excerpt)}${h.text.length>180?'…':''}<br>${link}`;
-      if (i < hits.length-1) html += '<br><br>';
-    });
-    await botReply(html);
-    setQR(['More topics','Current Affairs','Mock tests','Study tips']);
-
-  // 3 — Fallback to exams.json KB
-  } else {
-    if (KB.length === 0) buildKB();
-    const kbHits = searchKB(query);
-    if (kbHits.length) {
-      let html = `Found <strong>${kbHits.length}</strong> sheet${kbHits.length>1?'s':''}:<br><br>`;
-      kbHits.forEach((h,i) => {
-        const link = h.locked ? '' : ` — <a href="${h.href}">→ Open</a>`;
-        html += `<strong>${escHtml(h.title)}</strong>${link}<br><span style="font-size:11px;color:var(--muted2)">${h.desc.slice(0,100)}${h.desc.length>100?'…':''}</span>`;
-        if (i < kbHits.length-1) html += '<br><br>';
-      });
-      await botReply(html);
-      setQR(['More topics','Study tips','Mock tests']);
-    } else {
-      const fb = RAG.isReady()
-        ? 'I searched all study files but couldn\'t find a match. Try rephrasing or use a simpler keyword:'
-        : 'Still indexing files — try again in a moment, or choose a topic:';
-      await botReply(fb);
-      setQR(['SSC subjects','TNPSC subjects','Current Affairs','Mock tests','Study tips']);
-    }
-  }
-
-  if (statusEl) statusEl.textContent = '● Online · Study Assistant';
-}
-
-/* ─── Greeting ─── */
-async function greet() {
-  const c = getBotCfg();
-  const name = c.name || 'Arivoam AI';
-  const msg = c.greeting ||
-    `Hi! I'm <strong>${name}</strong> 👋<br>Your TNPSC & SSC study assistant — powered by your actual study files.<br>Ask me anything or tap 🎤 to speak!`;
-  await botReply(msg, 800);
-  const chips = (Array.isArray(c.topics) && c.topics.length)
-    ? c.topics.slice(0,5)
-    : ['SSC subjects','TNPSC subjects','Current Affairs','Study tips','Mock tests'];
-  setQR(chips);
-}
-
-/* ─── Chat mic ─── */
-function _chatMicStop() {
-  if (!_vcActive) return;
-  _vcActive = false;
-  if (_vcRec) { try { _vcRec.stop(); } catch(e){} _vcRec = null; }
-  _updateMicBtn();
-  const statusEl = document.getElementById('chatStatusText');
-  if (statusEl) statusEl.textContent = '● Online · Study Assistant';
-  const inp = document.getElementById('chatInput');
-  if (inp) inp.placeholder = 'Ask about TNPSC / SSC topics…';
-}
-
-function _updateMicBtn() {
-  const btn = document.getElementById('chatMicBtn');
-  if (!btn) return;
-  btn.textContent = _vcActive ? '⏹' : '🎤';
-  btn.classList.toggle('listening', _vcActive);
-  btn.title = _vcActive ? 'Stop listening' : 'Speak your question';
-}
-
-window.toggleChatMic = async function() {
-  if (_vcActive) { _chatMicStop(); return; }
-  if (!SR) { appendMsg('bot', '⚠ Voice input needs Chrome or Edge. Please type your question.'); return; }
-
-  /* Permission check */
-  const statusEl = document.getElementById('chatStatusText');
-  if (statusEl) statusEl.textContent = '🔐 Checking mic…';
-  const ok = await _getMicPermission();
-  if (!ok) {
-    appendMsg('bot', '🔒 Microphone permission denied. Click the lock icon in the browser address bar and allow microphone access, then try again.');
-    if (statusEl) statusEl.textContent = '● Online · Study Assistant';
-    return;
-  }
-
-  _vcActive = true;
-  _updateMicBtn();
-
-  const inp = document.getElementById('chatInput');
-  if (statusEl) statusEl.textContent = '🔴 Listening…';
-  if (inp) inp.placeholder = '🔴 Speak now…';
-
-  let accumulated = '';
-
-  function _startVcOnce() {
-    if (!_vcActive) return;
-    const r = _newRec();
-    if (!r) return;
-    _vcRec = r;
-
-    r.onresult = e => {
-      let interim = '';
-      for (let i = e.resultIndex; i < e.results.length; i++) {
-        if (e.results[i].isFinal) accumulated += e.results[i][0].transcript + ' ';
-        else interim += e.results[i][0].transcript;
+      function searchKB(query) {
+        if (KB.length === 0) buildKB();
+        const tokens = query.toLowerCase().split(/\W+/).filter(t => t.length > 2);
+        if (!tokens.length) return [];
+        return KB
+          .map(e => ({ ...e, score: tokens.reduce((a, t) => a + e.kws.filter(k => k.includes(t) || t.includes(k)).length, 0) }))
+          .filter(e => e.score > 0)
+          .sort((a, b) => b.score - a.score)
+          .slice(0, 4);
       }
-      if (inp) inp.value = (accumulated + interim).trim();
-    };
 
-    r.onerror = e => {
-      if (e.error === 'not-allowed' || e.error === 'audio-capture') {
-        _vcActive = false; _vcRec = null; _updateMicBtn();
-        appendMsg('bot', e.error === 'not-allowed'
-          ? '🔒 Mic blocked — allow microphone access in browser settings.'
-          : '🎙 No microphone found on this device.');
+      /* ─── FAQ ─── */
+      const FAQ = [
+        {
+          re: /^(hi|hello|hey|helo|hai|good (morning|evening|afternoon))\b/i,
+          ans() {
+            const style = getBotCfg().style || 'tutor';
+            const g = { tutor: 'Hello! Ready to ace your exam? 📚', friendly: 'Hey there! 👋 What topic shall we explore today?', formal: 'Good day. How may I assist your exam preparation?' };
+            return (g[style] || g.tutor) + ' Ask me anything about <strong>TNPSC</strong> or <strong>SSC</strong>!';
+          }, qr: ['SSC subjects', 'TNPSC subjects', 'Current Affairs', 'Study tips']
+        },
+
+        {
+          re: /help|what.*(can|do) you|capabilities/i,
+          ans: () => 'I can help you:<br>• <strong>Find crack sheets</strong> — "tell me about pronouns"<br>• <strong>List subjects</strong> — "SSC subjects"<br>• <strong>Exam tips</strong> — "how to prepare for TNPSC"<br>• <strong>Search any topic</strong> — just type a keyword!<br><br>You can also speak to me using the 🎤 button!',
+          qr: ['SSC subjects', 'TNPSC subjects', 'Mock tests', 'Study tips']
+        },
+
+        {
+          re: /ssc subjects|ssc topics|what.*ssc/i,
+          ans() {
+            if (typeof EXAMS === 'undefined') return 'Still loading data — try in a moment!';
+            return '<strong>SSC Subjects</strong><br>' + EXAMS.ssc.subjects.map(s => `<span class="bot-chip">${s.icon} ${s.label}</span>`).join('') + '<br><br>Which one would you like to explore?';
+          }, qr: ['English Grammar', 'Quantitative Aptitude', 'General Knowledge', 'Mock tests']
+        },
+
+        {
+          re: /tnpsc subjects|tnpsc topics|what.*tnpsc/i,
+          ans() {
+            if (typeof EXAMS === 'undefined') return 'Still loading data — try in a moment!';
+            return '<strong>TNPSC Subjects</strong><br>' + EXAMS.tnpsc.subjects.map(s => `<span class="bot-chip">${s.icon} ${s.label}</span>`).join('') + '<br><br>What would you like to study?';
+          }, qr: ['Tamil Grammar', 'Indian History', 'Current Affairs', 'Traveller Accounts']
+        },
+
+        {
+          re: /current affairs|ca vault|daily ca|news/i,
+          ans: () => '📰 <strong>Current Affairs Vault</strong><br>Daily notes covering Economy, Polity, Environment, Science, International & TN Affairs — each with MCQs and mains questions.<br><br><a href="CA-v2/index.html">→ Open CA Vault</a>',
+          qr: ['Newspaper Artifacts', 'TNPSC subjects', 'Study tips']
+        },
+
+        {
+          re: /newspaper|artifact/i,
+          ans: () => '🗞️ <strong>Newspaper Artifacts</strong><br>Full daily newspaper analysis with Critical/Trap/Tip/PYQ/GEM badges, MCQs, and Tamil translations. Open the <strong>CA Vault → Newspaper Vault</strong> section.',
+          qr: ['Current Affairs', 'Open CA Vault', 'SSC subjects']
+        },
+
+        {
+          re: /mock test|simulation|practice test|test/i,
+          ans: () => '📝 <strong>Tests & Simulations</strong><br>Practice tests for History, TN History, Geography, Polity and Economics — real exam-style questions.<br><br>Switch to the <strong>📝 Tests</strong> tab at the top.',
+          qr: ['History tests', 'Geography tests', 'Polity tests', 'Economics tests']
+        },
+
+        {
+          re: /travell?er|foreign.*(visitor|travell)|megasthenes|ibn battuta|fa.?hien|huen tsang/i,
+          ans: () => '🌍 <strong>Foreign Traveller Accounts</strong><br>18+ travellers covered: Megasthenes, Fa-Hien, Huen Tsang, Al-Biruni, Ibn Battuta, Marco Polo and more — with historical significance and exam angles.<br><br><a href="traveller_accounts/tnpsc_travellers.html">→ Open Traveller Notes</a>',
+          qr: ['TNPSC History', 'SSC GK', 'Indian History']
+        },
+
+        {
+          re: /pronoun/i,
+          ans: () => '🔤 <strong>Pronouns Crack Sheet</strong><br>All 8 types — Personal, Possessive, Reflexive, Reciprocal, Relative, Demonstrative, Distributive & Indefinite. Who/Whom trap, 231-order rule included.<br><br><a href="SSC_Pronouns_CrackSheet.html">→ Open Sheet</a>',
+          qr: ['Nouns', 'Grammar sheets', 'SSC English']
+        },
+
+        {
+          re: /\bnoun\b/i,
+          ans: () => '📝 <strong>Nouns Crack Sheet</strong><br>Proper, Common, Collective, Abstract, Material nouns. Traps: Data/Datum, Criteria/Criterion, Countable vs uncountable.<br><br><a href="SSC_Nouns_CrackSheet.html">→ Open Sheet</a>',
+          qr: ['Pronouns', 'Tenses & Verbs', 'SSC English']
+        },
+
+        {
+          re: /study tip|how to (study|prepare|crack)|preparation strategy/i,
+          ans() {
+            const t = getBotCfg().customTip || '1. Focus on PYQ patterns — 60% of questions repeat<br>2. Do Current Affairs daily — 20+ marks at stake<br>3. Use Crack Sheets for 48-hour revision sprints<br>4. Practice MCQs after every topic<br>5. Revise TN-specific events specially for TNPSC';
+            return '💡 <strong>Study Tips</strong><br>' + t;
+          }, qr: ['Current Affairs', 'Mock tests', 'TNPSC subjects']
+        },
+
+        {
+          re: /indus valley|harappa|mohenjo/i,
+          ans: () => '🏺 <strong>Indus Valley Civilisation</strong><br>3 full practice tests (50 Qs each) available — Discovery, Sites, Town Planning, Drainage, Trade, Script.<br><br>Switch to <strong>📝 Tests → History</strong> to attempt them.',
+          qr: ['History tests', 'Vedas test', 'TNPSC History']
+        },
+
+        {
+          re: /gaganyaan|isro|space mission|chandrayaan/i,
+          ans: () => '🚀 <strong>ISRO & Space Missions</strong><br>Covered in the CA Vault — May 12 (Gaganyaan TV-D2, Vyommitra), May 25 (Chandrayaan-3 Goddard Award), May 26 (Shenzhou-23).<br><br><a href="CA-v2/index.html">→ Open CA Vault</a>',
+          qr: ['Current Affairs', 'Science topics', 'Environment']
+        },
+
+        {
+          re: /polity|constitution|article|parliament/i,
+          ans: () => '⚖️ <strong>Polity & Constitution</strong><br>4 test sets available: Articles, Constitution Test-1, Test-2, and Salient Features. Also covered in CA Vault for current amendments.<br><br>Switch to <strong>📝 Tests → Polity</strong>.',
+          qr: ['Polity tests', 'Current Affairs', 'TNPSC subjects']
+        },
+
+        {
+          re: /economy|economic|gdp|rbi|budget/i,
+          ans: () => '💰 <strong>Indian Economy</strong><br>150Q master test available. Topics: GDP, Five Year Plans, RBI, Budget, FRBM, schemes. Also covered daily in the CA Vault under Economy.<br><br>Switch to <strong>📝 Tests → Economics</strong>.',
+          qr: ['Economics tests', 'Current Affairs', 'TNPSC subjects']
+        },
+
+        {
+          re: /environment|ecology|western ghats|biodiversity/i,
+          ans: () => '🌿 <strong>Environment & Ecology</strong><br>Topics: Western Ghats ESZ, National Parks, COP negotiations, IBCA, SDG 15, SMILE scheme. All in CA Vault May 2026 editions.',
+          qr: ['Current Affairs', 'TNPSC subjects', 'Science topics']
+        },
+
+        {
+          re: /clear (chat|history)|reset chat|new conversation/i,
+          ans: () => '🗑️ Sure! Clearing chat history now…',
+          qr: [], post: () => setTimeout(window.clearChatHistory, 600)
+        },
+
+        {
+          re: /thank|thanks|great|awesome|nice|good bot|perfect|well done/i,
+          ans: () => '😊 Happy to help! Keep going — you\'ve got this! 💪<br>Anything else I can help with?',
+          qr: ['SSC subjects', 'TNPSC subjects', 'Mock tests']
+        },
+      ];
+
+      function matchFAQ(q) {
+        for (const f of FAQ) if (f.re.test(q)) return f;
+        return null;
+      }
+
+      /* ─── RAG-powered query processor ─── */
+      async function processQuery(query) {
+        if (!query.trim()) return;
+        stopTTS();
+        _chatMicStop();
+        const statusEl = document.getElementById('chatStatusText');
+        if (statusEl) statusEl.textContent = '● Thinking…';
+
+        // 1 — FAQ intercept (fast, for known patterns)
+        const faq = matchFAQ(query);
+        if (faq) {
+          const html = typeof faq.ans === 'function' ? faq.ans() : faq.ans;
+          await botReply(html);
+          if (faq.qr && faq.qr.length) setQR(faq.qr);
+          if (faq.post) faq.post();
+          if (statusEl) statusEl.textContent = '● Online · Study Assistant';
+          return;
+        }
+
+        // 2 — RAG search across actual HTML files
+        const hits = RAG.search(query);
+        if (hits.length) {
+          let html = `📄 Found in <strong>${hits.length}</strong> source${hits.length > 1 ? 's' : ''}:<br><br>`;
+          hits.forEach((h, i) => {
+            const label = h.section !== h.title ? `<span style="font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:.5px;">${escHtml(h.section)}</span><br>` : '';
+            const excerpt = h.text.slice(0, 180).replace(/\s+/g, ' ');
+            const link = `<a href="${h.src}" style="font-size:11px;">→ Open: ${escHtml(h.title)}</a>`;
+            html += `${label}${escHtml(excerpt)}${h.text.length > 180 ? '…' : ''}<br>${link}`;
+            if (i < hits.length - 1) html += '<br><br>';
+          });
+          await botReply(html);
+          setQR(['More topics', 'Current Affairs', 'Mock tests', 'Study tips']);
+
+          // 3 — Fallback to exams.json KB
+        } else {
+          if (KB.length === 0) buildKB();
+          const kbHits = searchKB(query);
+          if (kbHits.length) {
+            let html = `Found <strong>${kbHits.length}</strong> sheet${kbHits.length > 1 ? 's' : ''}:<br><br>`;
+            kbHits.forEach((h, i) => {
+              const link = h.locked ? '' : ` — <a href="${h.href}">→ Open</a>`;
+              html += `<strong>${escHtml(h.title)}</strong>${link}<br><span style="font-size:11px;color:var(--muted2)">${h.desc.slice(0, 100)}${h.desc.length > 100 ? '…' : ''}</span>`;
+              if (i < kbHits.length - 1) html += '<br><br>';
+            });
+            await botReply(html);
+            setQR(['More topics', 'Study tips', 'Mock tests']);
+          } else {
+            const fb = RAG.isReady()
+              ? 'I searched all study files but couldn\'t find a match. Try rephrasing or use a simpler keyword:'
+              : 'Still indexing files — try again in a moment, or choose a topic:';
+            await botReply(fb);
+            setQR(['SSC subjects', 'TNPSC subjects', 'Current Affairs', 'Mock tests', 'Study tips']);
+          }
+        }
+
         if (statusEl) statusEl.textContent = '● Online · Study Assistant';
-        if (inp) inp.placeholder = 'Ask about TNPSC / SSC topics…';
-        return;
       }
-      /* no-speech / network — log and let onend restart */
-      console.info('Chat mic error (will restart):', e.error);
-    };
 
-    r.onend = () => {
-      _vcRec = null;
-      const q = accumulated.trim();
-      if (_vcActive && !q) {
-        /* No speech yet — restart session */
-        setTimeout(_startVcOnce, 120);
-        return;
+      /* ─── Greeting ─── */
+      async function greet() {
+        const c = getBotCfg();
+        const name = c.name || 'Arivoam AI';
+        const msg = c.greeting ||
+          `Hi! I'm <strong>${name}</strong> 👋<br>Your TNPSC & SSC study assistant — powered by your actual study files.<br>Ask me anything or tap 🎤 to speak!`;
+        await botReply(msg, 800);
+        const chips = (Array.isArray(c.topics) && c.topics.length)
+          ? c.topics.slice(0, 5)
+          : ['SSC subjects', 'TNPSC subjects', 'Current Affairs', 'Study tips', 'Mock tests'];
+        setQR(chips);
       }
-      /* Got speech — send it */
-      _vcActive = false; _updateMicBtn();
-      if (statusEl) statusEl.textContent = '● Online · Study Assistant';
-      if (inp) inp.placeholder = 'Ask about TNPSC / SSC topics…';
-      if (q) {
-        if (inp) inp.value = '';
+
+      /* ─── Chat mic ─── */
+      function _chatMicStop() {
+        if (!_vcActive) return;
+        _vcActive = false;
+        if (_vcRec) { try { _vcRec.stop(); } catch (e) { } _vcRec = null; }
+        _updateMicBtn();
+        const statusEl = document.getElementById('chatStatusText');
+        if (statusEl) statusEl.textContent = '● Online · Study Assistant';
+        const inp = document.getElementById('chatInput');
+        if (inp) inp.placeholder = 'Ask about TNPSC / SSC topics…';
+      }
+
+      function _updateMicBtn() {
+        const btn = document.getElementById('chatMicBtn');
+        if (!btn) return;
+        btn.textContent = _vcActive ? '⏹' : '🎤';
+        btn.classList.toggle('listening', _vcActive);
+        btn.title = _vcActive ? 'Stop listening' : 'Speak your question';
+      }
+
+      window.toggleChatMic = async function () {
+        if (_vcActive) { _chatMicStop(); return; }
+        if (!SR) { appendMsg('bot', '⚠ Voice input needs Chrome or Edge. Please type your question.'); return; }
+
+        /* Permission check */
+        const statusEl = document.getElementById('chatStatusText');
+        if (statusEl) statusEl.textContent = '🔐 Checking mic…';
+        const ok = await _getMicPermission();
+        if (!ok) {
+          appendMsg('bot', '🔒 Microphone permission denied. Click the lock icon in the browser address bar and allow microphone access, then try again.');
+          if (statusEl) statusEl.textContent = '● Online · Study Assistant';
+          return;
+        }
+
+        _vcActive = true;
+        _updateMicBtn();
+
+        const inp = document.getElementById('chatInput');
+        if (statusEl) statusEl.textContent = '🔴 Listening…';
+        if (inp) inp.placeholder = '🔴 Speak now…';
+
+        let accumulated = '';
+
+        function _startVcOnce() {
+          if (!_vcActive) return;
+          const r = _newRec();
+          if (!r) return;
+          _vcRec = r;
+
+          r.onresult = e => {
+            let interim = '';
+            for (let i = e.resultIndex; i < e.results.length; i++) {
+              if (e.results[i].isFinal) accumulated += e.results[i][0].transcript + ' ';
+              else interim += e.results[i][0].transcript;
+            }
+            if (inp) inp.value = (accumulated + interim).trim();
+          };
+
+          r.onerror = e => {
+            if (e.error === 'not-allowed' || e.error === 'audio-capture') {
+              _vcActive = false; _vcRec = null; _updateMicBtn();
+              appendMsg('bot', e.error === 'not-allowed'
+                ? '🔒 Mic blocked — allow microphone access in browser settings.'
+                : '🎙 No microphone found on this device.');
+              if (statusEl) statusEl.textContent = '● Online · Study Assistant';
+              if (inp) inp.placeholder = 'Ask about TNPSC / SSC topics…';
+              return;
+            }
+            /* no-speech / network — log and let onend restart */
+            console.info('Chat mic error (will restart):', e.error);
+          };
+
+          r.onend = () => {
+            _vcRec = null;
+            const q = accumulated.trim();
+            if (_vcActive && !q) {
+              /* No speech yet — restart session */
+              setTimeout(_startVcOnce, 120);
+              return;
+            }
+            /* Got speech — send it */
+            _vcActive = false; _updateMicBtn();
+            if (statusEl) statusEl.textContent = '● Online · Study Assistant';
+            if (inp) inp.placeholder = 'Ask about TNPSC / SSC topics…';
+            if (q) {
+              if (inp) inp.value = '';
+              document.getElementById('chatQR').innerHTML = '';
+              appendMsg('user', q);
+              processQuery(q);
+            }
+          };
+
+          try { r.start(); }
+          catch (err) {
+            _vcActive = false; _vcRec = null; _updateMicBtn();
+            appendMsg('bot', '⚠ Could not start mic. Reload and try again.');
+            if (statusEl) statusEl.textContent = '● Online · Study Assistant';
+          }
+        }
+
+        _startVcOnce();
+      };
+
+      window.stopChatMic = _chatMicStop;
+
+      /* ─── Send message ─── */
+      window.sendChat = function () {
+        const inp = document.getElementById('chatInput');
+        if (!inp) return;
+        const q = inp.value.trim();
+        if (!q) return;
+        inp.value = '';
+        stopTTS(); _chatMicStop();
         document.getElementById('chatQR').innerHTML = '';
         appendMsg('user', q);
         processQuery(q);
-      }
-    };
+      };
 
-    try { r.start(); }
-    catch(err) {
-      _vcActive = false; _vcRec = null; _updateMicBtn();
-      appendMsg('bot', '⚠ Could not start mic. Reload and try again.');
-      if (statusEl) statusEl.textContent = '● Online · Study Assistant';
-    }
-  }
+      /* ─── Init ─── */
+      try { ttsEnabled = localStorage.getItem('arivoam-tts') === '1'; } catch (e) { }
+      applyBotCfg();
+      updateSpeakerBtn();
 
-  _startVcOnce();
-};
+      // Auto-open chatbot on page load with chime
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          const panel = document.getElementById('chatPanel');
+          const msgs = document.getElementById('chatMessages');
+          if (!panel) return;
+          chatOpen = true;
+          panel.classList.add('open');
+          const notif = document.getElementById('chatNotif');
+          if (notif) notif.style.display = 'none';
+          playChime();
+          if (msgs && msgs.children.length === 0) {
+            const restored = restoreHistory();
+            if (!restored) setTimeout(() => greet(), 600);
+            else setQR(['SSC subjects', 'TNPSC subjects', 'Current Affairs', 'Study tips']);
+          }
+          // Build RAG index in background
+          RAG.build(t => {
+            const s = document.getElementById('chatStatusText');
+            if (s) s.textContent = t;
+          });
+        }, 2000);
+      });
 
-window.stopChatMic = _chatMicStop;
+      // Also build KB from exams.json after EXAMS loads
+      setTimeout(() => buildKB(), 3500);
 
-/* ─── Send message ─── */
-window.sendChat = function() {
-  const inp = document.getElementById('chatInput');
-  if (!inp) return;
-  const q = inp.value.trim();
-  if (!q) return;
-  inp.value = '';
-  stopTTS(); _chatMicStop();
-  document.getElementById('chatQR').innerHTML = '';
-  appendMsg('user', q);
-  processQuery(q);
-};
+    })();
+  </script>
 
-/* ─── Init ─── */
-try { ttsEnabled = localStorage.getItem('arivoam-tts') === '1'; } catch(e){}
-applyBotCfg();
-updateSpeakerBtn();
-
-// Auto-open chatbot on page load with chime
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    const panel = document.getElementById('chatPanel');
-    const msgs  = document.getElementById('chatMessages');
-    if (!panel) return;
-    chatOpen = true;
-    panel.classList.add('open');
-    const notif = document.getElementById('chatNotif');
-    if (notif) notif.style.display = 'none';
-    playChime();
-    if (msgs && msgs.children.length === 0) {
-      const restored = restoreHistory();
-      if (!restored) setTimeout(() => greet(), 600);
-      else setQR(['SSC subjects','TNPSC subjects','Current Affairs','Study tips']);
-    }
-    // Build RAG index in background
-    RAG.build(t => {
-      const s = document.getElementById('chatStatusText');
-      if (s) s.textContent = t;
-    });
-  }, 2000);
-});
-
-// Also build KB from exams.json after EXAMS loads
-setTimeout(() => buildKB(), 3500);
-
-})();
-</script>
-
-<button id="bttBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top" style="position:fixed;bottom:24px;right:24px;z-index:9998;width:42px;height:42px;border-radius:50%;background:rgba(13,15,20,0.92);border:1px solid rgba(245,200,66,0.35);color:#f5c842;font-size:18px;line-height:1;cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 2px 14px rgba(0,0,0,0.45);opacity:0;transition:opacity .25s,transform .2s;pointer-events:none;display:flex;align-items:center;justify-content:center;">↑</button>
-<script>(function(){var b=document.getElementById('bttBtn');if(!b)return;window.addEventListener('scroll',function(){var s=window.scrollY||document.documentElement.scrollTop;if(s>240){b.style.opacity='1';b.style.pointerEvents='auto';b.style.transform='translateY(0)';}else{b.style.opacity='0';b.style.pointerEvents='none';b.style.transform='translateY(6px)';}},{passive:true});})();</script>
-<button id="themeToggle" onclick="(function(){var l=document.documentElement.classList.toggle('light-mode');localStorage.setItem('arivoam-theme',l?'light':'dark');var b=document.getElementById('themeToggle');if(b)b.innerHTML=l?'&#9790;':'&#9728;';})()" title="Toggle light/dark mode" style="position:fixed;bottom:76px;right:24px;z-index:9998;width:42px;height:42px;border-radius:50%;background:rgba(13,15,20,0.92);border:1px solid rgba(245,200,66,0.35);color:#f5c842;font-size:16px;line-height:1;cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 2px 14px rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;transition:all .2s;">&#9728;</button><script>(function(){var b=document.getElementById('themeToggle');if(!b)return;if(document.documentElement.classList.contains('light-mode')){b.innerHTML='&#9790;';}})()</script>
+  <button id="bttBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top"
+    style="position:fixed;bottom:24px;right:24px;z-index:9998;width:42px;height:42px;border-radius:50%;background:rgba(13,15,20,0.92);border:1px solid rgba(245,200,66,0.35);color:#f5c842;font-size:18px;line-height:1;cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 2px 14px rgba(0,0,0,0.45);opacity:0;transition:opacity .25s,transform .2s;pointer-events:none;display:flex;align-items:center;justify-content:center;">↑</button>
+  <script>(function () { var b = document.getElementById('bttBtn'); if (!b) return; window.addEventListener('scroll', function () { var s = window.scrollY || document.documentElement.scrollTop; if (s > 240) { b.style.opacity = '1'; b.style.pointerEvents = 'auto'; b.style.transform = 'translateY(0)'; } else { b.style.opacity = '0'; b.style.pointerEvents = 'none'; b.style.transform = 'translateY(6px)'; } }, { passive: true }); })();</script>
+  <button id="themeToggle"
+    onclick="(function(){var l=document.documentElement.classList.toggle('light-mode');localStorage.setItem('arivoam-theme',l?'light':'dark');var b=document.getElementById('themeToggle');if(b)b.innerHTML=l?'&#9790;':'&#9728;';})()"
+    title="Toggle light/dark mode"
+    style="position:fixed;bottom:76px;right:24px;z-index:9998;width:42px;height:42px;border-radius:50%;background:rgba(13,15,20,0.92);border:1px solid rgba(245,200,66,0.35);color:#f5c842;font-size:16px;line-height:1;cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 2px 14px rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;transition:all .2s;">&#9728;</button>
+  <script>(function () { var b = document.getElementById('themeToggle'); if (!b) return; if (document.documentElement.classList.contains('light-mode')) { b.innerHTML = '&#9790;'; } })()</script>
 </body>
 
 </html>
