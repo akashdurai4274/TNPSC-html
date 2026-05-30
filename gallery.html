@@ -367,8 +367,40 @@
     .upload-z-icon { font-size: 1.8rem; margin-bottom: 6px; }
     .upload-z-txt { font-family: var(--font-m); font-size: 0.66rem; color: var(--muted2); }
     .upload-prev { display: none; margin-top: 10px; border-radius: 6px; overflow: hidden; }
-    .upload-prev img { width: 100%; max-height: 140px; object-fit: cover; }
+    .upload-prev img { width: 100%; max-height: 160px; object-fit: cover; display: block; }
     .modal-acts { display: flex; justify-content: flex-end; gap: 8px; margin-top: 22px; }
+
+    /* ── CAMERA CAPTURE ── */
+    .src-tabs { display: flex; gap: 6px; margin-bottom: 10px; }
+    .src-tab {
+      flex: 1; font-family: var(--font-m); font-size: 0.62rem; padding: 7px 10px;
+      border-radius: 6px; border: 1px solid var(--border); background: var(--bg);
+      color: var(--muted2); cursor: pointer; transition: all .18s; text-align: center;
+    }
+    .src-tab.active { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
+    .cam-wrap {
+      display: none; position: relative; border-radius: 8px; overflow: hidden;
+      background: #000; aspect-ratio: 4/3;
+    }
+    .cam-wrap.live { display: block; }
+    .cam-video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .cam-snap {
+      position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
+      background: rgba(255,255,255,.95); border: none; border-radius: 50%;
+      width: 54px; height: 54px; font-size: 1.4rem; cursor: pointer;
+      box-shadow: 0 3px 14px rgba(0,0,0,.5); transition: transform .15s, box-shadow .15s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cam-snap:hover { transform: translateX(-50%) scale(1.08); box-shadow: 0 4px 20px rgba(0,0,0,.6); }
+    .cam-flip {
+      position: absolute; top: 10px; right: 10px;
+      background: rgba(0,0,0,.45); border: none; border-radius: 50%;
+      width: 36px; height: 36px; font-size: 1rem; cursor: pointer; color: white;
+      display: flex; align-items: center; justify-content: center; transition: background .15s;
+    }
+    .cam-flip:hover { background: rgba(0,0,0,.7); }
+    .cam-err { padding: 20px; text-align: center; font-family: var(--font-m); font-size: 0.65rem; color: var(--red); }
+    #retakeBtn { margin-top: 8px; font-size: 0.6rem; padding: 5px 12px; }
 
     /* ── LIGHTBOX ── */
     .lightbox {
@@ -579,10 +611,12 @@ function buildMockData() {
 }
 
 /* ══════════════════ STATE ══════════════════ */
-let st = { view: 'subjects', sid: null, tid: null };
+let st   = { view: 'subjects', sid: null, tid: null };
 let data = { subjects: [] };
-let pick = { accent: ACCENTS[0], icon: ICONS[0], file: null };
-let q = '';
+let pick = { accent: ACCENTS[0], icon: ICONS[0], file: null, capturedUrl: null };
+let q    = '';
+let camStream = null;
+let camFacing = 'environment';
 
 function save() { localStorage.setItem(LS_KEY, JSON.stringify(data)); }
 function load() {
@@ -773,7 +807,11 @@ function openModal(html) {
   document.getElementById('modalOv').classList.remove('hidden');
   setTimeout(() => { const inp = document.querySelector('#modalBox .form-inp'); if (inp) inp.focus(); }, 80);
 }
-function closeModal() { document.getElementById('modalOv').classList.add('hidden'); pick.file = null; }
+function closeModal() {
+  document.getElementById('modalOv').classList.add('hidden');
+  pick.file = null; pick.capturedUrl = null;
+  stopCamera();
+}
 document.getElementById('modalOv').addEventListener('click', e => { if (e.target === document.getElementById('modalOv')) closeModal(); });
 
 /* ── Add Subject ── */
@@ -869,53 +907,156 @@ function doEditTopic(sid, tid) {
   if (t && v) { t.name = v; save(); closeModal(); render(); }
 }
 
+/* ══════════════════ CAMERA ══════════════════ */
+function stopCamera() {
+  if (camStream) { camStream.getTracks().forEach(t => t.stop()); camStream = null; }
+  const v = document.getElementById('camVideo');
+  if (v) v.srcObject = null;
+}
+
+async function startCamera() {
+  const wrap = document.getElementById('camWrap');
+  const v    = document.getElementById('camVideo');
+  if (!wrap || !v) return;
+  stopCamera();
+  wrap.innerHTML = `<video id="camVideo" class="cam-video" autoplay playsinline muted></video>
+    <button class="cam-snap" onclick="capturePhoto()" title="Take photo">📸</button>
+    <button class="cam-flip" onclick="flipCamera()" title="Flip camera">🔄</button>`;
+  const video = document.getElementById('camVideo');
+  try {
+    const constraints = { video: { facingMode: { ideal: camFacing }, width:{ideal:1280}, height:{ideal:720} } };
+    camStream = await navigator.mediaDevices.getUserMedia(constraints);
+    video.srcObject = camStream;
+    await video.play();
+  } catch (err) {
+    wrap.innerHTML = `<div class="cam-err">📷 Camera access denied.<br><small>${err.message}</small></div>`;
+  }
+}
+
+window.flipCamera = async function () {
+  camFacing = camFacing === 'environment' ? 'user' : 'environment';
+  await startCamera();
+};
+
+window.capturePhoto = function () {
+  const video = document.getElementById('camVideo');
+  if (!video || !video.videoWidth) return;
+  const canvas = document.createElement('canvas');
+  canvas.width  = video.videoWidth;
+  canvas.height = video.videoHeight;
+  canvas.getContext('2d').drawImage(video, 0, 0);
+  const url = canvas.toDataURL('image/jpeg', 0.88);
+  pick.capturedUrl = url;
+  pick.file = null;
+  stopCamera();
+  /* Show preview, hide camera */
+  const wrap = document.getElementById('camWrap');
+  if (wrap) wrap.classList.remove('live');
+  document.getElementById('upPrevImg').src = url;
+  document.getElementById('upPrev').style.display = 'block';
+  const retake = document.getElementById('retakeBtn');
+  if (retake) retake.style.display = 'inline-block';
+};
+
+window.retakePhoto = async function () {
+  pick.capturedUrl = null;
+  document.getElementById('upPrev').style.display = 'none';
+  const retake = document.getElementById('retakeBtn');
+  if (retake) retake.style.display = 'none';
+  const wrap = document.getElementById('camWrap');
+  if (wrap) wrap.classList.add('live');
+  await startCamera();
+};
+
+window.setUploadMode = async function (mode) {
+  document.querySelectorAll('.src-tab').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+  const zone = document.getElementById('upZone');
+  const wrap = document.getElementById('camWrap');
+  if (mode === 'file') {
+    stopCamera();
+    pick.capturedUrl = null;
+    if (zone) zone.style.display = '';
+    if (wrap) { wrap.classList.remove('live'); }
+    document.getElementById('upPrev').style.display = 'none';
+    const retake = document.getElementById('retakeBtn');
+    if (retake) retake.style.display = 'none';
+  } else {
+    if (zone) zone.style.display = 'none';
+    if (wrap) { wrap.classList.add('live'); await startCamera(); }
+  }
+};
+
 /* ── Upload Image ── */
 function openUpload() {
-  pick.file = null;
+  pick.file = null; pick.capturedUrl = null;
   openModal(`
-    <div class="modal-title">Upload Image</div>
-    <div class="modal-sub">Add an educational note, diagram, or chart</div>
+    <div class="modal-title">Add Image</div>
+    <div class="modal-sub">Upload a file or capture with camera</div>
     <div class="form-grp">
       <label class="form-lbl">Image Name</label>
       <input class="form-inp" id="mInp" placeholder="e.g. Preamble Summary…">
     </div>
     <div class="form-grp">
-      <label class="form-lbl">Select File</label>
-      <div class="upload-z" id="upZone">
-        <input type="file" accept="image/*" id="fileInp" onchange="handleFile(event)">
-        <div class="upload-z-icon">📤</div>
-        <div class="upload-z-txt">Click or drag · JPG, PNG, SVG, WebP</div>
+      <label class="form-lbl">Source</label>
+      <div class="src-tabs">
+        <button class="src-tab active" data-mode="file" onclick="setUploadMode('file')">📁 File / Gallery</button>
+        <button class="src-tab" data-mode="cam" onclick="setUploadMode('cam')">📷 Live Camera</button>
       </div>
+      <!-- File upload zone -->
+      <div class="upload-z" id="upZone">
+        <input type="file" accept="image/*" capture="environment" id="fileInp" onchange="handleFile(event)">
+        <div class="upload-z-icon">📤</div>
+        <div class="upload-z-txt">Tap to choose · JPG, PNG, SVG, WebP</div>
+      </div>
+      <!-- Camera view -->
+      <div class="cam-wrap" id="camWrap">
+        <video id="camVideo" class="cam-video" autoplay playsinline muted></video>
+        <button class="cam-snap" onclick="capturePhoto()" title="Take photo">📸</button>
+        <button class="cam-flip" onclick="flipCamera()" title="Flip">🔄</button>
+      </div>
+      <!-- Preview -->
       <div class="upload-prev" id="upPrev"><img id="upPrevImg" src="" alt="preview"></div>
+      <button id="retakeBtn" class="btn btn-ou" onclick="retakePhoto()" style="display:none;margin-top:8px;font-size:0.6rem;padding:5px 12px;">↩ Retake</button>
     </div>
     <div class="modal-acts">
       <button class="btn btn-ou" onclick="closeModal()">Cancel</button>
-      <button class="btn btn-pr" onclick="doUpload()">Upload</button>
+      <button class="btn btn-pr" onclick="doUpload()">Add Image</button>
     </div>`);
 }
+
 function handleFile(e) {
   const f = e.target.files[0]; if (!f) return;
-  pick.file = f;
+  pick.file = f; pick.capturedUrl = null;
   const r = new FileReader();
   r.onload = ev => {
     document.getElementById('upPrevImg').src = ev.target.result;
     document.getElementById('upPrev').style.display = 'block';
     if (!document.getElementById('mInp').value)
-      document.getElementById('mInp').value = f.name.replace(/\.[^/.]+$/,'');
+      document.getElementById('mInp').value = f.name.replace(/\.[^/.]+$/,'').replace(/[-_]/g,' ');
   };
   r.readAsDataURL(f);
 }
+
 function doUpload() {
-  const n = document.getElementById('mInp').value.trim();
+  const n = (document.getElementById('mInp').value || '').trim();
   const t = getT(st.sid, st.tid);
-  if (!t || !n) return;
-  if (!pick.file) { alert('Please select an image file.'); return; }
-  const r = new FileReader();
-  r.onload = ev => {
-    t.images.push({ id: uuid(), name: n, src: ev.target.result, date: new Date().toISOString().slice(0,10) });
-    save(); closeModal(); render();
-  };
-  r.readAsDataURL(pick.file);
+  if (!t || !n) {
+    const inp = document.getElementById('mInp');
+    if (inp) { inp.focus(); inp.style.borderColor='var(--red)'; setTimeout(()=>inp.style.borderColor='',1500); }
+    return;
+  }
+  const entry = { id: uuid(), name: n, date: new Date().toISOString().slice(0,10) };
+  if (pick.capturedUrl) {
+    entry.src = pick.capturedUrl;
+    t.images.push(entry); save(); stopCamera(); closeModal(); render();
+  } else if (pick.file) {
+    const r = new FileReader();
+    r.onload = ev => { entry.src = ev.target.result; t.images.push(entry); save(); closeModal(); render(); };
+    r.readAsDataURL(pick.file);
+  } else {
+    const upZone = document.getElementById('upZone');
+    if (upZone) { upZone.style.borderColor='var(--red)'; setTimeout(()=>upZone.style.borderColor='',1500); }
+  }
 }
 
 /* ── Edit Image ── */
