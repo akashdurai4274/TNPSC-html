@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body class="en-mode">
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">02 June 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">02 ஜூன் 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <!-- Sidebar TOC -->
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Finance</span><span class="lang-ta">பொருளாதாரம் & நிதி</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Appointments · Judiciary</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Tamil Nadu's V. Mohana Elevated as Supreme Court Judge</span>
+                        <span class="lang-ta">உச்ச நீதிமன்ற நீதிபதியாக தமிழகத்தைச் சேர்ந்த வி. மோகனா நியமனம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Union Law Ministry has notified the appointment of 5 new judges to the Supreme Court, including Senior Advocate V. Mohana from Coimbatore, Tamil Nadu. The other appointees are C.S. Chandrashekhar, Sheel Nagu, Sanjeev Sachdeva, and Arun Bhansali. With this, the working strength of the SC rises to 37 (against the sanctioned 38). Notably, V. Mohana is only the second woman in history to be directly elevated from the Bar to the Supreme Court bench (after Indu Malhotra) and the first such woman from Tamil Nadu. She will retire in June 2031.</p>
+                    <p class="lang-ta">உச்ச நீதிமன்றத்திற்கு 5 புதிய நீதிபதிகளை நியமித்து மத்திய சட்ட அமைச்சகம் அறிவிக்கை வெளியிட்டுள்ளது. இதில் தமிழகத்தின் கோவையைச் சேர்ந்த மூத்த வழக்கறிஞர் வி. மோகனாவும் அடங்குவார். சி.எஸ். சந்திரசேகர், ஷீல் நாகு, சஞ்சீவ் சச்தேவா மற்றும் அருண் பன்சாலி ஆகியோர் மற்ற நியமனதாரர்கள் ஆவர். இதன் மூலம் உச்ச நீதிமன்றத்தின் நீதிபதிகள் எண்ணிக்கை 37 ஆக உயர்ந்துள்ளது (அனுமதிக்கப்பட்ட 38-ல்). வழக்கறிஞர்கள் சங்கத்திலிருந்து (Bar) நேரடியாக உச்ச நீதிமன்ற நீதிபதியாக உயர்த்தப்படும் வரலாற்றில் 2-வது பெண் (இந்து மல்ஹோத்ராவுக்குப் பிறகு) மற்றும் தமிழகத்தைச் சேர்ந்த முதல் பெண் வி. மோகனா ஆவார் என்பது குறிப்பிடத்தக்கது. இவர் ஜூன் 2031-ல் ஓய்வு பெறுவார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Polity Hook:</strong> Article 124 of the Constitution deals with the establishment and constitution of the Supreme Court. Judges are appointed by the President.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> சரத்து 124 உச்ச நீதிமன்றத்தை நிறுவுதல் மற்றும் அமைப்பது பற்றிக் கூறுகிறது. நீதிபதிகள் குடியரசுத் தலைவரால் நியமிக்கப்படுகிறார்கள்.</span></li>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en">Parliament recently amended the law to increase the maximum strength of SC judges to 38 (including the Chief Justice). Earlier it was 34.</span><span class="lang-ta">உச்ச நீதிமன்ற நீதிபதிகளின் அதிகபட்ச எண்ணிக்கையை 38 ஆக (தலைமை நீதிபதி உட்பட) அதிகரிக்க நாடாளுமன்றம் சமீபத்தில் சட்டத் திருத்தம் கொண்டு வந்தது. முன்னதாக இது 34 ஆக இருந்தது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Social Issues · Demographics</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Tamil Nadu's Total Fertility Rate (TFR) Plummets to 1.7; Call for Incentives</span>
+                        <span class="lang-ta">தமிழகத்தின் கருவுறுதல் விகிதம் 1.7 ஆக சரிவு; சலுகைகள் வழங்க கோரிக்கை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">VCK MP D. Ravikumar has written to TN Health Minister Dr. K.G. Arunraj, expressing deep concern over the state's plummeting Total Fertility Rate (TFR), which has dropped to 1.7 according to the recent 2023-2024 National Family Health Survey (NFHS) data, while the national average remains at 2.0. He pointed out that Tamil Nadu accounts for 56.6% of female sterilizations in the country. To prevent a massive future demographic decline, he urged the state government to announce special incentives to encourage families to have a third child.</p>
+                    <p class="lang-ta">சமீபத்திய 2023-2024 தேசிய குடும்ப சுகாதார ஆய்வு (NFHS) தரவுகளின்படி, தமிழகத்தின் மொத்த கருவுறுதல் விகிதம் (TFR) 1.7 ஆகக் குறைந்துள்ளது குறித்து விசிக எம்பி து. ரவிக்குமார் தமிழக மக்கள் நல்வாழ்வுத்துறை அமைச்சர் டாக்டர் கே.ஜி. அருண்ராஜுக்கு கடிதம் எழுதியுள்ளார். அதே சமயம் தேசிய சராசரி 2.0 ஆக உள்ளது. நாட்டில் பெண்களின் கருத்தடை அறுவை சிகிச்சைகளில் தமிழகம் 56.6% பங்கு வகிக்கிறது என்பதை அவர் சுட்டிக்காட்டினார். எதிர்காலத்தில் ஏற்படக்கூடிய பெரும் மக்கள்தொகை வீழ்ச்சியைத் தடுக்க, மூன்றாவது குழந்தையைப் பெறுவதை ஊக்குவிக்கும் வகையில் சிறப்பு சலுகைகளை மாநில அரசு அறிவிக்க வேண்டும் என்று அவர் வலியுறுத்தினார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-tip">TIP</span><span class="lang-en"><strong>Economy / Demography:</strong> The "Replacement Level" Total Fertility Rate (TFR) required to maintain a stable population is <strong>2.1</strong>. Anything below this indicates an aging and shrinking population over time.</span><span class="lang-ta"><strong>பொருளாதாரம் / மக்கள்தொகை:</strong> ஒரு நிலையான மக்கள்தொகையைப் பராமரிக்கத் தேவையான "மாற்று நிலை" கருவுறுதல் விகிதம் (TFR) <strong>2.1</strong> ஆகும். இதற்கு கீழே சென்றால், காலப்போக்கில் மக்கள்தொகை சுருங்குவதையும் முதியோர் அதிகரிப்பதையும் குறிக்கும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · New Party</span>
+                        <span class="badge bg-tip">MODERATE</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Former TN BJP President K. Annamalai to Launch New Party</span>
+                        <span class="lang-ta">முன்னாள் தமிழக பாஜக தலைவர் கே. அண்ணாமலை புதிய கட்சி தொடங்குகிறார்?</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Former Tamil Nadu BJP President K. Annamalai is reportedly set to launch his own political party. He was replaced as the state BJP chief by Nainar Nagendran in April 2025. Amidst unmet expectations of a central ministerial post and friction over strategy during the recent assembly elections, Annamalai has traveled to New Delhi to convey his decision to BJP National President Nitin Gadkari. An official announcement regarding the new party is expected on June 4.</p>
+                    <p class="lang-ta">முன்னாள் தமிழக பாஜக தலைவர் கே. அண்ணாமலை புதிய அரசியல் கட்சி ஒன்றைத் தொடங்க உள்ளதாகத் தகவல்கள் வெளியாகியுள்ளன. ஏப்ரல் 2025-ல் அவருக்குப் பதிலாக நயினார் நாகேந்திரன் மாநிலத் தலைவராக நியமிக்கப்பட்டார். மத்திய அமைச்சர் பதவி கிடைக்காதது மற்றும் சமீபத்திய சட்டமன்றத் தேர்தலின் போது ஏற்பட்ட உத்தி முரண்பாடுகள் ஆகியவற்றின் காரணமாக, தனது முடிவை பாஜக தேசியத் தலைவர் நிதின் கட்கரியிடம் தெரிவிக்க அண்ணாமலை டெல்லி சென்றுள்ளார். புதிய கட்சி குறித்த அதிகாரப்பூர்வ அறிவிப்பு ஜூன் 4-ம் தேதி வெளியாகும் என எதிர்பார்க்கப்படுகிறது.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Infrastructure · Transport</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Record Patronage for Chennai Suburban AC Trains & Metro in May</span>
+                        <span class="lang-ta">மே மாதத்தில் சென்னை புறநகர் குளிர்சாதன ரயில்கள் மற்றும் மெட்ரோவில் பயணிகள் சாதனை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Due to the intense summer heat ('Kathiri Veyil'), the 10-coach Chennai Suburban AC train service operating between Chennai Beach and Chengalpattu saw record patronage, with 1.24 lakh passengers traveling in May alone. Concurrently, the Chennai Metro rail also recorded a massive ridership of 90.14 lakh passengers in May, heavily boosted by IPL match days and an Ilaiyaraaja music concert.</p>
+                    <p class="lang-ta">கடும் கோடை வெயில் (கத்திரி வெயில்) காரணமாக, சென்னை கடற்கரை - செங்கல்பட்டு இடையே இயக்கப்படும் 10 பெட்டிகள் கொண்ட புறநகர் குளிர்சாதன ரயில் சேவையில் மே மாதத்தில் மட்டும் 1.24 லட்சம் பேர் பயணம் செய்துள்ளனர். அதேசமயம், ஐபிஎல் போட்டி நாட்கள் மற்றும் இளையராஜா இசை நிகழ்ச்சி போன்றவற்றால் சென்னை மெட்ரோ ரயிலிலும் மே மாதத்தில் 90.14 லட்சம் பயணிகள் பயணித்து சாதனை படைத்துள்ளனர்.</p>
+                </div>
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Economy · Industrial Output</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">IIP Base Year Updated to 2022-23; April Growth Slips to 4.9%</span>
+                        <span class="lang-ta">IIP அடிப்படை ஆண்டு 2022-23 ஆக மாற்றம்; ஏப்ரல் தொழில் துறை வளர்ச்சி 4.9% ஆக சரிவு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">India's Index of Industrial Production (IIP) growth slipped to 4.9% in April, down from 5.7% in April last year, largely due to a slowdown in the energy sector triggered by Middle East tensions. Crucially, the Ministry of Statistics and Programme Implementation (MoSPI) has revised the IIP's base year from 2011-12 to 2022-23. The updated index now includes 120 new products (like CCTV cameras, medical stents, vaccines, and space components) and removes 64 obsolete ones (like kerosene, CFL lamps).</p>
+                    <p class="lang-ta">மத்திய கிழக்கு நாடுகளின் போர்ச் சூழல் காரணமாக எரிசக்தித் துறையில் ஏற்பட்ட மந்தநிலை காரணமாக, இந்தியாவின் தொழில்துறை உற்பத்தி குறியீட்டின் (IIP) வளர்ச்சி ஏப்ரல் மாதத்தில் 4.9% ஆகச் சரிந்துள்ளது (கடந்த ஆண்டு ஏப்ரலில் இது 5.7%). மிக முக்கியமாக, புள்ளியியல் மற்றும் திட்ட அமலாக்க அமைச்சகம் (MoSPI) IIP-ன் அடிப்படை ஆண்டை (Base Year) 2011-12 லிருந்து 2022-23 ஆக மாற்றியமைத்துள்ளது. புதுப்பிக்கப்பட்ட இந்தப் பட்டியலில் சிசிடிவி கேமராக்கள், மருத்துவ ஸ்டெண்டுகள், தடுப்பூசிகள் போன்ற 120 புதிய பொருட்கள் சேர்க்கப்பட்டுள்ளன. மண்ணெண்ணெய், சிஎப்எல் பல்புகள் போன்ற பயன்பாடு குறைந்த 64 பொருட்கள் நீக்கப்பட்டுள்ளன.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Economy Hook:</strong> The Base Year is a benchmark against which current economic data is compared. Changing it from 2011-12 to <strong>2022-23</strong> is a major factual update for all upcoming Prelims exams.</span><span class="lang-ta"><strong>பொருளாதாரக் குறிப்பு:</strong> அடிப்படை ஆண்டு (Base Year) என்பது தற்போதைய பொருளாதாரத் தரவுகளை ஒப்பிடுவதற்கான ஒரு அளவுகோலாகும். இது 2011-12 லிருந்து <strong>2022-23</strong> ஆக மாற்றப்பட்டுள்ளது, இது வரவிருக்கும் தேர்வுகளுக்கான மிக முக்கிய உண்மையாகும்.</span></li>
+                            <li><span class="lang-en"><strong>Organisation:</strong> IIP data is compiled and published monthly by the National Statistical Office (NSO) under MoSPI.</span><span class="lang-ta"><strong>நிறுவனம்:</strong> IIP தரவு புள்ளியியல் அமைச்சகத்தின் (MoSPI) கீழ் உள்ள தேசிய புள்ளியியல் அலுவலகத்தால் (NSO) மாதந்தோறும் தொகுக்கப்பட்டு வெளியிடப்படுகிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Economy · Taxation</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">GST Collections Hit ₹1.94 Lakh Crore in May 2026</span>
+                        <span class="lang-ta">மே 2026-ல் ஜிஎஸ்டி வசூல் ரூ.1.94 லட்சம் கோடியாக உயர்வு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Gross Goods and Services Tax (GST) revenue collected in the month of May 2026 stood at ₹1.94 lakh crore, registering a 3.2% increase compared to the ₹1.88 lakh crore collected in May 2025. According to the Finance Ministry, of this total, CGST is ₹37,397 crore, SGST is ₹45,143 crore, and IGST is ₹51,990 crore. The total GST collection for the first two months (April-May) of the current financial year has reached ₹4.37 lakh crore.</p>
+                    <p class="lang-ta">மே 2026 மாதத்தில் வசூலிக்கப்பட்ட மொத்த சரக்கு மற்றும் சேவை வரி (ஜிஎஸ்டி) வருவாய் ரூ.1.94 லட்சம் கோடியாகும். இது கடந்த ஆண்டு மே மாதத்தில் வசூலான ரூ.1.88 லட்சம் கோடியை விட 3.2% அதிகமாகும். நிதி அமைச்சகத்தின் தகவல்படி, இதில் மத்திய ஜிஎஸ்டி (CGST) ரூ.37,397 கோடி, மாநில ஜிஎஸ்டி (SGST) ரூ.45,143 கோடி, மற்றும் ஒருங்கிணைந்த ஜிஎஸ்டி (IGST) ரூ.51,990 கோடி ஆகும். நடப்பு நிதியாண்டின் முதல் இரண்டு மாதங்களில் (ஏப்ரல்-மே) மொத்த ஜிஎஸ்டி வசூல் ரூ.4.37 லட்சம் கோடியை எட்டியுள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Constitutional Hook:</strong> GST was introduced via the 101st Constitutional Amendment Act, 2016. Article 279A deals with the formation of the GST Council, headed by the Union Finance Minister.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> 101-வது அரசியலமைப்பு திருத்தச் சட்டம், 2016 மூலம் ஜிஎஸ்டி அறிமுகப்படுத்தப்பட்டது. சரத்து 279A மத்திய நிதி அமைச்சர் தலைமையிலான ஜிஎஸ்டி கவுன்சில் உருவாக்கம் பற்றிக் கூறுகிறது.</span></li>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en">The highest ever GST collection was recorded in April 2026 (₹2.43 Lakh Crore). May 2026 is the second-highest.</span><span class="lang-ta">இதுவரை இல்லாத அளவாக அதிகபட்ச ஜிஎஸ்டி வசூல் ஏப்ரல் 2026-ல் (ரூ.2.43 லட்சம் கோடி) பதிவானது. மே 2026 இரண்டாவது அதிகபட்சமாகும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">International Relations · Trade</span>
+                        <span class="badge bg-tip">MODERATE</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">India-Oman Free Trade Agreement (CEPA) Comes into Effect</span>
+                        <span class="lang-ta">இந்தியா-ஓமன் தடையற்ற வர்த்தக ஒப்பந்தம் அமலுக்கு வந்தது</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Union Minister of Commerce and Industry Piyush Goyal announced that the Comprehensive Economic Partnership Agreement (CEPA) between India and Oman has officially come into effect. Signed in Muscat in December 2025, the agreement enables duty-free access for over 10 Indian export sectors (including agriculture, gems, and textiles) to the Oman market. Bilateral trade is expected to jump from ₹1 lakh crore to ₹1.06 lakh crore in 2025-26.</p>
+                    <p class="lang-ta">இந்தியா-ஓமன் நாடுகளுக்கு இடையேயான விரிவான பொருளாதார கூட்டு ஒப்பந்தம் (CEPA - தடையற்ற வர்த்தக ஒப்பந்தம்) அதிகாரப்பூர்வமாக அமலுக்கு வந்துள்ளதாக மத்திய வர்த்தக மற்றும் தொழில்துறை அமைச்சர் பியூஷ் கோயல் அறிவித்தார். டிசம்பர் 2025-ல் மஸ்கட்டில் கையெழுத்தான இந்த ஒப்பந்தத்தின் மூலம், விவசாயப் பொருட்கள், ரத்தினங்கள், ஜவுளி உள்ளிட்ட 10-க்கும் மேற்பட்ட இந்தியப் பொருட்கள் ஓமன் சந்தையில் வரிச்சலுகை பெறும். இருதரப்பு வர்த்தகம் 2025-26-ல் ரூ.1 லட்சம் கோடியிலிருந்து ரூ.1.06 லட்சம் கோடியாக உயரும் என எதிர்பார்க்கப்படுகிறது.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Judiciary · Wakf Board</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">SC Questions Wakf Boards' Plea for Exemption from Court Fees</span>
+                        <span class="lang-ta">நீதிமன்ற கட்டண விலக்கு கோரிய வக்ப் அமைப்புகளின் மனு மீது உச்ச நீதிமன்றம் கேள்வி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Supreme Court questioned the legal basis of a plea by Wakf Boards seeking exemption from paying court fees in property disputes heard by Wakf Tribunals. Earlier, the Gujarat High Court had dismissed their petition, stating that under Section 83 of the Wakf Act, tribunal proceedings function like civil suits (involving framing issues and examining evidence) between landlords and tenants, and thus court fees are mandatory.</p>
+                    <p class="lang-ta">வக்ப் தீர்ப்பாயங்களில் விசாரிக்கப்படும் சொத்துத் தகராறு வழக்குகளுக்கு நீதிமன்றக் கட்டணம் செலுத்துவதிலிருந்து விலக்கு அளிக்கக் கோரி வக்ப் அமைப்புகள் தாக்கல் செய்த மனுவின் சட்ட அடிப்படை குறித்து உச்ச நீதிமன்றம் கேள்வி எழுப்பியுள்ளது. முன்னதாக, குஜராத் உயர் நீதிமன்றம் இந்த மனுவைத் தள்ளுபடி செய்தது. வக்ப் சட்டத்தின் 83-வது பிரிவின் கீழ், நில உரிமையாளர் மற்றும் வாடகைதாரர் இடையேயான உரிமையியல் வழக்குகளைப் போலவே (சிவில் வழக்கு) தீர்ப்பாய விசாரணைகளும் நடைபெறுவதால் நீதிமன்றக் கட்டணம் கட்டாயமாகும் என உயர் நீதிமன்றம் குறிப்பிட்டிருந்தது.</p>
+                </div>
+            </section>
+
+            <!-- INTERNATIONAL NEWS -->
+            <section id="international">
+                <h2>
+                    <span class="lang-en">International News</span>
+                    <span class="lang-ta">சர்வதேச செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Diplomacy · State Visit</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Myanmar President Assures PM Modi: Soil Won't Be Used Against India</span>
+                        <span class="lang-ta">இந்தியப் பாதுகாப்புக்கு எதிரான செயல்களை அனுமதிக்க மாட்டோம்: மியான்மர் அதிபர் உறுதி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Myanmar's newly elected President Min Aung Hlaing met Indian Prime Minister Narendra Modi at Hyderabad House in New Delhi. The leaders discussed enhancing cooperation in trade, connectivity, border management, and security. Crucially, the Myanmar President assured that Myanmar's soil would not be allowed to be used by any elements for activities detrimental to India's security interests (referring to insurgent groups). They also discussed steps to restore peace and democracy in Myanmar following the recent parliamentary elections.</p>
+                    <p class="lang-ta">சமீபத்தில் தேர்ந்தெடுக்கப்பட்ட மியான்மர் அதிபர் மின் ஆங் ஹ்லேங், இந்தியப் பிரதமர் நரேந்திர மோடியை புதுடெல்லியில் உள்ள ஹைதராபாத் இல்லத்தில் சந்தித்தார். வர்த்தகம், எல்லை மேலாண்மை மற்றும் பாதுகாப்பு ஆகியவற்றில் ஒத்துழைப்பை மேம்படுத்துவது குறித்து தலைவர்கள் விவாதித்தனர். மிக முக்கியமாக, இந்தியாவின் பாதுகாப்பு நலன்களுக்கு எதிரான செயல்களுக்கு மியான்மர் மண்ணை எந்த குழுக்களும் பயன்படுத்த அனுமதிக்க மாட்டோம் என்று அவர் மோடியிடம் உறுதியளித்தார். நாடாளுமன்றத் தேர்தலுக்குப் பிறகு மியான்மரில் அமைதி மற்றும் ஜனநாயகத்தை மீட்டெடுப்பதற்கான நடவடிக்கைகள் குறித்தும் அவர்கள் விவாதித்தனர்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Geography Hook:</strong> India shares a 1,643 km border with Myanmar, bordering four North-Eastern states: Arunachal Pradesh, Nagaland, Manipur, and Mizoram.</span><span class="lang-ta"><strong>புவியியல் குறிப்பு:</strong> இந்தியா 1,643 கிமீ எல்லையை மியான்மருடன் பகிர்ந்து கொள்கிறது. அருணாச்சல பிரதேசம், நாகாலாந்து, மணிப்பூர் மற்றும் மிசோரம் ஆகிய 4 வடகிழக்கு மாநிலங்கள் மியான்மருடன் எல்லையைப் பகிர்கின்றன.</span></li>
+                            <li><span class="badge bg-gem">GEM</span><span class="lang-en">Myanmar is the only ASEAN country adjoining India and acts as a gateway to South-East Asia under India's "Act East Policy".</span><span class="lang-ta">இந்தியாவின் "கிழக்கு நோக்கிய கொள்கையின்" (Act East Policy) கீழ் தென்கிழக்கு ஆசியாவிற்கான நுழைவாயிலாக மியான்மர் செயல்படுகிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Technology · Law</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Malaysia Bans Social Media for Children Under 16</span>
+                        <span class="lang-ta">மலேசியாவில் 16 வயதுக்குட்பட்ட சிறார்களுக்கு சமூக வலைதளங்கள் தடை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">To protect children from online dangers and inappropriate content, the Malaysian government has implemented a ban preventing children under 16 from creating or using social media accounts (like Facebook, Instagram, TikTok). Social media platforms are given 6 months to enforce strict age-verification via government-issued ID cards. Non-compliant platforms face fines up to 10 million Ringgit (approx ₹24 crore). Parents will not be penalized if children bypass the ban.</p>
+                    <p class="lang-ta">இணையவழி ஆபத்துகள் மற்றும் தேவையற்ற உள்ளடக்கங்களில் இருந்து சிறார்களைப் பாதுகாக்கும் நோக்கில், 16 வயதுக்குட்பட்டவர்கள் சமூக வலைதள கணக்குகளைத் (பேஸ்புக், இன்ஸ்டாகிராம், டிக்டாக்) தொடங்குவதற்கும் பயன்படுத்துவதற்கும் மலேசிய அரசு தடை விதித்துள்ளது. அரசு அடையாள அட்டைகள் மூலம் வயதை உறுதி செய்யும் முறையை அமல்படுத்த சமூக வலைதள நிறுவனங்களுக்கு 6 மாத அவகாசம் வழங்கப்பட்டுள்ளது. இதை மீறும் நிறுவனங்களுக்கு 1 கோடி ரிங்கிட் (சுமார் ரூ.24 கோடி) அபராதம் விதிக்கப்படும்.</p>
+                </div>
+            </section>
+
+            <!-- ECONOMY & FINANCE -->
+            <section id="economy">
+                <h2>
+                    <span class="lang-en">Economy & Finance</span>
+                    <span class="lang-ta">பொருளாதாரம் & நிதி</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Banking · Digital Payments</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">UPI Transactions Hit New Record: ₹29.90 Lakh Crore in May</span>
+                        <span class="lang-ta">யுபிஐ (UPI) பரிவர்த்தனைகள் புதிய உச்சம்: மே மாதத்தில் ரூ.29.90 லட்சம் கோடி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">India's flagship digital payment platform, UPI (Unified Payments Interface), reached a new all-time high in May 2026. According to the National Payments Corporation of India (NPCI), 2,320 crore transactions worth ₹29.90 lakh crore were processed in May alone, driven by summer travel and IPL cricket matches. This represents a 24% volume growth and 19% value growth compared to May 2025.</p>
+                    <p class="lang-ta">இந்தியாவின் டிஜிட்டல் பணப் பரிவர்த்தனை தளமான யுபிஐ (UPI), மே 2026-ல் புதிய உச்சத்தை எட்டியுள்ளது. இந்திய தேசிய கொடுப்பனவு கழகத்தின் (NPCI) தகவல்படி, கோடை காலப் பயணம் மற்றும் ஐபிஎல் கிரிக்கெட் போட்டிகள் காரணமாக மே மாதத்தில் மட்டும் ரூ.29.90 லட்சம் கோடி மதிப்பிலான 2,320 கோடி பரிவர்த்தனைகள் மேற்கொள்ளப்பட்டுள்ளன. இது கடந்த ஆண்டு மே மாதத்தை விட எண்ணிக்கையில் 24 சதவீதமும், மதிப்பில் 19 சதவீதமும் அதிகமாகும்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Global Reach:</strong> UPI is currently operational in 8 countries, including the UAE, Singapore, and Mauritius.</span><span class="lang-ta"><strong>உலகளாவிய பயன்பாடு:</strong> ஐக்கிய அரபு அமீரகம், சிங்கப்பூர், மொரீஷியஸ் உட்பட 8 நாடுகளில் யுபிஐ சேவை பயன்பாட்டில் உள்ளது.</span></li>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en">Which organisation operates UPI in India? <strong>Answer: NPCI (National Payments Corporation of India)</strong>, established by RBI and IBA.</span><span class="lang-ta">இந்தியாவில் UPI சேவையை நிர்வகிக்கும் அமைப்பு எது? <strong>விடை: NPCI (இந்திய தேசிய கொடுப்பனவு கழகம்)</strong>. இது ரிசர்வ் வங்கி மற்றும் IBA-வால் நிறுவப்பட்டது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+            </section>
+            
+            <!-- SPORTS -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports</span>
+                    <span class="lang-ta">விளையாட்டு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Cricket · IPL 2026</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">RCB Wins IPL 2026; 15-Year-Old Vaibhav Suryavanshi Shines</span>
+                        <span class="lang-ta">ஐபிஎல் 2026 சாம்பியன் பட்டத்தை வென்றது ஆர்சிபி; 15 வயது வைபவ் சூர்யவன்ஷி சாதனை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Royal Challengers Bengaluru (RCB) won the 19th edition of the IPL by defeating the Gujarat Titans in the finals, successfully defending their title to become back-to-back champions (joining CSK and MI). A standout performer of the season was 15-year-old Vaibhav Suryavanshi from Rajasthan Royals, who scored 776 runs, hit 72 sixes, and won 5 individual awards including the Orange Cap and Most Valuable Player. Kagiso Rabada (GT) won the Purple Cap with 29 wickets, and Sai Sudharsan (GT) hit the most boundaries (75).</p>
+                    <p class="lang-ta">19-வது ஐபிஎல் கிரிக்கெட் தொடரின் இறுதிப்போட்டியில் குஜராத் டைட்டன்ஸ் அணியை வீழ்த்தி ராயல் சேலஞ்சர்ஸ் பெங்களூரு (RCB) அணி சாம்பியன் பட்டம் வென்றது. இதன் மூலம் சிஎஸ்கே மற்றும் மும்பை இந்தியன்ஸ் அணிகளுக்குப் பிறகு தொடர்ச்சியாக இருமுறை (back-to-back) கோப்பையை வென்ற அணி என்ற பெருமையை ஆர்சிபி பெற்றது. ராஜஸ்தான் ராயல்ஸ் அணியின் 15 வயது இளம் வீரர் வைபவ் சூர்யவன்ஷி 776 ரன்கள் குவித்து, ஆரஞ்சு தொப்பி மற்றும் மதிப்புமிக்க வீரர் உட்பட 5 விருதுகளை வென்று சாதனை படைத்தார். ககிசோ ரபாடா (GT) 29 விக்கெட்டுகளுடன் ஊதா தொப்பியையும், சாய் சுதர்சன் (GT) அதிக பவுண்டரிகளையும் (75) வென்றனர்.</p>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Chess · Norway Chess</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Norway Chess: All Four Indian Players Suffer Defeats in Round 6</span>
+                        <span class="lang-ta">நார்வே செஸ்: 6-வது சுற்றில் 4 இந்திய செஸ் வீரர்களுக்கும் தோல்வி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In a disappointing 6th round at the Norway Chess tournament, all four Indian participants suffered defeats. In the Open section, D. Gukesh lost to reigning World Champion Ding Liren, while R. Praggnanandhaa fell to America's Wesley So. In the women's section, R. Vaishali was defeated by China's Ju Wenjun, and Koneru Humpy lost to Kazakhstan's Bibisara Assaubayeva.</p>
+                    <p class="lang-ta">நார்வே செஸ் போட்டியின் 6-வது சுற்றில் விளையாடிய நான்கு இந்திய வீரர்களும் தோல்வியடைந்தனர். ஆடவர் (ஓபன்) பிரிவில், டி. குகேஷ் தற்போதைய உலக சாம்பியனான டிங் லிரனிடமும், ஆர். பிரக்ஞானந்தா அமெரிக்காவின் வெஸ்லி சோவிடமும் வீழ்ந்தனர். மகளிர் பிரிவில், ஆர். வைஷாலி சீனாவின் ஜு வென்ஜுனிடமும், கோனேரு ஹம்பி கஜகஸ்தானின் பிபிசரா அசாபயேவாவிடமும் தோல்வி கண்டனர்.</p>
+                </div>
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Which organisation publishes the Index of Industrial Production (IIP) in India, and what is its recently updated base year?</span>
+                        <span class="lang-ta">கேள்வி: இந்தியாவில் தொழில்துறை உற்பத்தி குறியீட்டை (IIP) வெளியிடும் அமைப்பு எது, மற்றும் அதன் சமீபத்தில் புதுப்பிக்கப்பட்ட அடிப்படை ஆண்டு என்ன?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">National Statistical Office (NSO) under MoSPI; Base Year: 2022-23</span><br><br>
+                                <strong>Context:</strong> The government has revised the base year of IIP from 2011-12 to 2022-23 to better reflect current economic patterns, adding items like CCTV cameras and removing obsolete ones like kerosene.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">தேசிய புள்ளியியல் அலுவலகம் (NSO); அடிப்படை ஆண்டு: 2022-23</span><br><br>
+                                <strong>பின்னணி:</strong> தற்போதைய பொருளாதார முறைகளை சிறப்பாக பிரதிபலிக்கும் வகையில் IIP-ன் அடிப்படை ஆண்டை 2011-12 லிருந்து 2022-23 ஆக அரசு மாற்றியமைத்துள்ளது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Who among the following is the first woman lawyer from Tamil Nadu to be directly elevated from the Bar as a Judge of the Supreme Court of India?</span>
+                        <span class="lang-ta">கேள்வி: வழக்கறிஞர்கள் சங்கத்திலிருந்து (Bar) நேரடியாக இந்திய உச்ச நீதிமன்ற நீதிபதியாக உயர்த்தப்பட்ட தமிழகத்தைச் சேர்ந்த முதல் பெண் வழக்கறிஞர் யார்?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">V. Mohana</span><br><br>
+                                <strong>Context:</strong> Senior Advocate V. Mohana from Coimbatore was appointed to the SC on June 1, 2026. She is only the 2nd woman overall in India (after Indu Malhotra) to achieve this direct elevation.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">வி. மோகனா</span><br><br>
+                                <strong>பின்னணி:</strong> கோவையைச் சேர்ந்த மூத்த வழக்கறிஞர் வி. மோகனா ஜூன் 1, 2026 அன்று உச்ச நீதிமன்ற நீதிபதியாக நியமிக்கப்பட்டார். இந்த நேரடி நியமனத்தைப் பெறும் இந்தியாவின் 2-வது பெண் (இந்து மல்ஹோத்ராவுக்குப் பிறகு) இவரே ஆவார்.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">IIP Base Year Updated</span><span class="lang-ta">IIP அடிப்படை ஆண்டு மாற்றம்</span></td>
+                                <td><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></td>
+                                <td><span class="lang-en">Changed from 2011-12 to 2022-23 by MoSPI.</span><span class="lang-ta">MoSPI அமைப்பால் 2011-12 லிருந்து 2022-23 ஆக மாற்றம்.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">V. Mohana Appointed SC Judge</span><span class="lang-ta">வி. மோகனா SC நீதிபதியாக நியமனம்</span></td>
+                                <td><span class="lang-en">State/Judiciary</span><span class="lang-ta">மாநிலம்/நீதித்துறை</span></td>
+                                <td><span class="lang-en">1st woman from TN elevated directly from Bar to SC.</span><span class="lang-ta">வழக்கறிஞராக இருந்து நேரடியாக SC நீதிபதியான முதல் தமிழகப் பெண்.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">Myanmar President in India</span><span class="lang-ta">மியான்மர் அதிபர் இந்தியாவில்</span></td>
+                                <td><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></td>
+                                <td><span class="lang-en">Min Aung Hlaing met PM Modi, assured border security.</span><span class="lang-ta">மின் ஆங் ஹ்லேங், மோடியைச் சந்தித்து எல்லைப் பாதுகாப்பு உறுதி.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">UPI Record in May</span><span class="lang-ta">மே மாதத்தில் UPI சாதனை</span></td>
+                                <td><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></td>
+                                <td><span class="lang-en">₹29.90 Lakh Crore transacted via 2,320 crore hits.</span><span class="lang-ta">2,320 கோடி பரிவர்த்தனைகள் மூலம் ரூ.29.90 லட்சம் கோடி வசூல்.</span></td>
+                                <td><span class="badge bg-tip">MED</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">TN TFR Drops to 1.7</span><span class="lang-ta">தமிழக TFR 1.7 ஆக சரிவு</span></td>
+                                <td><span class="lang-en">State/Demography</span><span class="lang-ta">மாநிலம்/சமூகம்</span></td>
+                                <td><span class="lang-en">VCK MP urges incentives for 3rd child as TN fertility drops.</span><span class="lang-ta">கருவுறுதல் விகிதம் குறைந்ததால் 3வது குழந்தைக்கு ஊக்கத்தொகை கோரிக்கை.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani Chennai 02-06-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி சென்னை 02-06-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source images contained Tamil text detailing state, national, and international news for 02 June 2026. 
+State news focused on the appointment of Senior Advocate V. Mohana from TN as a Supreme Court Judge. CM Joseph Vijay addressed a rally in Trichy East, criticizing DMK and AIADMK. Former TN BJP Prez K. Annamalai is expected to launch a new party. VCK MP Ravikumar raised concerns over TN's dropping TFR (1.7) and asked for incentives for a 3rd child. A structural collapse in Ramapuram killed a worker. Suburban AC trains and Metro saw record patronage.
+National news included Myanmar President Min Aung Hlaing meeting PM Modi, assuring that Myanmar won't be used against India. GST collections for May stood at Rs 1.94 lakh crore. MoSPI changed the base year for the IIP index from 2011-12 to 2022-23. PM Modi lauded the PM SVANidhi scheme. CBI arrested a former Reliance exec for SBI bank fraud. Uniform Civil Code will soon be introduced in MP.
+Internationally, Malaysia banned social media for kids under 16. Colombia faces a presidential runoff. UNGA presidency election sees Bangladesh vs Cyprus.
+Sports: RCB won IPL 2026, Vaibhav Suryavanshi won 5 awards. Indian chess players suffered defeats in Norway chess. Indian U-18 hockey team beat Korea.]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூலப் படங்கள் 02 ஜூன் 2026 க்கான மாநில, தேசிய மற்றும் சர்வதேச செய்திகளைக் கொண்டிருந்தன.
+மாநில செய்திகளில், தமிழகத்தைச் சேர்ந்த மூத்த வழக்கறிஞர் வி. மோகனா உச்ச நீதிமன்ற நீதிபதியாக நியமிக்கப்பட்டுள்ளார். முதல்வர் ஜோசப் விஜய் திருச்சி கிழக்கில் உரையாற்றி திமுக, அதிமுகவை விமர்சித்தார். முன்னாள் தமிழக பாஜக தலைவர் அண்ணாமலை புதிய கட்சி தொடங்குகிறார். விசிக எம்பி ரவிக்குமார் தமிழகத்தின் குறையும் கருவுறுதல் விகிதம் (1.7) குறித்து கவலை தெரிவித்து 3வது குழந்தைக்கு ஊக்கத்தொகை கோரினார். ராமாபுரத்தில் கட்டிடம் இடிந்து தொழிலாளி பலி.
+தேசிய அளவில், மியான்மர் அதிபர் மின் ஆங் ஹ்லேங் பிரதமர் மோடியைச் சந்தித்து இந்தியாவுக்கு எதிராக மியான்மரை பயன்படுத்த அனுமதிக்க மாட்டோம் என உறுதியளித்தார். மே மாத ஜிஎஸ்டி வசூல் ரூ.1.94 லட்சம் கோடி. IIP குறியீட்டின் அடிப்படை ஆண்டை 2011-12ல் இருந்து 2022-23 ஆக MoSPI மாற்றியது. எஸ்பிஐ வங்கி மோசடி வழக்கில் ரிலையன்ஸ் முன்னாள் நிர்வாகியை சிபிஐ கைது செய்தது. மபியில் விரைவில் பொது சிவில் சட்டம்.
+சர்வதேச அளவில், 16 வயதுக்குட்பட்ட குழந்தைகளுக்கு சமூக வலைதளங்களை மலேசியா தடை செய்தது. கொலம்பியாவில் அதிபர் தேர்தலுக்கு இரண்டாம் கட்ட வாக்குப்பதிவு. ஐநா பொதுச் சபை தலைவர் தேர்தலில் வங்கதேசம் vs சைப்ரஸ்.
+விளையாட்டு: ஐபிஎல் 2026 ஐ ஆர்சிபி வென்றது, வைபவ் சூர்யவன்ஷி 5 விருதுகளை வென்றார். நார்வே செஸ்ஸில் இந்திய வீரர்கள் தோல்வி. U-18 ஹாக்கியில் கொரியாவை வீழ்த்தியது இந்தியா.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 02 June 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+    </script>
+</body>
+</html>
