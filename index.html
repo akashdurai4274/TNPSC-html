@@ -2047,7 +2047,7 @@
         left: 0;
         bottom: 0;
         width: 280px;
-        z-index: 210;
+        z-index: 220;
         overflow-y: auto;
         overflow-x: hidden;
         transform: translateX(-100%);
@@ -2143,7 +2143,7 @@
       /* Dropdown tab switcher */
       .exam-switcher {
         position: relative;
-        z-index: 1000;
+        z-index: 210;
       }
 
       .exam-tabs-trigger {
@@ -2861,16 +2861,33 @@
       <div id="aiSetupStatus"
         style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--green);min-height:16px;"></div>
 
+      <!-- Web Search -->
       <div style="border-top:1px solid var(--border);padding-top:12px;">
+        <label
+          style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--cyan);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:6px;">🌐
+          Web Search Key <span style="color:var(--muted)">(optional)</span></label>
+        <input id="braveKeyInput" type="password" placeholder="Brave Search API key (optional — free 2000 q/mo)"
+          style="width:100%;background:var(--bg);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:11px;padding:8px 12px;outline:none;margin-bottom:6px;">
+        <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);line-height:1.6;">
+          Without a key: Wikipedia is used as free fallback.<br>
+          With Brave key: richer web results. Get free key at <a href="https://api.search.brave.com" target="_blank"
+            style="color:var(--cyan)">api.search.brave.com</a>
+        </p>
+      </div>
+
+      <div style="display:flex;gap:8px;margin-top:8px;">
+        <button onclick="saveAIConfigFull()"
+          style="flex:1;background:var(--gold);color:#0d0f14;border:none;border-radius:7px;padding:9px;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;cursor:pointer;">Save
+          All</button>
+      </div>
+
+      <div style="border-top:1px solid var(--border);padding-top:10px;margin-top:8px;">
         <p style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);line-height:1.7;">
-          <strong style="color:var(--gold)">Get a free Groq key:</strong><br>
-          1. Visit <a href="https://console.groq.com" target="_blank" style="color:var(--blue)">console.groq.com</a><br>
-          2. Sign up → API Keys → Create Key<br>
-          3. Paste above · Free: 14,400 req/day<br><br>
-          <strong style="color:var(--gold)">Get a free Gemini key:</strong><br>
-          1. Visit <a href="https://aistudio.google.com/apikey" target="_blank"
-            style="color:var(--blue)">aistudio.google.com/apikey</a><br>
-          2. Create API Key · Free: 1M tokens/min
+          <strong style="color:var(--gold)">Free Groq key:</strong> <a href="https://console.groq.com" target="_blank"
+            style="color:var(--blue)">console.groq.com</a> → API Keys · 14,400 req/day<br>
+          <strong style="color:var(--gold)">Free Gemini key:</strong> <a href="https://aistudio.google.com/apikey"
+            target="_blank" style="color:var(--blue)">aistudio.google.com/apikey</a> · 1M tokens/min<br>
+          <strong style="color:var(--cyan)">Wikipedia search:</strong> Always active — no key needed
         </p>
       </div>
     </div>
@@ -3152,22 +3169,22 @@
        RAG ENGINE  — fetches + indexes actual HTML files
     ══════════════════════════════════════════════════════════ */
     const RAG = (() => {
-      let chunks    = [];
-      let idf       = {};
+      let chunks = [];
+      let idf = {};
       let sysPrompt = '';
-      let ready     = false;
-      let building  = false;
+      let ready = false;
+      let building = false;
 
       /* ── tokeniser (matches build-rag.js) ── */
       const STOP = new Set(
         ('a an the is are was were be been being have has had do does did will would could should may might must ' +
-         'can of in on at to for with by from up about into through during before after above below between out ' +
-         'off over under again further then once here there when where why how all both each few more most other ' +
-         'some such no nor not only same so than too very s t just don and or but if as also its it this that ' +
-         'which these those their they them we our your answer option select correct following').split(' ')
+          'can of in on at to for with by from up about into through during before after above below between out ' +
+          'off over under again further then once here there when where why how all both each few more most other ' +
+          'some such no nor not only same so than too very s t just don and or but if as also its it this that ' +
+          'which these those their they them we our your answer option select correct following').split(' ')
       );
       function tokenize(text) {
-        return text.toLowerCase().replace(/[^\w\s]/g,' ').split(/\s+/)
+        return text.toLowerCase().replace(/[^\w\s]/g, ' ').split(/\s+/)
           .filter(t => t.length > 2 && !STOP.has(t) && !/^\d{1,2}$/.test(t));
       }
 
@@ -3179,8 +3196,8 @@
           if (!res.ok) return false;
           const data = await res.json();
           if (!data.chunks || !data.idf) return false;
-          chunks    = data.chunks;
-          idf       = data.idf;
+          chunks = data.chunks;
+          idf = data.idf;
           sysPrompt = data.systemPrompt || '';
           return true;
         } catch (e) { return false; }
@@ -3189,59 +3206,59 @@
       /* ── Dynamic fallback (no pre-built file) ── */
       function dynamicTokenize(text) { return tokenize(text); }
       function computeTF(tokens) {
-        const freq = {}; tokens.forEach(t => { freq[t] = (freq[t]||0)+1; });
+        const freq = {}; tokens.forEach(t => { freq[t] = (freq[t] || 0) + 1; });
         const len = tokens.length || 1;
         const tf = {};
-        Object.keys(freq).forEach(t => { const v=freq[t]/len; if(v>=0.002) tf[t]=+v.toFixed(4); });
+        Object.keys(freq).forEach(t => { const v = freq[t] / len; if (v >= 0.002) tf[t] = +v.toFixed(4); });
         return tf;
       }
       function computeIDF() {
         const N = chunks.length || 1, df = {};
-        chunks.forEach(c => Object.keys(c.tf).forEach(t => { df[t]=(df[t]||0)+1; }));
-        Object.entries(df).forEach(([t,d]) => { idf[t] = +Math.log((N-d+0.5)/(d+0.5)+1).toFixed(4); });
+        chunks.forEach(c => Object.keys(c.tf).forEach(t => { df[t] = (df[t] || 0) + 1; }));
+        Object.entries(df).forEach(([t, d]) => { idf[t] = +Math.log((N - d + 0.5) / (d + 0.5) + 1).toFixed(4); });
       }
       async function buildDynamic(setStatus) {
         if (setStatus) setStatus('📚 Indexing study files…');
         const files = [
-          { url:'traveller_accounts/tnpsc_travellers.html', title:'Foreign Travellers to India' },
-          { url:'SSC_Nouns_CrackSheet.html',   title:'Nouns Crack Sheet'   },
-          { url:'SSC_Pronouns_CrackSheet.html', title:'Pronouns Crack Sheet' },
-          { url:'Polity/Schemes.html',           title:'Government Schemes'   },
-          { url:'Economics/tnpsc_five_year_plans.html', title:'Five Year Plans' },
+          { url: 'traveller_accounts/tnpsc_travellers.html', title: 'Foreign Travellers to India' },
+          { url: 'SSC_Nouns_CrackSheet.html', title: 'Nouns Crack Sheet' },
+          { url: 'SSC_Pronouns_CrackSheet.html', title: 'Pronouns Crack Sheet' },
+          { url: 'Polity/Schemes.html', title: 'Government Schemes' },
+          { url: 'Economics/tnpsc_five_year_plans.html', title: 'Five Year Plans' },
         ];
         try {
-          const r = await fetch('CA-v2/ca.json', { cache:'force-cache' });
+          const r = await fetch('CA-v2/ca.json', { cache: 'force-cache' });
           if (r.ok) {
             const ca = await r.json();
-            ca.slice(0,15).forEach(e => files.push({ url:'CA-v2/'+e.file, title:e.title }));
+            ca.slice(0, 15).forEach(e => files.push({ url: 'CA-v2/' + e.file, title: e.title }));
           }
-        } catch(e){}
+        } catch (e) { }
         for (let i = 0; i < files.length; i += 3) {
-          await Promise.all(files.slice(i, i+3).map(async ({url, title}) => {
+          await Promise.all(files.slice(i, i + 3).map(async ({ url, title }) => {
             try {
-              const res = await fetch(url, { cache:'force-cache' });
+              const res = await fetch(url, { cache: 'force-cache' });
               if (!res.ok) return;
               const html = await res.text();
               const doc = new DOMParser().parseFromString(html, 'text/html');
-              doc.querySelectorAll('script,style,nav,header,footer').forEach(el=>el.remove());
+              doc.querySelectorAll('script,style,nav,header,footer').forEach(el => el.remove());
               const body = doc.querySelector('main,article,body') || doc.body;
               let sec = title, buf = '';
               const flush = () => {
-                const t = buf.trim(); if (t.length < 60) { buf=''; return; }
+                const t = buf.trim(); if (t.length < 60) { buf = ''; return; }
                 const toks = dynamicTokenize(t);
-                if (toks.length >= 8) chunks.push({ src:url, title, section:sec, text:t.slice(0,500), tc:toks.length, tf:computeTF(toks) });
+                if (toks.length >= 8) chunks.push({ src: url, title, section: sec, text: t.slice(0, 500), tc: toks.length, tf: computeTF(toks) });
                 buf = '';
               };
               body.querySelectorAll('h1,h2,h3,h4,p,li,td').forEach(el => {
-                const tag = el.tagName, txt = el.textContent.replace(/\s+/g,' ').trim();
-                if (!txt || txt.length<10) return;
-                if (/^H[1-4]$/.test(tag)) { flush(); sec=txt; } else { buf+=' '+txt; if(buf.length>480) flush(); }
+                const tag = el.tagName, txt = el.textContent.replace(/\s+/g, ' ').trim();
+                if (!txt || txt.length < 10) return;
+                if (/^H[1-4]$/.test(tag)) { flush(); sec = txt; } else { buf += ' ' + txt; if (buf.length > 480) flush(); }
               });
               flush();
-            } catch(e){}
+            } catch (e) { }
           }));
         }
-        chunks.forEach((c,i) => { c.id=i; });
+        chunks.forEach((c, i) => { c.id = i; });
         computeIDF();
       }
 
@@ -3262,7 +3279,7 @@
               return;
             }
           }
-        } catch(e){}
+        } catch (e) { }
 
         /* 2. Load pre-built rag-index.json (fast — generated by build-rag.js) */
         const loaded = await loadPrebuilt(setStatus);
@@ -3275,8 +3292,8 @@
         /* Save to sessionStorage for fast same-session reloads */
         try {
           sessionStorage.setItem('arivoam-rag-v3',
-            JSON.stringify({ v:3, chunks, idf, sp: sysPrompt }));
-        } catch(e){}
+            JSON.stringify({ v: 3, chunks, idf, sp: sysPrompt }));
+        } catch (e) { }
 
         const n = chunks.length;
         if (setStatus) {
@@ -3293,7 +3310,7 @@
 
         const K1 = 1.5, B = 0.75;
         /* c.tc is set by build-rag.js; fallback to c.terms?.length for dynamic chunks */
-        const avgLen = chunks.reduce((a,c) => a + (c.tc || c.terms?.length || 40), 0) / chunks.length;
+        const avgLen = chunks.reduce((a, c) => a + (c.tc || c.terms?.length || 40), 0) / chunks.length;
 
         return chunks
           .map(c => {
@@ -3302,12 +3319,12 @@
             qTerms.forEach(qt => {
               const tf = c.tf[qt] || 0; if (!tf) return;
               const idfVal = idf[qt] || 1;
-              score += idfVal * (tf * (K1+1)) / (tf + K1*(1 - B + B*docLen/avgLen));
+              score += idfVal * (tf * (K1 + 1)) / (tf + K1 * (1 - B + B * docLen / avgLen));
             });
             return score > 0 ? { ...c, score } : null;
           })
           .filter(Boolean)
-          .sort((a,b) => b.score - a.score)
+          .sort((a, b) => b.score - a.score)
           .slice(0, topK);
       }
 
@@ -3436,11 +3453,77 @@
       _updateAIStatus();
       setTimeout(() => toggleAISetup(), 800);
     };
+    /* Full save — also saves Brave key */
+    window.saveAIConfigFull = function () {
+      const key = (document.getElementById('aiKeyInput')?.value || '').trim();
+      const prov = document.getElementById('aiProvider')?.value || 'groq';
+      const bKey = (document.getElementById('braveKeyInput')?.value || '').trim();
+      if (!key) { const el = document.getElementById('aiSetupStatus'); if (el) { el.style.color = 'var(--red)'; el.textContent = '⚠ Enter your LLM API key'; } return; }
+      AI.setConfig(key, prov);
+      try { if (bKey) localStorage.setItem('arivoam-brave-key', bKey); else localStorage.removeItem('arivoam-brave-key'); } catch (e) { }
+      _updateAIStatus();
+      setTimeout(() => toggleAISetup(), 800);
+    };
     window.clearAIConfig = function () {
       AI.clear();
+      try { localStorage.removeItem('arivoam-brave-key'); } catch (e) { }
       const ki = document.getElementById('aiKeyInput'); if (ki) ki.value = '';
+      const bi = document.getElementById('braveKeyInput'); if (bi) bi.value = '';
       _updateAIStatus();
     };
+    /* Pre-fill Brave key when panel opens */
+    const _origToggle = window.toggleAISetup;
+    window.toggleAISetup = function () {
+      _origToggle();
+      const bi = document.getElementById('braveKeyInput');
+      if (bi) { try { bi.value = localStorage.getItem('arivoam-brave-key') || ''; } catch (e) { } }
+    };
+
+    /* ══════════════════════════════════════════════════════════
+       WEB SEARCH ENGINE  (Wikipedia free · Brave optional)
+    ══════════════════════════════════════════════════════════ */
+    const WebSearch = (() => {
+      /* ── Wikipedia (free, no key, always available) ── */
+      async function wikipedia(query) {
+        const url = `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json&origin=*&srlimit=3&srprop=snippet&utf8=1`;
+        const res = await fetch(url, { cache: 'no-store' });
+        if (!res.ok) return [];
+        const d = await res.json();
+        return (d.query?.search || []).map(r => ({
+          source: 'Wikipedia',
+          title: r.title,
+          text: r.snippet.replace(/<[^>]+>/g, '').replace(/&quot;/g, '"').replace(/&amp;/g, '&').replace(/&#039;/g, "'").slice(0, 300)
+        }));
+      }
+
+      /* ── Brave Search (optional key — richer results) ── */
+      async function brave(query, key) {
+        const url = `https://api.search.brave.com/res/v1/web/search?q=${encodeURIComponent(query)}&count=4&search_lang=en&country=IN&text_decorations=false`;
+        const res = await fetch(url, { headers: { 'Accept': 'application/json', 'Accept-Encoding': 'gzip', 'X-Subscription-Token': key } });
+        if (!res.ok) return [];
+        const d = await res.json();
+        return (d.web?.results || []).map(r => ({
+          source: r.url?.replace(/^https?:\/\/(www\.)?/, '').split('/')[0] || 'Web',
+          title: r.title,
+          text: (r.description || r.extra_snippets?.[0] || '').slice(0, 300)
+        }));
+      }
+
+      async function search(query) {
+        try {
+          const braveKey = localStorage.getItem('arivoam-brave-key') || '';
+          if (braveKey) {
+            const results = await brave(query, braveKey);
+            if (results.length) return results;
+          }
+          return await wikipedia(query);
+        } catch (e) {
+          try { return await wikipedia(query); } catch (_) { return []; }
+        }
+      }
+
+      return { search };
+    })();
 
     /* ══════════════════════════════════════════════════════════
        CHATBOT ENGINE
@@ -3879,14 +3962,32 @@
         if (AI.configured()) {
           if (statusEl) statusEl.textContent = '● Thinking…';
 
-          /* Retrieve context */
-          const ragHits = RAG.search(query, 3);
+          /* ── Retrieve RAG context ── */
+          const ragHits = RAG.search(query, 5);
           const kbHits = searchKB(query).slice(0, 3);
 
-          const context = ragHits.map(h =>
-            `[${h.title} › ${h.section !== h.title ? h.section : ''}]\n${h.text.slice(0, 500)}`
-          ).join('\n\n');
+          /* ── Web search fallback when RAG has weak / no results ── */
+          const ragWeak = ragHits.length === 0 || (ragHits[0]?.score || 0) < 1.2;
+          let webHits = [];
+          if (ragWeak) {
+            try {
+              if (statusEl) statusEl.textContent = '🌐 Searching web…';
+              webHits = await WebSearch.search(query);
+            } catch (_) { }
+          }
 
+          /* ── Build unified context ── */
+          let context = '';
+          if (ragHits.length) {
+            context += '📚 Study file context:\n' +
+              ragHits.map(h => `[${h.title} › ${h.section !== h.title ? h.section : h.title}]\n${h.text.slice(0, 450)}`).join('\n\n');
+          }
+          if (webHits.length) {
+            context += (context ? '\n\n' : '') + '🌐 Web search results:\n' +
+              webHits.map(w => `[${w.source}] ${w.title}:\n${w.text}`).join('\n\n');
+          }
+
+          if (statusEl) statusEl.textContent = '● Thinking…';
           const messages = [
             { role: 'system', content: buildPrompt(context, kbHits) },
             ...chatHistory(4),
@@ -3918,13 +4019,16 @@
               speakText(reply);
             }
 
-            /* Append source links if RAG found something */
+            /* ── Source attribution ── */
+            const srcParts = [];
             if (ragHits.length) {
-              const linksHtml = ragHits.map(h =>
-                `<a href="${h.src}" style="font-size:11px;color:var(--gold)">→ ${escHtml(h.title)}</a>`
-              ).join('  ');
-              appendMsg('bot', `📄 Sources: ${linksHtml}`);
+              const uniq = [...new Map(ragHits.map(h => [h.src, h])).values()].slice(0, 3);
+              srcParts.push(...uniq.map(h => `<a href="${h.src}" style="font-size:11px;color:var(--gold)">📚 ${escHtml(h.title)}</a>`));
             }
+            if (webHits.length) {
+              srcParts.push(...webHits.slice(0, 2).map(w => `<span style="font-size:11px;color:var(--cyan)">🌐 ${escHtml(w.source)} — ${escHtml(w.title)}</span>`));
+            }
+            if (srcParts.length) appendMsg('bot', srcParts.join('  '));
 
             setQR(['Ask a follow-up', 'Related topics', 'Give me a PYQ', 'Study tip']);
 

@@ -673,7 +673,7 @@ function renderHero() {
 
 function renderBtn() {
   const b = document.getElementById('addBtn');
-  if (st.view === 'images') { b.textContent = '+ Upload Image'; b.onclick = () => openUpload(); }
+  if (st.view === 'images') { b.textContent = '📁 Upload'; b.onclick = () => openUpload(); }
   else if (st.view === 'topics') { b.textContent = '+ Add Topic'; b.onclick = () => openAddTopic(); }
   else { b.textContent = '+ Add Subject'; b.onclick = () => openAddSubject(); }
 }
@@ -770,8 +770,12 @@ function renderImages() {
         </div>
       `).join('')}
       <div class="add-ph" onclick="openUpload()">
-        <div class="add-ph-icon">📤</div>
-        <div>Upload Image</div>
+        <div class="add-ph-icon">📁</div>
+        <div>Upload File</div>
+      </div>
+      <div class="add-ph" onclick="openCamera()">
+        <div class="add-ph-icon">📷</div>
+        <div>Live Camera</div>
       </div>
     </div>`;
 }
@@ -986,42 +990,55 @@ window.setUploadMode = async function (mode) {
   }
 };
 
-/* ── Upload Image ── */
+/* ── Upload Image (file only) ── */
 function openUpload() {
   pick.file = null; pick.capturedUrl = null;
   openModal(`
-    <div class="modal-title">Add Image</div>
-    <div class="modal-sub">Upload a file or capture with camera</div>
+    <div class="modal-title">📁 Upload File</div>
+    <div class="modal-sub">Choose an image from your device</div>
     <div class="form-grp">
       <label class="form-lbl">Image Name</label>
       <input class="form-inp" id="mInp" placeholder="e.g. Preamble Summary…">
     </div>
     <div class="form-grp">
-      <label class="form-lbl">Source</label>
-      <div class="src-tabs">
-        <button class="src-tab active" data-mode="file" onclick="setUploadMode('file')">📁 File / Gallery</button>
-        <button class="src-tab" data-mode="cam" onclick="setUploadMode('cam')">📷 Live Camera</button>
-      </div>
-      <!-- File upload zone -->
       <div class="upload-z" id="upZone">
-        <input type="file" accept="image/*" capture="environment" id="fileInp" onchange="handleFile(event)">
-        <div class="upload-z-icon">📤</div>
-        <div class="upload-z-txt">Tap to choose · JPG, PNG, SVG, WebP</div>
+        <input type="file" accept="image/*" id="fileInp" onchange="handleFile(event)">
+        <div class="upload-z-icon">📁</div>
+        <div class="upload-z-txt">Tap or click to choose a file<br><small style="opacity:.6">JPG · PNG · SVG · WebP · GIF</small></div>
       </div>
-      <!-- Camera view -->
-      <div class="cam-wrap" id="camWrap">
-        <video id="camVideo" class="cam-video" autoplay playsinline muted></video>
-        <button class="cam-snap" onclick="capturePhoto()" title="Take photo">📸</button>
-        <button class="cam-flip" onclick="flipCamera()" title="Flip">🔄</button>
-      </div>
-      <!-- Preview -->
       <div class="upload-prev" id="upPrev"><img id="upPrevImg" src="" alt="preview"></div>
-      <button id="retakeBtn" class="btn btn-ou" onclick="retakePhoto()" style="display:none;margin-top:8px;font-size:0.6rem;padding:5px 12px;">↩ Retake</button>
     </div>
     <div class="modal-acts">
       <button class="btn btn-ou" onclick="closeModal()">Cancel</button>
       <button class="btn btn-pr" onclick="doUpload()">Add Image</button>
     </div>`);
+}
+
+/* ── Live Camera Capture (camera only) ── */
+function openCamera() {
+  pick.file = null; pick.capturedUrl = null;
+  openModal(`
+    <div class="modal-title">📷 Live Camera</div>
+    <div class="modal-sub">Point camera and tap the shutter to capture</div>
+    <div class="form-grp">
+      <label class="form-lbl">Image Name</label>
+      <input class="form-inp" id="mInp" placeholder="e.g. Whiteboard Notes…">
+    </div>
+    <div class="form-grp">
+      <div class="cam-wrap live" id="camWrap">
+        <video id="camVideo" class="cam-video" autoplay playsinline muted></video>
+        <button class="cam-snap" onclick="capturePhoto()" title="Take photo">📸</button>
+        <button class="cam-flip" onclick="flipCamera()" title="Flip camera">🔄</button>
+      </div>
+      <div class="upload-prev" id="upPrev"><img id="upPrevImg" src="" alt="preview"></div>
+      <button id="retakeBtn" class="btn btn-ou" onclick="retakePhoto()" style="display:none;margin-top:8px;font-size:0.6rem;padding:5px 12px;">↩ Retake</button>
+    </div>
+    <div class="modal-acts">
+      <button class="btn btn-ou" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-pr" onclick="doUpload()">Save Photo</button>
+    </div>`);
+  /* Start camera after modal renders */
+  setTimeout(() => startCamera(), 60);
 }
 
 function handleFile(e) {

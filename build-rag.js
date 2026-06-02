@@ -128,70 +128,93 @@ function computeTF(tokens) {
 }
 
 /* ══════════════════════════════════════════════════
-   SECTION-AWARE CHUNKING
+   SECTION-AWARE CHUNKING  (v2 — handles bilingual
+   newspaper HTML, div/section-id based splitting,
+   and proper text extraction)
 ══════════════════════════════════════════════════ */
 
-function chunkFile(html, src, pageTitle) {
-  // Remove nav / header / footer clutter
-  const cleaned = html
-    .replace(/<nav[\s\S]*?<\/nav>/gi, '')
-    .replace(/<header[\s\S]*?<\/header>/gi, '')
-    .replace(/<footer[\s\S]*?<\/footer>/gi, '')
-    .replace(/<script[\s\S]*?<\/script>/gi, '')
-    .replace(/<style[\s\S]*?<\/style>/gi, '')
-    .replace(/<!--[\s\S]*?-->/g, '');
+function preprocess(html) {
+  return html
+    /* ① Remove Tamil-language spans (bilingual newspaper content) */
+    .replace(/<span[^>]*class="[^"]*lang-ta[^"]*"[^>]*>[\s\S]*?<\/span>/gi, ' ')
+    .replace(/<span[^>]*lang="ta"[^>]*>[\s\S]*?<\/span>/gi, ' ')
+    /* ② Remove boilerplate regions */
+    .replace(/<nav[\s\S]*?<\/nav>/gi, ' ')
+    .replace(/<header[^>]*>[\s\S]*?<\/header>/gi, ' ')
+    .replace(/<footer[^>]*>[\s\S]*?<\/footer>/gi, ' ')
+    .replace(/<aside[^>]*>[\s\S]*?<\/aside>/gi, ' ')
+    /* ③ Remove scripts, styles, comments */
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<!--[\s\S]*?-->/g, ' ');
+}
 
-  // Split by headings to get sections
-  const headingRe = /<(h[1-4])[^>]*>([\s\S]*?)<\/h[1-4]>/gi;
-  const parts = [];
-  let last = 0;
+/* Derive a human-readable label from a section/div id */
+function idToLabel(id) {
+  return id.replace(/[-_]/g, ' ')
+    .replace(/\b([a-z])/g, c => c.toUpperCase())
+    .slice(0, 80);
+}
+
+function chunkFile(html, src, pageTitle) {
+  const cleaned = preprocess(html);
+  const parts   = [];
   let curSection = pageTitle;
+  let last       = 0;
+
+  /*
+   * Split on BOTH:
+   *  A) Headings  <h1>…</h1>  through <h4>
+   *  B) Named sections  <section id="…">  <article id="…">  <div id="…">
+   *     (newspaper files use <section id="national">, <section id="economy"> etc.)
+   */
+  const splitRe = new RegExp(
+    '<(h[1-4])[^>]*>([\\s\\S]*?)<\\/h[1-4]>' +
+    '|<(?:section|article|div)[^>]+id="([a-z][\\w-]{1,40})"[^>]*>',
+    'gi'
+  );
 
   let m;
-  while ((m = headingRe.exec(cleaned)) !== null) {
+  while ((m = splitRe.exec(cleaned)) !== null) {
     if (m.index > last) {
       parts.push({ section: curSection, raw: cleaned.slice(last, m.index) });
     }
-    curSection = m[2].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().slice(0, 120);
-    last = headingRe.lastIndex;
+    if (m[1]) {
+      /* Heading match */
+      curSection = m[2].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().slice(0, 120);
+    } else {
+      /* Section/article/div with id */
+      curSection = idToLabel(m[3]) + ' — ' + pageTitle;
+    }
+    last = splitRe.lastIndex;
   }
   if (last < cleaned.length) {
     parts.push({ section: curSection, raw: cleaned.slice(last) });
   }
 
+  /* ── Per-part → chunks ── */
   const chunks = [];
 
+  function pushChunk(section, t) {
+    t = t.trim();
+    if (t.length < CHUNK_MIN_TEXT) return;
+    const toks = tokenize(t);
+    if (toks.length < CHUNK_MIN_TOKS) return;
+    chunks.push({ src, title: pageTitle, section, text: t.slice(0, 550), tc: toks.length, tf: computeTF(toks) });
+  }
+
   for (const { section, raw } of parts) {
-    const text = stripHtml(raw).replace(/\n/g, ' ').replace(/\s+/g, ' ').trim();
+    const text = stripHtml(raw).replace(/\n/g, ' ').replace(/\s{2,}/g, ' ').trim();
     if (text.length < CHUNK_MIN_TEXT) continue;
 
-    // Split into target-size sub-chunks at sentence/phrase boundaries
-    const sentences = text.match(/[^.!?；\n]{20,}[.!?]?/g) || [text];
+    /* Split on sentence boundaries, accumulate to CHUNK_TARGET chars */
+    const sentences = text.match(/[^.!?\n]{15,}[.!?]?/g) || [text];
     let buf = '';
-
-    function pushChunk(t) {
-      t = t.trim();
-      if (t.length < CHUNK_MIN_TEXT) return;
-      const toks = tokenize(t);
-      if (toks.length < CHUNK_MIN_TOKS) return;
-      chunks.push({
-        src,
-        title: pageTitle,
-        section,
-        text: t.slice(0, 550),
-        tc: toks.length,
-        tf: computeTF(toks)
-      });
+    for (const s of sentences) {
+      buf += (buf ? ' ' : '') + s.trim();
+      if (buf.length >= CHUNK_TARGET) { pushChunk(section, buf); buf = ''; }
     }
-
-    for (const sent of sentences) {
-      buf += (buf ? ' ' : '') + sent.trim();
-      if (buf.length >= CHUNK_TARGET) {
-        pushChunk(buf);
-        buf = '';
-      }
-    }
-    if (buf) pushChunk(buf);
+    if (buf) pushChunk(section, buf);
   }
 
   return chunks;

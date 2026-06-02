@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body class="en-mode">
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">31 May 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">31 மே 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#scitech"><span class="lang-en">Sci-Tech</span><span class="lang-ta">அறிவியல்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+            <a href="#obituary"><span class="lang-en">Obituary</span><span class="lang-ta">மறைவு</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <!-- Sidebar TOC -->
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Finance</span><span class="lang-ta">பொருளாதாரம் & நிதி</span></a></li>
+                <li><a href="#scitech"><span class="lang-en">Science & Tech</span><span class="lang-ta">அறிவியல் & தொழில்நுட்பம்</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a></li>
+                <li><a href="#obituary"><span class="lang-en">Obituaries</span><span class="lang-ta">மறைவு</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · Defection Law</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">AIADMK Complains to Governor Against TVK's "Horse Trading"</span>
+                        <span class="lang-ta">தவெக குதிரை பேரம்: ஆளுநரிடம் அதிமுக புகார்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Senior AIADMK leaders met Tamil Nadu Governor R.N. Ravi and filed a formal complaint accusing the newly elected majority party, TVK, of engaging in "horse trading" (bribing/poaching MLAs). Following the recent assembly elections, four AIADMK MLAs had resigned their posts to join TVK. Former CM Edappadi K. Palaniswami strongly criticized this move, asserting that TVK won in his home constituency of Edappadi solely by "purchasing" their candidate.</p>
+                    <p class="lang-ta">சமீபத்தில் பெரும்பான்மை பெற்ற தவெக (TVK) கட்சி, "குதிரை பேரம்" (எம்எல்ஏக்களை விலைக்கு வாங்குதல்) மூலம் அதிமுக சட்டமன்ற உறுப்பினர்களை இழுப்பதாகக் கூறி, அதிமுகவின் மூத்த தலைவர்கள் ஆளுநர் ஆர்.என். ரவியைச் சந்தித்து முறையான புகாரை அளித்தனர். கடந்த சட்டமன்றத் தேர்தலுக்குப் பிறகு, 4 அதிமுக எம்எல்ஏக்கள் தங்களது பதவியை ராஜினாமா செய்துவிட்டு தவெக-வில் இணைந்தனர். முன்னாள் முதல்வர் எடப்பாடி கே. பழனிசாமி, தனது சொந்த தொகுதியான எடப்பாடியில் தவெக வேட்பாளரை "விலைக்கு வாங்கி" மட்டுமே வெற்றி பெற்றதாகக் கடுமையாக விமர்சித்தார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Constitutional Angle:</strong> The Tenth Schedule (Anti-Defection Law) inserted by the 52nd Amendment Act, 1985, deals with the disqualification of elected members on the grounds of defection.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> 52-வது திருத்தச் சட்டம், 1985 மூலம் சேர்க்கப்பட்ட பத்தாவது அட்டவணை (கட்சித் தாவல் தடைச் சட்டம்), கட்சித் தாவல் அடிப்படையில் தேர்ந்தெடுக்கப்பட்ட உறுப்பினர்களைத் தகுதி நீக்கம் செய்வது பற்றி கூறுகிறது.</span></li>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en">Resigning from the assembly seat *before* joining another party bypasses the standard disqualification that prevents a defector from holding a ministerial post, forcing a by-election instead.</span><span class="lang-ta">வேறு கட்சியில் சேருவதற்கு முன்பு சட்டமன்றப் பதவியை ராஜினாமா செய்வது, கட்சித் தாவல் தடைச் சட்டத்தின் கீழ் தகுதி நீக்கம் செய்யப்படுவதைத் தவிர்க்கிறது, மாறாக அது இடைத்தேர்தலுக்கு வழிவகுக்கிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Judiciary · Preventive Detention</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Madras HC Quashes Goondas Act Against Builder; Condemns Former Police Commissioner</span>
+                        <span class="lang-ta">கட்டுமான நிறுவன உரிமையாளர் மீதான குண்டர் சட்டம் ரத்து; முன்னாள் காவல் ஆணையருக்கு நீதிமன்றம் கண்டனம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Madras High Court quashed the detention order passed under the Goondas Act against private builder Santhosh Sharma, who was accused of a ₹43 crore real estate fraud. The court severely reprimanded the former Chennai Police Commissioner (and current ADGP of Anti-Corruption) Arun for repeatedly issuing "flawed" Goondas Act orders for extraneous reasons, noting that invoking this strict preventive detention law for standard fraud cases is a misuse of power.</p>
+                    <p class="lang-ta">ரூ.43 கோடி ரியல் எஸ்டேட் மோசடி வழக்கில் தனியார் கட்டுமான நிறுவன உரிமையாளர் சந்தோஷ் சர்மா மீது குண்டர் சட்டத்தின் கீழ் பிறப்பிக்கப்பட்ட தடுப்புக்காவல் உத்தரவை சென்னை உயர்நீதிமன்றம் ரத்து செய்தது. வழக்கமான மோசடி வழக்குகளுக்கு இந்த கடுமையான தடுப்புக்காவல் சட்டத்தைப் பயன்படுத்துவது அதிகார துஷ்பிரயோகம் என்று குறிப்பிட்ட நீதிமன்றம், "தவறான" குண்டர் சட்ட உத்தரவுகளைத் தொடர்ந்து பிறப்பித்த முன்னாள் சென்னை காவல் ஆணையருக்கு (தற்போதைய ஊழல் தடுப்புப் பிரிவு ஏடிஜிபி) கடும் கண்டனம் தெரிவித்தது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Legal Framework:</strong> The Tamil Nadu Goondas Act, 1982 (Act 14 of 1982) allows the state to place individuals under preventive detention for up to one year to prevent dangerous activities.</span><span class="lang-ta"><strong>சட்ட விதி:</strong> தமிழ்நாடு குண்டர் சட்டம், 1982, ஆபத்தான நடவடிக்கைகளைத் தடுப்பதற்காக தனிநபர்களை ஓராண்டு வரை தடுப்புக் காவலில் வைக்க மாநிலத்திற்கு அதிகாரமளிக்கிறது.</span></li>
+                            <li><span class="badge bg-tip">TIP</span><span class="lang-en"><strong>Article 22:</strong> Grants protection against arrest and detention in certain cases. Preventive detention laws cannot authorize detention for more than 3 months without an advisory board's approval.</span><span class="lang-ta"><strong>சரத்து 22:</strong> சில வழக்குகளில் கைது மற்றும் காவலில் வைக்கப்படுவதிலிருந்து பாதுகாப்பு அளிக்கிறது. ஆலோசனைக் குழுவின் ஒப்புதல் இன்றி 3 மாதங்களுக்கு மேல் காவலில் வைக்க தடுப்புக்காவல் சட்டங்கள் அனுமதிக்காது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Geography · Water Resources</span>
+                        <span class="badge bg-tip">MODERATE</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Veeranam Lake Water Level Drops; Supply to Chennai Halved</span>
+                        <span class="lang-ta">வீராணம் ஏரி நீர்மட்டம் சரிவு; சென்னைக்கான குடிநீர் விநியோகம் பாதியாக குறைப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Due to the intense summer heat and lack of water flow from the Lower Anicut (Keezhanai) through the Vadavaru river, the water level at Veeranam Lake in Cuddalore district has significantly dropped to 43.87 feet (total capacity 47.50 feet). Consequently, the drinking water supply to Chennai has been reduced from 70 cusecs to 30 cusecs. PWD officials assured that the current reserves will suffice for June, pending the customary opening of the Mettur Dam on June 12.</p>
+                    <p class="lang-ta">கடும் கோடை வெயில் மற்றும் கீழணையிலிருந்து வடவாறு வழியாக நீர்வரத்து இல்லாததால், கடலூர் மாவட்டத்தில் உள்ள வீராணம் ஏரியின் நீர்மட்டம் 43.87 அடியாக (மொத்த கொள்ளளவு 47.50 அடி) கணிசமாகக் குறைந்துள்ளது. இதன் காரணமாக, சென்னைக்கான குடிநீர் விநியோகம் விநாடிக்கு 70 கன அடியிலிருந்து 30 கன அடியாகக் குறைக்கப்பட்டுள்ளது. ஜூன் 12-ம் தேதி மேட்டூர் அணை திறக்கப்படும் என எதிர்பார்க்கப்படும் நிலையில், தற்போதைய இருப்பு ஜூன் மாதத்திற்குப் போதுமானதாக இருக்கும் என பொதுப்பணித்துறை அதிகாரிகள் உறுதியளித்துள்ளனர்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Static GK Hook:</strong> Veeranam Lake was originally built in the 10th Century by Rajaditya Chola (named after his father Parantaka I, who had the title 'Veeranarayana').</span><span class="lang-ta"><strong>நிலையான ஜிகே:</strong> வீராணம் ஏரி 10-ம் நூற்றாண்டில் ராஜாதித்த சோழனால் கட்டப்பட்டது (அவரது தந்தை முதலாம் பராந்தக சோழனின் 'வீரநாராயணன்' என்ற பட்டப் பெயரால் இது அழைக்கப்படுகிறது).</span></li>
+                            <li><span class="lang-en"><strong>Project:</strong> The "New Veeranam Project" was commissioned to supply drinking water from this lake to Chennai through massive pipelines.</span><span class="lang-ta"><strong>திட்டம்:</strong> வீராணம் ஏரியில் இருந்து சென்னைக்கு குழாய்கள் மூலம் குடிநீர் வழங்குவதற்காக "புதிய வீராணம் திட்டம்" தொடங்கப்பட்டது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Economy · MSME</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">TIIC to Hold Special Loan Mela in Chennai (June 1-30)</span>
+                        <span class="lang-ta">சென்னையில் நாளை முதல் தொழில் கடன் சிறப்பு முகாம் (ஜூன் 1-30)</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Tamilnadu Industrial Investment Corporation (TIIC) is organizing a special loan mela for MSMEs from June 1 to June 30 at its Nandanam, Chennai branch. The mela will facilitate loans to set up new industries and expand existing ones, offering a 25% capital subsidy up to ₹1.5 crore for eligible units. Schemes like NEEDS and the Annal Ambedkar Business Champion Scheme (AABCS) will be highlighted, with a full waiver of the application inspection fee during the mela.</p>
+                    <p class="lang-ta">தமிழ்நாடு தொழில் முதலீட்டுக் கழகம் (TIIC) குறு, சிறு மற்றும் நடுத்தரத் தொழில்களுக்கான (MSME) சிறப்பு கடன் திருவிழாவை ஜூன் 1 முதல் ஜூன் 30 வரை சென்னை நந்தனத்தில் உள்ள அதன் கிளையில் நடத்துகிறது. புதிய தொழில்களைத் தொடங்கவும், ஏற்கனவே உள்ளவற்றை விரிவுபடுத்தவும் கடன்களை வழங்குவதோடு, தகுதியான நிறுவனங்களுக்கு ரூ.1.5 கோடி வரை 25% மூலதன மானியத்தையும் இந்த முகாம் வழங்குகிறது. NEEDS மற்றும் அண்ணல் அம்பேத்கர் தொழில் முன்னோடிகள் திட்டம் (AABCS) போன்ற திட்டங்கள் இதில் முன்னிலைப்படுத்தப்படும். முகாமின் போது விண்ணப்ப ஆய்வு கட்டணம் முழுமையாக ரத்து செய்யப்படும்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en"><strong>Static GK:</strong> TIIC was established in 1949 and is the first State Financial Corporation (SFC) in India. It predates the SFC Act of 1951.</span><span class="lang-ta"><strong>நிலையான ஜிகே:</strong> தமிழ்நாடு தொழில் முதலீட்டுக் கழகம் (TIIC) 1949 இல் நிறுவப்பட்டது. இதுவே இந்தியாவின் முதல் மாநில நிதிக் கழகமாகும். இது 1951 ஆம் ஆண்டின் SFC சட்டத்திற்கு முந்தையது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · Chief Minister</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Karnataka: D.K. Shivakumar Officially Chosen as Chief Minister</span>
+                        <span class="lang-ta">கர்நாடகா புதிய முதல்வராக டி.கே. சிவகுமார் தேர்வு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">D.K. Shivakumar was unanimously elected as the leader of the Congress Legislature Party in Karnataka, officially paving the way for him to become the new Chief Minister. The resolution was proposed by outgoing CM Siddaramaiah (who resigned based on a prior power-sharing agreement) and seconded by G. Parameshwara. Governor Thawar Chand Gehlot formally invited Shivakumar to form the government, with the swearing-in scheduled for June 3.</p>
+                    <p class="lang-ta">கர்நாடகாவில் காங்கிரஸ் சட்டமன்றக் குழுவின் தலைவராக டி.கே. சிவகுமார் ஒருமனதாகத் தேர்ந்தெடுக்கப்பட்டார், இது அவர் புதிய முதல்வராக பதவியேற்பதற்கான அதிகாரப்பூர்வ வழியை உருவாக்கியுள்ளது. பதவி விலகும் முதல்வர் சித்தராமையா (முந்தைய அதிகாரப் பகிர்வு ஒப்பந்தத்தின் அடிப்படையில் ராஜினாமா செய்தவர்) இந்தத் தீர்மானத்தை முன்மொழிந்தார், ஜி. பரமேஸ்வரா அதை வழிமொழிந்தார். ஆட்சியமைக்க ஆளுநர் தாவர் சந்த் கெலாட் முறைப்படி சிவகுமாருக்கு அழைப்பு விடுத்துள்ளார். பதவியேற்பு விழா ஜூன் 3-ம் தேதி நடைபெறுகிறது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Constitutional Article:</strong> Article 164 (1) specifies that the Chief Minister shall be appointed by the Governor.</span><span class="lang-ta"><strong>அரசியலமைப்புச் சரத்து:</strong> முதலமைச்சர் ஆளுநரால் நியமிக்கப்படுவார் என்று சரத்து 164 (1) குறிப்பிடுகிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Education · Exam Irregularities</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">CUET-UG 2026 Delayed Due to Technical Glitches; 3,700 to Write Re-test</span>
+                        <span class="lang-ta">தொழில்நுட்பக் கோளாறு காரணமாக கியூட் (CUET) தேர்வு தாமதம்; 3,700 மாணவர்களுக்கு மறுதேர்வு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Common University Entrance Test (CUET-UG), conducted by the National Testing Agency (NTA), faced massive technical glitches nationwide. Tests scheduled for 10:30 AM were delayed past 11:00 AM, causing severe distress to students. The NTA stated the delay was caused by a technical issue at the service provider, Tata Consultancy Services (TCS) iON. Over 3,700 students who left the centers due to the delay will be given a re-test.</p>
+                    <p class="lang-ta">தேசிய தேர்வு முகமையால் (NTA) நடத்தப்படும் பொது பல்கலைக்கழக நுழைவுத் தேர்வில் (CUET-UG) நாடு முழுவதும் பெரும் தொழில்நுட்பக் கோளாறுகள் ஏற்பட்டன. காலை 10:30 மணிக்கு திட்டமிடப்பட்ட தேர்வுகள் 11:00 மணி வரை தாமதமானது மாணவர்களுக்கு கடும் சிரமத்தை ஏற்படுத்தியது. சேவை வழங்கும் நிறுவனமான டாடா கன்சல்டன்சி சர்வீசஸ் (TCS) அமைப்பில் ஏற்பட்ட தொழில்நுட்பக் கோளாறுதான் தாமதத்திற்குக் காரணம் என என்டிஏ (NTA) தெரிவித்துள்ளது. தாமதம் காரணமாக தேர்வு மையத்தை விட்டு வெளியேறிய 3,700 க்கும் மேற்பட்ட மாணவர்களுக்கு மறுதேர்வு நடத்தப்படும்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Defence & Security</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Indian Armed Forces Ready for "Operation Bandar 2.0": Army Chief</span>
+                        <span class="lang-ta">தேவைப்பட்டால் "ஆபரேஷன் பந்தர் 2.0" நடத்த தயார்: ராணுவ தலைமைத் தளபதி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Addressing the 150th passing out parade of the National Defence Academy (NDA) in Pune, Army Chief Gen Upendra Dwivedi stated that the armed forces are fully prepared to launch "Operation Bandar 2.0" if the need arises. Emphasizing modern multi-domain warfare capabilities across land, air, and sea, he noted that the original Operation Bandar (the 2019 Balakot airstrike) defined India's resolute response to terrorism.</p>
+                    <p class="lang-ta">புனேவில் உள்ள தேசிய பாதுகாப்பு அகாடமியின் (NDA) 150-வது பயிற்சி நிறைவு அணிவகுப்பில் உரையாற்றிய ராணுவ தலைமைத் தளபதி உபேந்திர திவேதி, தேவைப்பட்டால் "ஆபரேஷன் பந்தர் 2.0" (Operation Bandar 2.0) நடவடிக்கையை மேற்கொள்ள முப்படை படைகளும் முழுமையாக தயாராக உள்ளன என்று கூறினார். நிலம், வான் மற்றும் கடலில் நவீன பல்துறை போர் திறன்களை வலியுறுத்திய அவர், அசல் ஆபரேஷன் பந்தர் (2019 பாலாகோட் வான்வழித் தாக்குதல்) பயங்கரவாதத்திற்கு எதிரான இந்தியாவின் உறுதியான பதிலை வரையறுத்தது என்று குறிப்பிட்டார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Historical Context:</strong> "Operation Bandar" was the code name given by the Indian Air Force to the airstrikes targeting the Jaish-e-Mohammed terror camp in Balakot, Pakistan, on February 26, 2019, in response to the Pulwama attack.</span><span class="lang-ta"><strong>வரலாற்றுப் பின்னணி:</strong> புல்வாமா தாக்குதலுக்கு பதிலடியாக, பிப்ரவரி 26, 2019 அன்று பாகிஸ்தானின் பாலாகோட்டில் உள்ள ஜெய்ஷ்-இ-முகமது பயங்கரவாத முகாமை குறிவைத்து இந்திய விமானப்படை நடத்திய வான்வழித் தாக்குதலுக்கு வழங்கப்பட்ட குறியீட்டுப் பெயர் "ஆபரேஷன் பந்தர்".</span></li>
+                        </ul>
+                    </details>
+                </div>
+            </section>
+
+            <!-- ECONOMY & FINANCE -->
+            <section id="economy">
+                <h2>
+                    <span class="lang-en">Economy & Finance</span>
+                    <span class="lang-ta">பொருளாதாரம் & நிதி</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Banking · Financial Crime</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Bank Frauds Hit ₹48,021 Crore in FY 2025-26: RBI Report</span>
+                        <span class="lang-ta">2025-26 நிதியாண்டில் ரூ.48,021 கோடியாக வங்கி மோசடிகள் அதிகரிப்பு: ரிசர்வ் வங்கி அறிக்கை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">According to the Reserve Bank of India's annual report, banks and financial institutions in India reported 10,114 fraud cases amounting to a staggering ₹48,021 crore during the financial year 2025-26. While the number of cases decreased from 23,722 in the previous year, the financial value jumped significantly from ₹32,803 crore. Public sector banks accounted for the bulk of the fraudulent amounts (₹35,709 crore), primarily occurring in the loan/advances sector.</p>
+                    <p class="lang-ta">இந்திய ரிசர்வ் வங்கியின் ஆண்டு அறிக்கையின்படி, 2025-26 நிதியாண்டில் இந்தியாவில் உள்ள வங்கிகள் மற்றும் நிதி நிறுவனங்களில் ரூ.48,021 கோடி மதிப்பிலான 10,114 மோசடி வழக்குகள் பதிவாகியுள்ளன. முந்தைய ஆண்டை விட (23,722) வழக்குகளின் எண்ணிக்கை குறைந்திருந்தாலும், அதன் மதிப்பு ரூ.32,803 கோடியிலிருந்து கணிசமாக உயர்ந்துள்ளது. பொதுத்துறை வங்கிகளே அதிக அளவிலான மோசடி தொகையைக் (ரூ.35,709 கோடி) கொண்டுள்ளன, இவை முக்கியமாக கடன் வழங்கும் பிரிவில் நடந்துள்ளன.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>RBI Action:</strong> To counter this, RBI has introduced the advanced "Cyber Range" framework to test bank networks against cyber-attacks and is revamping the "Kavach" framework for fraud detection.</span><span class="lang-ta"><strong>ரிசர்வ் வங்கி நடவடிக்கை:</strong> இதை எதிர்கொள்ள, சைபர் தாக்குதல்களுக்கு எதிராக வங்கி நெட்வொர்க்குகளை சோதிக்க மேம்பட்ட "சைபர் ரேஞ்ச்" (Cyber Range) கட்டமைப்பை ரிசர்வ் வங்கி அறிமுகப்படுத்தியுள்ளது, மேலும் மோசடி கண்டறிதலுக்கான "கவச்" (Kavach) கட்டமைப்பையும் மாற்றி அமைத்து வருகிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Trade · Agriculture</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Import Duty Exemption on Cotton Extended Till Oct 30</span>
+                        <span class="lang-ta">பருத்தி இறக்குமதிக்கான வரி விலக்கு அக்டோபர் 30 வரை நீட்டிப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Union Finance Ministry has announced an extension of the import duty exemption on all varieties of cotton until October 30, 2026. This move, effective from June 1, aims to ensure adequate stock for the domestic textile and apparel industry and reduce input costs, benefiting manufacturers, consumers, and indirectly supporting domestic cotton farmers.</p>
+                    <p class="lang-ta">அனைத்து வகையான பருத்தி இறக்குமதிக்கான வரி விலக்கை அக்டோபர் 30, 2026 வரை நீட்டிப்பதாக மத்திய நிதி அமைச்சகம் அறிவித்துள்ளது. ஜூன் 1 முதல் அமலுக்கு வரும் இந்த நடவடிக்கை, உள்நாட்டு ஜவுளி மற்றும் ஆயத்த ஆடைத் துறைக்கு போதுமான இருப்பை உறுதி செய்வதையும், உற்பத்தியாளர்கள், நுகர்வோருக்கு பயனளிக்கும் வகையில் உள்ளீட்டு செலவுகளைக் குறைப்பதையும், மறைமுகமாக உள்நாட்டு பருத்தி விவசாயிகளை ஆதரிப்பதையும் நோக்கமாகக் கொண்டுள்ளது.</p>
+                </div>
+            </section>
+
+            <!-- INTERNATIONAL NEWS -->
+            <section id="international">
+                <h2>
+                    <span class="lang-en">International News</span>
+                    <span class="lang-ta">சர்வதேச செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Diplomacy · Neighbourhood First</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Myanmar Leader Min Aung Hlaing Begins 5-Day Visit to India</span>
+                        <span class="lang-ta">மியான்மர் அதிபர் மின் ஆங் ஹ்லேங் இந்தியாவுக்கு 5 நாள் பயணம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Myanmar's military ruler and recently appointed President, Min Aung Hlaing, arrived in Gaya, Bihar, commencing a 5-day state visit to India. He visited the Mahabodhi Temple, a UNESCO World Heritage site, reflecting the deep spiritual and historical ties between the two nations. He is scheduled to meet Prime Minister Narendra Modi in New Delhi to discuss border security, connectivity, and trade.</p>
+                    <p class="lang-ta">மியான்மரின் ராணுவ ஆட்சியாளரும், சமீபத்தில் அதிபராக நியமிக்கப்பட்டவருமான மின் ஆங் ஹ்லேங், பீகார் மாநிலம் கயாவை வந்தடைந்தார். இதன் மூலம் இந்தியாவுக்கான அவரது 5 நாள் அரசு முறைப் பயணம் தொடங்கியது. இரு நாடுகளுக்கும் இடையிலான ஆழமான ஆன்மீக மற்றும் வரலாற்று உறவுகளைப் பிரதிபலிக்கும் வகையில், யுனெஸ்கோ உலக பாரம்பரியச் சின்னமான மகாபோதி கோயிலுக்கு அவர் சென்றார். எல்லைப் பாதுகாப்பு, உள்கட்டமைப்பு மற்றும் வர்த்தகம் குறித்து விவாதிக்க அவர் புதுதில்லியில் பிரதமர் நரேந்திர மோடியைச் சந்திக்கத் திட்டமிட்டுள்ளார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Geography Hook:</strong> India shares a 1,640 km border with Myanmar, touching four northeastern states: Arunachal Pradesh, Nagaland, Manipur, and Mizoram.</span><span class="lang-ta"><strong>புவியியல் குறிப்பு:</strong> அருணாச்சலப் பிரதேசம், நாகாலாந்து, மணிப்பூர் மற்றும் மிசோரம் ஆகிய நான்கு வடகிழக்கு மாநிலங்களைத் தொட்டு 1,640 கி.மீ எல்லையை இந்தியா மியான்மருடன் பகிர்ந்து கொள்கிறது.</span></li>
+                            <li><span class="badge bg-gem">GEM</span><span class="lang-en">Myanmar is central to three key Indian foreign policies: "Neighbourhood First", "Act East Policy", and "Security and Growth for All in the Region (SAGAR)".</span><span class="lang-ta">இந்தியாவின் மூன்று முக்கிய வெளியுறவுக் கொள்கைகளுக்கு மியான்மர் மையமாக உள்ளது: "அண்டை நாடுகளுக்கு முன்னுரிமை", "கிழக்கு நோக்கிய கொள்கை", மற்றும் "பிராந்தியத்தில் உள்ள அனைவருக்கும் பாதுகாப்பு மற்றும் வளர்ச்சி (SAGAR)".</span></li>
+                        </ul>
+                    </details>
+                </div>
+            </section>
+
+            <!-- SCIENCE, TECH & ENVIRONMENT -->
+            <section id="scitech">
+                <h2>
+                    <span class="lang-en">Science, Tech & Environment</span>
+                    <span class="lang-ta">அறிவியல், தொழில்நுட்பம் & சுற்றுச்சூழல்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Space Technology</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Blue Origin's 'New Glenn' Rocket Suffers Major Explosion During Testing</span>
+                        <span class="lang-ta">ப்ளூ ஆரிஜின் நிறுவனத்தின் ராக்கெட் சோதனையின் போது வெடித்துச் சிதறியது</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Jeff Bezos' space company Blue Origin faced a major setback when a portion of its 'New Glenn' rocket exploded during a recent test, severely damaging the launch pad. This delays the company's plan to launch 3,200 satellites for Amazon's 'Project Kuiper' internet constellation. Furthermore, the explosion poses a risk of delaying NASA's Artemis program, as the New Glenn was scheduled to carry lunar landers and rovers for the Artemis-4 mission in 2028.</p>
+                    <p class="lang-ta">அமேசான் உரிமையாளர் ஜெஃப் பெசோஸின் விண்வெளி நிறுவனமான 'ப்ளூ ஆரிஜின்' (Blue Origin) அதன் 'நியூ க்ளென்' (New Glenn) ராக்கெட்டின் ஒரு பகுதி சமீபத்திய சோதனையின் போது வெடித்துச் சிதறியதில் பெரும் பின்னடைவைச் சந்தித்தது. இந்த விபத்து ஏவுதளத்தை கடுமையாக சேதப்படுத்தியது. இது அமேசானின் 'புராஜெக்ட் கைபர்' (Project Kuiper) இணைய சேவைக்கான 3,200 செயற்கைக்கோள்களை ஏவும் திட்டத்தை தாமதப்படுத்துகிறது. மேலும், 2028 ஆம் ஆண்டின் ஆர்ட்டெமிஸ்-4 திட்டத்திற்கான லேண்டர்கள் மற்றும் ரோவர்களை நியூ க்ளென் சுமந்து செல்லத் திட்டமிடப்பட்டிருந்ததால், நாசாவின் ஆர்ட்டெமிஸ் திட்டத்தையும் தாமதப்படுத்தும் அபாயம் உள்ளது.</p>
+                </div>
+            </section>
+
+            <!-- SPORTS -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports</span>
+                    <span class="lang-ta">விளையாட்டு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Cricket · IPL 2026</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">IPL 2026 Final: RCB vs Gujarat Titans in Ahmedabad</span>
+                        <span class="lang-ta">ஐபிஎல் 2026 இறுதிப் போட்டி: அகமதாபாத்தில் பெங்களூரு - குஜராத் மோதல்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The grand finale of the IPL 2026 tournament features the Royal Challengers Bengaluru (RCB) taking on the Gujarat Titans (GT). The match is scheduled at the Narendra Modi Stadium in Ahmedabad, the world's largest cricket stadium with a capacity of 1.3 lakh spectators. Both teams finished the league stage with 18 points (9 wins, 5 losses), but RCB secured the top spot via net run rate.</p>
+                    <p class="lang-ta">ஐபிஎல் 2026 தொடரின் இறுதிப் போட்டியில் ராயல் சேலஞ்சர்ஸ் பெங்களூரு (RCB) மற்றும் குஜராத் டைட்டன்ஸ் (GT) அணிகள் மோதுகின்றன. உலகின் மிகப்பெரிய கிரிக்கெட் மைதானமான அகமதாபாத்தில் உள்ள நரேந்திர மோடி மைதானத்தில் (1.3 லட்சம் பார்வையாளர்கள் திறன் கொண்டது) இந்தப் போட்டி நடைபெறுகிறது. லீக் சுற்றில் இரு அணிகளும் 18 புள்ளிகளுடன் (9 வெற்றிகள், 5 தோல்விகள்) முடித்தாலும், ரன் ரேட் அடிப்படையில் பெங்களூரு அணி முதலிடத்தைப் பிடித்தது.</p>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Wrestling · Asian Games Qualifier</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Vinesh Phogat Loses in Asian Games Qualifiers</span>
+                        <span class="lang-ta">ஆசிய விளையாட்டுத் தகுதிச் சுற்றில் வினேஷ் போகத் தோல்வி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Star Indian wrestler Vinesh Phogat, who was disqualified from the 2024 Paris Olympics finals for being overweight (in the 50 kg category), faced another setback. Attempting a comeback in the 53 kg category for the upcoming Asian Games in Japan, she lost in the semi-finals of the qualification tournament in Delhi to Minakshi Goyat (6-4). This defeat shatters her chances of participating in the Asian Games.</p>
+                    <p class="lang-ta">2024 பாரிஸ் ஒலிம்பிக் இறுதிப் போட்டியில் (50 கிலோ பிரிவு) அதிக எடையால் தகுதி நீக்கம் செய்யப்பட்ட இந்திய மல்யுத்த நட்சத்திரம் வினேஷ் போகத், மற்றொரு பின்னடைவைச் சந்தித்துள்ளார். ஜப்பானில் நடைபெறவுள்ள ஆசிய விளையாட்டுப் போட்டிகளுக்காக 53 கிலோ பிரிவில் மீண்டும் களமிறங்க முயன்ற அவர், தில்லியில் நடைபெற்ற தகுதிச் சுற்று அரையிறுதியில் மீனாட்சி கோயத்திடம் (6-4) தோல்வியடைந்தார். இந்தத் தோல்வியால் ஆசிய விளையாட்டில் பங்கேற்கும் அவரது வாய்ப்பு பறிபோனது.</p>
+                </div>
+            </section>
+
+            <!-- OBITUARIES -->
+            <section id="obituary">
+                <h2>
+                    <span class="lang-en">Obituaries</span>
+                    <span class="lang-ta">மறைவு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Cinema</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Actor Ajith Kumar's Mother Mohini Mani Passes Away</span>
+                        <span class="lang-ta">நடிகர் அஜித்குமாரின் தாயார் மோகினி மணி காலமானார்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Mohini Mani (84), the mother of prominent Tamil actor Ajith Kumar, passed away in Chennai due to age-related ailments. Chief Minister M.K. Stalin (represented by School Education Minister Anbil Mahesh Poyyamozhi and a personal message on X), Leader of Opposition Edappadi K. Palaniswami, and various other political and film personalities offered their condolences to the actor and his family.</p>
+                    <p class="lang-ta">முன்னணி தமிழ் நடிகர் அஜித்குமாரின் தாயார் மோகினி மணி (84), வயது மூப்பு காரணமாக சென்னையில் காலமானார். முதல்வர் மு.க. ஸ்டாலின் (பள்ளிக்கல்வித்துறை அமைச்சர் அன்பில் மகேஷ் பொய்யாமொழி நேரில் அஞ்சலி செலுத்தினார், முதல்வர் X தளத்தில் இரங்கல் தெரிவித்தார்), எதிர்க்கட்சித் தலைவர் எடப்பாடி கே. பழனிசாமி மற்றும் பல்வேறு அரசியல், திரையுலகப் பிரமுகர்கள் நடிகருக்கும் அவரது குடும்பத்தினருக்கும் தங்கள் இரங்கலைத் தெரிவித்தனர்.</p>
+                </div>
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Which schedule of the Indian Constitution deals with the Anti-Defection Law?</span>
+                        <span class="lang-ta">கேள்வி: இந்திய அரசியலமைப்பின் எந்த அட்டவணை கட்சித் தாவல் தடைச் சட்டத்தைக் கையாள்கிறது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Tenth Schedule</span><br><br>
+                                <strong>Context:</strong> AIADMK complained to the TN Governor about TVK engaging in horse-trading to attract its MLAs. The 10th Schedule was added by the 52nd Amendment in 1985.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">பத்தாவது அட்டவணை</span><br><br>
+                                <strong>பின்னணி:</strong> அதிமுக எம்எல்ஏக்களை இழுக்க தவெக குதிரை பேரத்தில் ஈடுபடுவதாக தமிழக ஆளுநரிடம் அதிமுக புகார் அளித்தது. 1985 இல் 52 வது திருத்தத்தின் மூலம் 10 வது அட்டவணை சேர்க்கப்பட்டது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Which is the first State Financial Corporation established in India?</span>
+                        <span class="lang-ta">கேள்வி: இந்தியாவில் நிறுவப்பட்ட முதல் மாநில நிதிக் கழகம் எது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Tamilnadu Industrial Investment Corporation (TIIC)</span><br><br>
+                                <strong>Context:</strong> TIIC is holding a special loan mela in Chennai to promote MSME development. It was established in 1949.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">தமிழ்நாடு தொழில் முதலீட்டுக் கழகம் (TIIC)</span><br><br>
+                                <strong>பின்னணி:</strong> குறு, சிறு மற்றும் நடுத்தர தொழில் வளர்ச்சியை ஊக்குவிப்பதற்காக TIIC சென்னையில் சிறப்பு கடன் திருவிழாவை நடத்துகிறது. இது 1949 இல் நிறுவப்பட்டது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">AIADMK vs TVK</span><span class="lang-ta">அதிமுக vs தவெக</span></td>
+                                <td><span class="lang-en">State/Polity</span><span class="lang-ta">மாநிலம்/அரசியல்</span></td>
+                                <td><span class="lang-en">AIADMK complains to Gov about horse trading.</span><span class="lang-ta">குதிரை பேரம் குறித்து ஆளுநரிடம் அதிமுக புகார்.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">Karnataka CM chosen</span><span class="lang-ta">கர்நாடக முதல்வர் தேர்வு</span></td>
+                                <td><span class="lang-en">National/Polity</span><span class="lang-ta">தேசியம்/அரசியல்</span></td>
+                                <td><span class="lang-en">DK Shivakumar to take oath on June 3.</span><span class="lang-ta">ஜூன் 3-ல் டிகே சிவகுமார் பதவியேற்பு.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">Goondas Act Misuse</span><span class="lang-ta">குண்டர் சட்டம் ரத்து</span></td>
+                                <td><span class="lang-en">State/Judiciary</span><span class="lang-ta">மாநிலம்/நீதித்துறை</span></td>
+                                <td><span class="lang-en">Madras HC quashes Goondas on private builder.</span><span class="lang-ta">கட்டுமான நிறுவன உரிமையாளர் மீதான குண்டர் சட்டம் ரத்து.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">Myanmar Leader Visit</span><span class="lang-ta">மியான்மர் அதிபர் வருகை</span></td>
+                                <td><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></td>
+                                <td><span class="lang-en">Min Aung Hlaing begins 5-day state visit to India.</span><span class="lang-ta">மின் ஆங் ஹ்லேங் 5 நாள் பயணமாக இந்தியா வருகை.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">Bank Frauds FY26</span><span class="lang-ta">வங்கி மோசடிகள்</span></td>
+                                <td><span class="lang-en">Economy/RBI</span><span class="lang-ta">பொருளாதாரம்</span></td>
+                                <td><span class="lang-en">₹48,021 Cr frauds reported in 2025-26 per RBI.</span><span class="lang-ta">2025-26ல் ரூ.48,021 கோடி மோசடிகள் என ரிசர்வ் வங்கி தகவல்.</span></td>
+                                <td><span class="badge bg-tip">MED</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani Chennai 31-05-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி சென்னை 31-05-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source images contained Tamil text detailing state, national, and international news for 31 May 2026. 
+State news focused on AIADMK filing a complaint with Governor R.N. Ravi regarding TVK's "horse trading" to poach its MLAs. Edappadi K. Palaniswami campaigned in Salem, criticizing TVK. The Madras High Court quashed a Goondas Act detention against builder Santhosh Sharma, severely criticizing former Police Commissioner Arun. Veeranam Lake water level dropped, halving Chennai's water supply to 30 cusecs. TIIC announced a loan mela for MSMEs in June.
+Nationally, D.K. Shivakumar was formally chosen as the Karnataka CM, to be sworn in on June 3. CUET-UG exams faced massive delays due to a TCS technical glitch; 3,700 students will take a retest. Army Chief Upendra Dwivedi asserted readiness for 'Operation Bandar 2.0'. 
+Internationally, Myanmar leader Min Aung Hlaing arrived in India for a 5-day visit. Blue Origin's 'New Glenn' rocket exploded during testing, causing major setbacks for Amazon's Project Kuiper and NASA's Artemis.
+Economy: RBI reported ₹48,021 crore in bank frauds in 2025-26. Cotton import duty exemption was extended till October 30.
+Sports: RCB will face Gujarat Titans in the IPL 2026 final. Vinesh Phogat lost in the Asian Games qualifiers.
+Obituary: Actor Ajith Kumar's mother Mohini Mani passed away at 84.]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூலப் படங்கள் 31 மே 2026 க்கான மாநில, தேசிய மற்றும் சர்வதேச செய்திகளைக் கொண்டிருந்தன.
+மாநில செய்திகளில், தவெக குதிரை பேரம் மூலம் எம்எல்ஏக்களை இழுப்பதாக ஆளுநர் ஆர்.என்.ரவியிடம் அதிமுக புகார் அளித்தது. சேலத்தில் எடப்பாடி பழனிசாமி தவெக-வை விமர்சித்தார். கட்டுமான நிறுவன உரிமையாளர் சந்தோஷ் சர்மா மீதான குண்டர் சட்டத்தை ரத்து செய்த சென்னை உயர்நீதிமன்றம், முன்னாள் காவல் ஆணையர் அருணுக்கு கடும் கண்டனம் தெரிவித்தது. வீராணம் ஏரி நீர்மட்டம் குறைந்ததால் சென்னைக்கு குடிநீர் விநியோகம் 30 கன அடியாக குறைந்தது. குறு, சிறு தொழில்களுக்கு TIIC கடன் முகாம் அறிவித்தது.
+தேசிய அளவில், கர்நாடக முதல்வராக டிகே சிவகுமார் முறைப்படி தேர்வு செய்யப்பட்டார்; ஜூன் 3ல் பதவியேற்பு. டிசிஎஸ் தொழில்நுட்ப கோளாறால் கியூட் தேர்வு தாமதம்; 3700 பேருக்கு மறுதேர்வு. 'ஆபரேஷன் பந்தர் 2.0'-க்கு தயார் என ராணுவ தளபதி உபேந்திர திவேதி பேட்டி.
+சர்வதேச அளவில், மியான்மர் அதிபர் மின் ஆங் ஹ்லேங் 5 நாள் பயணமாக இந்தியா வருகை. ப்ளூ ஆரிஜின் நிறுவனத்தின் 'நியூ க்ளென்' ராக்கெட் சோதனையின் போது வெடித்ததால் நாசா, அமேசான் திட்டங்களுக்கு பின்னடைவு.
+பொருளாதாரம்: 2025-26ல் ரூ.48,021 கோடி வங்கி மோசடிகள் நடந்ததாக ரிசர்வ் வங்கி அறிக்கை. பருத்தி இறக்குமதி வரி விலக்கு அக்டோபர் 30 வரை நீட்டிப்பு.
+விளையாட்டு: ஐபிஎல் 2026 இறுதிப் போட்டியில் குஜராத்தை எதிர்கொள்கிறது ஆர்சிபி. ஆசிய விளையாட்டுத் தகுதிச் சுற்றில் வினேஷ் போகத் தோல்வி.
+மறைவு: நடிகர் அஜித்குமாரின் தாயார் மோகினி மணி (84) காலமானார்.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 31 May 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+    </script>
+</body>
+</html>

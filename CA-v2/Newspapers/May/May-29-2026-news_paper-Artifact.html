@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            .nav-links { display: none; }
+        }
+        @media (max-width: 768px) {
+            header { padding: 1.5rem 1rem 1.2rem; }
+            header h1 { font-size: 1.5rem; letter-spacing: 0; line-height: 1.2; }
+            .tagline { font-size: 0.9rem; }
+
+            nav.sticky-top {
+                padding: 0.6rem 1rem;
+                flex-wrap: nowrap;
+                justify-content: space-between;
+                gap: 0.5rem;
+            }
+            .toggle-btn { padding: 0.35rem 0.75rem; font-size: 0.78rem; white-space: nowrap; }
+
+            .layout-container { padding: 0.75rem; gap: 0; }
+            main { width: 100%; min-width: 0; }
+            section { margin-bottom: 2.5rem; scroll-margin-top: 80px; }
+
+            .legend-row { padding: 0.75rem; gap: 0.4rem; }
+            .legend-item { font-size: 0.72rem; gap: 0.3rem; }
+            .legend-color { width: 11px; height: 11px; }
+
+            .news-card { padding: 1rem; margin-bottom: 1rem; }
+            .news-card:hover { transform: none; }
+            .news-card h3 { font-size: 1.1rem; margin-bottom: 0.6rem; }
+            .card-meta { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
+            .category-pill { font-size: 0.75rem; }
+            .badge { font-size: 0.68rem; padding: 0.15rem 0.45rem; margin-right: 0.3rem; }
+
+            details { padding: 0.75rem; }
+            details li { margin-bottom: 0.4rem; padding-left: 1.2rem; }
+
+            table { font-size: 0.78rem; display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            th, td { padding: 0.5rem 0.6rem; }
+
+            .raw-text-panel { font-size: 0.78rem; padding: 1rem; }
+            .answer-reveal { padding: 0.75rem; }
+
+            footer { padding: 1.5rem 1rem; font-size: 0.8rem; }
+            h2 { font-size: 1.3rem; }
+            h3 { font-size: 1.05rem; }
+        }
+
+        @media (max-width: 480px) {
+            header h1 { font-size: 1.2rem; }
+            header { padding: 1.2rem 0.75rem 1rem; }
+            .layout-container { padding: 0.5rem; }
+            .news-card { padding: 0.85rem; border-left-width: 3px; }
+            .legend-row { flex-direction: column; }
+            nav.sticky-top { padding: 0.5rem 0.75rem; }
+            .toggle-btn { font-size: 0.73rem; padding: 0.3rem 0.6rem; }
+        }
+
+        /* ── LIGHT / BRIGHT MODE ── */
+        html.light-mode {
+            --bg-page: #f5f6fa;
+            --bg-card: #ffffff;
+            --text-body: #1a1c2e;
+            --text-muted: #4e5478;
+        }
+        html.light-mode body { background: var(--bg-page) !important; color: var(--text-body) !important; }
+        html.light-mode header { border-bottom-color: rgba(184,132,10,0.35) !important; }
+        html.light-mode nav.sticky-top { background: rgba(245,246,250,0.97) !important; border-bottom-color: #d4d8e8 !important; }
+        html.light-mode .nav-links a { color: var(--text-body) !important; }
+        html.light-mode aside a { color: var(--text-muted) !important; }
+        html.light-mode aside a:hover, html.light-mode aside a.active { color: var(--accent-gold) !important; }
+        html.light-mode .news-card { background: var(--bg-card) !important; box-shadow: 0 2px 8px rgba(0,0,0,0.07) !important; }
+        html.light-mode .legend-row { background: var(--bg-card) !important; border: 1px solid #d4d8e8 !important; }
+        html.light-mode details { background: rgba(0,0,0,0.02) !important; border-color: #d4d8e8 !important; }
+        html.light-mode hr { border-top-color: rgba(0,0,0,0.1) !important; }
+        html.light-mode td { border-bottom-color: rgba(0,0,0,0.08) !important; }
+        html.light-mode tr:nth-child(even) { background: rgba(0,0,0,0.02) !important; }
+        html.light-mode .raw-text-panel { background: #f0f2f8 !important; color: var(--text-muted) !important; }
+        html.light-mode footer { background: var(--bg-card) !important; border-top-color: #d4d8e8 !important; }
+        html.light-mode #themeToggle, html.light-mode #backBtn, html.light-mode #bttBtn {
+            background: rgba(255,255,255,0.92) !important;
+            border-color: rgba(184,132,10,0.4) !important;
+            color: #b8840a !important;
+            box-shadow: 0 2px 14px rgba(0,0,0,0.12) !important;
+        }
+    </style>
+<link rel="stylesheet" href="../../arivoam-lightmode.css">
+<script>(function(){if(localStorage.getItem('arivoam-theme')=='light'){document.documentElement.classList.add('light-mode');}})()</script>
+</head>
+<body class="en-mode">
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">29 May 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">29 மே 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <!-- Sidebar TOC -->
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Finance</span><span class="lang-ta">பொருளாதாரம் & நிதி</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · Defection</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Political Churn: 4 AIADMK MLAs Resign to Support TVK; Former Ministers Jump Ship</span>
+                        <span class="lang-ta">தமிழக அரசியல் மாற்றம்: 4 அதிமுக எம்எல்ஏக்கள் ராஜினாமா செய்து தவெகவுக்கு ஆதரவு; முன்னாள் அமைச்சர்களும் இணைந்தனர்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In a major political shift following the recent assembly elections where TVK emerged as the single largest party (108 seats), four AIADMK MLAs—Chinnasamy, Maragatham Kumaravel, Jayakumar, and Sathyabama—resigned their posts to join TVK. Additionally, senior AIADMK figures including former minister Vellamandi Natarajan and former DGP R. Nataraj officially joined TVK. Former minister C. Vijayabaskar (Viralimalai MLA) is also consulting his supporters regarding a potential switch to TVK.</p>
+                    <p class="lang-ta">தவெக தனிப்பெரும் கட்சியாக (108 இடங்கள்) உருவெடுத்த சமீபத்திய சட்டமன்றத் தேர்தலைத் தொடர்ந்து, அதிமுகவைச் சேர்ந்த 4 எம்எல்ஏக்கள் (சின்னசாமி, மரகதம் குமரவேல், ஜெயக்குமார், சத்தியபாமா) தங்களது பதவிகளை ராஜினாமா செய்துவிட்டு தவெகவில் இணைந்தனர். மேலும், முன்னாள் அமைச்சர் வெல்லமண்டி நடராஜன் மற்றும் முன்னாள் டிஜிபி ஆர். நடராஜ் உள்ளிட்ட அதிமுகவின் மூத்த நிர்வாகிகளும் தவெகவில் இணைந்தனர். முன்னாள் அமைச்சர் சி. விஜயபாஸ்கர் (விராலிமலை எம்எல்ஏ) தவெகவில் இணைவது குறித்து தனது ஆதரவாளர்களுடன் ஆலோசனை நடத்தி வருகிறார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Constitutional Article:</strong> The 10th Schedule (Anti-Defection Law) added by the 52nd Amendment Act (1985) deals with the disqualification of MLAs/MPs on grounds of defection.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> 52-வது திருத்தச் சட்டம் (1985) மூலம் சேர்க்கப்பட்ட 10-வது அட்டவணை (கட்சித் தாவல் தடைச் சட்டம்), கட்சித் தாவல் அடிப்படையில் எம்எல்ஏக்கள்/எம்பிக்களை தகுதி நீக்கம் செய்வது பற்றி கூறுகிறது.</span></li>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en">If an MLA *resigns* their seat before joining another party, the anti-defection law's disqualification (which prevents them from holding ministerial posts) operates differently than if they defected while holding the seat. By resigning, they simply cause a by-election.</span><span class="lang-ta">ஒரு எம்எல்ஏ வேறு கட்சியில் சேருவதற்கு முன்பு தனது பதவியை *ராஜினாமா* செய்தால், கட்சித் தாவல் தடைச் சட்டம் வேறுவிதமாகச் செயல்படும். ராஜினாமா செய்வதன் மூலம் இடைத்தேர்தலுக்கு அவர்கள் வழிவகுக்கின்றனர்.</span></li>
+                            <li><span class="badge bg-gem">GEM</span><span class="lang-en">Article 190(1B) prevents a disqualified defector from being appointed as a Minister until re-elected.</span><span class="lang-ta">சரத்து 190(1B) கட்சித் தாவலால் தகுதி நீக்கம் செய்யப்பட்டவர் மீண்டும் தேர்ந்தெடுக்கப்படும் வரை அமைச்சராக நியமிக்கப்படுவதைத் தடுக்கிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Judiciary</span>
+                        <span class="badge bg-tip">MODERATE</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">"Judiciary Has Corruption, Judges Aren't Holy": Madras HC Refuses Ban on 'Karuppu' Movie</span>
+                        <span class="lang-ta">"நீதித்துறையில் ஊழல் உள்ளது, நீதிபதிகள் புனிதர்கள் அல்ல": 'கருப்பு' திரைப்படத்திற்கு தடை விதிக்க உயர்நீதிமன்றம் மறுப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Madras High Court dismissed a PIL seeking a ban on actor Suriya's film 'Karuppu', which allegedly depicted the judiciary and judges in a bad light. The bench comprising Justices G.R. Swaminathan and V. Lakshminarayanan observed, "Nobody can deny there is corruption in the judiciary. Judges need not be considered holy." The court upheld the filmmaker's artistic freedom (Article 19(1)(a)), stating that a fictional portrayal of a corrupt judge in a fictional court does not amount to Contempt of Court.</p>
+                    <p class="lang-ta">நீதித்துறையையும் நீதிபதிகளையும் அவமதிக்கும் வகையில் காட்சிகள் இருப்பதாகக் கூறி நடிகர் சூர்யாவின் 'கருப்பு' திரைப்படத்திற்கு தடை கோரிய பொதுநல வழக்கை சென்னை உயர்நீதிமன்றம் தள்ளுபடி செய்தது. நீதிபதிகள் ஜி.ஆர். சுவாமிநாதன் மற்றும் வி. லட்சுமிநாராயணன் அடங்கிய அமர்வு, "நீதித்துறையில் ஊழல் இருப்பதை யாரும் மறுக்க முடியாது. நீதிபதிகளை புனிதர்களாகக் கருத வேண்டியதில்லை" என்று குறிப்பிட்டது. கற்பனையான நீதிமன்றத்தில் கற்பனையான ஊழல் நீதிபதியை சித்தரிப்பது நீதிமன்ற அவமதிப்பு ஆகாது என்று கூறி, படைப்பாளியின் கலைச் சுதந்திரத்தை (சரத்து 19(1)(a)) நீதிமன்றம் உறுதி செய்தது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Constitutional Article:</strong> Article 19(1)(a) guarantees Freedom of Speech and Expression, which includes artistic and creative freedom, subject to reasonable restrictions under Article 19(2).</span><span class="lang-ta"><strong>அரசியலமைப்புச் சரத்து:</strong> சரத்து 19(1)(a) பேச்சு மற்றும் கருத்துச் சுதந்திரத்திற்கு உத்தரவாதம் அளிக்கிறது, இதில் கலைச் சுதந்திரமும் அடங்கும் (சரத்து 19(2)-ன் கீழ் நியாயமான கட்டுப்பாடுகளுக்கு உட்பட்டது).</span></li>
+                            <li><span class="lang-en"><strong>Legal Framework:</strong> Contempt of Courts Act, 1971. High Courts have the power to punish for contempt under Article 215 of the Constitution.</span><span class="lang-ta"><strong>சட்ட விதி:</strong> நீதிமன்ற அவமதிப்புச் சட்டம், 1971. அரசியலமைப்பின் 215-வது சரத்தின்படி நீதிமன்ற அவமதிப்புக்காக தண்டிக்கும் அதிகாரம் உயர்நீதிமன்றங்களுக்கு உள்ளது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Geography · Climate</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">'Kathiri Veyil' (Agni Natchathiram) Ends in Tamil Nadu</span>
+                        <span class="lang-ta">தமிழ்நாட்டில் 'கத்திரி வெயில்' (அக்னி நட்சத்திரம்) நிறைவடைந்தது</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The peak summer period known as 'Kathiri Veyil' or 'Agni Natchathiram', which began on May 4, officially ended on May 28 in Tamil Nadu. On its final day, 16 districts recorded temperatures crossing 100 degrees Fahrenheit, with Chennai (Meenambakkam) recording the highest at 106.16°F. The Regional Meteorological Centre predicted isolated heavy rains accompanied by thunder and lightning for several districts in the coming days.</p>
+                    <p class="lang-ta">மே 4 ஆம் தேதி தொடங்கிய 'கத்திரி வெயில்' அல்லது 'அக்னி நட்சத்திரம்' என்று அழைக்கப்படும் உச்ச கோடைக்காலம் தமிழ்நாட்டில் மே 28 அன்று அதிகாரப்பூர்வமாக முடிவடைந்தது. அதன் கடைசி நாளில், 16 மாவட்டங்களில் வெப்பநிலை 100 டிகிரி ஃபாரன்ஹீட்டைத் தாண்டியது, அதிகபட்சமாக சென்னை (மீனம்பாக்கம்) 106.16°F பதிவானது. வரும் நாட்களில் பல மாவட்டங்களில் இடி, மின்னலுடன் கூடிய மிதமான முதல் பலத்த மழை பெய்யக்கூடும் என சென்னை வானிலை ஆய்வு மையம் தெரிவித்துள்ளது.</p>
+                </div>
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · Chief Minister</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Karnataka: Siddaramaiah Resigns; D.K. Shivakumar to Take Oath as CM on May 31</span>
+                        <span class="lang-ta">கர்நாடகா: சித்தராமையா ராஜினாமா; மே 31-ல் புதிய முதல்வராக டி.கே. சிவகுமார் பதவியேற்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Following the Congress High Command's power-sharing formula of two-and-a-half years each, Karnataka Chief Minister Siddaramaiah submitted his resignation to Governor Thawar Chand Gehlot on May 28. Deputy CM D.K. Shivakumar is set to take over as the new Chief Minister and will take the oath of office on May 31. Siddaramaiah, who served his second term from 2023 to 2026, holds the record for serving as Karnataka's CM for the maximum period of 8 years in recent history.</p>
+                    <p class="lang-ta">காங்கிரஸ் மேலிடத்தின் அதிகாரப் பகிர்வு ஒப்பந்தத்தின்படி (தலா இரண்டரை ஆண்டுகள்), கர்நாடக முதல்வர் சித்தராமையா தனது ராஜினாமா கடிதத்தை ஆளுநர் தாவர் சந்த் கெலாட்டிடம் மே 28 அன்று அளித்தார். துணை முதல்வர் டி.கே. சிவகுமார் புதிய முதல்வராகப் பொறுப்பேற்க உள்ளார்; அவர் மே 31 அன்று பதவியேற்கிறார். 2023 முதல் 2026 வரை இரண்டாவது முறையாக பதவி வகித்த சித்தராமையா, கர்நாடகாவில் அதிகபட்சமாக 8 ஆண்டுகள் முதல்வராக இருந்த சாதனையைப் படைத்துள்ளார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Constitutional Article:</strong> Article 164 states that the Chief Minister shall be appointed by the Governor. A resignation letter is handed directly to the Governor.</span><span class="lang-ta"><strong>அரசியலமைப்புச் சரத்து:</strong> சரத்து 164, முதலமைச்சர் ஆளுநரால் நியமிக்கப்படுவார் என்று கூறுகிறது. ராஜினாமா கடிதம் நேரடியாக ஆளுநரிடம் வழங்கப்பட வேண்டும்.</span></li>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en">Match the State with its Governor (Current Karnataka Governor: Thawar Chand Gehlot).</span><span class="lang-ta">மாநிலத்தை அதன் ஆளுநருடன் பொருத்துக (தற்போதைய கர்நாடக ஆளுநர்: தாவர் சந்த் கெலாட்).</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Education · National Testing Agency</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">CUET (UG) 2026 Dates Announced: May 31, June 6 & 7</span>
+                        <span class="lang-ta">கியூட் (CUET) இளநிலை தேர்வுக்கான புதிய தேதிகள் அறிவிப்பு: மே 31, ஜூன் 6 & 7</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The National Testing Agency (NTA) announced the revised dates for the Common University Entrance Test (CUET UG 2026) for admission to undergraduate courses in central universities. The exams, previously postponed due to the Bakrid festival, will now be held on May 31, June 6, and June 7. Admit cards for the May 31 exam have been released on the official website.</p>
+                    <p class="lang-ta">மத்திய பல்கலைக்கழகங்களில் இளநிலை பட்டப்படிப்புகளில் சேருவதற்கான பொது பல்கலைக்கழக நுழைவுத் தேர்வுக்கான (CUET UG 2026) திருத்தப்பட்ட தேதிகளை தேசிய தேர்வு முகமை (NTA) அறிவித்தது. பக்ரீத் பண்டிகை காரணமாக ஒத்திவைக்கப்பட்ட இத்தேர்வு, தற்போது மே 31, ஜூன் 6 மற்றும் ஜூன் 7 ஆகிய தேதிகளில் நடைபெறும். மே 31 தேர்வுக்கான ஹால் டிக்கெட்டுகள் அதிகாரப்பூர்வ இணையதளத்தில் வெளியிடப்பட்டுள்ளன.</p>
+                </div>
+            </section>
+
+            <!-- INTERNATIONAL NEWS -->
+            <section id="international">
+                <h2>
+                    <span class="lang-en">International News</span>
+                    <span class="lang-ta">சர்வதேச செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Bilateral Deals · Energy</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Kazakhstan Signs $16.5 Billion Deal with Russia for First Nuclear Power Plant</span>
+                        <span class="lang-ta">ரஷ்யாவுடன் 16.5 பில்லியன் டாலர் அணுமின் நிலைய ஒப்பந்தத்தில் கையெழுத்திட்டது கஜகஸ்தான்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Kazakhstan, Central Asia's largest country, signed a landmark $16.5 billion agreement with Russia to build its first-ever nuclear power plant. Russian President Vladimir Putin and Kazakh President Kassym-Jomart Tokayev signed the pact in Astana. Russia's state nuclear corporation, Rosatom, secured the contract, beating competitors from China, France, and South Korea. The plant will be built at Ulken village on the shores of Lake Balkhash, with operations expected to begin in 2034.</p>
+                    <p class="lang-ta">மத்திய ஆசியாவின் மிகப்பெரிய நாடான கஜகஸ்தான், தனது முதல் அணுமின் நிலையத்தை அமைக்க ரஷ்யாவுடன் 16.5 பில்லியன் டாலர் மதிப்பிலான வரலாற்று ஒப்பந்தத்தில் கையெழுத்திட்டது. ரஷ்ய அதிபர் விளாடிமிர் புதின் மற்றும் கசாக் அதிபர் காசிம்-ஜோமார்ட் டோகாயேவ் ஆகியோர் அஸ்தானாவில் இந்த ஒப்பந்தத்தில் கையெழுத்திட்டனர். சீனா, பிரான்ஸ் மற்றும் தென் கொரியாவை பின்னுக்குத் தள்ளி, ரஷ்யாவின் ரோசாடோம் நிறுவனம் இந்த ஒப்பந்தத்தைப் பெற்றது. இந்த ஆலை பால்காஷ் ஏரியின் கரையில் உள்ள உல்கென் கிராமத்தில் கட்டப்படும், 2034-ல் இது பயன்பாட்டுக்கு வரும்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Static GK Hook:</strong> Kazakhstan is the world's largest producer of Uranium. Despite this, it hasn't had a nuclear power plant, partly due to the tragic legacy of Soviet-era nuclear testing at Semipalatinsk.</span><span class="lang-ta"><strong>நிலையான ஜிகே:</strong> உலகிலேயே அதிக அளவில் யுரேனியம் உற்பத்தி செய்யும் நாடு கஜகஸ்தான். இருந்தபோதிலும், சோவியத் கால அணு ஆயுத சோதனைகளின் (செமிபாலாடின்ஸ்க்) கசப்பான வரலாற்றால் அங்கு இதுவரை அணுமின் நிலையம் இல்லை.</span></li>
+                            <li><span class="badge bg-gem">GEM</span><span class="lang-en"><strong>Geography Exam Angle:</strong> "Lake Balkhash" is located in Kazakhstan. It is unique because its western half is fresh water, while the eastern half is saline.</span><span class="lang-ta"><strong>புவியியல் தேர்வு கோணம்:</strong> "பால்காஷ் ஏரி" கஜகஸ்தானில் அமைந்துள்ளது. இதன் மேற்குப் பகுதி நன்னீராகவும், கிழக்குப் பகுதி உவர் நீராகவும் இருப்பது இதன் சிறப்பாகும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Global Ethics · Religion</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Pope Francis Officially Rejects the 'Just War' Theory</span>
+                        <span class="lang-ta">"நியாயமான போர்" கோட்பாட்டை அதிகாரப்பூர்வமாக நிராகரித்தார் போப் பிரான்சிஸ்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In a historic doctrinal shift, Pope Francis has officially rejected the "Just War" theory that the Catholic Church has followed since the 5th century. In his new encyclical 'Mecnico Humanitas' (Great Humanity), the Pope stated that the theory is often misused as an excuse to justify military conflicts and warfare instead of seeking peace. The original theory was formulated by St. Augustine around 430 AD.</p>
+                    <p class="lang-ta">5-ஆம் நூற்றாண்டு முதல் கத்தோலிக்க திருச்சபை பின்பற்றி வரும் "நியாயமான போர்" (Just War) கோட்பாட்டை போப் பிரான்சிஸ் அதிகாரப்பூர்வமாக நிராகரித்துள்ளார். தனது புதிய சுற்றறிக்கையான 'மெக்னிகோ ஹுமனிடாஸ்' (Mecnico Humanitas) மூலம், அமைதியைத் தேடுவதற்குப் பதிலாக ராணுவ மோதல்கள் மற்றும் போர்களை நியாயப்படுத்த இக்கோட்பாடு ஒரு சாக்காக தவறாகப் பயன்படுத்தப்படுவதாக அவர் சுட்டிக்காட்டினார். அசல் கோட்பாடு கி.பி. 430-ல் புனித அகஸ்டின் என்பவரால் உருவாக்கப்பட்டது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Historical Context:</strong> The "Just War" theory (Jus ad bellum) outlines conditions under which resorting to war is morally justifiable (e.g., self-defense, last resort).</span><span class="lang-ta"><strong>வரலாற்றுப் பின்னணி:</strong> தற்காப்பு போன்ற தவிர்க்க முடியாத சூழ்நிலைகளில் போர் தொடுப்பது தார்மீக ரீதியாக நியாயமானதா என்பதை "நியாயமான போர்" கோட்பாடு வரையறுக்கிறது.</span></li>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en">Questions on prominent global doctrines and their originators are common. Remember: Just War Theory = St. Augustine.</span><span class="lang-ta">முக்கிய உலகளாவிய கோட்பாடுகள் மற்றும் அவற்றை உருவாக்கியவர்கள் பற்றிய கேள்விகள் பொதுவானவை. நினைவில் கொள்க: நியாயமான போர் கோட்பாடு = புனித அகஸ்டின்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+            </section>
+
+            <!-- ECONOMY & FINANCE -->
+            <section id="economy">
+                <h2>
+                    <span class="lang-en">Economy & Finance</span>
+                    <span class="lang-ta">பொருளாதாரம் & நிதி</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Corporate Results</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">ONGC Q4 Profit Rises 3%; BSNL Revenue Crosses ₹25,000 Crore</span>
+                        <span class="lang-ta">ஓஎன்ஜிசி (ONGC) 4-ஆம் காலாண்டு லாபம் 3% உயர்வு; பிஎஸ்என்எல் (BSNL) வருவாய் ரூ.25,000 கோடியைத் தாண்டியது</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Oil and Natural Gas Corporation (ONGC) reported a 3% rise in its Q4 (Jan-Mar 2026) net profit to ₹6,649.97 crore. However, its overall annual profit for 2025-26 dropped by 7.6% due to higher costs in finding new reserves. Meanwhile, Minister of State for Communications Pemmasani Chandrasekhar announced that BSNL's revenue reached ₹25,000 crore for FY 2025-26, marking a significant 19% growth over the past two years due to infrastructure upgrades and 4G rollouts.</p>
+                    <p class="lang-ta">ஆயில் அண்ட் நேச்சுரல் காஸ் கார்ப்பரேஷன் (ONGC) 4-ஆம் காலாண்டில் (ஜன-மார்ச் 2026) 3% நிகர லாப உயர்வுடன் ரூ.6,649.97 கோடியைப் பதிவு செய்துள்ளது. இருப்பினும், புதிய இருப்புக்களைத் தேடுவதற்கான அதிக செலவுகள் காரணமாக அதன் ஒட்டுமொத்த ஆண்டு லாபம் 7.6% குறைந்துள்ளது. இதற்கிடையே, பிஎஸ்என்எல் (BSNL) வருவாய் 2025-26 நிதியாண்டில் ரூ.25,000 கோடியை எட்டியுள்ளது என்று மத்திய இணை அமைச்சர் பெம்மசானி சந்திரசேகர் அறிவித்தார். உள்கட்டமைப்பு மேம்பாடுகள் மற்றும் 4ஜி சேவை விரிவாக்கம் காரணமாக கடந்த இரண்டு ஆண்டுகளில் இது 19% வளர்ச்சியை எட்டியுள்ளது.</p>
+                </div>
+            </section>
+
+            <!-- SPORTS -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports</span>
+                    <span class="lang-ta">விளையாட்டு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Chess</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Norway Chess: Praggnanandhaa Defeats Magnus Carlsen Again</span>
+                        <span class="lang-ta">நார்வே செஸ்: மேக்னஸ் கார்ல்சனை மீண்டும் வீழ்த்தினார் பிரக்ஞானந்தா</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Indian grandmaster R. Praggnanandhaa secured a major victory by defeating World No. 1 Magnus Carlsen in the third round of the Norway Chess tournament. Playing with white pieces in the classical format, Praggnanandhaa forced Carlsen to resign after 46 moves. This marks his second classical win against Carlsen and his 9th victory overall across all formats against the Norwegian champion.</p>
+                    <p class="lang-ta">நார்வே செஸ் போட்டியின் 3-வது சுற்றில் உலகின் நம்பர் 1 வீரரான மேக்னஸ் கார்ல்சனை வீழ்த்தி இந்திய கிராண்ட்மாஸ்டர் ஆர். பிரக்ஞானந்தா முக்கிய வெற்றியைப் பதிவு செய்தார். கிளாசிக்கல் பிரிவில் வெள்ளை நிற காய்களுடன் விளையாடிய பிரக்ஞானந்தா, 46 நகர்வுகளுக்குப் பிறகு கார்ல்சனை சரணடையச் செய்தார். கார்ல்சனுக்கு எதிராக கிளாசிக்கல் செஸ்ஸில் இவர் பெறும் 2-வது வெற்றி இதுவாகும். அனைத்து வடிவங்களிலும் சேர்த்து 9-வது வெற்றியாகும்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-tip">TIP</span><span class="lang-en">Sports achievements by Indians (especially Tamil Nadu athletes like Praggnanandhaa) against World Champions are frequently asked in TNPSC exams.</span><span class="lang-ta">விளையாட்டுத் துறையில் (குறிப்பாக பிரக்ஞானந்தா போன்ற தமிழக வீரர்கள்) உலக சாம்பியன்களுக்கு எதிராகப் பெறும் வெற்றிகள் டிஎன்பிஎஸ்சி தேர்வுகளில் அடிக்கடி கேட்கப்படும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Cricket · Women's T20 WC</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">4 Indian Women Umpires in 2026 Women's T20 World Cup Panel</span>
+                        <span class="lang-ta">2026 மகளிர் டி20 உலகக் கோப்பை நடுவர் குழுவில் 4 இந்தியப் பெண்கள்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The International Cricket Council (ICC) announced an 18-member all-female umpiring panel for the upcoming Women's T20 World Cup to be held in England and Wales. Four Indian umpires have been included: Match Referee G.S. Lakshmi, and on-field umpires Gayatri Venugopalan, Vrinda Rathi, and Janani N. This is the third consecutive time the Women's T20 World Cup will feature an all-female umpiring panel.</p>
+                    <p class="lang-ta">இங்கிலாந்து மற்றும் வேல்ஸில் நடைபெறவுள்ள மகளிர் டி20 உலகக் கோப்பைக்கான 18 பேர் கொண்ட அனைத்து மகளிர் நடுவர் குழுவை சர்வதேச கிரிக்கெட் கவுன்சில் (ICC) அறிவித்துள்ளது. இதில் 4 இந்திய நடுவர்கள் இடம்பெற்றுள்ளனர்: போட்டி நடுவர் ஜி.எஸ். லட்சுமி, மற்றும் கள நடுவர்கள் காயத்ரி வேணுகோபாலன், பிருந்தா ரதி, ஜனனி என். மகளிர் டி20 உலகக் கோப்பையில் அனைத்து மகளிர் நடுவர் குழு பணியாற்றுவது இது தொடர்ந்து 3-வது முறையாகும்.</p>
+                </div>
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Which Schedule of the Indian Constitution deals with the disqualification of Members of Parliament and State Legislatures on the ground of defection?</span>
+                        <span class="lang-ta">கேள்வி: இந்திய அரசியலமைப்பின் எந்த அட்டவணை, கட்சித் தாவல் அடிப்படையில் நாடாளுமன்ற மற்றும் மாநில சட்டமன்ற உறுப்பினர்களை தகுதி நீக்கம் செய்வது பற்றி கூறுகிறது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Tenth Schedule (10th Schedule)</span><br><br>
+                                <strong>Context:</strong> Four AIADMK MLAs resigned their posts before extending support to the newly elected majority party, TVK, to avoid disqualification under this schedule.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">பத்தாவது அட்டவணை (10th Schedule)</span><br><br>
+                                <strong>பின்னணி:</strong> இந்த அட்டவணையின் கீழ் தகுதி நீக்கம் செய்யப்படுவதைத் தவிர்ப்பதற்காக, புதிதாக தேர்ந்தெடுக்கப்பட்ட தவெக கட்சிக்கு ஆதரவு அளிப்பதற்கு முன்பு நான்கு அதிமுக எம்எல்ஏக்கள் தங்கள் பதவிகளை ராஜினாமா செய்தனர்.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Lake Balkhash, chosen as the site for the country's first nuclear power plant, is located in which of the following nations?</span>
+                        <span class="lang-ta">கேள்வி: நாட்டின் முதல் அணுமின் நிலையத்திற்கான இடமாகத் தேர்ந்தெடுக்கப்பட்டுள்ள பால்காஷ் ஏரி (Lake Balkhash) பின்வரும் எந்த நாட்டில் அமைந்துள்ளது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Kazakhstan</span><br><br>
+                                <strong>Context:</strong> Kazakhstan signed a $16.5 billion agreement with Russia's Rosatom to build its first nuclear power plant at Ulken village on the shores of Lake Balkhash.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">கஜகஸ்தான்</span><br><br>
+                                <strong>பின்னணி:</strong> பால்காஷ் ஏரியின் கரையில் உள்ள உல்கென் கிராமத்தில் தனது முதல் அணுமின் நிலையத்தை கட்ட ரஷ்யாவின் ரோசாடோம் நிறுவனத்துடன் 16.5 பில்லியன் டாலர் ஒப்பந்தத்தில் கஜகஸ்தான் கையெழுத்திட்டது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">Karnataka CM Change</span><span class="lang-ta">கர்நாடக முதல்வர் மாற்றம்</span></td>
+                                <td><span class="lang-en">National/Polity</span><span class="lang-ta">தேசியம்/அரசியல்</span></td>
+                                <td><span class="lang-en">Siddaramaiah resigns, DKS takes over on May 31.</span><span class="lang-ta">சித்தராமையா ராஜினாமா, மே 31-ல் டி.கே.சிவகுமார் பதவியேற்பு.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">AIADMK MLAs to TVK</span><span class="lang-ta">அதிமுக எம்எல்ஏக்கள் தவெக-வில் ஐக்கியம்</span></td>
+                                <td><span class="lang-en">State/Polity</span><span class="lang-ta">மாநிலம்/அரசியல்</span></td>
+                                <td><span class="lang-en">4 MLAs resign. Former ministers follow suit.</span><span class="lang-ta">4 பேர் ராஜினாமா. முன்னாள் அமைச்சர்களும் இணைகின்றனர்.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">Pope Rejects 'Just War'</span><span class="lang-ta">நியாயமான போர் கோட்பாடு நிராகரிப்பு</span></td>
+                                <td><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></td>
+                                <td><span class="lang-en">Rejects 5th century St. Augustine theory.</span><span class="lang-ta">புனித அகஸ்டின் உருவாக்கிய கோட்பாட்டை போப் நிராகரித்தார்.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">Kazakhstan Nuclear Plant</span><span class="lang-ta">கஜகஸ்தான் அணுமின் நிலையம்</span></td>
+                                <td><span class="lang-en">Intl/Energy</span><span class="lang-ta">சர்வதேசம்/ஆற்றல்</span></td>
+                                <td><span class="lang-en">$16.5B pact with Russia at Lake Balkhash.</span><span class="lang-ta">பால்காஷ் ஏரியில் ரஷ்யாவுடன் இணைந்து ஆலை அமைப்பு.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">Praggnanandhaa vs Carlsen</span><span class="lang-ta">பிரக்ஞானந்தா வெற்றி</span></td>
+                                <td><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></td>
+                                <td><span class="lang-en">Pragg beats Carlsen in Norway Chess classical.</span><span class="lang-ta">நார்வே செஸ் கிளாசிக்கல் பிரிவில் கார்ல்சனை வீழ்த்தினார்.</span></td>
+                                <td><span class="badge bg-tip">MED</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani Chennai 29-05-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி சென்னை 29-05-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source images contained Tamil text detailing state, national, and international news for 29 May 2026. 
+State news focused on AIADMK infighting, where EPS and SP Velumani factions reportedly withdrew petitions, but 4 AIADMK MLAs resigned to join TVK. Former ministers like Vellamandi Natarajan and C Vijayabaskar are also aligning with TVK. Madras HC refused to ban Suriya's film 'Karuppu' noting corruption in judiciary is a reality. Agni Natchathiram ended with 16 districts above 100 degrees.
+Nationally, Karnataka CM Siddaramaiah resigned per Congress' power-sharing pact, and DK Shivakumar will take oath on May 31. NTA announced CUET (UG) new dates. PM Modi held PRAGATI meeting focusing on Ken-Betwa river link.
+Internationally, Kazakhstan signed a $16.5B deal with Russia for its first nuclear plant. Pope Francis rejected the Just War theory. 16 schoolgirls died in a Kenya fire. US-Iran reached a temporary 60-day ceasefire extension.
+In Sports, R Praggnanandhaa beat Magnus Carlsen in Norway chess. Four Indian women were named umpires for the T20 World Cup.]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூலப் படங்கள் 29 மே 2026 க்கான மாநில, தேசிய மற்றும் சர்வதேச செய்திகளைக் கொண்டிருந்தன.
+மாநில செய்திகளில், அதிமுக எம்எல்ஏக்கள் 4 பேர் ராஜினாமா செய்து தவெகவில் இணைந்தது பெரும் அதிர்வலையை ஏற்படுத்தியது. முன்னாள் அமைச்சர்கள் சி.விஜயபாஸ்கர், வெல்லமண்டி நடராஜன் உள்ளிட்டோரும் தவெகவை நோக்கி நகர்கின்றனர். நீதித்துறையில் ஊழல் இருப்பதை சுட்டிக்காட்டி 'கருப்பு' திரைப்படத்திற்கு தடை விதிக்க உயர்நீதிமன்றம் மறுத்துவிட்டது. கத்திரி வெயில் நிறைவடைந்தது.
+தேசிய அளவில், காங்கிரஸ் ஒப்பந்தப்படி கர்நாடக முதல்வர் சித்தராமையா ராஜினாமா செய்தார்; டிகே சிவகுமார் மே 31-ல் பதவியேற்கிறார். கியூட் தேர்வு தேதிகளை NTA அறிவித்தது. கென்-பெட்வா நதிநீர் இணைப்பு குறித்து 'பிரகதி' கூட்டத்தில் பிரதமர் மோடி ஆலோசனை நடத்தினார்.
+சர்வதேச அளவில், கஜகஸ்தான் தனது முதல் அணுமின் நிலையத்தை அமைக்க ரஷ்யாவுடன் $16.5 பில்லியன் ஒப்பந்தம் செய்தது. நியாயமான போர் கோட்பாட்டை போப் நிராகரித்தார். கென்யா தீவிபத்தில் 16 மாணவிகள் பலி. அமெரிக்கா-ஈரான் இடையே தற்காலிக போர்நிறுத்தம்.
+விளையாட்டில், நார்வே செஸ்ஸில் கார்ல்சனை பிரக்ஞானந்தா வீழ்த்தினார். டி20 உலகக் கோப்பை நடுவர்களாக 4 இந்தியப் பெண்கள் தேர்வு.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 29 May 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+    </script>
+<button id="themeToggle" onclick="(function(){var l=document.documentElement.classList.toggle('light-mode');localStorage.setItem('arivoam-theme',l?'light':'dark');var b=document.getElementById('themeToggle');if(b)b.innerHTML=l?'&#9790;':'&#9728;';})()" title="Toggle light/dark mode" style="position:fixed;bottom:76px;right:24px;z-index:9998;width:42px;height:42px;border-radius:50%;background:rgba(13,15,20,0.92);border:1px solid rgba(245,200,66,0.35);color:#f5c842;font-size:16px;line-height:1;cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 2px 14px rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;transition:all .2s;">&#9728;</button><script>(function(){var b=document.getElementById('themeToggle');if(!b)return;if(document.documentElement.classList.contains('light-mode')){b.innerHTML='&#9790;';}})()</script>
+<a href="../../index.html" id="backBtn" onclick="if(history.length>1){event.preventDefault();history.back();}" title="Back to Hub" style="position:fixed;bottom:24px;left:24px;z-index:9998;width:42px;height:42px;border-radius:50%;background:rgba(13,15,20,0.92);border:1px solid rgba(245,200,66,0.35);color:#f5c842;font-size:20px;text-decoration:none;backdrop-filter:blur(8px);box-shadow:0 2px 14px rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;transition:all .2s;" onmouseover="this.style.background='rgba(245,200,66,0.12)';" onmouseout="this.style.background='rgba(13,15,20,0.92)';">&#8592;</a>
+</body>
+</html>

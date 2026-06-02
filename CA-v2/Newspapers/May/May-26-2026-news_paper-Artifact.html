@@ -1,0 +1,699 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            .nav-links { display: none; }
+        }
+        @media (max-width: 768px) {
+            header { padding: 1.5rem 1rem 1.2rem; }
+            header h1 { font-size: 1.5rem; letter-spacing: 0; line-height: 1.2; }
+            .tagline { font-size: 0.9rem; }
+
+            nav.sticky-top {
+                padding: 0.6rem 1rem;
+                flex-wrap: nowrap;
+                justify-content: space-between;
+                gap: 0.5rem;
+            }
+            .toggle-btn { padding: 0.35rem 0.75rem; font-size: 0.78rem; white-space: nowrap; }
+
+            .layout-container { padding: 0.75rem; gap: 0; }
+            main { width: 100%; min-width: 0; }
+            section { margin-bottom: 2.5rem; scroll-margin-top: 80px; }
+
+            .legend-row { padding: 0.75rem; gap: 0.4rem; }
+            .legend-item { font-size: 0.72rem; gap: 0.3rem; }
+            .legend-color { width: 11px; height: 11px; }
+
+            .news-card { padding: 1rem; margin-bottom: 1rem; }
+            .news-card:hover { transform: none; }
+            .news-card h3 { font-size: 1.1rem; margin-bottom: 0.6rem; }
+            .card-meta { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
+            .category-pill { font-size: 0.75rem; }
+            .badge { font-size: 0.68rem; padding: 0.15rem 0.45rem; margin-right: 0.3rem; }
+
+            details { padding: 0.75rem; }
+            details li { margin-bottom: 0.4rem; padding-left: 1.2rem; }
+
+            table { font-size: 0.78rem; display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            th, td { padding: 0.5rem 0.6rem; }
+
+            .raw-text-panel { font-size: 0.78rem; padding: 1rem; }
+            .answer-reveal { padding: 0.75rem; }
+
+            footer { padding: 1.5rem 1rem; font-size: 0.8rem; }
+            h2 { font-size: 1.3rem; }
+            h3 { font-size: 1.05rem; }
+        }
+
+        @media (max-width: 480px) {
+            header h1 { font-size: 1.2rem; }
+            header { padding: 1.2rem 0.75rem 1rem; }
+            .layout-container { padding: 0.5rem; }
+            .news-card { padding: 0.85rem; border-left-width: 3px; }
+            .legend-row { flex-direction: column; }
+            nav.sticky-top { padding: 0.5rem 0.75rem; }
+            .toggle-btn { font-size: 0.73rem; padding: 0.3rem 0.6rem; }
+        }
+
+        /* ── LIGHT / BRIGHT MODE ── */
+        html.light-mode {
+            --bg-page: #f5f6fa;
+            --bg-card: #ffffff;
+            --text-body: #1a1c2e;
+            --text-muted: #4e5478;
+        }
+        html.light-mode body { background: var(--bg-page) !important; color: var(--text-body) !important; }
+        html.light-mode header { border-bottom-color: rgba(184,132,10,0.35) !important; }
+        html.light-mode nav.sticky-top { background: rgba(245,246,250,0.97) !important; border-bottom-color: #d4d8e8 !important; }
+        html.light-mode .nav-links a { color: var(--text-body) !important; }
+        html.light-mode aside a { color: var(--text-muted) !important; }
+        html.light-mode aside a:hover, html.light-mode aside a.active { color: var(--accent-gold) !important; }
+        html.light-mode .news-card { background: var(--bg-card) !important; box-shadow: 0 2px 8px rgba(0,0,0,0.07) !important; }
+        html.light-mode .legend-row { background: var(--bg-card) !important; border: 1px solid #d4d8e8 !important; }
+        html.light-mode details { background: rgba(0,0,0,0.02) !important; border-color: #d4d8e8 !important; }
+        html.light-mode hr { border-top-color: rgba(0,0,0,0.1) !important; }
+        html.light-mode td { border-bottom-color: rgba(0,0,0,0.08) !important; }
+        html.light-mode tr:nth-child(even) { background: rgba(0,0,0,0.02) !important; }
+        html.light-mode .raw-text-panel { background: #f0f2f8 !important; color: var(--text-muted) !important; }
+        html.light-mode footer { background: var(--bg-card) !important; border-top-color: #d4d8e8 !important; }
+        html.light-mode #themeToggle, html.light-mode #backBtn, html.light-mode #bttBtn {
+            background: rgba(255,255,255,0.92) !important;
+            border-color: rgba(184,132,10,0.4) !important;
+            color: #b8840a !important;
+            box-shadow: 0 2px 14px rgba(0,0,0,0.12) !important;
+        }
+    </style>
+<link rel="stylesheet" href="../../arivoam-lightmode.css">
+<script>(function(){if(localStorage.getItem('arivoam-theme')=='light'){document.documentElement.classList.add('light-mode');}})()</script>
+</head>
+<body class="en-mode">
+<a href="../../index.html" id="backBtn" onclick="if(history.length>1){event.preventDefault();history.back();}" title="Back" style="position:fixed;bottom:24px;left:24px;z-index:9998;width:42px;height:42px;border-radius:50%;background:rgba(13,15,20,0.92);border:1px solid rgba(245,200,66,0.35);color:#f5c842;font-size:20px;line-height:1;text-decoration:none;backdrop-filter:blur(8px);box-shadow:0 2px 14px rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;transition:all .2s;" onmouseover="this.style.background='rgba(245,200,66,0.12)';" onmouseout="this.style.background='rgba(13,15,20,0.92)';">&#8592;</a>
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">26 May 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">26 மே 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#scitech"><span class="lang-en">Sci-Tech</span><span class="lang-ta">அறிவியல் & தொழில்நுட்பம்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <!-- Sidebar TOC -->
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Finance</span><span class="lang-ta">பொருளாதாரம் & நிதி</span></a></li>
+                <li><a href="#scitech"><span class="lang-en">Science & Tech</span><span class="lang-ta">அறிவியல் & தொழில்நுட்பம்</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Agriculture · Schemes</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">TN Govt Waives Crop Loans Up to ₹50,000 for Small & Marginal Farmers</span>
+                        <span class="lang-ta">சிறு, குறு விவசாயிகளுக்கான ரூ.50,000 வரையிலான பயிர்க்கடன் தள்ளுபடி: தமிழக அரசு அறிவிப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Chief Minister Joseph Vijay has ordered the waiver of crop loans up to ₹50,000 obtained by small and marginal farmers from cooperative banks between May 1, 2025, and February 28, 2026. For marginal farmers with loans up to ₹50,000, the entire amount is waived. For loans between ₹50,001 and ₹1,00,000, staggered waivers apply (e.g., ₹40,000 for marginal and ₹20,000 for small farmers). The scheme will benefit 14,22,555 farmers and cost the exchequer ₹2,044.46 crore.</p>
+                    <p class="lang-ta">கூட்டுறவு வங்கிகளில் சிறு, குறு விவசாயிகள் பெற்ற ரூ.50,000 வரையிலான பயிர்க்கடன்களை (மே 1, 2025 முதல் பிப்ரவரி 28, 2026 வரை) தள்ளுபடி செய்ய முதலமைச்சர் ஜோசப் விஜய் உத்தரவிட்டுள்ளார். ரூ.50,000 வரை கடன் பெற்ற குறு விவசாயிகளுக்கு முழுத் தொகையும், ரூ.50,001 முதல் ரூ.1 லட்சம் வரையிலான கடன்களுக்கு விகிதாச்சார அடிப்படையிலும் தள்ளுபடி வழங்கப்படும். இத்திட்டத்தால் 14,22,555 விவசாயிகள் பயன்பெறுவர், அரசுக்கு ரூ.2,044.46 கோடி கூடுதல் செலவாகும்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Constitutional Article:</strong> DPSP Article 48 directs the State to organize agriculture and animal husbandry on modern and scientific lines.</span><span class="lang-ta"><strong>அரசியலமைப்புச் சரத்து:</strong> வழிகாட்டு நெறிமுறைகளின் (DPSP) சரத்து 48 விவசாயம் மற்றும் கால்நடை வளர்ப்பை நவீன மற்றும் அறிவியல் வழிகளில் ஒழுங்கமைக்க அரசை அறிவுறுத்துகிறது.</span></li>
+                            <li><span class="lang-en"><strong>Definition:</strong> Marginal Farmer = Landholding up to 1 Hectare (2.5 acres). Small Farmer = Landholding between 1 to 2 Hectares (2.5 to 5 acres).</span><span class="lang-ta"><strong>வரையறை:</strong> குறு விவசாயி = 1 ஹெக்டேர் (2.5 ஏக்கர்) வரை நிலம் வைத்திருப்பவர். சிறு விவசாயி = 1 முதல் 2 ஹெக்டேர் (2.5 முதல் 5 ஏக்கர்) வரை நிலம் வைத்திருப்பவர்.</span></li>
+                            <li><span class="badge bg-gem">GEM</span><span class="lang-en"><strong>Exam Angle:</strong> Questions often test the specific financial outlay (₹2,044.46 crore) or the cut-off dates for eligibility (May 1, 2025 - Feb 28, 2026).</span><span class="lang-ta"><strong>தேர்வு கோணம்:</strong> ஒதுக்கப்பட்ட நிதி (ரூ.2,044.46 கோடி) அல்லது தகுதிக்கான காலவரம்பு (மே 1, 2025 - பிப் 28, 2026) ஆகியவற்றை தேர்வில் நேரடியாக கேட்கலாம்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Women Empowerment · Police</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">"Singappen" Special Task Force for Women's Safety to be Inaugurated on May 27</span>
+                        <span class="lang-ta">பெண்கள் பாதுகாப்புக்கான "சிங்கப்பெண்" சிறப்பு அதிரடிப்படை மே 27-ல் தொடக்கம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Following up on his election promise, CM Joseph Vijay will officially inaugurate the "Singappen" Special Task Force on May 27 at Rajarathinam Stadium, Egmore. Headed by IG K. Bhavaneeswari, the force aims to curb crimes against women. In the first phase, over 30 police personnel (including 1 SP, 2 DSPs, 4 Inspectors) have been appointed, and 30 patrol vehicles will be provided. The force will operate under the direct supervision of the Chief Minister.</p>
+                    <p class="lang-ta">தேர்தல் வாக்குறுதியை நிறைவேற்றும் வகையில், முதலமைச்சர் ஜோசப் விஜய் "சிங்கப்பெண்" சிறப்பு அதிரடிப்படையை மே 27 அன்று எழும்பூர் ராஜரத்தினம் மைதானத்தில் அதிகாரப்பூர்வமாகத் தொடங்கி வைக்கிறார். ஐஜி கே. பவானீஸ்வரி தலைமையில் செயல்படும் இப்படை பெண்களுக்கு எதிரான குற்றங்களைத் தடுப்பதை நோக்கமாகக் கொண்டுள்ளது. முதல் கட்டமாக 30க்கும் மேற்பட்ட போலீசார் நியமிக்கப்பட்டுள்ளனர், 30 ரோந்து வாகனங்கள் வழங்கப்படும். இப்படை முதல்வரின் நேரடி கண்காணிப்பில் செயல்படும்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Context:</strong> This initiative follows public outrage over a series of crimes against women, including the recent tragic death of a 10-year-old girl in Coimbatore.</span><span class="lang-ta"><strong>பின்னணி:</strong> சமீபத்தில் கோவையில் 10 வயது சிறுமி வன்கொடுமைக்கு ஆளான சம்பவம் உட்பட பெண்களுக்கு எதிரான குற்றங்கள் அதிகரித்ததையடுத்து இந்த நடவடிக்கை எடுக்கப்பட்டுள்ளது.</span></li>
+                            <li><span class="badge bg-tip">TIP</span><span class="lang-en">Remember the IG in charge: K. Bhavaneeswari. This is highly likely to appear as a factual Unit-9 question.</span><span class="lang-ta">நினைவில் கொள்க: பொறுப்பு ஐஜி கே. பவானீஸ்வரி. இது யூனிட்-9 இல் நேரடி கேள்வியாக வர வாய்ப்புள்ளது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Inter-State Issues</span>
+                        <span class="badge bg-pyq">PYQ</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Mekedatu Dam: CM Orders Expedited Legal Action Against Karnataka</span>
+                        <span class="lang-ta">மேகதாது அணை: கர்நாடகாவுக்கு எதிராக சட்ட நடவடிக்கைகளை துரிதப்படுத்த முதல்வர் உத்தரவு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In a high-level meeting with legal and water resource experts, CM Joseph Vijay directed officials to expedite legal actions against the Karnataka Government's proposed Mekedatu Dam project across the Cauvery river. This follows the Supreme Court's recent dismissal of Tamil Nadu's review petition against Karnataka preparing a Detailed Project Report (DPR). The CM emphasized that the project violates previous SC rulings.</p>
+                    <p class="lang-ta">காவேரி ஆற்றின் குறுக்கே கர்நாடக அரசு கட்ட உத்தேசித்துள்ள மேகதாது அணைத் திட்டத்திற்கு எதிராக சட்ட நடவடிக்கைகளை துரிதப்படுத்துமாறு சட்ட மற்றும் நீர்வள நிபுணர்களுடனான உயர்மட்டக் கூட்டத்தில் முதல்வர் ஜோசப் விஜய் அதிகாரிகளுக்கு உத்தரவிட்டார். கர்நாடகா விரிவான திட்ட அறிக்கை (DPR) தயாரிப்பதற்கு எதிரான தமிழகத்தின் மறுசீராய்வு மனுவை உச்சநீதிமன்றம் சமீபத்தில் தள்ளுபடி செய்ததையடுத்து இந்த நடவடிக்கை எடுக்கப்பட்டுள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en">Article 262 governs the adjudication of disputes relating to waters of inter-state rivers or river valleys.</span><span class="lang-ta">சரத்து 262 மாநிலங்களுக்கு இடையிலான நதிகள் அல்லது நதிப் பள்ளத்தாக்குகளின் நீர் தொடர்பான விவாதங்களைத் தீர்ப்பது பற்றிக் கூறுகிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · Governance</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Assam Introduces Uniform Civil Code (UCC) Bill in Assembly</span>
+                        <span class="lang-ta">அசாம் சட்டப்பேரவையில் பொது சிவில் சட்ட (UCC) மசோதா தாக்கல்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Assam Chief Minister Himanta Biswa Sarma introduced the Uniform Civil Code (UCC) Bill in the state assembly. The bill aims to streamline and unify laws regarding marriage, divorce, succession, and live-in relationships. Key features include banning polygamy, setting the legal marriage age to 21 for men and 18 for women, and making the registration of marriages and live-in relationships mandatory. Notably, the bill exempts tribal populations from its purview.</p>
+                    <p class="lang-ta">அசாம் முதலமைச்சர் ஹிமந்த பிஸ்வா சர்மா மாநில சட்டப்பேரவையில் பொது சிவில் சட்ட (UCC) மசோதாவை தாக்கல் செய்தார். திருமண, விவாகரத்து, வாரிசுரிமை மற்றும் சேர்ந்து வாழும் உறவுகள் தொடர்பான சட்டங்களை ஒன்றிணைத்து எளிமைப்படுத்துவதை மசோதா நோக்கமாகக் கொண்டுள்ளது. பலதார மணத்திற்கு தடை, திருமண வயதை ஆண்களுக்கு 21 ஆகவும் பெண்களுக்கு 18 ஆகவும் நிர்ணயித்தல், மற்றும் சேர்ந்து வாழும் ஜோடிகள் பதிவு செய்வதை கட்டாயமாக்குதல் ஆகியவை இதில் அடங்கும். முக்கியமாக, இந்த மசோதா பழங்குடியினருக்கு விலக்கு அளிக்கிறது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Constitutional Article:</strong> Article 44 of the Directive Principles of State Policy (DPSP) states that the State shall endeavor to secure for the citizens a Uniform Civil Code throughout the territory of India.</span><span class="lang-ta"><strong>அரசியலமைப்புச் சரத்து:</strong> இந்தியப் பகுதி முழுவதும் குடிமக்களுக்கு ஒரே மாதிரியான சிவில் சட்டத்தை (பொது சிவில் சட்டம்) பாதுகாத்து வழங்க அரசு முயல வேண்டும் என வழிகாட்டு நெறிமுறைகளின் சரத்து 44 கூறுகிறது.</span></li>
+                            <li><span class="lang-en"><strong>Context:</strong> Uttarakhand was the first state post-independence to pass a UCC bill earlier. Assam follows suit.</span><span class="lang-ta"><strong>பின்னணி:</strong> சுதந்திரத்திற்குப் பிறகு பொது சிவில் சட்ட மசோதாவை நிறைவேற்றிய முதல் மாநிலம் உத்தரகாண்ட் ஆகும். அதைத் தொடர்ந்து அசாம் செயல்படுகிறது.</span></li>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en">Tribal exemption: Remember that UCC in Assam *exempts* the tribal population, respecting their customary laws under the Sixth Schedule.</span><span class="lang-ta">பழங்குடியினருக்கு விலக்கு: ஆறாவது அட்டவணையின் கீழ் உள்ள பழங்குடியின மக்களின் வழக்கமான சட்டங்களை மதிக்கும் வகையில், அசாமில் உள்ள பொது சிவில் சட்டம் அவர்களுக்கு விலக்கு அளிக்கிறது என்பதை நினைவில் கொள்க.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Awards & Honours</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">President Murmu Confers Padma Awards to 66 Individuals</span>
+                        <span class="lang-ta">66 பேருக்கு பத்ம விருதுகளை வழங்கினார் குடியரசுத் தலைவர் முர்மு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">President Droupadi Murmu conferred the Padma Awards for 2026 to 66 awardees in the first phase at Rashtrapati Bhavan. Among the recipients from Tamil Nadu/Puducherry were Dr. K.R. Palanisamy (Padma Bhushan - Medicine), former TN Health Minister H.V. Hande (Padma Shri), writer Sivasankari (Padma Shri), Oduvar N. Swaminathan, and Silambam trainer Palanivel from Puducherry. Posthumous Padma Vibhushan was awarded to actor Dharmendra, and Uday Kotak received the Padma Bhushan.</p>
+                    <p class="lang-ta">குடியரசுத் தலைவர் திரௌபதி முர்மு 2026 ஆம் ஆண்டிற்கான பத்ம விருதுகளை முதல் கட்டமாக 66 பேருக்கு ராஷ்டிரபதி பவனில் வழங்கினார். தமிழ்நாடு/புதுச்சேரியைச் சேர்ந்தவர்களில் டாக்டர் கே.ஆர். பழனிசாமி (பத்ம பூஷண் - மருத்துவம்), முன்னாள் தமிழக சுகாதாரத்துறை அமைச்சர் ஹெச்.வி. ஹண்டே (பத்ம ஸ்ரீ), எழுத்தாளர் சிவசங்கரி (பத்ம ஸ்ரீ), ஓதுவார் என். சுவாமிநாதன், புதுச்சேரியைச் சேர்ந்த சிலம்பப் பயிற்சியாளர் பழனிவேல் ஆகியோர் அடங்குவர். மறைந்த நடிகர் தர்மேந்திராவுக்கு பத்ம விபூஷண், உதய் கோடக்குக்கு பத்ம பூஷண் விருது வழங்கப்பட்டது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en">Article 18 abolishes titles, but the Supreme Court has ruled that Padma awards are honors for merit, not titles.</span><span class="lang-ta">சரத்து 18 பட்டங்களை ஒழிக்கிறது, ஆனால் பத்ம விருதுகள் தகுதிக்கான மரியாதையே தவிர பட்டங்கள் அல்ல என்று உச்சநீதிமன்றம் தீர்ப்பளித்துள்ளது.</span></li>
+                            <li><span class="badge bg-gem">GEM</span><span class="lang-en"><strong>Exam Angle:</strong> Match the recipient from Tamil Nadu with their field (e.g., Dr. K.R. Palanisamy - Medicine, Sivasankari - Literature).</span><span class="lang-ta"><strong>தேர்வு கோணம்:</strong> தமிழகத்தைச் சேர்ந்த விருது பெற்றவர்களை அவர்களின் துறையுடன் பொருத்துமாறு கேள்விகள் வரலாம் (எ.கா. டாக்டர் கே.ஆர். பழனிசாமி - மருத்துவம், சிவசங்கரி - இலக்கியம்).</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Education · Judiciary</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">SC Slams NTA Over NEET Paper Leak; Radhakrishnan Panel to Review</span>
+                        <span class="lang-ta">நீட் வினாத்தாள் கசிவு: என்டிஏ-வுக்கு உச்சநீதிமன்றம் கண்டனம்; ராதாகிருஷ்ணன் குழு ஆய்வு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Supreme Court expressed deep disappointment with the National Testing Agency (NTA) for not learning from past mistakes regarding the NEET question paper leak. The leak in Rajasthan forced the cancellation of the exam for 22 lakh students, with a re-exam scheduled for June 21. The Court ordered the NTA to file a response by May 28 detailing how it implemented the recommendations of the high-level committee headed by former ISRO Chief K. Radhakrishnan.</p>
+                    <p class="lang-ta">நீட் வினாத்தாள் கசிவு தொடர்பாக கடந்த கால தவறுகளில் இருந்து பாடம் கற்காத தேசிய தேர்வு முகமைக்கு (NTA) உச்சநீதிமன்றம் கடும் அதிருப்தி தெரிவித்துள்ளது. ராஜஸ்தானில் வினாத்தாள் கசிந்ததால் 22 லட்சம் மாணவர்களுக்கான தேர்வு ரத்து செய்யப்பட்டு, ஜூன் 21-ம் தேதி மறுதேர்வு திட்டமிடப்பட்டுள்ளது. முன்னாள் இஸ்ரோ தலைவர் கே. ராதாகிருஷ்ணன் தலைமையிலான உயர்மட்டக் குழுவின் பரிந்துரைகளை எவ்வாறு செயல்படுத்தியது என்பது குறித்து மே 28-க்குள் பதிலளிக்குமாறு என்டிஏ-வுக்கு நீதிமன்றம் உத்தரவிட்டுள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Constitutional Angle:</strong> Education was moved from the State List to the Concurrent List by the 42nd Amendment Act (1976), allowing the Centre to create bodies like the NTA.</span><span class="lang-ta"><strong>அரசியலமைப்பு கோணம்:</strong> 42-வது திருத்தச் சட்டத்தின் (1976) மூலம் கல்வி மாநிலப் பட்டியலிலிருந்து பொதுப் பட்டியலுக்கு மாற்றப்பட்டது, இது என்டிஏ போன்ற அமைப்புகளை உருவாக்க மத்திய அரசுக்கு வழிவகுத்தது.</span></li>
+                            <li><span class="badge bg-tip">TIP</span><span class="lang-en">Committees are a favorite TNPSC question type. Remember: K. Radhakrishnan Committee deals with reforming the National Testing Agency (NTA).</span><span class="lang-ta">கமிட்டிகள் தொடர்பான கேள்விகள் டிஎன்பிஎஸ்சி-யில் அடிக்கடி கேட்கப்படும். நினைவில் கொள்க: கே. ராதாகிருஷ்ணன் கமிட்டி தேசிய தேர்வு முகமையை (NTA) சீர்திருத்துவது தொடர்புடையது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Social Justice · Judiciary</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Lack of Sanitary Napkins & Toilets Must Not Affect Girls' Education: SC</span>
+                        <span class="lang-ta">சானிட்டரி நாப்கின்கள், கழிப்பறைகள் குறைபாடுகளால் சிறுமிகளின் கல்வி பாதிக்கக்கூடாது: உச்சநீதிமன்றம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Supreme Court emphasized that girls' education should not suffer due to the unavailability of sanitary napkins or separate toilets in schools. The Court directed the Centre to strictly monitor states and UTs to ensure the implementation of its earlier order (passed in January 2025) mandating the free distribution of sanitary pads and the construction of separate toilets in all government, aided, and private schools. The Centre must submit compliance reports every three months.</p>
+                    <p class="lang-ta">பள்ளிகளில் சானிட்டரி நாப்கின்கள் அல்லது தனி கழிப்பறைகள் இல்லாத காரணத்தால் சிறுமிகளின் கல்வி பாதிக்கப்படக் கூடாது என உச்சநீதிமன்றம் வலியுறுத்தியுள்ளது. அனைத்து அரசு, உதவிபெறும் மற்றும் தனியார் பள்ளிகளிலும் சானிட்டரி பேட்களை இலவசமாக வழங்கவும், தனி கழிப்பறைகளை கட்டவும் உத்தரவிட்ட அதன் முந்தைய உத்தரவை (ஜனவரி 2025 இல் பிறப்பிக்கப்பட்டது) செயல்படுத்துவதை உறுதி செய்ய மாநிலங்கள் மற்றும் யூனியன் பிரதேசங்களை தீவிரமாக கண்காணிக்குமாறு மத்திய அரசுக்கு நீதிமன்றம் உத்தரவிட்டுள்ளது. மத்திய அரசு ஒவ்வொரு மூன்று மாதங்களுக்கும் இணக்க அறிக்கையை சமர்ப்பிக்க வேண்டும்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Constitutional Article:</strong> Article 21A (Right to Education) and Article 21 (Right to life with dignity, which includes health and sanitation).</span><span class="lang-ta"><strong>அரசியலமைப்புச் சரத்து:</strong> சரத்து 21A (கல்விக்கான உரிமை) மற்றும் சரத்து 21 (கண்ணியத்துடன் வாழ்வதற்கான உரிமை, இதில் சுகாதாரம் மற்றும் தூய்மை அடங்கும்).</span></li>
+                        </ul>
+                    </details>
+                </div>
+            </section>
+
+            <!-- INTERNATIONAL NEWS -->
+            <section id="international">
+                <h2>
+                    <span class="lang-en">International News</span>
+                    <span class="lang-ta">சர்வதேச செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Space Exploration</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">China Launches Shenzhou-23 Spacecraft with 3 Astronauts</span>
+                        <span class="lang-ta">3 வீரர்களுடன் விண்ணில் பாய்ந்தது சீனாவின் 'ஷென்சோ-23' விண்கலம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">China successfully launched the Shenzhou-23 spacecraft to its Tiangong Space Station with three astronauts on board. The crew, led by Ye Guangfu, includes Lai Kanying, the first female astronaut from the Hong Kong region to travel to space. They will replace the Shenzhou-21 crew. One of the astronauts plans to stay at the station for a full year to set a record for the longest continuous human stay in space, aiming to test human endurance limits for China's upcoming 2030 lunar mission.</p>
+                    <p class="lang-ta">சீனா தனது டியாங்காங் விண்வெளி நிலையத்திற்கு மூன்று விண்வெளி வீரர்களுடன் ஷென்சோ-23 விண்கலத்தை வெற்றிகரமாக விண்ணில் செலுத்தியது. யே குவாங்பு தலைமையிலான இந்தக் குழுவில், ஹாங்காங் பகுதியிலிருந்து விண்வெளிக்குச் செல்லும் முதல் பெண் விண்வெளி வீரரான லாய் கன்யிங் இடம்பெற்றுள்ளார். இவர்கள் ஷென்சோ-21 குழுவினரை மாற்றுவர். சீனாவின் வரவிருக்கும் 2030 சந்திரப் பயணத்திற்கான மனித சகிப்புத்தன்மையின் எல்லைகளை சோதிக்கும் நோக்கோடு, விண்வெளி வீரர்களில் ஒருவர் முழு ஆண்டு முழுவதும் அங்கு தங்கி சாதனை படைக்க உள்ளார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Static Hook:</strong> Tiangong means "Heavenly Palace". China built its own space station after being excluded from the International Space Station (ISS) by the USA.</span><span class="lang-ta"><strong>நிலையான ஜிகே:</strong> டியாங்காங் என்றால் "சொர்க்க அரண்மனை" என்று பொருள். சர்வதேச விண்வெளி நிலையத்திலிருந்து (ISS) அமெரிக்காவால் விலக்கி வைக்கப்பட்ட பின்னர் சீனா தனது சொந்த விண்வெளி நிலையத்தை உருவாக்கியது.</span></li>
+                            <li><span class="badge bg-gem">GEM</span><span class="lang-en"><strong>Exam Angle:</strong> Match the spacecraft to the country (Shenzhou -> China). Note that Lai Kanying is the first female astronaut from Hong Kong.</span><span class="lang-ta"><strong>தேர்வு கோணம்:</strong> விண்கலத்தை நாட்டுடன் பொருத்துக (ஷென்சோ -> சீனா). ஹாங்காங்கில் இருந்து விண்வெளிக்கு செல்லும் முதல் பெண் லாய் கன்யிங் என்பதை கவனிக்கவும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Diplomacy · Bilateral</span>
+                        <span class="badge bg-tip">MODERATE</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">China-Pakistan Ties Are Unbreakable: President Xi Jinping</span>
+                        <span class="lang-ta">பாகிஸ்தானுடனான நட்பு பிரிக்க முடியாதது: சீன அதிபர் ஜி ஜின்பிங் பெருமிதம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">During Pakistan Prime Minister Shehbaz Sharif's four-day state visit to China, President Xi Jinping stated that the China-Pakistan friendship is unbreakable and referred to Sharif as an "old friend." The two leaders signed 15 MoUs covering trade, investment, agriculture, and tech. They also discussed efforts to bring peace to the Middle East amidst the ongoing US-Iran tensions.</p>
+                    <p class="lang-ta">பாகிஸ்தான் பிரதமர் ஷெபாஸ் ஷெரீப்பின் நான்கு நாள் அரசு முறை சீனப் பயணத்தின் போது, அதிபர் ஜி ஜின்பிங், சீனா-பாகிஸ்தான் நட்பு பிரிக்க முடியாதது என்று கூறினார், மேலும் ஷெரீப்பை "பழைய நண்பர்" என்று குறிப்பிட்டார். இரு தலைவர்களும் வர்த்தகம், முதலீடு, விவசாயம் மற்றும் தொழில்நுட்பம் உள்ளிட்ட 15 புரிந்துணர்வு ஒப்பந்தங்களில் கையெழுத்திட்டனர். அமெரிக்க-ஈரான் பதற்றங்களுக்கு மத்தியில் மத்திய கிழக்கில் அமைதியைக் கொண்டுவருவதற்கான முயற்சிகள் குறித்தும் அவர்கள் விவாதித்தனர்.</p>
+                </div>
+            </section>
+
+            <!-- ECONOMY & FINANCE -->
+            <section id="economy">
+                <h2>
+                    <span class="lang-en">Economy & Finance</span>
+                    <span class="lang-ta">பொருளாதாரம் & நிதி</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Macro Economy</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">FM Sitharaman Cautions on Fuel, Forex Amidst Middle East Tensions</span>
+                        <span class="lang-ta">மத்திய கிழக்கு பதற்றம்: எரிபொருள், அந்நிய செலாவணியில் கவனம் தேவை - நிதியமைச்சர் சீதாராமன்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Addressing the 37th anniversary of SIDBI, Finance Minister Nirmala Sitharaman highlighted that the ongoing conflict in the Middle East has disrupted global crude oil supplies, leading to a multi-fold increase in petrol, diesel, and fertilizer prices. She urged caution regarding fuel and foreign exchange (forex) management. She defended the PM's appeal to avoid foreign travel to save forex and noted that cutting excise duty on fuel cost the Centre ₹1 lakh crore.</p>
+                    <p class="lang-ta">சிட்பி (SIDBI) வங்கியின் 37-வது ஆண்டு விழாவில் உரையாற்றிய நிதியமைச்சர் நிர்மலா சீதாராமன், மத்திய கிழக்கில் நடந்து வரும் மோதல்கள் உலகளாவிய கச்சா எண்ணெய் விநியோகத்தை சீர்குலைத்து, பெட்ரோல், டீசல் மற்றும் உரங்களின் விலையை பன்மடங்கு உயர்த்தியுள்ளது என்று சுட்டிக்காட்டினார். எரிபொருள் மற்றும் அந்நிய செலாவணி மேலாண்மை குறித்து எச்சரிக்கையாக இருக்குமாறு அவர் வலியுறுத்தினார். அந்நிய செலாவணியை சேமிக்க வெளிநாட்டு பயணங்களை தவிர்க்க வேண்டும் என்ற பிரதமரின் வேண்டுகோளை நியாயப்படுத்திய அவர், எரிபொருள் மீதான கலால் வரியை குறைத்ததால் மத்திய அரசுக்கு ரூ. 1 லட்சம் கோடி இழப்பு ஏற்பட்டதாக குறிப்பிட்டார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Institution:</strong> SIDBI (Small Industries Development Bank of India) was set up in 1990 as the principal financial institution for the MSME sector. Headquartered in Lucknow.</span><span class="lang-ta"><strong>நிறுவனம்:</strong> சிட்பி (SIDBI - இந்திய சிறு தொழில் மேம்பாட்டு வங்கி) 1990 இல் MSME துறைக்கான முதன்மை நிதி நிறுவனமாக அமைக்கப்பட்டது. தலைமையகம் லக்னோவில் உள்ளது.</span></li>
+                            <li><span class="badge bg-gem">GEM</span><span class="lang-en"><strong>Exam Angle:</strong> Link between international geopolitical conflicts and domestic inflation / current account deficit.</span><span class="lang-ta"><strong>தேர்வு கோணம்:</strong> சர்வதேச புவிசார் அரசியல் மோதல்களுக்கும் உள்நாட்டு பணவீக்கம் / நடப்புக் கணக்கு பற்றாக்குறைக்கும் இடையிலான தொடர்பு.</span></li>
+                        </ul>
+                    </details>
+                </div>
+            </section>
+
+            <!-- SPORTS -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports</span>
+                    <span class="lang-ta">விளையாட்டு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Wrestling</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Asian U23 Wrestling: Indian Women Grapplers Strike Gold</span>
+                        <span class="lang-ta">ஆசிய யு-23 மல்யுத்தம்: இந்திய வீராங்கனைகள் தங்கம் வென்று சாதனை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">At the Asian U23 Wrestling Championship held in Vietnam, Indian wrestlers dominated. In the men's category, Akanksh D. Tere (57kg), Vicky (97kg), and Pulkit (65kg) won gold. In the women's category, Muskan (53kg), Tapasya (57kg), and Bhagyashree (62kg) secured gold medals, continuing India's strong performance in the tournament.</p>
+                    <p class="lang-ta">வியட்நாமில் நடைபெறும் ஆசிய யு-23 மல்யுத்த சாம்பியன்ஷிப் போட்டியில் இந்திய வீரர்கள் ஆதிக்கம் செலுத்தினர். ஆண்கள் பிரிவில் அகான்ஷ் டி. தேரே (57 கிலோ), விக்கி (97 கிலோ), புல்கித் (65 கிலோ) ஆகியோர் தங்கம் வென்றனர். பெண்கள் பிரிவில் முஸ்கான் (53 கிலோ), தபஸ்யா (57 கிலோ), பாக்யஸ்ரீ (62 கிலோ) ஆகியோர் தங்கப் பதக்கங்களை வென்று தொடரில் இந்தியாவின் வலுவான ஆட்டத்தைத் தொடர்ந்தனர்.</p>
+                </div>
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Which Article of the Indian Constitution directs the State to endeavor to secure a Uniform Civil Code (UCC) for citizens throughout India?</span>
+                        <span class="lang-ta">கேள்வி: இந்தியா முழுவதும் உள்ள குடிமக்களுக்கு ஒரே மாதிரியான சிவில் சட்டத்தை (UCC) பாதுகாக்க அரசு முயற்சிக்க வேண்டும் என்று இந்திய அரசியலமைப்பின் எந்தச் சரத்து அறிவுறுத்துகிறது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Article 44</span><br><br>
+                                <strong>Context:</strong> Assam CM Himanta Biswa Sarma introduced the UCC bill in the state assembly to regulate marriage, divorce, and inheritance, exempting tribal populations.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">சரத்து 44</span><br><br>
+                                <strong>பின்னணி:</strong> அசாம் முதல்வர் ஹிமந்த பிஸ்வா சர்மா திருமணம், விவாகரத்து மற்றும் வாரிசுரிமையை ஒழுங்குபடுத்தும் பொது சிவில் சட்ட மசோதாவை மாநில சட்டசபையில் அறிமுகப்படுத்தினார், இதில் பழங்குடியினருக்கு விலக்கு அளிக்கப்பட்டுள்ளது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: The 'Shenzhou' spacecraft series belongs to which of the following countries?</span>
+                        <span class="lang-ta">கேள்வி: 'ஷென்சோ' விண்கலத் தொடர் பின்வரும் எந்த நாட்டைச் சேர்ந்தது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">China</span><br><br>
+                                <strong>Context:</strong> China launched the Shenzhou-23 spacecraft with three astronauts to its Tiangong space station.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">சீனா</span><br><br>
+                                <strong>பின்னணி:</strong> சீனா தனது டியாங்காங் விண்வெளி நிலையத்திற்கு மூன்று விண்வெளி வீரர்களுடன் ஷென்சோ-23 விண்கலத்தை செலுத்தியது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">Assam UCC Bill</span><span class="lang-ta">அசாம் பொது சிவில் சட்டம்</span></td>
+                                <td><span class="lang-en">National/Polity</span><span class="lang-ta">தேசியம்/அரசியல்</span></td>
+                                <td><span class="lang-en">Bans polygamy, live-in registration. Exempts tribals.</span><span class="lang-ta">பழங்குடியினருக்கு விலக்கு. திருமணம் 21/18 வயது.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">TN Crop Loan Waiver</span><span class="lang-ta">பயிர்க்கடன் தள்ளுபடி</span></td>
+                                <td><span class="lang-en">State/Agri</span><span class="lang-ta">மாநிலம்/வேளாண்மை</span></td>
+                                <td><span class="lang-en">Up to ₹50,000 waived for marginal/small farmers.</span><span class="lang-ta">சிறு/குறு விவசாயிகளுக்கு ரூ.50,000 வரை தள்ளுபடி.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">Padma Awards Conferred</span><span class="lang-ta">பத்ம விருதுகள் வழங்கல்</span></td>
+                                <td><span class="lang-en">National/Awards</span><span class="lang-ta">தேசியம்/விருதுகள்</span></td>
+                                <td><span class="lang-en">66 awardees. Dr. K.R. Palanisamy, Sivasankari from TN.</span><span class="lang-ta">66 பேருக்கு விருது. தமிழகத்திலிருந்து சிவசங்கரி, பழனிசாமி.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">Singappen Task Force</span><span class="lang-ta">சிங்கப்பெண் அதிரடிப்படை</span></td>
+                                <td><span class="lang-en">State/Police</span><span class="lang-ta">மாநிலம்/காவல்துறை</span></td>
+                                <td><span class="lang-en">Women's safety force under IG Bhavaneeswari.</span><span class="lang-ta">ஐஜி பவானீஸ்வரி தலைமையில் பெண்கள் பாதுகாப்பு படை.</span></td>
+                                <td><span class="badge bg-tip">MED</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">Shenzhou-23 Launch</span><span class="lang-ta">ஷென்சோ-23 ஏவுதல்</span></td>
+                                <td><span class="lang-en">Intl/Space</span><span class="lang-ta">சர்வதேசம்/விண்வெளி</span></td>
+                                <td><span class="lang-en">China sends 3 astronauts to Tiangong station.</span><span class="lang-ta">டியாங்காங் நிலையத்திற்கு 3 வீரர்களை சீனா அனுப்பியது.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani 26-05-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி 26-05-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source images contained Tamil text detailing state, national, and international news for 26 May 2026. 
+State news focused on CM Joseph Vijay ordering crop loan waivers up to Rs 50,000 for small and marginal farmers, the inauguration of the "Singappen" special task force for women's safety, and a death penalty awarded to a youth in Thoothukudi for the murder of a class 12 girl. Three AIADMK MLAs resigned to join TVK. 
+National news highlighted Assam introducing the UCC bill exempting tribals, the Supreme Court criticizing NTA over NEET leaks, and President Murmu conferring Padma awards to 66 people including several from TN. 
+Internationally, China launched Shenzhou-23 to its space station. Pakistan PM Shehbaz Sharif met Xi Jinping. 
+Economically, FM Nirmala Sitharaman warned of Middle East conflict impacts. Sports covered Indian wrestlers winning golds at the Asian U23 championships and French Open results.]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூலப் படங்கள் 26 மே 2026 க்கான மாநில, தேசிய மற்றும் சர்வதேச செய்திகளைக் கொண்டிருந்தன.
+மாநில செய்திகளில் சிறு, குறு விவசாயிகளுக்கான ரூ. 50,000 வரையிலான பயிர்க்கடன் தள்ளுபடி குறித்து முதல்வர் ஜோசப் விஜய் உத்தரவிட்டார். பெண்கள் பாதுகாப்புக்கான "சிங்கப்பெண்" சிறப்பு அதிரடிப்படை தொடங்கப்பட்டது. தூத்துக்குடியில் பிளஸ் 2 மாணவி கொலையில் இளைஞருக்கு மரண தண்டனை விதிக்கப்பட்டது. மூன்று அதிமுக எம்எல்ஏக்கள் ராஜினாமா செய்து தவெகவில் இணைந்தனர்.
+தேசிய அளவில், பழங்குடியினருக்கு விலக்களித்து அசாம் பொது சிவில் சட்ட மசோதாவை அறிமுகப்படுத்தியது. நீட் கசிவு தொடர்பாக என்டிஏ-வை உச்சநீதிமன்றம் விமர்சித்தது. தமிழகத்தைச் சேர்ந்தவர்கள் உட்பட 66 பேருக்கு குடியரசுத் தலைவர் முர்மு பத்ம விருதுகளை வழங்கினார்.
+சர்வதேச அளவில், சீனா ஷென்சோ-23 விண்கலத்தை ஏவியது. பாகிஸ்தான் பிரதமர் ஷெபாஸ் ஷெரீப் ஜி ஜின்பிங்கை சந்தித்தார்.
+பொருளாதார ரீதியாக, மத்திய கிழக்கு மோதலின் தாக்கங்கள் குறித்து நிதியமைச்சர் நிர்மலா சீதாராமன் எச்சரித்தார். ஆசிய யு-23 சாம்பியன்ஷிப்பில் இந்திய மல்யுத்த வீரர்கள் தங்கம் வென்றனர்.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 26 May 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+    </script>
+<button id="bttBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top" style="position:fixed;bottom:24px;right:24px;z-index:9998;width:42px;height:42px;border-radius:50%;background:rgba(13,15,20,0.92);border:1px solid rgba(245,200,66,0.35);color:#f5c842;font-size:18px;line-height:1;cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 2px 14px rgba(0,0,0,0.45);opacity:0;transition:opacity .25s,transform .2s;pointer-events:none;display:flex;align-items:center;justify-content:center;">↑</button>
+<script>(function(){var b=document.getElementById('bttBtn');if(!b)return;window.addEventListener('scroll',function(){var s=window.scrollY||document.documentElement.scrollTop;if(s>240){b.style.opacity='1';b.style.pointerEvents='auto';b.style.transform='translateY(0)';}else{b.style.opacity='0';b.style.pointerEvents='none';b.style.transform='translateY(6px)';}},{ passive:true });})();</script>
+<button id="themeToggle" onclick="(function(){var l=document.documentElement.classList.toggle('light-mode');localStorage.setItem('arivoam-theme',l?'light':'dark');var b=document.getElementById('themeToggle');if(b)b.innerHTML=l?'&#9790;':'&#9728;';})()" title="Toggle light/dark mode" style="position:fixed;bottom:76px;right:24px;z-index:9998;width:42px;height:42px;border-radius:50%;background:rgba(13,15,20,0.92);border:1px solid rgba(245,200,66,0.35);color:#f5c842;font-size:16px;line-height:1;cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 2px 14px rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;transition:all .2s;">&#9728;</button><script>(function(){var b=document.getElementById('themeToggle');if(!b)return;if(document.documentElement.classList.contains('light-mode')){b.innerHTML='&#9790;';}})()</script>
+</body>
+</html>

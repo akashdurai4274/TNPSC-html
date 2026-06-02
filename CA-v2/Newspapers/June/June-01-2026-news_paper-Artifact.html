@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body class="en-mode">
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">01 June 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">01 ஜூன் 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#scitech"><span class="lang-en">Sci-Tech</span><span class="lang-ta">அறிவியல் & தொழில்நுட்பம்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <!-- Sidebar TOC -->
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Finance</span><span class="lang-ta">பொருளாதாரம் & நிதி</span></a></li>
+                <li><a href="#scitech"><span class="lang-en">Science & Tech</span><span class="lang-ta">அறிவியல் & தொழில்நுட்பம்</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Heritage · Infrastructure</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Chennai Suburban Electric Train Service Completes 95 Years</span>
+                        <span class="lang-ta">சென்னை புறநகர் மின்சார ரயில் சேவை 95 ஆண்டுகளை நிறைவு செய்தது</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Chennai Suburban Electric Train service marked its 95th anniversary. Commencing in 1931, the first electric train in South India ran between Chennai Beach and Tambaram covering a distance of 29 km. Initially starting with a few trains and low ticket prices in 'Annas', it gradually expanded to Gummidipoondi (1985), Arakkonam, and Chengalpattu. Today, it remains one of India's busiest transport networks, offering the cheapest commute at a minimum fare of just ₹5.</p>
+                    <p class="lang-ta">சென்னை புறநகர் மின்சார ரயில் சேவை தொடங்கப்பட்டு 95 ஆண்டுகள் நிறைவடைந்துள்ளன. 1931-ஆம் ஆண்டு சென்னை கடற்கரை - தாம்பரம் இடையே (29 கி.மீ) தென்னிந்தியாவின் முதல் மின்சார ரயில் அறிமுகமானது. ஆரம்பத்தில் 'அணா' மதிப்பில் மிகக் குறைந்த கட்டணத்தில் தொடங்கப்பட்ட இச்சேவை, படிப்படியாக கும்மிடிப்பூண்டி (1985), அரக்கோணம், செங்கல்பட்டு வரை நீட்டிக்கப்பட்டது. இன்றும் இந்தியாவின் பரபரப்பான போக்குவரத்து அமைப்புகளில் ஒன்றாகவும், குறைந்தபட்சம் ₹5 என்ற மிகக் குறைந்த கட்டணத்திலும் சேவை வழங்கி வருகிறது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Static GK Hook:</strong> The first passenger train in India ran between Bori Bunder (Mumbai) and Thane in 1853. The first electric train in India ran between Bombay Victoria Terminus and Kurla in 1925. Chennai (South India's first) followed in 1931.</span><span class="lang-ta"><strong>நிலையான ஜிகே:</strong> இந்தியாவின் முதல் பயணிகள் ரயில் 1853 இல் மும்பை (போரி பந்தர்) - தானே இடையே ஓடியது. இந்தியாவின் முதல் மின்சார ரயில் 1925 இல் மும்பை விடி - குர்லா இடையே ஓடியது. தென்னிந்தியாவின் முதல் மின்சார ரயில் 1931 இல் சென்னையில் ஓடியது.</span></li>
+                            <li><span class="lang-en"><strong>MRTS:</strong> The Mass Rapid Transit System (MRTS) project in Chennai began its first route between Beach and Chepauk in 1995.</span><span class="lang-ta"><strong>பறக்கும் ரயில் (MRTS):</strong> சென்னையில் பறக்கும் ரயில் திட்டம் 1995-ல் கடற்கரை - சேப்பாக்கம் இடையே முதல் வழித்தடமாக தொடங்கப்பட்டது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Culture · Controversies</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Saffron Robe for Thiruvalluvar Portrait in Raj Bhavan Sparks Controversy</span>
+                        <span class="lang-ta">திருவள்ளுவருக்கு காவி உடை அணிவித்த ஆளுநருக்கு கறுப்புக்கொடி காட்டுவோம்: தலைவர்கள் கண்டனம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">A political row erupted in Tamil Nadu after a portrait of Saint-Poet Thiruvalluvar wearing a saffron robe was displayed at an event in Raj Bhavan. State Health Minister K.N. Arunraj strongly condemned Governor R.N. Ravi, stating that Thiruvalluvar transcends religion and caste, and giving him a specific religious color diminishes his secular philosophy ("Pirappokkum Ella Uyirkkum"). MDMK leader Vaiko announced black-flag protests against the Governor, and CPI(M) leader P. Shanmugam demanded an apology.</p>
+                    <p class="lang-ta">ஆளுநர் மாளிகையில் நடைபெற்ற விழாவில் திருவள்ளுவர் படத்திற்கு காவி உடை அணிவிக்கப்பட்டது தமிழகத்தில் பெரும் அரசியல் சர்ச்சையை ஏற்படுத்தியுள்ளது. மக்கள் நல்வாழ்வுத்துறை அமைச்சர் கே.என். அருண்ராஜ், ஆளுநர் ஆர்.என். ரவிக்கு கடும் கண்டனம் தெரிவித்தார். "பிறப்பொக்கும் எல்லா உயிர்க்கும்" என சமத்துவத்தைப் போதித்த, எம்மதத்தையும் சாராத திருவள்ளுவரை ஒரு குறிப்பிட்ட மத அடையாளத்திற்குள் சுருக்குவது அவரது உலகளாவிய தத்துவத்திற்கு முரணானது என்றார். ஆளுநருக்கு கறுப்புக்கொடி காட்டுவோம் என மதிமுக பொதுச்செயலாளர் வைகோவும், ஆளுநர் மன்னிப்பு கேட்க வேண்டும் என மார்க்சிஸ்ட் கம்யூனிஸ்ட் கட்சியின் பெ. சண்முகமும் வலியுறுத்தியுள்ளனர்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Culture Angle:</strong> Thiruvalluvar is celebrated as a secular poet. The traditional official image of Thiruvalluvar (in white robes) was finalized by artist K.R. Venugopal Sharma and officially adopted by the TN Govt under CM C.N. Annadurai.</span><span class="lang-ta"><strong>கலாச்சார கோணம்:</strong> திருவள்ளுவர் மதச்சார்பற்ற கவிஞராகப் போற்றப்படுகிறார். வெள்ளை நிற உடை அணிந்த திருவள்ளுவரின் அதிகாரப்பூர்வ உருவப்படம் ஓவியர் கே.ஆர். வேணுகோபால் சர்மாவால் வரையப்பட்டு, அண்ணாதுரை தலைமையிலான தமிழக அரசால் அதிகாரப்பூர்வமாக ஏற்றுக்கொள்ளப்பட்டது.</span></li>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en">The concept of secularism in Thirukkural is a frequent mains topic in Unit 8 (Tamil Society & Culture). Using the exact couplet "Pirappokkum Ella Uyirkkum" (Kural 972) is essential.</span><span class="lang-ta">திருக்குறளில் மதச்சார்பின்மை என்பது யூனிட் 8 (தமிழ் சமூகம் மற்றும் கலாச்சாரம்) இல் அடிக்கடி கேட்கப்படும் முதன்மைத் தேர்வுத் தலைப்பாகும். "பிறப்பொக்கும் எல்லா உயிர்க்கும்" (குறள் 972) என்ற வரியை நினைவில் கொள்க.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">History · Archeology</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">500-Year-Old Vijayanagara Era Temple & Sati Hero Stone Found in Javadhu Hills</span>
+                        <span class="lang-ta">ஜவ்வாது மலையில் 500 ஆண்டுகள் பழமையான விஜயநகர காலக் கோயில் மற்றும் உடன்கட்டை நடுகல் கண்டுபிடிப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">A team of researchers from Sacred Heart College, Tirupattur, discovered a 500-year-old stone temple belonging to the Vijayanagara period in Pungampattu Nadu village, Javadhu Hills. Locals worship it as a Mariamman temple. In the temple's sanctum sanctorum, a rare 'Sati' (Udan Kattai) hero stone was found. It depicts a male warrior with a dagger who died in battle, accompanied by two richly dressed female figures (his wives) showing the Abhaya Mudra, indicating they committed Sati.</p>
+                    <p class="lang-ta">திருப்பத்தூர் தூய நெஞ்சக் கல்லூரியின் தமிழ் துறை ஆராய்ச்சியாளர்கள் குழு, ஜவ்வாது மலையில் உள்ள புங்கம்பட்டு நாடு என்ற கிராமத்தில் 500 ஆண்டுகள் பழமையான விஜயநகர காலத்தைச் சேர்ந்த கல்கோயில் ஒன்றைக் கண்டறிந்துள்ளனர். இதனை உள்ளூர் மக்கள் மாரியம்மன் கோயில் என அழைக்கின்றனர். கோயிலின் கருவறையில் விஜயநகரத்தைச் சேர்ந்த 'உடன்கட்டை' (சதி) நடுகல் ஒன்றும் உள்ளது. போரில் வீரமரணம் அடைந்த கத்தியுடன் கூடிய ஆண் வீரர் உருவமும், அவருடன் இருபுறமும் அபய முத்திரையுடன் கூடிய இரு பெண்களின் (மனைவியர் உடன்கட்டை ஏறியதைக் குறிக்கும்) உருவங்களும் இதில் செதுக்கப்பட்டுள்ளன.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Archeology Hook:</strong> Hero stones (Nadukal) were erected to honor those who died in battle. Sati stones specifically commemorate wives who immolated themselves on their husband's funeral pyre.</span><span class="lang-ta"><strong>தொல்லியல் குறிப்பு:</strong> போரில் இறந்தவர்களை கவுரவிக்கும் வகையில் நடுகற்கள் எழுப்பப்பட்டன. கணவனின் சிதையில் தீக்குளித்த மனைவியரை நினைவுகூரும் வகையில் சதி (உடன்கட்டை) கற்கள் அமைக்கப்படுகின்றன.</span></li>
+                            <li><span class="badge bg-tip">TIP</span><span class="lang-en">Lord William Bentinck, with the help of Raja Ram Mohan Roy, abolished the practice of Sati in British India in 1829.</span><span class="lang-ta">ராஜாராம் மோகன் ராய் உதவியுடன் வில்லியம் பெண்டிங்க் பிரபு 1829 இல் பிரிட்டிஷ் இந்தியாவில் சதி முறையை ஒழித்தார்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Inter-State Disputes · Water</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Mekedatu Dam: TN Farmers Stopped at Hosur Border</span>
+                        <span class="lang-ta">மேக்கேதாட்டு அணை விவகாரம்: தமிழக விவசாயிகள் ஓசூரில் தடுத்து நிறுத்தம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Over 500 farmers from Tamil Nadu, led by P.R. Pandian of the Cauvery Farmers Association, attempted to besiege the Mekedatu area to protest Karnataka's swift moves to construct a dam across the Cauvery river. The farmers were stopped by the police at the TN-Karnataka border in Hosur. The proposed 67 TMC capacity dam at Mekedatu threatens the livelihood of farmers in 12 TN delta districts by impounding surplus water that usually flows to the Mettur Dam.</p>
+                    <p class="lang-ta">காவிரி ஆற்றின் குறுக்கே மேக்கேதாட்டுவில் அணை கட்டும் கர்நாடக அரசின் துரித நடவடிக்கைகளைக் கண்டித்து, தமிழக காவிரி விவசாயிகள் சங்கத்தின் பொதுச் செயலாளர் பி.ஆர். பாண்டியன் தலைமையில் 500-க்கும் மேற்பட்ட விவசாயிகள் மேக்கேதாட்டுப் பகுதியை முற்றுகையிட முயன்றனர். தமிழக-கர்நாடக எல்லையான ஓசூரில் காவல்துறையினரால் அவர்கள் தடுத்து நிறுத்தப்பட்டனர். 67 டிஎம்சி கொள்ளளவு கொண்ட மேக்கேதாட்டு அணை கட்டப்பட்டால், மேட்டூர் அணைக்கு வரும் உபரி நீர் தடுக்கப்பட்டு 12 டெல்டா மாவட்ட விவசாயிகளின் வாழ்வாதாரம் பாதிக்கப்படும்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Constitutional Angle:</strong> Inter-state river water disputes are handled under Article 262. Parliament enacted the Inter-State Water Disputes Act, 1956.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> மாநிலங்களுக்கு இடையேயான நதிநீர் தகராறுகள் சரத்து 262-ன் கீழ் கையாளப்படுகின்றன. நாடாளுமன்றம் மாநில நதிநீர் தகராறு சட்டம், 1956-ஐ இயற்றியது.</span></li>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en">As per the 2018 Supreme Court final verdict on the Cauvery issue, Karnataka is mandated to release <strong>177.25 TMC</strong> of water annually to Tamil Nadu.</span><span class="lang-ta">காவிரி விவகாரத்தில் 2018 உச்சநீதிமன்ற இறுதித் தீர்ப்பின்படி, கர்நாடகா ஆண்டுதோறும் <strong>177.25 டிஎம்சி</strong> தண்ணீரை தமிழகத்திற்கு வழங்க வேண்டும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Defence · Appointments</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">General N.S. Raja Subramani Takes Over as the 3rd Chief of Defence Staff (CDS)</span>
+                        <span class="lang-ta">இந்தியாவின் 3-வது முப்படை தலைமைத் தளபதியாக ஜெனரல் என்.எஸ். ராஜ சுப்பிரமணி பொறுப்பேற்றார்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">General N.S. Raja Subramani officially took charge as India's 3rd Chief of Defence Staff (CDS). He succeeds General Anil Chauhan, who retired. Hailing from Tamil Nadu, Gen. Raja Subramani previously served as the Vice Chief of Army Staff and as Military Advisor in the National Security Council Secretariat. He stated his focus would be on implementing theater commands to integrate the armed forces and accelerating indigenous weapon production.</p>
+                    <p class="lang-ta">இந்தியாவின் 3-வது முப்படை தலைமைத் தளபதியாக (CDS) ஜெனரல் என்.எஸ். ராஜ சுப்பிரமணி அதிகாரப்பூர்வமாகப் பொறுப்பேற்றார். ஓய்வுபெற்ற ஜெனரல் அனில் சவுகானுக்குப் பிறகு இவர் பதவியேற்றுள்ளார். தமிழகத்தைப் பூர்வீகமாகக் கொண்ட இவர், இதற்கு முன் ராணுவத்தின் துணைத் தளபதியாகவும், தேசியப் பாதுகாப்பு கவுன்சில் செயலகத்தில் ராணுவ ஆலோசகராகவும் பணியாற்றியுள்ளார். முப்படைகளின் ஒருங்கிணைந்த செயல்பாடுகளுக்கான (தியேட்டர் கமாண்ட்) சீர்திருத்தங்களை மேற்கொள்வதிலும், உள்நாட்டிலேயே ஆயுதங்கள் தயாரிப்பதை விரைவுபடுத்துவதிலும் அதிக கவனம் செலுத்துவேன் என்று அவர் கூறினார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Static GK Hook:</strong> The post of Chief of Defence Staff (CDS) was created in 2019. Gen. Bipin Rawat was the 1st CDS (died in a helicopter crash in TN in 2021). Gen. Anil Chauhan was the 2nd CDS.</span><span class="lang-ta"><strong>நிலையான ஜிகே:</strong> முப்படை தலைமைத் தளபதி (CDS) பதவி 2019 இல் உருவாக்கப்பட்டது. முதல் சிடிஎஸ் பிபின் ராவத் (2021-ல் தமிழகத்தில் ஹெலிகாப்டர் விபத்தில் இறந்தார்). 2-வது சிடிஎஸ் அனில் சவுகான்.</span></li>
+                            <li><span class="badge bg-gem">GEM</span><span class="lang-en">The CDS acts as the Principal Military Adviser to the Defence Minister on all tri-services matters and heads the Department of Military Affairs (DMA).</span><span class="lang-ta">முப்படைகள் தொடர்பான அனைத்து விவகாரங்களிலும் பாதுகாப்பு அமைச்சரின் முதன்மை ராணுவ ஆலோசகராக சிடிஎஸ் செயல்படுகிறார். மேலும் ராணுவ விவகாரங்கள் துறையின் (DMA) தலைவராகவும் உள்ளார்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Heritage · PM's Address</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Mann Ki Baat: PM Modi Highlights the Return of Anaimangalam Copper Plates</span>
+                        <span class="lang-ta">மன் கி பாத்: ஆனைமங்கலம் செப்பேடுகள் இந்தியா திரும்பியதைப் பெருமையுடன் குறிப்பிட்ட பிரதமர்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In his 134th 'Mann Ki Baat' radio address, Prime Minister Narendra Modi expressed pride over the recent return of the Chola-era 'Anaimangalam Copper Plates' from the Netherlands. Dating back to the 11th century, these plates record Rajendra Chola fulfilling his father Rajaraja Chola's promise to grant the village of Anaimangalam to a Buddhist monastery. The plates, stolen during Dutch rule in the 1700s, signify the Cholas' naval prowess and ties with Southeast Asian nations.</p>
+                    <p class="lang-ta">தனது 134-வது 'மன் கி பாத்' வானொலி உரையில், நெதர்லாந்திலிருந்து சமீபத்தில் சோழர் கால 'ஆனைமங்கலம் செப்பேடுகள்' இந்தியா திரும்பியதைப் பற்றி பிரதமர் நரேந்திர மோடி பெருமையுடன் குறிப்பிட்டார். 11-ஆம் நூற்றாண்டைச் சேர்ந்த இந்தச் செப்பேடுகள், தனது தந்தை ராஜராஜ சோழன் அளித்த வாக்குறுதியின்படி ஆனைமங்கலம் கிராமத்தை ஒரு பௌத்த விகாரைக்கு ராஜேந்திர சோழன் தானமாக வழங்கியதைப் பதிவு செய்துள்ளன. 1700-களில் டச்சு ஆட்சியின் போது எடுத்துச் செல்லப்பட்ட இந்தச் செப்பேடுகள், சோழர்களின் கடற்படை வலிமையையும் தென்கிழக்கு ஆசிய நாடுகளுடனான உறவையும் காட்டுகின்றன.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>History Hook (Unit 4/8):</strong> The Anaimangalam copper plates (also known as the Leiden Plates) are a crucial source for Chola history. They record the grant of revenues of Anaimangalam village to the Chudamani Vihara in Nagapattinam, built by the Srivijaya King Maravijayottungavarman.</span><span class="lang-ta"><strong>வரலாற்று குறிப்பு:</strong> ஆனைமங்கலம் செப்பேடுகள் (லீடன் செப்பேடுகள்) சோழர் வரலாற்றுக்கு ஒரு முக்கிய ஆதாரமாகும். ஸ்ரீவிஜய மன்னர் ஸ்ரீமாறவிஜயோத்துங்கவர்மனால் நாகப்பட்டினத்தில் கட்டப்பட்ட சூடாமணி விகாரைக்கு ஆனைமங்கலம் கிராமத்தின் வருவாயை தானமாக வழங்கியதை இது பதிவு செய்கிறது.</span></li>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en">Questions about Chola grants to Buddhism/Jainism often appear to highlight religious tolerance. Remember: Rajaraja I → Chudamani Vihara (Nagapattinam).</span><span class="lang-ta">சோழர்கள் பௌத்தம்/சமணத்திற்கு வழங்கிய மானியங்கள் பற்றிய கேள்விகள் அவர்களின் மத சகிப்புத்தன்மையை முன்னிலைப்படுத்த அடிக்கடி கேட்கப்படும். நினைவில் கொள்க: முதலாம் ராஜராஜன் → சூடாமணி விகாரை (நாகப்பட்டினம்).</span></li>
+                        </ul>
+                    </details>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Welfare · MSME/Economy</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">PM SVANidhi Scheme Completes 6 Years; Disburses Over ₹17,800 Crore</span>
+                        <span class="lang-ta">பிரதமர் ஸ்வநிதி திட்டம் 6 ஆண்டுகளை நிறைவு செய்தது; ரூ.17,800 கோடிக்கு மேல் கடன் வழங்கல்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The PM Street Vendor's AtmaNirbhar Nidhi (PM SVANidhi) scheme has successfully completed six years since its launch in June 2020 (post-Covid). Union Minister Manohar Lal Khattar announced that the scheme has disbursed over ₹17,800 crore in collateral-free loans, benefiting more than 75.5 lakh street vendors nationwide, including 34.81 lakh women. The scheme provides micro-credit in three tranches: ₹15,000, ₹25,000, and ₹50,000.</p>
+                    <p class="lang-ta">பிரதமரின் சாலையோர வியாபாரிகளுக்கான தற்சார்பு நிதித் திட்டம் (PM SVANidhi), ஜூன் 2020 இல் (கரோனாவுக்குப் பிறகு) தொடங்கப்பட்டு வெற்றிகரமாக 6 ஆண்டுகளை நிறைவு செய்துள்ளது. இத்திட்டத்தின் கீழ் பிணையில்லா கடனாக நாடு முழுவதும் ரூ.17,800 கோடிக்கு மேல் வழங்கப்பட்டுள்ளதாகவும், இதன் மூலம் 34.81 லட்சம் பெண்கள் உட்பட 75.5 லட்சத்திற்கும் மேற்பட்ட சாலையோர வியாபாரிகள் பயனடைந்துள்ளதாகவும் மத்திய அமைச்சர் மனோகர் லால் கட்டார் அறிவித்தார். இத்திட்டம் ₹15,000, ₹25,000, ₹50,000 என மூன்று தவணைகளாக நுண்கடன்களை வழங்குகிறது.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Infrastructure · NHAI</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Toll Plazas Flout 60 km Distance Rule; Public Faces Undue Burden</span>
+                        <span class="lang-ta">60 கி.மீ இடைவெளி விதியை மீறும் சுங்கச்சாவடிகள்; மக்கள் மீது கட்டணச் சுமை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Despite the 2008 National Highways Fee (Determination of Rates and Collection) Rules explicitly mandating a minimum distance of 60 km between two toll plazas on the same section of a national highway, many toll plazas in Tamil Nadu continuously violate this. For instance, on the Chennai-Kanyakumari highway, out of 10 toll plazas, 8 are situated within 43-45 km of each other (e.g., Athur-Vikravandi). NHAI bypasses the rules by exploiting exemptions for bypasses, bridges, or claiming old Build-Operate-Transfer (BOT) contracts cannot be legally altered.</p>
+                    <p class="lang-ta">2008-ஆம் ஆண்டின் தேசிய நெடுஞ்சாலை கட்டண விதிகளின்படி (National Highways Fee Rules) இரண்டு சுங்கச்சாவடிகளுக்கு இடையிலான இடைவெளி குறைந்தபட்சம் 60 கி.மீ இருக்க வேண்டும் என்று கட்டாயமாக்கப்பட்டுள்ளது. இருப்பினும், தமிழகத்தில் பல சுங்கச்சாவடிகள் இதை மீறுகின்றன. உதாரணமாக, சென்னை-கன்னியாகுமரி நெடுஞ்சாலையில் உள்ள 10 சுங்கச்சாவடிகளில் 8 சாவடிகள் 43-45 கி.மீ (உ-ம்: ஆத்தூர் - விக்கிரவாண்டி) இடைவெளியிலேயே அமைந்துள்ளன. புறவழிச்சாலைகள், பாலங்களுக்கான விதிவிலக்குகளைப் பயன்படுத்தியும், பழைய BOT (கட்டு-இயக்கு-ஒப்படை) ஒப்பந்தங்களை சட்டப்பூர்வமாக மாற்ற முடியாது எனக் கூறியும் NHAI விதிகளை மீறி செயல்படுகிறது.</p>
+                </div>
+            </section>
+
+            <!-- INTERNATIONAL NEWS -->
+            <section id="international">
+                <h2>
+                    <span class="lang-en">International News</span>
+                    <span class="lang-ta">சர்வதேச செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Diplomacy · Border Dispute</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Nepal PM Balendra Shah Accuses India of Encroaching Territory</span>
+                        <span class="lang-ta">"இந்திய நிலப்பகுதிகள் ஆக்கிரமிப்பு": நேபாள பிரதமர் பேச்சால் சர்ச்சை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Addressing the Nepalese Parliament, Nepal Prime Minister Balendra Shah stirred a fresh controversy by stating that India has encroached on Nepalese territory. He mentioned that while diplomatic notes were sent regarding areas like Lipulekh, he recently learned that India too claims Nepal has encroached on its land in some places. He stressed the need for both nations to resolve the border differences through diplomatic channels, noting that Nepal has also consulted China and Britain regarding this issue.</p>
+                    <p class="lang-ta">நேபாள நாடாளுமன்றத்தில் உரையாற்றிய நேபாள பிரதமர் பாலேந்திர ஷா, இந்திய நிலப்பகுதிகளை நேபாளம் ஆக்கிரமித்திருப்பதாக புதிய சர்ச்சையை ஏற்படுத்தியுள்ளார். லிபுலேக் உள்ளிட்ட பகுதிகளை இந்தியா ஆக்கிரமித்திருப்பது குறித்து முன்னரே தூதரக குறிப்பு அனுப்பப்பட்ட நிலையில், நேபாளமும் இந்தியாவின் சில பகுதிகளை ஆக்கிரமித்துள்ளதாக இந்தியா கூறுவது தனக்கு தற்போதுதான் தெரியும் என்றார். இரு நாடுகளும் தூதரக ரீதியில் எல்லைப் பிரச்சனைகளுக்குத் தீர்வு காண வேண்டும் என வலியுறுத்திய அவர், இது குறித்து சீனா மற்றும் பிரிட்டனுடனும் நேபாளம் ஆலோசனை நடத்தியுள்ளதாகக் குறிப்பிட்டார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Geography Hook:</strong> The border dispute between India and Nepal primarily involves the Kalapani, Lipulekh, and Limpiyadhura regions in Uttarakhand. The origin of the Mahakali (Kali) River is the main point of contention based on the 1816 Treaty of Sugauli.</span><span class="lang-ta"><strong>புவியியல் குறிப்பு:</strong> இந்தியாவுக்கும் நேபாளத்துக்கும் இடையிலான எல்லைப் பிரச்சனை முக்கியமாக உத்தரகண்டில் உள்ள காலாபானி, லிபுலேக் மற்றும் லிம்பியாடுரா பகுதிகளை உள்ளடக்கியது. 1816-ஆம் ஆண்டின் சுகௌலி ஒப்பந்தத்தின் அடிப்படையில் மகாகாளி ஆற்றின் உற்பத்தியாகும் இடமே முக்கியப் பிரச்சனையாகும்.</span></li>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en">In reality, Balendra Shah is the Mayor of Kathmandu, but the newspaper text attributes this to the "Nepal PM Balendra Shah". Always stick to the source text for the artifact, but verify facts independently for exams.</span><span class="lang-ta">உண்மையில் பாலேந்திர ஷா காத்மாண்டு மேயர் ஆவார், ஆனால் நாளிதழ் செய்தி அவரை "நேபாள பிரதமர் பாலேந்திர ஷா" என்று குறிப்பிடுகிறது. தேர்வுகளுக்குத் தயாராகும் போது உண்மைகளைச் சரிபார்க்கவும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Global Conflict · Middle East</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Israel Captures Lebanon's Strategic Beaufort Castle After 26 Years</span>
+                        <span class="lang-ta">லெபனானில் முக்கியக் கோட்டையைக் கைப்பற்றியது இஸ்ரேல்; 26 ஆண்டுகளுக்குப் பின் அதிக தொலைவு ஊடுருவல்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In a significant escalation against the Hezbollah outfit, Israeli forces advanced deep into Lebanon, crossing the Litani River, and captured the historic Beaufort Castle located in the mountainous region. This marks Israel's deepest incursion into Lebanon in 26 years. Israeli soldiers hoisted their flag atop the castle, which they previously held from 1982 until their withdrawal in 2000. Despite a US-brokered ceasefire attempt, Israel continues its military push against Hezbollah.</p>
+                    <p class="lang-ta">ஹிஸ்புல்லா அமைப்புக்கு எதிரான தாக்குதலைத் தீவிரப்படுத்தியுள்ள இஸ்ரேலியப் படைகள், லெபனானுக்குள் லிதானி நதியைத் தாண்டி ஊடுருவி, மலைப்பகுதியில் அமைந்துள்ள வரலாற்றுச் சிறப்புமிக்க பியூஃபோர்ட் கோட்டையைக் (Beaufort Castle) கைப்பற்றியுள்ளன. 26 ஆண்டுகளுக்குப் பிறகு லெபனானுக்குள் இஸ்ரேல் இவ்வளவு தூரம் ஊடுருவியிருப்பது இதுவே முதல்முறையாகும். 1982 முதல் 2000 ஆம் ஆண்டு வரை தங்கள் கட்டுப்பாட்டில் வைத்திருந்த அக்கோட்டையில் இஸ்ரேலிய வீரர்கள் தங்கள் கொடியை நாட்டியுள்ளனர். அமெரிக்கா போர்நிறுத்தத்திற்கு முயன்றபோதிலும், ஹிஸ்புல்லாவுக்கு எதிரான ராணுவ நடவடிக்கையை இஸ்ரேல் தொடர்கிறது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Geography Angle:</strong> Beaufort Castle is a Crusader fortress in Nabatieh Governorate, southern Lebanon. The Litani River is a key geographical feature often mentioned in Israel-Lebanon border security agreements (like UN Resolution 1701).</span><span class="lang-ta"><strong>புவியியல் கோணம்:</strong> பியூஃபோர்ட் கோட்டை என்பது தெற்கு லெபனானில் உள்ள ஒரு வரலாற்றுச் சிறப்புமிக்க கோட்டையாகும். இஸ்ரேல்-லெபனான் எல்லைப் பாதுகாப்பு ஒப்பந்தங்களில் (ஐ.நா தீர்மானம் 1701 போல) லிதானி நதி முக்கிய புவியியல் எல்லையாகக் குறிப்பிடப்படுகிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Global Conflict · Russia-Ukraine</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Drone Attack on Europe's Largest Nuclear Plant (Zaporizhzhia) in Ukraine</span>
+                        <span class="lang-ta">ரஷ்ய கட்டுப்பாட்டில் உள்ள ஐரோப்பாவின் மிகப்பெரிய அணுமின் நிலையமான ஜபோரிஜியா அணுமின் நிலையம் மீது ட்ரோன் தாக்குதல்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Russia has accused Ukraine of launching a drone attack on the Zaporizhzhia Nuclear Power Plant, Europe's largest atomic facility, which is currently under Russian control. The drone reportedly struck a fuel storage area causing a fire, prompting the evacuation of nearby residents. Ukraine has vehemently denied the allegations, calling it a false-flag operation by Russia. IAEA chief Rafael Grossi expressed grave concern over the incident.</p>
+                    <p class="lang-ta">ரஷ்யக் கட்டுப்பாட்டில் உள்ள, ஐரோப்பாவின் மிகப்பெரிய அணுமின் நிலையமான ஜபோரிஜியா (Zaporizhzhia) அணுமின் நிலையத்தின் மீது உக்ரைன் ட்ரோன் தாக்குதல் நடத்தியதாக ரஷ்யா குற்றம் சாட்டியுள்ளது. எரிபொருள் சேமிப்புக் கிடங்கில் ட்ரோன் தாக்கியதில் தீ விபத்து ஏற்பட்டதாகவும், இதனால் அப்பகுதி மக்கள் வெளியேற்றப்பட்டதாகவும் கூறப்படுகிறது. உக்ரைன் இந்தக் குற்றச்சாட்டை திட்டவட்டமாக மறுத்துள்ளது. இந்தச் சம்பவம் குறித்து சர்வதேச அணுசக்தி முகமையின் (IAEA) தலைவர் ரஃபேல் குரோஸி கவலை தெரிவித்துள்ளார்.</p>
+                </div>
+            </section>
+
+            <!-- ECONOMY & FINANCE -->
+            <section id="economy">
+                <h2>
+                    <span class="lang-en">Economy & Finance</span>
+                    <span class="lang-ta">பொருளாதாரம் & நிதி</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Trade · Taxation</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Windfall Tax Reduced on Export of Petrol, Diesel, and ATF</span>
+                        <span class="lang-ta">பெட்ரோல், டீசல், விமான எரிபொருள் ஏற்றுமதி மீதான மிகை லாபத் தடுப்பு வரி (Windfall Tax) குறைப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Union Government has announced a reduction in the windfall tax (Special Additional Excise Duty) levied on the export of domestically produced petrol, diesel, and Aviation Turbine Fuel (ATF), effective from June 1, 2026. The tax on diesel export has been reduced to ₹13.50 per litre, and ATF to ₹9.50 per litre. The tax was initially introduced in 2022 to prevent domestic shortages and capture super-normal profits earned by energy companies due to global price surges caused by the Middle East crisis.</p>
+                    <p class="lang-ta">உள்நாட்டில் உற்பத்தி செய்யப்படும் பெட்ரோல், டீசல் மற்றும் விமான எரிபொருள் (ATF) ஏற்றுமதிக்கு விதிக்கப்படும் மிகை லாபத் தடுப்பு வரியை (Windfall Tax) மத்திய அரசு குறைத்துள்ளது. இந்த நடைமுறை ஜூன் 1, 2026 முதல் அமலுக்கு வருகிறது. டீசல் மீதான வரி லிட்டருக்கு ரூ.13.50 ஆகவும், விமான எரிபொருள் மீதான வரி ரூ.9.50 ஆகவும் குறைக்கப்பட்டுள்ளது. உலகளாவிய விலை ஏற்றத்தால் எரிசக்தி நிறுவனங்கள் பெறும் அசாதாரண லாபத்தை ஒழுங்குபடுத்தவும், உள்நாட்டில் தட்டுப்பாடு ஏற்படுவதைத் தவிர்க்கவும் இந்த வரி 2022-ல் முதன்முதலில் அறிமுகப்படுத்தப்பட்டது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Economy Concept:</strong> A 'Windfall Tax' is a higher tax rate on sudden, unexpectedly large profits (windfalls) that a company earns, typically due to external market events (like geopolitical wars) rather than their own operational efficiency.</span><span class="lang-ta"><strong>பொருளாதாரக் கருத்து:</strong> 'மிகை லாபத் தடுப்பு வரி' (Windfall Tax) என்பது நிறுவனங்கள் தங்களின் சொந்த செயல்பாட்டுத் திறனால் அல்லாமல், வெளிப்புற சந்தை நிகழ்வுகளால் (போர்கள் போன்றவை) திடீரென ஈட்டும் மிகப்பெரிய லாபத்தின் மீது விதிக்கப்படும் கூடுதல் வரியாகும்.</span></li>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en">Which tax is levied on unforeseen or unexpectedly large profits? Answer: Windfall Tax.</span><span class="lang-ta">எதிர்பாராத அல்லது திடீரென கிடைக்கும் மிகப்பெரிய லாபத்தின் மீது விதிக்கப்படும் வரி எது? விடை: மிகை லாபத் தடுப்பு வரி (Windfall Tax).</span></li>
+                        </ul>
+                    </details>
+                </div>
+            </section>
+
+            <!-- SPORTS -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports</span>
+                    <span class="lang-ta">விளையாட்டு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Cricket · IPL 2026</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">IPL 2026: Royal Challengers Bengaluru Retains the Title, Beats GT</span>
+                        <span class="lang-ta">ஐபிஎல் 2026: குஜராத்தை வீழ்த்தி சாம்பியன் கோப்பையை தக்க வைத்தது பெங்களூரு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Royal Challengers Bengaluru (RCB) clinched the IPL 2026 championship by defeating the Gujarat Titans (GT) by 5 wickets in the finals held at Ahmedabad. Chasing a target of 156, RCB achieved it in 18 overs with Virat Kohli remaining unbeaten on a spectacular 75*. With this victory, RCB becomes the third team in IPL history to successfully defend/retain their title (back-to-back wins), following CSK (2010, 2011) and Mumbai Indians (2019, 2020).</p>
+                    <p class="lang-ta">அகமதாபாத்தில் நடைபெற்ற ஐபிஎல் 2026 இறுதிப் போட்டியில் ராயல் சேலஞ்சர்ஸ் பெங்களூரு (RCB) அணி 5 விக்கெட் வித்தியாசத்தில் குஜராத் டைட்டன்ஸ் (GT) அணியை வீழ்த்தி சாம்பியன் பட்டத்தை வென்றது. 156 ரன்கள் என்ற இலக்கை விரட்டிய பெங்களூரு அணி 18 ஓவர்களில் அதை எட்டியது. விராட் கோலி 75 ரன்களுடன் ஆட்டமிழக்காமல் அபாரமாக ஆடினார். இந்த வெற்றியின் மூலம், சிஎஸ்கே (2010, 2011) மற்றும் மும்பை இந்தியன்ஸ் (2019, 2020) அணிகளுக்குப் பிறகு, ஐபிஎல் வரலாற்றில் கோப்பையைத் தொடர்ந்து தக்கவைத்த (Back-to-back) 3-வது அணி என்ற பெருமையை பெங்களூரு பெற்றுள்ளது.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Badminton · Singapore Open</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Satwik-Chirag Create History: First Indians to Win Singapore Open Men's Doubles</span>
+                        <span class="lang-ta">சிங்கப்பூர் ஓபன் பாட்மிண்டன்: ஆடவர் இரட்டையர் பிரிவில் சாம்பியன் பட்டம் வென்றது சாத்விக்-சிராக் இணை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">India's star badminton duo, Satwiksairaj Rankireddy and Chirag Shetty, made history by winning the Men's Doubles title at the Singapore Open Badminton tournament. They defeated the Indonesian pair Fajar Alfian and Muhammad Rian Ardianto (18-21, 21-17, 21-16) in the final. This marks their first Singapore Open title and makes them the first Indian men's doubles pair to achieve this feat.</p>
+                    <p class="lang-ta">சிங்கப்பூர் ஓபன் பாட்மிண்டன் போட்டியின் ஆடவர் இரட்டையர் பிரிவில் இந்தியாவின் சாத்விக் சாய்ராஜ் ராங்கிரெட்டி மற்றும் சிராக் ஷெட்டி இணை சாம்பியன் பட்டம் வென்று வரலாறு படைத்துள்ளது. இறுதிப் போட்டியில் இவர்கள் இந்தோனேசியாவின் ஃபஜார் அல்பியான் - முஹம்மது ரியான் அர்டியான்டோ இணையை (18-21, 21-17, 21-16) வீழ்த்தினர். இப்போட்டியில் ஆடவர் இரட்டையர் பிரிவில் சாம்பியனான முதல் இந்திய இணை என்ற பெருமையை இவர்கள் பெற்றுள்ளனர்.</p>
+                </div>
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: The 'Anaimangalam Copper Plates' (Leiden Plates) are a primary historical source regarding the donation of a village to a Buddhist Vihara during the reign of which Chola king?</span>
+                        <span class="lang-ta">கேள்வி: எந்த சோழ மன்னரின் ஆட்சிக் காலத்தில் பௌத்த விகாரைக்கு ஒரு கிராமத்தை தானமாக வழங்கியதை முதன்மையாக ஆனைமங்கலம் செப்பேடுகள் (லீடன் செப்பேடுகள்) குறிப்பிடுகின்றன?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Rajaraja Chola I (fulfilled by Rajendra Chola I)</span><br><br>
+                                <strong>Context:</strong> PM Modi, in his Mann Ki Baat, highlighted the return of these 11th-century copper plates from the Netherlands, which showcase the Cholas' religious tolerance and Southeast Asian ties.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">முதலாம் ராஜராஜ சோழன் (ராஜேந்திர சோழனால் நிறைவேற்றப்பட்டது)</span><br><br>
+                                <strong>பின்னணி:</strong> 11-ஆம் நூற்றாண்டைச் சேர்ந்த இந்தச் செப்பேடுகள் நெதர்லாந்திலிருந்து மீட்கப்பட்டதை மன் கி பாத் உரையில் பிரதமர் மோடி சுட்டிக்காட்டினார். இது சோழர்களின் மத சகிப்புத்தன்மை மற்றும் தென்கிழக்கு ஆசிய உறவுகளைக் காட்டுகிறது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: What is the primary objective of the PM SVANidhi scheme launched in 2020?</span>
+                        <span class="lang-ta">கேள்வி: 2020 இல் தொடங்கப்பட்ட பிரதமரின் ஸ்வநிதி (PM SVANidhi) திட்டத்தின் முதன்மை நோக்கம் என்ன?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Providing collateral-free working capital loans to street vendors</span><br><br>
+                                <strong>Context:</strong> The scheme recently completed its 6th anniversary, disbursing over ₹17,800 crore to 75.5 lakh street vendors.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">சாலையோர வியாபாரிகளுக்கு பிணையில்லா மூலதனக் கடன் வழங்குதல்</span><br><br>
+                                <strong>பின்னணி:</strong> இத்திட்டம் சமீபத்தில் தனது 6-வது ஆண்டை நிறைவு செய்து, 75.5 லட்சம் சாலையோர வியாபாரிகளுக்கு ₹17,800 கோடிக்கு மேல் கடன்களை வழங்கியுள்ளது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">New CDS General Raja Subramani</span><span class="lang-ta">புதிய சிடிஎஸ் ராஜ சுப்பிரமணி</span></td>
+                                <td><span class="lang-en">National/Defence</span><span class="lang-ta">தேசியம்/பாதுகாப்பு</span></td>
+                                <td><span class="lang-en">Takes over as the 3rd Chief of Defence Staff.</span><span class="lang-ta">இந்தியாவின் 3-வது முப்படை தலைமைத் தளபதியாக பொறுப்பேற்பு.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">Thiruvalluvar Saffron Row</span><span class="lang-ta">திருவள்ளுவர் காவி உடை சர்ச்சை</span></td>
+                                <td><span class="lang-en">State/Polity</span><span class="lang-ta">மாநிலம்/அரசியல்</span></td>
+                                <td><span class="lang-en">TN Govt objects to saffron-robed portrait in Raj Bhavan.</span><span class="lang-ta">ஆளுநர் மாளிகையில் காவி உடை திருவள்ளுவர் படத்திற்கு தமிழக அரசு எதிர்ப்பு.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">Anaimangalam Copper Plates</span><span class="lang-ta">ஆனைமங்கலம் செப்பேடுகள்</span></td>
+                                <td><span class="lang-en">History/Heritage</span><span class="lang-ta">வரலாறு</span></td>
+                                <td><span class="lang-en">PM Modi highlights return of Chola plates from Netherlands.</span><span class="lang-ta">நெதர்லாந்திலிருந்து மீட்கப்பட்ட சோழர் செப்பேடுகள் பற்றி பிரதமர் பேச்சு.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">Beaufort Castle Captured</span><span class="lang-ta">பியூஃபோர்ட் கோட்டை மீட்பு</span></td>
+                                <td><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></td>
+                                <td><span class="lang-en">Israel captures Lebanese castle after 26 years.</span><span class="lang-ta">லெபனானின் வரலாற்று கோட்டையை 26 ஆண்டுகளுக்கு பின் பிடித்தது இஸ்ரேல்.</span></td>
+                                <td><span class="badge bg-tip">MED</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">Windfall Tax Reduced</span><span class="lang-ta">மிகை லாப வரி குறைப்பு</span></td>
+                                <td><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></td>
+                                <td><span class="lang-en">Tax on Petrol, Diesel & ATF exports slashed.</span><span class="lang-ta">பெட்ரோல், டீசல், ATF ஏற்றுமதிக்கான வரி குறைப்பு.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani Chennai 01-06-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி சென்னை 01-06-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source images contained Tamil text detailing state, national, and international news for 01 June 2026. 
+State news focused on the row over Governor R.N. Ravi displaying a portrait of Thiruvalluvar in saffron robes, drawing strong condemnation from ministers and opposition leaders. TN farmers protesting the Mekedatu dam were stopped at the Hosur border. The Chennai Suburban train network completed 95 years. A 500-year-old Vijayanagara temple and Sati stone were found in Javadhu Hills. 
+Nationally, General N.S. Raja Subramani assumed office as India's 3rd CDS. PM Modi mentioned the return of the Chola-era Anaimangalam Copper plates from the Netherlands in 'Mann Ki Baat'. The PM SVANidhi scheme crossed ₹17,800 cr in disbursements. CRPF deployed COBRA commandos in violence-hit Manipur. 
+Internationally, Nepal PM Balendra Shah accused India of border encroachment. Israel advanced into Lebanon, capturing Beaufort Castle. A drone attack was reported at the Zaporizhzhia nuclear plant in Ukraine. A mine explosion in Myanmar killed 46.
+Economy: Windfall tax on fuel exports was cut. India-US interim trade agreement talks were planned.
+Sports: RCB won the IPL 2026 title defeating GT. Satwik/Chirag won the Singapore Open. D. Gukesh beat Praggnanandhaa at Norway Chess.]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூலப் படங்கள் 01 ஜூன் 2026 க்கான மாநில, தேசிய மற்றும் சர்வதேச செய்திகளைக் கொண்டிருந்தன.
+மாநில செய்திகளில், ஆளுநர் மாளிகையில் திருவள்ளுவர் படத்திற்கு காவி உடை அணிவிக்கப்பட்டதற்கு அமைச்சர்கள் மற்றும் தலைவர்கள் கடும் கண்டனம் தெரிவித்தனர். மேக்கேதாட்டு அணையைக் கண்டித்து போராட முயன்ற தமிழக விவசாயிகள் ஓசூரில் தடுத்து நிறுத்தம். சென்னை புறநகர் மின்சார ரயில் சேவை 95 ஆண்டுகளை நிறைவு செய்தது. ஜவ்வாது மலையில் விஜயநகர காலக் கோயில் மற்றும் உடன்கட்டை நடுகல் கண்டறியப்பட்டது.
+தேசிய அளவில், இந்தியாவின் 3-வது முப்படை தலைமைத் தளபதியாக ஜெனரல் என்.எஸ். ராஜ சுப்பிரமணி பதவியேற்றார். நெதர்லாந்திலிருந்து மீட்கப்பட்ட சோழர் கால ஆனைமங்கலம் செப்பேடுகள் குறித்து 'மன் கி பாத்' உரையில் பிரதமர் பேசினார். பிரதமர் ஸ்வநிதி திட்டம் ரூ.17,800 கோடி கடன்களை வழங்கி 6 ஆண்டுகளை நிறைவு செய்தது. மணிப்பூரில் சிஆர்பிஎப் 'கோப்ரா' கமாண்டோக்கள் களமிறக்கப்பட்டனர்.
+சர்வதேச அளவில், இந்திய நிலப்பகுதிகளை ஆக்கிரமித்திருப்பதாக நேபாள பிரதமர் பாலேந்திர ஷா குற்றச்சாட்டு. லெபனானில் பியூஃபோர்ட் கோட்டையை இஸ்ரேல் கைப்பற்றியது. உக்ரைனின் ஜபோரிஜியா அணுமின் நிலையம் மீது ட்ரோன் தாக்குதல். ªமியான்மர் சுரங்க வெடிவிபத்தில் 46 பேர் பலி.
+பொருளாதாரம்: எரிபொருள் ஏற்றுமதி மீதான மிகை லாபத் தடுப்பு வரி குறைப்பு. இந்தியா-அமெரிக்கா இடைக்கால வர்த்தக ஒப்பந்தப் பேச்சுவார்த்தை.
+விளையாட்டு: ஐபிஎல் 2026 கோப்பையை பெங்களூரு அணி வென்றது. சிங்கப்பூர் ஓபனில் சாத்விக்/சிராக் சாம்பியன். நார்வே செஸ்ஸில் பிரக்ஞானந்தாவை வீழ்த்தினார் குகேஷ்.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 01 June 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+    </script>
+</body>
+</html>
