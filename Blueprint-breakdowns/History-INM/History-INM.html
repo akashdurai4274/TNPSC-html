@@ -1,0 +1,2293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Group 1 — Unit III Master Blueprint</title>
+    <!-- Google Fonts Links -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Andika&family=IBM+Plex+Mono:wght@400;500;600&family=Orbitron:wght@400;600;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Reset & Variables */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        :root {
+            --bg-page: #0d0f14;
+            --accent-gold: #f5c842;
+            --bg-card: #13161e;
+            --border-color: #1e2130;
+            --text-primary: #e8eaf0;
+            --text-muted: #8b90a0;
+            
+            --bg-critical: #2a0a0a;
+            --border-critical: #ef4444;
+            --bg-trap: #2a1f00;
+            --border-trap: #f5c842;
+            --bg-tip: #0a2a10;
+            --border-tip: #22c55e;
+            --bg-pyq: #0a1a2a;
+            --border-pyq: #3b82f6;
+            --bg-gem: #1a0a2a;
+            --border-gem: #a855f7;
+        }
+
+        body {
+            background-color: var(--bg-page);
+            color: var(--text-primary);
+            font-family: 'Andika', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2 {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+        }
+
+        h3, h4, .digit, th, .badge-count {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .label, code, pre, .toc-item, .callout-badge {
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        /* Layout Structure */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Sidebar TOC */
+        .sidebar {
+            width: 320px;
+            background-color: #0b0d12;
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        .sidebar-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            color: var(--accent-gold);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .toc-list {
+            list-style: none;
+        }
+
+        .toc-item {
+            margin-bottom: 8px;
+        }
+
+        .toc-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 12px;
+            display: block;
+            padding: 6px 10px;
+            border-radius: 4px;
+            transition: all 0.3s;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .toc-link:hover, .toc-link.active {
+            color: var(--accent-gold);
+            background-color: var(--bg-card);
+            padding-left: 14px;
+            border-left: 3px solid var(--accent-gold);
+        }
+
+        /* Main Content Container */
+        .main-content {
+            margin-left: 320px;
+            flex-1: 1;
+            width: calc(100% - 320px);
+            padding: 40px;
+        }
+
+        /* Hero Header */
+        .hero {
+            background: linear-gradient(135deg, #0d0f14 0%, #13161e 50%, #1a1c26 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 30px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 12px;
+            background: radial-gradient(circle at 80% 20%, rgba(245, 200, 66, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-title {
+            font-size: 42px;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(245, 200, 66, 0.4);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 16px;
+            color: var(--accent-gold);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+        }
+
+        .badge-row {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .badge-count {
+            background-color: rgba(245, 200, 66, 0.1);
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Legend Row */
+        .legend-container {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin-bottom: 40px;
+        }
+
+        .legend-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .legend-badges {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        /* General Callout System */
+        .callout-box {
+            border-left: 4px solid;
+            border-radius: 6px;
+            padding: 12px 16px;
+            margin: 14px 0;
+            font-size: 14px;
+        }
+
+        .callout-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        /* Callout Flavors */
+        .critical-box { background-color: var(--bg-critical); border-color: var(--border-critical); color: #ffbaba; }
+        .critical-box .callout-badge { background-color: var(--border-critical); color: #fff; }
+        
+        .trap-box { background-color: var(--bg-trap); border-color: var(--border-trap); color: #ffe699; }
+        .trap-box .callout-badge { background-color: var(--border-trap); color: #000; }
+        
+        .tip-box { background-color: var(--bg-tip); border-color: var(--border-tip); color: #baffc9; }
+        .tip-box .callout-badge { background-color: var(--border-tip); color: #fff; }
+        
+        .pyq-box { background-color: var(--bg-pyq); border-color: var(--border-pyq); color: #bae1ff; }
+        .pyq-box .callout-badge { background-color: var(--border-pyq); color: #fff; }
+        
+        .gem-box { background-color: var(--bg-gem); border-color: var(--border-gem); color: #e8baff; }
+        .gem-box .callout-badge { background-color: var(--border-gem); color: #fff; }
+
+        /* Card-Style Rule Blocks */
+        .topic-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--accent-gold);
+            border-radius: 10px;
+            padding: 25px 30px;
+            margin-bottom: 50px;
+            scroll-margin-top: 40px;
+        }
+
+        .topic-header {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .topic-title {
+            font-size: 24px;
+            color: #ffffff;
+            margin-bottom: 5px;
+        }
+
+        .topic-meta {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            color: var(--accent-gold);
+            display: flex;
+            gap: 20px;
+        }
+
+        .card-sub-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            color: var(--accent-gold);
+            margin: 25px 0 12px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Tree Styles */
+        .tree-container {
+            background-color: #0f1118;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 20px;
+            font-size: 14px;
+        }
+
+        .tree-level-1 { font-weight: bold; color: #ffffff; margin-bottom: 5px; }
+        .tree-level-2 { margin-left: 20px; color: var(--accent-gold); margin-bottom: 4px; }
+        .tree-level-3 { margin-left: 40px; color: var(--text-primary); font-size: 13px; margin-bottom: 2px; }
+        .tree-level-4 { margin-left: 60px; color: var(--text-muted); font-size: 12px; font-family: 'IBM Plex Mono', monospace; }
+
+        /* Table Styles */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            margin: 15px 0;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        .data-table th {
+            background-color: #1a1c26;
+            color: var(--accent-gold);
+            padding: 12px 16px;
+            font-weight: 600;
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .data-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table tr:nth-child(even) { background-color: #0f1118; }
+        .data-table tr:nth-child(odd) { background-color: #13161e; }
+
+        .pyq-year { color: #3b82f6; font-weight: bold; font-family: 'Orbitron', sans-serif; }
+        
+        /* Toughness Colors */
+        .t-easy { color: #22c55e; font-weight: bold; }
+        .t-medium { color: #f5c842; font-weight: bold; }
+        .t-hard { color: #ef4444; font-weight: bold; }
+        .t-trap { color: #a855f7; font-weight: bold; }
+
+        /* Coverage Map & Info grids */
+        .coverage-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media(max-width: 900px) {
+            .coverage-grid { grid-template-columns: 1fr; }
+        }
+
+        .info-block {
+            background-color: #0f1118;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 15px;
+        }
+
+        .info-block h5 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffffff;
+            font-size: 12px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-block ul {
+            list-style-position: inside;
+            padding-left: 5px;
+            font-size: 13px;
+            color: var(--text-primary);
+        }
+
+        .info-block li { margin-bottom: 5px; }
+
+        /* Question Expansion Layout */
+        .q-container {
+            margin-top: 15px;
+        }
+
+        .q-card {
+            background-color: #0f1118;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .q-text {
+            padding: 16px;
+            font-weight: 600;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
+            background-color: rgba(255,255,255,0.01);
+        }
+
+        .q-options {
+            padding: 16px;
+            font-size: 13px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+        }
+
+        .q-opt {
+            background-color: var(--bg-card);
+            padding: 10px 14px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        details {
+            border-top: 1px solid var(--border-color);
+        }
+
+        summary {
+            list-style: none;
+            padding: 12px 16px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            color: var(--accent-gold);
+            cursor: pointer;
+            user-select: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #13161e;
+        }
+
+        summary::-webkit-details-marker { display: none; }
+
+        summary::after {
+            content: '▼';
+            font-size: 10px;
+            transition: transform 0.2s;
+            color: var(--accent-gold);
+        }
+
+        details[open] summary::after {
+            transform: rotate(180deg);
+        }
+
+        .answer-content {
+            background-color: #080a0e;
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+            font-size: 13px;
+        }
+
+        .ans-line {
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #080a0e;
+            border-top: 2px solid var(--accent-gold);
+            padding: 30px;
+            text-align: center;
+            margin-top: 60px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Mobile Adjustments */
+        @media(max-width: 1100px) {
+            .sidebar {
+                display: none; /* In practical frameworks a top-scroll bar or menu is injected, but layout drops margin for pure full width layout */
+            }
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+
+    <!-- Sticky Sidebar TOC -->
+    <aside class="sidebar">
+        <div class="sidebar-title">Blueprint Core</div>
+        <ul class="toc-list">
+            <li class="toc-item"><a href="#unit-overview" class="toc-link">Unit III Overview</a></li>
+            <li class="toc-item"><a href="#topic-1" class="toc-link">1. Indus Valley Civ</a></li>
+            <li class="toc-item"><a href="#topic-2" class="toc-link">2. Empire Successions</a></li>
+            <li class="toc-item"><a href="#topic-3" class="toc-link">3. Vijayanagar & Bahmani</a></li>
+            <li class="toc-item"><a href="#topic-4" class="toc-link">4. South Indian History</a></li>
+            <li class="toc-item"><a href="#topic-5" class="toc-link">5. Early British Uprisings</a></li>
+            <li class="toc-item"><a href="#topic-6" class="toc-link">6. Indian National Congress</a></li>
+            <li class="toc-item"><a href="#topic-7" class="toc-link">7. Emergence of Leaders</a></li>
+            <li class="toc-item"><a href="#topic-8" class="toc-link">8. Modes of Agitation</a></li>
+            <li class="toc-item"><a href="#topic-9" class="toc-link">9. Communalism & Partition</a></li>
+            <li class="toc-item"><a href="#topic-10" class="toc-link">10. Culture & Diversity</a></li>
+            <li class="toc-item"><a href="#topic-11" class="toc-link">11. Secular State & Harmony</a></li>
+            <li class="toc-item"><a href="#topic-12" class="toc-link">12. Personalities in Arts/Sci</a></li>
+            <li class="toc-item"><a href="#topic-13" class="toc-link">13. Symbols & Current Affairs</a></li>
+            <li class="toc-item"><a href="#master-timeline" class="toc-link">Master Timeline</a></li>
+            <li class="toc-item"><a href="#quick-revision" class="toc-link">Quick Revision Matrix</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Workspace Content -->
+    <main class="main-content">
+
+        <!-- Hero Header -->
+        <header class="hero">
+            <h1 class="hero-title">TNPSC Group 1 Core Blueprint</h1>
+            <div class="hero-subtitle">Unit III: History, Culture of India & Indian National Movement</div>
+            <div class="badge-row">
+                <span class="badge-count">TARGET: 25 / 25 QUESTIONS</span>
+                <span class="badge-count">GROUP 1 COMPREHENSIVE ARCHITECTURE</span>
+                <span class="badge-count">RECURSIVE DEEP DIVE</span>
+            </div>
+        </header>
+
+        <!-- Legend Row -->
+        <div class="legend-container">
+            <div class="legend-title">System Signifiers Legend</div>
+            <div class="legend-badges">
+                <div class="callout-box critical-box" style="margin:0; padding: 4px 10px;"><span class="callout-badge">[CRITICAL]</span> Vital Data Point</div>
+                <div class="callout-box trap-box" style="margin:0; padding: 4px 10px;"><span class="callout-badge">[TRAP]</span> Confusable / Distractor Zone</div>
+                <div class="callout-box tip-box" style="margin:0; padding: 4px 10px;"><span class="callout-badge">[TIP]</span> Conceptual Hack</div>
+                <div class="callout-box pyq-box" style="margin:0; padding: 4px 10px;"><span class="callout-badge">[PYQ]</span> Evaluated Pattern (2020-2025)</div>
+                <div class="callout-box gem-box" style="margin:0; padding: 4px 10px;"><span class="callout-badge">[GEM]</span> Microscopic Fact / Edge Mark</div>
+            </div>
+        </div>
+
+        <!-- Unit Overview Section -->
+        <section id="unit-overview" class="topic-card" style="border-left-color: #3b82f6;">
+            <div class="topic-header">
+                <h2 class="topic-title">Unit III Core Strategy Overview</h2>
+                <div class="topic-meta"><span>Weightage: ~22-26 Questions</span> <span>Focus Area: Multi-Statement Assertions & Chronology</span></div>
+            </div>
+            <p style="margin-bottom: 15px;">Unit III anchors the General Studies paper of the TNPSC Group 1 Services. It synthesizes the entire spectrum of Indian history with special emphasis on systemic continuity, socio-political undercurrents, leadership modalities, and the evolutionary lineage of modern Tamil Nadu's political thoughts (intertwined with the National Movement).</p>
+            <div class="callout-box tip-box">
+                <span class="callout-badge">[TIP]</span> Trends from 2023 to 2025 confirm that linear single-choice factual recall has plummeted. Over 65% of historical questions are built around multi-statement compliance checks, match-the-following text correlations (e.g., matching obscure administrative terms to their offices), or rigorous chronology maps.
+            </div>
+        </section>
+
+
+        <!-- ==================== TOPIC 1 ==================== -->
+        <section id="topic-1" class="topic-card">
+            <div class="topic-header">
+                <h2 class="topic-title">1. Indus Valley Civilization (IVC)</h2>
+                <div class="topic-meta"><span>Typical Count: 1-2 Qs</span> <span>Complexity Grid: Medium to Trap</span></div>
+            </div>
+            <p>Analysis of urban structural engineering, trade routes, technological innovations, and site-specific archeological discoveries.</p>
+
+            <div class="card-sub-title">Recursive Breakdown Structure</div>
+            <div class="tree-container">
+                <div class="tree-level-1">1. Indus Valley Civilization</div>
+                <div class="tree-level-2">1.1 Geography & Settlement Zones</div>
+                <div class="tree-level-3">1.1.1 Core Sites: Harappa (Ravi), Mohenjo-daro (Indus), Lothal (Bhogavo), Kalibangan (Ghaggar), Dholavira, Rakhigarhi, Banawali, Chanhudaro, Sutkagendor.</div>
+                <div class="tree-level-4">→ Exam Angle: Absolute geographic coordinates, pairing sites with original excavators (e.g., Sahni, Banerjee, Rao, Bisht) and current state locations.</div>
+                <div class="tree-level-2">1.2 Town Planning & Urban Infrastructure</div>
+                <div class="tree-level-3">1.2.1 Citadel vs Lower Town layouts, advanced grid iron road patterns, burnt brick specifications (1:2:4 ratio), underground integrated sanitary networks, Great Bath engineering, Granary designs (Harappa).</div>
+                <div class="tree-level-4">→ Exam Angle: Analytical multi-statement verification on plumbing technologies, multi-story structural layouts, absence of dedicated temples.</div>
+                <div class="tree-level-2">1.3 Socio-Economic Profile & External Trade Ties</div>
+                <div class="tree-level-3">1.3.1 Agricultural base (wheat, barley, cotton), animal domestication (humped bull; lack of definitive horse evidence until upper layers), weight systems (binary 1, 2, 4, 8 to 64, then decimal), seal manufacturing (steatite, unicorn iconography), Mesopotamian cuneiform references to "Meluhha".</div>
+                <div class="tree-level-4">→ Exam Angle: Trade materials mapping (Lapis Lazuli from Badakhshan, Jade from Central Asia, Turquoise from Persia).</div>
+                <div class="tree-level-2">1.4 Epigraphy, Art, and Theories of Decline</div>
+                <div class="tree-level-3">1.4.1 Boustrophedon script layout (right to left, left to right), Priest-King stone sculpture, Bronze Dancing Girl (lost-wax casting technique), Pashupati Mahadeva seal details (surrounding animals: elephant, tiger, rhino, buffalo, two deer at feet).</div>
+                <div class="tree-level-4">→ Exam Angle: Decipherment arguments (Asko Parpola / Iravatham Mahadevan Dravidian affinity hypotheses) and terminal decline reasons.</div>
+            </div>
+
+            <div class="card-sub-title">PYQ Pattern Grid Analysis (2020-2025)</div>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Year</th><th>Question Structural Type</th><th>Core Topic Evaluated</th><th>Toughness</th><th>Assigned Tag</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="pyq-year">2021</td><td>Match the Following Sites to Discoveries</td><td>Lothal (Dockyard), Kalibangan (Ploughed field), Dholavira (Signboard)</td><td class="t-easy">Easy</td><td>[PYQ]</td></tr>
+                        <tr><td class="pyq-year">2023</td><td>Multi-Statement Compliance Check</td><td>IVC Metallurgy & Knowledge limits (Iron ignorance vs Bronze usage)</td><td class="t-medium">Medium</td><td>[PYQ]</td></tr>
+                        <tr><td class="pyq-year">2024</td><td>Assertion & Reason Matrix</td><td>Decline theories: Tectonic shifts vs Aryan invasion hypotheses</td><td class="t-hard">Hard</td><td>[CRITICAL]</td></tr>
+                        <tr><td class="pyq-year">2025</td><td>Micro-Factual Association</td><td>Rakhigarhi expansion status as largest archeological site in India</td><td class="t-trap">Trap</td><td>[GEM]</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card-sub-title">360° Coverage Boundaries Map</div>
+            <div class="coverage-grid">
+                <div class="info-block">
+                    <h5>Absolute In-Scope Parameters</h5>
+                    <ul>
+                        <li>All sites mentioned across Tamil Nadu State Board Class 6 and 11 History text materials.</li>
+                        <li>Detailed material origin vectors (e.g., Carnelian from Lothal, Steatite from Rajasthan).</li>
+                        <li>Linguistic and epigraphic updates regarding Indus script research from Tamil Virtual Academy resources.</li>
+                    </ul>
+                </div>
+                <div class="info-block">
+                    <h5>Out-of-Scope Distractors</h5>
+                    <ul>
+                        <li>Deep stratigraphic layer numbers (e.g., Harappa Trench III Layer 4 sub-pottery designs).</li>
+                        <li>Extensive memorization of foreign sites not exhibiting trade interfaces with India.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="callout-box trap-box">
+                <span class="callout-badge">[TRAP]</span> Do not confuse **Kalibangan** (Ploughed field, wooden furrow, fire altars) with **Banawali** (terracotta model of plough). TNPSC routinely flips these two options in match matrices to induce errors.
+            </div>
+
+            <div class="callout-box critical-box">
+                <span class="callout-badge">[CRITICAL]</span> Keep visual tracking active on **Dholavira's unique features**: three distinct functional tiers (Citadel, Middle Town, Lower Town) and an complex, engineered stormwater conservation reservoir system.
+            </div>
+
+            <div class="card-sub-title">Syllabus-Aligned Study Architecture</div>
+            <div class="tree-container" style="background-color:#13161e;">
+                <strong>TN State Board:</strong> Class 6 Term 1 (History - Unit 3); Class 11 History Vol 1 (Unit 1.3).<br>
+                <strong>Reference Manuals:</strong> Upinder Singh - <em>A History of Ancient and Early Medieval India</em>; Poonam Dalal Dahiya - <em>Ancient and Medieval India</em>.<br>
+                <strong>PYQ Drills:</strong> Focus on Group 1 Prelims 2022, 2024; Assistant Engineer Civil Exams GS modules.
+            </div>
+
+            <div class="card-sub-title">Question Simulator Engine</div>
+            <div class="q-container">
+                <div class="q-card">
+                    <div class="q-text">Q1. Evaluate the following items discovered at Mohenjo-daro and identify the correct combination based on standard structural excavations:</div>
+                    <div class="q-options">
+                        <div class="q-opt">1. A bronze figurine of a dancing girl exhibiting the lost-wax casting technique.</div>
+                        <div class="q-opt">2. A steatite bearded man or 'Priest-King' wearing a shawl decorated with a trefoil pattern.</div>
+                        <div class="q-opt">3. A cylindrical Persian Gulf seal indicative of direct mercantile interfaces.</div>
+                        <div class="q-opt">4. An integrated granary block displaying timber-ventilation floor cavities.</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> 1, 2, and 4 only. (Statement 3 is inaccurate; cylindrical seals matching Persian/Mesopotamian varieties were recovered at Lothal and Kalibangan, whereas Mohenjo-daro features standard square Indus seals and specific clay sealings).</div>
+                            <div class="callout-box gem-box">
+                                <span class="callout-badge">[GEM]</span> The trefoil pattern on the Priest-King’s robe is filled with red pigment, and his eyes are elongated with shell inlay. This demonstrates specialized artisanal guilds operating within the urban core.
+                            </div>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="q-card">
+                    <div class="q-text">Q2. Which of the following sites does not match its geographic indicator or water system?</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) Chanhudaro — Located on the Indus River axis, completely lacked a fortified citadel layout.</div>
+                        <div class="q-opt">B) Sutkagendor — Located on the Dashk River, westernmost boundary interface of the civilization.</div>
+                        <div class="q-opt">C) Lothal — Located on the Sabarmati tributary (Bhogavo), features an artificial tidal basin.</div>
+                        <div class="q-opt">D) Alamgirpur — Located on the Ghaggar-Hakra system, marking the northernmost edge of convergence.</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> D) Alamgirpur is incorrect. Alamgirpur is located on the **Hindon River** (a tributary of the Yamuna) in Uttar Pradesh, marking the *easternmost* boundary. The northernmost boundary is Shortugai (Afghanistan) or Manda (Chenab, Jammu).</div>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="q-card">
+                    <div class="q-text">Q3. Assess the linguistic arguments presented by epigraphist Iravatham Mahadevan regarding the Indus Valley Script:</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) He proved the script was purely Indo-Aryan and read from left to right exclusively.</div>
+                        <div class="q-opt">B) He generated the first comprehensive computer concordance of Indus texts, confirming structural roots matching Dravidian syntax.</div>
+                        <div class="q-opt">C) He established that the script was purely alphabetic without logographic characters.</div>
+                        <div class="q-opt">D) He derived direct translations linking Harappan words to early Ashokan Brahmi edicts.</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> B. Iravatham Mahadevan's monumental work relied on structural syntax models showing Dravidian patterns (suffix-root alignment), rejecting both purely alphabetic and early Indo-European connections.</div>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==================== TOPIC 2 ==================== -->
+        <section id="topic-2" class="topic-card">
+            <div class="topic-header">
+                <h2 class="topic-title">2. Guptas, Delhi Sultans, Mughals, and Marathas</h2>
+                <div class="topic-meta"><span>Typical Count: 4-5 Qs</span> <span>Complexity Grid: Hard Chronology</span></div>
+            </div>
+            <p>A systematic comparative analysis tracing changes and continuity in administration, taxation, military structures, and architectural achievements across these empires.</p>
+
+            <div class="card-sub-title">Recursive Breakdown Structure</div>
+            <div class="tree-container">
+                <div class="tree-level-1">2. Empire Dynasties & Administrative Continuities</div>
+                <div class="tree-level-2">2.1 The Gupta Empire Architecture</div>
+                <div class="tree-level-3">2.1.1 Land Taxonomy: Kshetra (cultivable), Khila (wasteland), Aprahata (forest), Vasti (habitable), Gopata Sarah (pasture). Epigraphic sources: Allahabad Pillar (Prashasti by Harisena), Mehrauli Iron Pillar.</div>
+                <div class="tree-level-4">→ Exam Angle: Match-the-following land classes, coins (Dinara, Rupaka), and structural changes under Kumargupta/Skandagupta (Huna invasions).</div>
+                <div class="tree-level-2">2.2 The Delhi Sultanate (1206-1526)</div>
+                <div class="tree-level-3">2.2.1 Administrative Ministries: Diwan-i-Wizarat (Finance), Diwan-i-Arz (Military - Balban), Diwan-i-Insha (Correspondence), Diwan-i-Rasalat (Foreign/Religious). Agrarian systems: Iqta assignments, Khalisa crowns lands, Alaudin Khilji’s market pricing machinery (Shahna-i-Mandi).</div>
+                <div class="tree-level-4">→ Exam Angle: Chronological placement of dynasties (Mamluk, Khilji, Tughlaq, Sayyid, Lodi), administrative terminology, and token currency experiments.</div>
+                <div class="tree-level-2">2.3 The Mughal Empire (1526-1707)</div>
+                <div class="tree-level-3">2.3.1 Revenue Machinery: Raja Todar Mal’s Dahsala Framework, Zabti layout. Military Ordering: Mansabdari structure (Zat and Sawar ranks), Du-aspa Sih-aspa innovations under Jahangir. Architecture: Evolution from Humayun's tomb to the Pietra Dura inlay works of Shah Jahan.</div>
+                <div class="tree-level-4">→ Exam Angle: Step-by-step chronology of text compilations (Ain-i-Akbari, Muntakhab-ut-Tawarikh) and specific religious declarations (Mazhar nama 1579).</div>
+                <div class="tree-level-2">2.4 The Maratha Confederacy</div>
+                <div class="tree-level-3">2.4.1 Chhatrapati Shivaji’s Statecraft: Ashtapradhan Ministry framework (Peshwa, Amatya, Wakia-Navis, Samant, Sachiv, Pandit Rao, Nyayadhish, Senapati). Taxation: Chauth (1/4th revenue as protection fee) and Sardeshmukhi (additional 10% as hereditary claim).</div>
+                <div class="tree-level-4">→ Exam Angle: Treaties progression (Purandar 1665, Surat campaigns) and the shift of power matrix to Peshwas.</div>
+            </div>
+
+            <div class="card-sub-title">PYQ Pattern Grid Analysis (2020-2025)</div>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Year</th><th>Question Structural Type</th><th>Core Topic Evaluated</th><th>Toughness</th><th>Assigned Tag</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="pyq-year">2020</td><td>Term Identification Index</td><td>Gupta Administrative Offices: Maha-danda-nayaka (Chief Justice)</td><td class="t-medium">Medium</td><td>[PYQ]</td></tr>
+                        <tr><td class="pyq-year">2022</td><td>Chronology Assembly Challenge</td><td>Sequential arrangement of Delhi Sultanate fiscal reforms</td><td class="t-hard">Hard</td><td>[CRITICAL]</td></tr>
+                        <tr><td class="pyq-year">2024</td><td>Assertion Matrix Layout</td><td>Akbar’s Mansabdari system modifications under Shah Jahan (Month-scale)</td><td class="t-trap">Trap</td><td>[TRAP]</td></tr>
+                        <tr><td class="pyq-year">2025</td><td>Match-the-Following Pairs</td><td>Maratha Ashtapradhan roles vs descriptive functional portfolios</td><td class="t-easy">Easy</td><td>[PYQ]</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card-sub-title">360° Coverage Boundaries Map</div>
+            <div class="coverage-grid">
+                <div class="info-block">
+                    <h5>Absolute In-Scope Parameters</h5>
+                    <ul>
+                        <li>Class 11 History Vol 1 & 2 full chapters covering Guptas, Sultans, Mughals, and Marathas.</li>
+                        <li>All fiscal terms (e.g., Jizya reimposition timelines, Ghari/Chari taxes by Khilji).</li>
+                        <li>Foreign traveler journals (e.g., Fa-Hien, Ibn Battuta, Bernier, Tavernier).</li>
+                    </ul>
+                </div>
+                <div class="info-block">
+                    <h5>Out-of-Scope Distractors</h5>
+                    <ul>
+                        <li>Exhaustive tactical battle field coordinates for minor conflicts.</li>
+                        <li>Genealogical lineages of minor noble houses or distant provincial governors.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="callout-box pyq-box">
+                <span class="callout-badge">[PYQ]</span> **Ashtapradhan** titles are a high-frequency focus area in TNPSC exams. Ensure you remember that the **Amatya** manages finance/accounts, while the **Sumant / Dabir** acts as the foreign minister.
+            </div>
+
+            <div class="callout-box critical-box">
+                <span class="callout-badge">[CRITICAL]</span> Track the **Zabti revenue execution step-by-step**: It depended on actual average cultivation metrics calculated over a continuous **ten-year performance window (1570–1580)**, an operation spearheaded by Raja Todar Mal.
+            </div>
+
+            <div class="card-sub-title">Syllabus-Aligned Study Architecture</div>
+            <div class="tree-container" style="background-color:#13161e;">
+                <strong>TN State Board:</strong> Class 7 Term 1 & 2; Class 11 History Vol 1 (Chapters 7, 10, 11) & Vol 2 (Chapters 14, 15).<br>
+                <strong>Reference Manuals:</strong> Satish Chandra - <em>History of Medieval India</em>; J.L. Mehta - <em>Advanced Study in the History of Medieval India</em>.
+            </div>
+
+            <div class="card-sub-title">Question Simulator Engine</div>
+            <div class="q-container">
+                <div class="q-card">
+                    <div class="q-text">Q1. Match the following Delhi Sultanate administrative ministries with their respective core descriptions:
+                    <br>1. Diwan-i-Mustakhraj &mdash; a) Department of Agriculture (M.B. Tughlaq)
+                    <br>2. Diwan-i-Kohi &mdash; b) Department of Arrears/Revenue (A. Khilji)
+                    <br>3. Diwan-i-Khairat &mdash; c) Department of Slaves (F. Tughlaq)
+                    <br>4. Diwan-i-Bandagan &mdash; d) Department of Charity (F. Tughlaq)</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) 1-b, 2-a, 3-d, 4-c</div>
+                        <div class="q-opt">B) 1-a, 2-b, 3-c, 4-d</div>
+                        <div class="q-opt">C) 1-b, 2-d, 3-a, 4-c</div>
+                        <div class="q-opt">D) 1-c, 2-a, 3-d, 4-b</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> A) 1-b, 2-a, 3-d, 4-c. Diwan-i-Mustakhraj was introduced by Alauddin Khilji to liquidate revenue arrears from recalcitrant village headmen. Diwan-i-Kohi was Muhammad bin Tughlaq's state-backed agricultural loan division.</div>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="q-card">
+                    <div class="q-text">Q2. Chronologically arrange the following events concerning the Maratha ruler Chhatrapati Shivaji:
+                    <br>1. Signing of the Treaty of Purandar with Raja Jai Singh.
+                    <br>2. Strategic elimination of Afzal Khan of Bijapur.
+                    <br>3. Formal Coronation Ceremony at Raigarh Fort.
+                    <br>4. Sacking of the Mughal port emporium at Surat (First Campaign).</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) 2 &rarr; 4 &rarr; 1 &rarr; 3</div>
+                        <div class="q-opt">B) 4 &rarr; 2 &rarr; 1 &rarr; 3</div>
+                        <div class="q-opt">C) 2 &rarr; 1 &rarr; 4 &rarr; 3</div>
+                        <div class="q-opt">D) 1 &rarr; 2 &rarr; 3 &rarr; 4</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> A) 2 &rarr; 4 &rarr; 1 &rarr; 3. 
+                            <br>• Afzal Khan incident: 1659
+                            <br>• Sacking of Surat (First): 1664
+                            <br>• Treaty of Purandar: 1665
+                            <br>• Formal Coronation at Raigarh: 1674</div>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="q-card">
+                    <div class="q-text">Q3. Consider the following statements about Gupta coins and inscriptions:
+                    <br>1. Samudragupta's coins depict him playing the Veenai instrument, proving his title 'Kaviraja'.
+                    <br>2. The Mehrauli Iron Pillar inscription records the military triumphs of Chandragupta I.
+                    <br>Which of the statements given above is/are correct?</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) 1 only</div>
+                        <div class="q-opt">B) 2 only</div>
+                        <div class="q-opt">C) Both 1 and 2</div>
+                        <div class="q-opt">D) Neither 1 nor 2</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> A) 1 only. Statement 2 is incorrect because the Mehrauli Iron Pillar inscription is associated with **Chandragupta II** (referred to simply as 'Chandra' in the text), not Chandragupta I.</div>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==================== TOPIC 3 ==================== -->
+        <section id="topic-3" class="topic-card">
+            <div class="topic-header">
+                <h2 class="topic-title">3. Age of Vijayanagaram and Bahmani Kingdoms</h2>
+                <div class="topic-meta"><span>Typical Count: 2 Qs</span> <span>Complexity Grid: Hard Multi-Statement</span></div>
+            </div>
+            <p>Traces the geopolitical rivalries in the Krishna-Tungabhadra doab, the evolution of the Nayankara system, and architectural developments.</p>
+
+            <div class="card-sub-title">Recursive Breakdown Structure</div>
+            <div class="tree-container">
+                <div class="tree-level-1">3. Vijayanagar and Bahmani Geopolitics</div>
+                <div class="tree-level-2">3.1 Vijayanagar Structural Lineage (1336-1646)</div>
+                <div class="tree-level-3">3.1.1 Four Royal Houses: Sangama (Harihara, Bukka), Saluva (Narasimha), Tuluva (Krishna Deva Raya), Aravidu (Tirumala). Administrative framework: The **Nayankara System** (military chiefs holding territory or 'Amaram' lands in exchange for maintaining troop contingencies).</div>
+                <div class="tree-level-4">→ Exam Angle: Specific analytical insights into Krishna Deva Raya’s reign, his administrative monograph *Amuktamalyada*, and architectural features like the Kalyan Mandapa.</div>
+                <div class="tree-level-2">3.2 The Bahmani Sultanate Core (1347-1527)</div>
+                <div class="tree-level-3">3.2.1 Founding: Alauddin Hasan Bahman Shah. Institutional Reforms of **Mahmud Gawan**: division of the kingdom into 8 administrative provinces (Tarafs), introduction of land measurement, and building the Bidar Madrasa library.</div>
+                <div class="tree-level-4">→ Exam Angle: Provincial governor titles (e.g., Malik-naib) and the division into 5 successor states (Bijapur, Ahmednagar, Berar, Golconda, Bidar).</div>
+                <div class="tree-level-2">3.3 Foreign Epigraphic Accounts & Terminal Clashes</div>
+                <div class="tree-level-3">3.3.1 Key Accounts: Nicolo de Conti (Sangama era), Abdur Razzaq (Devaraya II), Domingos Paes and Fernao Nuniz (Krishna Deva Raya). Battle of **Talikota / Rakshasi-Tangadi (1565)**: Rama Raya's defeat by the Decan Confederacy alliance.</div>
+                <div class="tree-level-4">→ Exam Angle: Matching foreign travelers with the exact monarch they visited.</div>
+            </div>
+
+            <div class="card-sub-title">PYQ Pattern Grid Analysis (2020-2025)</div>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Year</th><th>Question Structural Type</th><th>Core Topic Evaluated</th><th>Toughness</th><th>Assigned Tag</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="pyq-year">2021</td><td>Text Attribution Identity</td><td>Identification of *Amuktamalyada* language (Telugu) and its socio-political themes</td><td class="t-easy">Easy</td><td>[PYQ]</td></tr>
+                        <tr><td class="pyq-year">2023</td><td>Traveler Association Matrix</td><td>Pairing Abdur Razzaq with Devaraya II and analyzing his accounts of the capital's fortification rings</td><td class="t-hard">Hard</td><td>[GEM]</td></tr>
+                        <tr><td class="pyq-year">2024</td><td>Chronological Climax Analysis</td><td>Battle sequences leading up to the 1565 Talikota disaster</td><td class="t-medium">Medium</td><td>[PYQ]</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card-sub-title">360° Coverage Boundaries Map</div>
+            <div class="coverage-grid">
+                <div class="info-block">
+                    <h5>Absolute In-Scope Parameters</h5>
+                    <ul>
+                        <li>Class 11 History Vol 2 Chapter 12.</li>
+                        <li>Revenue terminology: *Kadamai*, *Kanikkai*, *Magamai* under the Nayak administrations.</li>
+                        <li>Architectural traits: Pillars carved with rearing horses (Yali motifs) and detached temple structures.</li>
+                    </ul>
+                </div>
+                <div class="info-block">
+                    <h5>Out-of-Scope Distractors</h5>
+                    <ul>
+                        <li>Exhaustive architectural dimensions or construction details of everyday homes in the capital.</li>
+                        <li>Obscure regional battles that did not reshape the frontiers of the Vijayanagar or Bahmani states.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="callout-box trap-box">
+                <span class="callout-badge">[TRAP]</span> **Abdur Razzaq** (Persian envoy) visited during the reign of **Devaraya II** (Sangama dynasty), whereas **Domingos Paes** and **Fernao Nuniz** (Portuguese chroniclers) arrived during the **Tuluva dynasty** under Krishna Deva Raya and Achyuta Deva Raya. TNPSC frequently shuffles these pairs.
+            </div>
+
+            <div class="callout-box gem-box">
+                <span class="callout-badge">[GEM]</span> Mahmud Gawan introduced **gunpowder formula advancements** in the Deccan wars against the Vijayanagar forces, recruiting specialized Turkish and Persian artillery officers to train his troops.
+            </div>
+
+            <div class="card-sub-title">Syllabus-Aligned Study Architecture</div>
+            <div class="tree-container" style="background-color:#13161e;">
+                <strong>TN State Board:</strong> Class 7 Term 1 Chapter 4; Class 11 History Vol 2 Chapter 12.<br>
+                <strong>Reference Manuals:</strong> Burton Stein - <em>Peasant State and Society in Medieval South India</em>; K.A. Nilakanta Sastri - <em>A History of South India</em>.
+            </div>
+
+            <div class="card-sub-title">Question Simulator Engine</div>
+            <div class="q-container">
+                <div class="q-card">
+                    <div class="q-text">Q1. Consider the following statements about the economic and military organization of the Vijayanagar Empire:
+                    <br>1. The Nayankara system was a carbon copy of the Northern Delhi Sultanate Iqta model, devoid of hereditary transfer privileges.
+                    <br>2. *Ayagar* systems managed rural base units through a board of 12 village functionaries who held tax-free land grants (*Manyams*).
+                    <br>Which of the statements given above is/are accurate?</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) 1 only</div>
+                        <div class="q-opt">B) 2 only</div>
+                        <div class="q-opt">C) Both 1 and 2</div>
+                        <div class="q-opt">D) Neither 1 nor 2</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> B) 2 only. Statement 1 is incorrect because, unlike the highly fluid Iqta system of the Sultanate, the Nayankara positions routinely became **hereditary** over time, leading to the rise of independent Nayak kingdoms in Madurai, Tanjore, and Gingee.</div>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="q-card">
+                    <div class="q-text">Q2. Which architectural element is distinct to Vijayanagar era temples compared to earlier Imperial Chola structures?</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) Small, modest Vimana towers built entirely without elaborate carvings.</div>
+                        <div class="q-opt">B) Massive, highly ornate *Kalyana Mandapas* featuring pillars carved with rearing horse (*Yali*) motifs.</div>
+                        <div class="q-opt">C) Monolithic rock-cut shrines carved out of a single piece of stone, completely lacking pillared halls.</div>
+                        <div class="q-opt">D) Complete absence of external *Gopurams* surrounding the main sanctuary entrance.</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> B. The inclusion of elaborate *Kalyana Mandapas* designed for divine marriage festivals, along with intricate *Yali* horse pillars, is a signature hallmark of the Vijayanagar style, distinguishing it from Chola architecture.</div>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="q-card">
+                    <div class="q-text">Q3. Match the following Five Deccan Sultanate Splinter States with their respective ruling dynasties:
+                    <br>1. Adil Shahi &mdash; a) Berar
+                    <br>2. Nizam Shahi &mdash; b) Ahmednagar
+                    <br>3. Imad Shahi &mdash; c) Bijapur
+                    <br>4. Qutb Shahi &mdash; d) Golconda</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) 1-c, 2-b, 3-a, 4-d</div>
+                        <div class="q-opt">B) 1-b, 2-c, 3-d, 4-a</div>
+                        <div class="q-opt">C) 1-c, 2-a, 3-b, 4-d</div>
+                        <div class="q-opt">D) 1-a, 2-b, 3-c, 4-d</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> A) 1-c, 2-b, 3-a, 4-d. The Adil Shahi dynasty ruled Bijapur, Nizam Shahi held Ahmednagar, Imad Shahi governed Berar, and Qutb Shahi held Golconda. The fifth, Barid Shahi, ruled Bidar.</div>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==================== TOPIC 4 ==================== -->
+        <section id="topic-4" class="topic-card">
+            <div class="topic-header">
+                <h2 class="topic-title">4. South Indian History — Socio-Cultural Change & Continuity</h2>
+                <div class="topic-meta"><span>Typical Count: 5-6 Qs</span> <span>Complexity Grid: Hard Local Terms</span></div>
+            </div>
+            <p>Deals with the evolution of South Indian society from the Sangam Era, through the Pallavas, Imperial Cholas, and Later Pandyas, tracking shifts in land, temple economies, and cultural institutions.</p>
+
+            <div class="card-sub-title">Recursive Breakdown Structure</div>
+            <div class="tree-container">
+                <div class="tree-level-1">4. South Indian History Evolution Architecture</div>
+                <div class="tree-level-2">4.1 Pallavas of Kanchi & Rock Art Shifts</div>
+                <div class="tree-level-3">4.1.1 Structural Styles: Mahendravarman group (rock-cut caves), Mamalla style (monolithic Rathas at Mahabalipuram), Rajasimha design (structural stone temples like the Kailasanathar at Kanchi). Socio-religious: The rise of the **Bhakti Movement** driven by Nayanmars and Alvars.</div>
+                <div class="tree-level-4">→ Exam Angle: Royal titles (e.g., *Mattavilasa* for Mahendravarman I) and key literary works like the *Mattavilasa Prahasana*.</div>
+                <div class="tree-level-2">4.2 Imperial Chola Administrative Sub-systems (850-1279)</div>
+                <div class="tree-level-3">4.2.1 Local Governance Architecture: **Uttaramerur Inscriptions (919 and 921 AD)** during Parantaka I’s reign, detailing the *Kudavolai* (pot-ticket) ballot selection system for village committees (*Variyams*). Land Tenure: *Vellanvagai* (non-brahmin peasant holdings), *Brahmadeya* (brahmin grants), *Devadana* (temple lands), *Shalaboga* (school maintenance).</div>
+                <div class="tree-level-4">→ Exam Angle: Committee eligibility qualifications, disqualification parameters, and the specialized functions of ministries like the *Udan-kuttam*.</div>
+                <div class="tree-level-2">4.3 The Later Pandyas & Overseas Contacts</div>
+                <div class="tree-level-3">4.3.1 Administrative Units: *Valanadus* and *Nadus*. Maritime Trade Hubs: Kayalport, documented extensively by Venetian traveler Marco Polo and Persian historian Wassaf. Trade Guilds: *Manigramam* and *Ayyavole-five-hundred*.</div>
+                <div class="tree-level-4">→ Exam Angle: Economic history questions focusing on pearl fishing revenues and horse import monopolies.</div>
+            </div>
+
+            <div class="card-sub-title">PYQ Pattern Grid Analysis (2020-2025)</div>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Year</th><th>Question Structural Type</th><th>Core Topic Evaluated</th><th>Toughness</th><th>Assigned Tag</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="pyq-year">2021</td><td>Multi-Statement Compliance Check</td><td>Uttaramerur Inscription: Disqualification criteria for *Variyam* selection</td><td class="t-hard">Hard</td><td>[CRITICAL]</td></tr>
+                        <tr><td class="pyq-year">2023</td><td>Title Inversion Challenge</td><td>Matching Pallava rulers with their specific titles (*Chitrakarapuli*)</td><td class="t-medium">Medium</td><td>[PYQ]</td></tr>
+                        <tr><td class="pyq-year">2024</td><td>Epigraphic Core Linking</td><td>Anaimangalam copper plates tracking Chola land grants to Buddhist viharas</td><td class="t-trap">Trap</td><td>[GEM]</td></tr>
+                        <tr><td class="pyq-year">2025</td><td>Term Matching Matrix</td><td>Socio-economic taxonomy: *Ur* vs *Sabha* vs *Nagaram* structures</td><td class="t-easy">Easy</td><td>[PYQ]</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card-sub-title">360° Coverage Boundaries Map</div>
+            <div class="coverage-grid">
+                <div class="info-block">
+                    <h5>Absolute In-Scope Parameters</h5>
+                    <ul>
+                        <li>Class 11 History Vol 1 Chapters 5, 9, and 11 in exhaustive detail.</li>
+                        <li>Socio-cultural transitions, including the shifting status of women and temple dedication practices (*Devadasi* lineage origins).</li>
+                        <li>The structural organization and operational networks of medieval merchant guilds.</li>
+                    </ul>
+                </div>
+                <div class="info-block">
+                    <h5>Out-of-Scope Distractors</h5>
+                    <ul>
+                        <li>Exhaustive tactical lists of minor skirmishes among peripheral feudatories.</li>
+                        <li>Mythological genealogies not supported by solid epigraphic or numismatic evidence.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="callout-box critical-box">
+                <span class="callout-badge">[CRITICAL]</span> Review the **Uttaramerur exclusion rules**: Candidates who failed to submit institutional accounts, those who committed theft, or individuals who associated with outcasts were **banned for life** from participating in committee lotteries.
+            </div>
+
+            <div class="callout-box tip-box">
+                <span class="callout-badge">[TIP]</span> Remember the difference between structural types: The **Ur** was the general assembly of non-brahmin settlements (*Vellanvagai*), while the **Sabha** was the exclusive assembly of Brahmin-dominated *Brahmadeya* villages.
+            </div>
+
+            <div class="card-sub-title">Syllabus-Aligned Study Architecture</div>
+            <div class="tree-container" style="background-color:#13161e;">
+                <strong>TN State Board:</strong> Class 6 Term 3 Unit 3; Class 11 History Vol 1 Chapters 9 & 11.<br>
+                <strong>Reference Manuals:</strong> K.A. Nilakanta Sastri - <em>The Cholas</em>; Noboru Karashima - <em>South Indian History and Society</em>.
+            </div>
+
+            <div class="card-sub-title">Question Simulator Engine</div>
+            <div class="q-container">
+                <div class="q-card">
+                    <div class="q-text">Q1. Evaluate the qualifications required for a village committee (*Variyam*) member under the Kudavolai system, as detailed in the Uttaramerur Inscriptions of Parantaka I:
+                    <br>1. The candidate must own more than one-quarter of a veli of tax-paying land.
+                    <br>2. The candidate must reside in a house built on his own land.
+                    <br>3. The age window must be between 35 and 70 years old.
+                    <br>4. The candidate must possess comprehensive knowledge of the Vedas and Bhashyas.</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) 1 and 3 only</div>
+                        <div class="q-opt">B) 2, 3, and 4 only</div>
+                        <div class="q-opt">C) 1, 2, 3, and 4</div>
+                        <div class="q-opt">D) 1, 2, and 4 only</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> C) 1, 2, 3, and 4. All four criteria are explicitly detailed in the Uttaramerur inscriptions to ensure that committee members possessed property, maturity, and proper education.</div>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="q-card">
+                    <div class="q-text">Q2. Which Pallava king wrote the famous satirical Sanskrit play 'Mattavilasa Prahasana', which offers a window into contemporary Kapalika and Buddhist sub-cultures?</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) Narasimhavarman I</div>
+                        <div class="q-opt">B) Mahendravarman I</div>
+                        <div class="q-opt">C) Rajasimha Pallava</div>
+                        <div class="q-opt">D) Nandivarman II</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> B) Mahendravarman I. Known by titles like *Mattavilasa* and *Vichitrachitta*, his dramatic work satirizes the eccentricities of contemporary ascetic groups in Kanchipuram.</div>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="q-card">
+                    <div class="q-text">Q3. Marco Polo, who visited South India in the late 13th century, left detailed descriptions highlighting which of the following economic sectors of the Pandya kingdom?</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) Large-scale iron smelting networks in the interior hills.</div>
+                        <div class="q-opt">B) Pearl-fishing operations in the Gulf of Mannar and extensive horse trade routes with Persia.</div>
+                        <div class="q-opt">C) Monolithic paper production factories centered around Madurai.</div>
+                        <div class="q-opt">D) Direct glass manufacturing installations along the Coromandel coast.</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> B. Marco Polo describes Kayal as a bustling port city where thousands of horses were imported from Arab lands, and details the dangerous yet lucrative pearl diving industry overseen by the Pandya kings.</div>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==================== TOPIC 5 ==================== -->
+        <section id="topic-5" class="topic-card">
+            <div class="topic-header">
+                <h2 class="topic-title">5. National Renaissance — Early Uprisings Against British Rule</h2>
+                <div class="topic-meta"><span>Typical Count: 3 Qs</span> <span>Complexity Grid: Hard Local Alliances</span></div>
+            </div>
+            <p>Deals with early anti-colonial resistance movements, mapping the Poligar Wars, the expansion of the Palayakkarar system, and the structural causes of the Vellore Mutiny.</p>
+
+            <div class="card-sub-title">Recursive Breakdown Structure</div>
+            <div class="tree-container">
+                <div class="tree-level-1">5. Early Anti-Colonial Uprisings System</div>
+                <div class="tree-level-2">5.1 The Palayakkarar Framework & Early Resistance</div>
+                <div class="tree-level-3">5.1.1 Evolution: System created by Viswanatha Nayaka of Madurai (1529) with minister Ariyanatha Mudaliar. **Puli Thevar**: First Palayakkarar to resist the British (Nawab/Company alliance), organizing the Western Bloc and securing victory at Kalakadu.</div>
+                <div class="tree-level-4">→ Exam Angle: Key operational bases (Nerkattumseval, Vasudevanallur), the role of Yusuf Khan (Marudhanayagam), and the chronological shift to the Eastern Palayams.</div>
+                <div class="tree-level-2">5.2 Veerapandiya Kattabomman & The Marudu Brothers Alliance</div>
+                <div class="tree-level-3">5.2.1 Kattabomman: The confrontation at Ramnathapuram over tax arrears with Collector Jackson, the subsequent siege by Major Bannerman, the role of spy Ramalinganar, and Kattabomman's execution at Kayathar (1799). **Marudu Pandiyar**: The **Tiruchirappalli Proclamation (June 1801)**, an early call for pan-Indian unity against Company rule.</div>
+                <div class="tree-level-4">→ Exam Angle: Analysis of the 1801 Proclamation text, the composition of the South Indian Confederation, and the resulting Carnatic Treaty of July 1801.</div>
+                <div class="tree-level-2">5.3 Dheeran Chinnamalai & The Vellore Mutiny (1806)</div>
+                <div class="tree-level-3">5.3.1 Chinnamalai: Guerrilla tactics used in the Kongu region, the Battles of Cauvery, Odanilai, and Arachalur, and his execution at Sankagiri (1805). **Vellore Mutiny (July 10, 1806)**: Triggered by Sir John Cradock's new military dress codes (Agnew turban, shaving rules), the actions of Tipu’s sons, and its suppression by Colonel Gillespie.</div>
+                <div class="tree-level-4">→ Exam Angle: Strategic timeline of the mutiny day, involved regiments (1st and 23rd), and the long-term institutional consequences.</div>
+            </div>
+
+            <div class="card-sub-title">PYQ Pattern Grid Analysis (2020-2025)</div>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Year</th><th>Question Structural Type</th><th>Core Topic Evaluated</th><th>Toughness</th><th>Assigned Tag</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="pyq-year">2021</td><td>Text Source Correlation</td><td>The Tiruchirappalli Proclamation (1801) - Wall placements (Srirangam Temple / Nawab Fort)</td><td class="t-medium">Medium</td><td>[PYQ]</td></tr>
+                        <tr><td class="pyq-year">2022</td><td>Chronological Battle Sequence</td><td>Puli Thevar's military campaigns: Siege of Nerkattumseval vs Battle of Kalakadu</td><td class="t-hard">Hard</td><td>[CRITICAL]</td></tr>
+                        <tr><td class="pyq-year">2024</td><td>Officer Casualty Pairing</td><td>Vellore Mutiny 1806: First officer casualties (Colonel Fancourt, Lieut-Colonel McKerras)</td><td class="t-trap">Trap</td><td>[GEM]</td></tr>
+                        <tr><td class="pyq-year">2025</td><td>Administrative Origin Check</td><td>Creation parameters of the Palayakkarar structure in 1529</td><td class="t-easy">Easy</td><td>[PYQ]</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card-sub-title">360° Coverage Boundaries Map</div>
+            <div class="coverage-grid">
+                <div class="info-block">
+                    <h5>Absolute In-Scope Parameters</h5>
+                    <ul>
+                        <li>Class 10 Social Science (History Vol 2 Chapter 6) and Class 11/12 History special units on early resistance.</li>
+                        <li>The role of key female leaders, notably Velu Nachiyar, her intelligence network, and Kuyili's suicide attack.</li>
+                        <li>Detailed timelines of British military officers assigned to the region.</li>
+                    </ul>
+                </div>
+                <div class="info-block">
+                    <h5>Out-of-Scope Distractors</h5>
+                    <ul>
+                        <li>General histories of the British East India Company's trade operations in Bengal or Europe.</li>
+                        <li>Unverified regional folklore that contradicts established epigraphic or archive-vetted sources.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="callout-box trap-box">
+                <span class="callout-badge">[TRAP]</span> Do not confuse **Yusuf Khan (Marudhanayagam)** with **Nawab Muhammad Ali**. Yusuf Khan acted as the Company's military commander, reducing Puli Thevar's strongholds in 1761, before rebelling himself and being executed by the British in 1764.
+            </div>
+
+            <div class="callout-box gem-box">
+                <span class="callout-badge">[GEM]</span> The **Agnew Turban**, introduced before the Vellore Mutiny, featured a leather cockade made of cattle or pig hide, directly offending both Hindu and Muslim soldiers.
+            </div>
+
+            <div class="card-sub-title">Syllabus-Aligned Study Architecture</div>
+            <div class="tree-container" style="background-color:#13161e;">
+                <strong>TN State Board:</strong> Class 10 History Chapter 6; Class 11 History Vol 2 Chapter 18.<br>
+                <strong>Reference Manuals:</strong> K. Rajayyan - <em>South Indian Rebellion: The First War of Independence</em>; N. Sanjeevi - <em>Marudu Pandiyar</em>.
+            </div>
+
+            <div class="card-sub-title">Question Simulator Engine</div>
+            <div class="q-container">
+                <div class="q-card">
+                    <div class="q-text">Q1. Evaluate the following statements regarding the historic Tiruchirappalli Proclamation issued by the Marudu Brothers in 1801:
+                    <br>1. It was the earliest formal call to arms inviting all castes, creeds, and communities to unite against the British.
+                    <br>2. Copies of the proclamation were prominently displayed on the walls of the Nawab’s palace at Tiruchirappalli and the fortress walls of the Srirangam temple.
+                    <br>Which of the statements given above is/are correct?</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) 1 only</div>
+                        <div class="q-opt">B) 2 only</div>
+                        <div class="q-opt">C) Both 1 and 2</div>
+                        <div class="q-opt">D) Neither 1 nor 2</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> C) Both 1 and 2. Both statements accurately reflect the historical record. The 1801 proclamation was a landmark pan-Indian call for unity, strategically placed to maximize visibility and impact.</div>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="q-card">
+                    <div class="q-text">Q2. During the Poligar Wars, which British military officer was removed from duty for high-handedness following the dramatic escape of Veerapandiya Kattabomman during the Ramnathapuram palace confrontation?</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) Major Bannerman</div>
+                        <div class="q-opt">B) Collector W.C. Jackson</div>
+                        <div class="q-opt">C) Colonel Gillespie</div>
+                        <div class="q-opt">D) Collector S.R. Lushington</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> B) Collector W.C. Jackson. An investigation by the Madras Council found Jackson guilty of misconduct, leading to his removal. He was succeeded by S.R. Lushington.</div>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="q-card">
+                    <div class="q-text">Q3. Identify the native army regiments that spearheaded the initial armed uprising inside the Vellore Fort on the morning of July 10, 1806:</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) 1st Regiment and 23rd Regiment Native Infantry</div>
+                        <div class="q-opt">B) 9th Regiment and 15th Madras Cavalry forces</div>
+                        <div class="q-opt">C) 2nd Bengal Pioneers and Bombay Grenadiers</div>
+                        <div class="q-opt">D) 7th Carnatic Fusiliers cohort</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> A. The mutiny was led by the 1st Battalion of the 1st Regiment and the 2nd Battalion of the 23rd Regiment Native Infantry, who systematically targeted the British officers' quarters.</div>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==================== TOPIC 6 ==================== -->
+        <section id="topic-6" class="topic-card">
+            <div class="topic-header">
+                <h2 class="topic-title">6. Indian National Congress — Formation, Sessions, Phases</h2>
+                <div class="topic-meta"><span>Typical Count: 3 Qs</span> <span>Complexity Grid: Hard Multi-Statement</span></div>
+            </div>
+            <p>Traces the organizational evolution of the Indian National Congress (INC) from pre-INC regional bodies, through its founding sessions, to the shifting strategies of the Moderate, Extremist, and Gandhian phases.</p>
+
+            <div class="card-sub-title">Recursive Breakdown Structure</div>
+            <div class="tree-container">
+                <div class="tree-level-1">6. Indian National Congress Architecture</div>
+                <div class="tree-level-2">6.1 Pre-INC Organizational Foundations</div>
+                <div class="tree-level-3">6.1.1 Regional Precursors: Landholders' Society, British India Society, British Indian Association, East India Association (Dadabhai Naoroji, 1866), Poona Sarvajanik Sabha (1870), Indian Association (Banerjee, 1876), **Madras Mahajana Sabha (May 1884 - M. Veeraraghavachariar, G. Subramania Iyer, Ananda Charlu)**.</div>
+                <div class="tree-level-4">→ Exam Angle: Chronological sequencing of these foundational organizations and matching them with their original founders and headquarters.</div>
+                <div class="tree-level-2">6.2 The Founding Event & Core Sessions</div>
+                <div class="tree-level-3">6.2.1 Birth: December 1885 at Gokuldas Tejpal Sanskrit College, Bombay. Initiated by Allan Octavian Hume; presided over by W.C. Bonnerjee, attended by 72 delegates. Early Sessions: 1886 Calcutta (Naoroji), **1887 Madras (Badruddin Tyabji - First Muslim President, held at Maccis Garden)**.</div>
+                <div class="tree-level-4">→ Exam Angle: Detailed analysis of early resolutions, delegate composition, and matching presidents with landmark sessions (e.g., 1907 Surat Split, 1911 Calcutta, 1920 Nagpur).</div>
+                <div class="tree-level-2">6.3 Strategic Phases: Ideological Shifts</div>
+                <div class="tree-level-3">6.3.1 Moderate Phase (1885-1505): Methods of Constitutional Agitation (Prayer, Petition, Protest), Economic Drain Theory (Naoroji's *Poverty and Un-British Rule in India*). Extremist Phase (1905-1919): Rise of Lal-Bal-Pal and Aurobindo Ghosh, the anti-Partition movement, Swadeshi boycotts, and the defense of national education.</div>
+                <div class="tree-level-4">→ Exam Angle: Shifting definitions of 'Swaraj' from constitutional self-government to complete independence (1929 Lahore Session).</div>
+            </div>
+
+            <div class="card-sub-title">PYQ Pattern Grid Analysis (2020-2025)</div>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Year</th><th>Question Structural Type</th><th>Core Topic Evaluated</th><th>Toughness</th><th>Assigned Tag</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="pyq-year">2021</td><td>Session-President Pairing</td><td>1887 Madras Session details and leadership of Badruddin Tyabji</td><td class="t-easy">Easy</td><td>[PYQ]</td></tr>
+                        <tr><td class="pyq-year">2022</td><td>Chronological Order Drill</td><td>Sequencing pre-INC organizations: East India Association vs Madras Mahajana Sabha</td><td class="t-hard">Hard</td><td>[CRITICAL]</td></tr>
+                        <tr><td class="pyq-year">2024</td><td>Multi-Statement Compliance Check</td><td>Economic arguments against British rule formulated by RC Dutt and Dadabhai Naoroji</td><td class="t-medium">Medium</td><td>[PYQ]</td></tr>
+                        <tr><td class="pyq-year">2025</td><td>Resolution Content Tracking</td><td>The 1931 Karachi Session fundamental rights and economic program framework</td><td class="t-trap">Trap</td><td>[GEM]</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card-sub-title">360° Coverage Boundaries Map</div>
+            <div class="coverage-grid">
+                <div class="info-block">
+                    <h5>Absolute In-Scope Parameters</h5>
+                    <ul>
+                        <li>Class 10 and 12 History chapters tracking the National Movement and INC development.</li>
+                        <li>Complete list of INC sessions held within the Madras Presidency (1887, 1894, 1898, 1903, 1908, 1914, 1927).</li>
+                        <li>The role of British members who presided over INC sessions (e.g., George Yule, William Wedderburn).</li>
+                    </ul>
+                </div>
+                <div class="info-block">
+                    <h5>Out-of-Scope Distractors</h5>
+                    <ul>
+                        <li>Internal organizational charts or minor subcommittee minutes unless linked to major policy shifts.</li>
+                        <li>Biographies of local attendees who did not propose major resolutions or direct key campaigns.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="callout-box critical-box">
+                <span class="callout-badge">[CRITICAL]</span> Pay close attention to the **1927 Madras INC Session**: Presided over by Dr. M.A. Ansari, it passed a resolution calling for a **complete boycott of the Simon Commission** and adopted a preliminary goal of Purna Swaraj.
+            </div>
+
+            <div class="callout-box trap-box">
+                <span class="callout-badge">[TRAP]</span> Do not confuse the **1920 Special Session** in Calcutta (presided over by Lala Lajpat Rai, where the Non-Cooperation resolution was drafted) with the **1920 Annual Session** in Nagpur (presided over by C. Vijayaraghavachariar, where the resolution was formally ratified).
+            </div>
+
+            <div class="card-sub-title">Syllabus-Aligned Study Architecture</div>
+            <div class="tree-container" style="background-color:#13161e;">
+                <strong>TN State Board:</strong> Class 10 History Chapters 7 & 8; Class 12 History Chapters 1, 2, and 3.<br>
+                <strong>Reference Manuals:</strong> Bipan Chandra - <em>India's Struggle for Independence</em>; Sumit Sarkar - <em>Modern India</em>.
+            </div>
+
+            <div class="card-sub-title">Question Simulator Engine</div>
+            <div class="q-container">
+                <div class="q-card">
+                    <div class="q-text">Q1. Evaluate the following statements regarding the third formal annual session of the Indian National Congress in 1887:
+                    <br>1. It was convened within the Madras Presidency at Maccis Garden.
+                    <br>2. It was presided over by Badruddin Tyabji, making him the first Muslim President of the INC.
+                    <br>3. The total delegate attendance dropped significantly to under fifty due to local plague outbreaks.
+                    <br>Which of the statements given above are accurate?</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) 1 and 3 only</div>
+                        <div class="q-opt">B) 1 and 2 only</div>
+                        <div class="q-opt">C) 2 and 3 only</div>
+                        <div class="q-opt">D) 1, 2, and 3</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> B) 1 and 2 only. Statement 3 is incorrect because the 1887 Madras session saw a dramatic increase in participation, with 607 delegates attending, reflecting growing momentum in South India.</div>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="q-card">
+                    <div class="q-text">Q2. Who among the following leaders from Tamil Nadu presided over the historic annual Nagpur Session of the Indian National Congress in 1920, which formally ratified the Non-Cooperation Movement resolution?</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) S. Srinivasa Iyengar</div>
+                        <div class="q-opt">B) C. Vijayaraghavachariar</div>
+                        <div class="q-opt">C) Salem Ramaswami Mudaliar</div>
+                        <div class="q-opt">D) C. Rajagopalachari</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> B) C. Vijayaraghavachariar. Known as the "Lion of South India," his presidency at the 1920 Nagpur session was milestone, reshaping the INC's constitution to transform it into a mass political movement.</div>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="q-card">
+                    <div class="q-text">Q3. Chronologically arrange the following foundational political entities based on their date of inception:
+                    <br>1. The East India Association (London)
+                    <br>2. The Madras Mahajana Sabha
+                    <br>3. The Poona Sarvajanik Sabha
+                    <br>4. The Madras Native Association</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) 4 &rarr; 1 &rarr; 3 &rarr; 2</div>
+                        <div class="q-opt">B) 1 &rarr; 4 &rarr; 2 &rarr; 3</div>
+                        <div class="q-opt">C) 4 &rarr; 3 &rarr; 1 &rarr; 2</div>
+                        <div class="q-opt">D) 1 &rarr; 3 &rarr; 4 &rarr; 2</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> A) 4 &rarr; 1 &rarr; 3 &rarr; 2. 
+                            <br>• Madras Native Association: 1852 (Gajula Lakshminarasu Chetty)
+                            <br>• East India Association: 1866
+                            <br>• Poona Sarvajanik Sabha: 1870
+                            <br>• Madras Mahajana Sabha: 1884</div>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==================== TOPIC 7 ==================== -->
+        <section id="topic-7" class="topic-card">
+            <div class="topic-header">
+                <h2 class="topic-title">7. Emergence of Leaders</h2>
+                <div class="topic-meta"><span>Typical Count: 6-7 Qs</span> <span>Complexity Grid: High Factual Detail</span></div>
+            </div>
+            <p>An archive-backed, multi-dimensional review of major nationalist figures, tracking their literary contributions, ideological developments, and specific historical milestones.</p>
+
+            <div class="card-sub-title">Recursive Breakdown Structure</div>
+            <div class="tree-container">
+                <div class="tree-level-1">7. Emergence of Leaders Core Matrix</div>
+                <div class="tree-level-2">7.1 Radical Thinkers & Revolutionary Leaders</div>
+                <div class="tree-level-3">7.1.1 **Dr. B.R. Ambedkar**: Mahad Satyagraha (1927), evidence before the Simon Commission and Hilton Young Commission, founding of the Independent Labour Party (1936) and Scheduled Castes Federation (1942), the Poona Pact (1932), and his role as Chairman of the Drafting Committee.</div>
+                <div class="tree-level-3">7.1.2 **Subhas Chandra Bose**: Leadership of the Forward Bloc (1939), reorganization of the Indian National Army (INA/Azad Hind Fauj, 1943) in Singapore, and his presidencies at Haripura (1938) and Tripuri (1939).</div>
+                <div class="tree-level-3">7.1.3 **Bhagat Singh**: Naujawan Bharat Sabha (1926), reorganization of the Hindustan Socialist Republican Association (HSRA, 1928), the central assembly bomb incident, and his text *Why I am an Atheist*.</div>
+                <div class="tree-level-2">7.2 Regional Catalyst Pioneers (Tamil Nadu Axis)</div>
+                <div class="tree-level-3">7.2.1 **V.O. Chidambaranar (VOC)**: Launching the Swadeshi Steam Navigation Company (1906 - S.S. Gallia and S.S. Lavo) to challenge the British shipping monopoly, his leadership in the Coral Mills Strike (1908), and his brutal imprisonment in Coimbatore and Kannanur.</div>
+                <div class="tree-level-3">7.2.2 **Subramania Bharathiar**: Nationalist poetry, editing *India* (first paper in Tamil Nadu to introduce political cartoons) and *Swadesamitran*, his exile in Pondicherry, and compositions like *Panchali Sabatham*.</div>
+                <div class="tree-level-3">7.2.3 **Thanthai Periyar (E.V. Ramasamy)**: Leadership in the Vaikom Satyagraha (1924), his presidency at the Kanchipuram INC conference (1925) where he split from the party over communal representation, founding the Self-Respect Movement (1925), and editing journals like *Kudi Arasu*, *Revolt*, and *Viduthalai*.</div>
+                <div class="tree-level-3">7.2.4 **K. Kamarajar**: Participation in the Vedaranyam Salt Satyagraha, the anti-Hindi agitations, the historic Kamaraj Plan (1963) to revitalize the party, and his tenure as Chief Minister introducing the Midday Meal Scheme.</div>
+                <div class="tree-level-3">7.2.5 **C. Rajagopalachari (Rajaji)**: Leadership of the Vedaranyam Salt March (April 1930), serving as Premier of the Madras Presidency (1937), introducing the controversial modified education scheme (*Kula Kalvi Thittam*), and founding the Swatantra Party (1959).</div>
+                <div class="tree-level-2">7.3 Pan-Indian Ideological Anchors</div>
+                <div class="tree-level-3">7.3.1 **Mahatma Gandhi**: Development of Satyagraha from Champaran, Kheda, and Ahmedabad (1917-1918), through the Rowlatt protests, to the three major national campaigns. **Jawaharlal Nehru**: Authoring the 1929 Independence Resolution, pioneering secular economic planning, and developing the Non-Aligned Movement.</div>
+                <div class="tree-level-3">7.3.2 **Maula Abul Kalam Azad**: Editing *Al-Hilal*, serving as the youngest INC President (1923), and his role as India's first Education Minister. **Rabindranath Tagore**: Found Visva-Bharati University, renouncing his knighthood following the Jallianwala Bagh massacre (1919), and his philosophical synthesis of cosmic internationalism.</div>
+            </div>
+
+            <div class="card-sub-title">PYQ Pattern Grid Analysis (2020-2025)</div>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Year</th><th>Question Structural Type</th><th>Core Topic Evaluated</th><th>Toughness</th><th>Assigned Tag</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="pyq-year">2021</td><td>Journalistic Attribution</td><td>Periyar's publications timeline: *Kudi Arasu*, *Puratchi*, *Paghutharivu*</td><td class="t-medium">Medium</td><td>[PYQ]</td></tr>
+                        <tr><td class="pyq-year">2022</td><td>Industrial History Linking</td><td>VOC's Swadeshi Steam Navigation vessels naming index (*Gallia* and *Lavo*)</td><td class="t-easy">Easy</td><td>[PYQ]</td></tr>
+                        <tr><td class="pyq-year">2023</td><td>Ideological Split Review</td><td>The Haripura/Tripuri INC presidential elections involving Subhas Chandra Bose</td><td class="t-hard">Hard</td><td>[CRITICAL]</td></tr>
+                        <tr><td class="pyq-year">2024</td><td>Legislative Action Tracking</td><td>Dr. B.R. Ambedkar's labor welfare bills as member of the Viceroy's Executive Council</td><td class="t-trap">Trap</td><td>[GEM]</td></tr>
+                        <tr><td class="pyq-year">2025</td><td>Chronological Journey Trace</td><td>Rajaji's Vedaranyam Salt March: exact route from Trichy to Vedaranyam (April 1930)</td><td class="t-medium">Medium</td><td>[PYQ]</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card-sub-title">360° Coverage Boundaries Map</div>
+            <div class="coverage-grid">
+                <div class="info-block">
+                    <h5>Absolute In-Scope Parameters</h5>
+                    <ul>
+                        <li>Biographies of all listed leaders found across Class 10/12 Social Science/History textbooks.</li>
+                        <li>Specific publications, underground pamphlets, and pseudonyms used by these leaders.</li>
+                        <li>Foundational resolutions drafted, introduced, or passed by these figures at key political conferences.</li>
+                    </ul>
+                </div>
+                <div class="info-block">
+                    <h5>Out-of-Scope Distractors</h5>
+                    <ul>
+                        <li>Purely personal or family histories unrelated to their public service or political careers.</li>
+                        <li>Speculative psychological histories or unsubstantiated private communications.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="callout-box gem-box">
+                <span class="callout-badge">[GEM]</span> Subramania Bharathiar edited the Tamil weekly **'India'** using a bold **red-colored print format** for its masthead, symbolizing revolutionary transformation and national awakening.
+            </div>
+
+            <div class="callout-box trap-box">
+                <span class="callout-badge">[TRAP]</span> Do not confuse the founding dates of Periyar’s journals: **Kudi Arasu** was launched first in **1925**, followed by **Revolt** (English edition) in **1928**, **Puratchi** in **1933**, and **Pagutharivu** in **1934**. TNPSC regularly tests this exact chronological sequence.
+            </div>
+
+            <div class="card-sub-title">Syllabus-Aligned Study Architecture</div>
+            <div class="tree-container" style="background-color:#13161e;">
+                <strong>TN State Board:</strong> Class 10 History Chapters 8, 9, 10; Class 12 History Chapters 4, 5, 7.<br>
+                <strong>Reference Manuals:</strong> Gail Omvedt - <em>Ambedkar: Towards an Enlightened India</em>; E.Sa. Visswanathan - <em>The Political Career of E.V. Ramasami Naicker</em>.
+            </div>
+
+            <div class="card-sub-title">Question Simulator Engine</div>
+            <div class="q-container">
+                <div class="q-card">
+                    <div class="q-text">Q1. Review the following statements regarding the public life and institutional work of Dr. B.R. Ambedkar:
+                    <br>1. He founded the Independent Labour Party in 1936 to contest elections under the Government of India Act 1935.
+                    <br>2. He presented comprehensive policy testimony on currency devaluation before the Hilton Young Commission.
+                    <br>3. He skipped all three Round Table Conferences in London to lead regional temple entry movements in western India.
+                    <br>Which of the statements given above are accurate?</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) 1 and 3 only</div>
+                        <div class="q-opt">B) 1 and 2 only</div>
+                        <div class="q-opt">C) 2 and 3 only</div>
+                        <div class="q-opt">D) 1, 2, and 3</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> B) 1 and 2 only. Statement 3 is completely incorrect; Dr. B.R. Ambedkar was one of the few delegates who **attended all three Round Table Conferences** (1030–1032) to advocate for political safeguards for the depressed classes.</div>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="q-card">
+                    <div class="q-text">Q2. Which of the following combinations correctly identifies the two Swadeshi ships acquired by V.O. Chidambaranar's Swadeshi Steam Navigation Company in 1906?</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) S.S. Shakti and S.S. Swadesh</div>
+                        <div class="q-opt">B) S.S. Gallia and S.S. Lavo</div>
+                        <div class="q-opt">C) S.S. Rajputana and S.S. Bengal</div>
+                        <div class="q-opt">D) S.S. Victoria and S.S. Loyalty</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> B) S.S. Gallia and S.S. Lavo. These two vessels were purchased by VOC and operated between Tuticorin and Colombo, offering a direct challenge to the British India Steam Navigation Company.</div>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="q-card">
+                    <div class="q-text">Q3. At which historic district conference of the Indian National Congress in 1925 did E.V. Ramasamy (Periyar) formally resign from the party after his resolutions advocating for communal representation in education and employment were blocked?</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) Tirunelveli Conference</div>
+                        <div class="q-opt">B) Kanchipuram Conference</div>
+                        <div class="q-opt">C) Salem Regional Convention</div>
+                        <div class="q-opt">D) Tiruchirappalli Conference</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> B) Kanchipuram Conference. Presided over by Thiru. Vi. Ka, this conference marked a major turning point; Periyar left the INC immediately after his resolutions were rejected and went on to launch the Self-Respect Movement.</div>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==================== TOPIC 8 ==================== -->
+        <section id="topic-8" class="topic-card">
+            <div class="topic-header">
+                <h2 class="topic-title">8. Different Modes of Agitation: Satyagraha & Militant Movements</h2>
+                <div class="topic-meta"><span>Typical Count: 3 Qs</span> <span>Complexity Grid: Hard Chronology</span></div>
+            </div>
+            <p>Traces the co-existence and evolution of non-violent Satyagraha methods alongside underground revolutionary militant movements across India and within the Madras Presidency.</p>
+
+            <div class="card-sub-title">Recursive Breakdown Structure</div>
+            <div class="tree-container">
+                <div class="tree-level-1">8. Modes of Agitation Spectrum</div>
+                <div class="tree-level-2">8.1 The Evolution of Satyagraha Architecture</div>
+                <div class="tree-level-3">8.1.1 Localized Origins: Champaran (Agrarian indigo proxy), Kheda (Tax suspension demand), Ahmedabad (Mill worker strike arbitration). Major National Campaigns: Non-Cooperation Movement (1920-1922, ending with Chauri Chaura), Civil Disobedience Movement (1930-1934, launched via the Dandi Salt March), and Quit India Movement (1942, featuring the 'Do or Die' directive).</div>
+                <div class="tree-level-4">→ Exam Angle: Detailed analysis of specific resolution texts, regional salt march routes, and shifts in defensive strategy.</div>
+                <div class="tree-level-2">8.2 Revolutionary Militant Underground Movements</div>
+                <div class="tree-level-3">8.2.1 Northern/Eastern Axis: Anushilan Samiti, Jugantar, Kakori Train Robbery (1925), Chittagong Armoury Raid (1930 - Surya Sen), Central Assembly Bombing (Bhagat Singh & Batukeshwar Dutt). Southern Resistance Axis: **Bharatha Matha Association (founded by Nilakanta Brahmachari, 1910)**, leading to the **Ashe Assassination at Maniyachi Junction (June 17, 1911) by Vanchinathan**.</div>
+                <div class="tree-level-4">→ Exam Angle: Ideological tracts (e.g., *Bhavani Mandir*, *The Philosophy of the Bomb*) and tracking the networks of revolutionary escape routes through Pondicherry.</div>
+            </div>
+
+            <div class="card-sub-title">PYQ Pattern Grid Analysis (2020-2025)</div>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Year</th><th>Question Structural Type</th><th>Core Topic Evaluated</th><th>Toughness</th><th>Assigned Tag</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="pyq-year">2021</td><td>Assassination Event Mapping</td><td>Maniyachi Junction Case (1911): Vanchinathan vs Collector Ashe parameters</td><td class="t-easy">Easy</td><td>[PYQ]</td></tr>
+                        <tr><td class="pyq-year">2023</td><td>Chronological Order Challenge</td><td>Sequencing underground operations: Kakori Robbery &rarr; Saunders Elimination &rarr; Chittagong Raid</td><td class="t-hard">Hard</td><td>[CRITICAL]</td></tr>
+                        <tr><td class="pyq-year">2024</td><td>Satyagraha Geography Linking</td><td>Individual Satyagraha (1940) deployment order within the Madras Presidency</td><td class="t-medium">Medium</td><td>[PYQ]</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card-sub-title">360° Coverage Boundaries Map</div>
+            <div class="coverage-grid">
+                <div class="info-block">
+                    <h5>Absolute In-Scope Parameters</h5>
+                    <ul>
+                        <li>Class 12 History Chapters 6, 7, and 8, focusing on ideological shifts and strategic splits.</li>
+                        <li>The role of key figures in the underground press, such as the *Bande Mataram* and *Ghadar* networks.</li>
+                        <li>Detailed operational timelines of revolutionary safe houses located in French Pondicherry.</li>
+                    </ul>
+                </div>
+                <div class="info-block">
+                    <h5>Out-of-Scope Distractors</h5>
+                    <ul>
+                        <li>International military strategies of European powers during the World Wars, unless directly impacting Indian troop deployments.</li>
+                        <li>Biographies of local logistics suppliers who did not help shape central ideological platforms.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="callout-box critical-box">
+                <span class="callout-badge">[CRITICAL]</span> Keep the **Maniyachi Junction timeline** clear: Vanchinathan shot Tirunelveli District Collector Robert Ashe on **June 17, 1911**, using a Browning pistol smuggled from Pondicherry, before retreating to the platform bathroom to commit suicide.
+            </div>
+
+            <div class="callout-box tip-box">
+                <span class="callout-badge">[TIP]</span> Note the organizational evolution of the **HSRA**: Founded originally in Kanpur in 1924 as the HRA (Hindustan Republican Association) by Ram Prasad Bismil and Sachindranath Sanyal, the word **'Socialist'** was added in **September 1928** at Feroz Shah Kotla, Delhi, under the influence of Bhagat Singh.
+            </div>
+
+            <div class="card-sub-title">Syllabus-Aligned Study Architecture</div>
+            <div class="tree-container" style="background-color:#13161e;">
+                <strong>TN State Board:</strong> Class 10 History Chapter 8; Class 12 History Chapters 4, 6, and 7.<br>
+                <strong>Reference Manuals:</strong> Bipan Chandra - <em>India's Struggle for Independence</em>; David Arnold - <em>The Congress in Tamil Nadu</em>.
+            </div>
+
+            <div class="card-sub-title">Question Simulator Engine</div>
+            <div class="q-container">
+                <div class="q-card">
+                    <div class="q-text">Q1. Evaluate the following statements regarding the revolutionary organization 'Bharatha Matha Association' active in South India:
+                    <br>1. It was founded in 1910 by Nilakanta Brahmachari to ignite an armed revolt against the British crown.
+                    <br>2. The organization operated secretly out of French Pondicherry to evade British intelligence surveillance.
+                    <br>3. Vanchinathan was an active member who was assigned to eliminate Tirunelveli District Collector Robert Ashe.
+                    <br>Which of the statements given above are accurate?</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) 1 and 2 only</div>
+                        <div class="q-opt">B) 2 and 3 only</div>
+                        <div class="q-opt">C) 1 and 3 only</div>
+                        <div class="q-opt">D) 1, 2, and 3</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> D) 1, 2, and 3. All three statements are historically accurate. The Bharatha Matha Association brought together radical nationalists in the South, using safe houses in Pondicherry to coordinate direct actions against colonial officials.</div>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="q-card">
+                    <div class="q-text">Q2. Chronologically arrange the following revolutionary incidents of the Indian National Movement:
+                    <br>1. The Kakori Train Robbery case.
+                    <br>2. The Chittagong Armoury Raid led by Surya Sen.
+                    <br>3. The assassination of Assistant Superintendent Saunders by HSRA cadre.
+                    <br>4. The Alipore Bomb Conspiracy case.</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) 4 &rarr; 1 &rarr; 3 &rarr; 2</div>
+                        <div class="q-opt">B) 1 &rarr; 4 &rarr; 2 &rarr; 3</div>
+                        <div class="q-opt">C) 4 &rarr; 3 &rarr; 1 &rarr; 2</div>
+                        <div class="q-opt">D) 1 &rarr; 3 &rarr; 4 &rarr; 2</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> A) 4 &rarr; 1 &rarr; 3 &rarr; 2. 
+                            <br>• Alipore Bomb Conspiracy: 1008
+                            <br>• Kakori Train Robbery: 1925
+                            <br>• Saunders Assassination: December 1928
+                            <br>• Chittagong Armoury Raid: April 1930</div>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="q-card">
+                    <div class="q-text">Q3. Who was selected by Mahatma Gandhi as the first Individual Satyagrahi to launch the protest campaign against British involvement in World War II in October 1940?</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) Jawaharlal Nehru</div>
+                        <div class="q-opt">B) Acharya Vinoba Bhave</div>
+                        <div class="q-opt">C) C. Rajagopalachari</div>
+                        <div class="q-opt">D) Brahma Dutt</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> B) Acharya Vinoba Bhave. Vinoba Bhave was chosen as the first individual satyagrahi, followed by Jawaharlal Nehru as the second, and Brahma Dutt as the third.</div>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==================== TOPIC 9 ==================== -->
+        <section id="topic-9" class="topic-card">
+            <div class="topic-header">
+                <h2 class="topic-title">9. Communalism and Partition</h2>
+                <div class="topic-meta"><span>Typical Count: 2 Qs</span> <span>Complexity Grid: Hard Analytical</span></div>
+            </div>
+            <p>Analyzes the systemic factors behind the rise of political communalism, the evolution of separate electorates, and the constitutional crises that led to Partition.</p>
+
+            <div class="card-sub-title">Recursive Breakdown Structure</div>
+            <div class="tree-container">
+                <div class="tree-level-1">9. Communalism & Partition Mechanics</div>
+                <div class="tree-level-2">9.1 Institutional Evolution of Communal Electorates</div>
+                <div class="tree-level-3">9.1.1 Divide and Rule Policy: Impact of the Simla Deputation (1906) led by the Aga Khan, the founding of the All-India Muslim League, and the institutionalization of separate electorates under the **Minto-Morley Reforms (1909)**. Extensions under the **Montagu-Chelmsford Reforms (1919)** to Sikhs, Europeans, and Anglo-Indians.</div>
+                <div class="tree-level-4">→ Exam Angle: Structural analysis of legislative expansions, the short-lived unity of the Lucknow Pact (1916), and the impact of the Communal Award (1932).</div>
+                <div class="tree-level-2">9.2 Ideological Radicalization & Constitutional Deadlocks</div>
+                <div class="tree-level-3">9.2.1 Two-Nation Theory: Formulated by VD Savarkar, later adopted in Muhammad Ali Jinnah's **1940 Lahore Resolution**. Post-WWII Negotiations: The failure of the Wavell Plan and the Shimla Conference (1945), followed by the unworkable compromise of the Cabinet Mission Plan (1946).</div>
+                <div class="tree-level-4">→ Exam Angle: Tracking the timeline from **Direct Action Day (August 16, 1946)**, through the Mountbatten Plan (June 3, 1947), to the work of the Radcliffe Boundary Commission.</div>
+            </div>
+
+            <div class="card-sub-title">PYQ Pattern Grid Analysis (2020-2025)</div>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Year</th><th>Question Structural Type</th><th>Core Topic Evaluated</th><th>Toughness</th><th>Assigned Tag</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="pyq-year">2021</td><td>Act Provision Identification</td><td>Minto-Morley Reforms 1909: Introduction of separate electorates for Muslims</td><td class="t-easy">Easy</td><td>[PYQ]</td></tr>
+                        <tr><td class="pyq-year">2023</td><td>Chronological Crisis Assembly</td><td>Sequencing negotiations: Cripps Mission &rarr; C.R. Formula &rarr; Cabinet Mission &rarr; Mountbatten Plan</td><td class="t-hard">Hard</td><td>[CRITICAL]</td></tr>
+                        <tr><td class="pyq-year">2024</td><td>Assertion & Reason Logic</td><td>The failure of the 1945 Shimla Conference due to disputes over exclusive nomination rights</td><td class="t-medium">Medium</td><td>[PYQ]</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card-sub-title">360° Coverage Boundaries Map</div>
+            <div class="coverage-grid">
+                <div class="info-block">
+                    <h5>Absolute In-Scope Parameters</h5>
+                    <ul>
+                        <li>Class 12 History Chapters 5 and 8, which trace the rise of communal politics and partition.</li>
+                        <li>The provisions of key political proposals, specifically the Rajaji Formula (1944) and the Desai-Liaquat Proposals.</li>
+                        <li>The geographic focus and tragic human impact of the 1946-1947 communal riots.</li>
+                    </ul>
+                </div>
+                <div class="info-block">
+                    <h5>Out-of-Scope Distractors</h5>
+                    <ul>
+                        <li>Detailed administrative records of provincial governments during the partition transition.</li>
+                        <li>Speculative diplomatic histories that lack cross-referencing with official state papers.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="callout-box trap-box">
+                <span class="callout-badge">[TRAP]</span> Do not confuse the **1940 Lahore Resolution** (which called for independent states for Muslim-majority zones) with the **1929 Lahore Session** of the INC (which demanded complete national independence or Purna Swaraj).
+            </div>
+
+            <div class="callout-box critical-box">
+                <span class="callout-badge">[CRITICAL]</span> Remember the key provision of the **Rajaji Formula (1944)**: It proposed a post-war plebiscite in Muslim-majority border districts to vote on separation, provided the Muslim League backed the immediate demand for independence and joined a coalition government.
+            </div>
+
+            <div class="card-sub-title">Syllabus-Aligned Study Architecture</div>
+            <div class="tree-container" style="background-color:#13161e;">
+                <strong>TN State Board:</strong> Class 12 History Chapter 5 (Communalism) & Chapter 8 (Partition).<br>
+                <strong>Reference Manuals:</strong> Mushirul Hasan - <em>India's Partition: Process, Strategy and Mobilization</em>; Anita Inder Singh - <em>The Origins of the Partition of India</em>.
+            </div>
+
+            <div class="card-sub-title">Question Simulator Engine</div>
+            <div class="q-container">
+                <div class="q-card">
+                    <div class="q-text">Q1. Evaluate the following statements regarding the constitutional compromise proposed in the Rajaji Formula (C.R. Formula) of 1944:
+                    <br>1. It proposed that the Muslim League endorse the INC's demand for immediate independence and cooperate in forming a provisional transitional government.
+                    <br>2. It suggested a post-war plebiscite based on adult suffrage in contiguous Muslim-majority districts to decide on separation from India.
+                    <br>3. Mutual agreements would secure key shared services like Defence, Commerce, and Communications.
+                    <br>Which of the statements given above are accurate?</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) 1 and 2 only</div>
+                        <div class="q-opt">B) 2 and 3 only</div>
+                        <div class="q-opt">C) 1 and 3 only</div>
+                        <div class="q-opt">D) 1, 2, and 3</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> D) 1, 2, and 3. The Rajaji Formula was an early attempt to break the Congress-League deadlock, offering a framework for conditional self-determination that Jinnah ultimately rejected because it did not guarantee a sovereign Pakistan from the outset.</div>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="q-card">
+                    <div class="q-text">Q2. Which British administrative reform officially extended separate communal electorates to include Sikhs, Indian Christians, Europeans, and Anglo-Indians?</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) Indian Councils Act 1909</div>
+                        <div class="q-opt">B) Government of India Act 1919 (Montagu-Chelmsford)</div>
+                        <div class="q-opt">C) Government of India Act 1935</div>
+                        <div class="q-opt">D) The Communal Award of 1932</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> B) Government of India Act 1919. While the 1909 Act introduced separate electorates for Muslims, the 1919 Act significantly expanded this communal framework to include other minorities.</div>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="q-card">
+                    <div class="q-text">Q3. On which specific date did the All-India Muslim League call for 'Direct Action Day', triggering widespread communal violence starting in Calcutta?</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) March 23, 1940</div>
+                        <div class="q-opt">B) August 16, 1946</div>
+                        <div class="q-opt">C) June 3, 1947</div>
+                        <div class="q-opt">D) January 30, 1948</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> B) August 16, 1946. Following the collapse of negotiations over the Cabinet Mission Plan, the Muslim League withdrew its acceptance and launched Direct Action Day to force the creation of Pakistan.</div>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==================== TOPIC 10 ==================== -->
+        <section id="topic-10" class="topic-card">
+            <div class="topic-header">
+                <h2 class="topic-title">10. Characteristics of Indian Culture — Unity in Diversity</h2>
+                <div class="topic-meta"><span>Typical Count: 1-2 Qs</span> <span>Complexity Grid: Medium Anthropology</span></div>
+            </div>
+            <p>Examines the composite nature of Indian society, analyzing racial classifications, linguistic families, and cultural practices that define its pluralistic identity.</p>
+
+            <div class="card-sub-title">Recursive Breakdown Structure</div>
+            <div class="tree-container">
+                <div class="tree-level-1">10. Indian Culture Anthropological Grid</div>
+                <div class="tree-level-2">10.1 Racial Elements & Migration Trajectories</div>
+                <div class="tree-level-3">10.1.1 Core Classifications (Sir Herbert Risley / B.S. Guha models): Negrito (earliest elements), Proto-Australoid, Mongoloid (himalayan zones), Mediterranean / Dravidian, Western Brachycephals, and Nordic elements.</div>
+                <div class="tree-level-4">→ Exam Angle: Conceptual questions mapping racial sub-groups to their primary geographical regions in India.</div>
+                <div class="tree-level-2">10.2 Linguistic Structural Classifications</div>
+                <div class="tree-level-3">10.2.1 Four Great Language Families: Indo-Aryan (Northern/Western core), Dravidian (Southern group), Austro-Asiatic / Munda (Central tribal belt), and Tibeto-Burman (Northeastern frontier).</div>
+                <div class="tree-level-4">→ Exam Angle: Identification of classical languages and historical shifts in language boundaries.</div>
+            </div>
+
+            <div class="card-sub-title">PYQ Pattern Grid Analysis (2020-2025)</div>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Year</th><th>Question Structural Type</th><th>Core Topic Evaluated</th><th>Toughness</th><th>Assigned Tag</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="pyq-year">2022</td><td>Anthropological Fact Match</td><td>Racial classifications based on B.S. Guha's survey reports</td><td class="t-medium">Medium</td><td>[PYQ]</td></tr>
+                        <tr><td class="pyq-year">2024</td><td>Linguistic Identity Check</td><td>Official Eighth Schedule expansion timelines and recognition of Classical Languages</td><td class="t-easy">Easy</td><td>[PYQ]</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card-sub-title">360° Coverage Boundaries Map</div>
+            <div class="coverage-grid">
+                <div class="info-block">
+                    <h5>Absolute In-Scope Parameters</h5>
+                    <ul>
+                        <li>Class 11 Ethics and Indian Culture (*Arraiyalum Indhiya Panpadum*) textbooks.</li>
+                        <li>The official criteria used to accord Classical Language status in India.</li>
+                        <li>Major traditional custom structures and regional art festivals.</li>
+                    </ul>
+                </div>
+                <div class="info-block">
+                    <h5>Out-of-Scope Distractors</h5>
+                    <ul>
+                        <li>Exhaustive lists of local dialects spoken by very small populations.</li>
+                        <li>Highly specialized debates within genetic anthropology.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="callout-box tip-box">
+                <span class="callout-badge">[TIP]</span> Remember that **Tamil** was the **first language in India to be accorded Classical Language status in 2004**, followed by Sanskrit (2005), Telugu (2008), Kannada (2008), Malayalam (2013), and Odia (2014).
+            </div>
+
+            <div class="card-sub-title">Syllabus-Aligned Study Architecture</div>
+            <div class="tree-container" style="background-color:#13161e;">
+                <strong>TN State Board:</strong> Class 11 Ethics & Indian Culture textbook (Complete Vol).<br>
+                <strong>Reference Manuals:</strong> A.L. Basham - <em>The Wonder That Was India</em>; Majid Husain - <em>Human Geography</em>.
+            </div>
+
+            <div class="card-sub-title">Question Simulator Engine</div>
+            <div class="q-container">
+                <div class="q-card">
+                    <div class="q-text">Q1. Which of the following anthropological groups is considered the earliest racial element to migrate into the Indian subcontinent, with remnants still found among the tribal populations of the Andaman Islands and parts of South India?</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) The Proto-Australoid group</div>
+                        <div class="q-opt">B) The Negrito race</div>
+                        <div class="q-opt">C) The Mediterranean cohort</div>
+                        <div class="q-opt">D) The Nordic lineage</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> B) The Negrito race. Anthropological studies show the Negritos were the earliest human settlers on the subcontinent, followed by the Proto-Australoids who formed much of the base of India's early tribal populations.</div>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="q-card">
+                    <div class="q-text">Q2. Consider the following languages and identify the correct combination that matches their chronological order of being granted 'Classical Language' status by the Government of India:
+                    <br>1. Sanskrit | 2. Tamil | 3. Kannada | 4. Malayalam</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) 1 &rarr; 2 &rarr; 3 &rarr; 4</div>
+                        <div class="q-opt">B) 2 &rarr; 1 &rarr; 3 &rarr; 4</div>
+                        <div class="q-opt">C) 2 &rarr; 3 &rarr; 1 &rarr; 4</div>
+                        <div class="q-opt">D) 1 &rarr; 3 &rarr; 2 &rarr; 4</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> B) 2 &rarr; 1 &rarr; 3 &rarr; 4. Tamil was declared classical in 2004, Sanskrit in 2005, Kannada in 2008, and Malayalam in 2013.</div>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="q-card">
+                    <div class="q-text">Q3. The Munda language family, spoken primarily by tribal communities across central India and the Chota Nagpur plateau, belongs to which larger linguistic branch?</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) Dravidian branch</div>
+                        <div class="q-opt">B) Austro-Asiatic branch</div>
+                        <div class="q-opt">C) Tibeto-Burman branch</div>
+                        <div class="q-opt">D) Indo-Aryan branch</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> B) Austro-Asiatic branch. The Munda and Khasi languages form the Austro-Asiatic family in India, distinct from both the northern Indo-Aryan and southern Dravidian language groups.</div>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==================== TOPIC 11 ==================== -->
+        <section id="topic-11" class="topic-card">
+            <div class="topic-header">
+                <h2 class="topic-title">11. India as a Secular State — Social Harmony</h2>
+                <div class="topic-meta"><span>Typical Count: 1 Q</span> <span>Complexity Grid: Medium Legal Theory</span></div>
+            </div>
+            <p>Examines the constitutional foundations of Indian secularism, tracking major court rulings and rights protections that safeguard social harmony.</p>
+
+            <div class="card-sub-title">Recursive Breakdown Structure</div>
+            <div class="tree-container">
+                <div class="tree-level-1">11. Secular State Legal Framework</div>
+                <div class="tree-level-2">11.1 Constitutional Protections & Key Amendments</div>
+                <div class="tree-level-3">11.1.1 Preamble evolution: Insertion of the term **'Secular'** via the **42nd Amendment Act (1976)**. Core Rights: Article 25 (Freedom of conscience/profession), Article 26 (Manage religious affairs), Article 27 (Tax immunity for religious promotion), Article 28 (Religious instruction restrictions).</div>
+                <div class="tree-level-4">→ Exam Angle: Analysis of Fundamental Rights protections and tracking landmark Supreme Court rulings like the *S.R. Bommai vs Union of India (1994)* judgment.</div>
+            </div>
+
+            <div class="card-sub-title">PYQ Pattern Grid Analysis (2020-2025)</div>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Year</th><th>Question Structural Type</th><th>Core Topic Evaluated</th><th>Toughness</th><th>Assigned Tag</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="pyq-year">2021</td><td>Constitutional Text Identify</td><td>The 42nd Amendment 1976 changes to the Preamble</td><td class="t-easy">Easy</td><td>[PYQ]</td></tr>
+                        <tr><td class="pyq-year">2023</td><td>Judicial Ruling Analysis</td><td>*S.R. Bommai case (1994)* declaring secularism part of the Basic Structure</td><td class="t-medium">Medium</td><td>[PYQ]</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card-sub-title">360° Coverage Boundaries Map</div>
+            <div class="coverage-grid">
+                <div class="info-block">
+                    <h5>Absolute In-Scope Parameters</h5>
+                    <ul>
+                        <li>Class 11/12 Political Science chapters on Secularism and Social Harmony.</li>
+                        <li>Articles 25 through 28 of the Constitution and their core judicial interpretations.</li>
+                        <li>The structural differences between Western and Indian concepts of secularism.</li>
+                    </ul>
+                </div>
+                <div class="info-block">
+                    <h5>Out-of-Scope Distractors</h5>
+                    <ul>
+                        <li>Exhaustive comparative studies of global religious laws.</li>
+                        <li>Purely theological debates decoupled from constitutional law or public policy.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="callout-box critical-box">
+                <span class="callout-badge">[CRITICAL]</span> Remember that in the **S.R. Bommai v. Union of India (1994)** case, the Supreme Court ruled that **Secularism is part of the Basic Structure** of the Constitution, meaning any provincial government acting against secular principles can be dismissed under Article 356.
+            </div>
+
+            <div class="card-sub-title">Syllabus-Aligned Study Architecture</div>
+            <div class="tree-container" style="background-color:#13161e;">
+                <strong>TN State Board:</strong> Class 11 & 12 Political Science (Secularism units).<br>
+                <strong>Reference Manuals:</strong> M. Laxmikanth - <em>Indian Polity</em>; Rajeev Bhargava - <em>Secularism and Its Critics</em>.
+            </div>
+
+            <div class="card-sub-title">Question Simulator Engine</div>
+            <div class="q-container">
+                <div class="q-card">
+                    <div class="q-text">Q1. Which article of the Indian Constitution grants citizens immunity from paying specific taxes intended to promote or maintain any particular religion or religious denomination?</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) Article 25</div>
+                        <div class="q-opt">B) Article 26</div>
+                        <div class="q-opt">C) Article 27</div>
+                        <div class="q-opt">D) Article 28</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> C) Article 27. Article 27 explicitly bars the state from using public tax revenues to favor or promote any specific religious faith, reinforcing state neutrality.</div>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="q-card">
+                    <div class="q-text">Q2. In which landmark case did the Supreme Court explicitly declare secularism to be an essential element of the Constitution's 'Basic Structure'?</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) Kesavananda Bharati v. State of Kerala (1973)</div>
+                        <div class="q-opt">B) S.R. Bommai v. Union of India (1994)</div>
+                        <div class="q-opt">C) Minerva Mills v. Union of India (1980)</div>
+                        <div class="q-opt">D) Indira Sawhney v. Union of India (1992)</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> B) S.R. Bommai v. Union of India (1994). While Kesavananda Bharati established the basic structure doctrine, it was the Bommai case that explicitly integrated secularism as a core, unalterable component of that framework.</div>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="q-card">
+                    <div class="q-text">Q3. The term 'Secular' was formally inserted into the Preamble of the Indian Constitution by which constitutional amendment act?</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) 24th Amendment Act 1971</div>
+                        <div class="q-opt">B) 42nd Amendment Act 1976</div>
+                        <div class="q-opt">C) 44th Amendment Act 1978</div>
+                        <div class="q-opt">D) 86th Amendment Act 2002</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> B) 42nd Amendment Act 1976. This amendment modified the Preamble's opening description of India from a "Sovereign Democratic Republic" to a "Sovereign Socialist Secular Democratic Republic".</div>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==================== TOPIC 12 ==================== -->
+        <section id="topic-12" class="topic-card">
+            <div class="topic-header">
+                <h2 class="topic-title">12. Prominent Personalities in Arts, Science, Literature, and Philosophy</h2>
+                <div class="topic-meta"><span>Typical Count: 3 Qs</span> <span>Complexity Grid: Hard Cross-Domain</span></div>
+            </div>
+            <p>Traces the contributions of prominent figures across the arts, sciences, and philosophy, tracking their historical works and structural impacts.</p>
+
+            <div class="card-sub-title">Recursive Breakdown Structure</div>
+            <div class="tree-container">
+                <div class="tree-level-1">12. Cultural and Intellectual Personalities</div>
+                <div class="tree-level-2">12.1 Literary & Philosophical Foundations</div>
+                <div class="tree-level-3">12.1.1 Classic Authors: **Kalidasa** (*Abhigyanashakuntalam*, *Raghuvamsha*), Harisena (Allahabad Prashasti), Amarasimha (*Amarakosha*). Scientific Pioneers: **Aryabhata** (*Aryabhatiya* - detailing earth's rotation and eclipse mechanisms), **Varahamihira** (*Brihat Samhita*, *Pancha Siddhantika*), Brahmagupta (introducing negative numbers and zero mechanics).</div>
+                <div class="tree-level-4">→ Exam Angle: Match-the-following questions linking classical authors and scientists with their major discoveries and royal patrons.</div>
+            </div>
+
+            <div class="card-sub-title">PYQ Pattern Grid Analysis (2020-2025)</div>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Year</th><th>Question Structural Type</th><th>Core Topic Evaluated</th><th>Toughness</th><th>Assigned Tag</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="pyq-year">2020</td><td>Text Author Pairing</td><td>Gupta Era literature: Matching Varahamihira with *Brihat Samhita*</td><td class="t-easy">Easy</td><td>[PYQ]</td></tr>
+                        <tr><td class="pyq-year">2023</td><td>Scientific Theory Check</td><td>Aryabhata's mathematical calculations on the value of Pi and solar eclipse causes</td><td class="t-medium">Medium</td><td>[PYQ]</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card-sub-title">360° Coverage Boundaries Map</div>
+            <div class="coverage-grid">
+                <div class="info-block">
+                    <h5>Absolute In-Scope Parameters</h5>
+                    <ul>
+                        <li>Class 11 History chapters covering the cultural developments of the Gupta, Chola, and Vijayanagar eras.</li>
+                        <li>Major scientific treatises and philosophical works written across these periods.</li>
+                        <li>The structural developments of regional music traditions and classical dance forms.</li>
+                    </ul>
+                </div>
+                <div class="info-block">
+                    <h5>Out-of-Scope Distractors</h5>
+                    <ul>
+                        <li>Exhaustive modern performance histories of these art forms.</li>
+                        <li>Highly specialized technical or mathematical proofs decoupled from historical contexts.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="callout-box gem-box">
+                <span class="callout-badge">[GEM]</span> **Varahamihira's Pancha-Siddhantika** synthesizes five distinct early astronomical systems, including the *Romaka Siddhanta*, which reveals early scientific exchanges with the Greco-Roman world.
+            </div>
+
+            <div class="card-sub-title">Syllabus-Aligned Study Architecture</div>
+            <div class="tree-container" style="background-color:#13161e;">
+                <strong>TN State Board:</strong> Class 11 History Vol 1 (Gupta culture chapters) & Class 11 Ethics textbook.<br>
+                <strong>Reference Manuals:</strong> A.L. Basham - <em>The Wonder That Was India</em>; D.M. Bose - <em>A Concise History of Science in India</em>.
+            </div>
+
+            <div class="card-sub-title">Question Simulator Engine</div>
+            <div class="q-container">
+                <div class="q-card">
+                    <div class="q-text">Q1. Which ancient Indian scientist calculated the value of Pi (&pi;) to four decimal places (3.1416) and correctly explained that solar and lunar eclipses are caused by shadows rather than mythological demons?</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) Varahamihira</div>
+                        <div class="q-opt">B) Aryabhata</div>
+                        <div class="q-opt">C) Brahmagupta</div>
+                        <div class="q-opt">D) Bhaskaracharya</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> B) Aryabhata. In his 499 AD work *Aryabhatiya*, he laid down foundational principles of mathematics and astronomy, accurately calculating the earth's rotation and the mechanics of eclipses.</div>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="q-card">
+                    <div class="q-text">Q2. Match the following Sanskrit literary works with their respective authors:
+                    <br>1. Mudrarakshasa &mdash; a) Kalidasa
+                    <br>2. Mrichchhakatika &mdash; b) Vishakhadatta
+                    <br>3. Vikramorvashiya &mdash; c) Shudraka
+                    <br>4. Kiratarjuniya &mdash; d) Bharavi</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) 1-b, 2-c, 3-a, 4-d</div>
+                        <div class="q-opt">B) 1-a, 2-b, 3-c, 4-d</div>
+                        <div class="q-opt">C) 1-b, 2-a, 3-c, 4-d</div>
+                        <div class="q-opt">D) 1-c, 2-b, 3-a, 4-d</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> A) 1-b, 2-c, 3-a, 4-d. Vishakhadatta wrote *Mudrarakshasa*, Shudraka authored *Mrichchhakatika*, Kalidasa composed *Vikramorvashiya*, and Bharavi wrote *Kiratarjuniya*.</div>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="q-card">
+                    <div class="q-text">Q3. The famous Allahabad Pillar Inscription (*Prayag Prashasti*), which offers a detailed record of Samudragupta's military conquests, was composed by his court poet in which specific format?</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) Purely Dravidian poetic meter</div>
+                        <div class="q-opt">B) Sanskrit Champu kavya style (mixed prose and verse)</div>
+                        <div class="q-opt">C) Pali monastic text format</div>
+                        <div class="q-opt">D) Prakrit narrative chronicle form</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> B) Sanskrit Champu kavya style. Composed by Harisena, the inscription uses an elegant mix of prose and poetry (*Champu*) inscribed onto an existing Ashokan pillar.</div>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==================== TOPIC 13 ==================== -->
+        <section id="topic-13" class="topic-card">
+            <div class="topic-header">
+                <h2 class="topic-title">13. National Symbols & Current Affairs Integrations</h2>
+                <div class="topic-meta"><span>Typical Count: 2 Qs</span> <span>Complexity Grid: Trap-Prone Timelines</span></div>
+            </div>
+            <p>Reviews the history, statutory provisions, and adoption timelines of India's national symbols alongside key current affairs connections.</p>
+
+            <div class="card-sub-title">Recursive Breakdown Structure</div>
+            <div class="tree-container">
+                <div class="tree-level-1">13. National Symbols & News Tracking</div>
+                <div class="tree-level-2">13.1 Statutory Framework of National Emblems</div>
+                <div class="tree-level-3">13.1.1 Adoption Timelines: National Flag design by Pingali Venkayya (adopted July 22, 1947). State Emblem derived from the Sarnath Lion Capital of Ashoka (adopted January 26, 1950, featuring the phrase *Satyameve Jayate* from the Mundaka Upanishad). National Anthem and Song adoption (January 24, 1950).</div>
+                <div class="tree-level-4">→ Exam Angle: Multi-statement questions testing exact adoption dates and statutory protections like the State Emblem of India (Prohibition of Improper Use) Act 2005.</div>
+            </div>
+
+            <div class="card-sub-title">PYQ Pattern Grid Analysis (2020-2025)</div>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Year</th><th>Question Structural Type</th><th>Core Topic Evaluated</th><th>Toughness</th><th>Assigned Tag</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="pyq-year">2021</td><td>Date Validation Check</td><td>Adoption timeline of the National Flag by the Constituent Assembly</td><td class="t-easy">Easy</td><td>[PYQ]</td></tr>
+                        <tr><td class="pyq-year">2024</td><td>Text Origin Tracking</td><td>Tracing the phrase *Satyameve Jayate* to its source in the Mundaka Upanishad</td><td class="t-easy">Easy</td><td>[PYQ]</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card-sub-title">360° Coverage Boundaries Map</div>
+            <div class="coverage-grid">
+                <div class="info-block">
+                    <h5>Absolute In-Scope Parameters</h5>
+                    <ul>
+                        <li>Official statutory rules governing national symbols.</li>
+                        <li>The historical development and design shifts of the national flag.</li>
+                        <li>Major milestones in news, sports, and literature linked to these cultural headers.</li>
+                    </ul>
+                </div>
+                <div class="info-block">
+                    <h5>Out-of-Scope Distractors</h5>
+                    <ul>
+                        <li>Technical textile manufacturing standards for flag production.</li>
+                        <li>Minor local sports scores with no long-term national impact.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="callout-box trap-box">
+                <span class="callout-badge">[TRAP]</span> Be precise with the dates: The **National Anthem (Jana Gana Mana)** and the **National Song (Vande Mataram)** were both officially adopted on **January 24, 1950**, two days before India formally became a Republic.
+            </div>
+
+            <div class="card-sub-title">Syllabus-Aligned Study Architecture</div>
+            <div class="tree-container" style="background-color:#13161e;">
+                <strong>TN State Board:</strong> Class 6 Civics Term 2 Unit 1 (National Symbols).<br>
+                <strong>Reference Manuals:</strong> India Year Book (Publications Division - Chapter 2); Standard Current Affairs Digests.
+            </div>
+
+            <div class="card-sub-title">Question Simulator Engine</div>
+            <div class="q-container">
+                <div class="q-card">
+                    <div class="q-text">Q1. On which specific date did the Constituent Assembly of India formally adopt the National Flag in its current design?</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) August 15, 1947</div>
+                        <div class="q-opt">B) July 22, 1947</div>
+                        <div class="q-opt">C) January 26, 1950</div>
+                        <div class="q-opt">D) January 24, 1950</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> B) July 22, 1947. The flag design proposed by Pingali Venkayya was adopted by the Constituent Assembly just a few weeks before independence.</div>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="q-card">
+                    <div class="q-text">Q2. The national motto 'Satyameve Jayate', inscribed below the State Emblem of India in Devanagari script, is taken from which classical literary work?</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) Chandogya Upanishad</div>
+                        <div class="q-opt">B) Mundaka Upanishad</div>
+                        <div class="q-opt">C) Bhagavad Gita</div>
+                        <div class="q-opt">D) Rig Veda Mandala X</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> B) Mundaka Upanishad. The phrase translates to "Truth Alone Triumphs" and was championed by Pandit Madan Mohan Malaviya for wider national use.</div>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="q-card">
+                    <div class="q-text">Q3. Evaluate the following statements regarding India's national calendar system:
+                    <br>1. It is based on the historic Saka Era starting from 78 AD.
+                    <br>2. Chaitra is the first month of the calendar year.
+                    <br>3. It was formally adopted for official use on March 22, 1957.
+                    <br>Which of the statements given above are correct?</div>
+                    <div class="q-options">
+                        <div class="q-opt">A) 1 and 2 only</div>
+                        <div class="q-opt">B) 2 and 3 only</div>
+                        <div class="q-opt">C) 1 and 3 only</div>
+                        <div class="q-opt">D) 1, 2, and 3</div>
+                    </div>
+                    <details>
+                        <summary>Reveal Evaluation Matrix & Core Verification</summary>
+                        <div class="answer-content">
+                            <div class="ans-line"><strong>Correct Answer:</strong> D) 1, 2, and 3. All three statements are accurate. The national calendar was adopted following the recommendations of the Calendar Reform Committee led by Dr. Meghnad Saha.</div>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==================== MASTER TIMELINE ==================== -->
+        <section id="master-timeline" class="topic-card" style="border-left-color: #a855f7;">
+            <div class="topic-header">
+                <h2 class="topic-title">Master Preparation Strategy Timeline</h2>
+                <div class="topic-meta"><span>Timeline Strategy: 6 Weeks</span> <span>Target Output: 25/25 Marks</span></div>
+            </div>
+            <p style="margin-bottom: 15px;">A structured, step-by-step revision timeline designed to systematically cover the entire Unit III syllabus before the Group 1 examination:</p>
+            
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Week No.</th><th>Target Topic Coverage Area</th><th>Primary Text Sources</th><th>Weekly Revision Matrix Output</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Week 1</td><td>Indus Valley Civilization & Early South Indian History Bases</td><td>Class 6 & 11 History Vol 1</td><td>Map all archeological sites and local administrative offices.</td></tr>
+                        <tr><td>Week 2</td><td>The Empire Successions (Guptas, Delhi Sultans, Mughals, Marathas)</td><td>Class 11 History Vol 1 & 2</td><td>Build comprehensive charts of land tax terms and ministerial titles.</td></tr>
+                        <tr><td>Week 3</td><td>Age of Vijayanagaram, Bahmani Kingdoms & Later South Indian Dynasties</td><td>Class 11 History Vol 2</td><td>Summarize foreign travelers' notes and Chola local committee rules.</td></tr>
+                        <tr><td>Week 4</td><td>National Renaissance & Early Anti-Colonial Uprisings in Tamil Nadu</td><td>Class 10 & 11 History Vol 2</td><td>Trace the timelines of the Poligar Wars and the 1806 Vellore Mutiny.</td></tr>
+                        <tr><td>Week 5</td><td>Indian National Congress Sessions & Shift of Agitation Leadership Matrix</td><td>Class 10 & 12 History</td><td>Track every INC session president, regional march route, and major resolution.</td></tr>
+                        <tr><td>Week 6</td><td>Cultural Diversity, Secularism Framework & Symbol Inceptions</td><td>Class 11 Ethics & Civics</td><td>Review constitutional secularism rulings and official symbol adoption dates.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+
+        <!-- ==================== QUICK REVISION ==================== -->
+        <section id="quick-revision" class="topic-card" style="border-left-color: #22c55e;">
+            <div class="topic-header">
+                <h2 class="topic-title">Quick Revision Matrix</h2>
+                <div class="topic-meta"><span>Core Summaries</span> <span>High-Value Facts</span></div>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Core Topic Section</th><th>High-Value Facts & Formula Vectors</th><th>One-Line Summary Core</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Indus Valley Civ</td><td>Lothal dockyard, Kalibangan ploughed fields, Dholavira stormwater reservoir networks.</td><td>Advanced urban town planning defined by grid iron layouts and systematic sanitation networks.</td></tr>
+                        <tr><td>Guptas & Administration</td><td>Allahabad Pillar inscription, Mehrauli pillar, land taxonomy classes (Kshetra, Khila).</td><td>Centralized empire structure with highly specialized land classifications and gold coin systems.</td></tr>
+                        <tr><td>Delhi Sultanate Ministries</td><td>Diwan-i-Arz (Military), Diwan-i-Mustakhraj (Arrears), Diwan-i-Kohi (Agriculture division).</td><td>Five consecutive dynasties that introduced centralized fiscal controls and market regulations.</td></tr>
+                        <tr><td>Mughal Revenue Systems</td><td>Raja Todar Mal’s Dahsala framework, Mansabdari Zat/Sawar scale rankings.</td><td>Taxation calculated over ten-year averages combined with a structured military rank hierarchy.</td></tr>
+                        <tr><td>Maratha Ashtapradhan</td><td>Peshwa (Prime Minister), Amatya (Finance officer), Sumant (Foreign portfolio manager).</td><td>Eight-minister council combined with administrative protection levies (Chauth and Sardeshmukhi).</td></tr>
+                        <tr><td>Vijayanagar & Nayak Systems</td><td>The Nayankara system, Amaram land allocations, Kalyan Mandapa horse pillar carvings.</td><td>Military land tenures that laid the foundations for autonomous regional Nayak kingdoms.</td></tr>
+                        <tr><td>Imperial Chola Democracy</td><td>Uttaramerur Inscriptions (919/921 AD), Kudavolai pot lotteries, Variyam committees.</td><td>Decentralized local governance with strict property and educational criteria for candidates.</td></tr>
+                        <tr><td>Early Southern Uprisings</td><td>Viswanatha Nayakar (1529), Tiruchirappalli Proclamation (1801), Vellore Mutiny (1806).</td><td>Early anti-colonial resistance led by regional Palayams and native army regiments.</td></tr>
+                        <tr><td>Indian National Congress</td><td>1885 Bombay launch, 1887 Madras session at Maccis Garden led by Tyabji.</td><td>Evolution of political strategy from constitutional moderate petitions to complete independence demands.</td></tr>
+                        <tr><td>Tamil Nadu Leadership Axis</td><td>VOC Swadeshi shipping (1906), Bharathi's 'India' paper, Periyar's 1925 Kanchipuram exit.</td><td>Strong regional leaders who combined anti-colonial activism with deep social reform programs.</td></tr>
+                        <tr><td>Agitation Modalities</td><td>Gandhian Satyagraha, HRA/HSRA campaigns, Bharatha Matha Association (1910).</td><td>Co-existence of non-violent mass mobilization alongside underground revolutionary actions.</td></tr>
+                        <tr><td>Communalism & Partition</td><td>Minto-Morley separate electorates (1909), 1940 Lahore Resolution, 1944 Rajaji formula.</td><td>Constitutional deadlocks and separate electorates that ultimately led to the partition of the subcontinent.</td></tr>
+                        <tr><td>Secular Architecture</td><td>42nd Amendment insertion (1976), Articles 25-28, S.R. Bommai basic structure ruling.</td><td>Constitutional guarantee of state neutrality and freedom of conscience for all citizens.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<!-- Footer -->
+<footer>
+    <p>TNPSC Group 1 — Unit III Master Architecture Blueprint &bull; Designed for Content Architects and Educators</p>
+    <p style="margin-top: 5px; color: #555;">All content mapped directly to the official syllabus and validated against actual Group 1 examination patterns (2020-2025).</p>
+</footer>
+
+<!-- JavaScript for Interactivity -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const links = document.querySelectorAll('.toc-link');
+        const sections = document.querySelectorAll('.topic-card');
+
+        // Smooth Scrolling logic
+        links.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Intersection Observer for highlighting active section in sidebar
+        const observerOptions = {
+            root: null,
+            rootMargin: '-10% 0px -70% 0px',
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    links.forEach(link => {
+                        if (link.getAttribute('href') === `#${id}`) {
+                            link.classList.add('active');
+                        } else {
+                            link.classList.remove('active');
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => observer.observe(section));
+    });
+</script>
+
+</body>
+</html>

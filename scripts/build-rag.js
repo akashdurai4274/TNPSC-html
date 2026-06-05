@@ -12,8 +12,8 @@
 const fs   = require('fs');
 const path = require('path');
 
-const ROOT = __dirname;
-const OUT  = path.join(ROOT, 'rag-index.json');
+const ROOT = path.join(__dirname, '..');
+const OUT  = path.join(ROOT, 'data', 'rag-index.json');
 
 /* ══════════════════════════════════════════════════
    SYSTEM PROMPT  (stored inside rag-index.json)

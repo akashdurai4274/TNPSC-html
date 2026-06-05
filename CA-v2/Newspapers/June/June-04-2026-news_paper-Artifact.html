@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body class="en-mode">
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">04 June 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">04 ஜூன் 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <!-- Sidebar TOC -->
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Finance</span><span class="lang-ta">பொருளாதாரம் & நிதி</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · Appointments</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">D.K. Shivakumar Sworn in as 25th Chief Minister of Karnataka</span>
+                        <span class="lang-ta">கர்நாடகாவின் 25-வது முதல்வராக டி.கே. சிவகுமார் பதவியேற்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Following the resignation of Siddaramaiah on May 28, D.K. Shivakumar was sworn in as the 25th Chief Minister of Karnataka in a ceremony held at the Glass House of Raj Bhavan in Bengaluru. G. Parameshwara took oath as the Deputy Chief Minister, along with 12 other cabinet ministers. The oath of office and secrecy was administered by the Governor of Karnataka, Thaawarchand Gehlot. Shivakumar, who took the oath in the name of his spiritual guru Ajjayya, is the first CM from the Vokkaliga community since H.D. Kumaraswamy.</p>
+                    <p class="lang-ta">மே 28-ம் தேதி சித்தராமையா ராஜினாமா செய்ததையடுத்து, கர்நாடகாவின் 25-வது முதல்வராக டி.கே. சிவகுமார் பெங்களூரு ராஜ்பவனில் உள்ள கண்ணாடி மாளிகையில் பதவியேற்றுக் கொண்டார். ஜி. பரமேஸ்வர் துணை முதல்வராகவும், மேலும் 12 பேர் அமைச்சர்களாகவும் பதவியேற்றனர். கர்நாடக ஆளுநர் தாவர்சந்த் கெலாட் அவர்களுக்குப் பதவிப் பிரமாணம் மற்றும் ரகசியக் காப்புப் பிரமாணம் செய்து வைத்தார். தனது ஆன்மீக குருவான அஜ்ஜய்யாவின் பெயரில் பதவியேற்ற சிவகுமார், எச்.டி. குமாரசாமிக்குப் பிறகு ஒக்கலிகர் சமுதாயத்தைச் சேர்ந்த முதல் முதல்வர் ஆவார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Polity Hook:</strong> Article 164 of the Indian Constitution states that the Chief Minister shall be appointed by the Governor, and the other Ministers shall be appointed by the Governor on the advice of the Chief Minister.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> சரத்து 164-ன்படி முதல்வர் ஆளுநரால் நியமிக்கப்பட வேண்டும், மற்றும் முதல்வரின் ஆலோசனையின் பேரில் பிற அமைச்சர்கள் ஆளுநரால் நியமிக்கப்பட வேண்டும்.</span></li>
+                            <li><span class="badge bg-tip">TIP</span><span class="lang-en">Governor of Karnataka: Thaawarchand Gehlot. Working strength of the Karnataka Legislative Assembly is 224.</span><span class="lang-ta">கர்நாடக ஆளுநர்: தாவர்சந்த் கெலாட். கர்நாடக சட்டமன்றத்தின் மொத்த இடங்கள் 224.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Judiciary · Elections</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Madras HC Invalidates AIADMK's 2016 Radhapuram Election Win</span>
+                        <span class="lang-ta">2016 ராதாபுரம் தேர்தல்: அதிமுக வேட்பாளரின் வெற்றி செல்லாது என ஐகோர்ட் தீர்ப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Madras High Court has declared the victory of AIADMK candidate I.S. Inbadurai in the 2016 Assembly elections for the Radhapuram constituency as invalid. The court ruled in favour of DMK's M. Appavu (the current Assembly Speaker) after postal votes were recounted. Upon counting the previously rejected postal votes, Appavu secured 153 votes against Inbadurai's 1, bringing his final winning margin to 104 votes. The court also barred Inbadurai from claiming an MLA pension for the 2016-2021 term.</p>
+                    <p class="lang-ta">2016-ம் ஆண்டு ராதாபுரம் சட்டமன்றத் தொகுதியில் போட்டியிட்ட அதிமுக வேட்பாளர் ஐ.எஸ். இன்பதுரையின் வெற்றி செல்லாது என சென்னை உயர் நீதிமன்றம் தீர்ப்பளித்துள்ளது. தபால் வாக்குகள் எண்ணப்பட்ட பிறகு திமுகவின் எம். அப்பாவுவுக்கு (தற்போதைய பேரவைத் தலைவர்) சாதகமாக நீதிமன்றம் தீர்ப்பளித்தது. நிராகரிக்கப்பட்ட தபால் வாக்குகள் எண்ணப்பட்டதில், அப்பாவு 153 வாக்குகளும், இன்பதுரை 1 வாக்கும் பெற்றனர்; இதன் மூலம் அப்பாவு 104 வாக்குகள் வித்தியாசத்தில் வெற்றி பெற்றதாக அறிவிக்கப்பட்டது. 2016-2021 காலகட்டத்திற்கான எம்எல்ஏ ஓய்வூதியத்தை இன்பதுரை கோரக் கூடாது எனவும் நீதிமன்றம் தடை விதித்துள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Polity Hook:</strong> Election Petitions challenging the validity of a parliamentary or assembly election are directly heard by the <strong>High Court</strong> of the respective state under the Representation of the People Act, 1951.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> மக்கள் பிரதிநிதித்துவச் சட்டம், 1951-ன்படி நாடாளுமன்ற அல்லது சட்டமன்றத் தேர்தலின் செல்லுபடியாகும் தன்மையை சவால் செய்யும் தேர்தல் மனுக்கள் (Election Petitions) நேரடியாக அந்தந்த மாநில <strong>உயர் நீதிமன்றத்தால்</strong> விசாரிக்கப்படுகின்றன.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Law Enforcement · Appointments</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Sandeep Singh Rathore Takes Charge as DGP of Prisons</span>
+                        <span class="lang-ta">சிறைத்துறை டிஜிபியாக சந்தீப் ராய் ரத்தோர் பொறுப்பேற்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Sandeep Singh Rathore officially took charge as the DGP of Prisons and Correctional Services in Tamil Nadu on Wednesday. He replaces K. Shankar, who has been transferred to the Enforcement (Prohibition) wing as ADGP. Rathore, a 1992-batch IPS officer, previously served as the Commissioner of Police for Avadi (2021) and Chennai (2023), and also served as the Chief of Tamil Nadu Police during the recent assembly elections as directed by the ECI.</p>
+                    <p class="lang-ta">தமிழக சிறை மற்றும் சீர்திருத்தப் பணிகள் துறை டிஜிபியாக சந்தீப் ராய் ரத்தோர் புதன்கிழமை பொறுப்பேற்றுக் கொண்டார். சிறைத்துறை ஏடிஜிபியாக இருந்த கே. சங்கர் மதுவிலக்கு அமலாக்கப் பிரிவுக்கு மாற்றப்பட்டுள்ளார். 1992-ம் ஆண்டு பேட்ச் ஐபிஎஸ் அதிகாரியான ரத்தோர், முன்னதாக ஆவடி (2021) மற்றும் சென்னை (2023) காவல் ஆணையராகப் பணியாற்றியவர். மேலும், சமீபத்திய சட்டமன்றத் தேர்தலின் போது தேர்தல் ஆணையத்தின் உத்தரவின் பேரில் தமிழக காவல்துறைத் தலைவராகவும் (DGP) பணியாற்றினார்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Economy · Exports</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">India's First Chilled Fish Export to Oman Commences Under CEPA</span>
+                        <span class="lang-ta">CEPA ஒப்பந்தத்தின் கீழ் ஓமனுக்கு முதல்முறையாக 'குளிரூட்டப்பட்ட மீன்' ஏற்றுமதி தொடக்கம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Following the implementation of the India-Oman Comprehensive Economic Partnership Agreement (CEPA) on June 1, the first consignment of chilled fish was successfully exported from Chennai to Oman. Customs Assistant Commissioner Manimegalai Selvam flagged off the shipment. This marks a significant milestone, as Oman has completely removed the 5% import duty on marine products like shrimp, fish, and squid, creating new market opportunities for Indian seafood in the Middle East.</p>
+                    <p class="lang-ta">இந்தியா-ஓமன் விரிவான பொருளாதார கூட்டு ஒப்பந்தம் (CEPA) ஜூன் 1 முதல் அமலுக்கு வந்ததையடுத்து, சென்னையிலிருந்து ஓமனுக்கு முதல்முறையாக குளிரூட்டப்பட்ட மீன் (Chilled Fish) ஏற்றுமதி வெற்றிகரமாகத் தொடங்கியது. சுங்கத்துறை உதவி ஆணையர் மணிமேகலை செல்வம் இதனை கொடியசைத்துத் தொடங்கி வைத்தார். இறால், மீன், கணவாய் போன்ற கடல் உணவுப் பொருட்களுக்கு விதிக்கப்பட்டிருந்த 5% இறக்குமதி வரியை ஓமன் முழுமையாக ரத்து செய்துள்ளது. இது மத்திய கிழக்கில் இந்திய கடல் உணவுகளுக்கு புதிய சந்தை வாய்ப்புகளை உருவாக்கும் முக்கிய மைல்கல்லாகும்.</p>
+                </div>
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National / Central News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Economy · Policy</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Union Cabinet Approves ₹10,000 Crore to Stabilize ATF Prices</span>
+                        <span class="lang-ta">விமான எரிபொருள் விலையை கட்டுப்படுத்த ரூ.10,000 கோடி நிதி: மத்திய அமைச்சரவை ஒப்புதல்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Union Cabinet, chaired by PM Narendra Modi, approved a ₹10,000 crore interest-free advance scheme for state-owned oil marketing companies to stabilize Aviation Turbine Fuel (ATF) prices. The move comes as global ATF prices surged from $60.50 per barrel in March to $142 per barrel in May due to the Middle East conflict, severely impacting Indian airlines and skyrocketing ticket prices. I&B Minister Ashwini Vaishnaw stated this fund will ensure stable fuel costs and mitigate the burden on passengers.</p>
+                    <p class="lang-ta">பிரதமர் நரேந்திர மோடி தலைமையிலான மத்திய அமைச்சரவை, விமான எரிபொருள் (ATF) விலையை நிலையாக வைத்திருக்க, பொதுத்துறை எண்ணெய் நிறுவனங்களுக்கு ரூ.10,000 கோடி வட்டியில்லா முன்பணம் வழங்கும் திட்டத்திற்கு ஒப்புதல் அளித்துள்ளது. மத்திய கிழக்கு போர் காரணமாக சர்வதேச ATF விலை மார்ச் மாதத்தில் பேரலுக்கு $60.50-லிருந்து மே மாதத்தில் $142 ஆக உயர்ந்தது. இது இந்திய விமான நிறுவனங்களை கடுமையாகப் பாதித்து, டிக்கெட் கட்டணங்களை உயர்த்தியது. இந்த நிதி எரிபொருள் விலையை நிலையாக வைத்திருக்கவும், பயணிகள் மீதான சுமையைக் குறைக்கவும் உதவும் என தகவல் ஒலிபரப்புத்துறை அமைச்சர் அஸ்வினி வைஷ்ணவ் தெரிவித்தார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en">Fuel costs constitute approximately <strong>40%</strong> of the total operational expenses for airlines in India.</span><span class="lang-ta">இந்தியாவில் விமான நிறுவனங்களின் மொத்த செயல்பாட்டுச் செலவுகளில் எரிபொருள் செலவு தோராயமாக <strong>40%</strong> ஆகும்.</span></li>
+                            <li><span class="lang-en"><strong>Economy Hook:</strong> Subsidies or advances to Oil Marketing Companies (OMCs) increase the government's fiscal deficit.</span><span class="lang-ta"><strong>பொருளாதாரக் குறிப்பு:</strong> எண்ணெய் நிறுவனங்களுக்கு வழங்கப்படும் மானியங்கள் அல்லது முன்பணங்கள் அரசாங்கத்தின் நிதிப் பற்றாக்குறையை (Fiscal Deficit) அதிகரிக்கும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Judiciary · Corruption</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Sukesh Chandrashekhar Rs 200 Crore Scam: Court Frames Charges</span>
+                        <span class="lang-ta">ரூ.200 கோடி மோசடி வழக்கு: சுகேஷ் சந்திரசேகர், ஜாக்குலின் மீது குற்றச்சாட்டுகள் பதிவு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">A Delhi court officially framed charges against 17 individuals, including alleged conman Sukesh Chandrashekhar and actress Jacqueline Fernandez, in a ₹200 crore money laundering case. Sukesh, arrested in 2017 for attempting to bribe the EC on behalf of TTV Dhinakaran, ran the extortion ring from Tihar jail by impersonating senior PMO and Home Ministry officials. The Enforcement Directorate (ED) has registered the case under the Prevention of Money Laundering Act (PMLA).</p>
+                    <p class="lang-ta">ரூ.200 கோடி பணமோசடி வழக்கில், மோசடி மன்னன் என அழைக்கப்படும் சுகேஷ் சந்திரசேகர், நடிகை ஜாக்குலின் பெர்னாண்டஸ் உட்பட 17 பேர் மீது டெல்லி நீதிமன்றம் அதிகாரப்பூர்வமாக குற்றச்சாட்டுகளைப் பதிவு செய்துள்ளது. 2017-ல் டிடிவி தினகரனுக்காக தேர்தல் ஆணையத்திற்கு லஞ்சம் கொடுக்க முயன்ற வழக்கில் கைது செய்யப்பட்ட சுகேஷ், திகார் சிறையில் இருந்தபடியே, பிரதமர் அலுவலகம் மற்றும் உள்துறை அமைச்சக மூத்த அதிகாரிகள் போல் ஆள்மாறாட்டம் செய்து பணப்பறிப்பில் ஈடுபட்டார். அமலாக்கத்துறை (ED) சட்டவிரோத பணப் பரிமாற்றத் தடுப்புச் சட்டத்தின் (PMLA) கீழ் இவ்வழக்கைப் பதிவு செய்துள்ளது.</p>
+                </div>
+            </section>
+
+            <!-- INTERNATIONAL NEWS -->
+            <section id="international">
+                <h2>
+                    <span class="lang-en">International News</span>
+                    <span class="lang-ta">சர்வதேச செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Trade · Geopolitics</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">US Proposes 12.5% Additional Tariff on India and 53 Other Nations</span>
+                        <span class="lang-ta">இந்தியா உள்பட 54 நாடுகள் மீது 12.5% கூடுதல் வரி விதிக்க அமெரிக்கா திட்டம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The United States Trade Representative (USTR) has proposed levying an additional 12.5% tariff on goods imported from 54 countries, including India, China, Japan, and Brazil. This action falls under Section 301 of the US Trade Act. The USTR stated these nations have failed to restrict the export of goods manufactured using "forced labour," creating an unfair playing field for American workers. Additionally, a 10% tariff is proposed against 6 other countries (like Canada and the EU) for inadequate enforcement of existing bans.</p>
+                    <p class="lang-ta">அமெரிக்க வர்த்தக பிரதிநிதி (USTR) இந்தியா, சீனா, ஜப்பான், பிரேசில் உள்ளிட்ட 54 நாடுகளில் இருந்து இறக்குமதி செய்யப்படும் பொருட்கள் மீது 12.5% கூடுதல் வரி விதிக்க பரிந்துரைத்துள்ளார். இந்த நடவடிக்கை அமெரிக்க வர்த்தக சட்டத்தின் 301-வது பிரிவின் கீழ் வருகிறது. இந்த நாடுகள் "கட்டாய உழைப்பைக்" (Forced Labour) கொண்டு உற்பத்தி செய்யப்படும் பொருட்களின் ஏற்றுமதியைக் கட்டுப்படுத்தத் தவறிவிட்டன என்றும், இது அமெரிக்கத் தொழிலாளர்களுக்கு நியாயமற்ற போட்டியை உருவாக்குவதாகவும் USTR குறிப்பிட்டுள்ளது. மேலும், இருக்கும் தடைகளைச் சரிவர அமல்படுத்தாத கனடா, ஐரோப்பிய ஒன்றியம் போன்ற 6 நாடுகள் மீது 10% வரி விதிக்கவும் பரிந்துரைக்கப்பட்டுள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Economy / IR Hook:</strong> Section 301 of the US Trade Act of 1974 allows the US President to take retaliatory action against foreign trade practices deemed "unjustifiable" or "unreasonable."</span><span class="lang-ta"><strong>சர்வதேச உறவுகள் குறிப்பு:</strong> 1974-ம் ஆண்டின் அமெரிக்க வர்த்தக சட்டத்தின் 301-வது பிரிவு, "நியாயமற்ற" வெளிநாட்டு வர்த்தக நடைமுறைகளுக்கு எதிராக பதிலடி நடவடிக்கை எடுக்க அமெரிக்க அதிபருக்கு அதிகாரம் அளிக்கிறது.</span></li>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en">The Ministry of Commerce and Industry handles these trade disputes for India, often engaging in bilateral talks to resolve them before they hit the WTO.</span><span class="lang-ta">வர்த்தக மற்றும் தொழில்துறை அமைச்சகம் இந்தியாவுக்கான இந்த வர்த்தக மோதல்களைக் கையாளுகிறது, பெரும்பாலும் WTO-க்குச் செல்வதற்கு முன்பு இருதரப்புப் பேச்சுவார்த்தைகள் மூலம் இவற்றைத் தீர்க்க முயல்கிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Conflict · Middle East</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">1 Indian Killed as Iran Drones Strike Kuwait Airport; India Condemns Attack</span>
+                        <span class="lang-ta">குவைத் விமான நிலையம் மீது ஈரான் ட்ரோன் தாக்குதல்: ஒரு இந்தியர் பலி; இந்தியா கண்டனம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">One Indian citizen was killed and 63 others (including passengers and staff) were injured when Iran launched a drone strike on Terminal 1 of the Kuwait International Airport. The attack was reportedly in retaliation to US strikes on Iranian missile bases near the Strait of Hormuz. Following the incident, Kuwait gave two Iranian diplomats 24 hours to leave the country. India's Ministry of External Affairs strongly condemned the targeting of civilian infrastructure and stated it is coordinating with Kuwaiti authorities to assist the victims.</p>
+                    <p class="lang-ta">குவைத் சர்வதேச விமான நிலையத்தின் முனையம்-1 மீது ஈரான் நடத்திய ட்ரோன் தாக்குதலில் ஒரு இந்தியக் குடிமகன் உயிரிழந்தார் மற்றும் 63 பேர் (பயணிகள் மற்றும் ஊழியர்கள்) காயமடைந்தனர். ஹார்முஸ் ஜலசந்தி அருகே உள்ள ஈரானிய ஏவுகணைத் தளங்கள் மீது அமெரிக்கா நடத்திய தாக்குதலுக்கு பதிலடியாக இந்தத் தாக்குதல் நடந்ததாகக் கூறப்படுகிறது. இச்சம்பவத்தையடுத்து, இரண்டு ஈரானிய தூதர்கள் நாட்டை விட்டு வெளியேற குவைத் 24 மணி நேர அவகாசம் அளித்தது. சிவிலியன் உள்கட்டமைப்பை குறிவைத்ததற்கு இந்திய வெளியுறவு அமைச்சகம் கடும் கண்டனம் தெரிவித்துள்ளதுடன், பாதிக்கப்பட்டவர்களுக்கு உதவ குவைத் அதிகாரிகளுடன் ஒருங்கிணைந்து செயல்படுவதாகவும் தெரிவித்துள்ளது.</p>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Global Oil · Geopolitics</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">UAE's Exit from OPEC Exposes Rifts in the Oil Cartel</span>
+                        <span class="lang-ta">ஓபெக் (OPEC) அமைப்பிலிருந்து ஐக்கிய அரபு அமீரகம் வெளியேற்றம்: எண்ணெய் கூட்டமைப்பில் விரிசல்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The United Arab Emirates (UAE) has decided to exit the Organization of the Petroleum Exporting Countries (OPEC), exposing deep rifts over production quotas. Founded in 1960, OPEC controls 36.7% of global oil production. The UAE's exit is driven by its "Vision 2031" economic plan; having invested $150 billion to boost its daily production capacity to 5 million barrels, the UAE was frustrated by OPEC capping its output at 3.4 million barrels to maintain high global prices. This exit might lead the UAE to trade oil in non-dollar currencies (like Rupee or Yuan), potentially weakening the petrodollar system.</p>
+                    <p class="lang-ta">பாறை எண்ணெய் ஏற்றுமதி செய்யும் நாடுகளின் அமைப்பிலிருந்து (OPEC - ஓபெக்) வெளியேற ஐக்கிய அரபு அமீரகம் (UAE) முடிவு செய்துள்ளது. இது எண்ணெய் உற்பத்தி ஒதுக்கீடுகள் தொடர்பான ஆழமான விரிசல்களை வெளிப்படுத்தியுள்ளது. 1960-ல் நிறுவப்பட்ட ஓபெக், உலகளாவிய எண்ணெய் உற்பத்தியில் 36.7%-ஐக் கட்டுப்படுத்துகிறது. அமீரகத்தின் இந்த வெளியேற்றம் அதன் "Vision 2031" பொருளாதாரத் திட்டத்தால் தூண்டப்படுகிறது; தினசரி உற்பத்தித் திறனை 5 மில்லியன் பேரல்களாக உயர்த்த $150 பில்லியனை முதலீடு செய்துள்ள நிலையில், உலகளாவிய விலையை அதிகமாக வைத்திருக்க ஓபெக் அதன் உற்பத்தியை 3.4 மில்லியன் பேரல்களாகக் கட்டுப்படுத்தியதால் அமீரகம் அதிருப்தி அடைந்தது. இந்த வெளியேற்றம் அமீரகத்தை டாலர் அல்லாத நாணயங்களில் (ரூபாய் அல்லது யுவான்) எண்ணெய் வர்த்தகம் செய்ய வழிவகுக்கலாம், இது பெட்ரோ-டாலர் அமைப்பை பலவீனப்படுத்தும்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en">OPEC was founded in 1960 in Baghdad by Iran, Iraq, Kuwait, Saudi Arabia, and Venezuela. Its headquarters is in <strong>Vienna, Austria</strong>.</span><span class="lang-ta">ஓபெக் (OPEC) 1960-ல் ஈராக் தலைநகர் பாக்தாத்தில் ஈரான், ஈராக், குவைத், சவுதி அரேபியா மற்றும் வெனிசுலாவால் நிறுவப்பட்டது. இதன் தலைமையகம் <strong>ஆஸ்திரியாவின் வியன்னாவில்</strong> உள்ளது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+            </section>
+
+            <!-- ECONOMY & FINANCE -->
+            <section id="economy">
+                <h2>
+                    <span class="lang-en">Economy & Finance</span>
+                    <span class="lang-ta">பொருளாதாரம் & நிதி</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Corporates · Investment</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Adani Group to Invest a Record ₹1.53 Lakh Crore in FY26</span>
+                        <span class="lang-ta">நடப்பு நிதியாண்டில் அதானி குழுமம் ரூ.1.53 லட்சம் கோடி முதலீடு: வரலாற்றுச் சாதனை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Adani Group is set to make a capital investment of ₹1.53 lakh crore in the 2025-26 financial year, marking the highest single-year investment in India's corporate history. Almost 80% of this capital will be directed towards core infrastructure sectors such as energy, transport, and logistics. Key projects driving this investment include the Navi Mumbai International Airport, the Ganga Expressway, copper smelter plants, and 5.1 GW of renewable energy capacity. The group's total asset value has now surged to ₹7.85 lakh crore.</p>
+                    <p class="lang-ta">2025-26 நிதியாண்டில் அதானி குழும நிறுவனங்கள் முன் எப்போதும் இல்லாத வகையில் ரூ.1.53 லட்சம் கோடி மூலதன முதலீட்டை மேற்கொள்ள உள்ளன. இந்தியாவின் பெருநிறுவன வரலாற்றிலேயே ஒரே ஆண்டில் மேற்கொள்ளப்பட்ட மிகப்பெரிய மூலதன முதலீடான இது, அதானி குழுமத்தின் மொத்த சொத்து மதிப்பை ரூ.7.85 லட்சம் கோடியாக அதிகரித்துள்ளது. இதில் சுமார் 80 சதவீத முதலீடுகள் எரிசக்தி, போக்குவரத்து போன்ற நாட்டின் உள்கட்டமைப்பு மேம்பாட்டுத் துறைகளிலேயே முழுமையாகச் செலவிடப்பட உள்ளன. நவி மும்பை சர்வதேச விமான நிலையம், கங்கா விரைவுச் சாலை, தாமிர உருக்காலை மற்றும் 5.1 ஜிகாவாட் புதுப்பிக்கத்தக்க எரிசக்தி திட்டங்கள் ஆகியவை இந்த முதலீட்டின் முக்கிய அம்சங்களாகும்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Macroeconomics · Reserves</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">RBI Clarifies: No Plan to Sell Gold Reserves</span>
+                        <span class="lang-ta">கையிருப்பில் உள்ள தங்கம் விற்பனையா?: ரிசர்வ் வங்கி மறுப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Reserve Bank of India (RBI) strongly denied recent media reports claiming that it plans to sell portions of its gold reserves. In a press release, the RBI termed the information "false" and clarified that it currently holds 880.52 tonnes of gold, remaining unchanged. The central bank urged the public to rely only on official bulletins regarding gold reserves, which are published monthly on its website.</p>
+                    <p class="lang-ta">தனது கையிருப்பில் உள்ள தங்கத்தை விற்பனை செய்வதாக வெளியான தகவலை இந்திய ரிசர்வ் வங்கி (RBI) திட்டவட்டமாக மறுத்துள்ளது. இது தொடர்பாக ரிசர்வ் வங்கி வெளியிட்ட செய்திக்குறிப்பில், சில ஊடகங்களில் வெளியான இந்தத் தகவல் தவறானது என்றும், தற்போதைய நிலையில் ரிசர்வ் வங்கியிடம் 880.52 டன் தங்கம் கையிருப்பில் உள்ளது, அதில் எவ்வித மாற்றமும் இல்லை என்றும் விளக்கமளித்துள்ளது. தங்க இருப்பு குறித்து மாதந்தோறும் ரிசர்வ் வங்கி வெளியிடும் அதிகாரப்பூர்வ தகவலை மட்டுமே நம்புமாறு பொதுமக்களிடம் கேட்டுக் கொள்ளப்பட்டுள்ளது.</p>
+                </div>
+            </section>
+            
+            <!-- SPORTS -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports</span>
+                    <span class="lang-ta">விளையாட்டு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Chess · Norway Chess</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Norway Chess: Praggnanandhaa Defeats World No. 1 Magnus Carlsen Again</span>
+                        <span class="lang-ta">நார்வே செஸ்: உலகின் நம்பர் 1 வீரர் கார்ல்செனை மீண்டும் வீழ்த்தினார் பிரக்ஞானந்தா</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In a stunning Round 8 match at the Norway Chess tournament, Indian Grandmaster R. Praggnanandhaa defeated reigning World No. 1 Magnus Carlsen in the classical format. This is the second time Praggnanandhaa has beaten Carlsen in a classical game (after Viswanathan Anand did it in 2007). With this win, Praggnanandhaa moved to the 3rd spot on the leaderboard (12 points). Meanwhile, D. Gukesh suffered his 3rd defeat, ending his title hopes.</p>
+                    <p class="lang-ta">நார்வே செஸ் போட்டியின் 8-வது சுற்றில், இந்திய கிராண்ட்மாஸ்டர் ஆர். பிரக்ஞானந்தா, உலகின் முதல்நிலை வீரரான நார்வேயின் மேக்னஸ் கார்ல்செனை கிளாசிக் சுற்றில் வீழ்த்தி சாதனை படைத்தார். கிளாசிக் சுற்றில் கார்ல்செனை பிரக்ஞானந்தா வீழ்த்துவது இது 2-வது முறையாகும் (இதற்கு முன் 2007-ல் விஸ்வநாதன் ஆனந்த் வென்றிருந்தார்). இந்த வெற்றியின் மூலம் 12 புள்ளிகளுடன் பிரக்ஞானந்தா 3-வது இடத்துக்கு முன்னேறினார். அதேசமயம், டி. குகேஷ் தனது 3-வது தோல்வியைச் சந்தித்து பட்டத்தை வெல்லும் வாய்ப்பை இழந்தார்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Tennis · French Open</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">French Open: Swiatek Reaches Semis; Sabalenka Knocked Out</span>
+                        <span class="lang-ta">பிரெஞ்சு ஓபன்: அரையிறுதியில் ஸ்வியாடெக்; அதிர்ச்சித் தோல்வி அடைந்தார் சபலென்கா</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">At the French Open (Roland Garros), World No. 1 Iga Swiatek secured her spot in the semi-finals by defeating Marketa Vondrousova. However, World No. 2 Aryna Sabalenka faced a shock quarter-final exit, losing to 17-year-old Russian sensation Mirra Andreeva (6-3, 5-7, 0-6). Andreeva becomes the youngest Grand Slam semi-finalist since Martina Hingis in 1997. In the men's draw, Alexander Zverev advanced to the semis after a victory over Alex de Minaur.</p>
+                    <p class="lang-ta">பிரெஞ்சு ஓபன் டென்னிஸ் போட்டியில், உலகின் நம்பர் 1 வீராங்கனையான இகா ஸ்வியாடெக், மார்கெட்டா வோண்ட்ரூசோவாவை வீழ்த்தி அரையிறுதிக்கு முன்னேறினார். ஆனால், உலகின் 2-ம் நிலை வீராங்கனையான அரினா சபலென்கா, 17 வயது ரஷ்ய வீராங்கனையான மிரா ஆண்ட்ரீவாவிடம் (6-3, 5-7, 0-6) அதிர்ச்சித் தோல்வி அடைந்து காலிறுதியோடு வெளியேறினார். 1997-ல் மார்டினா ஹிங்கிஸுக்குப் பிறகு கிராண்ட்ஸ்லாம் அரையிறுதிக்கு முன்னேறிய இளம் வீராங்கனை என்ற பெருமையை ஆண்ட்ரீவா பெற்றார். ஆடவர் பிரிவில், அலெக்சாண்டர் ஸ்வெரேவ், அலெக்ஸ் டி மினாரை வீழ்த்தி அரையிறுதிக்குத் தகுதி பெற்றார்.</p>
+                </div>
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Who among the following is empowered to appoint the Chief Minister of a State under the Constitution of India?</span>
+                        <span class="lang-ta">கேள்வி: இந்திய அரசியலமைப்பின்படி ஒரு மாநிலத்தின் முதலமைச்சரை நியமிக்கும் அதிகாரம் கீழ்க்கண்ட எவருக்கு உள்ளது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">The Governor of the State (Article 164)</span><br><br>
+                                <strong>Context:</strong> D.K. Shivakumar was sworn in as the 25th Chief Minister of Karnataka, administered by Governor Thaawarchand Gehlot.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">மாநில ஆளுநர் (சரத்து 164)</span><br><br>
+                                <strong>பின்னணி:</strong> கர்நாடகாவின் 25-வது முதல்வராக டி.கே. சிவகுமார் பதவியேற்றார். அவருக்கு ஆளுநர் தாவர்சந்த் கெலாட் பதவிப் பிரமாணம் செய்து வைத்தார்.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Section 301 of the US Trade Act, frequently seen in the news, is associated with which of the following actions?</span>
+                        <span class="lang-ta">கேள்வி: அடிக்கடி செய்திகளில் காணப்படும் அமெரிக்க வர்த்தக சட்டத்தின் 301-வது பிரிவு கீழ்க்கண்ட எந்த நடவடிக்கையுடன் தொடர்புடையது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Imposing retaliatory tariffs on foreign nations for unfair trade practices</span><br><br>
+                                <strong>Context:</strong> The USTR proposed a 12.5% additional tariff on 54 countries (including India) citing forced labour violations under Section 301.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">நியாயமற்ற வர்த்தக நடைமுறைகளுக்காக வெளிநாடுகள் மீது பதிலடி வரிகளை விதித்தல்</span><br><br>
+                                <strong>பின்னணி:</strong> கட்டாய உழைப்பு மீறல்களைக் சுட்டிக்காட்டி 301 பிரிவின் கீழ் இந்தியா உள்ளிட்ட 54 நாடுகள் மீது 12.5% கூடுதல் வரியை அமெரிக்கா (USTR) முன்மொழிந்தது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">Karnataka CM Swearing-in</span><span class="lang-ta">கர்நாடக முதல்வர் பதவியேற்பு</span></td>
+                                <td><span class="lang-en">Polity</span><span class="lang-ta">அரசியலமைப்பு</span></td>
+                                <td><span class="lang-en">D.K. Shivakumar becomes 25th CM.</span><span class="lang-ta">டி.கே. சிவகுமார் 25வது முதல்வரானார்.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">US 12.5% Tariff</span><span class="lang-ta">அமெரிக்காவின் 12.5% வரி</span></td>
+                                <td><span class="lang-en">Economy/IR</span><span class="lang-ta">பொருளாதாரம்/உறவுகள்</span></td>
+                                <td><span class="lang-en">Section 301 invoked against 54 countries (inc. India) for forced labour.</span><span class="lang-ta">கட்டாய உழைப்புக்காக இந்தியா உள்பட 54 நாடுகள் மீது பிரிவு 301 பயன்பாடு.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">Oman CEPA Fish Export</span><span class="lang-ta">ஓமனுக்கு மீன் ஏற்றுமதி</span></td>
+                                <td><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></td>
+                                <td><span class="lang-en">First chilled fish exported from Chennai as 5% duty is scrapped.</span><span class="lang-ta">5% வரி ரத்து செய்யப்பட்டதால் சென்னையிலிருந்து முதல் மீன் ஏற்றுமதி.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">Norway Chess</span><span class="lang-ta">நார்வே செஸ்</span></td>
+                                <td><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></td>
+                                <td><span class="lang-en">Praggnanandhaa beats Carlsen in classic format.</span><span class="lang-ta">கிளாசிக் சுற்றில் கார்ல்செனை வீழ்த்தினார் பிரக்ஞானந்தா.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">Radhapuram 2016 Verdict</span><span class="lang-ta">ராதாபுரம் 2016 தீர்ப்பு</span></td>
+                                <td><span class="lang-en">State/Judiciary</span><span class="lang-ta">மாநிலம்/நீதித்துறை</span></td>
+                                <td><span class="lang-en">Appavu declared winner by 104 votes over Inbadurai (ADMK).</span><span class="lang-ta">இன்பதுரையை விட அப்பாவு 104 வாக்குகள் வித்தியாசத்தில் வெற்றி பெற்றதாக அறிவிப்பு.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani Chennai 04-06-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி சென்னை 04-06-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source text detailed state, national, and international news for 04 June 2026. 
+State news highlighted D.K. Shivakumar swearing in as the 25th CM of Karnataka replacing Siddaramaiah. The Madras HC declared ADMK's I.S. Inbadurai's 2016 Radhapuram election win invalid, and declared DMK's Appavu the winner. CM Joseph Vijay gave 1 Rajya Sabha seat to Congress. ED raided Dindigul AR Dairy Foods regarding adulterated ghee. Sandeep Singh Rathore became DGP of Prisons. Schools in TN reopen on June 4. Annamalai is to announce a new party on June 5. EPS election affidavit case was dismissed. First chilled fish export to Oman from Chennai began under CEPA.
+National news included the Union Cabinet approving a ₹10,000 crore advance for OMCs to stabilize ATF prices. A Delhi hotel fire killed 21 (11 foreigners). A mosque/dargah at Varanasi railway station was demolished. A Delhi court framed charges against Sukesh Chandrashekhar and Jacqueline Fernandez in a Rs 200 Cr scam. RBI denied rumors of selling gold reserves (880.52 tonnes). Adani Group announced a record ₹1.53 lakh crore investment.
+Internationally, the US proposed a 12.5% tariff on 54 countries (including India) over forced labor. Iran's drone strike on Kuwait Airport killed 1 Indian. The UAE is reportedly leaving OPEC.
+Sports: Praggnanandhaa defeated Carlsen in Norway Chess. Swiatek reached French Open semis while Sabalenka was knocked out.]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூல உரைகள் 04 ஜூன் 2026 க்கான செய்திகளைக் கொண்டிருந்தன.
+மாநில செய்திகளில், சித்தராமையாவுக்குப் பதிலாக கர்நாடகாவின் 25-வது முதல்வராக டி.கே. சிவகுமார் பதவியேற்றார். 2016 ராதாபுரம் தேர்தலில் அதிமுகவின் இன்பதுரையின் வெற்றி செல்லாது எனவும் அப்பாவு வெற்றி பெற்றதாகவும் ஹைகோர்ட் தீர்ப்பளித்தது. முதல்வர் ஜோசப் விஜய் காங்கிரஸுக்கு 1 ராஜ்யசபா இடத்தை ஒதுக்கினார். திருப்பதி லட்டு நெய் விவகாரத்தில் திண்டுக்கல் ஏஆர் டெய்ரியில் அமலாக்கத்துறை சோதனை. சிறைத்துறை டிஜிபியாக சந்தீப் ராய் ரத்தோர் நியமனம். தமிழகத்தில் ஜூன் 4 பள்ளிகள் திறப்பு. அண்ணாமலை புதிய கட்சியை ஜூன் 5-ல் அறிவிக்கிறார். இபிஎஸ் தேர்தல் பிரமாணப் பத்திர வழக்கு தள்ளுபடி. CEPA-வின் கீழ் சென்னையிலிருந்து ஓமனுக்கு முதல் மீன் ஏற்றுமதி.
+தேசிய அளவில், விமான எரிபொருள் விலையை கட்டுப்படுத்த ரூ.10,000 கோடிக்கு அமைச்சரவை ஒப்புதல். டெல்லி ஹோட்டல் தீ விபத்தில் 21 பேர் பலி. வாரணாசி ரயில் நிலைய மசூதி இடிப்பு. 200 கோடி மோசடி வழக்கில் சுகேஷ், ஜாக்குலின் மீது குற்றச்சாட்டுகள் பதிவு. தங்க இருப்பை விற்பதாக வந்த வதந்தியை ரிசர்வ் வங்கி மறுத்தது. அதானி குழுமம் ரூ.1.53 லட்சம் கோடி முதலீடு.
+சர்வதேச அளவில், கட்டாய உழைப்பைக் கண்டித்து இந்தியா உள்ளிட்ட 54 நாடுகள் மீது 12.5% வரியை அமெரிக்கா முன்மொழிந்தது. குவைத் விமான நிலையம் மீது ஈரான் நடத்திய ட்ரோன் தாக்குதலில் 1 இந்தியர் பலி. ஒபெக் அமைப்பிலிருந்து அமீரகம் விலகுகிறது.
+விளையாட்டு: நார்வே செஸ்ஸில் கார்ல்செனை வீழ்த்தினார் பிரக்ஞானந்தா. பிரெஞ்சு ஓபனில் ஸ்வியாடெக் அரையிறுதி; சபலென்கா வெளியேற்றம்.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 04 June 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+    </script>
+</body>
+</html>

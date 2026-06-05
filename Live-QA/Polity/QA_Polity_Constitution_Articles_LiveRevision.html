@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QA_Polity_Important_Articles_LiveRevision</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Andika&family=IBM+Plex+Mono:wght@400;600&family=Orbitron:wght@500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #0d0f14;
+            --card-bg: #161a23;
+            --gold: #f5c842;
+            --gold-hover: #e0b534;
+            --text-light: #f3f4f6;
+            --text-muted: #9ca3af;
+            
+            /* Callout Colors */
+            --critical: #ef4444;
+            --trap: #f5c842;
+            --tip: #10b981;
+            --pyq: #3b82f6;
+            --gem: #a855f7;
+            
+            /* Glares */
+            --gem-glow: rgba(168, 85, 247, 0.2);
+            --pyq-glow: rgba(59, 130, 246, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Andika', sans-serif;
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Syne', sans-serif;
+            font-weight: 400;
+        }
+
+        .orbitron {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .mono {
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        /* Hero Header */
+        .hero {
+            background: linear-gradient(135deg, #11141c 0%, #1a1f2c 100%);
+            border-bottom: 3px solid var(--gold);
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero h1 {
+            color: var(--gold);
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto 20px auto;
+        }
+
+        .meta-pills {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .pill {
+            background: rgba(245, 200, 66, 0.1);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Layout Container */
+        .container {
+            max-width: full;
+            margin: 10px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 968px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                position: relative !important;
+                top: 0 !important;
+            }
+        }
+
+        /* Sticky Sidebar & TOC */
+        .sidebar {
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+        }
+
+        .toc-card {
+            background: var(--card-bg);
+            border: 1px solid #242b3a;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .toc-card h3 {
+            color: var(--gold);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #242b3a;
+            padding-bottom: 8px;
+        }
+
+        .toc-list {
+            list-style: none;
+        }
+
+        .toc-list li {
+            margin-bottom: 10px;
+        }
+
+        .toc-list a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+            display: block;
+        }
+
+        .toc-list a:hover {
+            color: var(--gold);
+        }
+
+        /* Filters Layout */
+        .filter-container {
+            background: var(--card-bg);
+            border: 1px solid #242b3a;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 25px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-label {
+            color: var(--gold);
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .btn-filter {
+            background: #1f2533;
+            border: 1px solid #323b52;
+            color: var(--text-light);
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-filter:hover, .btn-filter.active {
+            background: var(--gold);
+            color: var(--bg-dark);
+            border-color: var(--gold);
+        }
+
+        /* Legend Row */
+        .legend-row {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            background: #11141c;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border: 1px solid #242b3a;
+            font-size: 0.85rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+
+        /* Cards and Structural Blocks */
+        .session-overview {
+            background: var(--card-bg);
+            border-left: 5px solid var(--gold);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .session-overview h2 {
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .overview-stat {
+            background: #1f2533;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #242b3a;
+        }
+
+        .overview-stat span {
+            display: block;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .overview-stat strong {
+            font-size: 1.3rem;
+            color: var(--gold);
+        }
+
+        /* Q&A Cards System */
+        .question-group-title {
+            color: var(--gold);
+            margin: 40px 0 20px 0;
+            border-bottom: 2px solid #242b3a;
+            padding-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .q-card {
+            background: var(--card-bg);
+            border: 1px solid #242b3a;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .q-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .q-card.has-gem {
+            border-color: var(--gem);
+            box-shadow: 0 4px 20px var(--gem-glow);
+        }
+
+        .q-card.has-pyq {
+            border-color: var(--pyq);
+            box-shadow: 0 4px 20px var(--pyq-glow);
+        }
+
+        .q-header {
+            background: #1b202e;
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            border-bottom: 1px solid #242b3a;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .q-badge-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+
+        .badge {
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge.easy { background: rgba(16, 185, 129, 0.15); color: var(--tip); border: 1px solid var(--tip); }
+        .badge.medium { background: rgba(245, 200, 66, 0.15); color: var(--trap); border: 1px solid var(--trap); }
+        .badge.hard { background: rgba(239, 68, 68, 0.15); color: var(--critical); border: 1px solid var(--critical); }
+        .badge.type { background: #2e374d; color: var(--text-light); }
+
+        .q-num {
+            background: var(--gold);
+            color: var(--bg-dark);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .q-text-block h3 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            color: #ffffff;
+        }
+
+        .q-text-tamil {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-style: italic;
+        }
+
+        /* Accordion Collapsed Mechanics Fixed */
+        .q-body {
+            padding: 20px;
+            display: none; 
+            border-top: 1px solid #242b3a;
+        }
+
+        .answer-block {
+            background: rgba(16, 185, 129, 0.05);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        /* Gold Toggle Icon Container */
+        .toggle-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            color: var(--gold);
+            font-size: 0.85rem;
+            font-weight: bold;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-left: 15px;
+            flex-shrink: 0;
+        }
+
+        /* Active State Configurations */
+        .q-card.active .q-body {
+            display: block;
+        }
+
+        .q-card.active .toggle-icon {
+            transform: rotate(-180deg); /* Arrow flips upwards cleanly */
+        }
+
+        .answer-title {
+            color: var(--tip);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .wrong-chat {
+            text-decoration: line-through;
+            color: var(--critical);
+            margin-right: 10px;
+        }
+
+        .correct-ans {
+            color: var(--tip);
+            font-weight: bold;
+        }
+
+        /* Callout Blocks System */
+        .callout {
+            border-left: 4px solid #fff;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .callout-label {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .callout.critical { background: rgba(239, 68, 68, 0.05); border-color: var(--critical); }
+        .callout.critical .callout-label { color: var(--critical); }
+        
+        .callout.trap { background: rgba(245, 200, 66, 0.05); border-color: var(--trap); }
+        .callout.trap .callout-label { color: var(--trap); }
+        
+        .callout.tip { background: rgba(16, 185, 129, 0.05); border-color: var(--tip); }
+        .callout.tip .callout-label { color: var(--tip); }
+        
+        .callout.pyq { background: rgba(59, 130, 246, 0.05); border-color: var(--pyq); }
+        .callout.pyq .callout-label { color: var(--pyq); }
+        
+        .callout.gem { background: rgba(168, 85, 247, 0.05); border-color: var(--gem); }
+        .callout.gem .callout-label { color: var(--gem); }
+
+        /* Tables Construction */
+        .styled-table-container {
+            overflow-x: auto;
+            margin: 25px 0;
+            border-radius: 8px;
+            border: 1px solid #242b3a;
+        }
+
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        .styled-table th {
+            background: #1b202e;
+            color: var(--gold);
+            padding: 12px 15px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-bottom: 2px solid #242b3a;
+        }
+
+        .styled-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #242b3a;
+            background: var(--card-bg);
+        }
+
+        .styled-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Summary & Prediction Cards */
+        .summary-card, .prediction-card {
+            background: var(--card-bg);
+            border: 1px solid #242b3a;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 40px;
+        }
+
+        .summary-card h2, .prediction-card h2 {
+            color: var(--gold);
+            margin-bottom: 15px;
+            border-bottom: 1px solid #242b3a;
+            padding-bottom: 8px;
+        }
+
+        .bullet-list {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .bullet-list li {
+            margin-bottom: 10px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #11141c;
+            border-top: 1px solid #242b3a;
+            padding: 20px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <h1 class="orbitron">High-Yield Q&A Revision Crack Sheet</h1>
+        <p>இந்திய அரசியல்அமைப்பு முக்கிய சரத்துக்கள் (Important Articles of the Indian Constitution) - TNPSC Group 1, 2, 4 & SSC Live Session Analysis</p>
+        <div class="meta-pills mono">
+            <span class="pill">📚 Subject: Polity / Civics</span>
+            <span class="pill">🎯 Target: TNPSC & SSC Exams</span>
+            <span class="pill">⚡ Faculty: SP Velan</span>
+            <span class="pill">📝 Medium: Bilingual (Tamil / English)</span>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <div class="toc-card">
+                <h3 class="orbitron">NAVIGATION</h3>
+                <ul class="toc-list">
+                    <li><a href="#overview">📊 Session Overview</a></li>
+                    <li><a href="#rajya-sabha">🏛️ Rajya Sabha Articles</a></li>
+                    <li><a href="#judiciary">⚖️ Judiciary Jurisdiction</a></li>
+                    <li><a href="#state-exec">👔 State Executive & Assembly</a></li>
+                    <li><a href="#local-bodies">🏡 Local Bodies & Finance</a></li>
+                    <li><a href="#services-langs">💼 Public Services & Languages</a></li>
+                    <li><a href="#summary">📋 10-Point Summary</a></li>
+                    <li><a href="#predictions">🔮 2026 Predictions</a></li>
+                    <li><a href="#flashcards">⚡ Rapid Flashcards</a></li>
+                    <li><a href="#master-cheat">🏆 Master Cheat Card</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main>
+            <div class="filter-container mono">
+                <span class="filter-label">FILTERS:</span>
+                <button class="btn-filter active" onclick="filterCards('all')">All Questions</button>
+                <button class="btn-filter" onclick="filterCards('easy')">Easy</button>
+                <button class="btn-filter" onclick="filterCards('medium')">Medium</button>
+                <button class="btn-filter" onclick="filterCards('hard')">Hard</button>
+                <button class="btn-filter" onclick="filterCards('gem')">Live Gems 💎</button>
+                <button class="btn-filter" onclick="filterCards('pyq')">PYQ Alerts 🏆</button>
+            </div>
+
+            <div class="legend-row mono">
+                <div class="legend-item"><div class="legend-dot" style="background: var(--tip);"></div> Easy</div>
+                <div class="legend-item"><div class="legend-dot" style="background: var(--trap);"></div> Medium</div>
+                <div class="legend-item"><div class="legend-dot" style="background: var(--critical);"></div> Hard</div>
+                <div class="legend-item"><div class="legend-dot" style="background: var(--pyq);"></div> PYQ Alert</div>
+                <div class="legend-item"><div class="legend-dot" style="background: var(--gem);"></div> Live Gem Insight</div>
+            </div>
+
+            <section id="overview" class="session-overview">
+                <h2 class="orbitron">📊 SESSION OVERVIEW</h2>
+                <p>இந்த நேரலை திருப்புதல் அமர்வு டிஎன்பிஎஸ்சி மற்றும் எஸ்எஸ்சி தேர்வுகளில் மீண்டும் மீண்டும் கேட்கப்படும் இந்திய அரசியலமைப்புச் சட்டத்தின் முக்கிய விவாதங்கள் மற்றும் வினாக்களை உள்ளடக்கியது. (This live revision session deeply analyzes heavily repeated constitutional provisions, structure, and amendments for competitive examinations.)</p>
+                <div class="overview-grid mono">
+                    <div class="overview-stat"><span>TOTAL QUESTIONS</span><strong>13 Live + 1 HW</strong></div>
+                    <div class="overview-stat"><span>CORE FOCUS</span><strong>Important Articles</strong></div>
+                    <div class="overview-stat"><span>WEIGHTAGE</span><strong>5 - 7 Questions</strong></div>
+                    <div class="overview-stat"><span>HIGH-YIELD CORE</span><strong>Judiciary & Local Bodies</strong></div>
+                </div>
+                
+                <div class="callout tip" style="margin-top: 20px;">
+                    <div class="callout-label">📖 DAILY THIRUKKURAL INSIGHT</div>
+                    <p><strong>குறள்:</strong> நிலையின் திரியாது அடங்கியான் தோற்றம் மலையினும் மானப் பெரியது.</p>
+                    <p><strong>English Translation:</strong> The strict self-control of a righteous man who swerves not from his path is grander than even the highest mountain peaks.</p>
+                    <p><strong>Exam Motivation Tip:</strong> நேர்மையான வழியில் நிலையாக படித்து உழைப்பவனின் வெற்றியும் புகழும் மலையை விட பெரியதாக அமையும்.</p>
+                </div>
+            </section>
+
+            <h2 id="rajya-sabha" class="question-group-title orbitron">🏛️ Union Legislature / Rajya Sabha Articles</h2>
+            
+            <div class="q-card" data-difficulty="medium">
+                <div class="q-header" onclick="toggleAccordion(this)">
+                    <div>
+                        <div class="q-badge-row mono">
+                            <span class="badge medium">Medium</span>
+                            <span class="badge type">Factual / Conceptual</span>
+                        </div>
+                        <div class="q-text-block">
+                            <h3>Q1. Which Article describes the power of the Deputy Chairman or other person to perform the duties of the office of, or to act as, Chairman of Rajya Sabha?</h3>
+                            <p class="q-text-tamil">துணைத்தலைவர் அல்லது மற்ற நபரின் நாடாளுமன்ற மாநிலங்களவை அலுவலக பணியை செய்ய தலைவராக செயல்படுவதற்கான அதிகாரத்தை எந்த சரத்து விவரிக்கிறது?</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <span class="q-num orbitron">Q1</span>
+                        <div class="toggle-icon">▼</div>
+                    </div>
+                </div>
+                <div class="q-body">
+                    <div class="answer-block">
+                        <div class="answer-title">✅ CORRECT ANSWER</div>
+                        <p>Live Chat Mistakes: <span class="wrong-chat">Article 92</span> → <span class="correct-ans">Article 91</span></p>
+                    </div>
+                    <div class="callout tip">
+                        <div class="callout-label">[RULE LINK] Constitutional Mechanism</div>
+                        <p>Under Article 91, when the office of the Chairman of the Council of States (Rajya Sabha) is vacant, or during any period when the Vice-President is acting as or discharging the functions of President, the duties of the office shall be performed by the Deputy Chairman.</p>
+                    </div>
+                    <div class="callout trap">
+                        <div class="callout-label">[TNPSC / SSC TRAP] Article 92 Overlap</div>
+                        <p><strong>Article 92</strong> explicitly states that the Chairman or Deputy Chairman <em>shall not preside</em> while a resolution for their removal from office is under consideration. Students frequently mix this up with Article 91's officiating power.</p>
+                    </div>
+                    <div class="callout gem">
+                        <div class="callout-label">[💎 LIVE GEM] Voting Limitations under Removal Resolution</div>
+                        <p><strong>Live Discussion Point:</strong> Article 92 Sub-clause (2) clarifies that when a removal resolution is active against the Chairman (Vice President), they have the right to speak in the proceedings but <strong>no right to vote</strong> at all on the resolution, breaking the standard tie-breaker rule.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2 id="judiciary" class="question-group-title orbitron">⚖️ Union Judiciary & Appellate Jurisdiction</h2>
+
+            <div class="q-card has-pyq" data-difficulty="hard">
+                <div class="q-header" onclick="toggleAccordion(this)">
+                    <div>
+                        <div class="q-badge-row mono">
+                            <span class="badge hard">Hard</span>
+                            <span class="badge type">Conceptual</span>
+                        </div>
+                        <div class="q-text-block">
+                            <h3>Q2. Which Article of the Constitution deals with the enlargement of the jurisdiction of the Supreme Court?</h3>
+                            <p class="q-text-tamil">உச்ச நீதிமன்றத்தின் அதிகார வரம்பை விரிவுபடுத்துவது பற்றி எந்த சரத்து விவரிக்கிறது?</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <span class="q-num orbitron">Q2</span>
+                        <div class="toggle-icon">▼</div>
+                    </div>
+                </div>
+                <div class="q-body">
+                    <div class="answer-block">
+                        <div class="answer-title">✅ CORRECT ANSWER</div>
+                        <p><span class="correct-ans">Article 138</span> (Options checked: 134, 135, 137, 138)</p>
+                    </div>
+                    <div class="callout pyq">
+                        <div class="callout-label">🏆 PYQ ALERT (TNPSC Gr 1 / SSC CGL)</div>
+                        <p>The core provisions of Supreme Court jurisdictions (Articles 131 - 143) are standard recurring match-the-following items in state services exams over the past decade.</p>
+                    </div>
+                    <div class="callout gem">
+                        <div class="callout-label">[💎 LIVE GEM] Article 135 Explained via Recent Events</div>
+                        <p>Faculty connected <strong>Article 135</strong> (Jurisdiction and powers of the Federal Court under existing law to be exercisable by the Supreme Court) to an appellate jurisdiction issue arising out of the recent Vilathikulam double death penalty case where mercy petitions and sequential appeals highlight how structural appellate power functions.</p>
+                    </div>
+                    <div class="callout critical">
+                        <div class="callout-label">[CRITICAL] Key Overlaps</div>
+                        <p><strong>Article 137:</strong> Review of judgments or orders by the Supreme Court (Power of Judicial Review of its own rulings).</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2 id="state-exec" class="question-group-title orbitron">👔 State Executive & Legislative Protections</h2>
+
+            <div class="q-card has-pyq" data-difficulty="medium">
+                <div class="q-header" onclick="toggleAccordion(this)">
+                    <div>
+                        <div class="q-badge-row mono">
+                            <span class="badge medium">Medium</span>
+                            <span class="badge type">Conceptual / Mathematical Shortcut</span>
+                        </div>
+                        <div class="q-text-block">
+                            <h3>Q3. Which Article details the duties of the Chief Minister regarding the furnishing of information to the Governor?</h3>
+                            <p class="q-text-tamil">ஆளுனருக்கு மாநில நிர்வாக தகவல் அளிப்பது போன்ற முதலமைச்சரின் கடமைகளை எந்த சரத்து விவரிக்கிறது?</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <span class="q-num orbitron">Q3</span>
+                        <div class="toggle-icon">▼</div>
+                    </div>
+                </div>
+                <div class="q-body">
+                    <div class="answer-block">
+                        <div class="answer-title">✅ CORRECT ANSWER</div>
+                        <p><span class="correct-ans">Article 167</span></p>
+                    </div>
+                    <div class="callout tip">
+                        <div class="callout-label">[TIP] The "+89" Magical Mnemonic Rule</div>
+                        <p>To easily map Central Government structural articles to equivalent State Government articles, use the <strong>89 addition rule</strong>:</p>
+                        <p class="mono" style="background:#11141c; padding:8px; border-radius:4px; margin-top:5px;">
+                            Article 78 (Duties of PM to President) + 89 = Article 167 (Duties of CM to Governor).
+                        </p>
+                    </div>
+                    <div class="callout gem">
+                        <div class="callout-label">[💎 LIVE GEM] Constitutional Bridge Concept</div>
+                        <p>The Chief Minister functions as the communication bridge between the Council of Ministers and the Governor at the state level, identical to how the Prime Minister links the Cabinet with the President at the Union level.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="q-card has-pyq" data-difficulty="medium">
+                <div class="q-header" onclick="toggleAccordion(this)">
+                    <div>
+                        <div class="q-badge-row mono">
+                            <span class="badge medium">Medium</span>
+                            <span class="badge type">Factual / Regional History</span>
+                        </div>
+                        <div class="q-text-block">
+                            <h3>Q4. Which Article deals with the abolition or creation of Legislative Councils (State Legislative Council - MLC) in States?</h3>
+                            <p class="q-text-tamil">மாநிலங்களில் சட்ட மேலவையை உருவாக்குதல் அல்லது நீக்குதல் பற்றி எந்த சரத்து விவரிக்கிறது?</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <span class="q-num orbitron">Q4</span>
+                        <div class="toggle-icon">▼</div>
+                    </div>
+                </div>
+                <div class="q-body">
+                    <div class="answer-block">
+                        <div class="answer-title">✅ CORRECT ANSWER</div>
+                        <p><span class="correct-ans">Article 169</span></p>
+                    </div>
+                    <div class="callout pyq">
+                        <div class="callout-label">🏆 PYQ ALERT - TAMIL NADU FACT HISTORY</div>
+                        <p><strong>Important Milestone:</strong> Tamil Nadu possessed a bicameral legislature until the State Legislative Council was abolished under Chief Minister M.G. Ramachandran via a resolution executed on <strong>November 1, 1986</strong> using the Article 169 framework.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="q-card" data-difficulty="hard">
+                <div class="q-header" onclick="toggleAccordion(this)">
+                    <div>
+                        <div class="q-badge-row mono">
+                            <span class="badge hard">Hard</span>
+                            <span class="badge type">Factual / Separation of Powers</span>
+                        </div>
+                        <div class="q-text-block">
+                            <h3>Q5. Which Article states that courts should not inquire into the proceedings of the State Legislature?</h3>
+                            <p class="q-text-tamil">சட்டமன்றத்தின் செயல்பாடுகளை நீதிமன்றங்கள் விசாரிக்கக் கூடாது என்று கூறும் சரத்து எது?</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <span class="q-num orbitron">Q5</span>
+                        <div class="toggle-icon">▼</div>
+                    </div>
+                </div>
+                <div class="q-body">
+                    <div class="answer-block">
+                        <div class="answer-title">✅ CORRECT ANSWER</div>
+                        <p><span class="correct-ans">Article 212</span></p>
+                    </div>
+                    <div class="callout tip">
+                        <div class="callout-label">[TIP] Central Mapping Analogy</div>
+                        <p>Apply the subtraction configuration conceptually: <strong>Article 122</strong> bars courts from inquiring into Parliamentary proceedings. Swapping and manipulating structural patterns brings you directly to <strong>Article 212</strong> for the state legislatures.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="q-card" data-difficulty="easy">
+                <div class="q-header" onclick="toggleAccordion(this)">
+                    <div>
+                        <div class="q-badge-row mono">
+                            <span class="badge easy">Easy</span>
+                            <span class="badge type">Factual</span>
+                        </div>
+                        <div class="q-text-block">
+                            <h3>Q6. Which Article establishes that there shall be a High Court for each State?</h3>
+                            <p class="q-text-tamil">ஒவ்வொரு மாநிலத்திற்கும் ஒரு உயர் நீதிமன்றம் இருக்க வேண்டும் என்று கூறும் சரத்து எது?</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <span class="q-num orbitron">Q6</span>
+                        <div class="toggle-icon">▼</div>
+                    </div>
+                </div>
+                <div class="q-body">
+                    <div class="answer-block">
+                        <div class="answer-title">✅ CORRECT ANSWER</div>
+                        <p><span class="correct-ans">Article 214</span></p>
+                    </div>
+                    <div class="callout gem">
+                        <div class="callout-label">[💎 LIVE GEM] Common High Court Provisions</div>
+                        <p><strong>Article 231</strong> authorizes the establishment of a Common High Court for two or more states or Union Territories. This modification was enabled by the <strong>7th Constitutional Amendment Act of 1956</strong>. India currently operates 6 common High Courts.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2 id="local-bodies" class="question-group-title orbitron">🏡 Local Self-Government & Finance Provisions</h2>
+
+            <div class="q-card" data-difficulty="hard">
+                <div class="q-header" onclick="toggleAccordion(this)">
+                    <div>
+                        <div class="q-badge-row mono">
+                            <span class="badge hard">Hard</span>
+                            <span class="badge type">Trick / Structural</span>
+                        </div>
+                        <div class="q-text-block">
+                            <h3>Q7. Which specific Article explains the power to impose taxes by, and funds of, the Municipalities?</h3>
+                            <p class="q-text-tamil">நகராட்சிகள் மூலம் வரிகளை விதிக்கும் அதிகாரம் மற்றும் அதன் நிதி பற்றி எந்த சரத்து கூறுகிறது?</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <span class="q-num orbitron">Q7</span>
+                        <div class="toggle-icon">▼</div>
+                    </div>
+                </div>
+                <div class="q-body">
+                    <div class="answer-block">
+                        <div class="answer-title">✅ CORRECT ANSWER</div>
+                        <p><span class="correct-ans">Article 243X</span></p>
+                    </div>
+                    <div class="callout critical">
+                        <div class="callout-label">[CRITICAL] Capital vs Small Alphabet Case Notation</div>
+                        <p>Capital letter suffixes (e.g., 243A to 243ZG) denote post-amendment additions enacted via the <strong>73rd & 74th Amendments (1992)</strong>. Lowercase suffixes represent original text configurations explicitly structural to the 1950 constitution.</p>
+                    </div>
+                    <div class="callout trap">
+                        <div class="callout-label">[SSC TRAP] Panchayat vs Municipality Taxation Overlap</div>
+                        <p><strong>Panchayat Tax Power:</strong> Article 243H</p>
+                        <p><strong>Municipality Tax Power:</strong> Article 243X</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="q-card has-pyq" data-difficulty="medium">
+                <div class="q-header" onclick="toggleAccordion(this)">
+                    <div>
+                        <div class="q-badge-row mono">
+                            <span class="badge medium">Medium</span>
+                            <span class="badge type">Factual / Accounting</span>
+                        </div>
+                        <div class="q-text-block">
+                            <h3>Q8. Which Article dictates the Consolidated Funds and Public Accounts of India and of the States?</h3>
+                            <p class="q-text-tamil">இந்தியா மற்றும் மாநிலங்களின் ஒருங்கிணைந்த நிதிகள் மற்றும் பொதுக்கணக்குகள் பற்றி விவரிக்கும் சரத்து எது?</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <span class="q-num orbitron">Q8</span>
+                        <div class="toggle-icon">▼</div>
+                    </div>
+                </div>
+                <div class="q-body">
+                    <div class="answer-block">
+                        <div class="answer-title">✅ CORRECT ANSWER</div>
+                        <p><span class="correct-ans">Article 266</span></p>
+                    </div>
+                    <div class="callout gem">
+                        <div class="callout-label">[💎 LIVE GEM] Public Accounts Simplified via Real Life Examples</div>
+                        <p>Faculty explained that while tax revenues deposit into the Consolidated Fund (Article 266), small scale public savings like the Public Provident Fund (PPF) managed via Post Office schemes or Government employee provident funds sit inside the <strong>Public Account of India</strong> because the state acts merely as a temporary custodian.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="q-card has-pyq" data-difficulty="easy">
+                <div class="q-header" onclick="toggleAccordion(this)">
+                    <div>
+                        <div class="q-badge-row mono">
+                            <span class="badge easy">Easy</span>
+                            <span class="badge type">Factual / Constitutional Amendment</span>
+                        </div>
+                        <div class="q-text-block">
+                            <h3>Q9. Which constitutional provision defines the Goods and Services Tax Council (GST Council)?</h3>
+                            <p class="q-text-tamil">சரக்கு மற்றும் சேவை வரி கவுன்சில் (GST Council) பற்றி எந்த சரத்து விவரிக்கிறது?</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <span class="q-num orbitron">Q9</span>
+                        <div class="toggle-icon">▼</div>
+                    </div>
+                </div>
+                <div class="q-body">
+                    <div class="answer-block">
+                        <div class="answer-title">✅ CORRECT ANSWER</div>
+                        <p><span class="correct-ans">Article 279A</span></p>
+                    </div>
+                    <div class="callout pyq">
+                        <div class="callout-label">🏆 PYQ ALERT - AMENDMENT MATCHING</div>
+                        <p>GST Council was inserted via the <strong>101st Constitutional Amendment Act, 2016</strong>. This remains one of the single most heavily tested structural amendment facts across recent papers.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2 id="services-langs" class="question-group-title orbitron">💼 Public Service Commissions & Languages</h2>
+
+            <div class="q-card" data-difficulty="medium">
+                <div class="q-header" onclick="toggleAccordion(this)">
+                    <div>
+                        <div class="q-badge-row mono">
+                            <span class="badge medium">Medium</span>
+                            <span class="badge type">Factual / Trap Prevention</span>
+                        </div>
+                        <div class="q-text-block">
+                            <h3>Q10. Which Article details the creation and existence of Public Service Commissions for the Union and for the States?</h3>
+                            <p class="q-text-tamil">மத்திய யூனியன் மற்றும் மாநிலங்களுக்கான பொதுப் பணியாளர் தேர்வாணையங்களை (UPSC & TNPSC) பற்றி எந்த சரத்து விவரிக்கிறது?</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <span class="q-num orbitron">Q10</span>
+                        <div class="toggle-icon">▼</div>
+                    </div>
+                </div>
+                <div class="q-body">
+                    <div class="answer-block">
+                        <div class="answer-title">✅ CORRECT ANSWER</div>
+                        <p>Live Chat Blind Spots: <span class="wrong-chat">Article 310</span> → <span class="correct-ans">Article 315</span></p>
+                    </div>
+                    <div class="callout critical">
+                        <div class="callout-label">[CRITICAL] Clarifying the Civil Services Range Overlap</div>
+                        <p><strong>Article 311:</strong> Deals explicitly with dismissal, removal, or reduction in rank of civil servants. It does not dictate the institutional creation of the commissions themselves.</p>
+                    </div>
+                    <div class="callout gem">
+                        <div class="callout-label">[💎 LIVE GEM] Current Institutional Leaders (2026 Check)</div>
+                        <p>The current operational leader structure includes the UPSC Chairperson at the national level and structural transitions within the State Public Service Commission (TNPSC) framework.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="q-card has-pyq" data-difficulty="easy">
+                <div class="q-header" onclick="toggleAccordion(this)">
+                    <div>
+                        <div class="q-badge-row mono">
+                            <span class="badge easy">Easy</span>
+                            <span class="badge type">Conceptual / Elections</span>
+                        </div>
+                        <div class="q-text-block">
+                            <h3>Q11. Which Article mandates elections to the House of the People (Lok Sabha) and Legislative Assemblies to be based on Adult Suffrage?</h3>
+                            <p class="q-text-tamil">வயது வந்தோர் வாக்குரிமையின் அடிப்படையில் லோக்சபா மற்றும் மாநில சட்டமன்றங்களுக்கான தேர்தல்கள் நடத்தப்பட வேண்டும் என்று கூறும் சரத்து எது?</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <span class="q-num orbitron">Q11</span>
+                        <div class="toggle-icon">▼</div>
+                    </div>
+                </div>
+                <div class="q-body">
+                    <div class="answer-block">
+                        <div class="answer-title">✅ CORRECT ANSWER</div>
+                        <p><span class="correct-ans">Article 326</span> (Mnemonic Link: 3-2-6 multiplication style or 18 years benchmark verification)</p>
+                    </div>
+                    <div class="callout pyq">
+                        <div class="callout-label">🏆 PYQ ALERT - AGE AMENDMENT LEVEL</div>
+                        <p>Voting age eligibility was lowered from 21 years down to 18 years via the landmark <strong>61st Constitutional Amendment Act, 1989</strong>.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="q-card" data-difficulty="medium">
+                <div class="q-header" onclick="toggleAccordion(this)">
+                    <div>
+                        <div class="q-badge-row mono">
+                            <span class="badge medium">Medium</span>
+                            <span class="badge type">Property Rights History</span>
+                        </div>
+                        <div class="q-text-block">
+                            <h3>Q12. Which constitutional article ensures that persons shall not be deprived of property save by authority of law?</h3>
+                            <p class="q-text-tamil">சட்டப்பூர்வ அதிகாரத்தால் தவிர தனிநபர்களின் சொத்துக்களை பறிக்கக் கூடாது என்று கூறும் சரத்து எது?</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <span class="q-num orbitron">Q12</span>
+                        <div class="toggle-icon">▼</div>
+                    </div>
+                </div>
+                <div class="q-body">
+                    <div class="answer-block">
+                        <div class="answer-title">✅ CORRECT ANSWER</div>
+                        <p><span class="correct-ans">Article 300A</span></p>
+                    </div>
+                    <div class="callout tip">
+                        <div class="callout-label">[RULE LINK] Structural Relocation of Fundamental Rights</div>
+                        <p>Originally, the Right to Property stood as a fully operational Fundamental Right under Article 19(1)(f) and Article 31. The <strong>44th Constitutional Amendment Act of 1978</strong> stripped this protection away, migrating it over to Part XII as a regular Legal/Constitutional Right under <strong>Article 300A</strong>.</p>
+                    </div>
+                    <div class="callout gem">
+                        <div class="callout-label">[💎 LIVE GEM] The Catalyst Case: Kesavananda Bharati</div>
+                        <p>The intense structural struggle between individual religious property rights (monastery land management across Kerala under HH Kesavananda Bharati) and state property land ceiling laws served as the prime catalyst that ultimately birthed the <strong>Basic Structure Doctrine</strong> of 1973.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="q-card" data-difficulty="hard">
+                <div class="q-header" onclick="toggleAccordion(this)">
+                    <div>
+                        <div class="q-badge-row mono">
+                            <span class="badge hard">Hard</span>
+                            <span class="badge type">Language Provisions / Factual</span>
+                        </div>
+                        <div class="q-text-block">
+                            <h3>Q13. Which Article provides for the Commission and Committee of Parliament on Official Language?</h3>
+                            <p class="q-text-tamil">அலுவல் மொழி பற்றிய நாடாளுமன்றத்தின் ஆணையம் மற்றும் குழு பற்றி விவரிக்கும் சரத்து எது?</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <span class="q-num orbitron">Q13</span>
+                        <div class="toggle-icon">▼</div>
+                    </div>
+                </div>
+                <div class="q-body">
+                    <div class="answer-block">
+                        <div class="answer-title">✅ CORRECT ANSWER</div>
+                        <p>Live Chat Mistakes: <span class="wrong-chat">Article 343</span> → <span class="correct-ans">Article 344</span></p>
+                    </div>
+                    <div class="callout trap">
+                        <div class="callout-label">[TNPSC TRAP] Official Language vs Institutional Commission</div>
+                        <p><strong>Article 343:</strong> Declares the core Official Language of the Union (Hindi in Devanagari script).</p>
+                        <p><strong>Article 344:</strong> Directs the operational setup of Parliamentary commissions and evaluation committees tracking language implementation progress.</p>
+                    </div>
+                    <div class="callout gem">
+                        <div class="callout-label">[💎 LIVE GEM] Debunking National Language Myths</div>
+                        <p><strong>CRITICAL FACT:</strong> India has <strong>NO National Language</strong>. The Indian state operates explicitly with designated official operational languages. <strong>Eighth Schedule</strong> recognizes 22 distinct regional languages, expanding significantly from the initial base of 14 languages.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="q-card" style="border-left: 5px solid var(--critical);" data-difficulty="hard">
+                <div class="q-header" style="background:#221418;" onclick="toggleAccordion(this)">
+                    <div>
+                        <div class="q-badge-row mono">
+                            <span class="badge hard">Hard</span>
+                            <span class="badge type">Homework Assignment [NEEDS EXPANSION]</span>
+                        </div>
+                        <div class="q-text-block">
+                            <h3>Q14 (HW). Which Article specifies the automatic suspension of provisions of Article 19 during a National Emergency?</h3>
+                            <p class="q-text-tamil">தேசிய அவசரநிலை பிரகடனத்தின் போது, சரத்து 19-ல் உள்ள சுதந்திர உரிமைகள் தானாகவே தற்காலிகமாக நீக்கப்படுவதை விவரிக்கும் சரத்து எது?</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <span class="q-num orbitron">HW</span>
+                        <div class="toggle-icon">▼</div>
+                    </div>
+                </div>
+                <div class="q-body">
+                    <div class="answer-block">
+                        <div class="answer-title">✅ COMPLETE EXPANDED SOLUTION</div>
+                        <p><span class="correct-ans">Article 358</span></p>
+                    </div>
+                    <div class="callout critical">
+                        <div class="callout-label">[CRITICAL MASTER COMPARISON] Article 358 vs Article 359</div>
+                        <div class="styled-table-container">
+                            <table class="styled-table">
+                                <thead>
+                                    <tr>
+                                        <th>Feature Criterion</th>
+                                        <th>Article 358</th>
+                                        <th>Article 359</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Scope</strong></td>
+                                        <td>Suspends Fundamental Rights under <strong>Article 19</strong> only.</td>
+                                        <td>Suspends enforcement of other specified Fundamental Rights.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Automation</strong></td>
+                                        <td><strong>Automatic suspension</strong> the moment emergency is declared.</td>
+                                        <td>Requires a separate specific Presidential Order.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Absolute Exception</strong></td>
+                                        <td>Article 19 rights cannot be restored until emergency ends.</td>
+                                        <td><strong>Articles 20 and 21 can NEVER be suspended</strong>.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <section id="summary" class="summary-card">
+                <h2 class="orbitron">📋 10-POINT HIGH-YIELD REVISION SUMMARY</h2>
+                <ul class="bullet-list">
+                    <li><strong>Article 91</strong> permits the Deputy Chairman to assume executive control when the Rajya Sabha Chairman's post falls vacant.</li>
+                    <li><strong>Article 92</strong> strips the presiding officer of their standard casting/tie-breaking vote while a removal resolution targets them.</li>
+                    <li><strong>Article 138</strong> delegates the enlargement power of Supreme Court jurisdictional reach directly to Parliament.</li>
+                    <li><strong>Article 167</strong> frames the non-negotiable statutory duty of the Chief Minister to report administration facts to the Governor.</li>
+                    <li>The mathematical <strong>89 Addition Rule</strong> allows fast conversion from federal machinery provisions to regional state articles.</li>
+                    <li><strong>Article 169</strong> governs structural creation/abolition of legislative councils, famously used in Tamil Nadu on November 1, 1986.</li>
+                    <li>Local government tax powers partition distinctly: <strong>243H</strong> protects Panchayats, while <strong>243X</strong> guides Municipalities.</li>
+                    <li>The <strong>GST Council (Article 279A)</strong> stands as a landmark cooperative federal entity created under the 101st Amendment.</li>
+                    <li><strong>Article 300A</strong> reclassified property ownership from a fundamental protection into a statutory constitutional legal right.</li>
+                    <li>India functions completely with <strong>Official Languages (Article 343/344)</strong> and holds zero concept of a singular national language.</li>
+                </ul>
+            </section>
+
+            <section id="predictions" class="prediction-card">
+                <h2 class="orbitron">🔮 2026 HIGH-RELEVANCE EXAM PREDICTIONS</h2>
+                <div class="callout trap">
+                    <div class="callout-label">Prediction 1: Joint Public Service Commission (JPSC) Structural Controls</div>
+                    <p>Expect queries probing the exact appointing authorities for a JPSC serving multiple states (Appointed by the President under Article 315, unlike separate state public service commissions).</p>
+                </div>
+                <div class="callout pyq">
+                    <div class="callout-label">Prediction 2: Separation of Powers Jurisdictional Frictions</div>
+                    <p>Given recent friction points between judicial rulings and legislative privileges, statements targeting <strong>Article 122/212</strong> are highly likely in upcoming group services exams.</p>
+                </div>
+                <div class="callout gem">
+                    <div class="callout-label">Prediction 3: Climate Disruption & Federal Relief Funds Mapping</div>
+                    <p>With major 2026 El Niño and La Niña climate disruptions looming globally, fiscal allocations drawn out of the <strong>Contingency Fund of India (Article 267)</strong> are critical high-probability assessment targets.</p>
+                </div>
+            </section>
+
+            <section id="flashcards" style="margin-top:40px;">
+                <h2 class="orbitron" style="color:var(--gold); margin-bottom:15px;">⚡ RAPID FLASHCARD TABLE</h2>
+                <div class="styled-table-container">
+                    <table class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Core Topic Target</th>
+                                <th>Constitutional Article</th>
+                                <th>Rapid Recall Summary Key</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Acting RS Chairman Power</td><td class="mono">Article 91</td><td>Deputy Chairman takes charge when vacancy arises</td></tr>
+                            <tr><td>Removal Friction/Presiding Ban</td><td class="mono">Article 92</td><td>No casting vote allowed during removal processing</td></tr>
+                            <tr><td>Supreme Court Extension</td><td class="mono">Article 138</td><td>Parliament holds sole authorization to expand jurisdiction</td></tr>
+                            <tr><td>CM Communication Mandate</td><td class="mono">Article 167</td><td>CM serves as structural link to Governor</td></tr>
+                            <tr><td>Legislative Council Sunset</td><td class="mono">Article 169</td><td>Abolition or creation framework for State Upper Houses</td></tr>
+                            <tr><td>Court Boundary Protections</td><td class="mono">Article 212</td><td>Bars judicial inquiry into State Assembly operations</td></tr>
+                            <tr><td>High Court Baseline Mandate</td><td class="mono">Article 214</td><td>Establishes distinct judicial setups for states</td></tr>
+                            <tr><td>Panchayat Fiscal Rights</td><td class="mono">Article 243H</td><td>Tax collection systems for rural local bodies</td></tr>
+                            <tr><td>Urban Local Body Taxation</td><td class="mono">Article 243X</td><td>Municipal authorization to levy local taxes</td></tr>
+                            <tr><td>State Fiscal Registries</td><td class="mono">Article 266</td><td>Consolidated Funds and Public Accounts mapping</td></tr>
+                            <tr><td>Federal Fiscal Coordination</td><td class="mono">Article 279A</td><td>Constitutional home of the GST Council</td></tr>
+                            <tr><td>Public Sector Gateways</td><td class="mono">Article 315</td><td>UPSC and State PSC operational existence foundation</td></tr>
+                            <tr><td>Universal Adult Suffrage</td><td class="mono">Article 326</td><td>Voting rights linked strictly to age qualifications</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="master-cheat" class="summary-card" style="border-top: 3px solid var(--gem);">
+                <h2 class="orbitron" style="color:var(--gem);">🏆 THE ULTIMATE MASTER CHEAT CARD</h2>
+                <p style="margin-bottom:15px;">Use this compact block for last-minute entrance hall tracking. It highlights common pitfalls and structural variations across closely related provisions.</p>
+                <div class="styled-table-container">
+                    <table class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Constitutional Part</th>
+                                <th>Range Examined</th>
+                                <th>High-Yield Critical Focus Area</th>
+                                <th>Frequent Trap Point Preventative</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="mono">Part V (Union)</td>
+                                <td class="mono">Articles 52 - 151</td>
+                                <td>Appellate jurisdictions & RS structural voting rights.</td>
+                                <td>Do not swap Article 91 duties with Article 92 limitations.</td>
+                            </tr>
+                            <tr>
+                                <td class="mono">Part VI (States)</td>
+                                <td class="mono">Articles 152 - 237</td>
+                                <td>CM statutory reporting duties and judicial immunities.</td>
+                                <td>Remember the 89-addition rule applies perfectly here.</td>
+                            </tr>
+                            <tr>
+                                <td class="mono">Part IXA (Urban)</td>
+                                <td class="mono">Articles 243P - 243ZG</td>
+                                <td>Municipal taxation systems and fund allocations.</td>
+                                <td>Article 243X deals with urban units, while 243H targets Panchayats.</td>
+                            </tr>
+                            <tr>
+                                <td class="mono">Part XVII (Languages)</td>
+                                <td class="mono">Articles 343 - 351</td>
+                                <td>Official evaluation panels and language criteria.</td>
+                                <td>Article 343 sets the language, while Article 344 handles panels.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="footer mono">
+        <p>High-Yield Q&A Revision Crack Sheet · Designed for Premium Exam Revision</p>
+        <p style="font-size: 0.75rem; margin-top: 5px; color: var(--text-muted);">© 2026 SP Velan Academy. All Rights Reserved. Track your goals with absolute consistency.</p>
+    </footer>
+
+    <script>
+        function toggleAccordion(headerElement) {
+            const currentCard = headerElement.closest('.q-card');
+            currentCard.classList.toggle('active');
+        }
+
+        function filterCards(type) {
+            const buttons = document.querySelectorAll('.btn-filter');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const cards = document.querySelectorAll('.q-card');
+            cards.forEach(card => {
+                if (type === 'all') {
+                    card.style.display = 'block';
+                } else if (type === 'easy' || type === 'medium' || type === 'hard') {
+                    if (card.getAttribute('data-difficulty') === type) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                } else if (type === 'gem') {
+                    if (card.classList.contains('has-gem')) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                } else if (type === 'pyq') {
+                    if (card.classList.contains('has-pyq')) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

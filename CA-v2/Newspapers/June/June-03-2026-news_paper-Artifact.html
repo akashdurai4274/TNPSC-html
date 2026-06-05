@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body class="en-mode">
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">03 June 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">03 ஜூன் 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <!-- Sidebar TOC -->
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Finance</span><span class="lang-ta">பொருளாதாரம் & நிதி</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Appointments · Police</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Mahesh Kumar Aggarwal Takes Charge as 34th DGP of Tamil Nadu</span>
+                        <span class="lang-ta">தமிழகத்தின் 34-வது டிஜிபியாக மகேஷ் குமார் அகர்வால் பொறுப்பேற்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Mahesh Kumar Aggarwal officially took charge as the 34th Director General of Police (DGP) of Tamil Nadu on June 3. Following the retirement of former DGP Shankar Jiwal last August, there was a lack of consensus between the TN Government and the UPSC regarding the new appointment, leading to C. Sylendra Babu temporarily holding the post. Eventually, the UPSC panel shortlisted three IPS officers: Rajeev Kumar, Sandeep Rathore, and Mahesh Kumar Aggarwal. The TN government selected Mahesh Kumar Aggarwal, who previously served as the ADGP of CID.</p>
+                    <p class="lang-ta">தமிழக காவல்துறை தலைவராக (டிஜிபி) மகேஷ் குமார் அகர்வால் ஜூன் 3-ம் தேதி பொறுப்பேற்றுக் கொண்டார். இவர் தமிழகத்தின் 34-வது டிஜிபி ஆவார். கடந்த ஆகஸ்ட் மாதம் டிஜிபியாக இருந்த சங்கர் ஜிவால் ஓய்வு பெற்றதையடுத்து, புதிய டிஜிபியை நியமிப்பதில் மாநில அரசுக்கும் யுபிஎஸ்சி-க்கும் (UPSC) இடையே ஒருமித்த கருத்து எட்டப்படாமல், சி. சைலேந்திரபாபு பொறுப்பு டிஜிபியாக செயல்பட்டு வந்தார். பின்னர் யுபிஎஸ்சி குழு ராஜீவ் குமார், சந்தீப் ரத்தோர், மகேஷ் குமார் அகர்வால் ஆகிய 3 ஐபிஎஸ் அதிகாரிகளைப் பரிந்துரைத்தது. இதில் சிஐடி சிறப்பு டிஜிபியாக இருந்த மகேஷ் குமார் அகர்வாலை தமிழக அரசு தேர்வு செய்தது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Polity Hook:</strong> According to the SC's Prakash Singh Guidelines (2006), the State DGP is selected by the State Government from a panel of the three senior-most IPS officers prepared by the UPSC.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> பிரகாஷ் சிங் வழக்கின் உச்ச நீதிமன்ற தீர்ப்பின்படி (2006), யுபிஎஸ்சி (UPSC) பரிந்துரைக்கும் மூன்று மூத்த ஐபிஎஸ் அதிகாரிகளின் பட்டியலிலிருந்து மாநில அரசு டிஜிபியைத் தேர்ந்தெடுக்க வேண்டும்.</span></li>
+                            <li><span class="badge bg-tip">TIP</span><span class="lang-en">The DGP is assured a minimum tenure of two years irrespective of his/her date of superannuation.</span><span class="lang-ta">டிஜிபியாக நியமிக்கப்படுபவருக்கு ஓய்வு பெறும் வயதைப் பொருட்படுத்தாமல் குறைந்தபட்சம் 2 ஆண்டுகள் பதவிக்காலம் உறுதி செய்யப்படுகிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Infrastructure · Welfare</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Jal Jeevan Mission 2.0 Extended to 2028; MoU Signed with TN</span>
+                        <span class="lang-ta">ஜல் ஜீவன் மிஷன் 2.0 திட்டம் 2028 வரை நீட்டிப்பு; தமிழகத்துடன் புரிந்துணர்வு ஒப்பந்தம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Tamil Nadu Chief Minister Joseph Vijay signed a Memorandum of Understanding (MoU) with Union Jal Shakti Minister C.R. Patil via video conference, officially extending the implementation of the 'Jal Jeevan Mission 2.0' until December 2028. Initially launched for the 2019-2024 period, the scheme has provided tap water connections to 46.71 lakh households in TN so far. Out of the approved ₹18,123.05 crore for upcoming projects, the Union Government will fund ₹9,025.68 crore, ensuring safe drinking water for all rural households.</p>
+                    <p class="lang-ta">மத்திய ஜல் சக்தித் துறை அமைச்சர் சி.ஆர். பாட்டீல் மற்றும் தமிழக முதல்வர் ஜோசப் விஜய் ஆகியோர் காணொளி மூலம் 'ஜல் ஜீவன் மிஷன் 2.0' திட்டத்தை டிசம்பர் 2028 வரை நீட்டிப்பதற்கான புரிந்துணர்வு ஒப்பந்தத்தில் கையெழுத்திட்டனர். 2019-2024 காலகட்டத்திற்காகத் தொடங்கப்பட்ட இத்திட்டத்தின் கீழ் இதுவரை தமிழகத்தில் 46.71 லட்சம் வீடுகளுக்கு குடிநீர் இணைப்புகள் வழங்கப்பட்டுள்ளன. வரவிருக்கும் திட்டங்களுக்காக ஒப்புதல் அளிக்கப்பட்ட ₹18,123.05 கோடியில், மத்திய அரசு ₹9,025.68 கோடியை வழங்கும். இது அனைத்து கிராமப்புற வீடுகளுக்கும் பாதுகாப்பான குடிநீரை உறுதி செய்யும்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Scheme Hook:</strong> Jal Jeevan Mission (JJM) was launched on August 15, 2019, with the goal of providing 'Har Ghar Jal' (Functional Household Tap Connection) to every rural household.</span><span class="lang-ta"><strong>திட்டக் குறிப்பு:</strong> ஒவ்வொரு கிராமப்புற வீட்டிற்கும் 'ஹர் கர் ஜல்' (குடிநீர் குழாய் இணைப்பு) வழங்கும் நோக்கத்துடன் ஆகஸ்ட் 15, 2019 அன்று ஜல் ஜீவன் மிஷன் தொடங்கப்பட்டது.</span></li>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en">Fund sharing pattern for JJM: 50:50 between Centre and States (90:10 for Himalayan/North-Eastern States, 100% for UTs).</span><span class="lang-ta">நிதிப் பகிர்வு: மத்திய-மாநில அரசுகளுக்கு இடையே 50:50. (இமயமலை/வடகிழக்கு மாநிலங்களுக்கு 90:10, யூனியன் பிரதேசங்களுக்கு 100%).</span></li>
+                        </ul>
+                    </details>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Accidents · Environment</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Chennai Port Fire: Sulfur Pile Catches Fire, Panic Ensues</span>
+                        <span class="lang-ta">சென்னை துறைமுகத்தில் ரசாயனக் கிடங்கில் தீ: நச்சுப் புகையால் மக்கள் அவதி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">A fire broke out in an open warehouse holding sulfur stockpiles inside the Chennai Port complex on Tuesday morning, emitting thick toxic smoke. The sulfur was imported for Coromandel Fertilizers operating in Ennore. The smoke spread across the port, Secretariat, and Parry's Corner, causing eye irritation and coughing among the public. Firefighters extinguished the blaze in an hour. Port authorities stated sulfur is highly flammable above 110°C, and water spraying measures were in place to prevent such incidents.</p>
+                    <p class="lang-ta">சென்னை துறைமுக வளாகத்தில் திறந்தவெளியில் சேமித்து வைக்கப்பட்டிருந்த சல்பர் (கந்தகம்) ரசாயனக் குவியலில் செவ்வாய்க்கிழமை காலை தீப்பிடித்து நச்சுப் புகை வெளியேறியது. எண்ணூரில் செயல்படும் கோரமண்டல் உரம் நிறுவனத்திற்காக இந்த சல்பர் இறக்குமதி செய்யப்பட்டிருந்தது. புகை துறைமுகம், தலைமைச் செயலகம் மற்றும் பாரிமுனை ஆகிய பகுதிகளில் பரவியதால் பொதுமக்களுக்கு கண் எரிச்சல் மற்றும் இருமல் ஏற்பட்டது. தீயணைப்பு வீரர்கள் ஒரு மணி நேரத்திற்குள் தீயை அணைத்தனர். சல்பர் 110°C வெப்பநிலைக்கு மேல் எளிதில் தீப்பிடிக்கக்கூடியது என்பதால், இத்தகைய சம்பவங்களைத் தடுக்க தண்ணீர் தெளிக்கும் நடவடிக்கைகள் பின்பற்றப்படுவதாக துறைமுக அதிகாரிகள் தெரிவித்தனர்.</p>
+                </div>
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Judiciary · Appointments</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">5 New Supreme Court Judges Take Oath; Strength Rises to 37</span>
+                        <span class="lang-ta">உச்சநீதிமன்றத்தில் 5 புதிய நீதிபதிகள் பதவியேற்பு; மொத்த எண்ணிக்கை 37 ஆக உயர்வு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Five newly appointed judges took oath in the Supreme Court, administered by Chief Justice Surya Kant. With this, the working strength of the Supreme Court has reached an unprecedented 37 (against the sanctioned 38). The new judges are V. Mohana (from Coimbatore, 2nd woman elevated directly from the Bar), C.S. Chandrashekhar, Sheel Nagu, Sanjeev Sachdeva, and Arun Bhansali. Recently, the Central Government passed an ordinance to increase the maximum strength of SC judges from 34 to 38.</p>
+                    <p class="lang-ta">உச்ச நீதிமன்ற தலைமை நீதிபதி சூர்ய காந்த் முன்னிலையில் 5 புதிய நீதிபதிகள் பதவியேற்றுக் கொண்டனர். இதன் மூலம் உச்ச நீதிமன்றத்தின் நீதிபதிகள் எண்ணிக்கை இதுவரை இல்லாத வகையில் 37 ஆக உயர்ந்துள்ளது (அனுமதிக்கப்பட்ட 38-ல்). வி. மோகனா (கோவையைச் சேர்ந்தவர், வழக்கறிஞர் சங்கத்திலிருந்து நேரடியாக உயர்ந்த 2-வது பெண்), சி.எஸ். சந்திரசேகர், ஷீல் நாகு, சஞ்சீவ் சச்தேவா மற்றும் அருண் பன்சாலி ஆகியோர் புதிய நீதிபதிகளாவர். சமீபத்தில் மத்திய அரசு உச்ச நீதிமன்ற நீதிபதிகளின் அதிகபட்ச எண்ணிக்கையை 34-ல் இருந்து 38 ஆக அதிகரிக்க சட்டம் இயற்றியது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Constitutional Hook:</strong> The Parliament is authorized to regulate the number of Judges in the Supreme Court under Article 124(1) of the Indian Constitution.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> இந்திய அரசியலமைப்பின் 124(1) வது சரத்தின் கீழ் உச்ச நீதிமன்ற நீதிபதிகளின் எண்ணிக்கையை முறைப்படுத்த நாடாளுமன்றத்திற்கு அதிகாரம் உள்ளது.</span></li>
+                            <li><span class="lang-en"><strong>Fact:</strong> The sanctioned strength is 38 (37 Judges + 1 Chief Justice). Currently, there is only 1 vacancy.</span><span class="lang-ta"><strong>உண்மை:</strong> அனுமதிக்கப்பட்ட நீதிபதிகள் எண்ணிக்கை 38 (37 நீதிபதிகள் + 1 தலைமை நீதிபதி). தற்போது 1 காலியிடம் மட்டுமே உள்ளது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Judiciary · Women's Rights</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Supreme Court: Married Daughters Cannot be Excluded from Compassionate Appointments</span>
+                        <span class="lang-ta">கருணை அடிப்படையிலான வேலைவாய்ப்பில் திருமணமான பெண்களைப் புறக்கணிக்கக் கூடாது: உச்சநீதிமன்றம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Supreme Court struck down a 2019 Uttar Pradesh Government order that excluded married daughters from being considered as "dependents" for compassionate appointments. A bench comprising Justices P.S. Narasimha and Alok Aradhe ruled that assuming a daughter ceases to be part of her parents' family upon marriage is arbitrary, discriminatory, and violates the constitutional guarantee of equality. The court emphasized that dependency should be assessed based on facts, not marital status.</p>
+                    <p class="lang-ta">கருணை அடிப்படையிலான வேலைவாய்ப்புகளில் "சார்ந்திருப்பவர்கள்" (Dependents) என்ற வரையறையிலிருந்து திருமணமான மகள்களை விலக்கிய 2019-ம் ஆண்டின் உத்தரபிரதேச அரசு உத்தரவை உச்ச நீதிமன்றம் ரத்து செய்துள்ளது. நீதிபதிகள் பி.எஸ். நரசிம்மா மற்றும் அலோக் ஆராதே ஆகியோர் அடங்கிய அமர்வு, திருமணத்திற்குப் பிறகு ஒரு மகள் தனது பெற்றோரின் குடும்பத்தைச் சேர்ந்தவர் அல்ல என்று கருதுவது தன்னிச்சையானது, பாரபட்சமானது மற்றும் அரசியலமைப்புச் சட்டம் உறுதி செய்துள்ள சமத்துவத்திற்கு எதிரானது என்று தீர்ப்பளித்தது. சார்ந்திருத்தல் என்பது திருமண நிலையை வைத்து அல்லாமல், உண்மைகளின் அடிப்படையிலேயே தீர்மானிக்கப்பட வேண்டும் என வலியுறுத்தியது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Fundamental Rights Hook:</strong> This ruling upholds Article 14 (Equality before law) and Article 15 (Prohibition of discrimination on grounds of sex).</span><span class="lang-ta"><strong>அடிப்படை உரிமைகள்:</strong> இத்தீர்ப்பு சரத்து 14 (சட்டத்தின் முன் அனைவரும் சமம்) மற்றும் சரத்து 15 (பாலினத்தின் அடிப்படையில் பாகுபாடு காட்ட தடை) ஆகியவற்றை நிலைநிறுத்துகிறது.</span></li>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en">Compassionate appointments are an exception to the general rule of equality of opportunity in public employment (Article 16), designed to provide immediate relief to a deceased employee's family.</span><span class="lang-ta">கருணை அடிப்படையிலான நியமனங்கள் என்பது பொது வேலைவாய்ப்பில் சம வாய்ப்பு (சரத்து 16) என்ற பொது விதியிலிருந்து விலக்களிக்கப்பட்டது. இது இறந்த ஊழியரின் குடும்பத்திற்கு உடனடி நிவாரணம் வழங்க வடிவமைக்கப்பட்டுள்ளது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Environment · Biosphere</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Supreme Court Orders Eviction of Encroachers in Agasthiyamalai Biosphere Reserve</span>
+                        <span class="lang-ta">அகஸ்தியமலை உயிர்க்கோளக் காப்பகப் பகுதியில் உள்ள ஆக்கிரமிப்புகளை அகற்ற உச்சநீதிமன்றம் உத்தரவு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Supreme Court directed the Tamil Nadu government to prepare a time-bound plan to evict encroachments in the protected areas of the Agasthiyamalai Biosphere Reserve. A report by the Central Empowered Committee (CEC) revealed that 4,601 encroachers have occupied over 5,072 hectares of forest land. Shockingly, 118 retired and serving government officials were identified among the encroachers. The bench ordered strict disciplinary and criminal action against officials who permitted illegal constructions, particularly within the Meghamalai Wildlife Sanctuary.</p>
+                    <p class="lang-ta">அகஸ்தியமலை உயிர்க்கோளக் காப்பகத்தின் பாதுகாக்கப்பட்ட பகுதிகளில் உள்ள ஆக்கிரமிப்புகளை அகற்ற காலக்கெடுவுடன் கூடிய திட்டத்தைத் தயாரிக்குமாறு தமிழக அரசுக்கு உச்ச நீதிமன்றம் உத்தரவிட்டுள்ளது. மத்திய அதிகாரம் அளிக்கப்பட்ட குழுவின் (CEC) அறிக்கையின்படி, 4,601 ஆக்கிரமிப்பாளர்கள் 5,072 ஹெக்டேர் வன நிலங்களை ஆக்கிரமித்துள்ளனர். அதிர்ச்சியளிக்கும் வகையில், 118 ஓய்வுபெற்ற மற்றும் பணியிலுள்ள அரசு ஊழியர்களும் இதில் அடங்குவர். குறிப்பாக மேகமலை வனவிலங்கு சரணாலயத்திற்குள் சட்டவிரோத கட்டுமானங்களை அனுமதித்த அதிகாரிகள் மீது கடுமையான ஒழுங்கு மற்றும் குற்றவியல் நடவடிக்கை எடுக்க நீதிபதிகள் உத்தரவிட்டனர்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Geography Hook (Unit 3):</strong> Agasthiyamalai Biosphere Reserve was established in 2001, spanning parts of Tamil Nadu and Kerala. It was included in the UNESCO World Network of Biosphere Reserves in 2016.</span><span class="lang-ta"><strong>புவியியல் குறிப்பு:</strong> அகஸ்தியமலை உயிர்க்கோளக் காப்பகம் 2001 இல் நிறுவப்பட்டது, இது தமிழகம் மற்றும் கேரளாவின் சில பகுதிகளை உள்ளடக்கியது. 2016 இல் இது யுனெஸ்கோவின் (UNESCO) உயிர்க்கோள இருப்பு வலையமைப்பில் சேர்க்கப்பட்டது.</span></li>
+                            <li><span class="badge bg-tip">TIP</span><span class="lang-en">The Kani tribes are the indigenous inhabitants of the Agasthiyamalai region.</span><span class="lang-ta">காணி பழங்குடியினர் அகஸ்தியமலைப் பகுதியின் பூர்வீகக் குடிகள் ஆவர்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+            </section>
+
+            <!-- INTERNATIONAL NEWS -->
+            <section id="international">
+                <h2>
+                    <span class="lang-en">International News</span>
+                    <span class="lang-ta">சர்வதேச செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Diplomacy · India-Nepal</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">No Room for Third Party in India-Nepal Border Dispute: India Rejects Intervention</span>
+                        <span class="lang-ta">இந்தியா-நேபாள எல்லைப் பிரச்சனையில் 3-ம் தரப்பு தலையீட்டிற்கு இடமில்லை: இந்தியா திட்டவட்டம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Ministry of External Affairs categorically stated that there is no room for a third party to mediate the India-Nepal border dispute, rebuffing recent remarks by the Nepalese Prime Minister suggesting consultations with China and Britain. The MEA clarified that 98% of the border has already been demarcated, with remaining areas largely shifting due to the changing course of the Gandaki River. India emphasized that bilateral mechanisms exist to resolve these minor issues amicably.</p>
+                    <p class="lang-ta">இந்தியாவுக்கும் நேபாளத்துக்கும் இடையிலான எல்லைப் பிரச்சனையில் மூன்றாம் தரப்பு தலையிடுவதற்கு இடமில்லை என்று இந்திய வெளியுறவு அமைச்சகம் திட்டவட்டமாகத் தெரிவித்துள்ளது. இப்பிரச்சனை குறித்து சீனா மற்றும் பிரிட்டனுடன் நேபாளம் பேசியுள்ளதாக நேபாள பிரதமர் சமீபத்தில் கூறியிருந்த நிலையில் இந்த விளக்கம் அளிக்கப்பட்டுள்ளது. இரு நாடுகளிடையேயான எல்லை 98% வரையறுக்கப்பட்டுவிட்டதாகவும், கண்டகி நதியின் பாதை மாறியதன் விளைவாகவே சில பகுதிகளில் எல்லை வரையறுக்கப்படாமல் உள்ளதாகவும் வெளியுறவுத்துறை தெளிவுபடுத்தியுள்ளது. இருதரப்பு வழிமுறைகள் மூலமே இப் பிரச்சனைக்கு தீர்வு காணப்படும் என இந்தியா வலியுறுத்தியுள்ளது.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Global Bodies · UNGA</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Bangladesh Foreign Minister Khalilur Rahman Elected President of 81st UNGA</span>
+                        <span class="lang-ta">ஐ.நா. பொதுச்சபை தலைவராக வங்கதேச வெளியுறவு அமைச்சர் கலிலுர் ரஹ்மான் தேர்வு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Bangladesh Foreign Minister Khalilur Rahman was elected as the President of the 81st session of the United Nations General Assembly (UNGA). He becomes the second Bangladeshi to hold this prestigious post, following Humayun Rasheed Choudhury in 1986. The election saw a contest between the Asia-Pacific region candidates: Bangladesh and Cyprus. The 81st session will commence in September 2026, succeeding the current president Annalena Baerbock of Germany.</p>
+                    <p class="lang-ta">ஐ.நா. பொதுச்சபையின் 81-வது கூட்டத் தொடரின் தலைவராக வங்கதேச வெளியுறவு அமைச்சர் கலிலுர் ரஹ்மான் தேர்ந்தெடுக்கப்பட்டுள்ளார். கடந்த 1986-ல் உமாயூன் ரஷீத் சவுத்ரிக்குப் பிறகு இப்பதவியை வகிக்கும் 2-வது வங்கதேசத்தவர் இவராவார். ஆசிய-பசிபிக் பிராந்தியத்திற்கான இப்பதவிக்கு வங்கதேசம் மற்றும் சைப்ரஸ் நாடுகளுக்கிடையே போட்டி நிலவியது. இதில் வென்ற வங்கதேச அமைச்சர், தற்போதைய ஐ.நா பொதுச்சபை தலைவரான ஜெர்மனியின் அனலேனா பேர்பாக்கிற்குப் பிறகு செப்டம்பர் 2026 இல் பொறுப்பேற்க உள்ளார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en">Who was the first Indian to become the President of the UN General Assembly? <strong>Answer: Vijaya Lakshmi Pandit (8th session, 1953)</strong>.</span><span class="lang-ta">ஐ.நா பொதுச் சபையின் தலைவரான முதல் இந்தியர் யார்? <strong>விடை: விஜயலட்சுமி பண்டிட் (8-வது கூட்டத்தொடர், 1953)</strong>.</span></li>
+                            <li><span class="lang-en"><strong>Context Note:</strong> The presidency rotates annually among five geographic groups: African, Asia-Pacific, Eastern European, Latin American and Caribbean, and Western European.</span><span class="lang-ta"><strong>பின்னணி:</strong> ஐ.நா பொதுச்சபை தலைவர் பதவி ஆப்பிரிக்கா, ஆசிய-பசிபிக், கிழக்கு ஐரோப்பா, லத்தீன் அமெரிக்கா-கரீபியன், மேற்கு ஐரோப்பா ஆகிய 5 பிராந்தியங்களுக்கு சுழற்சி முறையில் வழங்கப்படும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+            </section>
+
+            <!-- ECONOMY & FINANCE -->
+            <section id="economy">
+                <h2>
+                    <span class="lang-en">Economy & Finance</span>
+                    <span class="lang-ta">பொருளாதாரம் & நிதி</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Macroeconomics · Indices</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Govt to Replace WPI with Producer Price Index (PPI) for Inflation Tracking</span>
+                        <span class="lang-ta">மொத்த விற்பனை விலைக் குறியீட்டுக்கு (WPI) பதிலாக உற்பத்தியாளர் விலைக்குறியீடு (PPI) அறிமுகம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">To measure inflation more accurately, the Union Government has decided to phase in the Producer Price Index (PPI) to replace the existing Wholesale Price Index (WPI). The new PPI, with a revised base year of 2022-23, will be launched on June 15. The number of items tracked will increase from 697 to 957, and it will initially cover 7 service sectors, including railways and telecom. Both WPI and PPI will run parallel for up to 5 years before WPI is entirely phased out.</p>
+                    <p class="lang-ta">நாட்டின் பணவீக்கத்தை மிகவும் துல்லியமாகக் கணக்கிடும் வகையில், தற்போது நடைமுறையில் உள்ள மொத்த விற்பனை விலைக் குறியீட்டுக்கு (WPI) பதிலாக, உற்பத்தியாளர் விலைக்குறியீட்டை (PPI) அறிமுகப்படுத்த மத்திய அரசு முடிவு செய்துள்ளது. 2022-23-ஐ புதிய அடிப்படை ஆண்டாகக் கொண்ட PPI, ஜூன் 15-ல் வெளியிடப்படும். இதில் கணக்கீட்டுப் பொருட்களின் எண்ணிக்கை 697-லிருந்து 957-ஆக அதிகரிக்கப்பட்டுள்ளதுடன், ரயில்வே உள்ளிட்ட 7 சேவைத் துறைகளும் சேர்க்கப்பட்டுள்ளன. அடுத்த 5 ஆண்டுகளுக்கு WPI மற்றும் PPI இரண்டுமே வெளியிடப்பட்டு, பின்னர் WPI முழுமையாக விலக்கிக்கொள்ளப்படும்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Economy Concept:</strong> WPI measures changes in prices of goods sold in bulk by wholesale businesses. PPI measures the average change in prices received by domestic producers for their output, reflecting supply-side inflation more accurately. CPI measures retail consumer inflation.</span><span class="lang-ta"><strong>பொருளாதாரக் கருத்து:</strong> WPI மொத்த விற்பனையாளர்களால் விற்கப்படும் பொருட்களின் விலையைக் கணக்கிடுகிறது. PPI உள்நாட்டு உற்பத்தியாளர்கள் பெறும் விலையின் சராசரி மாற்றத்தைக் கணக்கிடுகிறது (விநியோகப் பக்க பணவீக்கம்). CPI நுகர்வோர் சில்லறை பணவீக்கத்தைக் கணக்கிடுகிறது.</span></li>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en">The RBI uses CPI (Consumer Price Index) to anchor its inflation targeting policy, NOT WPI or PPI.</span><span class="lang-ta">இந்திய ரிசர்வ் வங்கி தனது பணவீக்க இலக்குக் கொள்கைக்கு CPI-ஐ (நுகர்வோர் விலைக் குறியீடு) பயன்படுத்துகிறது, WPI அல்லது PPI-ஐ அல்ல.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Fiscal Policy · Deficit</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">April Fiscal Deficit Surges to 21.4% of FY27 Target Amid Middle East War</span>
+                        <span class="lang-ta">ஏப்ரல் மாத நிதிப்பற்றாக்குறை நடப்பு நிதியாண்டு இலக்கில் 21.4% ஆக அதிகரிப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">India's fiscal deficit for April 2026 reached ₹3.62 lakh crore, touching 21.4% of the full-year target for FY2026-27 in just the first month. According to the Controller General of Accounts (CGA), the total expenditure was ₹5.75 lakh crore against a revenue receipt of ₹2.03 lakh crore. The surge is primarily attributed to rising global crude oil prices caused by the Middle East conflict, prompting the government to continuously reduce excise duties on fuels to absorb the burden instead of passing it to consumers.</p>
+                    <p class="lang-ta">நடப்பு நிதியாண்டின் (2026-27) முதல் மாதமான ஏப்ரலில் இந்தியாவின் நிதிப்பற்றாக்குறை ரூ.3.62 லட்சம் கோடியாகப் பதிவாகியுள்ளது. இது இந்த ஆண்டுக்கான மொத்த இலக்கில் 21.4% ஆகும். மத்திய தலைமை கணக்காயர் (CGA) தரவுகளின்படி, ஏப்ரலில் அரசின் மொத்த செலவினம் ரூ.5.75 லட்சம் கோடி; ஆனால் வருவாய் வரவுகள் ரூ.2.03 லட்சம் கோடியாக மட்டுமே இருந்தது. மத்திய கிழக்கு போர் காரணமாக கச்சா எண்ணெய் விலை உயர்ந்ததால், நுகர்வோர் மீதான சுமையைக் குறைக்க எரிபொருள் மீதான கலால் வரியை அரசு குறைத்து வருவதே செலவினம் அதிகரிக்க முக்கியக் காரணமாகும்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Economy Definition:</strong> Fiscal Deficit = Total Expenditure – Total Receipts (excluding borrowings). It indicates the total borrowing requirements of the government.</span><span class="lang-ta"><strong>பொருளாதார வரையறை:</strong> நிதிப் பற்றாக்குறை = மொத்த செலவினம் - மொத்த வரவுகள் (கடன் வாங்குதல் தவிர). இது அரசாங்கத்தின் மொத்த கடன் தேவைகளைக் குறிக்கிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+            </section>
+            
+            <!-- SPORTS -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports</span>
+                    <span class="lang-ta">விளையாட்டு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Cricket · ICC Rules</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">ICC Annual Meeting: Pink Ball Allowed in Tests for Bad Light</span>
+                        <span class="lang-ta">ஐசிசி கூட்டம்: வெளிச்சம் குறைவான நேரங்களில் டெஸ்ட் போட்டிகளில் பிங்க் பந்துக்கு அனுமதி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The International Cricket Council (ICC) during its annual meeting in Ahmedabad made significant rule changes. To prevent match interruptions due to bad light in Test cricket (played with a red ball), teams can now agree to switch to a pink ball under floodlights. Additionally, like T20 'strategic timeouts', coaches are now permitted to enter the field during 'drinks breaks' to consult with players. The ICC also officially suspended Canada Cricket for administrative misconduct.</p>
+                    <p class="lang-ta">அகமதாபாத்தில் நடைபெற்ற சர்வதேச கிரிக்கெட் கவுன்சில் (ஐசிசி) வருடாந்திர கூட்டத்தில் முக்கிய முடிவுகள் எடுக்கப்பட்டன. டெஸ்ட் போட்டிகளில் (சிவப்பு பந்து) வெளிச்சமின்மை காரணமாக ஆட்டம் தடைபடுவதைத் தவிர்க்க, செயற்கை விளக்கு ஒளியில் 'பிங்க்' (இளஞ்சிவப்பு) பந்தைப் பயன்படுத்த அணிகள் ஒப்புக்கொண்டால் அனுமதி வழங்கப்படும். மேலும், டி20 போட்டிகளைப் போல, டெஸ்ட் போட்டிகளிலும் 'ட்ரிங்க்ஸ்' இடைவேளையின் போது பயிற்சியாளர்கள் மைதானத்திற்குள் வந்து வீரர்களுடன் ஆலோசிக்க அனுமதி அளிக்கப்பட்டுள்ளது. நிர்வாகச் சீர்கேடு காரணமாக கனடா கிரிக்கெட் வாரியத்தை ஐசிசி இடைநீக்கம் செய்தது.</p>
+                </div>
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Which of the following indices is being planned by the Union Government to replace the Wholesale Price Index (WPI) for better tracking of inflation?</span>
+                        <span class="lang-ta">கேள்வி: பணவீக்கத்தை சிறப்பாகக் கணக்கிட, மொத்த விற்பனை விலைக் குறியீட்டுக்கு (WPI) பதிலாக கீழ்க்கண்ட எந்தக் குறியீட்டை அறிமுகப்படுத்த மத்திய அரசு திட்டமிட்டுள்ளது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Producer Price Index (PPI)</span><br><br>
+                                <strong>Context:</strong> The new PPI, with a base year of 2022-23, tracks the price changes from the perspective of domestic producers, covering both goods and services.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">உற்பத்தியாளர் விலைக் குறியீடு (PPI)</span><br><br>
+                                <strong>பின்னணி:</strong> 2022-23-ஐ அடிப்படை ஆண்டாகக் கொண்ட புதிய PPI, உள்நாட்டு உற்பத்தியாளர்களின் பார்வையில் இருந்து விலை மாற்றங்களைக் கண்காணிக்கும். இதில் பொருட்கள் மற்றும் சேவைகள் இரண்டும் அடங்கும்.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Agasthiyamalai Biosphere Reserve, recently in the news regarding Supreme Court orders on encroachment, is spread across which of the following states?</span>
+                        <span class="lang-ta">கேள்வி: ஆக்கிரமிப்புகள் தொடர்பான உச்ச நீதிமன்ற உத்தரவால் சமீபத்தில் செய்திகளில் இடம்பிடித்த அகஸ்தியமலை உயிர்க்கோளக் காப்பகம் எந்தெந்த மாநிலங்களில் பரவியுள்ளது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Tamil Nadu and Kerala</span><br><br>
+                                <strong>Context:</strong> The SC ordered the eviction of encroachers, including retired officials, from the protected regions of Agasthiyamalai.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">தமிழ்நாடு மற்றும் கேரளா</span><br><br>
+                                <strong>பின்னணி:</strong> அகஸ்தியமலையின் பாதுகாக்கப்பட்ட வனப்பகுதிகளில் ஓய்வுபெற்ற அதிகாரிகள் உள்ளிட்ட ஆக்கிரமிப்பாளர்களை வெளியேற்ற உச்ச நீதிமன்றம் உத்தரவிட்டது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">Mahesh Kumar Aggarwal TN DGP</span><span class="lang-ta">டிஜிபியாக மகேஷ் குமார் அகர்வால்</span></td>
+                                <td><span class="lang-en">State/Police</span><span class="lang-ta">மாநிலம்/காவல்துறை</span></td>
+                                <td><span class="lang-en">Assumes office as the 34th DGP of Tamil Nadu.</span><span class="lang-ta">தமிழகத்தின் 34-வது டிஜிபியாக பொறுப்பேற்பு.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">PPI Replaces WPI</span><span class="lang-ta">WPI-க்கு பதில் PPI அறிமுகம்</span></td>
+                                <td><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></td>
+                                <td><span class="lang-en">Base year 2022-23; covers goods & 7 service sectors.</span><span class="lang-ta">அடிப்படை ஆண்டு 2022-23; சேவைகளும் உள்ளடக்கப்படும்.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">JJM 2.0 Extended to 2028</span><span class="lang-ta">JJM திட்டம் 2028 வரை நீட்டிப்பு</span></td>
+                                <td><span class="lang-en">State/National</span><span class="lang-ta">மாநிலம்/தேசியம்</span></td>
+                                <td><span class="lang-en">TN signs MoU for Jal Jeevan Mission rural tap water.</span><span class="lang-ta">ஜல் ஜீவன் திட்ட நீட்டிப்பிற்கு தமிழகம் ஒப்பந்தம்.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">SC on Compassionate Jobs</span><span class="lang-ta">கருணை வேலை - SC உத்தரவு</span></td>
+                                <td><span class="lang-en">Judiciary</span><span class="lang-ta">நீதித்துறை</span></td>
+                                <td><span class="lang-en">Married daughters cannot be excluded from dependents list.</span><span class="lang-ta">திருமணமான பெண்களை சார்ந்தோர் பட்டியலில் இருந்து நீக்கக்கூடாது.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">Agasthiyamalai Eviction</span><span class="lang-ta">அகஸ்தியமலை ஆக்கிரமிப்பு அகற்றம்</span></td>
+                                <td><span class="lang-en">Environment</span><span class="lang-ta">சுற்றுச்சூழல்</span></td>
+                                <td><span class="lang-en">SC orders eviction of 4,601 encroachers in biosphere.</span><span class="lang-ta">உயிர்க்கோளப் பகுதியில் 4601 ஆக்கிரமிப்பாளர்களை அகற்ற SC உத்தரவு.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani Chennai 03-06-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி சென்னை 03-06-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source text detailed state, national, and international news for 03 June 2026. 
+State news highlighted Mahesh Kumar Aggarwal taking charge as TN's 34th DGP. A massive fire broke out at a sulfur storage facility in Chennai port causing panic due to toxic smoke. CM Joseph Vijay signed an MoU with the Union Jal Shakti Ministry to extend Jal Jeevan Mission 2.0 to 2028. SC ordered eviction of encroachers in Agasthiyamalai Biosphere Reserve. Private schools were ordered to display fees publicly. 
+National news included 5 new SC judges taking oath, taking the tally to 37. SC ruled that married daughters are eligible for compassionate appointments. The government announced the replacement of the Wholesale Price Index (WPI) with the Producer Price Index (PPI) starting June 15, with a base year of 2022-23. April fiscal deficit hit 21.4% of the annual target. ED raided Vedanta group offices. CBI arrested key figures in the Rs 800 crore Uttarakhand cooperative scam. India rejected 3rd party intervention in the Nepal border dispute. 
+Internationally, Bangladesh Foreign Minister Khalilur Rahman was elected UNGA President. Russia launched heavy missile/drone strikes on Kyiv. 
+Sports: ICC allowed the use of the pink ball in test matches for bad light. Praggnanandhaa and Gukesh won in Norway Chess.]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூல உரைகள் 03 ஜூன் 2026 க்கான செய்திகளைக் கொண்டிருந்தன.
+மாநில செய்திகளில், தமிழகத்தின் 34-வது டிஜிபியாக மகேஷ் குமார் அகர்வால் பதவியேற்றார். சென்னை துறைமுகத்தில் சல்பர் கிடங்கில் தீ விபத்து ஏற்பட்டு நச்சுப் புகையால் மக்கள் அவதியுற்றனர். ஜல் ஜீவன் மிஷன் திட்டத்தை 2028 வரை நீட்டிக்க மத்திய அரசுடன் முதல்வர் ஜோசப் விஜய் புரிந்துணர்வு ஒப்பந்தம் மேற்கொண்டார். அகஸ்தியமலை காப்பகத்தில் ஆக்கிரமிப்புகளை அகற்ற உச்ச நீதிமன்றம் உத்தரவு. தனியார் பள்ளிகள் கட்டண விவரங்களை அறிவிக்க உத்தரவு.
+தேசிய அளவில், 5 புதிய உச்சநீதிமன்ற நீதிபதிகள் பதவியேற்றனர் (மொத்தம் 37). கருணை அடிப்படையில் வேலை வழங்க திருமணமான மகள்களுக்கும் உரிமை உண்டு என SC தீர்ப்பு. பணவீக்கத்தைக் கணக்கிட WPI-க்கு பதிலாக PPI குறியீடு 2022-23 அடிப்படை ஆண்டுடன் அறிமுகம். ஏப்ரல் நிதிப்பற்றாக்குறை நடப்பாண்டு இலக்கில் 21.4% ஆக உயர்ந்தது. வேதாந்தா அலுவலகங்களில் அமலாக்கத்துறை சோதனை. உத்தரகாண்டில் 800 கோடி மோசடியில் சிபிஐ கைது நடவடிக்கை. நேபாள எல்லைப் பிரச்சனையில் 3-ம் தரப்பு தலையீட்டை இந்தியா நிராகரித்தது.
+சர்வதேச அளவில், ஐநா பொதுச்சபை தலைவராக வங்கதேச அமைச்சர் கலிலுர் ரஹ்மான் தேர்வு. உக்ரைன் தலைநகர் மீது ரஷ்யா கடும் தாக்குதல்.
+விளையாட்டு: டெஸ்ட் போட்டிகளில் வெளிச்சமின்மை காரணமாக பிங்க் பந்துக்கு ஐசிசி அனுமதி. நார்வே செஸ்ஸில் பிரக்ஞானந்தா, குகேஷ் வெற்றி.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 03 June 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+    </script>
+</body>
+</html>

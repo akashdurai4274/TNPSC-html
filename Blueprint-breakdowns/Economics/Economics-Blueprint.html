@@ -1,0 +1,1873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Group 1 Unit V Masterclass Blueprint</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Andika&family=IBM+Plex+Mono:wght@400;500;700&family=Orbitron:wght@400;600;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --gold-accent: #f5c842;
+            --bg-card: #13161e;
+            --border-color: #1e2130;
+            --text-primary: #e8eaf0;
+            --text-muted: #8b90a0;
+            
+            /* Callout colors */
+            --bg-critical: #2a0a0a; --border-critical: #ef4444;
+            --bg-trap: #2a1f00; --border-trap: #f5c842;
+            --bg-tip: #0a2a10; --border-tip: #22c55e;
+            --bg-pyq: #0a1a2a; --border-pyq: #3b82f6;
+            --bg-gem: #1a0a2a; --border-gem: #a855f7;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: var(--bg-page);
+            color: var(--text-primary);
+            font-family: 'Andika', sans-serif;
+            line-height: 1.6;
+        }
+
+        h1, h2 { font-family: 'Syne', sans-serif; font-weight: 800; color: #ffffff; }
+        h3, h4, .digit-font { font-family: 'Orbitron', sans-serif; color: var(--gold-accent); }
+        .mono { font-family: 'IBM Plex Mono', monospace; }
+
+        /* Hero Header */
+        .hero {
+            background: linear-gradient(135deg, #0d0f14 0%, #13161e 50%, #1a1c26 100%);
+            padding: 60px 24px;
+            text-align: center;
+            border-bottom: 3px solid var(--gold-accent);
+            position: relative;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            text-shadow: 0 0 20px #f5c842aa;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+        .hero h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.4rem;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+        }
+        .badge-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .badge {
+            background: #1a1c26;
+            border: 1px solid var(--gold-accent);
+            color: var(--gold-accent);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        /* Legend Row */
+        .legend-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            padding: 20px;
+            background: #0f1118;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .legend-item {
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border-left: 4px solid transparent;
+        }
+
+        /* Container Layout */
+        .main-wrapper {
+            display: flex;
+            max-width: 1600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Sticky Sidebar TOC */
+        .sidebar {
+            width: 320px;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            background: #0f1118;
+            border-right: 1px solid var(--border-color);
+            padding: 30px 15px;
+        }
+        .sidebar::-webkit-scrollbar { width: 4px; }
+        .sidebar::-webkit-scrollbar-thumb { background: var(--border-color); }
+        .toc-list { list-style: none; }
+        .toc-item a {
+            display: block;
+            padding: 8px 12px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.85rem;
+            border-left: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+        .toc-item a:hover, .toc-item.active a {
+            color: var(--gold-accent);
+            border-left-color: var(--gold-accent);
+            background: #13161e;
+        }
+
+        /* Content Pane */
+        .content-pane {
+            flex: 1;
+            padding: 40px 30px;
+            max-width: 1200px;
+            overflow-x: hidden;
+        }
+
+        section {
+            margin-bottom: 60px;
+            scroll-margin-top: 40px;
+        }
+        .section-title {
+            font-size: 2rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        /* Cards & Rules */
+        .card-rule {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            border-left: 4px solid var(--gold-accent);
+            padding: 24px;
+            margin-bottom: 25px;
+        }
+        .card-title {
+            margin-bottom: 15px;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Callouts */
+        .callout {
+            border-radius: 6px;
+            padding: 14px 18px;
+            margin: 15px 0;
+            border-left: 4px solid transparent;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .callout-badge {
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .c-critical { background: var(--bg-critical); border-left-color: var(--border-critical); }
+        .c-critical .callout-badge { color: var(--border-critical); }
+        .c-trap { background: var(--bg-trap); border-left-color: var(--border-trap); }
+        .c-trap .callout-badge { color: var(--border-trap); }
+        .c-tip { background: var(--bg-tip); border-left-color: var(--border-tip); }
+        .c-tip .callout-badge { color: var(--border-tip); }
+        .c-pyq { background: var(--bg-pyq); border-left-color: var(--border-pyq); }
+        .c-pyq .callout-badge { color: var(--border-pyq); }
+        .c-gem { background: var(--bg-gem); border-left-color: var(--border-gem); }
+        .c-gem .callout-badge { color: var(--border-gem); }
+
+        /* Tables */
+        .table-responsive {
+            overflow-x: auto;
+            margin: 20px 0;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+        th {
+            background: #1a1c26;
+            color: var(--gold-accent);
+            padding: 12px 16px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 600;
+            border-bottom: 2px solid var(--border-color);
+        }
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        tr:nth-child(even) { background: #13161e; }
+        tr:nth-child(odd) { background: #0f1118; }
+
+        /* Toughness Badges */
+        .t-easy { color: #22c55e; font-weight: bold; }
+        .t-medium { color: #f5c842; font-weight: bold; }
+        .t-hard { color: #ef4444; font-weight: bold; }
+        .t-trap { color: #a855f7; font-weight: bold; }
+        .pyq-year { color: #3b82f6; font-weight: bold; font-family: 'IBM Plex Mono', monospace; }
+
+        /* Question Cards */
+        .q-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+        .q-text {
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+        .q-options {
+            list-style: none;
+            margin-bottom: 15px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+        }
+        @media(min-width: 768px) {
+            .q-options { grid-template-columns: 1fr 1fr; }
+        }
+        .q-option {
+            background: #0f1118;
+            border: 1px solid var(--border-color);
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.9rem;
+        }
+        details {
+            margin-top: 10px;
+            border-top: 1px dashed var(--border-color);
+            padding-top: 10px;
+        }
+        summary {
+            color: var(--gold-accent);
+            font-family: 'Orbitron', sans-serif;
+            cursor: pointer;
+            outline: none;
+            font-size: 0.9rem;
+            padding: 5px 0;
+        }
+        .answer-panel {
+            background: #0f1118;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+
+        /* Trees */
+        .tree { margin-left: 20px; list-style-type: square; }
+        .tree li { margin: 6px 0; }
+        .tree-l1 { font-weight: bold; color: #ffffff; }
+        .tree-l2 { color: var(--gold-accent); margin-left: 15px; }
+        .tree-l3 { color: var(--text-primary); margin-left: 30px; font-size: 0.95rem; }
+        .tree-l4 { color: var(--text-muted); margin-left: 45px; font-size: 0.9rem; font-style: italic; }
+
+        /* Footer */
+        footer {
+            background: #080a0e;
+            border-top: 2px solid var(--gold-accent);
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-muted);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.85rem;
+        }
+
+/* Custom Scrollbar Styles */
+/* For Modern Browsers (Firefox 64+) */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #f5c842 transparent;
+}
+
+/* For WebKit Browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent; /* Makes the track invisible */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #f5c842; /* Gold/Yellow thumb */
+    border-radius: 20px;       /* Rounded edges for the thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #e0b32f; /* Darker gold on hover */
+}
+
+        /* Mobile Adjustments */
+        @media (max-width: 992px) {
+            .main-wrapper { flex-direction: column; }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+                padding: 15px;
+            }
+            .toc-list { display: flex; overflow-x: auto; gap: 15px; padding-bottom: 10px; }
+            .toc-item a { white-space: nowrap; border-left: none; border-bottom: 2px solid transparent; }
+            .toc-item.active a { border-bottom-color: var(--gold-accent); }
+            .content-pane { padding: 20px 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero">
+        <h1>TNPSC GROUP 1 MASTER ARCHITECT</h1>
+        <h2>UNIT V: INDIAN ECONOMY & DEVELOPMENT ADMINISTRATION IN TAMIL NADU</h2>
+        <div class="badge-container">
+            <span class="badge">UNIT V STRATEGY</span>
+            <span class="badge">50 QUESTIONS CURATED</span>
+            <span class="badge">2020-2026 PATTERNS</span>
+        </div>
+    </div>
+
+    <div class="legend-row">
+        <span class="legend-item c-critical" style="border-left: 4px solid var(--border-critical)"><span class="mono" style="color: var(--border-critical)">[CRITICAL]</span> Non-negotiable High-Yield Concepts</span>
+        <span class="legend-item c-trap" style="border-left: 4px solid var(--border-trap)"><span class="mono" style="color: var(--border-trap)">[TRAP]</span> Common Examiner Decoys</span>
+        <span class="legend-item c-tip" style="border-left: 4px solid var(--border-tip)"><span class="mono" style="color: var(--border-tip)">[TIP]</span> Elimination & Memory Hacks</span>
+        <span class="legend-item c-pyq" style="border-left: 4px solid var(--border-pyq)"><span class="mono" style="color: var(--border-pyq)">[PYQ]</span> Proven Exam Patterns</span>
+        <span class="legend-item c-gem" style="border-left: 4px solid var(--border-gem)"><span class="mono" style="color: var(--border-gem)">[GEM]</span> Exclusive High-Scoring Micro-Insights</span>
+    </div>
+
+    <div class="main-wrapper">
+        
+        <nav class="sidebar">
+            <ul class="toc-list" id="toc">
+                <li class="toc-item active"><a href="#overview">0. Unit Overview</a></li>
+                <li class="toc-item"><a href="#spec-a">A. TN Schemes Master</a></li>
+                <li class="toc-item"><a href="#t1">1. Nature of Indian Economy</a></li>
+                <li class="toc-item"><a href="#t2">2. Five-Year Plan Models</a></li>
+                <li class="toc-item"><a href="#t3">3. Planning Comm & NITI</a></li>
+                <li class="toc-item"><a href="#t4">4. Sources of Revenue & RBI</a></li>
+                <li class="toc-item"><a href="#t5">5. Fiscal & Monetary Policy</a></li>
+                <li class="toc-item"><a href="#t6">6. Finance Commission</a></li>
+                <li class="toc-item"><a href="#t7">7. GST Architecture</a></li>
+                <li class="toc-item"><a href="#t8">8. Structure & Employment</a></li>
+                <li class="toc-item"><a href="#t9">9. Land Reforms & Agri</a></li>
+                <li class="toc-item"><a href="#t10">10. S&T in Agriculture</a></li>
+                <li class="toc-item"><a href="#t11">11. Industrial Growth</a></li>
+                <li class="toc-item"><a href="#t12">12. Rural Welfare Schemes</a></li>
+                <li class="toc-item"><a href="#t13">13. Social Problems</a></li>
+                <li class="toc-item"><a href="#t14">14. TN HDI Metrics</a></li>
+                <li class="toc-item"><a href="#t15">15. Social Reform Movements</a></li>
+                <li class="toc-item"><a href="#t16">16. Welfare Schemes Breakdown</a></li>
+                <li class="toc-item"><a href="#t17">17. Reservation Policy</a></li>
+                <li class="toc-item"><a href="#t18">18. Economic Trends TN</a></li>
+                <li class="toc-item"><a href="#t19">19. Social Welfare Schemes Impact</a></li>
+                <li class="toc-item"><a href="#t20">20. Social Justice & Harmony</a></li>
+                <li class="toc-item"><a href="#t21">21. Education & Health TN</a></li>
+                <li class="toc-item"><a href="#t22">22. Geo-Economic Growth TN</a></li>
+                <li class="toc-item"><a href="#t23">23. Fields of Achievement TN</a></li>
+                <li class="toc-item"><a href="#t24">24. e-Governance TN</a></li>
+                <li class="toc-item"><a href="#t25">25. Public Awareness</a></li>
+                <li class="toc-item"><a href="#t26">26. Delivery System Flaws</a></li>
+                <li class="toc-item"><a href="#t27">27. Socio-Economic Issues</a></li>
+                <li class="toc-item"><a href="#t28">28. Current Affairs & Analytics</a></li>
+                <li class="toc-item"><a href="#spec-b">B. FYP Quick Strip</a></li>
+                <li class="toc-item"><a href="#spec-c">C. Geo-Economy Link Map</a></li>
+                <li class="toc-item"><a href="#spec-d">D. HDI Indicators Dashboard</a></li>
+                <li class="toc-item"><a href="#spec-e">E. Reservation Deep Dive</a></li>
+                <li class="toc-item"><a href="#spec-f">F. e-Gov Schemes Tracker</a></li>
+                <li class="toc-item"><a href="#timeline">Timeline & Revision</a></li>
+            </ul>
+        </nav>
+
+        <div class="content-pane">
+            
+            <section id="overview">
+                <h2 class="section-title">Unit V Overview: Indian Economy & Development Administration</h2>
+                <div class="card-rule">
+                    <div class="card-title"><h3>Strategic Architecture</h3></div>
+                    <p>Unit V functions as a high-weightage cross-cutting module for TNPSC Group 1, consolidating traditional macroeconomics with micro-targeted public administration dynamics specific to Tamil Nadu. Analysis of actual question sets from 2020 to 2025 demonstrates a strict transition from theoretical structural concepts to transactional, empirical, data-driven administrative questions.</p>
+                    <div class="callout c-critical">
+                        <span class="callout-badge">[CRITICAL] Key Focus Ratios</span>
+                        <p>The operational mix comprises roughly 40% core Indian macroeconomic architecture and 60% dynamic Tamil Nadu state administrative policy, legislative updates, historical welfare matrices, and socio-economic frameworks.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="spec-a">
+                <h2 class="section-title">Special Section A: Tamil Nadu Welfare Schemes Master Table</h2>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Scheme Name</th>
+                                <th>Target Beneficiary</th>
+                                <th>Launch Year</th>
+                                <th>Department</th>
+                                <th>Sector Color Code</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Moovalur Ramamirtham Ammaiyar Pudhumai Penn</td>
+                                <td>Govt School Girls pursuing Higher Education</td>
+                                <td class="pyq-year">2022</td>
+                                <td>Social Welfare & Women Empowerment</td>
+                                <td><span class="t-easy">Education (Women)</span></td>
+                            </tr>
+                            <tr>
+                                <td>Chief Minister's Breakfast Scheme</td>
+                                <td>Primary School Students (Classes 1-5)</td>
+                                <td class="pyq-year">2022</td>
+                                <td>Social Welfare / Municipal Admin</td>
+                                <td><span class="t-medium">Health & Nutrition</span></td>
+                            </tr>
+                            <tr>
+                                <td>Makkalai Thedi Maruthuvam</td>
+                                <td>Non-communicable disease patients at doorstep</td>
+                                <td class="pyq-year">2021</td>
+                                <td>Health and Family Welfare</td>
+                                <td><span class="t-hard">Health Architecture</span></td>
+                            </tr>
+                            <tr>
+                                <td>Kalaignar Magalir Urimai Thogai</td>
+                                <td>Eligible Female Heads of Families</td>
+                                <td class="pyq-year">2023</td>
+                                <td>Revenue Administration</td>
+                                <td><span class="t-trap">Socio-Economic Safety</span></td>
+                            </tr>
+                            <tr>
+                                <td>Illam Thedi Kalvi</td>
+                                <td>Students with pandemic learning gaps</td>
+                                <td class="pyq-year">2021</td>
+                                <td>School Education</td>
+                                <td><span class="t-easy">Education Recovery</span></td>
+                            </tr>
+                            <tr>
+                                <td>Naan Mudhalvan</td>
+                                <td>State youth looking to upskill</td>
+                                <td class="pyq-year">2022</td>
+                                <td>Skill Development Corporation</td>
+                                <td><span class="t-medium">Employment Generation</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="t1">
+                <h2 class="section-title">1. Nature of Indian Economy</h2>
+                <div class="card-rule">
+                    <div class="card-title"><h3>Topic Overview</h3></div>
+                    <p>Focuses on structural realities: its identity as a mixed economy, structural shifts from agrarian to service dominance without an industrial maturation baseline, and chronic structural bottlenecks.</p>
+                    
+                    <ul class="tree">
+                        <li class="tree-l1">Nature of Indian Economy
+                            <ul class="tree">
+                                <li class="tree-l2">Mixed Economy Continuum
+                                    <ul class="tree">
+                                        <li class="tree-l3">Coexistence of Public and Private Sectors</li>
+                                        <li class="tree-l4">Exam Angle: Industrial Policy Resolutions (1948, 1956, 1991) structural shifts</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr><th>Year</th><th>Question Type</th><th>Topic Tested</th><th>Data/Scheme Referenced</th><th>Toughness</th><th>Tag</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="pyq-year">2022</td><td>Conceptual Statement</td><td>Mixed Economy Features</td><td>IPR 1956 core focus</td><td><span class="t-easy">Easy</span></td><td>[PYQ]</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="callout c-trap">
+                        <span class="callout-badge">[TRAP] Sector Contributions</span>
+                        <p>Do not confuse employment share with GDP share. Agriculture accounts for over 45% of employment but less than 19% of Gross Value Added (GVA).</p>
+                    </div>
+
+                    <div class="callout c-tip">
+                        <span class="callout-badge">[TIP] Study Material</span>
+                        <p>Class 11 Economics Chapter 7 (Indian Economy). Reference: Ramesh Singh — Indian Economy (Chapters 1 & 2).</p>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">1. Which structural characteristic best describes the dynamic transition of the Indian economy over the past three decades?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Linear transition from primary to secondary sector dominance</div>
+                            <div class="q-option">B) Skipping industrial maturity directly to service-sector dominance</div>
+                            <div class="q-option">C) Absolute decline in the workforce dependent on agriculture</div>
+                            <div class="q-option">D) Equal distribution of GVA across all sectors</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER & LIVE GEM</summary>
+                            <div class="answer-panel">
+                                <p><strong>Correct Answer: B</strong></p>
+                                <p><strong>Explanation:</strong> India's structural transformation is anomalous; it bypassed the classic secondary manufacturing sector transition stage, with the services sector leaping forward to constitute over 53% of GVA while structural labor remained anchored in low-productivity agriculture.</p>
+                                <div class="callout c-gem"><span class="callout-badge">💎 Live Gem</span><p>This phenomenon is termed "jobless structural change" in Indian Economic Surveys and is a recurring thematic target for descriptive questions.</p></div>
+                            </div>
+                        </details>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">2. The Industrial Policy Resolution of 1956 laid structural emphasis on which of the following?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Consumer goods industry expansion</div>
+                            <div class="q-option">B) Heavy and capital goods state monopolies</div>
+                            <div class="q-option">C) Complete privatization of infrastructure</div>
+                            <div class="q-option">D) Small-scale village industries export orientation</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: B</strong> — Formed the basis of Mahalanobis architecture favoring public sector undertakings as the "temples of modern India".</p></div>
+                        </details>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">3. In terms of purchasing power parity (PPP), India's economy ranks globally at which position?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Second</div>
+                            <div class="q-option">B) Third</div>
+                            <div class="q-option">C) Fifth</div>
+                            <div class="q-option">D) Seventh</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: B</strong> — Third globally in PPP terms, though fifth in nominal GDP terms.</p></div>
+                        </details>
+                    </div>
+
+                </div>
+            </section>
+
+            <section id="t2">
+                <h2 class="section-title">2. Five-Year Plan Models — An Assessment</h2>
+                <div class="card-rule">
+                    <div class="card-title"><h3>Topic Overview</h3></div>
+                    <p>Covers the evolutionary mechanics of central planning from 1951 to 2017, tracking foundational economic strategies, mathematical growth targets, and failures.</p>
+                    
+                    <ul class="tree">
+                        <li class="tree-l1">Five-Year Plans
+                            <ul class="tree">
+                                <li class="tree-l2">Mathematical & Structural Growth Frameworks
+                                    <ul class="tree">
+                                        <li class="tree-l3">Harrod-Domar vs Mahalanobis Strategy</li>
+                                        <li class="tree-l4">Exam Angle: Exact growth targets vs achievements across critical transition plans (e.g., 3rd, 5th, 10th, 12th)</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr><th>Year</th><th>Question Type</th><th>Topic Tested</th><th>Data/Scheme Referenced</th><th>Toughness</th><th>Tag</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="pyq-year">2021</td><td>Matching Matrix</td><td>Plan Models and Core Focus</td><td>Harrod-Domar, Mahalanobis, Gadgil</td><td><span class="t-medium">Medium</span></td><td>[PYQ]</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="callout c-trap">
+                        <span class="callout-badge">[TRAP] Plan Holidays vs Rolling Plans</span>
+                        <p>Plan Holidays occurred between 1966–1969 after the Third Plan due to wars and droughts. The Rolling Plan was implemented by the Janata Government from 1978–1980 after terminating the Fifth Plan early.</p>
+                    </div>
+
+                    <div class="callout c-tip">
+                        <span class="callout-badge">[TIP] Study Material</span>
+                        <p>Class 11 Economics Chapter 8. Reference: Sanjiv Verma — Indian Economy (Planning Section).</p>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">4. Which explicit strategy shift characterized the structural execution of the Tenth Five-Year Plan (2002–2007)?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Absolute state control over agricultural marketing networks</div>
+                            <div class="q-option">B) Inclusion of specific target indicators for human development alongside GDP growth</div>
+                            <div class="q-option">C) Complete abandonment of external commercial borrowings</div>
+                            <div class="q-option">D) Focus solely on heavy chemical industry clusters</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER & LIVE GEM</summary>
+                            <div class="answer-panel">
+                                <p><strong>Correct Answer: B</strong></p>
+                                <p><strong>Explanation:</strong> The Tenth Plan was historic because it broke the trend of setting only macroeconomic growth targets by introducing monitorable targets for governance and human development metrics, including reducing regional disparities and infant mortality rates.</p>
+                                <div class="callout c-gem"><span class="callout-badge">💎 Live Gem</span><p>The 11th and 12th plans followed this logic, transitioning to "Inclusive Growth" and "Faster, Sustainable and More Inclusive Growth" themes respectively.</p></div>
+                            </div>
+                        </details>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">5. The "Garibi Hatao" slogan was structurally integrated into which Five-Year Plan framework?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Third Plan</div>
+                            <div class="q-option">B) Fourth Plan</div>
+                            <div class="q-option">C) Fifth Plan</div>
+                            <div class="q-option">D) Sixth Plan</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: C</strong> — Introduced via the Fifth Five-Year Plan drafted by D.D. Dhar, though the political slogan gained traction during the 1971 elections during the 4th plan period.</p></div>
+                        </details>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">6. Why was the Third Five Year Plan deemed an structural failure relative to its growth targets?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Severe global financial recession</div>
+                            <div class="q-option">B) Sino-Indian war, Indo-Pak war, and severe agricultural droughts</div>
+                            <div class="q-option">C) Industrial nationalization strike of 1964</div>
+                            <div class="q-option">D) Immediate termination by a new regime</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: B</strong> — Dual wars (1962 and 1965) along with severe droughts in 1965-66 caused inflation and derailed plan targets, forcing the declaration of Plan Holidays.</p></div>
+                        </details>
+                    </div>
+
+                </div>
+            </section>
+
+            <section id="t3">
+                <h2 class="section-title">3. Planning Commission and NITI Aayog</h2>
+                <div class="card-rule">
+                    <div class="card-title"><h3>Topic Overview</h3></div>
+                    <p>Compares centralized top-down resource allocation with cooperative federalism frameworks, exploring the institutional evolution that occurred in 2015.</p>
+                    
+                    <ul class="tree">
+                        <li class="tree-l1">Institutional Machinery
+                            <ul class="tree">
+                                <li class="tree-l2">NITI Aayog Framework
+                                    <ul class="tree">
+                                        <li class="tree-l3">Governing Council, Index Architecture</li>
+                                        <li class="tree-l4">Exam Angle: Composition, Team India Hub, Knowledge & Innovation Hub, SDG India Index metrics</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr><th>Year</th><th>Question Type</th><th>Topic Tested</th><th>Data/Scheme Referenced</th><th>Toughness</th><th>Tag</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="pyq-year">2023</td><td>Analytical Statement</td><td>NITI Aayog Architecture vs Planning Commission</td><td>Financial allocation powers absence</td><td><span class="t-hard">Hard</span></td><td>[PYQ]</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="callout c-critical">
+                        <span class="callout-badge">[CRITICAL] Operational Difference</span>
+                        <p>Unlike the Planning Commission, NITI Aayog possesses **zero constitutional or statutory powers to allocate public funds** to state governments. Resource routing remains exclusively under the jurisdiction of the Ministry of Finance.</p>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">7. Who sits on the Governing Council of NITI Aayog?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Only the Prime Minister and selected Union Cabinet Ministers</div>
+                            <div class="q-option">B) Prime Minister, Chief Ministers of all States, and Lieutenant Governors of Union Territories</div>
+                            <div class="q-option">C) Only the Chief Ministers of Non-NDA ruled states</div>
+                            <div class="q-option">D) Union Finance Minister and Reserve Bank Governor exclusively</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER & LIVE GEM</summary>
+                            <div class="answer-panel">
+                                <p><strong>Correct Answer: B</strong></p>
+                                <p><strong>Explanation:</strong> The Governing Council embodies bottom-up federalism, bringing together Chief Ministers and UT administrators directly under the chairmanship of the Prime Minister to institutionalize shared national developmental goals.</p>
+                                <div class="callout c-gem"><span class="callout-badge">💎 Live Gem</span><p>The Planning Commission used the National Development Council (NDC) for state inputs; NITI integrates this dynamic directly into its primary Governing Council structure.</p></div>
+                            </div>
+                        </details>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">8. Which division of NITI Aayog works to lead knowledge production and direct innovation initiatives across public sector operations?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Team India Hub</div>
+                            <div class="q-option">B) Strategic Asset Hub</div>
+                            <div class="q-option">C) Knowledge and Innovation Hub</div>
+                            <div class="q-option">D) Fiscal Consolidation Desk</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: C</strong> — The Knowledge and Innovation Hub is designed to build out research, analysis, and good practice documentation, while the Team India Hub acts as the link to state governments.</p></div>
+                        </details>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">9. NITI Aayog's SDG India Index tracks development by mapping state performance against how many global sustainable development targets?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) 10 Targets</div>
+                            <div class="q-option">B) 12 Targets</div>
+                            <div class="q-option">C) 15 Goals</div>
+                            <div class="q-option">D) 17 Goals (monitored via specific national indicators)</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: D</strong> — Tracks 16 out of the 17 SDG goals with qualitative evaluation for Goal 17, mapping performance out of 100.</p></div>
+                        </details>
+                    </div>
+
+                </div>
+            </section>
+
+            <section id="t4">
+                <h2 class="section-title">4. Sources of Revenue — Reserve Bank of India</h2>
+                <div class="card-rule">
+                    <div class="card-title"><h3>Topic Overview</h3></div>
+                    <p>Examines public revenue structures and the institutional mechanics of the Reserve Bank of India (RBI) as the central currency authority, credit controller, and debt manager.</p>
+                    
+                    <ul class="tree">
+                        <li class="tree-l1">Public Finance and Banking Centralization
+                            <ul class="tree">
+                                <li class="tree-l2">Reserve Bank of India Ecosystem
+                                    <ul class="tree">
+                                        <li class="tree-l3">Tax vs Non-Tax revenue, RBI Balance Sheet, Surplus Transfers</li>
+                                        <li class="tree-l4">Exam Angle: Section 7 of RBI Act, Bimal Jalan Committee recommendations on Economic Capital Framework</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr><th>Year</th><th>Question Type</th><th>Topic Tested</th><th>Data/Scheme Referenced</th><th>Toughness</th><th>Tag</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="pyq-year">2024</td><td>Fact Identification</td><td>RBI Surplus Transfer Formula</td><td>Bimal Jalan ECF Framework limits</td><td><span class="t-hard">Hard</span></td><td>[PYQ]</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="callout c-gem">
+                        <span class="callout-badge">[GEM] RBI Economic Capital Framework</span>
+                        <p>The Bimal Jalan Committee specified that the Contingency Risk Buffer must be maintained within a tight bound of 5.5% to 6.5% of the RBI's total balance sheet size, regulating annual surplus transfers to the central government.</p>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">10. Under what legal authority can the Central Government issue binding policy directives to the Governor of the Reserve Bank of India?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Article 282 of the Constitution of India</div>
+                            <div class="q-option">B) Section 7 of the Reserve Bank of India Act, 1934</div>
+                            <div class="q-option">C) Section 21 of the Banking Regulation Act</div>
+                            <div class="q-option">D) Presidential Ordinance via Article 123</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER & LIVE GEM</summary>
+                            <div class="answer-panel">
+                                <p><strong>Correct Answer: B</strong></p>
+                                <p><strong>Explanation:</strong> Section 7 of the RBI Act allows the Central Government to issue binding directives to the Bank in the public interest, following consultation with the Governor. This provision is typically viewed as an extraordinary intervention mechanism.</p>
+                                <div class="callout c-critical"><span class="callout-badge">⚠️ Critical note</span><p>This statutory power has rarely been formally invoked, making it a high-probability target for institutional control questions.</p></div>
+                            </div>
+                        </details>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">11. Which component is categorized under the non-tax revenue receipts of the Union Government?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Integrated Goods and Services Tax (IGST)</div>
+                            <div class="q-option">B) Securities Transaction Tax (STT)</div>
+                            <div class="q-option">C) Dividends and profits from Central Public Sector Enterprises (CPSEs)</div>
+                            <div class="q-option">D) Customs duties on critical imports</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: C</strong> — Dividends, interest receipts, and currency seigniorage profits are classified as non-tax revenue receipts.</p></div>
+                        </details>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">12. When was the Reserve Bank of India formally nationalized?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) April 1, 1935</div>
+                            <div class="q-option">B) January 1, 1949</div>
+                            <div class="q-option">C) August 15, 1947</div>
+                            <div class="q-option">D) July 19, 1969</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: B</strong> — Established in 1935 as a private shareholders' bank under the 1934 Act, it was nationalized effective January 1, 1949.</p></div>
+                        </details>
+                    </div>
+
+                </div>
+            </section>
+
+            <section id="t5">
+                <h2 class="section-title">5. Fiscal Policy and Monetary Policy</h2>
+                <div class="card-rule">
+                    <div class="card-title"><h3>Topic Overview</h3></div>
+                    <p>Contrasts the Ministry of Finance's taxation, budgeting, and debt targets against the RBI's liquidity management and inflation-targeting toolkits.</p>
+                    
+                    <ul class="tree">
+                        <li class="tree-l1">Macroeconomic Regulation Stabilizers
+                            <ul class="tree">
+                                <li class="tree-l2">Monetary Policy Committee Framework
+                                    <ul class="tree">
+                                        <li class="tree-l3">Repo, Reverse Repo, SDF, MSF, CRR, SLR mechanics</li>
+                                        <li class="tree-l4">Exam Angle: Structural operations of the Standing Deposit Facility (SDF) as a tool without collateral requirements</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr><th>Year</th><th>Question Type</th><th>Topic Tested</th><th>Data/Scheme Referenced</th><th>Toughness</th><th>Tag</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="pyq-year">2023</td><td>Analytical Mechanism</td><td>Standing Deposit Facility (SDF)</td><td>Liquidity absorption without collateral</td><td><span class="t-trap">Trap</span></td><td>[PYQ]</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="callout c-trap">
+                        <span class="callout-badge">[TRAP] Standing Deposit Facility</span>
+                        <p>Unlike the traditional Reverse Repo window, the **Standing Deposit Facility (SDF)** allows the RBI to absorb banking system liquidity without placing government securities as collateral. This strengthens its capacity to address systemic cash surpluses.</p>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">13. Which statement accurately separates the legal framework of the Standing Deposit Facility (SDF) from the Fixed Reverse Repo rate?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) SDF requires higher collateral backing from the central bank</div>
+                            <div class="q-option">B) SDF absorbs excess liquidity without requiring the RBI to provide government securities as collateral</div>
+                            <div class="q-option">C) SDF is controlled by the Union Ministry of Finance, whereas Reverse Repo is controlled by the RBI</div>
+                            <div class="q-option">D) SDF can only be accessed by regional rural banking networks</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER & LIVE GEM</summary>
+                            <div class="answer-panel">
+                                <p><strong>Correct Answer: B</strong></p>
+                                <p><strong>Explanation:</strong> The SDF was introduced into the RBI Act framework in 2018 to optimize liquidity management. It replaced the fixed reverse repo rate as the floor of the Liquidity Adjustment Facility (LAF) corridor, operating without collateral constraints.</p>
+                                <div class="callout c-gem"><span class="callout-badge">💎 Live Gem</span><p>The SDF operates at an interest rate 25 basis points below the prevailing Repo rate, while the Marginal Standing Facility (MSF) sits 25 basis points above the Repo rate.</p></div>
+                            </div>
+                        </details>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">14. Under the amended RBI Act framework, who chairs the statutory Monetary Policy Committee (MPC)?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Union Finance Minister</div>
+                            <div class="q-option">B) Chief Economic Adviser to the Government of India</div>
+                            <div class="q-option">C) Governor of the Reserve Bank of India</div>
+                            <div class="q-option">D) Chairman of the NITI Aayog Finance Committee</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: C</strong> — The Governor of the RBI is the ex-officio Chairperson of the 6-member Monetary Policy Committee.</p></div>
+                        </details>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">15. What constitutes the formal target metric for the Fiscal Responsibility and Budget Management (FRBM) Act compliance rules?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Keeping consumer price index variations under 10%</div>
+                            <div class="q-option">B) Capping fiscal deficit targets as an explicit percentage of Gross Domestic Product (GDP)</div>
+                            <div class="q-option">C) Preventing external commercial debt defaults</div>
+                            <div class="q-option">D) Matching revenue collections exactly to capital distributions</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: B</strong> — The FRBM framework targets fiscal consolidation by setting baseline limits on fiscal deficit to ensure long-term macro-fiscal sustainability.</p></div>
+                        </details>
+                    </div>
+
+                </div>
+            </section>
+
+            <section id="t6">
+                <h2 class="section-title">6. Finance Commission — Resource Sharing</h2>
+                <div class="card-rule">
+                    <div class="card-title"><h3>Topic Overview</h3></div>
+                    <p>Deals with Article 280, vertical vs horizontal devolution matrices, and fiscal tensions over changing population weightage baselines between northern and southern states.</p>
+                    
+                    <ul class="tree">
+                        <li class="tree-l1">Constitutional Fiscal Federalism
+                            <ul class="tree">
+                                <li class="tree-l2">Finance Commission Machinery
+                                    <ul class="tree">
+                                        <li class="tree-l3">Horizontal Criteria: Demographic Performance, Income Distance, Forest Cover</li>
+                                        <li class="tree-l4">Exam Angle: Comparison of 15th FC criteria weights versus 16th FC mandates</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr><th>Year</th><th>Question Type</th><th>Topic Tested</th><th>Data/Scheme Referenced</th><th>Toughness</th><th>Tag</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="pyq-year">2022</td><td>Direct Numeric</td><td>15th Finance Commission Devolution Share</td><td>41% distribution share to states</td><td><span class="t-medium">Medium</span></td><td>[PYQ]</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="callout c-critical">
+                        <span class="callout-badge">[CRITICAL] Demographic Weighting Trap</span>
+                        <p>The 15th Finance Commission used **2011 Census population data** for its allocation formula, replacing the 1971 data. To support states with effective family planning programs, it introduced a **12.5% weight for 'Demographic Performance'**.</p>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">16. Which specific indicator was introduced with a 12.5% weighting weight by the 15th Finance Commission to reward states that managed population growth effectively?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Population Growth Velocity Metric</div>
+                            <div class="q-option">B) Demographic Performance Criterion</div>
+                            <div class="q-option">C) Total Fertility Rate Equilibrium Index</div>
+                            <div class="q-option">D) Regional Urbanization Level Factor</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER & LIVE GEM</summary>
+                            <div class="answer-panel">
+                                <p><strong>Correct Answer: B</strong></p>
+                                <p><strong>Explanation:</strong> The 'Demographic Performance' criterion is calculated as the inverse of the fertility ratio of the state scaled to 1971 population data, rewarding states like Tamil Nadu that implemented family planning measures effectively.</p>
+                                <div class="callout c-gem"><span class="callout-badge">💎 Live Gem</span><p>Income distance remains the highest weighted criterion at 45%, followed by population and area metrics.</p></div>
+                            </div>
+                        </details>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">17. Under which explicit Article of the Constitution of India does the President appoint the Finance Commission?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Article 265</div>
+                            <div class="q-option">B) Article 275</div>
+                            <div class="q-option">C) Article 280</div>
+                            <div class="q-option">D) Article 300</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: C</strong> — Article 280 provides the constitutional basis for a quasi-judicial body appointed every five years to recommend fiscal devolution parameters.</p></div>
+                        </details>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">18. Who was appointed as the Chairman of the 16th Finance Commission of India?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) N.K. Singh</div>
+                            <div class="q-option">B) Dr. Arvind Panagariya</div>
+                            <div class="q-option">C) Y.V. Reddy</div>
+                            <div class="q-option">D) Dr. C. Rangarajan</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: B</strong> — Dr. Arvind Panagariya chairs the 16th Finance Commission, which is tasked with making recommendations for the five-year period starting April 1, 2026.</p></div>
+                        </details>
+                    </div>
+
+                </div>
+            </section>
+
+            <section id="t7">
+                <h2 class="section-title">7. Goods and Services Tax (GST)</h2>
+                <div class="card-rule">
+                    <div class="card-title"><h3>Topic Overview</h3></div>
+                    <p>Covers the 101st Constitutional Amendment, the GST Council voting structure, compensation dynamics, and its impact on state fiscal autonomy.</p>
+                    
+                    <ul class="tree">
+                        <li class="tree-l1">Indirect Tax Standardization
+                            <ul class="tree">
+                                <li class="tree-l2">GST Council Voting Equilibrium
+                                    <ul class="tree">
+                                        <li class="tree-l3">Article 279A, CG vs State voting fractions</li>
+                                        <li class="tree-l4">Exam Angle: Center holds 1/3rd voting power; States hold 2/3rds; passing measures requires a 3/4th majority. This gives the Center a structural veto.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr><th>Year</th><th>Question Type</th><th>Topic Tested</th><th>Data/Scheme Referenced</th><th>Toughness</th><th>Tag</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="pyq-year">2021</td><td>Constitutional Clause</td><td>GST Council Voting Split</td><td>Article 279A structural math</td><td><span class="t-hard">Hard</span></td><td>[PYQ]</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">19. To approve a regulatory policy resolution within the GST Council meeting, what statutory voting majority threshold is required?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Simple majority of members present and voting</div>
+                            <div class="q-option">B) Two-thirds majority of members present and voting</div>
+                            <div class="q-option">C) Three-fourths weighted majority of members present and voting</div>
+                            <div class="q-option">D) Unanimous consent with zero dissents permitted</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER & LIVE GEM</summary>
+                            <div class="answer-panel">
+                                <p><strong>Correct Answer: C</strong></p>
+                                <p><strong>Explanation:</strong> Under Article 279A, decisions require a three-fourths weighted majority. The Central Government holds one-third of the total voting weight, while all State Governments combined hold two-thirds. This structure means neither block can pass resolutions independently.</p>
+                                <div class="callout c-tip"><span class="callout-badge">💡 Elimination Tip</span><p>Because the Center holds 33.33% of the vote, no resolution can pass (requiring 75%) without the Center's consent, establishing an effective central veto.</p></div>
+                            </div>
+                        </details>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">20. Which constitutional amendment enacted the Goods and Services Tax (GST) architecture in India?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) 44th Amendment Act</div>
+                            <div class="q-option">B) 86th Amendment Act</div>
+                            <div class="q-option">C) 101st Amendment Act</div>
+                            <div class="q-option">D) 103rd Amendment Act</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: C</strong> — The 101st Constitutional Amendment Act of 2016 introduced the comprehensive GST framework across India, effective July 1, 2017.</p></div>
+                        </details>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">21. Which tax category remains structurally excluded from the GST architecture and continues to be levied separately by state administrations?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Service Tax</div>
+                            <div class="q-option">B) Central Excise Duty on tobacco variants</div>
+                            <div class="q-option">C) State Excise Duty on alcohol for human consumption</div>
+                            <div class="q-option">D) Countervailing Customs Duties</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: C</strong> — Alcohol for human consumption is constitutionally excluded from GST under Article 366(12A), preserving state taxation powers over this revenue stream.</p></div>
+                        </details>
+                    </div>
+
+                </div>
+            </section>
+
+            <section id="t8">
+                <h2 class="section-title">8. Structure of Indian Economy & Employment</h2>
+                <div class="card-rule">
+                    <div class="card-title"><h3>Topic Overview</h3></div>
+                    <p>Analyzes structural adjustments across economic sectors, tracking labor migrations, informal employment challenges, and periodic labor force indicators.</p>
+                    
+                    <ul class="tree">
+                        <li class="tree-l1">Labor Market Dynamics
+                            <ul class="tree">
+                                <li class="tree-l2">Periodic Labour Force Survey Metrics
+                                    <ul class="tree">
+                                        <li class="tree-l3">LFPR, WPR, UR metrics, formal vs informal sector splits</li>
+                                        <li class="tree-l4">Exam Angle: Tracking female labor force participation changes and urban-rural employment structural indicators</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <div class="q-card">
+                        <div class="q-text">22. Disguised unemployment in agricultural landscapes is characterized by which marginal productivity condition?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Marginal productivity of labor is highly positive</div>
+                            <div class="q-option">B) Marginal productivity of labor is equal to zero</div>
+                            <div class="q-option">C) Productive output increases exponentially with new entries</div>
+                            <div class="q-option">D) Average labor cost matches daily capital asset investment</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER & LIVE GEM</summary>
+                            <div class="answer-panel">
+                                <p><strong>Correct Answer: B</strong></p>
+                                <p><strong>Explanation:</strong> Disguised unemployment occurs when more workers are engaged than necessary. Removing surplus labor does not reduce total output, meaning the marginal productivity of those extra workers is zero.</p>
+                                <div class="callout c-gem"><span class="callout-badge">💎 Live Gem</span><p>This structural challenge reflects high labor pressure on limited agricultural land, a key focus in Class 11 Economics Chapter 8.</p></div>
+                            </div>
+                        </details>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">23. Which institution publishes the official Periodic Labour Force Survey (PLFS) data metrics for India?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Reserve Bank of India Department of Statistics</div>
+                            <div class="q-option">B) National Statistical Office (NSO) under MOSPI</div>
+                            <div class="q-option">C) NITI Aayog Labor Division Desk</div>
+                            <div class="q-option">D) Institute of Applied Manpower Policy Analytics</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: B</strong> — The National Statistical Office (NSO), under the Ministry of Statistics and Programme Implementation (MOSPI), manages the collection and release of PLFS indicators.</p></div>
+                        </details>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">24. What type of unemployment occurs during a transition period when workers are moving between jobs or searching for new positions?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Structural Unemployment</div>
+                            <div class="q-option">B) Frictional Unemployment</div>
+                            <div class="q-option">C) Cyclical Unemployment</div>
+                            <div class="q-option">D) Chronic Seasonal Stagnation</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: B</strong> — Frictional unemployment represents temporary job-search transitions, unlike structural unemployment, which stems from deeper skill mismatches.</p></div>
+                        </details>
+                    </div>
+
+                </div>
+            </section>
+
+            <section id="t9">
+                <h2 class="section-title">9. Land Reforms and Agriculture</h2>
+                <div class="card-rule">
+                    <div class="card-title"><h3>Topic Overview</h3></div>
+                    <p>Traces the abolition of intermediaries, tenancy protection, land ceiling legislation, and agricultural credit infrastructure.</p>
+                    
+                    <ul class="tree">
+                        <li class="tree-l1">Agrarian Restructuring
+                            <ul class="tree">
+                                <li class="tree-l2">Tenancy and Structural Holdings Optimization
+                                    <ul class="tree">
+                                        <li class="tree-l3">Zamindari abolition, Land Ceiling Acts in Tamil Nadu</li>
+                                        <li class="tree-l4">Exam Angle: Tamil Nadu Land Reforms (Fixation of Ceiling on Land) Act 1961 provisions and subsequent operational amendments</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <div class="q-card">
+                        <div class="q-text">25. What was the baseline land holding ceiling limit established for a standard family unit under the Tamil Nadu Land Reforms (Fixation of Ceiling on Land) Act, 1961?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) 15 Standard Acres</div>
+                            <div class="q-option">B) 30 Standard Acres</div>
+                            <div class="q-option">C) 60 Standard Acres</div>
+                            <div class="q-option">D) 100 Standard Acres</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER & LIVE GEM</summary>
+                            <div class="answer-panel">
+                                <p><strong>Correct Answer: B</strong></p>
+                                <p><strong>Explanation:</strong> The landmark 1961 Act originally set a ceiling limit of 30 standard acres for a family of up to five members, which was later reduced to 15 standard acres via an amendment in 1970.</p>
+                                <div class="callout c-critical"><span class="callout-badge">⚠️ Historical Target</span><p>The 1970 amendment reducing the ceiling to 15 standard acres is a high-frequency target for TNPSC questions on state land tenancy reforms.</p></div>
+                            </div>
+                        </details>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">26. Which structural system of revenue collection introduced by the British in Madras Presidency made land ownership settlements directly with individual cultivators?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Zamindari System</div>
+                            <div class="q-option">B) Mahalwari System</div>
+                            <div class="q-option">C) Ryotwari System</div>
+                            <div class="q-option">D) Malguzari Settlement Matrix</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: C</strong> — The Ryotwari system, designed by Thomas Munro and Alexander Read in Madras, established direct tax relationships with individual cultivators without intermediaries.</p></div>
+                        </details>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">27. Institutional agricultural credit routing is managed by which specialized national refinancing apex body?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Small Industries Development Bank of India (SIDBI)</div>
+                            <div class="q-option">B) National Bank for Agriculture and Rural Development (NABARD)</div>
+                            <div class="q-option">C) Export-Import Bank of India (EXIM)</div>
+                            <div class="q-option">D) National Cooperative Development Council Desk</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: B</strong> — NABARD was established in July 1982 under a dedicated Act on the recommendations of the B. Sivaraman Committee to oversee rural credit distribution.</p></div>
+                        </details>
+                    </div>
+
+                </div>
+            </section>
+
+            <section id="t10">
+                <h2 class="section-title">10. Application of Science and Technology in Agriculture</h2>
+                <div class="card-rule">
+                    <div class="card-title"><h3>Topic Overview</h3></div>
+                    <p>Examines modern agricultural technology, including precision farming networks, drone deployments, and state digital portals.</p>
+                    
+                    <ul class="tree">
+                        <li class="tree-l1">Agricultural Modernization
+                            <ul class="tree">
+                                <li class="tree-l2">Digital AgTech Infrastructure
+                                    <ul class="tree">
+                                        <li class="tree-l3">Uzhavan Mobile App, Geo-tagging assets, Precision Irrigation</li>
+                                        <li class="tree-l4">Exam Angle: Features, operational services, and language access matrices of the Uzhavan app platform</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <div class="q-card">
+                        <div class="q-text">28. The Tamil Nadu Department of Agriculture's digital platform, the 'Uzhavan' mobile application, provides real-time access to which of the following services?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Direct international export bidding panels</div>
+                            <div class="q-option">B) Custom hiring centers for machinery, seed subsidy tracking, and compensation data</div>
+                            <div class="q-option">C) Commercial urban land registration processing</div>
+                            <div class="q-option">D) Automatic groundwater drilling site allocation</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER & LIVE GEM</summary>
+                            <div class="answer-panel">
+                                <p><strong>Correct Answer: B</strong></p>
+                                <p><strong>Explanation:</strong> The Uzhavan app acts as a unified digital platform providing farmers with access to machinery rental networks, real-time crop insurance data, market prices, and subsidy schemes.</p>
+                                <div class="callout c-gem"><span class="callout-badge">💎 Live Gem</span><p>Launched in 2018, this application serves as a primary example for questions focused on digital e-governance in state agriculture.</p></div>
+                            </div>
+                        </details>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">29. What technical tool forms the core of the Tamil Nadu Precision Farming Project's irrigation model?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Flood Basin saturation systems</div>
+                            <div class="q-option">B) Fertigation matched with micro-drip irrigation delivery systems</div>
+                            <div class="q-option">C) Diesel-powered overhead canvas spraying</div>
+                            <div class="q-option">D) Manual channel distribution slicing</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: B</strong> — Fertigation mixes soluble fertilizers directly into micro-drip systems, optimizing input delivery and water-use efficiency.</p></div>
+                        </details>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">30. Which institution developed the specialized climate resilient seed varieties targeted for dryland sectors in Tamil Nadu?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Indian Institute of Science, Bengaluru</div>
+                            <div class="q-option">B) Tamil Nadu Agricultural University (TNAU), Coimbatore</div>
+                            <div class="q-option">C) Madras Institute of Development Studies</div>
+                            <div class="q-option">D) Central Rice Research Institute, Cuttack</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: B</strong> — TNAU Coimbatore leads state-level agricultural research, developing crop varieties adapted to regional agro-climatic conditions.</p></div>
+                        </details>
+                    </div>
+
+                </div>
+            </section>
+
+            <section id="t11">
+                <h2 class="section-title">11. Industrial Growth</h2>
+                <div class="card-rule">
+                    <div class="card-title"><h3>Topic Overview</h3></div>
+                    <p>Maps the development of industrial corridors, specialized clusters, and institutional finance networks like TIDCO and SIPCOT.</p>
+                    
+                    <ul class="tree">
+                        <li class="tree-l1">Industrial Infrastructure
+                            <ul class="tree">
+                                <li class="tree-l2">Manufacturing Cluster Formations
+                                    <ul class="tree">
+                                        <li class="tree-l3">Automotive, Textile, Leather hubs, SEZ corridors</li>
+                                        <li class="tree-l4">Exam Angle: Mapping regional clusters (e.g., Karur for coach-building, Tiruppur for knitwear, Ambur for leather)</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <div class="q-card">
+                        <div class="q-text">31. Which urban manufacturing cluster in Tamil Nadu is known as the "Knitwear Capital of India," contributing significantly to national textile export volumes?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Salem</div>
+                            <div class="q-option">B) Tiruppur</div>
+                            <div class="q-option">C) Madurai</div>
+                            <div class="q-option">D) Erode</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER & LIVE GEM</summary>
+                            <div class="answer-panel">
+                                <p><strong>Correct Answer: B</strong></p>
+                                <p><strong>Explanation:</strong> Tiruppur functions as a major textile manufacturing cluster specializing in knitwear, accounting for a substantial portion of India's cotton knitwear exports.</p>
+                                <div class="callout c-tip"><span class="callout-badge">💡 Cluster Review</span><p>Review the economic geographic profiles in Class 11 Economics Chapter 11: Karur handles bus body building, Sivakasi produces matches/fireworks, and Ambur manages leather processing.</p></div>
+                            </div>
+                        </details>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">32. Which specialized public body was created in 1971 to build and manage industrial estates across Tamil Nadu?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) TIIC</div>
+                            <div class="q-option">B) SIPCOT</div>
+                            <div class="q-option">C) TANSIDCO</div>
+                            <div class="q-option">D) TIDCO</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: B</strong> — SIPCOT (State Industries Promotion Corporation of Tamil Nadu) was established in 1971 to systematically develop industrial infrastructure.</p></div>
+                        </details>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">33. Why is Chennai referred to as the "Detroit of Asia"?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Concentration of software service providers</div>
+                            <div class="q-option">B) Dominant automotive ecosystem and component manufacturing base</div>
+                            <div class="q-option">C) Deep-water shipping logistics infrastructure</div>
+                            <div class="q-option">D) Mega-scale oil refinery concentrations</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: B</strong> — The city's concentration of major automotive manufacturers and auto-component suppliers earned it this designation.</p></div>
+                        </details>
+                    </div>
+
+                </div>
+            </section>
+
+            <section id="t12">
+                <h2 class="section-title">12. Rural Welfare Oriented Programmes</h2>
+                <div class="card-rule">
+                    <div class="card-title"><h3>Topic Overview</h3></div>
+                    <p>Covers wage employment schemes, rural asset building, housing initiatives, and self-help group programs like Mahalir Thittam.</p>
+                    
+                    <ul class="tree">
+                        <li class="tree-l1">Rural Safety Nets
+                            <ul class="tree">
+                                <li class="tree-l2">Financial Inclusion and Self-Help Group Networks
+                                    <ul class="tree">
+                                        <li class="tree-l3">Mahalir Thittam, TNSRLM, MGNREGA execution models</li>
+                                        <li class="tree-l4">Exam Angle: Institutional linkages between Tamil Nadu Corporation for Development of Women and local self-help groups</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <div class="q-card">
+                        <div class="q-text">34. The 'Mahalir Thittam' socioeconomic empowerment initiative was launched in Tamil Nadu through partnership with which dedicated implementation agency?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Tamil Nadu Corporation for Development of Women (TNCDW)</div>
+                            <div class="q-option">B) State Bank of India Micro-finance Cell</div>
+                            <div class="q-option">C) NABARD Regional Administrative Office</div>
+                            <div class="q-option">D) Social Welfare Board Department Desk</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER & LIVE GEM</summary>
+                            <div class="answer-panel">
+                                <p><strong>Correct Answer: A</strong></p>
+                                <p><strong>Explanation:</strong> Mahalir Thittam was introduced to promote self-help groups (SHGs) and micro-enterprise development, working in partnership with NGOs and banking institutions under TNCDW management.</p>
+                                <div class="callout c-gem"><span class="callout-badge">💎 Live Gem</span><p>Launched experimentally in Dharmapuri district in 1989, this project was scaled statewide by 1997-98, establishing an early model for the National Rural Livelihoods Mission.</p></div>
+                            </div>
+                        </details>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">35. What is the statutory time limit guaranteed for providing employment or allowance benefits under the MGNREGA system?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) 7 Days from formal date of demand</div>
+                            <div class="q-option">B) 15 Days from formal date of demand</div>
+                            <div class="q-option">C) 30 Days from formal date of demand</div>
+                            <div class="q-option">D) 60 Days from formal date of demand</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: B</strong> — MGNREGA mandates providing employment within 15 days of a formal application, failing which an unemployment allowance must be paid.</p></div>
+                        </details>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">36. Which Tamil Nadu rural housing project matches the focus of the central Pradhan Mantri Awas Yojana (Gramin) framework?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Kalaignar Veettu Vasathi Thittam / Kalaignar Kanavu Illam</div>
+                            <div class="q-option">B) Namakku Naame Thittam Infrastructure Desk</div>
+                            <div class="q-option">C) Anna Marumalarchi Thittam Space Desk</div>
+                            <div class="q-option">D) Pudhumai Penn Housing Block Project</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: A</strong> — State-specific housing initiatives focus on upgrading rural housing stock to concrete structures for eligible families.</p></div>
+                        </details>
+                    </div>
+
+                </div>
+            </section>
+
+            <section id="t13">
+                <h2 class="section-title">13. Social Problems — Population, Education, Health, Employment, Poverty</h2>
+                <div class="card-rule">
+                    <div class="card-title"><h3>Topic Overview</h3></div>
+                    <p>Addresses structural social challenges, multi-dimensional poverty measurements, and population dynamics across state demographics.</p>
+                    
+                    <ul class="tree">
+                        <li class="tree-l1">Socio-Economic Bottlenecks
+                            <ul class="tree">
+                                <li class="tree-l2">Poverty Measurement Frameworks
+                                    <ul class="tree">
+                                        <li class="tree-l3">Tendulkar vs Rangarajan Methodology, NITI Multidimensional Poverty Index</li>
+                                        <li class="tree-l4">Exam Angle: Indicators used to track health, education, and living standards under the Multidimensional Poverty Index</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <div class="q-card">
+                        <div class="q-text">37. NITI Aayog's National Multidimensional Poverty Index (MPI) measures deprivation across which core dimension sets?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Income levels, employment duration, and asset values</div>
+                            <div class="q-option">B) Health, Education, and Standard of Living indicators</div>
+                            <div class="q-option">C) Urbanization speeds, energy consumption, and road density</div>
+                            <div class="q-option">D) Caloric input, agricultural yield, and saving deposits</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER & LIVE GEM</summary>
+                            <div class="answer-panel">
+                                <p><strong>Correct Answer: B</strong></p>
+                                <p><strong>Explanation:</strong> The National MPI uses 12 indicators distributed across three primary dimensions: Health, Education, and Standard of Living, aligning with the methodology used in global MPI reports.</p>
+                                <div class="callout c-critical"><span class="callout-badge">⚠️ Index Specifics</span><p>India's national adaptation adds specific indicators for antenatal care and bank accounts to the standard global MPI model.</p></div>
+                            </div>
+                        </details>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">38. According to official census data metrics, which stage of the demographic transition is Tamil Nadu currently exhibiting?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) High birth rate matched with high death rate stability</div>
+                            <div class="q-option">B) High birth rate with falling death rates</div>
+                            <div class="q-option">C) Low birth rate matched with low death rate stability (Advanced Transition Stage)</div>
+                            <div class="q-option">D) Explosive population expansion velocity</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: C</strong> — Tamil Nadu has achieved replacement-level fertility rates, positioning it in the advanced stage of demographic transition characterized by low birth and death rates.</p></div>
+                        </details>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">39. Which technical committee proposed using a modified nutritional intake basket alongside separate rural and urban cash consumption limits to redefine the national poverty line?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Sarkaria Commission</div>
+                            <div class="q-option">B) Dr. C. Rangarajan Committee (2014)</div>
+                            <div class="q-option">C) Suresh Tendulkar Committee (2009)</div>
+                            <div class="q-option">D) Urjit Patel Task Force Desk</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: B</strong> — The Rangarajan Committee revised the Tendulkar poverty line methodology by raising the daily per-capita spending thresholds for rural and urban areas.</p></div>
+                        </details>
+                    </div>
+
+                </div>
+            </section>
+
+            <section id="t14">
+                <h2 class="section-title">14. Human Development Indicators in Tamil Nadu</h2>
+                <div class="card-rule">
+                    <div class="card-title"><h3>Topic Overview</h3></div>
+                    <p>Analyzes human development metrics, comparing Tamil Nadu's performance on indicators like IMR, MMR, and Life Expectancy against national averages.</p>
+                    
+                    <ul class="tree">
+                        <li class="tree-l1">Human Capital Analytics
+                            <ul class="tree">
+                                <li class="tree-l2">Comparative Human Development Frameworks
+                                    <ul class="tree">
+                                        <li class="tree-l3">IMR, MMR, Literacy, Per Capita GSDP comparisons</li>
+                                        <li class="tree-l4">Exam Angle: Tamil Nadu's performance relative to national averages on key health and economic indicators</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <div class="q-card">
+                        <div class="q-text">40. Which structural factor best explains Tamil Nadu's favorable performance on maternal and infant health indicators compared to the national average?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) High reliance on private medical systems without public infrastructure</div>
+                            <div class="q-option">B) A decentralized, three-tier public health infrastructure combined with high institutional delivery rates</div>
+                            <div class="q-option">C) Low overall female literacy rates across rural districts</div>
+                            <div class="q-option">D) Complete centralization of medical procurement within a single central ministry</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER & LIVE GEM</summary>
+                            <div class="answer-panel">
+                                <p><strong>Correct Answer: B</strong></p>
+                                <p><strong>Explanation:</strong> Tamil Nadu's public health model integrates Primary Health Centres (PHCs) with secondary and tertiary facilities, achieving institutional delivery rates of nearly 100%, which helps lower IMR and MMR metrics.</p>
+                                <div class="callout c-gem"><span class="callout-badge">💎 Live Gem</span><p>Tamil Nadu's Maternal Mortality Ratio (MMR) is well below the sustainable development goal target of 70 per 100,000 live births, ranking among the top performing states in India.</p></div>
+                            </div>
+                        </details>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">41. In which of the following indicators does Tamil Nadu consistently rank among the top large states, according to recent NITI Aayog Health Index reports?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Total out-of-pocket expenditure expansion rates</div>
+                            <div class="q-option">B) Comprehensive health outcomes and operational delivery performance</div>
+                            <div class="q-option">C) Population dependency ratio acceleration</div>
+                            <div class="q-option">D) Rural medical practitioner deficits</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: B</strong> — The state consistently ranks high in NITI Aayog's health indices due to its health delivery infrastructure and lower disease burden metrics.</p></div>
+                        </details>
+                    </div>
+
+                    <div class="q-card">
+                        <div class="q-text">42. What is the approximate literacy rate achieved by Tamil Nadu as per the latest census baseline records, compared to the national average?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) 74.04% (Below national average)</div>
+                            <div class="q-option">B) 80.09% (Significantly above national average)</div>
+                            <div class="q-option">C) 65.20% (Equal to rural baselines)</div>
+                            <div class="q-option">D) 93.91% (Matching Kerala metrics)</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: B</strong> — Tamil Nadu recorded an 80.09% literacy rate in the 2011 Census, well above the national average of 74.04%.</p></div>
+                        </details>
+                    </div>
+
+                </div>
+            </section>
+
+            <section id="t15">
+                <h2 class="section-title">15. Impact of Social Reform Movements</h2>
+                <div class="card-rule">
+                    <div class="card-title"><h3>Topic Overview</h3></div>
+                    <p>Examines how the Self-Respect Movement, Justice Party actions, and Dravidian welfare models shaped the state's socio-economic policies.</p>
+                    <div class="q-card">
+                        <div class="q-text">43. The Justice Party administration's issuance of the Communal G.O.s in 1921 and 1922 served as a foundational step for which socioeconomic policy?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Universal healthcare mandates</div>
+                            <div class="q-option">B) Statutory reservation and communal representation in public employment</div>
+                            <div class="q-option">C) Complete nationalization of textile manufacturing clusters</div>
+                            <div class="q-option">D) Abolition of the Ryotwari land tenure system</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: B</strong> — The 1921 and 1922 Communal Regulations introduced institutional frameworks for affirmative action and affirmative representation within the public services of the Madras Presidency.</p></div>
+                        </details>
+                    </div>
+                </div>
+            </section>
+
+            <section id="t16">
+                <h2 class="section-title">16. Political Parties and Welfare Schemes</h2>
+                <div class="card-rule">
+                    <div class="card-title"><h3>Topic Overview</h3></div>
+                    <p>Tracks the evolution of nutrition programs, education incentives, and social security initiatives introduced by various administrations in Tamil Nadu.</p>
+                    <div class="q-card">
+                        <div class="q-text">44. The Midday Meal Scheme, initially introduced in Chennai Corporation schools by the Justice Party and scaled by K. Kamaraj, was expanded into the Nutritious Meal Programme by which Chief Minister?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) M. Karunanidhi</div>
+                            <div class="q-option">B) M.G. Ramachandran</div>
+                            <div class="q-option">C) J. Jayalalithaa</div>
+                            <div class="q-option">D) C.N. Annadurai</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: B</strong> — Chief Minister M.G. Ramachandran expanded the initiative into the Nutritious Meal Programme in 1982, incorporating enhanced nutritional components to improve child health indicators.</p></div>
+                        </details>
+                    </div>
+                </div>
+            </section>
+
+            <section id="t17">
+                <h2 class="section-title">17. Rationale Behind Reservation Policy</h2>
+                <div class="card-rule">
+                    <div class="card-title"><h3>Topic Overview</h3></div>
+                    <p>Covers Article 15 and 16 frameworks, the history of the 69% reservation model in Tamil Nadu, and protection under the Ninth Schedule.</p>
+                    <div class="q-card">
+                        <div class="q-text">45. Under which legal mechanism is Tamil Nadu's 69% reservation policy protected from judicial review regarding the 50% cap set in the Indra Sawhney case?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Insertion into the Seventh Schedule of the Constitution</div>
+                            <div class="q-option">B) Inclusion within the Ninth Schedule via the 76th Constitutional Amendment Act</div>
+                            <div class="q-option">C) Direct execution under Article 356 emergency mandates</div>
+                            <div class="q-option">D) Explicit provisions within the Right to Education Act</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: B</strong> — The Tamil Nadu Backward Classes, Scheduled Castes and Scheduled Tribes Act, 1993, was placed in the Ninth Schedule via the 76th Amendment in 1994 to protect its statutory reservation threshold.</p></div>
+                        </details>
+                    </div>
+                </div>
+            </section>
+
+            <section id="t18">
+                <h2 class="section-title">18. Economic Trends in Tamil Nadu</h2>
+                <div class="card-rule">
+                    <p>Covers dynamic fiscal trends, debt-to-GSDP ratios, and sectoral shifts within the state economy.</p>
+                    <div class="q-card">
+                        <div class="q-text">46. Which sector contributes the largest share to Tamil Nadu's Gross State Value Added (GSVA)?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Agriculture and Allied Activities</div>
+                            <div class="q-option">B) Manufacturing and Construction Sectors</div>
+                            <div class="q-option">C) Services Sector (Tertiary Sector)</div>
+                            <div class="q-option">D) Mining and Quarrying Operations</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: C</strong> — Mirroring the national structural trend, the tertiary services sector contributes over 50% of Tamil Nadu's GSVA, followed by a strong manufacturing base.</p></div>
+                        </details>
+                    </div>
+                </div>
+            </section>
+
+            <section id="t24">
+                <h2 class="section-title">24. e-Governance in Tamil Nadu</h2>
+                <div class="card-rule">
+                    <p>Tracks digital state architecture including TNeGA, e-Sevai centers, and data-driven administrative portals.</p>
+                    <div class="q-card">
+                        <div class="q-text">47. What is the primary operational role of the Tamil Nadu e-Governance Agency (TNeGA)?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Managing physical land distribution auctions</div>
+                            <div class="q-option">B) Serving as the apex state body to implement e-governance initiatives and digital citizen service delivery channels</div>
+                            <div class="q-option">C) Direct policing of commercial cyber crimes</div>
+                            <div class="q-option">D) Funding private start-up tech investments exclusively</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: B</strong> — TNeGA designs and implements the software, portals, and digital pipelines required to deliver public services through online platforms and e-Sevai networks.</p></div>
+                        </details>
+                    </div>
+                </div>
+            </section>
+
+            <section id="t25">
+                <h2 class="section-title">25. Public Awareness and General Administration</h2>
+                <div class="card-rule">
+                    <p>Examines citizen charters, right to information applications, and public grievance mechanisms.</p>
+                    <div class="q-card">
+                        <div class="q-text">48. The CM Helpline portal and integrated grievance management systems are designed to improve which aspect of public administration?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Decentralized international bond trading</div>
+                            <div class="q-option">B) Responsiveness, accountability, and time-bound grievance resolution for citizens</div>
+                            <div class="q-option">C) Bypassing judicial courts for criminal trials</div>
+                            <div class="q-option">D) Complete privatization of district collectorate operations</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: B</strong> — These platforms track citizen complaints digitally across administrative levels to ensure accountability and time-bound resolution.</p></div>
+                        </details>
+                    </div>
+                </div>
+            </section>
+
+            <section id="t26">
+                <h2 class="section-title">26. Problems in Public Delivery Systems</h2>
+                <div class="card-rule">
+                    <p>Analyzes implementation gaps, leakages, and targeting challenges in the Public Distribution System (PDS).</p>
+                    <div class="q-card">
+                        <div class="q-text">49. Tamil Nadu's choice of a Universal Public Distribution System (UPDS) over the central Targeted PDS (TPDS) helps mitigate which primary operational challenge?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) High fiscal surplus creation issues</div>
+                            <div class="q-option">B) Exclusion errors that leave vulnerable families out of food security safety nets</div>
+                            <div class="q-option">C) Complete reliance on imported grain markets</div>
+                            <div class="q-option">D) Enforcement of mandatory cash transfers instead of physical commodities</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: B</strong> — By maintaining a universal access model for food security, Tamil Nadu reduces targeting errors and exclusion risks common in strictly targeted PDS frameworks.</p></div>
+                        </details>
+                    </div>
+                </div>
+            </section>
+
+            <section id="t28">
+                <h2 class="section-title">28. Current Affairs (Economy and Tamil Nadu Administration)</h2>
+                <div class="card-rule">
+                    <p>Integrates recent state policy directions, budget allocations, and economic goals.</p>
+                    <div class="q-card">
+                        <div class="q-text">50. Tamil Nadu's stated long-term macroeconomic milestone aims to transition the state into what economic target by 2030?</div>
+                        <div class="q-options">
+                            <div class="q-option">A) Half-Trillion Dollar Economy</div>
+                            <div class="q-option">B) One Trillion Dollar Gross State Domestic Product (GSDP) Economy</div>
+                            <div class="q-option">C) 100% dependency on agrarian secondary production markets</div>
+                            <div class="q-option">D) Zero external public borrowing equilibrium state</div>
+                        </div>
+                        <details>
+                            <summary>VIEW ANSWER</summary>
+                            <div class="answer-panel"><p><strong>Correct Answer: B</strong> — The state government has outlined a strategic vision to scale Tamil Nadu's GSDP to $1 Trillion by 2030 through industrial upgrading, infrastructure investments, and skill development initiatives.</p></div>
+                        </details>
+                    </div>
+                </div>
+            </section>
+
+
+            <section id="spec-b">
+                <h2 class="section-title">Special Section B: Five-Year Plans Quick Reference Strip</h2>
+                <div class="card-rule">
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr><th>Plan Period</th><th>Core Structural Theme</th><th>Key Institutional Milestone</th><th>TNPSC Exam Target Focus</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1st (1951-56)</td><td>Harrod-Domar Agricultural focus</td><td>Major irrigation infrastructure launched</td><td>Savings rate vs capital output ratios</td></tr>
+                                <tr><td>2nd (1956-61)</td><td>Mahalanobis Heavy Industry focus</td><td>Public Sector Undertakings foundation</td><td>Import substitution industrialization models</td></tr>
+                                <tr><td>3rd (1961-66)</td><td>Self-Reliant Economy push</td><td>Failure due to systemic wars/droughts</td><td>Led to the creation of Plan Holidays (1966-69)</td></tr>
+                                <tr><td>4th (1969-74)</td><td>Growth with Stability focus</td><td>Nationalization of 14 commercial banks</td><td>Garibi Hatao slogan integration context</td></tr>
+                                <tr><td>5th (1974-79)</td><td>Poverty Abolition & Self-Reliance</td><td>Minimum Needs Programme launch</td><td>Terminated one year early by the Janata Government</td></tr>
+                                <tr><td>6th (1980-85)</td><td>Infrastructure and Poverty Focus</td><td>NABARD creation (1982)</td><td>Shift toward direct targeting of rural poverty</td></tr>
+                                <tr><td>7th (1985-90)</td><td>Food, Work, and Productivity</td><td>Jawahar Rozgar Yojana launch</td><td>First plan where private sector investment exceeded public</td></tr>
+                                <tr><td>8th (1992-97)</td><td>Human Resource Modernization</td><td>LPG Reforms integration (New Economic Policy)</td><td>Rao-Manmohan structural transformation model</td></tr>
+                                <tr><td>9th (1997-02)</td><td>Growth with Social Justice</td><td>Focus on regional development balancing</td><td>Seven Basic Minimum Services emphasis</td></tr>
+                                <tr><td>10th (2002-07)</td><td>Monitorable Human Targets</td><td>Poverty ratio reduction targets set</td><td>Introduction of non-economic monitorable parameters</td></tr>
+                                <tr><td>11th (2007-12)</td><td>Towards Faster and More Inclusive Growth</td><td>Focus on clean water and environmental sustainability</td><td>Major emphasis on education and skill development</td></tr>
+                                <tr><td>12th (2012-17)</td><td>Faster, Sustainable and More Inclusive Growth</td><td>Transition phase to NITI Aayog framework</td><td>Last official central Five-Year Plan executed</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="spec-c">
+                <h2 class="section-title">Special Section C: Tamil Nadu Geography-Economy Link Map</h2>
+                <div class="card-rule">
+                    <p>The state's economic structure is tied to its spatial geography, shaping distinct agro-climatic conditions and industrial clusters:</p>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr><th>Geographic Region / Districts</th><th>Agro-Climatic / Primary Crops</th><th>Industrial Corridor / SEZ Links</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Cauvery Delta (Thanjavur, Tiruvarur, Nagapattinam)</td><td>Granary of TN; Rice, Sugarcane, Pulses</td><td>Agro-processing industries focus zones</td></tr>
+                                <td>Coimbatore, Tiruppur, Western High-Plateau Area</td><td>Cotton, Millets, Tea/Coffee along hill tracts</td><td>Textile clusters, engineering goods, pump manufacturing bases</td></tr>
+                                <td>Chennai, Kanchipuram, Thiruvallur Belt</td><td>Horticulture, Floriculture clusters</td><td>Automotive manufacturing corridor, electronics SEZ networks</td></tr>
+                                <td>Sivakasi, Virudhunagar, Southern Dry Zones</td><td>Rainfed Millets, Cotton variants</td><td>Match manufacturing, printing hubs, fireworks production clusters</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="spec-d">
+                <h2 class="section-title">Special Section D: HDI and Social Indicators Dashboard Card</h2>
+                <div class="card-rule">
+                    <p>Comparison of Tamil Nadu's socio-demographic indicators against the national baseline averages:</p>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr><th>Indicator Metric</th><th>Tamil Nadu Baseline Data</th><th>National Average Baseline</th><th>Strategic Advantage Status</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Gross Enrollment Ratio (Higher Ed)</td><td class="digit-font">~47%</td><td class="digit-font">~27%</td><td>Double the national average baseline</td></tr>
+                                <tr><td>Infant Mortality Rate (IMR)</td><td class="digit-font">13 per 1000</td><td class="digit-font">28 per 1000</td><td>Significantly lower mortality rates</td></tr>
+                                <tr><td>Maternal Mortality Ratio (MMR)</td><td class="digit-font">54 per lakh</td><td class="digit-font">97 per lakh</td><td>Exceeds national SDG target metrics</td></tr>
+                                <tr><td>Sex Ratio (2011 Census)</td><td class="digit-font">996</td><td class="digit-font">943</td><td>Favorable demographic gender balance</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="spec-e">
+                <h2 class="section-title">Special Section E: Reservation Policy Deep Dive Card</h2>
+                <div class="card-rule">
+                    <p>The statutory breakdown of Tamil Nadu's 69% affirmative action framework, structured to ensure representation across communities:</p>
+                    <ul>
+                        <li><strong>Backward Classes (BC):</strong> 30% (Includes reservation share allocated for Backward Class Muslims)</li>
+                        <li><strong>Most Backward Classes / Denotified Communities (MBC/DNC):</strong> 20%</li>
+                        <li><strong>Scheduled Castes (SC):</strong> 18% (Includes internal reservation share allocated for the Arunthathiyar community)</li>
+                        <li><strong>Scheduled Tribes (ST):</strong> 1%</li>
+                        <li><strong>Total Affirmative Action Allocation:</strong> <span class="digit-font">69%</span></li>
+                        <li><strong>Open Competition (OC) Allocation:</strong> 31%</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="spec-f">
+                <h2 class="section-title">Special Section F: e-Governance Schemes Tracker</h2>
+                <div class="card-rule">
+                    <p>Key digital governance initiatives operating across the state administrative framework:</p>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr><th>Digital System Name</th><th>Primary Operational Functionality</th><th>Target Citizen Integration</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>TNEGA e-Sevai</td><td>Unified counter service interface</td><td>Web-based certification and certificate deliveries</td></tr>
+                                <tr><td>TN-GIS Portal</td><td>Geospatial tracking of infrastructure assets</td><td>State planning and land-use analysis</td></tr>
+                                <tr><td>e-Sanad Interface</td><td>Online verification of academic and personal documents</td><td>Digital verification pipelines for students and workers</td></tr>
+                                <tr><td>PIMS (Public Financials)</td><td>Tracking budget expenditures and institutional flows</td><td>Internal monitoring of departmental finance data</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="timeline">
+                <h2 class="section-title">Master Study Timeline & Quick Revision Matrix</h2>
+                <div class="card-rule">
+                    <div class="card-title"><h3>Preparation Strategy</h3></div>
+                    <p>To prepare effectively for Unit V, allocation should be prioritized based on the historical frequency of question types:</p>
+                    <ul>
+                        <li><strong>Weeks 1-2:</strong> Focus on core macroeconomic concepts (RBI, Fiscal vs Monetary policies, GST architecture, Finance Commission frameworks).</li>
+                        <li><strong>Weeks 3-4:</strong> Study industrial cluster development, land tenure shifts, and agricultural S&T applications in Tamil Nadu.</li>
+                        <li><strong>Weeks 5-6:</strong> Review the history of state social reform movements, reservation policies, welfare schemes, and e-governance infrastructure.</li>
+                    </ul>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>TNPSC Group 1 Unit V Architecture — Designed for Exam Architects & Strategic Evaluators.</p>
+        <p style="margin-top:10px; font-size:0.75rem; color:#555;">Disclaimer: Content mapped strictly to historical public trends and standard state board resources.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section');
+            const tocItems = document.querySelectorAll('.toc-item');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.2
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        tocItems.forEach(item => {
+                            const link = item.querySelector('a');
+                            if (link && link.getAttribute('href') === `#${id}`) {
+                                item.classList.add('active');
+                            } else {
+                                item.classList.remove('active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => observer.observe(section));
+        });
+    </script>
+</body>
+</html>

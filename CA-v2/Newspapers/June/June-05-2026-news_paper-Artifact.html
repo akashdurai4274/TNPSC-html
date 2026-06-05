@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body class="en-mode">
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">05 June 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">05 ஜூன் 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <!-- Sidebar TOC -->
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Finance</span><span class="lang-ta">பொருளாதாரம் & நிதி</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Economy · Investment</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">L&T Signs MoU to Invest ₹18,600 Crore in Tamil Nadu, Creating 8,200 Jobs</span>
+                        <span class="lang-ta">தமிழகத்தில் ரூ.18,600 கோடி முதலீடு செய்ய எல்&டி (L&T) புரிந்துணர்வு ஒப்பந்தம்: 8,200 பேருக்கு வேலைவாய்ப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Larsen & Toubro (L&T) signed a Memorandum of Understanding (MoU) with the Tamil Nadu government in the presence of Chief Minister Joseph Vijay to invest ₹18,600 crore across three major projects. This is the first major MoU signed after Vijay became CM. The projects include a ₹15,000 crore data center expansion in Kanchipuram, a ₹2,500 crore IT & EV components plant in Coimbatore, and a ₹1,100 crore expansion of the Kattupalli Shipyard in Tiruvallur. These investments are projected to create 8,200 direct and indirect jobs and contribute significantly to TN's goal of becoming a $1.5 Trillion economy by 2036.</p>
+                    <p class="lang-ta">முதல்வர் ஜோசப் விஜய் முன்னிலையில், தமிழக அரசுடன் எல்&டி (L&T - லார்சன் & டூப்ரோ) நிறுவனம் ரூ.18,600 கோடி முதலீட்டில் மூன்று முக்கிய திட்டங்களை செயல்படுத்துவதற்கான புரிந்துணர்வு ஒப்பந்தத்தில் கையெழுத்திட்டது. விஜய் முதல்வரான பிறகு மேற்கொள்ளப்பட்ட முதல் பெரிய புரிந்துணர்வு ஒப்பந்தம் இதுவாகும். காஞ்சிபுரம் மாவட்டத்தில் ரூ.15,000 கோடி முதலீட்டில் தரவு மைய (Data Center) விரிவாக்கம், கோவையில் ரூ.2,500 கோடியில் தகவல் தொழில்நுட்பம் மற்றும் மின் வாகன (EV) உதிரிபாகங்கள் தயாரிப்பு ஆலை, திருவள்ளூரில் ரூ.1,100 கோடியில் காட்டுப்பள்ளி கப்பல் கட்டும் தள விரிவாக்கம் ஆகியவை இதில் அடங்கும். இதன் மூலம் 8,200 பேருக்கு வேலைவாய்ப்பு கிடைக்கும் எனவும், 2036-க்குள் தமிழக பொருளாதாரத்தை 1.5 டிரில்லியன் டாலராக உயர்த்தும் முதல்வரின் இலக்கிற்கு இது உதவும் எனவும் தெரிவிக்கப்பட்டுள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Economy Hook:</strong> The Tamil Nadu government has revised its ambitious economic target to reach a <strong>$1.5 Trillion economy by 2036</strong> (previously it was $1 Trillion by 2030).</span><span class="lang-ta"><strong>பொருளாதாரக் குறிப்பு:</strong> தமிழ்நாடு அரசு தனது லட்சிய பொருளாதார இலக்கை <strong>2036-ஆம் ஆண்டிற்குள் 1.5 டிரில்லியன் டாலராக</strong> மாற்றியமைத்துள்ளது (முன்னதாக இது 2030-க்குள் 1 டிரில்லியன் டாலராக இருந்தது).</span></li>
+                            <li><span class="badge bg-gem">GEM</span><span class="lang-en">The Kattupalli Shipyard is a strategic asset for India, as it is one of the few shipyards capable of building and repairing defense and commercial vessels on the East Coast.</span><span class="lang-ta">பாதுகாப்பு மற்றும் வணிகக் கப்பல்களைக் கட்டும் மற்றும் பழுதுபார்க்கும் திறன் கொண்ட கிழக்குக் கடற்கரையில் உள்ள சில தளங்களில் காட்டுப்பள்ளி கப்பல் கட்டும் தளம் ஒன்றாகும். இது இந்தியாவின் முக்கிய உத்திசார் சொத்தாகும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Infrastructure · Policy</span>
+                        <span class="badge bg-tip">MODERATE</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">No "CM Fund" or "Minister Fund" from Highways Contractors: EV Velu</span>
+                        <span class="lang-ta">நெடுஞ்சாலைத் துறை ஒப்பந்ததாரர்களிடம் ‘முதல்வர் நிதி’, ‘அமைச்சர் நிதி’ என வசூலிக்கப்படாது: அமைச்சர் எ.வ. வேலு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">During a consultative meeting with highway contractors in Guindy, Public Works and Highways Minister EV Velu assured that no illegal commissions such as "CM Fund", "Minister Fund", or "Party Fund" will be collected from contractors hereafter. He promised to eradicate the previous "20 to 25% commission culture" and ensure transparent administration. A new "Margin Contract Section" will be established to provide raw materials like sand directly to contractors without middlemen, and a "Single Window System" will clear all project permissions.</p>
+                    <p class="lang-ta">கிண்டியில் நெடுஞ்சாலைத் துறை ஒப்பந்ததாரர்களுடன் நடைபெற்ற ஆலோசனைக் கூட்டத்தில் பொதுப்பணி மற்றும் நெடுஞ்சாலைத் துறை அமைச்சர் எ.வ. வேலு பேசுகையில், இனி ஒப்பந்ததாரர்களிடம் 'முதல்வர் நிதி', 'அமைச்சர் நிதி', 'கட்சி நிதி' என்ற பெயரில் எந்த தொகையும் (கமிஷன்) வசூலிக்கப்படாது என உறுதியளித்தார். முந்தைய காலங்களில் இருந்த 20 முதல் 25 சதவீத கமிஷன் கலாச்சாரம் முற்றிலுமாக ஒழிக்கப்பட்டு, வெளிப்படையான நிர்வாகம் உறுதி செய்யப்படும் என்றார். மணல் போன்ற மூலப்பொருட்களை இடைத்தரகர்கள் இன்றி நேரடியாக ஒப்பந்ததாரர்களுக்கு வழங்க "மார்ஜின் கான்ட்ராக்ட் செக்‌ஷன்" என்ற புதிய துறை உருவாக்கப்படும் என்றும், அனைத்து அனுமதிகளையும் வழங்க "ஒற்றைச் சாளர முறை" (Single Window System) கொண்டுவரப்படும் என்றும் அவர் அறிவித்தார்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · State Demand</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">MDMK Demands Trichy be Declared as 2nd Capital of Tamil Nadu</span>
+                        <span class="lang-ta">திருச்சியை தமிழகத்தின் 2-ம் தலைநகராக அறிவிக்க வேண்டும்: முதல்வரிடம் மதிமுக வலியுறுத்தல்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">MDMK Principal Secretary and Trichy MP Durai Vaiko met CM Joseph Vijay in Chennai and submitted a petition urging the government to declare Trichy as the second capital of Tamil Nadu. His other key demands included establishing a separate TNSTC division headquartered in Trichy (bifurcating Kumbakonam), initiating Metro Rail projects for a 68 km stretch in Trichy, setting up one of the five proposed Central University cities in Trichy, and creating a global electronics manufacturing hub at Manapparai SIPCOT.</p>
+                    <p class="lang-ta">மதிமுக முதன்மைச் செயலாளரும், திருச்சி மக்களவைத் தொகுதி உறுப்பினருமான துரை வைகோ, முதல்வர் ஜோசப் விஜய்யைச் சந்தித்து திருச்சியை தமிழகத்தின் இரண்டாவது தலைநகராக அறிவிக்கக் கோரி மனு அளித்தார். மேலும், கும்பகோணம் கோட்டத்திலிருந்து பிரித்து திருச்சியை தலைமையிடமாகக் கொண்டு தனி அரசுப் போக்குவரத்துக் கழகம் அமைக்க வேண்டும், திருச்சியில் 68 கி.மீ தொலைவுக்கு மெட்ரோ ரயில் திட்டத்தை தொடங்க வேண்டும், மத்திய அரசு அறிவித்துள்ள 5 பல்கலைக்கழக நகரங்களில் ஒன்றை திருச்சியில் அமைக்க வேண்டும், மணப்பாறை சிப்காட்டில் உலகளாவிய மின்னணு உற்பத்தி மையத்தை உருவாக்க வேண்டும் ஆகிய கோரிக்கைகளையும் அவர் முன்வைத்தார்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Judiciary · Administration</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">DVAC Raids 60 Sub-Registrar Offices in TN; ₹37 Lakhs Seized</span>
+                        <span class="lang-ta">தமிழகம் முழுவதும் 60 சார்பதிவாளர் அலுவலகங்களில் லஞ்ச ஒழிப்புத்துறை சோதனை: ரூ.37 லட்சம் பறிமுதல்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Following widespread complaints of corruption and bribery, the Directorate of Vigilance and Anti-Corruption (DVAC) conducted surprise raids at 60 Sub-Registrar offices across Tamil Nadu on an auspicious 'Muhurtham' day (Thursday), when property registrations are high. Unaccounted cash totaling ₹37,75,650 was seized from 47 offices. The highest seizures were in Tirupattur (₹3.22 lakh), Salem East (₹3.18 lakh), and Tiruppur Pongalur (₹2.53 lakh). Following the raids, three Sub-Registrars from Tirupattur, Dharmapuri, and Krishnagiri were suspended for causing revenue loss to the government.</p>
+                    <p class="lang-ta">பத்திரப் பதிவுத் துறையில் லஞ்சம் மற்றும் ஊழல் புகார்கள் அதிகரித்ததையடுத்து, அதிகளவில் பத்திரப் பதிவுகள் நடைபெறும் சுப முகூர்த்த நாளான வியாழக்கிழமையன்று தமிழகம் முழுவதும் 60 சார்பதிவாளர் அலுவலகங்களில் லஞ்ச ஒழிப்புத் துறையினர் (DVAC) திடீர் சோதனை நடத்தினர். இதில் 47 அலுவலகங்களில் இருந்து கணக்கில் வராத ரூ.37,75,650 ரொக்கம் பறிமுதல் செய்யப்பட்டது. அதிகபட்சமாக திருப்பத்தூர் (ரூ.3.22 லட்சம்), சேலம் கிழக்கு (ரூ.3.18 லட்சம்), திருப்பூர் பொங்கலூர் (ரூ.2.53 லட்சம்) ஆகிய இடங்களில் பணம் பறிமுதல் செய்யப்பட்டது. இச்சோதனையைத் தொடர்ந்து, அரசுக்கு வருவாய் இழப்பு ஏற்படுத்தியதாக திருப்பத்தூர், தர்மபுரி, கிருஷ்ணகிரி மாவட்ட சார்பதிவாளர்கள் 3 பேரை பணியிடை நீக்கம் செய்து அரசு உத்தரவிட்டுள்ளது.</p>
+                </div>
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National / Central News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Judiciary · Technology</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Supreme Court Issues Draft Guidelines for AI Usage in Courts</span>
+                        <span class="lang-ta">நீதிமன்றங்களில் செயற்கை நுண்ணறிவு (AI) பயன்பாடு: வரைவு வழிகாட்டுதல்களை வெளியிட்டது உச்சநீதிமன்றம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">To modernize the judicial system while preserving its integrity, the Supreme Court has released a 35-page draft guideline on the use of Artificial Intelligence (AI) in courts. Crucially, it strictly prohibits the use of AI for making judicial decisions, passing judgments, or determining sentences. AI is allowed only as an assistive tool for administrative tasks, case management, translating legal documents into regional languages, legal research, and chatbots for litigants. The SC mandates a three-tier regulatory body headed by an SC judge to oversee AI implementation.</p>
+                    <p class="lang-ta">நீதித்துறையின் ஒருமைப்பாட்டைப் பாதுகாக்கும் அதே வேளையில், அதன் செயல்பாடுகளை நவீனமயமாக்கும் நடவடிக்கையாக, நீதிமன்றங்களில் செயற்கை நுண்ணறிவு (AI) தொழில்நுட்பத்தைப் பயன்படுத்துவதற்கான 35 பக்க வரைவு வழிகாட்டுதல்களை உச்ச நீதிமன்றம் வெளியிட்டுள்ளது. மிக முக்கியமாக, தீர்ப்புகள் வழங்குதல், தண்டனை விதித்தல் போன்ற நீதித்துறை முடிவுகளை எடுக்க AI-ஐ பயன்படுத்துவது திட்டவட்டமாக தடை செய்யப்பட்டுள்ளது. வழக்கு மேலாண்மை, சட்ட ஆவணங்களை மாநில மொழிகளில் மொழிபெயர்த்தல், சட்ட ஆராய்ச்சி மற்றும் வழக்காடுபவர்களுக்கு உதவும் சாட்பாட்கள் (Chatbots) போன்ற நிர்வாகப் பணிகளுக்கு மட்டுமே AI அனுமதிக்கப்படும். AI பயன்பாட்டைக் கண்காணிக்க உச்ச நீதிமன்ற நீதிபதி தலைமையில் 3 அடுக்கு ஒழுங்காற்று ஆணையம் அமைக்கப்படும் எனத் தெரிவிக்கப்பட்டுள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Governance Hook:</strong> This initiative aligns with Phase III of the e-Courts project, pushing for a digital and paperless judiciary in India.</span><span class="lang-ta"><strong>ஆளுமை குறிப்பு:</strong> இந்தியாவின் நீதித்துறையை டிஜிட்டல் மற்றும் காகிதமில்லா முறைக்கு மாற்றும் இ-கோர்ட்ஸ் (e-Courts) திட்டத்தின் மூன்றாம் கட்டத்துடன் இந்த முயற்சி இணைந்துள்ளது.</span></li>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en">AI algorithms cannot replace judges. Human oversight is mandatory, and AI cannot be trained on individuals' personal data without consent, upholding the Digital Personal Data Protection Act.</span><span class="lang-ta">AI அல்காரிதம்கள் நீதிபதிகளை மாற்ற முடியாது. மனித மேற்பார்வை கட்டாயம். மேலும் டிஜிட்டல் தனிநபர் தரவு பாதுகாப்பு சட்டத்தை மீறி, தனிநபர்களின் தரவுகளைக் கொண்டு AI-க்கு பயிற்சி அளிக்கக் கூடாது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · PM Tenure</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">PM Modi Set to Surpass Nehru as Longest-Serving Democratically Elected PM</span>
+                        <span class="lang-ta">ஜனநாயக முறையில் தேர்ந்தெடுக்கப்பட்டு அதிக காலம் பதவி வகித்த பிரதமர்: நேருவின் சாதனையை முறியடிக்கிறார் மோடி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Prime Minister Narendra Modi is on the verge of making history by becoming the longest-serving Prime Minister elected through a democratic process in India. By completing 4,399 days in office on June 10, 2026, he will surpass India's first PM Jawaharlal Nehru's record of 4,398 days (calculated from the first general election in 1952). Nehru served a total of 17 years (from Aug 1947 to May 1964), but his initial years were before the first democratic elections. Modi has been in power consecutively since May 2014.</p>
+                    <p class="lang-ta">இந்தியாவில் ஜனநாயக முறையில் தேர்ந்தெடுக்கப்பட்டு அதிக காலம் பதவி வகித்த பிரதமர் என்ற பெருமையை பிரதமர் நரேந்திர மோடி இன்னும் சில தினங்களில் பெறவுள்ளார். ஜூன் 10, 2026 அன்று தனது பதவிக்காலத்தில் 4,399 நாட்களை நிறைவு செய்வதன் மூலம், இந்தியாவின் முதல் பிரதமர் ஜவஹர்லால் நேருவின் 4,398 நாட்கள் (1952 முதல் பொதுத் தேர்தலுக்குப் பிறகு கணக்கிடப்பட்டது) என்ற சாதனையை அவர் முறியடிக்க உள்ளார். நேரு மொத்தம் 17 ஆண்டுகள் (ஆகஸ்ட் 1947 முதல் மே 1964 வரை) பிரதமராக இருந்தாலும், அவரது ஆரம்ப ஆண்டுகள் முதல் ஜனநாயகத் தேர்தலுக்கு முந்தையவை. மோடி மே 2014 முதல் தொடர்ந்து ஆட்சியில் உள்ளார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Polity Hook:</strong> Article 75 states that the Prime Minister shall be appointed by the President. The PM holds office during the pleasure of the President, provided they command a majority in the Lok Sabha.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> பிரதமர் குடியரசுத் தலைவரால் நியமிக்கப்படுவார் என சரத்து 75 கூறுகிறது. மக்களவையில் பெரும்பான்மை உள்ளவரை குடியரசுத் தலைவரின் விருப்பத்தின் பேரில் பிரதமர் பதவியில் இருப்பார்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Defence · Modernization</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Defence Minister Doubles Financial Powers of Armed Forces Commanders</span>
+                        <span class="lang-ta">முப்படைகளின் கமாண்டர்களுக்கான நிதி ஒதுக்கீடு அதிகாரத்தை இருமடங்காக உயர்த்தினார் ராஜ்நாத் சிங்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Defence Minister Rajnath Singh approved the doubling of financial allocation powers for Field Commanders of the Army, Navy, and Air Force. The financial limit for standard procurements has been raised from ₹40 crore to ₹100 crore, and for emergency requirements, it has been increased from ₹75 crore to ₹150 crore. This move aims to strengthen field operations, decentralize standard procurements, and reduce dependency on foreign imports by encouraging domestic defense manufacturing.</p>
+                    <p class="lang-ta">ராணுவம், கடற்படை மற்றும் விமானப் படையைச் சேர்ந்த ஃபீல்டு கமாண்டர்களுக்கான (Field Commanders) நிதி ஒதுக்கீடு அதிகாரத்தை இருமடங்காக உயர்த்த பாதுகாப்புத் துறை அமைச்சர் ராஜ்நாத் சிங் ஒப்புதல் அளித்துள்ளார். இதன்படி, வழக்கமான கொள்முதல்களுக்கான நிதி வரம்பு ரூ.40 கோடியிலிருந்து ரூ.100 கோடியாகவும், அவசரத் தேவைகளுக்கான நிதி வரம்பு ரூ.75 கோடியிலிருந்து ரூ.150 கோடியாகவும் உயர்த்தப்பட்டுள்ளது. களச் செயல்பாடுகளை வலுப்படுத்தவும், கொள்முதல் அதிகாரத்தைப் பரவலாக்கவும், உள்நாட்டு பாதுகாப்பு உற்பத்தியை ஊக்குவிப்பதன் மூலம் வெளிநாட்டு இறக்குமதியைச் சார்ந்திருப்பதைக் குறைக்கவும் இந்த நடவடிக்கை எடுக்கப்பட்டுள்ளது.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">E-Governance · UPSC</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">UPSC Successfully Implements Facial Recognition System in Prelims 2026</span>
+                        <span class="lang-ta">2026 சிவில் சர்வீசஸ் முதல்நிலைத் தேர்வில் முக அங்கீகார முறையை வெற்றிகரமாக அமல்படுத்தியது யுபிஎஸ்சி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Union Public Service Commission (UPSC) announced that the Artificial Intelligence-based Facial Recognition System (FRS) was successfully implemented for the first time during the Civil Services Preliminary Examination held on May 24, 2026. Over 5.49 lakh candidates appeared. The system matched candidates' live faces with the photos uploaded in their application forms in just 6 to 8 seconds using an app developed with the help of the National Informatics Centre (NIC), successfully preventing impersonation.</p>
+                    <p class="lang-ta">கடந்த மே 24, 2026 அன்று நடைபெற்ற சிவில் சர்வீசஸ் (IAS, IPS) முதல்நிலைத் தேர்வில் ஆள்மாறாட்டத்தைத் தடுக்கும் வகையில் முதல்முறையாக முக அங்கீகார முறை (Facial Recognition) வெற்றிகரமாக அமல்படுத்தப்பட்டதாக மத்திய அரசுப் பணியாளர் தேர்வாணையம் (UPSC) தெரிவித்துள்ளது. 5.49 லட்சத்துக்கும் மேற்பட்டோர் தேர்வெழுதினர். தேசிய தகவல் மையத்தின் (NIC) உதவியுடன் உருவாக்கப்பட்ட செயலி மூலம், தேர்வர்களின் தற்போதைய முகத்தை விண்ணப்பத்தில் உள்ள புகைப்படத்துடன் வெறும் 6 முதல் 8 வினாடிகளில் ஒப்பிட்டு சரிபார்த்து இந்த தொழில்நுட்பம் வெற்றிகரமாகச் செயல்பட்டது.</p>
+                </div>
+            </section>
+
+            <!-- INTERNATIONAL NEWS -->
+            <section id="international">
+                <h2>
+                    <span class="lang-en">International News</span>
+                    <span class="lang-ta">சர்வதேச செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Global Bodies · UN Security Council</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">UNSC Elections: 5 New Non-Permanent Members Elected for 2027-28</span>
+                        <span class="lang-ta">ஐ.நா. பாதுகாப்பு கவுன்சிலில் 5 புதிய தற்காலிக உறுப்பு நாடுகள் தேர்வு (2027-2028)</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The UN General Assembly elected Austria, Kyrgyzstan, Portugal, Trinidad & Tobago, and Zimbabwe as the five new non-permanent members of the United Nations Security Council (UNSC) for the 2027-28 term. They will replace Denmark, Greece, Pakistan, Panama, and Somalia, whose terms end in 2026. Kyrgyzstan joins the UNSC for the first time. India, which served in 2021-22, is aiming for a seat in the 2028-29 term.</p>
+                    <p class="lang-ta">2027-28 காலகட்டத்திற்கான ஐ.நா. பாதுகாப்பு கவுன்சிலின் (UNSC) 5 புதிய தற்காலிக உறுப்பு நாடுகளாக ஆஸ்திரியா, கிர்கிஸ்தான், போர்ச்சுகல், டிரினிடாட் & டொபாகோ மற்றும் ஜிம்பாப்வே ஆகிய நாடுகள் தேர்ந்தெடுக்கப்பட்டுள்ளன. 2026-ல் பதவிக்காலம் முடிவடையும் டென்மார்க், கிரீஸ், பாகிஸ்தான், பனாமா மற்றும் சோமாலியா ஆகிய நாடுகளுக்குப் பதிலாக இவை பொறுப்பேற்கும். கிர்கிஸ்தான் முதல்முறையாக பாதுகாப்பு கவுன்சிலில் இடம்பிடிக்கிறது. 2021-22-ல் பதவி வகித்த இந்தியா, அடுத்ததாக 2028-29 காலகட்டத்திற்கான தேர்தலில் போட்டியிடவுள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>IR Hook:</strong> The UNSC has 15 members: 5 Permanent members with veto power (USA, UK, France, Russia, China) and 10 Non-Permanent members elected for 2-year terms by the UN General Assembly.</span><span class="lang-ta"><strong>சர்வதேச உறவுகள் குறிப்பு:</strong> ஐ.நா பாதுகாப்பு கவுன்சில் 15 உறுப்பினர்களைக் கொண்டது: வீட்டோ அதிகாரம் கொண்ட 5 நிரந்தர உறுப்பினர்கள் (அமெரிக்கா, இங்கிலாந்து, பிரான்ஸ், ரஷ்யா, சீனா) மற்றும் ஐ.நா பொதுச் சபையால் 2 ஆண்டு காலத்திற்கு தேர்ந்தெடுக்கப்படும் 10 தற்காலிக உறுப்பினர்கள்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Diplomacy · India-Venezuela</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">India and Venezuela Forge Long-Term Energy Cooperation</span>
+                        <span class="lang-ta">இந்தியா - வெனிசுலா இடையே நீண்டகால எரிசக்தி ஒத்துழைப்பு: கச்சா எண்ணெய் வர்த்தகம் அதிகரிப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Venezuelan Acting President Delcy Rodriguez visited India and held comprehensive talks with PM Narendra Modi to build a long-term energy partnership. Amidst global fuel supply disruptions due to the Middle East conflict, India is diversifying its crude oil sourcing. With US sanctions on Venezuela lifted, India has resumed and increased its crude oil imports from the South American nation. India also raised the issue of $500 million in pending dividend payments due to ONGC Videsh from Venezuela.</p>
+                    <p class="lang-ta">வெனிசுலாவின் பொறுப்பு அதிபர் டெல்சி ரோட்ரிக்ஸ் இந்தியா வந்து பிரதமர் நரேந்திர மோடியைச் சந்தித்து நீண்டகால எரிசக்தி கூட்டாண்மையை உருவாக்குவது குறித்து விரிவான பேச்சுவார்த்தை நடத்தினார். மத்திய கிழக்கு போர் காரணமாக உலகளாவிய எரிபொருள் விநியோகத்தில் பாதிப்பு ஏற்பட்டுள்ள நிலையில், இந்தியா தனது கச்சா எண்ணெய் கொள்முதலைப் பல நாடுகளுக்குப் பரவலாக்கி வருகிறது. வெனிசுலா மீதான அமெரிக்காவின் தடைகள் நீக்கப்பட்டதையடுத்து, அந்நாட்டிலிருந்து கச்சா எண்ணெய் இறக்குமதியை இந்தியா மீண்டும் தொடங்கியுள்ளதுடன், அதனை அதிகரித்தும் வருகிறது. வெனிசுலாவில் இருந்து ஓஎன்ஜிசி விதேஷ் (ONGC Videsh) நிறுவனத்திற்கு வர வேண்டிய 500 மில்லியன் டாலர் நிலுவைத் தொகை குறித்தும் இந்தியா வலியுறுத்தியது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Geography Hook:</strong> Venezuela has the world's largest proven oil reserves.</span><span class="lang-ta"><strong>புவியியல் குறிப்பு:</strong> உலகிலேயே அதிக அளவில் நிரூபிக்கப்பட்ட கச்சா எண்ணெய் இருப்பைக் கொண்ட நாடு வெனிசுலா ஆகும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+            </section>
+
+            <!-- ECONOMY & FINANCE -->
+            <section id="economy">
+                <h2>
+                    <span class="lang-en">Economy & Finance</span>
+                    <span class="lang-ta">பொருளாதாரம் & நிதி</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Automobile · Green Tech</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Maruti Suzuki Launches India's First 100% Flex-Fuel Car</span>
+                        <span class="lang-ta">இந்தியாவின் முதல் 100% ‘பிளெக்ஸ்-ஃப்யூல்’ (Flex-Fuel) காரை அறிமுகப்படுத்தியது மாருதி சுசுகி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Maruti Suzuki launched India's first "Flex-Fuel" car, a modified WagonR model capable of running on any blend of ethanol and petrol, up to 100% ethanol (E100). Union Minister Nitin Gadkari stated that this technology will drastically reduce India's massive crude oil import bills and boost the rural agricultural economy by utilizing biofuels. The government plans to open 500 ethanol fuel stations by the end of this year and 5,000 by next year.</p>
+                    <p class="lang-ta">பெட்ரோல் மற்றும் எத்தனால் கலந்த எந்தவொரு எரிபொருளிலும் (100% எத்தனால் வரை) இயங்கக்கூடிய இந்தியாவின் முதல் "பிளெக்ஸ்-ஃப்யூல்" (Flex-Fuel) காரான மாருதி சுசுகி வேகன்ஆர் மாடலை மத்திய அமைச்சர் நிதின் கட்கரி அறிமுகப்படுத்தினார். இந்தத் தொழில்நுட்பம் இந்தியாவின் கச்சா எண்ணெய் இறக்குமதிச் செலவை பெருமளவு குறைப்பதோடு, உயிரி எரிபொருட்களை (Biofuels) பயன்படுத்துவதன் மூலம் கிராமப்புற விவசாயப் பொருளாதாரத்தையும் மேம்படுத்தும் என்று அமைச்சர் தெரிவித்தார். இந்த ஆண்டு இறுதிக்குள் 500 எத்தனால் எரிபொருள் நிலையங்களையும், அடுத்த ஆண்டுக்குள் 5,000 நிலையங்களையும் திறக்க அரசு திட்டமிட்டுள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Environment / Economy:</strong> Flex-fuel vehicles (FFV) have internal combustion engines designed to run on more than one fuel, usually gasoline blended with either ethanol or methanol fuel. India's target is 20% ethanol blending in petrol (E20) by 2025.</span><span class="lang-ta"><strong>சுற்றுச்சூழல் / பொருளாதாரம்:</strong> பிளெக்ஸ்-எரிபொருள் வாகனங்கள் (FFV) பெட்ரோலுடன் எத்தனால் அல்லது மெத்தனால் கலந்த எரிபொருளில் இயங்கும் வகையில் வடிவமைக்கப்பட்டுள்ளன. பெட்ரோலில் 20% எத்தனால் (E20) கலக்கும் இலக்கை 2025-க்குள் எட்ட இந்தியா திட்டமிட்டுள்ளது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Corporates · SEBI</span>
+                        <span class="badge bg-tip">MODERATE</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">SEBI Accuses Rajesh Exports of ₹15 Lakh Crore Revenue Fraud</span>
+                        <span class="lang-ta">ராஜேஷ் எக்ஸ்போர்ட்ஸ் நிறுவனம் மீது ரூ.15 லட்சம் கோடி வருவாய் மோசடி புகார்: செபி (SEBI) நடவடிக்கை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Securities and Exchange Board of India (SEBI) has accused Rajesh Exports, a prominent gold refining and jewelry manufacturing company, of inflating its consolidated revenue by over ₹15 lakh crore over the last five years. SEBI banned its owner, Prashant Mehta, from trading in the stock market. The fraud was allegedly executed by falsely claiming that 99.8% of its revenue came from its overseas subsidiary, Valcambi (in Switzerland), which SEBI found to be misrepresenting third-party gold trading as the company's own revenue.</p>
+                    <p class="lang-ta">பிரபல தங்க சுத்திகரிப்பு மற்றும் ஆபரணங்கள் தயாரிப்பு நிறுவனமான ராஜேஷ் எக்ஸ்போர்ட்ஸ், கடந்த 5 ஆண்டுகளில் தனது வருவாயை ரூ.15 லட்சம் கோடிக்கு மேல் உயர்த்திப் பொய்யான கணக்குக் காட்டியுள்ளதாக இந்திய பங்குச்சந்தை கட்டுப்பாட்டு வாரியம் (செபி - SEBI) குற்றம் சாட்டியுள்ளது. இந்நிறுவனத்தின் உரிமையாளர் பிரசாந்த் மேத்தா பங்குச் சந்தையில் ஈடுபட செபி தடை விதித்துள்ளது. நிறுவனத்தின் 99.8% வருவாய் சுவிட்சர்லாந்தில் உள்ள அதன் துணை நிறுவனமான வல்காம்பியில் (Valcambi) இருந்து வந்ததாக கணக்குக் காட்டப்பட்டுள்ளது. ஆனால், மூன்றாம் தரப்பு தங்க வர்த்தகத்தை தனது சொந்த வருவாயாக காட்டி ராஜேஷ் எக்ஸ்போர்ட்ஸ் மோசடி செய்துள்ளதை செபி கண்டறிந்துள்ளது.</p>
+                </div>
+            </section>
+            
+            <!-- SPORTS -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports</span>
+                    <span class="lang-ta">விளையாட்டு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Cricket · Squad Update</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Virat Kohli Ruled Out of Afghanistan ODI Series; Ruturaj Replaces Him</span>
+                        <span class="lang-ta">ஆப்கானிஸ்தான் ஒருநாள் தொடரிலிருந்து விலகினார் விராட் கோலி; ருதுராஜ் கெய்க்வாட் சேர்ப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Star batter Virat Kohli has been ruled out of the upcoming ODI series against Afghanistan due to a thigh injury sustained during the recent IPL finals (where he led RCB to the title). Ruturaj Gaikwad has been named as his replacement in the squad. Questions also remain over captain Rohit Sharma's availability due to an injury.</p>
+                    <p class="lang-ta">ஆப்கானிஸ்தானுக்கு எதிரான வரவிருக்கும் ஒருநாள் கிரிக்கெட் தொடரிலிருந்து நட்சத்திர பேட்ஸ்மேன் விராட் கோலி காயம் காரணமாக விலகியுள்ளார். சமீபத்திய ஐபிஎல் இறுதிப் போட்டியின் போது (இதில் அவர் ஆர்சிபியை சாம்பியன் ஆக்கினார்) தொடைப் பகுதியில் ஏற்பட்ட காயம் காரணமாக அவர் விலகியுள்ளார். அவருக்குப் பதிலாக ருதுராஜ் கெய்க்வாட் அணியில் சேர்க்கப்பட்டுள்ளார். காயம் காரணமாக கேப்டன் ரோஹித் சர்மாவின் பங்கேற்பும் சந்தேகத்தில் உள்ளது.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Football · Global Indian</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">4 Indian-Origin Players Representing Other Nations in FIFA World Cup</span>
+                        <span class="lang-ta">ஃபிஃபா (FIFA) உலகக் கோப்பையில் 4 இந்திய வம்சாவளி வீரர்கள் பல்வேறு நாடுகளுக்காக விளையாடுகின்றனர்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In the ongoing 2026 FIFA World Cup, four players of Indian origin are representing other countries: Sarpreet Singh (New Zealand - parents from Punjab), Nishan Velupillay (Australia - father is a Sri Lankan Tamil), Tamin (Qatar - Kerala origin), and Samuel Muthusamy (DR Congo - Tamil origin). While India has yet to qualify for the World Cup, the global presence of Indian-origin talent highlights the diaspora's impact on international football.</p>
+                    <p class="lang-ta">நடைபெற்று வரும் 2026 ஃபிஃபா (FIFA) உலகக் கோப்பை கால்பந்து போட்டியில் 4 இந்திய வம்சாவளி வீரர்கள் மற்ற நாடுகளுக்காக விளையாடுகின்றனர். சர்பிரீத் சிங் (நியூசிலாந்து - பெற்றோர் பஞ்சாப்பைச் சேர்ந்தவர்கள்), நிஷான் வேலுப்பிள்ளை (ஆஸ்திரேலியா - தந்தை இலங்கைத் தமிழர்), தமின் (கத்தார் - கேரளாவைப் பூர்வீகமாகக் கொண்டவர்) மற்றும் சாமுவேல் முத்துசாமி (காங்கோ - தமிழ் வம்சாவளி) ஆகியோரே அவர்கள். உலகக் கோப்பைக்கு இந்தியா இன்னும் தகுதி பெறாத நிலையில், இந்திய வம்சாவளி வீரர்களின் இந்த உலகளாவிய பங்கேற்பு சர்வதேச கால்பந்தில் அவர்களின் தாக்கத்தை எடுத்துக்காட்டுகிறது.</p>
+                </div>
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Which of the following countries was NOT recently elected as a non-permanent member of the UN Security Council for the 2027-28 term?</span>
+                        <span class="lang-ta">கேள்வி: 2027-28 காலகட்டத்திற்கான ஐ.நா. பாதுகாப்பு கவுன்சிலின் தற்காலிக உறுப்பு நாடாக கீழ்க்கண்ட எந்த நாடு சமீபத்தில் தேர்ந்தெடுக்கப்படவில்லை?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Germany (or any option other than Austria, Kyrgyzstan, Portugal, Trinidad & Tobago, Zimbabwe)</span><br><br>
+                                <strong>Context:</strong> Austria, Kyrgyzstan, Portugal, Trinidad & Tobago, and Zimbabwe won the election. Germany contested but lost the Western European seat to Portugal and Austria.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">ஜெர்மனி (ஆஸ்திரியா, கிர்கிஸ்தான், போர்ச்சுகல், டிரினிடாட் & டொபாகோ, ஜிம்பாப்வே ஆகிய 5 நாடுகள் மட்டுமே தேர்வாகின)</span><br><br>
+                                <strong>பின்னணி:</strong> மேற்கு ஐரோப்பிய இடங்களுக்கான தேர்தலில் போர்ச்சுகல் மற்றும் ஆஸ்திரியாவிடம் ஜெர்மனி தோல்வியடைந்தது. கிர்கிஸ்தான் முதல்முறையாக தேர்வாகியுள்ளது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: The term "Flex-Fuel" vehicle, recently seen in the news regarding Maruti Suzuki's launch, refers to an engine capable of running on:</span>
+                        <span class="lang-ta">கேள்வி: மாருதி சுசுகியின் வெளியீடு தொடர்பாக சமீபத்தில் செய்திகளில் காணப்பட்ட "பிளெக்ஸ்-எரிபொருள்" (Flex-Fuel) வாகனம் என்பது எந்த எரிபொருளில் இயங்கும் திறன் கொண்ட இயந்திரத்தைக் குறிக்கிறது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">A blend of petrol and ethanol (up to 100%)</span><br><br>
+                                <strong>Context:</strong> Flex-fuel vehicles can run on any mixture of petrol and ethanol, reducing crude oil dependence and boosting the rural bio-fuel economy.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">பெட்ரோல் மற்றும் எத்தனால் கலவை (100% வரை)</span><br><br>
+                                <strong>பின்னணி:</strong> பிளெக்ஸ்-எரிபொருள் வாகனங்கள் பெட்ரோல் மற்றும் எத்தனால் கலந்த எந்தவொரு கலவையிலும் இயங்கும், இது கச்சா எண்ணெய் மீதான சார்பைக் குறைத்து கிராமப்புற பொருளாதாரத்தை உயர்த்தும்.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">L&T ₹18,600 Cr in TN</span><span class="lang-ta">எல்&டி ரூ.18,600 கோடி முதலீடு</span></td>
+                                <td><span class="lang-en">State/Economy</span><span class="lang-ta">மாநிலம்/பொருளாதாரம்</span></td>
+                                <td><span class="lang-en">Data center in Kanchipuram, Shipyard expansion in Kattupalli.</span><span class="lang-ta">காஞ்சிபுரத்தில் டேட்டா சென்டர், காட்டுப்பள்ளியில் கப்பல் தளம் விரிவாக்கம்.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">SC AI Guidelines</span><span class="lang-ta">SC செயற்கை நுண்ணறிவு விதிகள்</span></td>
+                                <td><span class="lang-en">National/Judiciary</span><span class="lang-ta">தேசியம்/நீதித்துறை</span></td>
+                                <td><span class="lang-en">AI banned for judgments; allowed for admin/translation tasks.</span><span class="lang-ta">தீர்ப்புகளுக்கு AI தடை; நிர்வாக/மொழிபெயர்ப்பு பணிகளுக்கு அனுமதி.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">India's 1st Flex-Fuel Car</span><span class="lang-ta">முதல் பிளெக்ஸ்-எரிபொருள் கார்</span></td>
+                                <td><span class="lang-en">National/Tech</span><span class="lang-ta">தேசியம்/தொழில்நுட்பம்</span></td>
+                                <td><span class="lang-en">Maruti Suzuki WagonR capable of 100% ethanol blending.</span><span class="lang-ta">100% எத்தனாலில் இயங்கும் மாருதி சுசுகி வேகன்ஆர் அறிமுகம்.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">UNSC New Members</span><span class="lang-ta">UNSC புதிய உறுப்பினர்கள்</span></td>
+                                <td><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></td>
+                                <td><span class="lang-en">Austria, Kyrgyzstan, Portugal, Trinidad & Tobago, Zimbabwe.</span><span class="lang-ta">ஆஸ்திரியா, கிர்கிஸ்தான், போர்ச்சுகல், டிரினிடாட் & டொபாகோ, ஜிம்பாப்வே.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">PM Modi's Tenure Record</span><span class="lang-ta">மோடியின் பதவிக்கால சாதனை</span></td>
+                                <td><span class="lang-en">Polity</span><span class="lang-ta">அரசியலமைப்பு</span></td>
+                                <td><span class="lang-en">To surpass Nehru as longest-serving elected PM on June 10.</span><span class="lang-ta">அதிக காலம் பதவி வகித்த பிரதமர் சாதனையை ஜூன் 10-ல் நேருவை முறியடிக்கிறார்.</span></td>
+                                <td><span class="badge bg-tip">MED</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani Chennai 05-06-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி சென்னை 05-06-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source text detailed state, national, and international news for 05 June 2026. 
+State news highlighted L&T signing an MoU with the TN govt to invest Rs 18,600 crore creating 8,200 jobs. MDMK Durai Vaiko demanded Trichy be made TN's second capital. Minister EV Velu promised no commissions ("CM fund", etc.) will be taken from highway contractors. DVAC raided 60 sub-registrar offices, seizing Rs 37 lakhs; 3 officials suspended. TANGEDCO hard disk theft investigation continued. Fire at Pallikaranai dump yard destroyed vehicles. Annamalai is launching his new party today. Kanyakumari, Nilgiris received heavy rain alerts.
+National news included the SC issuing draft guidelines for AI in courts, prohibiting it for judgments. PM Modi is set to surpass Nehru as the longest-serving democratically elected PM on June 10. UPSC successfully used facial recognition in Prelims. Defence Minister doubled financial powers for armed forces commanders. Maruti launched India's first 100% flex-fuel car. SEBI accused Rajesh Exports of Rs 15 lakh crore revenue fraud. 
+Internationally, UNSC elected 5 non-permanent members for 2027-28. Venezuela's Delcy Rodriguez visited India for energy talks. South Korea held local elections.
+Sports: Virat Kohli ruled out of Afg ODIs, Ruturaj Gaikwad replaced him. Four Indian-origin players are playing in the FIFA World Cup for other nations. India reached SAFF Women's final against Bangladesh.]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூல உரைகள் 05 ஜூன் 2026 க்கான செய்திகளைக் கொண்டிருந்தன.
+மாநில செய்திகளில், தமிழகத்தில் எல்&டி நிறுவனம் ரூ.18,600 கோடியில் முதலீடு செய்து 8,200 வேலைவாய்ப்புகளை உருவாக்க ஒப்பந்தம் செய்தது. திருச்சியை 2-ம் தலைநகராக்க மதிமுக கோரிக்கை. நெடுஞ்சாலை ஒப்பந்ததாரர்களிடம் கமிஷன் வசூலிக்கப்படாது என அமைச்சர் உறுதியளித்தார். 60 சார்பதிவாளர் அலுவலகங்களில் லஞ்ச ஒழிப்புத்துறை சோதனை; ரூ.37 லட்சம் பறிமுதல், 3 பேர் சஸ்பெண்ட். பள்ளிக்கரணை குப்பை கிடங்கில் தீ விபத்து. அண்ணாமலை புதிய கட்சியை இன்று தொடங்குகிறார். நீலகிரி, கன்னியாகுமரிக்கு கனமழை எச்சரிக்கை.
+தேசிய அளவில், நீதிமன்றங்களில் AI பயன்பாட்டிற்கான வரைவு விதிகளை SC வெளியிட்டது. அதிக காலம் பதவி வகித்த பிரதமர் சாதனையை நேருவை முறியடித்து மோடி படைக்க உள்ளார். சிவில் சர்வீஸ் தேர்வில் முக அங்கீகார முறை (Facial Recognition) வெற்றி. முப்படைகளின் கமாண்டர்களுக்கான நிதி அதிகாரம் இருமடங்காக உயர்வு. இந்தியாவின் முதல் 100% பிளெக்ஸ்-எரிபொருள் காரை மாருதி வெளியிட்டது. ராஜேஷ் எக்ஸ்போர்ட்ஸ் மீது செபி மோசடி புகார்.
+சர்வதேச அளவில், ஐ.நா பாதுகாப்பு கவுன்சிலுக்கு 5 புதிய தற்காலிக உறுப்பினர்கள் தேர்வு. வெனிசுலா அதிபர் இந்தியா வருகை.
+விளையாட்டு: கோலி காயம் காரணமாக விலகல், ருதுராஜ் சேர்ப்பு. ஃபிஃபா உலகக் கோப்பையில் 4 இந்திய வம்சாவளி வீரர்கள். தெற்காசிய கால்பந்து (SAFF) இறுதிப்போட்டியில் இந்தியா-வங்கதேசம் மோதல்.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 05 June 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+    </script>
+</body>
+</html>

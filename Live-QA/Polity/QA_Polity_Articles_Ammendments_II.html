@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Group 1 - Constitutional Amendments Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Andika&family=IBM+Plex+Mono:wght@400;600&family=Orbitron:wght@500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #0d0f14;
+            --bg-card: #161a23;
+            --bg-surface: #1f2430;
+            --gold: #f5c842;
+            --gold-hover: #e0b430;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            
+            /* Callout Colors */
+            --critical: #ef4444;
+            --trap: #f5c842;
+            --tip: #22c55e;
+            --pyq: #3b82f6;
+            --gem: #a855f7;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: 'Andika', sans-serif;
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+        }
+        
+        .digit-font {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .badge {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        /* Hero Header */
+        .hero {
+            background: linear-gradient(135deg, #161a23 0%, #0d0f14 100%);
+            border-bottom: 2px solid var(--gold);
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero h1 {
+            color: var(--gold);
+            font-size: 2.5rem;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto 1.5rem auto;
+        }
+
+        /* Legend Row */
+        .legend-row {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+
+        /* Layout Container */
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+            padding: 0 2rem;
+        }
+
+        /* Sticky TOC */
+        .sidebar {
+            position: sticky;
+            top: 2rem;
+            height: calc(100vh - 4rem);
+            overflow-y: auto;
+            background: var(--bg-card);
+            border-radius: 8px;
+            padding: 1.5rem;
+            border: 1px solid rgba(245, 200, 66, 0.1);
+        }
+
+        .sidebar h3 {
+            color: var(--gold);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(245, 200, 66, 0.2);
+            padding-bottom: 0.5rem;
+        }
+
+        .toc-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .toc-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+            display: block;
+            padding: 0.25rem 0px;
+        }
+
+        .toc-link:hover {
+            color: var(--gold);
+        }
+
+        /* Search Bar Controls */
+        .search-container {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(245, 200, 66, 0.1);
+        }
+
+        .search-wrapper {
+            position: relative;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .search-input {
+            flex: 1;
+            background: var(--bg-main);
+            border: 1px solid rgba(245, 200, 66, 0.3);
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            color: var(--text-main);
+            font-size: 1rem;
+            font-family: 'Andika', sans-serif;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 8px rgba(245, 200, 66, 0.2);
+        }
+
+        /* Table & Card Layouts */
+        .amendment-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-card);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(245, 200, 66, 0.1);
+        }
+
+        .amendment-table th {
+            background: rgba(245, 200, 66, 0.05);
+            color: var(--gold);
+            text-align: left;
+            padding: 1rem;
+            font-family: 'Syne', sans-serif;
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .amendment-table td {
+            padding: 1.25rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            vertical-align: top;
+        }
+
+        .amendment-table tr:hover {
+            background: rgba(255,255,255,0.01);
+        }
+
+        /* Callout Micro-system */
+        .callout {
+            border-left: 4px solid;
+            padding: 0.75rem 1rem;
+            margin-top: 0.75rem;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .callout-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+        .critical { border-color: var(--critical); color: #fca5a5; }
+        .critical .callout-title { color: var(--critical); }
+        
+        .trap { border-color: var(--trap); color: #fef08a; }
+        .trap .callout-title { color: var(--trap); }
+        
+        .tip { border-color: var(--tip); color: #bbf7d0; }
+        .tip .callout-title { color: var(--tip); }
+        
+        .pyq { border-color: var(--pyq); color: #93c5fd; }
+        .pyq .callout-title { color: var(--pyq); }
+        
+        .gem { border-color: var(--gem); color: #e9d5ff; }
+        .gem .callout-title { color: var(--gem); }
+
+        /* Rule Blocks & Dynamic Components */
+        .question-card {
+            background: var(--bg-card);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .question-title {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .expand-btn {
+            background: none;
+            border: none;
+            color: var(--gold);
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+        }
+
+        .question-content {
+            display: none;
+            margin-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 1rem;
+        }
+
+        .question-content.active {
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            border-top: 1px solid rgba(245, 200, 66, 0.2);
+            padding: 1.5rem;
+            text-align: center;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        @media (max-width: 968px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Header -->
+    <header class="hero">
+        <h1>CONSTITUTIONAL AMENDMENTS TRACKER</h1>
+        <p>Comprehensive Master Database for TNPSC Group 1 Preliminary & Mains Exam. Built with multi-dimensional tracking metrics including landmarks, judgments, and specific regional impact vectors.</p>
+        
+        <!-- Legend Row -->
+        <div class="legend-row">
+            <div class="legend-item"><div class="legend-color" style="background: var(--critical)"></div><span style="color: #fca5a5">[CRITICAL] Fundamental Pillars</span></div>
+            <div class="legend-item"><div class="legend-color" style="background: var(--trap)"></div><span style="color: #fef08a">[TRAP] High-Risk Errors</span></div>
+            <div class="legend-item"><div class="legend-color" style="background: var(--tip)"></div><span style="color: #bbf7d0">[TIP] Quick Revision Vectors</span></div>
+            <div class="legend-item"><div class="legend-color" style="background: var(--pyq)"></div><span style="color: #93c5fd">[PYQ] Past Exam Context</span></div>
+            <div class="legend-item"><div class="legend-color" style="background: var(--gem)"></div><span style="color: #e9d5ff">[GEM] Live Classroom Insights</span></div>
+        </div>
+    </header>
+
+    <!-- Main Workspace Container -->
+    <div class="container">
+        
+        <!-- Sticky Left TOC Navigation -->
+        <aside class="sidebar">
+            <h3>Quick Jump</h3>
+            <ul class="toc-list">
+                <li><a href="#sec-1-25" class="toc-link">Amendments 1 - 25</a></li>
+                <li><a href="#sec-26-50" class="toc-link">Amendments 26 - 50</a></li>
+                <li><a href="#sec-51-75" class="toc-link">Amendments 51 - 75</a></li>
+                <li><a href="#sec-76-100" class="toc-link">Amendments 76 - 100</a></li>
+                <li><a href="#sec-101-106" class="toc-link">Amendments 101 - 106</a></li>
+                <li><a href="#sec-questions" class="toc-link">💎 Live Case Analysis Cards</a></li>
+            </ul>
+        </aside>
+
+        <!-- Dynamic Content Engine Window -->
+        <main class="content-space">
+            
+            <!-- Universal Search Interface -->
+            <div class="search-container">
+                <div class="search-wrapper">
+                    <input type="text" id="masterSearch" class="search-input" placeholder="Search by Amendment Number, Year, Specific Case (e.g., Berubari, Inamdar), or Content terms...">
+                </div>
+            </div>
+
+            <!-- Master Dataset Tables -->
+            <h2 id="sec-1-25" style="color: var(--gold); margin-bottom: 1rem;">Amendments 1 to 25</h2>
+            <table class="amendment-table">
+                <thead>
+                    <tr>
+                        <th style="width: 15%">Act & Year</th>
+                        <th style="width: 50%">Core Constitutional Provisions & Objectives</th>
+                        <th style="width: 35%">TNPSC Exam Relevance & Enhanced Analytics</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body-1">
+                    <tr class="searchable-row">
+                        <td class="digit-font">1st Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1951</span></td>
+                        <td>
+                            Added <strong>Ninth Schedule</strong> to insulate land reform laws from judicial review. Introduced three new grounds of reasonable restriction on freedom of speech (Article 19(2)): <strong>Public Order, Friendly relations with foreign states, and Incitement to an offence</strong>. Empowered state to execute special provisions for advancement of SEBCs.
+                        </td>
+                        <td>
+                            <div class="callout critical">
+                                <div class="callout-title">[CRITICAL]</div>
+                                Triggered by landmark <em>State of Madras v. Champakam Dorairajan (1951)</em> case regarding communal reservations in Tamil Nadu.
+                            </div>
+                            <div class="callout pyq">
+                                <div class="callout-title">[PYQ]</div>
+                                Questioned repeatedly on what restrictions were added to Art 19(2).
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">2nd Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1952</span></td>
+                        <td>Readjusted scale of representation in Lok Sabha, providing that one member could represent more than 7,500,000 persons.</td>
+                        <td><div class="callout tip"><div class="callout-title">[TIP]</div>Deals strictly with early demographic balancing acts in early general elections.</div></td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">3rd Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1954</span></td>
+                        <td>Empowered Parliament to control production, supply, and distribution of foodstuffs, cattle fodder, raw cotton, cotton seed, and raw jute in public interest.</td>
+                        <td>Altered Entry 33 of Concurrent List to centralize essential commodities powers.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">4th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1955</span></td>
+                        <td>Made quantum of compensation given in lieu of compulsory acquisition of private property non-justiciable (beyond court scrutiny). Expanded state monopoly over trade.</td>
+                        <td><div class="callout trap"><div class="callout-title">[TRAP]</div>Do not confuse with the 44th Amendment which deleted Right to Property completely. This merely restricted compensation challenges.</div></td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">5th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1955</span></td>
+                        <td>Empowered President to fix time-limits for State Legislatures to express views on proposed central laws affecting state boundaries (Article 3).</td>
+                        <td>Crucial for understanding federal dynamics under Article 3.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">6th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1956</span></td>
+                        <td>Introduced taxes on sale or purchase of goods taking place during inter-state trade or commerce. Restricted state powers over same.</td>
+                        <td>Laid early foundations for Union control over inter-state indirect taxation streams.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">7th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1956</span></td>
+                        <td>Implemented recommendations of <strong>States Reorganisation Commission</strong>. Abolished classification of states into Part A, B, C, and D states. Reorganized India into 14 States and 6 UTs. Allowed common High Courts for two or more states.</td>
+                        <td><div class="callout critical"><div class="callout-title">[CRITICAL]</div>Altered Articles 1, 2, 3, 4, and 4th schedule entirely. Essential historical turning point for federal setups.</div></td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">8th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1959</span></td>
+                        <td>Extended period of reservation of seats for SCs, STs, and Anglo-Indians in Lok Sabha and Assemblies by 10 more years (up to 1970).</td>
+                        <td>First of the series of periodic 10-year extensions given to constitutional reservation models.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">9th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1960</span></td>
+                        <td>Facilitated cession of Indian territory of <strong>Berubari Union</strong> (West Bengal) to Pakistan as provided under Indo-Pakistan Agreement (1958).</td>
+                        <td><div class="callout critical"><div class="callout-title">[CRITICAL]</div>Led to historic <em>Berubari Union Case (1960)</em> where SC ruled Preamble is not part of Constitution and Article 3 cannot be used to cede territory to foreign countries.</div></td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">10th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1961</span></td>
+                        <td>Incorporated Dadra and Nagar Haveli into Indian Union as a Union Territory post-liberation from Portuguese rule.</td>
+                        <td>Integrated external territories into Article 1 frameworks.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">11th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1961</span></td>
+                        <td>Changed election procedure of Vice-President by establishing Electoral College instead of joint meeting of both Houses. Provided that vacancy in electoral college cannot challenge Presidential/VP elections.</td>
+                        <td>Streamlined process to avoid legislative logjams during high executive elections.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">12th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1962</span></td>
+                        <td>Incorporated Goa, Daman, and Diu into Indian Union as Union Territories following Operation Vijay.</td>
+                        <td>Further elimination of colonial enclaves on western coast.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">13th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1962</span></td>
+                        <td>Conferred statehood status upon Nagaland and made special protection provisions under newly inserted <strong>Article 371A</strong>.</td>
+                        <td>Asymmetric federalism mechanism initiated for tribal protections.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">14th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1962</span></td>
+                        <td>Incorporated former French territory of Puducherry into Indian Union. Enabled creation of Legislatures and Councils of Ministers for certain UTs.</td>
+                        <td>Direct impact on Puducherry governance model frequently referenced in regional exams.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">15th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1963</span></td>
+                        <td>Increased retirement age of High Court judges from <strong>60 to 62 years</strong>. Enabled retired HC judges to sit as ad-hoc judges of same court.</td>
+                        <td><div class="callout pyq"><div class="callout-title">[PYQ]</div>Frequently asked in match the following style matrices alongside Supreme Court age provisions.</div></td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">16th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1963</span></td>
+                        <td>Included "Sovereignty and Integrity of India" within forms of oaths/affirmations for lawmakers, ministers, judges, and CAG. Included it as a ground of restriction on Article 19.</td>
+                        <td>Enacted in backdrop of secessionist trends to fortify unity frameworks.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">17th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1964</span></td>
+                        <td>Prohibited acquisition of land under personal cultivation unless market-value compensation is provided. Added 44 more land reform acts to Ninth Schedule.</td>
+                        <td>Led to intensive legal standoffs culminating in basic structure challenges later.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">18th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1966</span></td>
+                        <td>Clarified that power of Parliament under Article 3 to form new states includes power to form a state/UT by uniting part of any state/UT to another.</td>
+                        <td>Purely technical clarification regarding territorial adjustments.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">19th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1966</span></td>
+                        <td>Abolished system of Election Tribunals and vested power to hear election petitions directly within High Courts.</td>
+                        <td>Judicial streamlining to expedite election-related dispute resolutions.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">20th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1966</span></td>
+                        <td>Validated appointments of certain district judges in Uttar Pradesh which had been struck down by Supreme Court.</td>
+                        <td>Curative amendment designed to protect administrative finality in regional judiciaries.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">21st Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1967</span></td>
+                        <td>Included <strong>Sindhi</strong> as the 15th constitutionally recognized language within Eighth Schedule.</td>
+                        <td><div class="callout pyq"><div class="callout-title">[PYQ]</div>The entry sequence of languages added to Eighth Schedule is highly testable. Remember Sindhi was first.</div></td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">22nd Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1969</span></td>
+                        <td>Facilitated creation of a new autonomous State of Meghalaya within boundaries of State of Assam.</td>
+                        <td>Innovative institutional framework preceding full-scale statehood deployment.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">23rd Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1969</span></td>
+                        <td>Extended reservation metrics for SCs/STs and Anglo-Indians in legislative chambers for another ten years (up to 1980).</td>
+                        <td>Second regular cyclical extension of administrative reservations.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">24th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1971</span></td>
+                        <td>Affirmed absolute power of Parliament to amend any part of Constitution including Fundamental Rights by amending Articles 13 and 368. Made it mandatory for President to give assent to Amendment Bills.</td>
+                        <td><div class="callout critical"><div class="callout-title">[CRITICAL]</div>Passed to completely nullify structural impact of <em>Golaknath Case (1967)</em> judgment.</div></td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">25th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1971</span></td>
+                        <td>Curtailed Fundamental Right to property. Mandated that laws giving effect to DPSPs under Article 39(b) or (c) cannot be challenged for violating Articles 14, 19, or 31.</td>
+                        <td>Introduced <strong>Article 31C</strong>. Declared that where Article 31C steps in, Fundamental Rights step out. Substantive challenge in Kesavananda Bharati.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Next Block: 26 to 50 -->
+            <h2 id="sec-26-50" style="color: var(--gold); margin-bottom: 1rem;">Amendments 26 to 50</h2>
+            <table class="amendment-table">
+                <thead>
+                    <tr>
+                        <th style="width: 15%">Act & Year</th>
+                        <th style="width: 50%">Core Constitutional Provisions & Objectives</th>
+                        <th style="width: 35%">TNPSC Exam Relevance & Enhanced Analytics</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body-2">
+                    <tr class="searchable-row">
+                        <td class="digit-font">26th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1971</span></td>
+                        <td>Abolished privy purses, titles, and special privileges originally granted to former rulers of princely states during integration.</td>
+                        <td>Historic egalitarian shift terminating legacy feudal real estate payouts.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">27th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1971</span></td>
+                        <td>Empowered administrators of certain North-Eastern Union Territories to promulgate legislative ordinances during recess of assemblies.</td>
+                        <td>Administrative adaptation for shifting security zones in the east.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">28th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1972</span></td>
+                        <td>Abolished special service privilege guarantees of Indian Civil Service (ICS) officers and empowered Parliament to govern their service criteria.</td>
+                        <td>Transitioned colonial civil governance systems to democratic norms.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">29th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1972</span></td>
+                        <td>Inserted two land reform legislations from Kerala into protective parameters of Ninth Schedule.</td>
+                        <td>Another precursor piece directly challenged in historic basic structure litigation.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">30th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1972</span></td>
+                        <td>Abolished financial threshold criteria (Rs 20,000) for filing civil appeals to Supreme Court. Replaced it with requirement that case must involve a <strong>substantial question of law</strong>.</td>
+                        <td>Optimized highest court resources toward systemic legal issues rather than monetary disputes.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">31st Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1973</span></td>
+                        <td>Increased total elective strength of Lok Sabha from <strong>525 to 545 seats</strong> to accommodate population growth recorded in census metrics.</td>
+                        <td><div class="callout pyq"><div class="callout-title">[PYQ]</div>Important baseline for tracking demographic representation ceilings in parliamentary history.</div></td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">32nd Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1973</span></td>
+                        <td>Inserted specialized regional equitable safeguards for Telangana zone inside Andhra Pradesh under Article 371D.</td>
+                        <td>Direct historic precedent to future state divisions in Deccan area.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">33rd Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1974</span></td>
+                        <td>Stipulated that Speaker or Chairman can accept resignation of legislators only if fully satisfied it is completely <strong>voluntary and genuine</strong>.</td>
+                        <td>Formulated to block forced political resignations during high-tension regional agitations.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">34th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1974</span></td>
+                        <td>Added 20 distinct agrarian tenure and land redistribution laws enacted across states into protected Ninth Schedule lists.</td>
+                        <td>Continuous systemic insulating of socialist wealth distribution strategies from judicial interventions.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">35th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1974</span></td>
+                        <td>Terminated protectorate status of <strong>Sikkim</strong>, updating it to Associate State of Indian Union. Added Tenth Schedule detailing terms of association.</td>
+                        <td><div class="callout trap"><div class="callout-title">[TRAP]</div>Do not confuse with the 36th amendment. 35th made it an Associate State and added an older temporary Tenth Schedule.</div></td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">36th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1975</span></td>
+                        <td>Elevated Sikkim to status of a full-fledged 22nd state of Indian Union. Completely omitted temporary Tenth Schedule.</td>
+                        <td><div class="callout pyq"><div class="callout-title">[PYQ]</div>Extremely frequent question regarding precise year and amendment index of Sikkim full integration.</div></td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">37th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1975</span></td>
+                        <td>Provided a Legislative Assembly and Council of Ministers framework for Union Territory of Arunachal Pradesh.</td>
+                        <td>Strategic institutional maturation of frontier strategic zones.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">38th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1975</span></td>
+                        <td>Made declaration of National Emergencies by President completely non-justiciable. Allowed simultaneous proclamations on distinct grounds.</td>
+                        <td>Passed immediately prior to emergency declarations to construct systemic defense structures.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">39th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1975</span></td>
+                        <td>Placed election disputes of President, Vice-President, Prime Minister, and Lok Sabha Speaker beyond purview of judiciaries.</td>
+                        <td>Passed in response to <em>Allahabad HC Judgment</em> in Indira Gandhi election dispute. Struck down partially in <em>Indira Gandhi v. Raj Narain</em>.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">40th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1976</span></td>
+                        <td>Empowered Parliament to define and dynamically alter limits of territorial waters, continental shelf, EEZ, and maritime zones.</td>
+                        <td>Sovereign maritime economic control stabilization vector.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">41st Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1976</span></td>
+                        <td>Raised upper retirement age limit of members of State Public Service Commission (SPSC) and JPSC from <strong>60 to 62 years</strong>.</td>
+                        <td><div class="callout critical"><div class="callout-title">[CRITICAL]</div>Direct structural connection to TNPSC setup operations. Do not forget age remains 65 for UPSC.</div></td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">42nd Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1976</span></td>
+                        <td>Known as the <strong>Mini-Constitution</strong>. Implemented Swaran Singh recommendations. Added <strong>Socialist, Secular, Integrity</strong> to Preamble. Added Part IVA (Fundamental Duties). Shifted 5 subjects to Concurrent list (Education, Forests, Weights/Measures, Wild Animals, Admn of Justice). Bound President to Cabinet advice.</td>
+                        <td>
+                            <div class="callout critical"><div class="callout-title">[CRITICAL]</div>Most expansive amendment in history. Altered structural balance of powers comprehensively across federal tiers.</div>
+                        </td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">43rd Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1977</span></td>
+                        <td>Restored jurisdiction of Supreme Court and High Courts regarding judicial review powers and issuance of constitutional writs.</td>
+                        <td>First corrective rolling back of extreme centralization measures introduced during emergency.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">44th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1978</span></td>
+                        <td>Replaced "internal disturbance" with "armed rebellion" for National Emergency. Made written cabinet advice mandatory. Deleted <strong>Right to Property</strong> from Part III, re-housing it as Article 300A legal right. Ensured Articles 20 & 21 cannot be suspended.</td>
+                        <td><div class="callout critical"><div class="callout-title">[CRITICAL]</div>Massive counter-balancing act restoring basic constitutional liberties and accountability dynamics.</div></td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">45th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1980</span></td>
+                        <td>Extended reservation parameters for SC/ST quotas and Anglo-Indian representations by another 10-year block (until 1990).</td>
+                        <td>Routine decade extension baseline adjustment.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">46th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1983</span></td>
+                        <td>Plugged structural loopholes in sales tax systems to stop commercial tax evasion maneuvers in inter-state consignments.</td>
+                        <td>Technical fiscal tightening instrument.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">47th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1984</span></td>
+                        <td>Included specified land reform acts belonging to Assam, Bihar, Haryana, Tamil Nadu, UP, and West Bengal into protected Ninth Schedule.</td>
+                        <td>Direct protection of TN regional land ceiling laws from local litigation.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">48th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1984</span></td>
+                        <td>Permitted extension of President's Rule in Punjab beyond standard limits without meeting specific stringent statutory conditions.</td>
+                        <td>Specialized state security situation amendment.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">49th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1984</span></td>
+                        <td>Accorded constitutional sanctity and structured framework to Autonomous District Council systems operating inside Tripura.</td>
+                        <td>Sixth Schedule strengthening mechanism for indigenous tribal populations.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">50th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1984</span></td>
+                        <td>Authorized Parliament to modify/restrict Fundamental Rights of personnel working in military intelligence or telecommunication networks.</td>
+                        <td>Modified Article 33 to guarantee extreme operational security protocols.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Next Block: 51 to 75 -->
+            <h2 id="sec-51-75" style="color: var(--gold); margin-bottom: 1rem;">Amendments 51 to 75</h2>
+            <table class="amendment-table">
+                <thead>
+                    <tr>
+                        <th style="width: 15%">Act & Year</th>
+                        <th style="width: 50%">Core Constitutional Provisions & Objectives</th>
+                        <th style="width: 35%">TNPSC Exam Relevance & Enhanced Analytics</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body-3">
+                    <tr class="searchable-row">
+                        <td class="digit-font">51st Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1984</span></td>
+                        <td>Secured reservation metrics for ST populations across Meghalaya, Arunachal Pradesh, Nagaland, and Mizoram within legislative structures.</td>
+                        <td>Demographic calibration for eastern tribal balancing.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">52nd Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1985</span></td>
+                        <td>Popularly called the <strong>Anti-Defection Law</strong>. Added <strong>Tenth Schedule</strong> containing details regarding disqualification on grounds of party defection.</td>
+                        <td><div class="callout critical"><div class="callout-title">[CRITICAL]</div>Massive structural focus point for polity exams. Reconfigured floor dynamics across houses.</div></td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">53rd Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1986</span></td>
+                        <td>Inserted special protective governance rules for Mizoram, fixing assembly minimum baseline layout at 40 members.</td>
+                        <td>Stabilization logic post Mizoram peace accords.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">54th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1986</span></td>
+                        <td>Enhanced salary structures of Supreme Court and High Court judges. Enabled dynamic changes via regular parliamentary law.</td>
+                        <td>Judicial infrastructure maintenance asset.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">55th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1986</span></td>
+                        <td>Fixed minimum assembly composition parameters for newly structurally formed Arunachal Pradesh state at 30 seats.</td>
+                        <td>Frontier institutional formalization vector.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">56th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1987</span></td>
+                        <td>Fixed minimum structural legislative membership metrics for State of Goa at a baseline floor of 30 members.</td>
+                        <td>Accommodated de-linking of Goa from older combined UT layouts.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">57th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1987</span></td>
+                        <td>Adjusted reservation seats allocated for ST populations in North-Eastern tribal pockets based on demographic counts.</td>
+                        <td>Electoral boundary adjustments to protect ethnic balances.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">58th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1987</span></td>
+                        <td>Provided an authoritative, legally validated translation of Constitution of India in <strong>Hindi language</strong>.</td>
+                        <td>Authorized national linguistic accessibility under constitutional mandate.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">59th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1988</span></td>
+                        <td>Permitted emergency over Punjab on basis of internal disturbances, restricting basic life liberties under Art 21 during that zone.</td>
+                        <td>Extremely controversial; later repealed completely by subsequent corrective amendment.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">60th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1988</span></td>
+                        <td>Increased maximum ceiling on professional, trade, and employment taxes from old Rs 250 level to <strong>Rs 2,500 per annum</strong>.</td>
+                        <td><div class="callout tip"><div class="callout-title">[TIP]</div>Direct fiscal devolution relevance for local municipality funding mechanics.</div></td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">61st Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1989</span></td>
+                        <td>Reduced minimum voting age from <strong>21 years to 18 years</strong> for Lok Sabha and State Assembly elections (Amended Art 326).</td>
+                        <td><div class="callout pyq"><div class="callout-title">[PYQ]</div>Massive youth franchise expansion. Top structural question material in TNPSC.</div></td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">62nd Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1989</span></td>
+                        <td>Extended reservation protocols for SC/ST and Anglo-Indian seats by another standard 10 years (until 2000).</td>
+                        <td>Decadal alignment maintenance task.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">63rd Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1989</span></td>
+                        <td>Repealed all emergency provisions introduced via 59th Amendment in Punjab, restoring status quo.</td>
+                        <td>Corrective framework returning emergency powers to normal baseline limits.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">64th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1990</span></td>
+                        <td>Extended President's rule timelines inside Punjab up to a total length of 3 years and 6 months.</td>
+                        <td>Ad-hoc extension designed for localized civil stress situations.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">65th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1990</span></td>
+                        <td>Replaced single Special Officer with a multi-member <strong>National Commission for SCs and STs</strong> under Article 338.</td>
+                        <td>Institutionalized constitutional oversight mechanism for marginalized welfare.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">66th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1990</span></td>
+                        <td>Protected 55 state land reform initiatives by nesting them directly within protective folds of Ninth Schedule.</td>
+                        <td>Insulated agrarian transformations from civil litigation waves.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">67th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1990</span></td>
+                        <td>Facilitated further extended operational duration of President's rule in Punjab up to 4 years total.</td>
+                        <td>Localized security response vector.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">68th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1991</span></td>
+                        <td>Extended President's rule baseline timeline in Punjab to absolute maximum peak cap of 5 years total.</td>
+                        <td>Final phase of localized crisis extensions before return of democratic assembly elections.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">69th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1991</span></td>
+                        <td>Accorded specialized status to UT of Delhi, redesignating it as <strong>National Capital Territory of Delhi</strong> under Article 239AA. Provided a 70-member assembly.</td>
+                        <td><div class="callout critical"><div class="callout-title">[CRITICAL]</div>Complex center-state power balance vector. Frequently in news and highly testable.</div></td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">70th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1992</span></td>
+                        <td>Included elected members of NCT of Delhi and UT of Puducherry legislative assemblies into <strong>Electoral College for Presidential Election</strong>.</td>
+                        <td>Ensured legislative representations of Union Territories participate in head of state selections.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">71st Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1992</span></td>
+                        <td>Included <strong>Konkani, Manipuri, and Nepali</strong> languages into Eighth Schedule. Total scheduled count reached 18.</td>
+                        <td><div class="callout tip"><div class="callout-title">[TIP]</div>Use acronym "KMN" to easily recall the second block of language additions.</div></td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">72nd Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1992</span></td>
+                        <td>Secured structured seat reservation paradigms for ST populations within Tripura Legislative Assembly setup.</td>
+                        <td>Localized balancing model for tribal political equity.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">73rd Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1992</span></td>
+                        <td>Granted constitutional status and protection to <strong>Panchayati Raj Institutions</strong>. Added <strong>Part IX</strong> and <strong>Eleventh Schedule</strong> containing 29 functional items.</td>
+                        <td><div class="callout critical"><div class="callout-title">[CRITICAL]</div>Pillar of local governance. Essential for Group 1 Prelims and Mains Paper 2.</div></td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">74th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1992</span></td>
+                        <td>Granted constitutional status and protection to <strong>Urban Local Bodies (Municipalities)</strong>. Added <strong>Part IX-A</strong> and <strong>Twelfth Schedule</strong> with 18 functional items.</td>
+                        <td>Companion pillar to 73rd Act, creating unified local urban governance frameworks.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">75th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1994</span></td>
+                        <td>Provided for setting up state-level Rent Tribunals to resolve complex landlord-tenant disputes without overloading basic courts.</td>
+                        <td>Judicial offloading strategy in urban litigation zones.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Next Block: 76 to 100 -->
+            <h2 id="sec-76-100" style="color: var(--gold); margin-bottom: 1rem;">Amendments 76 to 100</h2>
+            <table class="amendment-table">
+                <thead>
+                    <tr>
+                        <th style="width: 15%">Act & Year</th>
+                        <th style="width: 50%">Core Constitutional Provisions & Objectives</th>
+                        <th style="width: 35%">TNPSC Exam Relevance & Enhanced Analytics</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body-4">
+                    <tr class="searchable-row">
+                        <td class="digit-font">76th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1994</span></td>
+                        <td>Placed <strong>Tamil Nadu Reservation Act of 1994</strong> (providing <strong>69% reservation</strong>) inside Ninth Schedule to insulate it from judicial review following <em>Indira Sawhney (1992)</em> 50% cap.</td>
+                        <td>
+                            <div class="callout critical"><div class="callout-title">[CRITICAL]</div>Absolute peak significance for TNPSC exams. Protects Tamil Nadu's unique social justice paradigm.</div>
+                            <div class="callout pyq"><div class="callout-title">[PYQ]</div>Asked multiple times across state-level exams regarding Ninth Schedule protection index.</div>
+                        </td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">77th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1995</span></td>
+                        <td>Amended Article 16(4A) to permit reservation in <strong>promotions</strong> for SC and ST government employees.</td>
+                        <td>Passed to systematically bypass restrictive parts of <em>Indira Sawhney</em> judgment.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">78th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1995</span></td>
+                        <td>Nested 27 additional progressive land reform laws inside Ninth Schedule, bringing final entry layout index count up to 284.</td>
+                        <td>Agrarian law protection sequence extension.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">79th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">1999</span></td>
+                        <td>Extended legislative seat reservations for SC/ST and Anglo-Indian seats by another 10 years (until 2010).</td>
+                        <td>Routine decadal adjustment cycle.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">80th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">2000</span></td>
+                        <td>Implemented <strong>Alternative Scheme of Devolution</strong> based on 10th Finance Commission recommendations. Created pool of central taxes shared with states.</td>
+                        <td>Reconfigured federal financial resource sharing architecture.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">81st Act<br><span style="font-size:0.8rem; color:var(--text-muted);">2000</span></td>
+                        <td>Introduced <strong>Carry Forward Rule</strong> via Article 16(4B), allowing unfilled reserved vacancies of a year to be treated as a separate class not counting against 50% cap next year.</td>
+                        <td>Bypassed 50% annual structural reservation cap ceilings for backlog seats.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">82nd Act<br><span style="font-size:0.8rem; color:var(--text-muted);">2000</span></td>
+                        <td>Permitted lowering of qualifying marks or relaxation of standards for SCs/STs in promotions within public services (Art 335).</td>
+                        <td>Restored older administrative reservation flexibilities.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">83rd Act<br><span style="font-size:0.8rem; color:var(--text-muted);">2000</span></td>
+                        <td>Exempted Arunachal Pradesh from providing mandatory SC reservations within its rural Panchayats due to fully tribal demographic reality.</td>
+                        <td>Pragmatic demographic adaptation of 73rd Amendment rules.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">84th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">2001</span></td>
+                        <td>Extended freeze on readjustment of seats in Lok Sabha and State Assemblies for another 25 years (<strong>up to 2026</strong>) to encourage family planning measures.</td>
+                        <td><div class="callout critical"><div class="callout-title">[CRITICAL]</div>Highly topical since the freeze extends precisely to 2026. Important for upcoming delimitation debates.</div></td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">85th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">2001</span></td>
+                        <td>Provided for <strong>Consequential Seniority</strong> for SC/ST government servants in cases of promotion under reservation rules, with retrospective effect from 1995.</td>
+                        <td>Re-secured promotions hierarchies following structural judicial pushbacks.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">86th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">2002</span></td>
+                        <td>Made elementary education a Fundamental Right by inserting <strong>Article 21-A</strong> (Free & compulsory education for ages 6-14). Changed Art 45 (DPSP) and added 11th Fundamental Duty (Art 51A(k)).</td>
+                        <td><div class="callout critical"><div class="callout-title">[CRITICAL]</div>Tri-dimensional impact on Part III, IV, and IVA. Paramount topic for all educational policy analytics.</div></td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">87th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">2003</span></td>
+                        <td>Mandated readjustment of territorial constituencies based on <strong>2001 Census data</strong> instead of older 1991 metrics, keeping overall seat counts frozen.</td>
+                        <td>Internal boundary calibration without altering net state representation weights.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">88th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">2003</span></td>
+                        <td>Inserted Article 268-A to give explicit framework to <strong>Service Tax</strong> collection and appropriation dynamics.</td>
+                        <td>Historical fiscal evolutionary step on journey toward eventual unified GST framework.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">89th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">2003</span></td>
+                        <td>Bifurcated combined commission into two bodies: <strong>National Commission for Scheduled Castes (Art 338)</strong> and <strong>National Commission for Scheduled Tribes (Art 338-A)</strong>.</td>
+                        <td>Institutional specialization designed to focus directly on distinct tribal policy needs.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">90th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">2003</span></td>
+                        <td>Protected representation of ST and non-ST populations within Assam Legislative Assembly from newly carved Bodoland Territorial Areas District.</td>
+                        <td>Maintained historic ethnic ratios inside autonomous territorial frameworks.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">91st Act<br><span style="font-size:0.8rem; color:var(--text-muted);">2003</span></td>
+                        <td>Limited size of Council of Ministers to <strong>15% of total strength</strong> of Lok Sabha / State Assembly. Minimum size of state ministry set to 12. Tightened Anti-Defection split rules.</td>
+                        <td><div class="callout pyq"><div class="callout-title">[PYQ]</div>Checked regularly on precise percentage ceilings and minimum numbers allowed in small states.</div></td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">92nd Act<br><span style="font-size:0.8rem; color:var(--text-muted);">2003</span></td>
+                        <td>Added four more languages to Eighth Schedule: <strong>Bodo, Dogri, Maithili, and Santhali</strong>. Total constitutionally recognized languages reached <strong>22</strong>.</td>
+                        <td><div class="callout tip"><div class="callout-title">[TIP]</div>Use acronym "BDMS" (like DMBS) to memorize the third language expansion phase.</div></td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">93rd Act<br><span style="font-size:0.8rem; color:var(--text-muted);">2005</span></td>
+                        <td>Empowered State to make special reservation provisions for SC/ST/OBCs in all educational institutions including <strong>private unaided colleges</strong>. Nullified <em>Inamdar (2005)</em>.</td>
+                        <td>Massive expansion of social justice reach to commercial education landscapes.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">94th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">2006</span></td>
+                        <td>Exempted Bihar from having a mandatory Tribal Welfare Minister, extending that requirement to newly created states of Jharkhand and Chhattisgarh.</td>
+                        <td>Administrative adjustment based on changing internal state boundary profiles.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">95th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">2009</span></td>
+                        <td>Extended reservation parameters for SC/ST and Anglo-Indian seats in Lok Sabha/Assemblies by another 10 years (until 2020).</td>
+                        <td>Standard cyclical extension adjustment.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">96th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">2011</span></td>
+                        <td>Substituted name spelling <strong>"Odia"</strong> for older "Oriya" in Eighth Schedule and national listings.</td>
+                        <td>Cultural phonetic alignment inside official constitutional linguistic rosters.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">97th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">2011</span></td>
+                        <td>Granted constitutional status to <strong>Cooperative Societies</strong>. Added right to form them to Art 19(1)(c). Added DPSP Art 43-B. Added <strong>Part IX-B</strong>.</td>
+                        <td><div class="callout trap"><div class="callout-title">[TRAP]</div>Note that SC struck down parts of Part IX-B dealing with state cooperatives due to lack of ratification by states. Central parts remain valid.</div></td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">98th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">2013</span></td>
+                        <td>Inserted Article 371J to empower Governor of Karnataka to execute special developmental focus on Hyderabad-Karnataka Region.</td>
+                        <td>Asymmetric regional economic balancing vector.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">99th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">2014</span></td>
+                        <td>Established <strong>National Judicial Appointments Commission (NJAC)</strong> to replace older collegium system for appointing judges.</td>
+                        <td><div class="callout critical"><div class="callout-title">[CRITICAL]</div>Struck down completely as unconstitutional by Supreme Court in 2015 for breaching independence of judiciary.</div></td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">100th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">2014</span></td>
+                        <td>Ratified <strong>Land Boundary Agreement (LBA)</strong> between India and Bangladesh. Exchanged enclaves and altered First Schedule.</td>
+                        <td>Major geopolitical boundary streamlining exercise resolved after decades.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Final Block: 101 to 106 -->
+            <h2 id="sec-101-106" style="color: var(--gold); margin-bottom: 1rem;">Amendments 101 to 106</h2>
+            <table class="amendment-table">
+                <thead>
+                    <tr>
+                        <th style="width: 15%">Act & Year</th>
+                        <th style="width: 50%">Core Constitutional Provisions & Objectives</th>
+                        <th style="width: 35%">TNPSC Exam Relevance & Enhanced Analytics</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body-5">
+                    <tr class="searchable-row">
+                        <td class="digit-font">101st Act<br><span style="font-size:0.8rem; color:var(--text-muted);">2016</span></td>
+                        <td>Introduced <strong>Goods and Services Tax (GST)</strong>. Inserted Articles 246A, 269A, 279A (GST Council). Completely restructured indirect tax regime.</td>
+                        <td><div class="callout critical"><div class="callout-title">[CRITICAL]</div>Massive structural overhaul of cooperative federalism. Mains questions center heavily on state fiscal autonomy.</div></td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">102nd Act<br><span style="font-size:0.8rem; color:var(--text-muted);">2018</span></td>
+                        <td>Granted full constitutional status to <strong>National Commission for Backward Classes (NCBC)</strong> by inserting <strong>Article 338B</strong>. Added Art 342A regarding identification powers.</td>
+                        <td>Brought NCBC to equal structural parity with NCSC and NCST commissions.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">103rd Act<br><span style="font-size:0.8rem; color:var(--text-muted);">2019</span></td>
+                        <td>Provided up to <strong>10% reservation for Economically Weaker Sections (EWS)</strong> among non-reserved categories by amending Articles 15(6) and 16(6).</td>
+                        <td>Introduced income/asset criteria for constitutional reservations alongside social backwardness. Upheld in <em>Janhit Abhiyan case</em>.</td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">104th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">2019</span></td>
+                        <td>Extended reservation of seats for SCs and STs in Lok Sabha and State Legislative Assemblies by another 10 years (until <strong>January 25, 2030</strong>). <strong>Discontinued provision for nominating two Anglo-Indian members</strong> to Lok Sabha and State Assemblies.</td>
+                        <td><div class="callout critical"><div class="callout-title">[CRITICAL]</div>Terminated the historic political representation of Anglo-Indians. Absolute hot topic for recent structural counts of MPs/MLAs.</div></td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">105th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">2021</span></td>
+                        <td>Restored power of <strong>State Governments and Union Territories to identify and notify their own list of Socially and Educationally Backward Classes (SEBCs)</strong>. Overturned interpretation of Supreme Court judgment on 102nd Amendment.</td>
+                        <td><div class="callout tip"><div class="callout-title">[TIP]</div>Crucial for states like Tamil Nadu to protect state-level backward class lists and reservation policies.</div></td>
+                    </tr>
+                    <tr class="searchable-row">
+                        <td class="digit-font">106th Act<br><span style="font-size:0.8rem; color:var(--text-muted);">2023</span></td>
+                        <td>Popularly known as the <strong>Nari Shakti Vandan Adhiniyam</strong>. Reserves <strong>33% of all seats for women</strong> in Lok Sabha, State Legislative Assemblies, and NCT of Delhi Assembly (including seats within SC/ST quotas).</td>
+                        <td><div class="callout critical"><div class="callout-title">[CRITICAL]</div>Will remain in effect for 15 years. Implementation is tied to the completion of the next census and subsequent delimitation exercise. Essential for political empowerment questions.</div></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Question Cards Workspace Section -->
+            <h2 id="sec-questions" style="color: var(--gold); margin-bottom: 1rem;">💎 Live Case Analysis & High-Yield Cards</h2>
+            
+            <div class="question-card">
+                <div class="question-header" onclick="toggleCard('q1')">
+                    <span class="question-title">How does the 105th Amendment protect state-level autonomy in Tamil Nadu?</span>
+                    <button class="expand-btn" id="q1-btn">+</button>
+                </div>
+                <div class="question-content" id="q1">
+                    <p>The 102nd Amendment was interpreted by the Supreme Court as centralizing the notification of Backward Classes exclusively under the President. The <strong>105th Amendment clarified and restored the concurrent power</strong> of states to maintain their independent state lists. This prevents administrative disruption to Tamil Nadu's existing reservation matrices.</p>
+                    <div class="callout gem">
+                        <div class="callout-title">💎 Live Classroom Gem</div>
+                        In Mains, link this directly to federalism. States argue local governments are best positioned to observe localized social stratification, making central-only lists counter to federal principle.
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header" onclick="toggleCard('q2')">
+                    <span class="question-title">Why is the 76th Amendment considered a unique shield for Tamil Nadu's 69% reservation?</span>
+                    <button class="expand-btn" id="q2-btn">+</button>
+                </div>
+                <div class="question-content" id="q2">
+                    <p>The 1992 <em>Indira Sawhney</em> judgment placed a strict 50% ceiling on total reservations. To preserve its 69% model, Tamil Nadu passed a state act and secured its placement in the <strong>Ninth Schedule via the 76th Constitutional Amendment Act</strong>, attempting to insulate it from judicial review.</p>
+                    <div class="callout gem">
+                        <div class="callout-title">💎 Live Classroom Gem</div>
+                        Always analyze this alongside the <em>I.R. Coelho (2007)</em> judgment. The SC ruled laws added to the Ninth Schedule after April 24, 1973, can still be challenged if they violate the Basic Structure.
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Persistent Global Footer -->
+    <footer>
+        TNPSC Group 1 Polity Database • Current Year Reference: 2026 • Designed for scannability and deep conceptual retention.
+    </footer>
+
+    <!-- Search Engine Logic -->
+    <script>
+        document.getElementById('masterSearch').addEventListener('keyup', function() {
+            let filter = this.value.toLowerCase();
+            let rows = document.querySelectorAll('.searchable-row');
+            
+            rows.forEach(row => {
+                let text = row.innerText.toLowerCase();
+                if(text.includes(filter)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+
+        function toggleCard(id) {
+            let content = document.getElementById(id);
+            let btn = document.getElementById(id + '-btn');
+            if(content.classList.contains('active')) {
+                content.classList.remove('active');
+                btn.innerText = '+';
+            } else {
+                content.classList.add('active');
+                btn.innerText = '-';
+            }
+        }
+    </script>
+</body>
+</html>

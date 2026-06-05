@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Arivoam — TNPSC & SSC Study Hub</title>
-  <link rel="stylesheet" href="arivoam-shared.css">
+  <link rel="stylesheet" href="styles/arivoam-shared.css">
   <style>
     :root {
       /* File-specific overrides / additions */
@@ -2178,7 +2178,7 @@
       }
     }
   </style>
-  <link rel="stylesheet" href="arivoam-lightmode.css">
+  <link rel="stylesheet" href="styles/arivoam-lightmode.css">
   <script>(function () { if (localStorage.getItem('arivoam-theme') == 'light') { document.documentElement.classList.add('light-mode'); } })()</script>
 </head>
 
@@ -2303,7 +2303,7 @@
 
   <script>
     /* ─────────────── DATA ─────────────── */
-    /* EXAMS is populated at runtime via fetch('exams.json') — see init() below */
+    /* EXAMS is populated at runtime via fetch('data/exams.json') — see init() below */
     let EXAMS = {};
 
     /* ─────────────── STATE ─────────────── */
@@ -2593,7 +2593,7 @@
 
       if (!TESTS_DATA) {
         try {
-          const res = await fetch('tests.json', { cache: 'no-store' });
+          const res = await fetch('data/tests.json', { cache: 'no-store' });
           if (!res.ok) throw new Error('HTTP ' + res.status);
           TESTS_DATA = await res.json();
         } catch (err) {
@@ -2729,7 +2729,7 @@
         if (cached && cacheDate === today) {
           EXAMS = JSON.parse(cached);
         } else {
-          const res = await fetch('exams.json', { cache: 'no-store' });
+          const res = await fetch('data/exams.json', { cache: 'no-store' });
           if (!res.ok) throw new Error('HTTP ' + res.status);
           EXAMS = await res.json();
           sessionStorage.setItem('arivoam_exams', JSON.stringify(EXAMS));
@@ -2752,7 +2752,7 @@
           `<div style="padding:40px 0;color:var(--red);font-family:'IBM Plex Mono',monospace;font-size:13px;">
              ⚠ Failed to load data: ${err.message}<br>
              <span style="color:var(--muted);font-size:11px;margin-top:8px;display:block;">
-               Make sure <strong>exams.json</strong> is in the same folder as this HTML file.
+               Make sure <strong>data/exams.json</strong> is accessible from the server root.
              </span>
            </div>`;
       }
@@ -3198,7 +3198,7 @@
       async function loadPrebuilt(setStatus) {
         try {
           if (setStatus) setStatus('📖 Loading knowledge base…');
-          const res = await fetch('rag-index.json', { cache: 'force-cache' });
+          const res = await fetch('data/rag-index.json', { cache: 'force-cache' });
           if (!res.ok) return false;
           const data = await res.json();
           if (!data.chunks || !data.idf) return false;
