@@ -1,0 +1,599 @@
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body class="en-mode">
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">10 June 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">10 ஜூன் 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <!-- Sidebar TOC -->
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Tech</span><span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Governance · Women's Safety</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">CM Joseph Vijay Launches "Singappen" Special Action Force</span>
+                        <span class="lang-ta">பெண்களின் பாதுகாப்புக்காக "சிங்கப்பெண்" சிறப்பு அதிரடிப்படையை தொடங்கி வைத்தார் முதல்வர்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Fulfilling a major election promise, Tamil Nadu Chief Minister Joseph Vijay officially launched the "Singappen Special Action Force" to curb crimes against women. The force will be directly monitored by the CM's office. The government has allocated ₹354 crores for this initiative, which includes the creation of 2,500 new police posts, 270 all-women field teams, 49 advanced drones for surveillance, and 420 modern patrol vehicles. The force will also utilize body-worn cameras to ensure transparency and rapid action.</p>
+                    <p class="lang-ta">தேர்தல் வாக்குறுதியை நிறைவேற்றும் வகையில், பெண்களுக்கு எதிரான குற்றங்களைத் தடுக்க "சிங்கப்பெண் சிறப்பு அதிரடிப்படை"யை தமிழக முதல்வர் ஜோசப் விஜய் அதிகாரப்பூர்வமாகத் தொடங்கி வைத்தார். இது முதல்வரின் நேரடிக் கண்காணிப்பின் கீழ் செயல்படும். இத்திட்டத்திற்காக ரூ.354 கோடி ஒதுக்கீடு செய்யப்பட்டுள்ளது. இதன் மூலம் 2,500 புதிய பணியிடங்கள், 270 முழு நேர மகளிர் களக் குழுக்கள், 49 ட்ரோன்கள் மற்றும் 420 நவீன ரோந்து வாகனங்கள் வாங்கப்பட உள்ளன. வெளிப்படைத்தன்மையை உறுதி செய்ய 270 உடல் கேமராக்களும் (Body-worn cameras) பயன்படுத்தப்பட உள்ளன.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Constitutional Hook:</strong> Article 15(3) of the Indian Constitution allows the State to make special provisions for women and children.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> இந்திய அரசியலமைப்பின் சரத்து 15(3), பெண்கள் மற்றும் குழந்தைகளுக்காகச் சிறப்பு ஏற்பாடுகளைச் செய்ய மாநில அரசுக்கு அதிகாரம் அளிக்கிறது.</span></li>
+                            <li><span class="lang-en">Actor-turned-politician Kamal Haasan openly welcomed this initiative by the TVK government.</span><span class="lang-ta">தவெக அரசின் இந்த முன்னெடுப்பை மக்கள் நீதி மய்யம் தலைவர் கமல் ஹாசன் வரவேற்றுள்ளார்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · State Assembly</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Disqualification Action Dropped Against 21 AIADMK MLAs</span>
+                        <span class="lang-ta">21 அதிமுக எம்எல்ஏ-க்கள் மீதான தகுதிநீக்க நடவடிக்கை ரத்து: சபாநாயகர் ஜே.சி.டி. பிரபாகர் அறிவிப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Tamil Nadu Legislative Assembly Speaker J.C.D. Prabhakar announced that the disqualification proceedings against 21 AIADMK MLAs have been dropped. These MLAs had initially voted against the TVK government during a recent confidence motion, violating their party whip. However, after AIADMK leader Edappadi K. Palaniswami submitted a letter stating the MLAs had expressed regret and were pardoned by the party, the Speaker invoked his powers under the 10th Schedule to cancel the action. Proceedings continue against 4 other MLAs who resigned their posts.</p>
+                    <p class="lang-ta">சமீபத்தில் நடைபெற்ற நம்பிக்கை வாக்கெடுப்பின் போது கட்சி கொறடாவின் உத்தரவை மீறி, ஆளும் தவெக அரசுக்கு ஆதரவாக வாக்களித்த 21 அதிமுக எம்எல்ஏ-க்கள் மீதான தகுதிநீக்க நடவடிக்கை கைவிடப்படுவதாக பேரவைத் தலைவர் ஜே.சி.டி. பிரபாகர் அறிவித்துள்ளார். இந்த 21 பேரும் தங்களது செயலுக்கு வருத்தம் தெரிவித்ததால் அவர்கள் மன்னிக்கப்பட்டதாக அதிமுக பொதுச்செயலாளர் எடப்பாடி பழனிசாமி கடிதம் அளித்ததை அடுத்து, 10-வது அட்டவணையின் கீழ் சபாநாயகர் இந்த முடிவை எடுத்துள்ளார். இருப்பினும் பதவியை ராஜினாமா செய்த 4 எம்எல்ஏ-க்கள் மீதான விசாரணை தொடரும் என அவர் தெரிவித்தார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-critical">CRITICAL</span><span class="lang-en"><strong>Anti-Defection Law:</strong> Added by the 52nd Amendment Act (1985), the 10th Schedule dictates that the Speaker holds the final authority on disqualification, though it is subject to judicial review (Kihoto Hollohan case, 1992).</span><span class="lang-ta"><strong>கட்சித் தாவல் தடைச் சட்டம்:</strong> 52-வது சட்டத் திருத்தம் (1985) மூலம் சேர்க்கப்பட்ட 10-வது அட்டவணைப்படி, தகுதிநீக்கம் குறித்த இறுதி முடிவை எடுக்கும் அதிகாரம் சபாநாயகருக்கு உண்டு (இது நீதிமன்ற ஆய்வுக்கு உட்பட்டது - கிஹோட்டோ ஹொல்லோஹான் வழக்கு, 1992).</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Judiciary · Administration</span>
+                        <span class="badge bg-trap">TRAP</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Madras HC Stays GO Granting Magistrate Powers to Police Officers</span>
+                        <span class="lang-ta">காவல்துறை அதிகாரிகளுக்கு நிர்வாக நடுவர் அதிகாரம் வழங்கும் அரசாணைக்கு உயர்நீதிமன்றம் இடைக்காலத் தடை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Madurai Bench of the Madras High Court has placed an interim stay on a controversial Government Order (GO) passed by the State Home Secretary, which granted "Executive Magistrate" (Nirvaga Naduvar) powers to Deputy Commissioners of Police. A PIL argued that vesting magisterial powers in the police violates constitutional principles and threatens individual liberty. The court has directed the Home Secretary to respond by July 14.</p>
+                    <p class="lang-ta">காவல்துறை துணை ஆணையர்களுக்கு "நிர்வாக நடுவர்" (Executive Magistrate) அதிகாரத்தை வழங்கி மாநில உள்துறை செயலாளர் பிறப்பித்த சர்ச்சைக்குரிய அரசாணைக்கு சென்னை உயர்நீதிமன்ற மதுரை கிளை இடைக்காலத் தடை விதித்துள்ளது. காவல்துறைக்கு நடுவர் அதிகாரம் வழங்குவது அரசியலமைப்புக் கொள்கைகளுக்கு எதிரானது என்றும், தனிமனித சுதந்திரத்தைப் பறிக்கும் என்றும் கூறி தாக்கல் செய்யப்பட்ட பொதுநல வழக்கில் இத்தீர்ப்பு வழங்கப்பட்டுள்ளது. இது தொடர்பாக ஜூலை 14-க்குள் பதிலளிக்க உள்துறை செயலாளருக்கு நீதிமன்றம் உத்தரவிட்டுள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>DPSP Hook (Article 50):</strong> The State shall take steps to separate the judiciary from the executive in the public services of the State. Vesting magistrate powers to the police directly conflicts with the spirit of this Directive Principle.</span><span class="lang-ta"><strong>அரசு வழிகாட்டு நெறிமுறைகள் (சரத்து 50):</strong> அரசின் பொதுச் சேவைகளில் நீதித்துறையை நிர்வாகத் துறையிலிருந்து பிரிக்க அரசு நடவடிக்கை எடுக்க வேண்டும். காவல்துறைக்கு நடுவர் அதிகாரம் வழங்குவது இக்கொள்கைக்கு முரணானதாகும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National / Central News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Rural Dev · Scheme Expansion</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">MGNREGA Upgraded: Centre Releases ₹95,692 Cr for New "125 Days Work Scheme"</span>
+                        <span class="lang-ta">100 நாள் வேலைத் திட்டம் இனி "125 நாள் வேலைத் திட்டம்": மாநிலங்களுக்கு ரூ.95,692 கோடி விடுவிப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Union Government has officially rolled out the "125 Days Work Scheme" (upgraded from the 100-day MGNREGA), releasing a massive interim fund of ₹95,692 crores to states and UTs. Tamil Nadu has been allocated ₹7,957.57 crores. The scheme's funding ratio is 60:40 (Centre:State) for normal states, and 90:10 for Himalayan and North-Eastern states. Union Rural Development Minister Shivraj Singh Chouhan instructed states to strictly ensure zero delays in wage payments.</p>
+                    <p class="lang-ta">மகாத்மா காந்தி தேசிய ஊரக வேலை உறுதித் திட்டமானது (100 நாள் வேலைத் திட்டம்) "125 நாள் வேலைத் திட்டமாக" அதிகாரப்பூர்வமாக மாற்றப்பட்டுள்ளது. இதற்காக மாநிலங்கள் மற்றும் யூனியன் பிரதேசங்களுக்கு ரூ.95,692 கோடியை மத்திய அரசு விடுவித்துள்ளது. இதில் தமிழ்நாட்டிற்கு ரூ.7,957.57 கோடி ஒதுக்கப்பட்டுள்ளது. இத்திட்டத்திற்கான நிதிப்பகிர்வு சாதாரண மாநிலங்களுக்கு 60:40 (மத்தியம்:மாநிலம்) ஆகவும், இமயமலை மற்றும் வடகிழக்கு மாநிலங்களுக்கு 90:10 ஆகவும் இருக்கும். தொழிலாளர்களின் ஊதியத்தில் எவ்வித தாமதமும் இருக்கக் கூடாது என ஊரக வளர்ச்சித் துறை அமைச்சர் சிவராஜ் சிங் சௌகான் அறிவுறுத்தியுள்ளார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Governance Hook:</strong> Originally passed in 2005 as NREGA, it ensures a legal right to work. The wage rate is linked to the Consumer Price Index for Agricultural Labourers (CPI-AL).</span><span class="lang-ta"><strong>ஆளுமை குறிப்பு:</strong> 2005-ல் கொண்டுவரப்பட்ட இச்சட்டம் வேலை செய்வதற்கான சட்டப்பூர்வ உரிமையை உறுதி செய்கிறது. இதற்கான ஊதிய விகிதம் விவசாயத் தொழிலாளர்களுக்கான நுகர்வோர் விலைக் குறியீட்டுடன் (CPI-AL) இணைக்கப்பட்டுள்ளது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · PM Record</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">PM Modi to Break Jawaharlal Nehru's Record for Continuous Days in Office</span>
+                        <span class="lang-ta">தொடர்ச்சியாக அதிக நாட்கள் பிரதமராக இருந்த நேருவின் சாதனையை முறியடிக்கிறார் மோடி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">On June 10, 2026, Prime Minister Narendra Modi will complete 12 years in office and break Jawaharlal Nehru's record of 4,399 continuous days as the elected Prime Minister of India. While Nehru served longer overall (if counting his interim govt period from 1947-1952), Modi will hold the record for continuous days post-1952 general elections. The NDA alliance met in Delhi to mark this achievement, where Bihar CM Nitish Kumar praised PM Modi's development initiatives.</p>
+                    <p class="lang-ta">ஜூன் 10, 2026 அன்று, பிரதமர் நரேந்திர மோடி பதவியேற்று 12 ஆண்டுகளை நிறைவு செய்வதன் மூலம், தேர்ந்தெடுக்கப்பட்ட பிரதமராகத் தொடர்ச்சியாக அதிக நாட்கள் (4,399 நாட்கள்) பதவி வகித்த ஜவஹர்லால் நேருவின் சாதனையை முறியடிக்கிறார். நேரு ஒட்டுமொத்தமாக அதிக காலம் பதவி வகித்திருந்தாலும் (1947-1952 இடைக்கால அரசைச் சேர்த்தால்), 1952 பொதுத் தேர்தலுக்குப் பிறகு தொடர்ச்சியாக அதிக நாட்கள் பதவி வகிக்கும் சாதனையை மோடி பெறுகிறார். இதனை முன்னிட்டு டெல்லியில் நடைபெற்ற தேசிய ஜனநாயகக் கூட்டணி கூட்டத்தில் மோடியின் சாதனைகளை பீகார் முதல்வர் நிதிஷ்குமார் பாராட்டினார்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Diplomacy · G7 Summit</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">PM Modi to Visit France, Italy (G7), and Switzerland</span>
+                        <span class="lang-ta">பிரான்ஸ், இத்தாலி (G7 மாநாடு) மற்றும் சுவிட்சர்லாந்து நாடுகளுக்குப் பிரதமர் மோடி பயணம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Prime Minister Narendra Modi will embark on a multi-nation European tour from June 13 to 19. He will first hold bilateral talks with French President Emmanuel Macron in Nice and launch "Bharat Innovates". He will then travel to Slovakia (the first-ever visit by an Indian PM since its independence in 1993). Later, he will participate in the G7 Summit taking place in Apulia, Italy, and conclude his tour by attending the 'VivaTech' summit in Paris.</p>
+                    <p class="lang-ta">ஜூன் 13 முதல் 19 வரை ஐரோப்பிய நாடுகளில் பிரதமர் மோடி சுற்றுப்பயணம் மேற்கொள்கிறார். முதலில் பிரான்ஸ் அதிபர் இம்மானுவேல் மேக்ரானுடன் இருதரப்புப் பேச்சுவார்த்தை நடத்தும் அவர், "பாரத் இன்னோவேட்ஸ்" திட்டத்தைத் தொடங்கி வைக்கிறார். பின்னர் சுலோவாக்கியாவுக்குப் பயணம் மேற்கொள்கிறார் (1993-ல் அந்நாடு சுதந்திரம் பெற்ற பிறகு இந்தியப் பிரதமர் செல்வது இதுவே முதல்முறை). அதனைத் தொடர்ந்து, இத்தாலியின் அபுலியாவில் நடைபெறும் G7 உச்சி மாநாட்டில் பங்கேற்கிறார். இறுதியாக பாரிஸில் நடைபெறும் 'விவாடெக்' (VivaTech) மாநாட்டிலும் அவர் பங்கேற்க உள்ளார்.</p>
+                </div>
+
+            </section>
+
+            <!-- INTERNATIONAL NEWS -->
+            <section id="international">
+                <h2>
+                    <span class="lang-en">International News</span>
+                    <span class="lang-ta">சர்வதேச செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Immigration · US Policy</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">US Federal Court Strikes Down Trump's $100,000 H-1B Visa Fee Hike</span>
+                        <span class="lang-ta">H-1B விசா கட்டணத்தை $100,000 ஆக உயர்த்திய டிரம்பின் உத்தரவை ரத்து செய்தது அமெரிக்க நீதிமன்றம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In a major relief to Indian IT professionals, a US Federal District Court in Massachusetts struck down President Donald Trump's executive order that had drastically increased the H-1B visa fee to $100,000 per year. The judge ruled that the fee hike amounted to an illegal tax, as it was imposed without the approval of the US Congress. The Trump administration has faced multiple legal setbacks regarding its aggressive trade tariffs and visa restrictions.</p>
+                    <p class="lang-ta">இந்திய தகவல் தொழில்நுட்ப (IT) வல்லுநர்களுக்கு பெரும் நிம்மதி அளிக்கும் வகையில், H-1B விசா கட்டணத்தை ஆண்டுக்கு 1 லட்சம் டாலராக உயர்த்தி அதிபர் டொனால்ட் டிரம்ப் பிறப்பித்த உத்தரவை மாசசூசெட்ஸ் மாகாண அமெரிக்க ஃபெடரல் நீதிமன்றம் ரத்து செய்துள்ளது. அமெரிக்க நாடாளுமன்றத்தின் ஒப்புதலின்றி இந்த கட்டண உயர்வு விதிக்கப்பட்டதால் இது சட்டவிரோதமான வரி விதிப்பு என நீதிபதி தீர்ப்பளித்துள்ளார். கடுமையான வர்த்தக வரிகள் மற்றும் விசா கட்டுப்பாடுகள் விவகாரத்தில் டிரம்ப் நிர்வாகம் தொடர்ந்து சட்டரீதியான பின்னடைவுகளைச் சந்தித்து வருகிறது.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Defence · Gallantry Award</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">President Murmu Awards Kirti Chakra to Mizoram's Capt. Lalrinawma Sailo</span>
+                        <span class="lang-ta">மிசோரமைச் சேர்ந்த கேப்டன் லால்ரினாவ்மா சைலோவுக்கு 'கீர்த்தி சக்ரா' விருது வழங்கி கௌரவித்த குடியரசுத் தலைவர்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">President Droupadi Murmu awarded the Kirti Chakra, India's second-highest peacetime gallantry award, to 27-year-old Captain Lalrinawma Sailo from Mizoram for his exceptional bravery in eliminating terrorists during an operation. He is only the second soldier from Mizoram to receive this prestigious award (the first being Subedar Zalnawmliana in 1968). The Mizoram CM also announced a cash reward of ₹10 lakhs for the braveheart.</p>
+                    <p class="lang-ta">தீவிரவாதிகளை வீழ்த்தியதில் சிறப்பான வீரம் மற்றும் துணிச்சலை வெளிப்படுத்தியதற்காக, மிசோரமைச் சேர்ந்த 27 வயது கேப்டன் லால்ரினாவ்மா சைலோவுக்கு, அமைதிக்காலத்தின் இரண்டாவது மிக உயரிய விருதான 'கீர்த்தி சக்ரா' விருதைக் குடியரசுத் தலைவர் திரௌபதி முர்மு வழங்கினார். மிசோரமில் இருந்து இவ்விருதைப் பெறும் இரண்டாவது வீரர் இவர் ஆவார் (இதற்கு முன் 1968-ல் சுபேதார் சால்நவ்ம்லியானா பெற்றார்). இந்த வீரருக்கு மிசோரம் முதல்வர் ரூ.10 லட்சம் ஊக்கத்தொகையும் அறிவித்துள்ளார்.</p>
+                </div>
+            </section>
+
+            <!-- ECONOMY & TECH -->
+            <section id="economy">
+                <h2>
+                    <span class="lang-en">Economy & Technology</span>
+                    <span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Health · Nutrition Standards</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Folic Acid Supplements to be Prescribed in Micrograms (mcg) Instead of Milligrams (mg)</span>
+                        <span class="lang-ta">ஃபோலிக் அமில மருந்துகளின் அளவீடு மில்லிகிராமுக்கு (mg) பதிலாக மைக்ரோகிராமாக (mcg) மாற்றம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">To prevent dosage confusion and ensure precise administration, the Union Health Ministry has mandated that Folic Acid (Vitamin B9) supplements must be formulated and sold in micrograms (mcg) rather than milligrams (mg). Folic acid is critical for producing red blood cells and preventing birth defects in pregnant women. Over-dosage due to confusing 'mg' metrics has led to neurological and cardiac issues in some patients. The new system will be strictly enforced within six months.</p>
+                    <p class="lang-ta">மருந்துகளின் அளவுகளில் ஏற்படும் குழப்பங்களைத் தவிர்த்து, சரியான அளவை உறுதி செய்வதற்காக, ஃபோலிக் அமில (Vitamin B9) மருந்துகள் இனி மில்லிகிராமுக்கு (mg) பதிலாக மைக்ரோகிராம் (mcg) அளவீட்டிலேயே விற்கப்பட வேண்டும் என மத்திய சுகாதாரத்துறை அமைச்சகம் உத்தரவிட்டுள்ளது. ரத்த சிவப்பணுக்களை உருவாக்கவும், கர்ப்பிணிகளுக்கு பிறவி குறைபாடுகளைத் தடுக்கவும் ஃபோலிக் அமிலம் மிகவும் அவசியம். 'mg' அளவீட்டு குழப்பத்தால் அதிக மருந்து உட்கொள்வது நரம்பியல் மற்றும் இதய பாதிப்புகளை ஏற்படுத்தியுள்ளதால், அடுத்த 6 மாதங்களுக்குள் இந்த புதிய நடைமுறை கட்டாயமாக்கப்பட உள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Science Hook:</strong> Vitamin B9 is known as Folic Acid. Its deficiency causes Megaloblastic Anemia. It is crucial during pregnancy to prevent neural tube defects.</span><span class="lang-ta"><strong>அறிவியல் குறிப்பு:</strong> வைட்டமின் பி9 ஃபோலிக் அமிலம் என அழைக்கப்படுகிறது. இதன் குறைபாட்டால் மெகலோபிளாஸ்டிக் அனீமியா (Megaloblastic Anemia) ஏற்படுகிறது. நரம்பு குழாய் குறைபாடுகளைத் தடுக்க கர்ப்ப காலத்தில் இது மிக அவசியம்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Corporate · AI Integration</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">TCS to Deploy 5 Lakh AI Agents; CEO Assures No Job Cuts</span>
+                        <span class="lang-ta">டிசிஎஸ் (TCS) நிறுவனத்தில் 5 லட்சம் A.I ஏஜென்ட்கள்: ஊழியர்களின் வேலை பறிபோகாது என சிஇஓ உறுதி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">During the 31st AGM of Tata Consultancy Services (TCS), CEO N. Chandrasekaran announced that the IT giant will soon deploy 5 lakh AI agents alongside its 5-lakh-strong human workforce. He assured employees that this technological shift will not lead to layoffs but will increase the demand for high-skilled talent. TCS reported a massive $250 million revenue from AI-related projects in the last quarter alone and expects 100% of its projects to have AI components by 2028-2030.</p>
+                    <p class="lang-ta">டாடா கன்சல்டன்சி சர்வீசஸ் (TCS) நிறுவனத்தின் 31-வது பொதுக்குழுக் கூட்டத்தில், அதன் சிஇஓ என். சந்திரசேகரன் பேசுகையில், நிறுவனத்தில் உள்ள 5 லட்சம் ஊழியர்களுக்கு இணையாக 5 லட்சம் செயற்கை நுண்ணறிவு (A.I) ஏஜென்ட்கள் விரைவில் களமிறக்கப்படுவார்கள் என அறிவித்தார். இதனால் எவருடைய வேலையும் பறிபோகாது என்றும், மாறாகத் திறமையானவர்களுக்கான தேவை அதிகரிக்கும் என்றும் அவர் உறுதியளித்தார். கடந்த காலாண்டில் மட்டும் AI சார்ந்த திட்டங்கள் மூலம் டிசிஎஸ் சுமார் 250 மில்லியன் டாலர் வருவாயை ஈட்டியுள்ளது; 2028-2030-க்குள் அதன் 100% திட்டங்களும் AI தொழில்நுட்பத்தைக் கொண்டிருக்கும் என எதிர்பார்க்கப்படுகிறது.</p>
+                </div>
+            </section>
+            
+            <!-- SPORTS -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports</span>
+                    <span class="lang-ta">விளையாட்டு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Football · FIFA 2026</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Official Ball for 2026 FIFA World Cup: "Triyonta" Equipped with Sensors</span>
+                        <span class="lang-ta">2026 உலகக் கோப்பை கால்பந்து போட்டிக்கான அதிகாரப்பூர்வ பந்து அறிமுகம்: "டிரையோன்டா" (Triyonta)</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The official football for the 2026 FIFA World Cup, named <strong>"Triyonta"</strong> (meaning 'Three Waves' in Spanish), has been unveiled. The name represents the three host nations: USA, Canada, and Mexico. The ball features green (Mexico), blue (USA), and red (Canada) colours, alongside motifs of an eagle, star, and maple leaf. It is uniquely constructed from 4 tetrahedrons, replacing the traditional 32-panel design. It is equipped with advanced internal sensors to relay live data to VAR (Video Assistant Referee), ensuring highly accurate off-side and handball decisions.</p>
+                    <p class="lang-ta">2026-ம் ஆண்டு நடைபெறவுள்ள உலகக் கோப்பை கால்பந்து போட்டிக்கான அதிகாரப்பூர்வ பந்து அறிமுகப்படுத்தப்பட்டுள்ளது. இதற்கு <strong>"டிரையோன்டா" (Triyonta)</strong> எனப் பெயரிடப்பட்டுள்ளது (ஸ்பானிய மொழியில் 'மூன்று அலைகள்' எனப் பொருள்). அமெரிக்கா, கனடா, மெக்சிகோ ஆகிய 3 நடத்தும் நாடுகளைக் குறிக்கும் வகையில் இது அமைந்துள்ளது. வழக்கமான 32 பேனல்களுக்குப் பதிலாக 4 டெட்ராஹெட்ரான் (Tetrahedron) வடிவில் இது உருவாக்கப்பட்டுள்ளது. இதில் பச்சைக் நிறம் (மெக்சிகோ), நீலம் (அமெரிக்கா), சிவப்பு (கனடா) ஆகியவற்றுடன் கழுகு, நட்சத்திரம், மேப்பிள் இலை சின்னங்களும் பொறிக்கப்பட்டுள்ளன. பந்தின் உள்ளே நுண்ணிய சென்சார் பொருத்தப்பட்டுள்ளதால், VAR தொழில்நுட்பத்தின் மூலம் மிகத் துல்லியமான முடிவுகளை நடுவர்கள் வழங்க இது உதவும்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Cricket · IND-A vs SL-A</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Ruturaj Gaikwad Hits Century as India-A Beats Sri Lanka-A</span>
+                        <span class="lang-ta">ருதுராஜ் கெய்க்வாட் சதம்: இலங்கை ஏ (A) அணியை வீழ்த்தியது இந்தியா ஏ (A) அணி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In the ongoing tri-series (also involving Afghanistan A) in Dambulla, the India 'A' team secured a narrow 8-run victory against Sri Lanka 'A'. Batting first, India posted 277/6, driven by a brilliant century from Ruturaj Gaikwad (101) and a solid half-century by captain Tilak Varma (60). In response, Sri Lanka 'A' fell short, finishing at 269 all out, despite a strong 74 from Sahan Arachchige.</p>
+                    <p class="lang-ta">தம்புள்ளாவில் நடைபெறும் முத்தரப்புத் தொடரில் (ஆப்கானிஸ்தான் 'ஏ' அணி உட்பட), இந்தியா 'ஏ' அணி இலங்கை 'ஏ' அணியை 8 ரன்கள் வித்தியாசத்தில் வீழ்த்தி வெற்றி பெற்றது. முதலில் பேட் செய்த இந்தியா, ருதுராஜ் கெய்க்வாட்டின் (101) அபார சதம் மற்றும் கேப்டன் திலக் வர்மாவின் (60) அரைசதத்தால் 277/6 ரன்கள் குவித்தது. அடுத்து ஆடிய இலங்கை 'ஏ' அணியில் சாஹன் ஆராச்சிகே (Sahan Arachchige) 74 ரன்கள் எடுத்த போதிலும், அந்த அணி 269 ரன்களுக்கு அனைத்து விக்கெட்டுகளையும் இழந்து தோல்வியடைந்தது.</p>
+                </div>
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Which Schedule of the Indian Constitution contains provisions related to the disqualification of Members of Parliament and State Legislatures on the ground of defection?</span>
+                        <span class="lang-ta">கேள்வி: கட்சித் தாவல் காரணமாக நாடாளுமன்ற மற்றும் சட்டமன்ற உறுப்பினர்களைத் தகுதிநீக்கம் செய்வது தொடர்பான விதிகள் இந்திய அரசியலமைப்பின் எந்த அட்டவணையில் இடம்பெற்றுள்ளன?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">10th Schedule</span><br><br>
+                                <strong>Context:</strong> Assembly Speaker JCD Prabhakar invoked the 10th Schedule to drop disqualification proceedings against 21 AIADMK MLAs who previously voted against the party whip.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">10-வது அட்டவணை</span><br><br>
+                                <strong>பின்னணி:</strong> கொறடாவின் உத்தரவை மீறிய 21 அதிமுக எம்எல்ஏ-க்கள் மீதான தகுதிநீக்க நடவடிக்கையை 10-வது அட்டவணையின் அதிகாரத்தைப் பயன்படுத்தி சபாநாயகர் ஜே.சி.டி. பிரபாகர் கைவிட்டார்.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Megaloblastic anemia and neural tube defects in newborns are primarily caused by the deficiency of which vitamin?</span>
+                        <span class="lang-ta">கேள்வி: மெகலோபிளாஸ்டிக் அனீமியா (Megaloblastic anemia) மற்றும் புதிதாகப் பிறந்த குழந்தைகளில் ஏற்படும் நரம்பு குழாய் குறைபாடுகள் எந்த வைட்டமின் குறைபாட்டால் ஏற்படுகின்றன?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Vitamin B9 (Folic Acid)</span><br><br>
+                                <strong>Context:</strong> The Union Health Ministry mandated that Folic Acid must be prescribed in micrograms (mcg) instead of milligrams (mg) to prevent dangerous overdosing.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">வைட்டமின் B9 (ஃபோலிக் அமிலம்)</span><br><br>
+                                <strong>பின்னணி:</strong> அதிக அளவிலான மருந்தால் ஏற்படும் ஆபத்துகளைத் தடுக்க ஃபோலிக் அமிலத்தை மில்லிகிராமுக்கு (mg) பதிலாக மைக்ரோகிராம் (mcg) அளவீட்டில் விற்க சுகாதாரத்துறை உத்தரவிட்டுள்ளது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">Singappen Force</span><span class="lang-ta">சிங்கப்பெண் படை</span></td>
+                                <td><span class="lang-en">State/Women Safety</span><span class="lang-ta">மாநிலம்/பாதுகாப்பு</span></td>
+                                <td><span class="lang-en">CM Vijay launches ₹354 Cr women's safety force.</span><span class="lang-ta">பெண்கள் பாதுகாப்புக்காக ரூ.354 கோடியில் சிறப்புப் படை.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">MGNREGA 125 Days</span><span class="lang-ta">125 நாள் வேலை திட்டம்</span></td>
+                                <td><span class="lang-en">National/Scheme</span><span class="lang-ta">தேசியம்/திட்டம்</span></td>
+                                <td><span class="lang-en">Upgraded to 125 days; TN allocated ₹7,957 Cr.</span><span class="lang-ta">125 நாளாக உயர்வு; தமிழகத்திற்கு ரூ.7,957 கோடி ஒதுக்கீடு.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">FIFA 2026 Ball</span><span class="lang-ta">2026 FIFA பந்து</span></td>
+                                <td><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></td>
+                                <td><span class="lang-en">Named "Triyonta", features 4 tetrahedrons & sensors.</span><span class="lang-ta">"டிரையோன்டா" பந்து அறிமுகம்; சென்சார் பொருத்தப்பட்டுள்ளது.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">Folic Acid (Vit B9)</span><span class="lang-ta">ஃபோலிக் அமிலம் (Vit B9)</span></td>
+                                <td><span class="lang-en">Health/Sci-Tech</span><span class="lang-ta">சுகாதாரம்/அறிவியல்</span></td>
+                                <td><span class="lang-en">To be prescribed in mcg instead of mg.</span><span class="lang-ta">mg அளவீட்டிற்குப் பதிலாக mcg அளவீடாக மாற்றம்.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">H-1B Visa Fee Stay</span><span class="lang-ta">H-1B விசா கட்டணம் ரத்து</span></td>
+                                <td><span class="lang-en">Intl/Immigration</span><span class="lang-ta">சர்வதேசம்/விசா</span></td>
+                                <td><span class="lang-en">US court blocks Trump's $100k fee hike.</span><span class="lang-ta">டிரம்ப் விதித்த $100,000 கட்டணத்தை ரத்து செய்தது US நீதிமன்றம்.</span></td>
+                                <td><span class="badge bg-tip">MED</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani Chennai 10-06-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி சென்னை 10-06-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source text detailed state, national, and international news for 10 June 2026. 
+State news highlighted the dropping of disqualification action against 21 AIADMK MLAs by Speaker JCD Prabhakar. CM Joseph Vijay launched the "Singappen" special action force for women's safety with an allocation of Rs 354 crores. TANGEDCO issued a warning regarding PF/ESI payments. Madras HC stayed a GO granting magisterial powers to police. Free TNPSC/RRB coaching classes announced in Chennai. Inbadurai appealed in SC against the HC order on the 2016 Radhapuram election. Anbumani Ramadoss met the CM to demand a caste census. Health Minister inspected Omandurar hospital.
+National news covered the Centre releasing Rs 95,692 crores for the new "125 Days Work Scheme" (formerly MGNREGA). PM Modi is set to break Nehru's record of 4,399 continuous days as PM. The NDA alliance meets today. Education Minister Dharmendra Pradhan assured the NEET re-exam will be flawless. CBI/ED summoned Kerala CM's daughter Veena. CID raided TMC offices in Bengal. 
+Internationally, a US Court struck down Trump's $100,000 H-1B visa fee hike. President Murmu awarded the Kirti Chakra to Mizoram's Capt Lalrinawma Sailo. A 7.8 magnitude earthquake hit the Philippines, killing 37. Israel struck Lebanon killing 8. PoK saw deadly protests over refugee seats. 
+Economy: TCS will deploy 5 Lakh AI agents. Folic acid will now be measured in mcg. NLC India's OFS was oversubscribed.
+Sports: The 2026 FIFA World Cup ball 'Triyonta' was launched. India A beat Sri Lanka A in cricket, fueled by Ruturaj's century. Jannik Sinner became World No.1 in Tennis.]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூல உரைகள் 10 ஜூன் 2026 க்கான செய்திகளைக் கொண்டிருந்தன.
+மாநில செய்திகளில், 21 அதிமுக எம்எல்ஏ-க்கள் மீதான தகுதிநீக்க நடவடிக்கையை சபாநாயகர் ரத்து செய்தார். பெண்களின் பாதுகாப்புக்காக "சிங்கப்பெண் சிறப்பு அதிரடிப்படை"யை ரூ.354 கோடியில் முதல்வர் ஜோசப் விஜய் தொடங்கி வைத்தார். PF/ESI கட்டணங்கள் குறித்து மின்வாரியம் எச்சரிக்கை. காவல்துறைக்கு நடுவர் அதிகாரம் வழங்கும் அரசாணைக்கு உயர்நீதிமன்றம் தடை. சென்னையில் இலவச போட்டித் தேர்வு பயிற்சி தொடக்கம். 2016 ராதாபுரம் தேர்தல் வழக்கில் இன்பதுரை உச்சநீதிமன்றத்தில் மேல்முறையீடு. சாதிவாரி கணக்கெடுப்பு கோரி முதல்வருடன் அன்புமணி சந்திப்பு.
+தேசிய அளவில், 125 நாள் வேலைத் திட்டத்திற்காக ரூ.95,692 கோடியை மத்திய அரசு விடுவித்தது. தொடர்ந்து 4,399 நாட்கள் பிரதமராக இருந்த நேருவின் சாதனையை மோடி முறியடிக்கிறார். தேசிய ஜனநாயக கூட்டணி கூட்டம் இன்று நடக்கிறது. நீட் மறுதேர்வு தவறின்றி நடக்கும் என அமைச்சர் தர்மேந்திர பிரதான் உறுதி. கேரள முதல்வர் மகள் வீணாவுக்கு ஈடி சம்மன். மேற்கு வங்கத்தில் திரிணமூல் அலுவலகங்களில் சிஐடி சோதனை.
+சர்வதேச அளவில், H-1B விசா கட்டணத்தை $100,000 ஆக உயர்த்திய டிரம்பின் உத்தரவை அமெரிக்க நீதிமன்றம் ரத்து செய்தது. மிசோரமை சேர்ந்த கேப்டன் லால்ரினாவ்மா சைலோவுக்கு குடியரசுத் தலைவர் 'கீர்த்தி சக்ரா' வழங்கினார். பிலிப்பைன்ஸில் 7.8 ரிக்டர் நிலநடுக்கத்தால் 37 பேர் பலி. லெபனானில் இஸ்ரேல் தாக்குதலால் 8 பேர் பலி. ஆக்கிரமிப்பு காஷ்மீரில் அகதிகள் ஒதுக்கீட்டை ரத்து செய்யக்கோரி போராட்டம்.
+பொருளாதாரம்: டிசிஎஸ் நிறுவனம் 5 லட்சம் AI ஏஜென்ட்களைப் பயன்படுத்த உள்ளது. ஃபோலிக் அமிலம் இனி mcg-ல் விற்கப்படும்.
+விளையாட்டு: 2026 FIFA உலகக் கோப்பைக்கான 'டிரையோன்டா' (Triyonta) பந்து அறிமுகம். ருதுராஜ் சதத்தால் இலங்கை ஏ அணியை இந்தியா ஏ வீழ்த்தியது. டென்னிஸில் சின்னர் நம்பர் 1 இடத்தைப் பிடித்தார்.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 10 June 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+    </script>
+</body>
+</html>
+ 

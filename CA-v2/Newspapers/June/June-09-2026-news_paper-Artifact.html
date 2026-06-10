@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body class="en-mode">
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">09 June 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">09 ஜூன் 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <!-- Sidebar TOC -->
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Tech</span><span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Governance · Women's Safety</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">CM Launches "Singappen" Special Action Force for Women's Safety</span>
+                        <span class="lang-ta">பெண்களின் பாதுகாப்புக்காக "சிங்கப்பெண்" சிறப்பு அதிரடிப்படையை தொடங்கி வைத்தார் முதல்வர்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Fulfilling a major assembly election promise, Tamil Nadu Chief Minister Joseph Vijay officially launched the "Singappen Special Action Force" (சிங்கப்பெண் சிறப்பு அதிரடிப்படை) to curb crimes against women. Initially comprising 30 police personnel including SPs and Inspectors, the force will be directly monitored by the Chief Minister's office. DGP Mukesh Kumar Agarwal and Home Secretary K. Manivasan were present during the launch event at Rajarathinam Stadium, where modern patrol vehicles were handed over to the unit.</p>
+                    <p class="lang-ta">சட்டப்பேரவைத் தேர்தல் வாக்குறுதியை நிறைவேற்றும் வகையில், பெண்களுக்கு எதிரான குற்றங்களைத் தடுக்க "சிங்கப்பெண் சிறப்பு அதிரடிப்படை"யை தமிழக முதல்வர் ஜோசப் விஜய் அதிகாரப்பூர்வமாகத் தொடங்கி வைத்தார். காவல் கண்காணிப்பாளர்கள், ஆய்வாளர்கள் உள்ளிட்ட 30 போலீசாருடன் முதற்கட்டமாக உருவாக்கப்பட்டுள்ள இந்த அதிரடிப்படை, முதல்வரின் நேரடிக் கண்காணிப்பின் கீழ் செயல்படும். எழும்பூர் ராஜரத்தினம் மைதானத்தில் நடைபெற்ற விழாவில், இக்குழுவினருக்கு நவீன ரோந்து வாகனங்கள் வழங்கப்பட்டன. இதில் டிஜிபி முகேஷ் குமார் அகர்வால், உள்துறை செயலாளர் கே. மணிவாசன் ஆகியோர் பங்கேற்றனர்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Constitutional Hook:</strong> Article 15(3) of the Indian Constitution allows the State to make special provisions for women and children. This forms the basis for specialized forces and schemes for women's safety.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> இந்திய அரசியலமைப்பின் சரத்து 15(3), பெண்கள் மற்றும் குழந்தைகளுக்காகச் சிறப்புச் சலுகைகளை வழங்க மாநில அரசுக்கு அதிகாரம் அளிக்கிறது. பெண்களின் பாதுகாப்புக்கான சிறப்புப் படைகள் மற்றும் திட்டங்களுக்கு இதுவே அடிப்படையாகும்.</span></li>
+                            <li><span class="lang-en"><strong>Administration:</strong> Law and Order is a State Subject (List II of Schedule VII).</span><span class="lang-ta"><strong>நிர்வாகம்:</strong> சட்டம் ஒழுங்கு என்பது மாநிலப் பட்டியல் (அட்டவணை VII, பட்டியல் II) சார்ந்த விவகாரமாகும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Health · Organ Donation</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Tamil Nadu Tops India in Organ Donation: 145 Donors in First 5 Months of 2026</span>
+                        <span class="lang-ta">உடல் உறுப்பு தானத்தில் தமிழ்நாடு முதலிடம்: 5 மாதங்களில் 145 பேர் தானம் அளித்து சாதனை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Tamil Nadu continues to lead the country in organ donations. According to Dr. N. Gopalakrishnan, Member Secretary of TRANSTAN (Transplant Authority of TN), 145 brain-dead individuals donated their organs in the first five months of 2026, granting a new lease of life to 800 people. A total of 799 organs were harvested (including 263 kidneys, 118 livers, 39 hearts, and 41 lungs). The state's initiative to accord state honors to organ donors (announced in September 2023) has boosted awareness significantly. To date, TN has recorded 2,466 donors and 14,395 organ transplants.</p>
+                    <p class="lang-ta">உடல் உறுப்பு தானத்தில் தமிழ்நாடு தொடர்ந்து இந்திய அளவில் முதலிடத்தில் உள்ளது. தமிழ்நாடு உறுப்பு மாற்று ஆணையத்தின் (TRANSTAN) உறுப்பினர் செயலர் டாக்டர் என். கோபாலகிருஷ்ணன் கூறுகையில், 2026-ம் ஆண்டின் முதல் ஐந்து மாதங்களில் 145 மூளைச்சாவு அடைந்தவர்கள் தங்கள் உறுப்புகளைத் தானம் செய்து 800 பேருக்கு மறுவாழ்வு அளித்துள்ளனர் என்றார். மொத்தம் 799 உறுப்புகள் (263 சிறுநீரகங்கள், 118 கல்லீரல்கள், 39 இதயங்கள், 41 நுரையீரல்கள்) பெறப்பட்டுள்ளன. உறுப்பு தானம் செய்வோருக்கு அரசு மரியாதை செலுத்தும் திட்டம் (செப்டம்பர் 2023-ல் அறிவிக்கப்பட்டது) விழிப்புணர்வை அதிகரித்துள்ளது. இதுவரை தமிழகத்தில் 2,466 கொடையாளர்கள் மூலம் 14,395 உறுப்புகள் தானமாகப் பெறப்பட்டுள்ளன.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Infrastructure · Metro Rail</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Chennai Metro Crosses 4.71 Crore Ridership in 5 Months</span>
+                        <span class="lang-ta">சென்னை மெட்ரோ ரயிலில் 5 மாதங்களில் 4.71 கோடி பேர் பயணம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Chennai Metro Rail Limited (CMRL) reported a massive ridership of 4.71 crore passengers between January and May 2026. March recorded the highest footfall with 1.01 crore passengers, and a single-day record of over 3 lakh passengers was achieved on March 13. A significant portion of commuters utilized the National Common Mobility Card (Singara Chennai Card) to travel.</p>
+                    <p class="lang-ta">சென்னை மெட்ரோ ரயில் நிறுவனம் (CMRL) வெளியிட்டுள்ள தரவுகளின்படி, 2026-ம் ஆண்டு ஜனவரி முதல் மே மாதம் வரை 4.71 கோடி பேர் மெட்ரோ ரயில்களில் பயணம் செய்துள்ளனர். மார்ச் மாதத்தில் அதிகபட்சமாக 1.01 கோடி பேர் பயணித்துள்ளனர்; மார்ச் 13-ம் தேதி ஒரே நாளில் 3 லட்சத்திற்கும் அதிகமானோர் பயணம் செய்து சாதனை படைத்துள்ளனர். பெரும்பாலான பயணிகள் தேசிய பொதுப் பயண அட்டை (சிங்காரச் சென்னை அட்டை) மூலம் பயணம் மேற்கொண்டுள்ளனர்.</p>
+                </div>
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National / Central News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · Education Scam</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">INDIA Bloc Demands Resignation of Education Minister Dharmendra Pradhan Over NEET Scams</span>
+                        <span class="lang-ta">டெல்லியில் இண்டி கூட்டணி கூட்டம்: நீட் விவகாரத்தில் கல்வி அமைச்சர் பதவி விலக வலியுறுத்தல்; திமுக புறக்கணிப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The opposition INDIA bloc convened a crucial meeting in New Delhi, chaired by Congress President Mallikarjun Kharge, to discuss nationwide protests concerning irregularities in the NEET and CUET exams conducted by the NTA. The bloc unanimously demanded the immediate resignation of Union Education Minister Dharmendra Pradhan. However, significant allies including the DMK and AAP boycotted the meeting. The meeting concluded with a resolution to raise public issues and convene every two months.</p>
+                    <p class="lang-ta">என்டிஏ (NTA) நடத்தும் நீட் (NEET) மற்றும் கியூட் (CUET) தேர்வுகளில் நடைபெற்ற முறைகேடுகளுக்கு எதிராக நாடு முழுவதும் நடைபெறும் போராட்டங்கள் குறித்து விவாதிக்க, காங்கிரஸ் தலைவர் மல்லிகார்ஜுன கார்கே தலைமையில் 'இண்டி' (INDIA) கூட்டணியின் ஆலோசனைக் கூட்டம் டெல்லியில் நடைபெற்றது. இக்கூட்டத்தில் மத்திய கல்வி அமைச்சர் தர்மேந்திர பிரதான் உடனடியாகப் பதவி விலக வேண்டும் என ஒருமனதாகத் தீர்மானம் நிறைவேற்றப்பட்டது. இருப்பினும், திமுக மற்றும் ஆம் ஆத்மி உள்ளிட்ட முக்கிய கூட்டணிக் கட்சிகள் இக்கூட்டத்தைப் புறக்கணித்தன. மக்கள் பிரச்சினைகளைத் தொடர்ந்து எழுப்புவது எனவும், இரண்டு மாதங்களுக்கு ஒருமுறை கூடி ஆலோசிப்பது எனவும் முடிவெடுக்கப்பட்டது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en">Note the political context: DMK boycotted the meeting because Congress formed an alliance with the ruling TVK party in Tamil Nadu recently.</span><span class="lang-ta">தமிழகத்தில் ஆளும் தவெக-வுடன் காங்கிரஸ் கூட்டணி அமைத்துள்ளதால் திமுக இக்கூட்டத்தைப் புறக்கணித்தது என்பதைப் பின்னணியாக நினைவில் கொள்ளவும்.</span></li>
+                            <li><span class="lang-en"><strong>Polity Hook:</strong> Education was shifted from the State List to the Concurrent List via the 42nd Constitutional Amendment Act, 1976.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> 1976-ம் ஆண்டின் 42-வது அரசியலமைப்புச் சட்டத் திருத்தத்தின் மூலம் கல்வித் துறை மாநிலப் பட்டியலிலிருந்து பொதுப் பட்டியலுக்கு மாற்றப்பட்டது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Economy · Financial Inclusion</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">PM Jan Dhan Yojana Surpasses 58 Crore Accounts; Deposits Hit ₹1.45 Lakh Crore</span>
+                        <span class="lang-ta">பிரதான் மந்திரி ஜன் தன் யோஜனா: வங்கிக் கணக்குகள் 58 கோடியைத் தாண்டியது; இருப்புத் தொகை ரூ.1.45 லட்சம் கோடி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Union Finance Minister Nirmala Sitharaman announced that the Pradhan Mantri Jan Dhan Yojana (PMJDY), launched on August 28, 2014, has achieved a historic milestone by surpassing 58 crore bank accounts. A staggering ₹1.45 lakh crore has been deposited in these accounts. The minister highlighted that 56% of account holders are women, and 67% of the accounts are in rural and semi-urban areas. The scheme has successfully brought 94% of adults into the formal banking network, enabling Direct Benefit Transfers (DBT) and minimizing corruption.</p>
+                    <p class="lang-ta">ஆகஸ்ட் 28, 2014 அன்று தொடங்கப்பட்ட பிரதான் மந்திரி ஜன் தன் யோஜனா (PMJDY) திட்டத்தின் கீழ் இதுவரை 58 கோடிக்கும் அதிகமான வங்கிக் கணக்குகள் தொடங்கப்பட்டு வரலாற்றுச் சாதனை படைக்கப்பட்டுள்ளதாக மத்திய நிதியமைச்சர் நிர்மலா சீதாராமன் தெரிவித்தார். இக்கணக்குகளில் மொத்தம் ரூ.1.45 லட்சம் கோடி இருப்பு வைக்கப்பட்டுள்ளது. கணக்கு வைத்துள்ளவர்களில் 56 சதவீதம் பேர் பெண்கள் என்றும், 67 சதவீத கணக்குகள் ஊரகம் மற்றும் சிறு நகரங்களில் உள்ளதாகவும் அவர் குறிப்பிட்டார். இத்திட்டம் 94 சதவீத பெரியவர்களை முறையான வங்கி கட்டமைப்புக்குள் கொண்டு வந்துள்ளதுடன், மானியங்களை நேரடியாகச் செலுத்தும் (DBT) திட்டத்தைச் செயல்படுத்தி ஊழலைக் குறைத்துள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Scheme Hook:</strong> PMJDY is a National Mission for Financial Inclusion to ensure access to financial services. It provides a zero-balance account, a free RuPay debit card, and an overdraft facility up to ₹10,000.</span><span class="lang-ta"><strong>திட்டக் குறிப்பு:</strong> நிதிச் சேவைகளை அனைவருக்கும் கிடைக்கச் செய்வதற்கான தேசிய அளவிலான திட்டமே PMJDY. இது குறைந்தபட்ச இருப்புத் தொகை தேவையில்லாத வங்கிக் கணக்கு, இலவச ரூபே டெபிட் கார்டு மற்றும் ரூ.10,000 வரையிலான மிகைப்பற்று (Overdraft) வசதியை வழங்குகிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Industrial Disaster · Andhra Pradesh</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">8 Workers Killed in Molten Iron Spill at Visakhapatnam Steel Plant</span>
+                        <span class="lang-ta">விசாகப்பட்டினம் இரும்பு ஆலையில் கொதிநிலை இரும்பு கொட்டி 8 தொழிலாளர்கள் பலி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">A tragic industrial accident occurred at a private iron and steel plant in Visakhapatnam, Andhra Pradesh, claiming the lives of 8 workers and critically injuring 6 others. The accident happened when a crane carrying molten iron at 1,600 degrees Celsius accidentally spilled onto the workers below. Prime Minister Narendra Modi expressed his condolences and announced a solatium of ₹2 lakh from the PMNRF for the families of the deceased and ₹50,000 for the injured. AP CM Chandrababu Naidu ordered an inquiry.</p>
+                    <p class="lang-ta">ஆந்திரப் பிரதேச மாநிலம் விசாகப்பட்டினத்தில் உள்ள தனியார் இரும்பு உருக்காலை ஒன்றில் ஏற்பட்ட கோர விபத்தில் 8 தொழிலாளர்கள் உயிரிழந்தனர்; 6 பேர் பலத்த காயமடைந்தனர். 1,600 டிகிரி செல்சியஸ் கொதிநிலையில் இருந்த திரவ இரும்பை கிரேன் மூலம் கொண்டு சென்றபோது, அது தவறுதலாகக் கீழே வேலை செய்து கொண்டிருந்த தொழிலாளர்கள் மீது கொட்டியதால் இவ்விபத்து நிகழ்ந்தது. பிரதமர் நரேந்திர மோடி ஆழ்ந்த இரங்கலைத் தெரிவித்ததுடன், உயிரிழந்தவர்களின் குடும்பத்தினருக்கு பிரதமரின் தேசிய நிவாரண நிதியிலிருந்து (PMNRF) தலா ரூ.2 லட்சமும், காயமடைந்தவர்களுக்கு ரூ.50,000-ம் வழங்கப்படும் என அறிவித்தார். ஆந்திர முதல்வர் சந்திரபாபு நாயுடு விசாரணைக்கு உத்தரவிட்டுள்ளார்.</p>
+                </div>
+            </section>
+
+            <!-- INTERNATIONAL NEWS -->
+            <section id="international">
+                <h2>
+                    <span class="lang-en">International News</span>
+                    <span class="lang-ta">சர்வதேச செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Natural Disaster · Pacific Ring of Fire</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Massive 7.8 Magnitude Earthquake Strikes Philippines; 35 Dead</span>
+                        <span class="lang-ta">பிலிப்பைன்ஸில் 7.8 ரிக்டர் அளவிலான சக்திவாய்ந்த நிலநடுக்கம்: 35 பேர் பலி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">A powerful earthquake measuring 7.8 on the Richter scale struck the southern Philippines (near Mindanao Island), resulting in at least 35 deaths and leaving over 200 injured. The quake hit at a depth of 33 km undersea, causing severe destruction in General Santos city, collapsing malls and residential buildings. A minor tsunami of 1 meter was also triggered, affecting coastal villages. The Philippines frequently experiences seismic activity due to its location on the Pacific "Ring of Fire".</p>
+                    <p class="lang-ta">தெற்கு பிலிப்பைன்ஸில் (மின்டானோ தீவு அருகே) ரிக்டர் அளவுகோலில் 7.8 ஆகப் பதிவான சக்திவாய்ந்த நிலநடுக்கம் ஏற்பட்டது. இதில் குறைந்தது 35 பேர் உயிரிழந்தனர் மற்றும் 200-க்கும் மேற்பட்டோர் காயமடைந்தனர். கடலுக்கு அடியில் 33 கி.மீ ஆழத்தில் ஏற்பட்ட இந்நிலநடுக்கத்தால், ஜெனரல் சான்டோஸ் நகரில் பெருமளவில் சேதம் ஏற்பட்டது; வணிக வளாகங்கள் மற்றும் குடியிருப்புகள் இடிந்து விழுந்தன. 1 மீட்டர் உயரத்திற்குச் சுனாமி அலைகள் எழுந்ததால் கடலோரக் கிராமங்களும் பாதிக்கப்பட்டன. பசிபிக் பெருங்கடலின் "நெருப்பு வளையம்" (Ring of Fire) பகுதியில் அமைந்துள்ளதால், பிலிப்பைன்ஸில் அடிக்கடி நிலநடுக்கங்கள் ஏற்படுவது வழக்கம்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Geography Hook:</strong> The "Ring of Fire" (Circum-Pacific Belt) is a path along the Pacific Ocean characterized by active volcanoes and frequent earthquakes, holding roughly 90% of the world's earthquakes.</span><span class="lang-ta"><strong>புவியியல் குறிப்பு:</strong> "நெருப்பு வளையம்" (Ring of Fire) என்பது பசிபிக் பெருங்கடலைச் சுற்றியுள்ள, அடிக்கடி நிலநடுக்கங்கள் மற்றும் எரிமலை வெடிப்புகள் நிகழும் ஒரு பகுதியாகும். உலக நிலநடுக்கங்களில் 90% இங்குதான் நிகழ்கின்றன.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Diplomacy · Middle East</span>
+                        <span class="badge bg-trap">TRAP</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Centre Issues Travel Advisory Urging Indians to Avoid Travel to Iran Amid Israel Conflict</span>
+                        <span class="lang-ta">இஸ்ரேல்-ஈரான் மோதல் எதிரொலி: ஈரானுக்குப் பயணம் செய்வதைத் தவிர்க்குமாறு இந்தியர்களுக்கு மத்திய அரசு அறிவுறுத்தல்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Following the resumption of missile attacks between Iran and Israel (breaking a temporary ceasefire since April 8), the Indian Government has issued a strict travel advisory. Indians have been urged to avoid all non-essential travel to Iran. Additionally, Indians currently residing in Iran have been asked to utilize available transport to leave the country. A similar advisory applies to Indians in Israel, advising them to stay in safe zones and follow local alerts, as the 100-day conflict intensifies.</p>
+                    <p class="lang-ta">ஏப்ரல் 8 முதல் அமலிலிருந்த தற்காலிகப் போர்நிறுத்தத்தை மீறி ஈரான் மற்றும் இஸ்ரேல் இடையே மீண்டும் ஏவுகணைத் தாக்குதல்கள் தொடங்கியுள்ளதையடுத்து, இந்திய அரசு கடுமையான பயண எச்சரிக்கையை விடுத்துள்ளது. அவசியமில்லாமல் ஈரானுக்குப் பயணம் செய்வதைத் தவிர்க்குமாறு இந்தியர்கள் அறிவுறுத்தப்பட்டுள்ளனர். மேலும், ஈரானில் வசிக்கும் இந்தியர்கள் அங்கிருந்து வெளியேறுமாறும், இஸ்ரேலில் வசிப்பவர்கள் பாதுகாப்பான இடங்களில் இருக்குமாறும் கேட்டுக் கொள்ளப்பட்டுள்ளனர். இரு நாடுகளுக்கு இடையேயான இப்போராட்டம் 100 நாட்களை எட்டியுள்ளது.</p>
+                </div>
+            </section>
+
+            <!-- ECONOMY & FINANCE -->
+            <section id="economy">
+                <h2>
+                    <span class="lang-en">Economy & Finance</span>
+                    <span class="lang-ta">பொருளாதாரம் & நிதி</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Macroeconomics · Trade</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">India Records Current Account Surplus of $7.1 Billion in Q4 FY26</span>
+                        <span class="lang-ta">2025-26 நிதியாண்டின் 4-ம் காலாண்டில் இந்தியாவின் நடப்புக் கணக்கு உபரி 710 கோடி டாலராகப் பதிவு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">India recorded a Current Account Surplus of $7.1 billion in the fourth quarter (Jan-March) of the financial year 2025-26, which translates to 0.7% of the GDP. This is a significant drop compared to the $13.7 billion (1.4% of GDP) surplus in the corresponding quarter of the previous year. The RBI noted that while service exports (software and business services) saw strong growth, the merchandise trade deficit widened to $83.4 billion. Remittances from Indians working abroad stood at $43.5 billion. For the full FY26, the Current Account Deficit (CAD) was $25.2 billion.</p>
+                    <p class="lang-ta">2025-26 நிதியாண்டின் 4-ம் காலாண்டில் (ஜனவரி-மார்ச்) இந்தியாவின் நடப்புக் கணக்கு உபரி (Current Account Surplus) 710 கோடி டாலராக (மொத்த உள்நாட்டு உற்பத்தியில் 0.7%) பதிவாகியுள்ளது. முந்தைய ஆண்டின் இதே காலாண்டில் இது 1,370 கோடி டாலராக (GDP-யில் 1.4%) இருந்த நிலையில், தற்போது குறைந்துள்ளது. மென்பொருள் மற்றும் வணிகச் சேவைகள் ஏற்றுமதி வலுவான வளர்ச்சியைப் பதிவு செய்தாலும், சரக்கு வர்த்தகப் பற்றாக்குறை 83.4 பில்லியன் டாலராக விரிவடைந்துள்ளது என ரிசர்வ் வங்கி தெரிவித்துள்ளது. வெளிநாடு வாழ் இந்தியர்கள் அனுப்பிய பணம் (Remittances) 43.5 பில்லியன் டாலராக உள்ளது. 2025-26 முழு நிதியாண்டிற்கான நடப்புக் கணக்குப் பற்றாக்குறை (CAD) 25.2 பில்லியன் டாலராக உள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en"><strong>Economy Hook:</strong> A Current Account Deficit (CAD) occurs when the value of a country's imports of goods and services is greater than its exports. A Surplus occurs when exports exceed imports. India generally runs a CAD due to high crude oil imports, making a quarterly surplus notable.</span><span class="lang-ta"><strong>பொருளாதாரக் குறிப்பு:</strong> ஒரு நாட்டின் பொருட்கள் மற்றும் சேவைகளின் இறக்குமதி மதிப்பு அதன் ஏற்றுமதி மதிப்பை விட அதிகமாக இருக்கும் போது நடப்புக் கணக்குப் பற்றாக்குறை (CAD) ஏற்படுகிறது. கச்சா எண்ணெய் இறக்குமதி அதிகமாக இருப்பதால் இந்தியா பொதுவாகப் பற்றாக்குறையையே சந்திக்கிறது; எனவே காலாண்டு உபரி என்பது குறிப்பிடத்தக்கதாகும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+            </section>
+            
+            <!-- SPORTS -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports</span>
+                    <span class="lang-ta">விளையாட்டு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Cricket · Test Match</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">India Crushes Afghanistan by an Innings and 300 Runs in Historic Test</span>
+                        <span class="lang-ta">ஆப்கானிஸ்தானுக்கு எதிரான டெஸ்ட் போட்டியில் இன்னிங்ஸ் மற்றும் 300 ரன்கள் வித்தியாசத்தில் இந்தியா அபார வெற்றி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">India defeated Afghanistan by an innings and 300 runs on the third day of their Test match held in Mulanpur, Punjab. After declaring at 564/8 (with centuries from Shubman Gill and KL Rahul), India bowled out Afghanistan for 152 and 112 in their two innings. Debutant spinner Manav Suthar took 6 wickets in the first innings and 3 in the second, earning the 'Player of the Match' award. This 300-run margin is India's highest victory margin by an innings in Test history.</p>
+                    <p class="lang-ta">பஞ்சாப் மாநிலம் முலான்பூரில் நடைபெற்ற ஆப்கானிஸ்தானுக்கு எதிரான டெஸ்ட் போட்டியின் 3-வது நாளிலேயே இந்தியா இன்னிங்ஸ் மற்றும் 300 ரன்கள் வித்தியாசத்தில் அபார வெற்றி பெற்றது. ஷுப்மன் கில் மற்றும் கே.எல். ராகுல் ஆகியோரின் சதத்தால் இந்தியா 564/8 ரன்கள் குவித்து டிக்ளேர் செய்த நிலையில், ஆப்கானிஸ்தான் 152 மற்றும் 112 ரன்களுக்குச் சுருண்டது. அறிமுக ஸ்பின்னர் மானவ் சுதர் முதல் இன்னிங்ஸில் 6 விக்கெட்டுகளையும், இரண்டாவது இன்னிங்ஸில் 3 விக்கெட்டுகளையும் வீழ்த்தி 'ஆட்ட நாயகன்' விருதை வென்றார். டெஸ்ட் கிரிக்கெட் வரலாற்றில் இன்னிங்ஸ் முறையில் இந்தியா பெறும் மிகப்பெரிய வெற்றி இதுவாகும்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Chess · Reward</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">CM Rewards Grandmaster Praggnanandhaa with ₹50 Lakhs for Norway Chess Victory</span>
+                        <span class="lang-ta">நார்வே செஸ்ஸில் சாம்பியன் பட்டம் வென்ற பிரக்ஞானந்தாவுக்கு ரூ.50 லட்சம் ஊக்கத்தொகை வழங்கினார் முதல்வர்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Chief Minister Joseph Vijay presented a cheque of ₹50 lakh to Tamil Nadu Grandmaster R. Praggnanandhaa for winning the prestigious Norway Chess tournament in Oslo. He became the first Indian to clinch this title. The CM also played a game of chess with the champion at the Secretariat. Under the state's scheme for elite sportspersons, Praggnanandhaa receives an annual stipend of ₹30 lakh.</p>
+                    <p class="lang-ta">நார்வேயின் ஒஸ்லோவில் நடைபெற்ற புகழ்பெற்ற நார்வே செஸ் தொடரில் சாம்பியன் பட்டம் வென்ற தமிழக கிராண்ட்மாஸ்டர் ஆர். பிரக்ஞானந்தாவுக்கு (இப்பட்டத்தை வென்ற முதல் இந்தியர்) முதல்வர் ஜோசப் விஜய் ரூ.50 லட்சத்துக்கான காசோலையை ஊக்கத்தொகையாக வழங்கினார். மேலும் தலைமைச் செயலகத்தில் முதல்வருடன் பிரக்ஞானந்தா செஸ் விளையாடினார். தலைசிறந்த விளையாட்டு வீரர்களுக்கான மாநில அரசின் சிறப்புத் திட்டத்தின் கீழ் பிரக்ஞானந்தாவுக்கு ஆண்டுதோறும் ரூ.30 லட்சம் உதவித்தொகை வழங்கப்படுகிறது.</p>
+                </div>
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Which Constitutional Article empowers the State to make special provisions for the welfare and protection of women and children, enabling initiatives like the "Singappen" special force?</span>
+                        <span class="lang-ta">கேள்வி: "சிங்கப்பெண்" அதிரடிப்படை போன்ற முன்னெடுப்புகளைச் செயல்படுத்துவதற்கு ஏதுவாக, பெண்கள் மற்றும் குழந்தைகளின் நலன் மற்றும் பாதுகாப்பிற்கான சிறப்பு ஏற்பாடுகளைச் செய்ய மாநில அரசுக்கு அதிகாரமளிக்கும் அரசியலமைப்புச் சரத்து எது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Article 15(3)</span><br><br>
+                                <strong>Context:</strong> CM Joseph Vijay launched the 30-member "Singappen" special action force to curb crimes against women, directly supervised by the CM's office.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">சரத்து 15(3)</span><br><br>
+                                <strong>பின்னணி:</strong> பெண்களுக்கு எதிரான குற்றங்களைத் தடுக்க, முதல்வரின் நேரடிக் கண்காணிப்பின் கீழ் 30 பேர் கொண்ட "சிங்கப்பெண்" சிறப்பு அதிரடிப்படையை முதல்வர் ஜோசப் விஜய் தொடங்கி வைத்தார்.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Which scheme was launched by the Union Government as a National Mission for Financial Inclusion to ensure access to banking services for every household?</span>
+                        <span class="lang-ta">கேள்வி: அனைத்து வீடுகளுக்கும் வங்கிச் சேவைகள் கிடைப்பதை உறுதி செய்வதற்காக, ஒருங்கிணைந்த நிதிச் சேவைகளுக்கான தேசிய இயக்கமாக மத்திய அரசால் தொடங்கப்பட்ட திட்டம் எது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Pradhan Mantri Jan Dhan Yojana (PMJDY)</span><br><br>
+                                <strong>Context:</strong> FM Nirmala Sitharaman announced that the scheme, launched in August 2014, has crossed 58 crore accounts with deposits worth ₹1.45 lakh crore.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">பிரதான் மந்திரி ஜன் தன் யோஜனா (PMJDY)</span><br><br>
+                                <strong>பின்னணி:</strong> ஆகஸ்ட் 2014-ல் தொடங்கப்பட்ட இத்திட்டம் 58 கோடி வங்கிக் கணக்குகளைத் தாண்டி ரூ.1.45 லட்சம் கோடி இருப்பைப் பெற்றுள்ளதாக நிதியமைச்சர் நிர்மலா சீதாராமன் தெரிவித்தார்.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">Singappen Force</span><span class="lang-ta">சிங்கப்பெண் அதிரடிப்படை</span></td>
+                                <td><span class="lang-en">State/Governance</span><span class="lang-ta">மாநிலம்/ஆளுமை</span></td>
+                                <td><span class="lang-en">Launched by CM Vijay for women's safety.</span><span class="lang-ta">பெண்கள் பாதுகாப்பிற்காக முதல்வர் விஜய்யால் தொடக்கம்.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">Organ Donation</span><span class="lang-ta">உறுப்பு தானம்</span></td>
+                                <td><span class="lang-en">State/Health</span><span class="lang-ta">மாநிலம்/சுகாதாரம்</span></td>
+                                <td><span class="lang-en">TN tops with 145 donors in 5 months.</span><span class="lang-ta">5 மாதங்களில் 145 தானங்களுடன் தமிழகம் முதலிடம்.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">Jan Dhan Accounts</span><span class="lang-ta">ஜன் தன் கணக்குகள்</span></td>
+                                <td><span class="lang-en">National/Economy</span><span class="lang-ta">தேசியம்/பொருளாதாரம்</span></td>
+                                <td><span class="lang-en">Crosses 58 Crore mark; ₹1.45 L Crore deposits.</span><span class="lang-ta">58 கோடியைத் தாண்டியது; ரூ.1.45 லட்சம் கோடி இருப்பு.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">Philippines Quake</span><span class="lang-ta">பிலிப்பைன்ஸ் நிலநடுக்கம்</span></td>
+                                <td><span class="lang-en">Intl/Disaster</span><span class="lang-ta">சர்வதேசம்/பேரழிவு</span></td>
+                                <td><span class="lang-en">7.8 magnitude hits Mindanao; 35 dead.</span><span class="lang-ta">மின்டானோவில் 7.8 ரிக்டர் நிலநடுக்கம்; 35 பேர் பலி.</span></td>
+                                <td><span class="badge bg-tip">MED</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">Current Account Surplus</span><span class="lang-ta">நடப்புக் கணக்கு உபரி</span></td>
+                                <td><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></td>
+                                <td><span class="lang-en">India logs $7.1 Billion surplus in Q4 FY26.</span><span class="lang-ta">4-ம் காலாண்டில் 710 கோடி டாலர் உபரி பதிவு.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani Chennai 09-06-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி சென்னை 09-06-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source text detailed state, national, and international news for 09 June 2026. 
+State news highlighted the launch of the "Singappen Special Action Force" for women's safety by CM Joseph Vijay at Rajarathinam Stadium. TN tops organ donation with 145 donors in 5 months. Chennai Metro saw 4.71 crore rides in 5 months. TANGEDCO will fill 15,000 vacancies. CM Vijay ordered 24/7 water supply in corporations. YouTuber Maridhas was arrested for a derogatory post about Minister Keerthana. Annamalai warned against using his name for private setups. 
+National news reported the INDIA bloc meeting in Delhi demanding the Education Minister's resignation over NEET/CUET, which DMK and AAP boycotted. Visakhapatnam steel plant accident claimed 8 lives due to a molten iron spill. Finance Minister announced PMJDY crossed 58 crore accounts. SC issued notice to NTA over NEET re-exam. 20 TMC MPs gave support letters to NDA in Bengal, causing a political stir.
+Internationally, a 7.8 magnitude earthquake in the Philippines killed 35. India issued a travel advisory against Iran amidst the Iran-Israel missile conflict. Xi Jinping visited North Korea promising unwavering support. 
+Economy: India's Q4 FY26 Current Account showed a $7.1 Bn surplus. Sensex dropped 719 points. TCS grabbed a Canada Life IT contract. Adani Ports secured an Argentina marine contract. 
+Sports: CM Vijay rewarded Pragg with Rs 50 lakh for winning Norway Chess. India beat Afghanistan by an innings and 300 runs in a Test match (Manav Suthar taking 9 wkts). India won 17 medals in U15/U20 Asian Wrestling.]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூல உரைகள் 09 ஜூன் 2026 க்கான செய்திகளைக் கொண்டிருந்தன.
+மாநில செய்திகளில், முதல்வர் ஜோசப் விஜய் பெண்களின் பாதுகாப்புக்காக "சிங்கப்பெண் சிறப்பு அதிரடிப்படை"யை தொடங்கி வைத்தார். உறுப்பு தானத்தில் 5 மாதங்களில் 145 கொடையாளர்களுடன் தமிழகம் முதலிடம். சென்னை மெட்ரோவில் 5 மாதங்களில் 4.71 கோடி பேர் பயணம். மின்வாரியத்தில் 15,000 பணியிடங்கள் நிரப்பப்படும். மாநகராட்சிகளில் 24 மணி நேரமும் குடிநீர் வழங்க முதல்வர் விஜய் உத்தரவு. அமைச்சர் கீர்த்தனா குறித்து அவதூறு பரப்பிய யூடியூபர் மாரிதாஸ் கைது. தனது பெயரைப் பயன்படுத்த அண்ணாமலை எச்சரிக்கை.
+தேசிய அளவில், டெல்லியில் நீட் முறைகேட்டைக் கண்டித்து கல்வி அமைச்சர் பதவி விலக கோரிய இண்டி கூட்டணி கூட்டத்தை திமுக, ஆம் ஆத்மி புறக்கணித்தது. விசாகப்பட்டினம் இரும்பு ஆலையில் கொதிநிலை இரும்பு கொட்டி 8 பேர் பலி. ஜன் தன் கணக்குகள் 58 கோடியைத் தாண்டியதாக நிதியமைச்சர் அறிவிப்பு. மேற்கு வங்கத்தில் 20 திரிணமூல் எம்பிக்கள் என்டிஏ-வுக்கு ஆதரவு.
+சர்வதேச அளவில், பிலிப்பைன்ஸில் 7.8 ரிக்டர் நிலநடுக்கத்தால் 35 பேர் பலி. இஸ்ரேல்-ஈரான் மோதலால் ஈரானுக்குச் செல்ல வேண்டாம் என இந்தியா எச்சரிக்கை. வடகொரியாவுக்கு சென்ற ஜி ஜின்பிங் தொடர்ந்து ஆதரவளிக்க உறுதி.
+பொருளாதாரம்: 4-ம் காலாண்டில் இந்தியாவின் நடப்புக் கணக்கு 7.1 பில்லியன் டாலர் உபரியானது. சென்செக்ஸ் 719 புள்ளிகள் சரிவு. கனடா லைஃப் ஒப்பந்தத்தை டிசிஎஸ் வென்றது. அர்ஜென்டினாவில் அதானி போர்ட்ஸ் ஒப்பந்தம்.
+விளையாட்டு: நார்வே செஸ் வென்ற பிரக்ஞானந்தாவுக்கு ரூ.50 லட்சம் வழங்கி முதல்வர் விஜய் கௌரவிப்பு. ஆப்கானிஸ்தானுக்கு எதிரான டெஸ்டில் இந்தியா இன்னிங்ஸ் மற்றும் 300 ரன்கள் வித்தியாசத்தில் வெற்றி (மானவ் சுதர் 9 விக்கெட்). ஆசிய மல்யுத்தத்தில் இந்தியாவுக்கு 17 பதக்கங்கள்.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 09 June 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body class="en-mode">
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">06 June 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">06 ஜூன் 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <!-- Sidebar TOC -->
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Finance</span><span class="lang-ta">பொருளாதாரம் & நிதி</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Environment · Bio-Diversity</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Nilgiri Tahr Population Increases by 4.68%; Synchronized Census Results Released</span>
+                        <span class="lang-ta">நீலகிரி வரையாடுகளின் எண்ணிக்கை 4.68% உயர்வு: ஒருங்கிணைந்த கணக்கெடுப்பு முடிவுகள் வெளியீடு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The population of the Nilgiri Tahr, Tamil Nadu's state animal, has increased by 4.68% in the current year, reaching an estimated 1,364 individuals. The data was released by the Tamil Nadu Forest Department on World Environment Day at the Guindy Children's Park, Chennai. The synchronized census, conducted across the Western Ghats, revealed that 44.87% of the tahrs live in the Anamalai region and 29.25% in the Nilgiris. Additionally, the synchronized bird census recorded 393 species with a direct count of over 6.01 lakh birds.</p>
+                    <p class="lang-ta">தமிழகத்தின் மாநில விலங்கான நீலகிரி வரையாடுகளின் எண்ணிக்கை நடப்பாண்டில் 4.68 சதவீதம் உயர்ந்து 1,364 ஆக மதிப்பிடப்பட்டுள்ளதாக தமிழக வனத்துறை தெரிவித்துள்ளது. உலகச் சுற்றுச்சூழல் தினத்தை முன்னிட்டு சென்னை கிண்டி சிறுவர் பூங்காவில் நடைபெற்ற விழாவில் இதற்கான தரவுகள் வெளியிடப்பட்டன. மேற்குத் தொடர்ச்சி மலைப்பகுதிகளில் மேற்கொள்ளப்பட்ட ஒருங்கிணைந்த கணக்கெடுப்பின்படி, வரையாடுகளில் 44.87 சதவீதம் ஆனைமலைப் பகுதிகளிலும், 29.25 சதவீதம் நீலகிரிப் பகுதிகளிலும் வாழ்கின்றன. மேலும், பறவைகள் கணக்கெடுப்பில் 393 இனங்கள் பதிவு செய்யப்பட்டு, 6.01 லட்சத்துக்கும் மேற்பட்ட பறவைகள் நேரடியாகக் கணக்கிடப்பட்டுள்ளன.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Geography/Environment Hook:</strong> The Nilgiri Tahr (Nilgiritragus hylocrius) is the state animal of Tamil Nadu. It is listed as <strong>Endangered</strong> on the IUCN Red List and protected under Schedule I of the Wildlife (Protection) Act, 1972.</span><span class="lang-ta"><strong>சுற்றுச்சூழல் குறிப்பு:</strong> நீலகிரி வரையாடு (Nilgiritragus hylocrius) தமிழ்நாட்டின் மாநில விலங்காகும். இது ஐயுசிஎன் (IUCN) சிவப்புப் பட்டியலில் <strong>அழிந்து வரும் இனம் (Endangered)</strong> என வகைப்படுத்தப்பட்டுள்ளதுடன், 1972 வனவிலங்கு பாதுகாப்புச் சட்டத்தின் அட்டவணை I-ன் கீழ் பாதுகாக்கப்படுகிறது.</span></li>
+                            <li><span class="lang-en"><strong>Scheme Note:</strong> Project Nilgiri Tahr was launched by the TN Government in 2022 to conserve the species and its habitat.</span><span class="lang-ta"><strong>திட்டக் குறிப்பு:</strong> வரையாடு மற்றும் அதன் வாழ்விடத்தைப் பாதுகாப்பதற்காக 2022-ம் ஆண்டில் தமிழக அரசால் 'நீலகிரி வரையாடு திட்டம்' (Project Nilgiri Tahr) தொடங்கப்பட்டது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Governance · Policy</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">"Vetri Thamizhagam": TN Govt Targets Implementation of 436 Schemes</span>
+                        <span class="lang-ta">"வெற்றித் தமிழகம்": 436 திட்டங்களைச் செயல்படுத்த இலக்கு நிர்ணயம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">During the first cabinet meeting chaired by Chief Minister Joseph Vijay on Friday, a target was set to implement 436 schemes mentioned in the TVK election manifesto under the umbrella title "Vetri Thamizhagam" (Victorious Tamil Nadu). The schemes are structurally categorized based on the Thirukkural divisions: Aram (187 schemes), Porul (169 schemes), and Inbam (80 schemes). Key focuses include youth and women empowerment, farmer and fishermen welfare, corruption-free governance, and a drug-free Tamil Nadu.</p>
+                    <p class="lang-ta">வெள்ளிக்கிழமை நடைபெற்ற முதல்வர் ஜோசப் விஜய் தலைமையிலான முதல் அமைச்சரவைக் கூட்டத்தில், தவெக தேர்தல் அறிக்கையில் கூறப்பட்டுள்ள 436 திட்டங்களை "வெற்றித் தமிழகம்" என்ற தலைப்பில் செயல்படுத்த இலக்கு நிர்ணயிக்கப்பட்டது. இத்திட்டங்கள் திருக்குறள் பிரிவுகளின் அடிப்படையில் அறம் (187 திட்டங்கள்), பொருள் (169 திட்டங்கள்), இன்பம் (80 திட்டங்கள்) என வகைப்படுத்தப்பட்டுள்ளன. இளைஞர் மற்றும் மகளிர் மேம்பாடு, விவசாயிகள் மற்றும் மீனவர்கள் நலம், ஊழலற்ற நல்லாட்சி, போதையில்லா தமிழகம் ஆகியவை இதன் முக்கிய அம்சங்களாகும்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Culture Hook (Unit 8):</strong> The categorization is derived from Thirukkural's Muppal (Aram, Porul, Inbam).</span><span class="lang-ta"><strong>கலாச்சாரக் குறிப்பு (Unit 8):</strong> இந்த வகைப்பாடு திருக்குறளின் முப்பால் (அறம், பொருள், இன்பம்) அடிப்படையில் அமைந்துள்ளது.</span></li>
+                            <li><span class="badge bg-tip">TIP</span><span class="lang-en">The Assembly session will begin on June 18 with Governor (Rajendra Viswanath)R.V. Arlekar's address, followed by the presentation of the full budget for FY 2026-27.</span><span class="lang-ta">ஆளுநர் திரு. ராஜேந்திர விஸ்வநாத் அர்லேகர் உரையுடன் ஜூன் 18-ம் தேதி சட்டமன்றக் கூட்டத்தொடர் தொடங்குகிறது. பின்னர் 2026-27 நிதியாண்டுக்கான முழு பட்ஜெட் தாக்கல் செய்யப்படும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Judiciary · Administration</span>
+                        <span class="badge bg-tip">MODERATE</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">"Vande Mataram" Not Just for TN; It's a Central Circular, Clarifies Madras HC</span>
+                        <span class="lang-ta">"வந்தே மாதரம்" பாடல் உத்தரவு தமிழகத்துக்கு மட்டுமானதல்ல; அது மத்திய அரசின் சுற்றறிக்கை: உயர்நீதிமன்றம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Madras High Court disposed of a PIL challenging a recent Central Government circular (dated Jan 28) which mandated singing "Vande Mataram" at the beginning of all government functions. The petitioner argued that singing "Tamil Thai Vaazhthu" first has been Tamil Nadu's tradition. Chief Justice S.V. Gangapurwala clarified that the circular applies to all states across India and the High Court cannot issue directions to the Central Government on which song to sing first. The petitioner withdrew the plea to file a fresh one challenging the circular itself.</p>
+                    <p class="lang-ta">அரசு நிகழ்ச்சிகள் தொடங்கும் போது "வந்தே மாதரம்" பாடலை முதலில் பாட வேண்டும் என்று மத்திய அரசு ஜனவரி 28-ம் தேதி வெளியிட்ட சுற்றறிக்கைக்கு எதிரான பொதுநல வழக்கை சென்னை உயர் நீதிமன்றம் தள்ளுபடி செய்து முடித்து வைத்தது. 'தமிழ்த் தாய் வாழ்த்து' பாடலை முதலில் பாடுவது தமிழகத்தின் மரபு என மனுதாரர் வாதிட்டார். தலைமை நீதிபதி எஸ்.வி. கங்காபுர்வாலா கூறுகையில், "இந்தச் சுற்றறிக்கை தமிழகத்துக்கு மட்டுமானதல்ல, இந்தியா முழுவதும் உள்ள அனைத்து மாநிலங்களுக்கும் பொருந்தும். எந்தப் பாடலை முதலில் பாட வேண்டும் என மத்திய அரசுக்கு உயர் நீதிமன்றம் உத்தரவிட முடியாது" எனத் தெளிவுபடுத்தினார். சுற்றறிக்கையை ரத்து செய்யக் கோரி புதிய மனு தாக்கல் செய்வதாகக் கூறி மனுதாரர் வழக்கை திரும்பப் பெற்றார்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · State Demand</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">PMK Passes Resolution Urging Caste Census in Tamil Nadu</span>
+                        <span class="lang-ta">தமிழகத்தில் சாதிவாரி கணக்கெடுப்பு நடத்த வேண்டும்: பாமக கூட்டத்தில் தீர்மானம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">An all-party meeting organized by the PMK in Chennai, chaired by Dr. Anbumani Ramadoss, unanimously passed a resolution demanding the Tamil Nadu Government to conduct a caste-based census. Representatives from 43 political and social organizations participated. Anbumani emphasized that to legally protect the state's 69% reservation policy in the Supreme Court, quantified data from a "Social Justice Survey" (Caste Census) is indispensable. He requested the State Government to announce this as a policy decision during the upcoming Governor's address.</p>
+                    <p class="lang-ta">பாட்டாளி மக்கள் கட்சி (பாமக) சார்பில் சென்னையில் நடைபெற்ற அனைத்துக் கட்சி கூட்டத்தில், தமிழகத்தில் சாதிவாரி மக்கள் தொகை கணக்கெடுப்பை மாநில அரசு நடத்த வேண்டும் என ஒருமனதாகத் தீர்மானம் நிறைவேற்றப்பட்டது. டாக்டர் அன்புமணி ராமதாஸ் தலைமையில் நடைபெற்ற இக்கூட்டத்தில் 43 அரசியல் மற்றும் சமுதாய அமைப்புகளின் பிரதிநிதிகள் பங்கேற்றனர். உச்ச நீதிமன்றத்தில் 69 சதவீத இடஒதுக்கீட்டை சட்டப்பூர்வமாகப் பாதுகாக்க, "சமூக நீதி சர்வே" (சாதிவாரி கணக்கெடுப்பு) தரவுகள் மிக அவசியம் என அன்புமணி வலியுறுத்தினார். வரவிருக்கும் ஆளுநர் உரையில் இதை அரசின் கொள்கை முடிவாக அறிவிக்க வேண்டும் எனவும் அவர் கோரிக்கை விடுத்தார்.</p>
+                </div>
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National / Central News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Environment · Ramsar Convention</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">India Registers its 100th Ramsar Site: Jaya Prakash Narayan Bird Sanctuary in UP</span>
+                        <span class="lang-ta">இந்தியாவின் 100-வது ராம்சர் தளம்: உத்தர பிரதேசத்தின் ஜெய பிரகாஷ் நாராயண் பறவைகள் சரணாலயம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Prime Minister Narendra Modi announced that the Jaya Prakash Narayan Bird Sanctuary (Surha Taal), located in the Ballia district of Uttar Pradesh, has been officially designated as India's 100th Ramsar Site. This marks a historic milestone in India's wetland conservation efforts. PM Modi noted that the sanctuary's rich biodiversity attracts both local and migratory birds. UP CM Yogi Adityanath received the official certificate from the Union Environment Minister on World Environment Day.</p>
+                    <p class="lang-ta">உத்தரப் பிரதேச மாநிலம் பல்லியா மாவட்டத்தில் அமைந்துள்ள ஜெய பிரகாஷ் நாராயண் பறவைகள் சரணாலயம் இந்தியாவின் 100-வது ராம்சர் தளமாக (Ramsar Site) அதிகாரப்பூர்வமாக அங்கீகரிக்கப்பட்டுள்ளதாக பிரதமர் நரேந்திர மோடி அறிவித்தார். இது இந்தியாவின் ஈரநிலப் பாதுகாப்பு முயற்சிகளில் ஒரு வரலாற்றுச் சிறப்புமிக்க மைல்கல்லாகும். இச்சரணாலயத்தின் பல்லுயிர் வளம் உள்ளூர் மற்றும் வெளிநாட்டுப் பறவைகளை ஈர்க்கிறது எனப் பிரதமர் குறிப்பிட்டார். உலகச் சுற்றுச்சூழல் தினத்தை முன்னிட்டு இதற்கான அதிகாரப்பூர்வ சான்றிதழை மத்திய அமைச்சரிடமிருந்து உ.பி. முதல்வர் யோகி ஆதித்யநாத் பெற்றுக் கொண்டார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Environment Hook:</strong> The Ramsar Convention on Wetlands is an international treaty signed in Ramsar, Iran, in 1971. India became a party to it on February 1, 1982.</span><span class="lang-ta"><strong>சுற்றுச்சூழல் குறிப்பு:</strong> ஈரநிலங்களுக்கான ராம்சர் ஒப்பந்தம் என்பது 1971-ல் ஈரானின் ராம்சர் நகரில் கையெழுத்திடப்பட்ட ஒரு சர்வதேச ஒப்பந்தமாகும். பிப்ரவரி 1, 1982 அன்று இந்தியா இதில் இணைந்தது.</span></li>
+                            <li><span class="lang-en"><strong>Fact:</strong> Tamil Nadu has the highest number of Ramsar sites in India (20 as of 2026). Keep an eye out for updates.</span><span class="lang-ta"><strong>உண்மை:</strong> இந்தியாவில் அதிக ராம்சர் தளங்களைக் கொண்ட மாநிலம் தமிழ்நாடு (2026 நிலவரப்படி 20).</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Defence · Atmanirbhar Bharat</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">PM Modi Reviews Indigenous 'Zorawar' Light Tank at L&T Facility in Surat</span>
+                        <span class="lang-ta">சூரத்தில் உள்நாட்டிலேயே தயாரிக்கப்பட்ட 'ஜோரோவர்' இலகுரக பீரங்கியைப் பார்வையிட்டார் பிரதமர் மோடி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Prime Minister Narendra Modi visited the L&T Armoured Systems Complex in Hazira, Surat (Gujarat) to inspect the indigenous 'Zorawar' light tanks and other defense equipment. Jointly designed by the Defence Research and Development Organisation (DRDO) and Larsen & Toubro, the Zorawar tank weighs roughly 25 tonnes, making it air-transportable and highly maneuverable. It is specifically designed to be deployed in high-altitude terrains, primarily along the Sino-Indian border.</p>
+                    <p class="lang-ta">குஜராத் மாநிலம் சூரத்தில் உள்ள ஹசிராவில் அமைந்துள்ள எல்&டி (L&T) ஆர்மர்டு சிஸ்டம்ஸ் வளாகத்தை பிரதமர் நரேந்திர மோடி நேரில் பார்வையிட்டார். அங்கு உள்நாட்டிலேயே தயாரிக்கப்படும் 'ஜோரோவர்' இலகுரக பீரங்கி மற்றும் பாதுகாப்பு தளவாடங்களை அவர் ஆய்வு செய்தார். டிஆர்டிஓ (DRDO) மற்றும் எல்&டி நிறுவனம் இணைந்து வடிவமைத்துள்ள ஜோரோவர் பீரங்கி தோராயமாக 25 டன் எடை கொண்டது. இதனால் இதனை விமானம் மூலம் எளிதாக எடுத்துச் செல்ல முடியும். இது முக்கியமாக சீன எல்லையை ஒட்டியுள்ள அதிக உயரமான மலைப்பகுதிகளில் பயன்படுத்துவதற்காக பிரத்யேகமாக வடிவமைக்கப்பட்டுள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Defence Hook:</strong> The tank is named after General Zorawar Singh Kahluria, a legendary military commander who conquered Ladakh and Tibet in the 19th century.</span><span class="lang-ta"><strong>பாதுகாப்புக் குறிப்பு:</strong> 19-ம் நூற்றாண்டில் லடாக் மற்றும் திபெத்தை வென்ற புகழ்பெற்ற ராணுவத் தளபதியான ஜெனரல் ஜோரோவர் சிங் கஹ்லூரியாவின் பெயரால் இந்தப் பீரங்கிக்கு பெயரிடப்பட்டுள்ளது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+            </section>
+
+            <!-- INTERNATIONAL NEWS -->
+            <section id="international">
+                <h2>
+                    <span class="lang-en">International News</span>
+                    <span class="lang-ta">சர்வதேச செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Defence · Diplomacy</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Russia Ready to Provide 5th-Gen Su-57 Fighter Jets to India: Putin</span>
+                        <span class="lang-ta">இந்தியாவுக்கு 5-ம் தலைமுறை சுஹோய் எஸ்யு-57 போர் விமானங்களை வழங்கத் தயார்: ரஷ்ய அதிபர் புதின்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Russian President Vladimir Putin announced at the St. Petersburg International Economic Forum that Russia is ready to supply its advanced 5th-generation Sukhoi Su-57 stealth fighter jets to India. Furthermore, he offered to jointly co-produce these jets in India as a symbol of the enduring bilateral friendship. Due to delays in India's indigenous AMCA (Advanced Medium Combat Aircraft) project, the Centre is reportedly considering the procurement of at least two squadrons of Su-57s. India recently signed an agreement to purchase five more S-400 air defense systems from Russia.</p>
+                    <p class="lang-ta">செயின்ட் பீட்டர்ஸ்பர்க்கில் நடைபெறும் சர்வதேசப் பொருளாதார மாநாட்டில் பேசிய ரஷ்ய அதிபர் விளாதிமிர் புதின், அதிநவீன 5-ம் தலைமுறை சுஹோய் எஸ்யு-57 (Su-57) போர் விமானங்களை இந்தியாவுக்கு வழங்க ரஷ்யா தயாராக உள்ளதாகத் தெரிவித்தார். மேலும், இரு நாடுகளுக்கிடையேயான நீடித்த நட்புறவின் அடையாளமாக, இவ்விமானங்களை இந்தியாவிலேயே இணைந்து தயாரிக்கவும் அவர் ஒப்புதல் அளித்தார். இந்தியாவின் உள்நாட்டுத் தயாரிப்பான ஏஎம்சிஏ (AMCA - Advanced Medium Combat Aircraft) திட்டத்தில் தாமதம் ஏற்படுவதால், குறைந்தபட்சம் இரண்டு சுஹோய் எஸ்யு-57 போர் விமானப் படைப்பிரிவுகளைக் கொள்முதல் செய்ய மத்திய அரசு பரிசீலித்து வருவதாகக் கூறப்படுகிறது. முன்னதாக, ரஷ்யாவிடமிருந்து மேலும் 5 எஸ்-400 (S-400) ஏவுகணைத் தடுப்பு அமைப்புகளை வாங்க இந்தியா சமீபத்தில் ஒப்பந்தம் செய்திருந்தது.</p>
+                </div>
+
+            </section>
+
+            <!-- ECONOMY & FINANCE -->
+            <section id="economy">
+                <h2>
+                    <span class="lang-en">Economy & Finance</span>
+                    <span class="lang-ta">பொருளாதாரம் & நிதி</span>
+                </h2>
+
+                <div class="news-card">w
+                    <div class="card-meta">
+                        <span class="category-pill">Macroeconomics · GDP</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">RBI Keeps Repo Rate Unchanged at 5.25%; FY26 GDP Growth Clocked at 7.7%</span>
+                        <span class="lang-ta">வட்டி விகிதத்தில் மாற்றமில்லை: ரெப்போ ரேட் 5.25% ஆகத் தொடரும்; 2025-26 பொருளாதார வளர்ச்சி 7.7%</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Reserve Bank of India's Monetary Policy Committee (MPC) unanimously decided to keep the benchmark repo rate unchanged at 5.25%. RBI Governor Shanjay Malhotra highlighted that while the GDP growth for the financial year 2025-26 stood robust at 7.7% (with Q4 growth hitting 7.8%), inflation targets are yet to be met. The projected GDP growth for the upcoming FY 2026-27 is estimated at 6.6%. The central bank aims to navigate global disruptions, such as the Middle East conflict and volatile crude oil prices, while ensuring domestic economic stability.</p>
+                    <p class="lang-ta">இந்திய ரிசர்வ் வங்கியின் (RBI) நிதிக் கொள்கைக் குழு (MPC), வங்கிகளுக்கு வழங்கப்படும் குறுகிய காலக் கடனுக்கான வட்டி விகிதத்தை (ரெப்போ ரேட்) மாற்றமில்லாமல் 5.25% ஆகத் தொடர ஒருமனதாக முடிவு செய்துள்ளது. ரிசர்வ் வங்கி ஆளுநர் சஞ்சய் மல்ஹோத்ரா கூறுகையில், 2025-26 நிதியாண்டின் மொத்த உள்நாட்டு உற்பத்தி (GDP) வளர்ச்சி 7.7 சதவீதமாக (4-ம் காலாண்டு 7.8%) வலுவாகப் பதிவாகியிருந்தாலும், பணவீக்கத்தைக் குறைக்கும் இலக்கு இன்னும் எட்டப்படவில்லை என்றார். வரவிருக்கும் 2026-27 நிதியாண்டுக்கான நாட்டின் பொருளாதார வளர்ச்சி 6.6 சதவீதமாக மதிப்பிடப்பட்டுள்ளது. மத்திய கிழக்கு போர் மற்றும் நிலையற்ற கச்சா எண்ணெய் விலை போன்ற உலகளாவிய தடங்கல்களைச் சமாளித்து, உள்நாட்டுப் பொருளாதார நிலைத்தன்மையை உறுதி செய்ய ரிசர்வ் வங்கி இலக்கு நிர்ணயித்துள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en">The repo rate remaining unchanged means EMI rates for housing and auto loans will generally remain stable. Note the current rate is <strong>5.25%</strong>.</span><span class="lang-ta">ரெப்போ விகிதம் மாறாமல் இருப்பதால் வீடு மற்றும் வாகனக் கடன்களுக்கான இஎம்ஐ (EMI) பொதுவாக நிலையானதாக இருக்கும். தற்போதைய வட்டி விகிதம் <strong>5.25%</strong> என்பதைக் கவனிக்கவும்.</span></li>
+                            <li><span class="lang-en"><strong>Economy Hook:</strong> Gross Value Added (GVA) for Q4 was 7.9%, surpassing GDP growth. GVA provides a sector-specific picture of the economy (supply side), while GDP is from the consumers' perspective (demand side).</span><span class="lang-ta"><strong>பொருளாதாரக் குறிப்பு:</strong> 4-ம் காலாண்டில் மொத்த மதிப்பு கூட்டல் (GVA) 7.9% ஆக பதிவாகி, ஜிடிபி (GDP) வளர்ச்சியை முந்தியுள்ளது. ஜிவிஏ (GVA) என்பது பொருளாதாரத்தின் துறை சார்ந்த (உற்பத்தி) வளர்ச்சியை அளவிடுகிறது; ஜிடிபி என்பது நுகர்வோர் கண்ணோட்டத்தில் (தேவை) கணக்கிடப்படுகிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Foreign Direct Investment · Tech</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">AirTrunk to Invest ₹3 Lakh Crore ($30 Bn) in Indian Data Centers by 2030</span>
+                        <span class="lang-ta">இந்தியாவில் ஏர்டிரங்க் நிறுவனம் ரூ.3 லட்சம் கோடி முதலீடு: தரவு மையங்களைக் கட்டமைக்கத் திட்டம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Australia-based leading technology company AirTrunk (recently acquired by Blackstone) has announced a massive investment of ₹3 lakh crore ($30 billion) to establish high-capacity Data Centers in India by 2030. The company's CEO, Robin Khuda, met PM Modi in Delhi to discuss this initiative, which aims to create 5 GW of data center capacity. This investment will position India as a global hub for Cloud Computing and Artificial Intelligence infrastructure, creating significant job opportunities.</p>
+                    <p class="lang-ta">இந்தியாவில் உயர்திறன் கொண்ட தரவு மையங்களைக் (Data Centers) கட்டமைக்கும் நோக்கில், ஆஸ்திரேலியாவைத் தலைமையிடமாகக் கொண்ட முன்னணி தொழில்நுட்ப நிறுவனமான 'ஏர்டிரங்க்' (சமீபத்தில் பிளாக்ஸ்டோன் நிறுவனத்தால் கையகப்படுத்தப்பட்டது) 2030-க்குள் ரூ.3 லட்சம் கோடி ($30 பில்லியன்) முதலீடு செய்யவுள்ளது. இந்நிறுவனத்தின் தலைமைச் செயல் அதிகாரி ராபின் குடா, டெல்லியில் பிரதமர் மோடியைச் சந்தித்து இது குறித்துப் பேசினார். இதன் மூலம் 5 ஜிகாவாட் திறன் கொண்ட தரவு மையங்கள் உருவாக்கப்படும். இம்முதலீடு இந்தியாவை கிளவுட் கம்ப்யூட்டிங் மற்றும் செயற்கை நுண்ணறிவுக்கான (AI) உலகளாவிய மையமாக மாற்றுவதுடன், அதிக வேலைவாய்ப்புகளையும் உருவாக்கும்.</p>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Fiscal Policy · Taxation</span>
+                        <span class="badge bg-tip">MODERATE</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Centre Promulgates Ordinance Exempting Foreign Investment in Govt Bonds from Capital Gains Tax</span>
+                        <span class="lang-ta">அரசு கடன் பத்திரங்களில் அன்னிய முதலீடு: மூலதன ஆதாய வரிக்கு விலக்களிக்க அவசர சட்டம் அமல்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Union Government has promulgated an ordinance exempting foreign investments in specific Government Securities from Capital Gains Tax. Effective retrospectively from April 1 of the current year, this move aims to attract long-term foreign capital and stabilize the Indian Rupee against global pressures. The ordinance removes short-term, concentration, and issue-specific borrowing limits for Foreign Portfolio Investors (FPIs) under the Fully Accessible Route (FAR).</p>
+                    <p class="lang-ta">குறிப்பிட்ட அரசு கடன் பத்திரங்கள் மீதான அன்னிய முதலீட்டுக்கு மூலதன ஆதாய வரியிலிருந்து (Capital Gains Tax) விலக்களிப்பதற்கான அவசர சட்டத்தை மத்திய அரசு அமல்படுத்தியுள்ளது. நடப்பாண்டு ஏப்ரல் 1-ம் தேதி முதல் இது முன்தேதியிட்டு அமலுக்கு வருகிறது. நீண்டகால அன்னிய முதலீட்டை ஈர்க்கவும், ரூபாய் மதிப்பின் மீதான அழுத்தத்தைச் சமாளிக்கவும் இந்த முடிவு எடுக்கப்பட்டுள்ளது. முழுமையாக அணுகக்கூடிய வழிகளின் (FAR) கீழ் அன்னிய நிறுவன முதலீட்டாளர்களுக்கு (FPI) விதிக்கப்பட்டிருந்த குறுகிய கால கடன் வரம்பு, செறிவு வரம்பு உள்ளிட்ட கட்டுப்பாடுகள் நீக்கப்பட்டுள்ளன.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Constitutional Hook:</strong> The President of India promulgates ordinances under <strong>Article 123</strong> of the Constitution when Parliament is not in session.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> நாடாளுமன்றத்தின் இரு அவைகளும் கூடாத நிலையில், இந்திய அரசியலமைப்பின் <strong>சரத்து 123</strong>-ன் கீழ் குடியரசுத் தலைவர் அவசர சட்டங்களை (Ordinances) இயற்றலாம்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+            </section>
+            
+            <!-- SPORTS -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports</span>
+                    <span class="lang-ta">விளையாட்டு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Hockey · Junior Asia Cup</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Junior Asia Cup Hockey: India Defeats Pakistan 5-3 to Enter Finals</span>
+                        <span class="lang-ta">ஆசிய கோப்பை ஹாக்கி: பாகிஸ்தானை வீழ்த்தி இந்திய ஆடவர் அணி இறுதிப்போட்டிக்கு முன்னேற்றம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Indian men's Under-18 hockey team advanced to the finals of the Asian Junior Cup in Japan by defeating arch-rivals Pakistan 5-3 in the semi-finals. India's Araijeet Singh Hundal scored a brilliant hat-trick (49', 53', 56') to secure the victory. India will face defending champions Japan in the final. However, the Indian women's U-18 team lost to China 1-3 in a penalty shootout in their semi-final match.</p>
+                    <p class="lang-ta">ஜப்பானில் நடைபெறும் 18 வயதுக்கு உட்பட்டோருக்கான ஆசிய கோப்பை ஹாக்கிப் போட்டியின் ஆடவர் அரையிறுதியில், இந்திய அணி 5-3 என்ற கோல் கணக்கில் பாகிஸ்தானை வீழ்த்தி இறுதிப்போட்டிக்கு முன்னேறியது. இந்தியாவின் அர்ஜீத் சிங் ஹுண்டால் ஹாட்ரிக் கோல் (49', 53', 56') அடித்து அணியின் வெற்றியை உறுதி செய்தார். இறுதிப்போட்டியில் இந்தியா நடப்பு சாம்பியனான ஜப்பானை எதிர்கொள்கிறது. அதேசமயம், மகளிர் அரையிறுதியில் இந்திய அணி பெனால்டி ஷூட்அவுட் வாய்ப்பில் 1-3 என்ற கோல் கணக்கில் சீனாவிடம் தோல்வியடைந்தது.</p>
+                </div>
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Which of the following bird sanctuaries was recently designated as India's 100th Ramsar Site?</span>
+                        <span class="lang-ta">கேள்வி: இந்தியாவின் 100-வது ராம்சர் தளமாக சமீபத்தில் அறிவிக்கப்பட்ட பறவைகள் சரணாலயம் எது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Jaya Prakash Narayan Bird Sanctuary (Surha Taal), Uttar Pradesh</span><br><br>
+                                <strong>Context:</strong> PM Modi announced this milestone on World Environment Day. UP CM Yogi Adityanath received the official certificate.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">ஜெய பிரகாஷ் நாராயண் பறவைகள் சரணாலயம், உத்தரப் பிரதேசம்</span><br><br>
+                                <strong>பின்னணி:</strong> உலகச் சுற்றுச்சூழல் தினத்தை முன்னிட்டு பிரதமர் மோடி இந்த வரலாற்றுச் சிறப்புமிக்க அறிவிப்பை வெளியிட்டார்.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Under which Article of the Indian Constitution does the President hold the power to promulgate ordinances, such as the recent one exempting foreign investments from capital gains tax?</span>
+                        <span class="lang-ta">கேள்வி: அரசு கடன் பத்திரங்களில் அன்னிய முதலீடுகளுக்கு மூலதன ஆதாய வரியிலிருந்து விலக்களிக்கும் அவசர சட்டம் சமீபத்தில் இயற்றப்பட்டது. இத்தகைய அவசர சட்டங்களை இயற்ற குடியரசுத் தலைவருக்கு அதிகாரம் அளிக்கும் சரத்து எது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Article 123</span><br><br>
+                                <strong>Context:</strong> The Central Government used Article 123 to implement the tax exemption immediately while Parliament was not in session.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">சரத்து 123</span><br><br>
+                                <strong>பின்னணி:</strong> நாடாளுமன்றக் கூட்டத்தொடர் நடைபெறாத நேரத்தில், வட்டி விலக்கை உடனடியாக அமல்படுத்த மத்திய அரசு சரத்து 123-ஐப் பயன்படுத்தியது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">100th Ramsar Site</span><span class="lang-ta">100-வது ராம்சர் தளம்</span></td>
+                                <td><span class="lang-en">Environment</span><span class="lang-ta">சுற்றுச்சூழல்</span></td>
+                                <td><span class="lang-en">Jaya Prakash Narayan Bird Sanctuary, UP.</span><span class="lang-ta">ஜெய பிரகாஷ் நாராயண் பறவைகள் சரணாலயம், உ.பி.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">Nilgiri Tahr Population</span><span class="lang-ta">வரையாடுகள் எண்ணிக்கை</span></td>
+                                <td><span class="lang-en">State/Environment</span><span class="lang-ta">மாநிலம்/சுற்றுச்சூழல்</span></td>
+                                <td><span class="lang-en">Rises by 4.68% to 1,364 individuals.</span><span class="lang-ta">எண்ணிக்கை 4.68% உயர்ந்து 1,364 ஆக பதிவு.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">Zorawar Light Tank</span><span class="lang-ta">ஜோரோவர் இலகுரக பீரங்கி</span></td>
+                                <td><span class="lang-en">Defence</span><span class="lang-ta">பாதுகாப்பு</span></td>
+                                <td><span class="lang-en">Inspected by PM at L&T facility in Surat; indigenous.</span><span class="lang-ta">சூரத்தில் பிரதமர் மோடி ஆய்வு; உள்நாட்டுத் தயாரிப்பு.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">AirTrunk Investment</span><span class="lang-ta">ஏர்டிரங்க் முதலீடு</span></td>
+                                <td><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></td>
+                                <td><span class="lang-en">₹3 Lakh Crore in Indian Data Centers by 2030.</span><span class="lang-ta">இந்தியத் தரவு மையங்களில் ரூ.3 லட்சம் கோடி முதலீடு.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">Russia Offers Su-57</span><span class="lang-ta">ரஷ்யா Su-57 வழங்கத் தயார்</span></td>
+                                <td><span class="lang-en">Intl/Defence</span><span class="lang-ta">சர்வதேசம்/பாதுகாப்பு</span></td>
+                                <td><span class="lang-en">Putin offers 5th Gen stealth fighters to India.</span><span class="lang-ta">5-ம் தலைமுறை போர் விமானங்களை இந்தியாவுக்கு வழங்க புதின் தயார்.</span></td>
+                                <td><span class="badge bg-tip">MED</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani Chennai 06-06-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி சென்னை 06-06-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source text detailed state, national, and international news for 06 June 2026. 
+State news highlighted the TVK government under CM Joseph Vijay targeting 436 schemes from their manifesto categorized into Aram, Porul, Inbam. Annamalai launched a new political movement. The TN Assembly session is scheduled to begin on June 18. PMK demanded a state caste census. Nilgiri Tahr population saw a 4.68% increase to 1,364. Madras HC ruled "Vande Mataram" singing rule applies to all states, not just TN. DVAC booked former minister K.N. Nehru in an MAWS scam.
+National news included PM Modi announcing the 100th Ramsar site: JP Narayan Bird Sanctuary in UP. AirTrunk announced a $30 Billion data center investment in India. PM Modi inspected the Zorawar light tank in Surat. RBI retained the repo rate at 5.25%. A fire at 'Plarix Stay' in Delhi killed 21. 26 PFI members were charged under UAPA.
+Internationally, Russian President Putin offered Su-57 jets to India. Xi Jinping is set to visit North Korea. US sanctioned Cuba's defence ministry.
+Sports: India's U-18 men's hockey team beat Pakistan 5-3 to reach the Junior Asia Cup final. Praggnanandhaa beat Gukesh in Norway chess. Swiatek and Zverev advanced in the French Open.]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூல உரைகள் 06 ஜூன் 2026 க்கான செய்திகளைக் கொண்டிருந்தன.
+மாநில செய்திகளில், தவெக அரசு 436 திட்டங்களை அறம், பொருள், இன்பம் என வகைப்படுத்திச் செயல்படுத்த இலக்கு நிர்ணயித்துள்ளது. அண்ணாமலை புதிய அரசியல் இயக்கத்தைத் தொடங்கினார். ஜூன் 18-ல் தமிழக சட்டப்பேரவை கூடுகிறது. பாமக சாதிவாரி கணக்கெடுப்பு கோரியது. நீலகிரி வரையாடுகள் 4.68% அதிகரித்து 1,364 ஆகப் பதிவு. "வந்தே மாதரம்" பாடும் உத்தரவு அனைத்து மாநிலங்களுக்கும் பொருந்தும் என ஐகோர்ட் தீர்ப்பு. லஞ்ச ஒழிப்புத்துறை முன்னாள் அமைச்சர் கே.என். நேரு மீது வழக்குப்பதிவு.
+தேசிய அளவில், இந்தியாவின் 100-வது ராம்சர் தளமாக உ.பி-யின் ஜே.பி. நாராயண் பறவைகள் சரணாலயத்தை பிரதமர் அறிவித்தார். தரவு மையங்களில் $30 பில்லியன் முதலீடு செய்ய ஏர்டிரங்க் முடிவு. சூரத்தில் ஜோரோவர் பீரங்கியை மோடி ஆய்வு செய்தார். ரெப்போ ரேட் 5.25% ஆகத் தொடரும் என ரிசர்வ் வங்கி அறிவிப்பு. டெல்லி ஓட்டல் தீ விபத்தில் 21 பேர் பலி. 26 பிஎஃப்ஐ (PFI) உறுப்பினர்கள் மீது UAPA வழக்குப்பதிவு.
+சர்வதேச அளவில், ரஷ்ய அதிபர் புதின் இந்தியாவுக்கு Su-57 விமானங்களை வழங்கத் தயார் என அறிவிப்பு. வடகொரியாவுக்கு ஜி ஜின்பிங் பயணம். கியூபா பாதுகாப்பு அமைச்சகம் மீது அமெரிக்கா தடை.
+விளையாட்டு: ஜூனியர் ஆசிய கோப்பை ஹாக்கியில் பாகிஸ்தானை 5-3 என வீழ்த்தி இந்தியா இறுதிப்போட்டிக்கு தகுதி. நார்வே செஸ்ஸில் குகேஷை வீழ்த்தினார் பிரக்ஞானந்தா. பிரெஞ்சு ஓபனில் ஸ்வியாடெக், ஸ்வெரேவ் முன்னேற்றம்.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 06 June 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+    </script>
+</body>
+</html>

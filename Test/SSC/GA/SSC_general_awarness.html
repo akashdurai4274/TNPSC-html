@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSC Selection Phase 14 — 2026 | GA Master Test</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Orbitron:wght@400;600;700;900&family=IBM+Plex+Mono:wght@400;500;600&family=Andika:wght@400;700&display=swap');
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0f14;--surface:#13161d;--border:#1e2230;
+  --gold:#f5c842;--red:#ff4d4d;--green:#4dff91;--blue:#4db8ff;--purple:#b84dff;
+  --text:#e8e8f0;--muted:#7a7f94;
+  --sidebar-w:280px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Andika',sans-serif;min-height:100vh;overflow-x:hidden}
+/* Custom Scrollbar Styles */
+/* For Modern Browsers (Firefox 64+) */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #f5c842 transparent;
+}
+
+/* For WebKit Browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent; /* Makes the track invisible */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #f5c842; /* Gold/Yellow thumb */
+    border-radius: 20px;       /* Rounded edges for the thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #e0b32f; /* Darker gold on hover */
+}
+/* HEADER */
+#hero{position:sticky;top:0;z-index:100;background:rgba(13,15,20,0.97);border-bottom:1px solid var(--border);padding:10px 20px;backdrop-filter:blur(8px)}
+.hero-inner{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.hero-titles{flex:1;min-width:200px}
+.hero-titles h1{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800;color:var(--gold);line-height:1.1;letter-spacing:.05em}
+.hero-titles p{font-family:'Orbitron',monospace;font-size:.65rem;color:var(--muted);margin-top:2px;letter-spacing:.1em}
+.hero-right{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+#timer-display{font-family:'Orbitron',monospace;font-size:1.5rem;font-weight:700;color:var(--gold);letter-spacing:.1em;min-width:90px;text-align:center}
+#timer-display.danger{color:var(--red);animation:pulse .8s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+#timer-toggle{background:var(--border);border:1px solid var(--gold);color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:.7rem;padding:6px 12px;border-radius:6px;cursor:pointer;transition:.2s}
+#timer-toggle:hover{background:var(--gold);color:var(--bg)}
+#score-badge{font-family:'Orbitron',monospace;font-size:.75rem;background:var(--surface);border:1px solid var(--border);padding:6px 14px;border-radius:20px;color:var(--text);white-space:nowrap}
+
+/* LAYOUT */
+#layout{display:flex;min-height:calc(100vh - 62px)}
+#sidebar{width:var(--sidebar-w);min-width:var(--sidebar-w);background:var(--surface);border-right:1px solid var(--border);padding:14px 10px;position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto}
+#sidebar h3{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;padding-left:2px}
+#palette{display:grid;grid-template-columns:repeat(10,1fr);gap:4px}
+.pnum{width:22px;height:22px;border-radius:4px;border:1px solid var(--border);background:var(--border);color:var(--muted);font-family:'Orbitron',monospace;font-size:.55rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.15s;user-select:none}
+.pnum:hover{border-color:var(--gold)}
+.pnum.current{border:2px solid var(--gold);color:var(--gold)}
+.pnum.correct{background:var(--green);color:#000;border-color:var(--green)}
+.pnum.wrong{background:var(--red);color:#fff;border-color:var(--red)}
+
+#main{flex:1;padding:24px 28px;max-width:900px}
+
+/* QUESTION CARD */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:20px;transition:.2s}
+.qcard:target,.qcard.active-view{border-color:var(--gold)}
+.qcard-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:14px}
+.qnum-badge{font-family:'Orbitron',monospace;font-size:.75rem;font-weight:700;color:var(--gold);background:rgba(245,200,66,.1);border:1px solid rgba(245,200,66,.3);padding:3px 10px;border-radius:6px;white-space:nowrap}
+.topic-tags{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.tag{font-family:'IBM Plex Mono',monospace;font-size:.6rem;font-weight:600;padding:2px 8px;border-radius:20px;letter-spacing:.05em}
+.tag-pyq{background:rgba(77,184,255,.15);color:var(--blue);border:1px solid rgba(77,184,255,.3)}
+.tag-critical{background:rgba(255,77,77,.15);color:var(--red);border:1px solid rgba(255,77,77,.3)}
+.tag-trap{background:rgba(245,200,66,.15);color:var(--gold);border:1px solid rgba(245,200,66,.3)}
+.tag-topic{background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border)}
+.qtext{font-family:'Andika',sans-serif;font-size:1rem;line-height:1.65;color:var(--text);margin-bottom:16px}
+.options{display:flex;flex-direction:column;gap:8px}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:.2s;font-family:'Andika',sans-serif;font-size:.95rem;line-height:1.5;min-height:44px}
+.opt:hover:not(.locked){border-color:var(--gold);background:rgba(245,200,66,.05)}
+.opt-label{font-family:'Orbitron',monospace;font-size:.7rem;font-weight:700;color:var(--muted);min-width:20px;padding-top:2px}
+.opt.correct-ans{background:rgba(77,255,145,.1);border-color:var(--green);color:var(--green)}
+.opt.correct-ans .opt-label{color:var(--green)}
+.opt.wrong-ans{background:rgba(255,77,77,.1);border-color:var(--red);color:var(--red)}
+.opt.wrong-ans .opt-label{color:var(--red)}
+.opt.locked{cursor:default}
+.result-msg{margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:.8rem;font-weight:600;padding:6px 12px;border-radius:6px;display:none}
+.result-msg.correct{background:rgba(77,255,145,.15);color:var(--green);border:1px solid rgba(77,255,145,.3);display:block}
+.result-msg.wrong{background:rgba(255,77,77,.15);color:var(--red);border:1px solid rgba(255,77,77,.3);display:block}
+.gem-box{margin-top:14px;background:rgba(184,77,255,.08);border:1px solid rgba(184,77,255,.25);border-radius:8px;overflow:hidden}
+.gem-toggle{width:100%;background:none;border:none;padding:8px 14px;text-align:left;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--purple);display:flex;align-items:center;gap:6px}
+.gem-toggle:hover{background:rgba(184,77,255,.1)}
+.gem-content{padding:10px 14px;font-family:'Andika',sans-serif;font-size:.88rem;color:var(--text);line-height:1.6;border-top:1px solid rgba(184,77,255,.2);display:none}
+.gem-content.open{display:block}
+
+/* FOOTER */
+footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);margin-top:20px}
+footer .gold-line{height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin-bottom:16px}
+footer p{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--muted);line-height:1.8}
+footer p span{color:var(--gold)}
+
+#submit-btn{display:block;margin:20px auto;background:linear-gradient(135deg,var(--gold),#e0a800);color:#000;font-family:'Orbitron',monospace;font-size:.85rem;font-weight:700;padding:14px 36px;border-radius:8px;border:none;cursor:pointer;letter-spacing:.08em;transition:.2s}
+#submit-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(245,200,66,.3)}
+
+/* MODAL */
+#modal{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.85);backdrop-filter:blur(6px);align-items:center;justify-content:center}
+#modal.show{display:flex}
+.modal-box{background:var(--surface);border:1px solid var(--gold);border-radius:16px;padding:36px;max-width:480px;width:90%;text-align:center}
+.modal-box h2{font-family:'Syne',sans-serif;font-size:1.6rem;color:var(--gold);margin-bottom:8px}
+.modal-box .final-score{font-family:'Orbitron',monospace;font-size:2.5rem;font-weight:900;color:var(--green);margin:16px 0}
+.modal-box p{font-family:'Andika',sans-serif;font-size:.95rem;color:var(--muted);margin-bottom:6px}
+.modal-box .grade{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700;margin:12px 0}
+#modal-close{margin-top:20px;background:var(--gold);color:#000;border:none;font-family:'Orbitron',monospace;font-size:.8rem;font-weight:700;padding:10px 28px;border-radius:6px;cursor:pointer}
+
+/* MOBILE */
+@media(max-width:768px){
+  #sidebar{display:none}
+  #mobile-palette{display:block;position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--surface);border-top:1px solid var(--border);padding:8px 10px 12px}
+  #mobile-palette h3{font-family:'IBM Plex Mono',monospace;font-size:.6rem;color:var(--muted);margin-bottom:6px;letter-spacing:.1em}
+  #mobile-pal-scroll{overflow-x:auto;display:flex;gap:4px;padding-bottom:2px}
+  #mobile-pal-scroll .pnum{min-width:26px;width:26px;height:26px;font-size:.6rem;flex-shrink:0}
+  #layout{padding-bottom:80px}
+  #main{padding:14px 12px}
+  .hero-titles h1{font-size:.95rem}
+  #timer-display{font-size:1.1rem}
+  .hero-right{gap:8px}
+}
+@media(min-width:769px){#mobile-palette{display:none}}
+
+/* Sidebar scrollbar */
+#sidebar::-webkit-scrollbar{width:4px}
+#sidebar::-webkit-scrollbar-track{background:transparent}
+#sidebar::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+</style>
+</head>
+<body>
+
+<header id="hero">
+  <div class="hero-inner">
+    <div class="hero-titles">
+      <h1>SSC SELECTION PHASE 14 — 2026</h1>
+      <p>General Awareness Master Test &nbsp;·&nbsp; 150 Questions</p>
+    </div>
+    <div class="hero-right">
+      <div id="timer-display">--:--</div>
+      <button id="timer-toggle">⏱ Enable Timer</button>
+      <div id="score-badge">Score: 0 / 0 Attempted</div>
+    </div>
+  </div>
+</header>
+
+<div id="layout">
+  <aside id="sidebar">
+    <h3>Question Palette</h3>
+    <div id="palette"></div>
+  </aside>
+  <main id="main">
+    <div id="questions-container"></div>
+    <button id="submit-btn">📊 View Final Score</button>
+    <footer>
+      <div class="gold-line"></div>
+      <p><span>SSC Phase 14 · 2026 · General Awareness Master Test</span></p>
+      <p>Crafted for aspirants who aim to master, not just attempt.</p>
+    </footer>
+  </main>
+</div>
+
+<div id="mobile-palette">
+  <h3>PALETTE</h3>
+  <div id="mobile-pal-scroll"></div>
+</div>
+
+<div id="modal">
+  <div class="modal-box">
+    <h2>📊 Final Score</h2>
+    <div class="final-score" id="modal-score">0 / 150</div>
+    <p id="modal-attempted"></p>
+    <p id="modal-pct"></p>
+    <div class="grade" id="modal-grade"></div>
+    <button id="modal-close">Close</button>
+  </div>
+</div>
+
+<script>
+const QUESTIONS = [
+// ─── HISTORY (Q1–Q18) ───────────────────────────────────────────────────────
+{n:1,topic:"HISTORY",tags:["PYQ","CRITICAL"],q:"The Indus Valley Civilisation site of Lothal is located in which modern Indian state?",opts:["Rajasthan","Gujarat","Haryana","Punjab"],ans:1,gem:"Lothal was a port city with a dockyard — the world's earliest known. Remember: Lothal = Lot of sea trade. SSC loves its location; don't confuse with Dholavira (also Gujarat) or Kalibangan (Rajasthan)."},
+{n:2,topic:"HISTORY",tags:["PYQ"],q:"The Vedic text that contains the famous 'Gayatri Mantra' is:",opts:["Rigveda","Samaveda","Yajurveda","Atharvaveda"],ans:0,gem:"Gayatri Mantra (dedicated to sun-god Savitri) is in Rigveda 3.62.10. Samaveda = melodies, Yajurveda = rituals, Atharvaveda = charms and spells. PYQ favourite."},
+{n:3,topic:"HISTORY",tags:["CRITICAL","TRAP"],q:"Which Mauryan king is associated with the 'Dhamma' policy of religious tolerance?",opts:["Chandragupta Maurya","Bindusara","Ashoka","Dasharatha"],ans:2,gem:"Ashoka's Dhamma was NOT Buddhism itself but a moral code. TRAP: Many confuse Dhamma with Buddhism. Dhamma = non-violence, respect for elders, charity. His edicts were inscribed on pillars and rocks."},
+{n:4,topic:"HISTORY",tags:["PYQ"],q:"The Battle of Tarain (1191) was fought between Prithviraj Chauhan and:",opts:["Mahmud of Ghazni","Muhammad Ghori","Qutb-ud-din Aibak","Iltutmish"],ans:1,gem:"First Battle of Tarain (1191) → Prithviraj WON. Second Battle of Tarain (1192) → Prithviraj LOST to Ghori. SSC frequently asks which battle year. Memory: 1-1-9-1 = First fight, First win."},
+{n:5,topic:"HISTORY",tags:["CRITICAL"],q:"The 'Doctrine of Lapse' was introduced by which Governor-General of India?",opts:["Lord Dalhousie","Lord Wellesley","Lord Cornwallis","Lord Hastings"],ans:0,gem:"Dalhousie annexed Satara (1848), Nagpur, Jhansi via Doctrine of Lapse. It stated that if a ruler died without a natural heir, the state would lapse to the British. A major cause of 1857 revolt."},
+{n:6,topic:"HISTORY",tags:["PYQ","TRAP"],q:"The Bhakti saint who composed 'Bijak', a collection of poems, was:",opts:["Mirabai","Tulsidas","Kabir","Surdas"],ans:2,gem:"Kabir's Bijak is a sacred text for the Kabir Panth sect. TRAP: Tulsidas wrote Ramcharitmanas; Mirabai's compositions are called 'Padas'. Kabir = Doha (couplets) + Bijak."},
+{n:7,topic:"HISTORY",tags:["CRITICAL"],q:"Who among the following founded the 'Asiatic Society of Bengal' in 1784?",opts:["Raja Ram Mohan Roy","William Jones","Warren Hastings","Max Müller"],ans:1,gem:"William Jones (orientalist) founded it; Warren Hastings was the Governor-General who supported it. The society promoted study of Asian cultures and history. Jones translated Kalidasa's Shakuntalam into English."},
+{n:8,topic:"HISTORY",tags:["PYQ"],q:"The First Factory Act regulating child labour in India was passed in:",opts:["1881","1891","1901","1911"],ans:0,gem:"Factory Act 1881 prohibited employment of children below 7 years in factories and limited hours for those aged 7–12. It was India's first labour welfare legislation. SSC loves this year."},
+{n:9,topic:"HISTORY",tags:["CRITICAL","TRAP"],q:"The 'Poona Pact' of 1932 was an agreement between Mahatma Gandhi and:",opts:["Jawaharlal Nehru","B.R. Ambedkar","Muhammad Ali Jinnah","Bal Gangadhar Tilak"],ans:1,gem:"TRAP: Many confuse Poona Pact with Gandhi-Irwin Pact (1931). Poona Pact: Gandhi (opposing separate electorates) + Ambedkar → gave reserved seats in general electorates to Depressed Classes."},
+{n:10,topic:"HISTORY",tags:["PYQ"],q:"Which session of the Indian National Congress declared 'Purna Swaraj' (Complete Independence) as its goal?",opts:["Nagpur Session 1920","Lahore Session 1929","Karachi Session 1931","Calcutta Session 1928"],ans:1,gem:"Lahore Session, December 1929, under Jawaharlal Nehru as President. January 26, 1930 was declared Independence Day → that's why January 26 is now Republic Day."},
+{n:11,topic:"HISTORY",tags:["TRAP"],q:"The Chola king who sent a naval expedition to Southeast Asia was:",opts:["Rajaraja I","Rajendra I","Kulottunga I","Parantaka I"],ans:1,gem:"Rajendra Chola I (1014–1044 CE) launched the famous naval expedition against the Srivijaya Empire (modern Malaysia/Indonesia). Not Rajaraja I who built Brihadeeswarar Temple. TRAP."},
+{n:12,topic:"HISTORY",tags:["PYQ"],q:"The Harappan script has NOT been deciphered yet. In which direction was it written?",opts:["Left to right","Right to left","Boustrophedon (alternate directions)","Top to bottom"],ans:2,gem:"The Indus script is largely boustrophedon — alternating direction like an ox plowing a field. Some seals show right-to-left writing. This script remains one of the world's great unsolved mysteries."},
+{n:13,topic:"HISTORY",tags:["CRITICAL"],q:"Akbar's revenue system 'Zabti' (also called Ain-i-Dahsala) was developed by:",opts:["Birbal","Todar Mal","Abul Fazl","Bairam Khan"],ans:1,gem:"Raja Todar Mal (Finance Minister of Akbar) developed the Dahsala system — averaging revenue over 10 years. Also associated with 'bandobast' (settlement of land). SSC frequently asks who developed Zabti."},
+{n:14,topic:"HISTORY",tags:["PYQ"],q:"The 'Quit India Movement' was launched on:",opts:["August 8, 1940","August 9, 1942","August 15, 1942","October 2, 1942"],ans:1,gem:"August 9, 1942 — 'Do or Die' speech by Gandhi at Gowalia Tank Maidan, Bombay. The movement's slogan was coined by Yusuf Meherally. August 9 is observed as Quit India Day."},
+{n:15,topic:"HISTORY",tags:["TRAP"],q:"The Jallianwala Bagh massacre (1919) was carried out under whose orders?",opts:["Lord Chelmsford","General Dyer","Michael O'Dwyer","Lord Curzon"],ans:1,gem:"TRAP: General Reginald Dyer ordered the firing; Michael O'Dwyer was the Lieutenant Governor of Punjab who supported it. O'Dwyer was later assassinated by Udham Singh in London (1940) in revenge."},
+{n:16,topic:"HISTORY",tags:["PYQ"],q:"Banabhatta was the court poet of which ruler?",opts:["Chandragupta II","Samudragupta","Harshavardhana","Pulakesi II"],ans:2,gem:"Banabhatta wrote 'Harshacharita' (biography of Harsha) and 'Kadambari'. Harsha's court was at Kanauj. For Guptas: Kalidasa was the poet. Don't mix them up — PYQ favourite."},
+{n:17,topic:"HISTORY",tags:["CRITICAL"],q:"The 'Vernacular Press Act' of 1878 was passed during the tenure of:",opts:["Lord Lytton","Lord Ripon","Lord Curzon","Lord Dufferin"],ans:0,gem:"Lord Lytton (the Viceroy who also partitioned Bengal — wait, that's Curzon!). CRITICAL: Vernacular Press Act (muzzled Indian language newspapers) = Lytton. Partition of Bengal (1905) = Curzon. Don't mix."},
+{n:18,topic:"HISTORY",tags:["PYQ"],q:"Which Mughal emperor built the Taj Mahal?",opts:["Akbar","Jahangir","Shah Jahan","Aurangzeb"],ans:2,gem:"Shah Jahan built Taj Mahal (1632–1653) in memory of Mumtaz Mahal. Architect: Ustad Ahmad Lahori. The minarets lean slightly outward to protect the main dome in case of collapse — brilliant engineering."},
+
+// ─── GEOGRAPHY (Q19–Q36) ────────────────────────────────────────────────────
+{n:19,topic:"GEOGRAPHY",tags:["PYQ","CRITICAL"],q:"Which river is known as the 'Sorrow of Bihar'?",opts:["Ganga","Kosi","Gandak","Son"],ans:1,gem:"Kosi is 'Sorrow of Bihar' due to frequent devastating floods (changes course up to 120 km). 'Sorrow of Bengal' = Damodar. 'Sorrow of Odisha' = Mahanadi. SSC loves these nicknames."},
+{n:20,topic:"GEOGRAPHY",tags:["PYQ"],q:"The Siachen Glacier is located in which mountain range?",opts:["Himalayas","Karakoram","Hindukush","Zaskar"],ans:1,gem:"Siachen is in the Karakoram range — the world's highest battlefield. It is the longest glacier in the Karakoram and the second-longest non-polar glacier. India controls it since Operation Meghdoot (1984)."},
+{n:21,topic:"GEOGRAPHY",tags:["CRITICAL","TRAP"],q:"The Tropic of Cancer passes through how many Indian states?",opts:["7","8","9","10"],ans:1,gem:"8 states: Gujarat, Rajasthan, MP, Chhattisgarh, Jharkhand, West Bengal, Tripura, Mizoram. TRAP: Some sources say 'passes through or touches' = 8 states. Remember: GRMCJWTM (first letters). SSC standard answer = 8."},
+{n:22,topic:"GEOGRAPHY",tags:["PYQ"],q:"Which is the largest freshwater lake in India?",opts:["Chilika Lake","Wular Lake","Dal Lake","Loktak Lake"],ans:1,gem:"Wular Lake (J&K) is India's largest freshwater lake. Chilika (Odisha) is largest brackish/saltwater coastal lagoon. Loktak (Manipur) is largest freshwater lake in Northeast. SSC frequently confuses these."},
+{n:23,topic:"GEOGRAPHY",tags:["PYQ"],q:"The Palk Strait separates India from:",opts:["Maldives","Sri Lanka","Indonesia","Myanmar"],ans:1,gem:"Palk Strait (narrow) + Gulf of Mannar (wider) together separate India from Sri Lanka. Adam's Bridge (Ram Setu) is a chain of limestone shoals in the Palk Strait. Width at narrowest: ~53 km."},
+{n:24,topic:"GEOGRAPHY",tags:["CRITICAL"],q:"Which Indian state has the longest coastline?",opts:["Maharashtra","Andhra Pradesh","Tamil Nadu","Gujarat"],ans:3,gem:"Gujarat has the longest coastline (~1,600 km) due to its highly indented coast including the Gulf of Kutch and Gulf of Khambhat. Second longest: Andhra Pradesh. CRITICAL: Often asked with wrong answer options."},
+{n:25,topic:"GEOGRAPHY",tags:["PYQ","TRAP"],q:"The 'Roaring Forties' refers to:",opts:["Tropical cyclones in India","Strong westerly winds in 40°–50° S latitudes","Trade winds in equatorial region","Monsoon winds over Bay of Bengal"],ans:1,gem:"Roaring Forties = westerly winds 40°–50° S. Furious Fifties = 50°–60° S. Shrieking Sixties = 60°–70° S. These were crucial for sailing ships before the Suez/Panama Canals."},
+{n:26,topic:"GEOGRAPHY",tags:["CRITICAL"],q:"The 'Sundarbans' mangrove forest is shared between India and:",opts:["Myanmar","Bangladesh","Sri Lanka","Nepal"],ans:1,gem:"Sundarbans spans West Bengal (India) and Bangladesh — home to Bengal tigers that swim. UNESCO World Heritage Site. India's part is in 24 Parganas district. Largest mangrove forest in the world."},
+{n:27,topic:"GEOGRAPHY",tags:["PYQ"],q:"Aravalli Range is the oldest mountain range in India. What is its highest peak?",opts:["Guru Shikhar","Achalgarh","Taragarh","Kumbhalgarh"],ans:0,gem:"Guru Shikhar (Mount Abu, Rajasthan) at ~1,722 m is the highest peak of Aravallis. Aravalli is one of the oldest fold mountains in the world (pre-Cambrian). It runs from Gujarat to Delhi."},
+{n:28,topic:"GEOGRAPHY",tags:["TRAP"],q:"Where is Duncan Passage located?",opts:["Between North and South Andaman","Between South Andaman and Little Andaman","Between Little Andaman and Car Nicobar","Between Andaman and Nicobar Islands"],ans:1,gem:"Duncan Passage: Between South Andaman & Little Andaman. Ten Degree Channel: Between Andaman & Nicobar Islands. TRAP: SSC loves these sea passages. Nine Degree Channel: between Lakshadweep islands."},
+{n:29,topic:"GEOGRAPHY",tags:["PYQ"],q:"The Nanda Devi peak is located in which state?",opts:["Himachal Pradesh","Uttarakhand","Sikkim","Jammu & Kashmir"],ans:1,gem:"Nanda Devi (7,816 m) is in Uttarakhand and is the highest peak entirely within India. K2 is higher but in disputed territory. Nanda Devi Biosphere Reserve is a UNESCO World Heritage Site."},
+{n:30,topic:"GEOGRAPHY",tags:["CRITICAL"],q:"Which ocean current is responsible for making Western Europe warmer than its latitude would suggest?",opts:["Labrador Current","Canary Current","North Atlantic Drift","Benguela Current"],ans:2,gem:"North Atlantic Drift (extension of Gulf Stream) brings warm waters to NW Europe. UK at 51°N has milder winters than Winnipeg at the same latitude. This is why London rarely freezes while Moscow does."},
+{n:31,topic:"GEOGRAPHY",tags:["PYQ"],q:"The 'Eastern Ghats' are discontinuous hills running parallel to which coast?",opts:["West coast of India","East coast of India","Northern plains","Deccan Plateau edge"],ans:1,gem:"Eastern Ghats run parallel to Coromandel Coast (E coast). They are lower, discontinuous and cut by rivers (Mahanadi, Godavari, Krishna, Kaveri). Western Ghats = continuous, higher, Malabar Coast."},
+{n:32,topic:"GEOGRAPHY",tags:["TRAP"],q:"The 'Ring of Fire' is associated with which ocean?",opts:["Indian Ocean","Atlantic Ocean","Pacific Ocean","Arctic Ocean"],ans:2,gem:"Pacific Ring of Fire = zone of volcanoes and earthquakes around the Pacific Ocean rim (Chile, Japan, Philippines, etc.). ~90% of world's earthquakes occur here. TRAP: Indian Ocean has some activity but it's the Pacific."},
+{n:33,topic:"GEOGRAPHY",tags:["PYQ"],q:"Which among the following is India's highest waterfall?",opts:["Jog Falls","Nohkalikai Falls","Dudh Sagar Falls","Chitrakote Falls"],ans:1,gem:"Nohkalikai Falls (Meghalaya) ~340 m is India's tallest waterfall. Jog Falls (Karnataka) ~253 m is the highest purely plunge waterfall. SSC often asks 'highest' vs 'plunge type' — Nohkalikai wins overall."},
+{n:34,topic:"GEOGRAPHY",tags:["CRITICAL"],q:"The International Date Line approximately follows which meridian?",opts:["0° meridian","90° East","135° East","180° meridian"],ans:3,gem:"IDL roughly follows 180° meridian but zigzags to keep island nations in same time zone (Fiji, Kiribati). Crossing westward: gain a day. Crossing eastward: lose a day. Prime Meridian (0°) passes through Greenwich."},
+{n:35,topic:"GEOGRAPHY",tags:["PYQ"],q:"The 'Corn Belt' of the USA is located in which region?",opts:["Northeast USA","Southeast USA","Central/Midwest USA","Pacific Coast"],ans:2,gem:"US Corn Belt = Iowa, Illinois, Indiana, Ohio, Nebraska. Conditions: fertile glacial soil, moderate rainfall, warm summers. Similarly India's rice belt is in eastern India (WB, Odisha, AP). Geographic belts are SSC favourites."},
+{n:36,topic:"GEOGRAPHY",tags:["TRAP"],q:"Which city is known as the 'Gateway of India' for trade with Southeast Asia?",opts:["Mumbai","Chennai","Kolkata","Vishakhapatnam"],ans:1,gem:"TRAP: Mumbai has the famous 'Gateway of India' monument, but Chennai (Madras) is called 'Gateway to India' for SE Asia trade. The question asks about trade context. Gateway of India (monument) = Mumbai."},
+
+// ─── POLITY (Q37–Q54) ───────────────────────────────────────────────────────
+{n:37,topic:"POLITY",tags:["PYQ","CRITICAL"],q:"The Constitution of India was adopted on:",opts:["15 August 1947","26 January 1950","26 November 1949","2 October 1949"],ans:2,gem:"Adopted: November 26, 1949 (Constitution Day / Samvidhan Divas). Came into effect: January 26, 1950 (Republic Day). Dr. B.R. Ambedkar was Chairman of Drafting Committee. Most frequently tested polity date."},
+{n:38,topic:"POLITY",tags:["PYQ"],q:"The concept of 'Judicial Review' in the Indian Constitution is borrowed from:",opts:["UK","USA","Ireland","Canada"],ans:1,gem:"Judicial Review (power to strike down unconstitutional laws) = USA. Fundamental Rights = USA. DPSPs = Ireland. Federal Structure = Canada/Australia. Parliamentary System = UK. SSC loves these borrowings."},
+{n:39,topic:"POLITY",tags:["CRITICAL","TRAP"],q:"Which Schedule of the Constitution deals with the anti-defection law?",opts:["8th Schedule","9th Schedule","10th Schedule","11th Schedule"],ans:2,gem:"10th Schedule (added by 52nd Amendment, 1985) = Anti-Defection Law. TRAP: 8th Schedule = 22 official languages; 9th Schedule = laws immune from judicial review; 11th Schedule = Panchayati Raj (73rd Amendment)."},
+{n:40,topic:"POLITY",tags:["PYQ"],q:"The President of India is elected by:",opts:["Lok Sabha members only","Both Houses of Parliament","Elected members of Parliament + State Legislative Assemblies","All members of Parliament + all State Legislatures"],ans:2,gem:"Electoral College for President = Elected MPs (Lok Sabha + Rajya Sabha) + Elected MLAs of all State Assemblies + Delhi & Puducherry Assemblies. Nominated members do NOT vote. Rajya Sabha nominated members excluded."},
+{n:41,topic:"POLITY",tags:["CRITICAL"],q:"Article 356 of the Indian Constitution deals with:",opts:["Financial Emergency","National Emergency","President's Rule in States","Suspension of Fundamental Rights"],ans:2,gem:"Article 356 = President's Rule (State Emergency). Article 352 = National Emergency (external aggression/war). Article 360 = Financial Emergency. The '3-5-6-0' trick: 352-National, 356-State, 360-Financial."},
+{n:42,topic:"POLITY",tags:["PYQ","TRAP"],q:"Which Fundamental Right was removed from the Constitution by the 44th Amendment Act?",opts:["Right to Education","Right to Property","Right to Equality","Right against Exploitation"],ans:1,gem:"Right to Property (Article 31) was removed from Fundamental Rights by 44th Amendment (1978) under Janata Government. Now it is a legal/constitutional right under Article 300A but not a Fundamental Right."},
+{n:43,topic:"POLITY",tags:["PYQ"],q:"The Chairman of the Rajya Sabha is:",opts:["Speaker of Lok Sabha","President of India","Vice President of India","Prime Minister"],ans:2,gem:"Vice President is the ex-officio Chairman of Rajya Sabha. Deputy Chairman is elected by RS members. Lok Sabha has a Speaker elected by its members. Don't confuse — SSC trap question."},
+{n:44,topic:"POLITY",tags:["CRITICAL"],q:"'Zero Hour' in Indian Parliament refers to:",opts:["First hour of Parliament session","Time immediately after Question Hour","Midnight session","Time for private member bills"],ans:1,gem:"Zero Hour (informal term) = proceedings immediately after Question Hour (12 noon). Members raise urgent public matters without advance notice. It is unique to Indian Parliament, not in Constitution or Rules."},
+{n:45,topic:"POLITY",tags:["PYQ"],q:"The 73rd Constitutional Amendment (1992) is related to:",opts:["Urban Local Bodies","Panchayati Raj","Right to Education","GST"],ans:1,gem:"73rd Amendment = Panchayati Raj (rural local bodies). 74th Amendment = Nagarpalika / Urban Local Bodies. 86th Amendment = RTE (Right to Education). Remember: 73-Rural, 74-Urban."},
+{n:46,topic:"POLITY",tags:["TRAP"],q:"The concept of 'Basic Structure' of the Constitution was propounded in which case?",opts:["Golaknath Case","Kesavananda Bharati Case","Minerva Mills Case","Maneka Gandhi Case"],ans:1,gem:"Kesavananda Bharati v. State of Kerala (1973) — 13-judge bench introduced Basic Structure Doctrine. TRAP: Golaknath (1967) said Parliament cannot amend Fundamental Rights. Kesavananda overruled it partially but gave Basic Structure."},
+{n:47,topic:"POLITY",tags:["PYQ"],q:"Which body is described as the 'Fifth Wheel of the Coach' in the Indian Constitution?",opts:["Planning Commission","Finance Commission","Rajya Sabha","UPSC"],ans:2,gem:"Rajya Sabha was called 'Fifth Wheel of the Coach' by critics who felt it was redundant. Dr. Ambedkar defended it. It represents states' interests and prevents hasty legislation. Phrase attributed to Srinivasa Iyengar."},
+{n:48,topic:"POLITY",tags:["CRITICAL"],q:"Under Article 21A, Right to Education is a Fundamental Right for children in which age group?",opts:["5–14 years","6–14 years","6–18 years","5–16 years"],ans:1,gem:"Article 21A (86th Amendment, 2002) = Free and compulsory education for 6–14 years. The RTE Act 2009 operationalised this. CRITICAL: 6 to 14, not 5 to 14. 25% seats reserved in private schools under RTE."},
+{n:49,topic:"POLITY",tags:["PYQ"],q:"The Directive Principle that relates to 'Equal pay for equal work for both men and women' is in:",opts:["Article 38","Article 39","Article 40","Article 41"],ans:1,gem:"Article 39(d) = Equal pay for equal work. Article 39(b) = Adequate means of livelihood. Article 40 = Organisation of Village Panchayats. DPSPs are in Part IV (Articles 36–51)."},
+{n:50,topic:"POLITY",tags:["TRAP"],q:"Which is the correct order of precedence among the following constitutional posts?",opts:["President, VP, PM, Speaker","President, PM, VP, Speaker","President, VP, Speaker, PM","President, PM, Speaker, VP"],ans:0,gem:"Order of precedence: President → VP → PM → Speaker. TRAP: People confuse PM and Speaker positions. The Warrant of Precedence is a government document listing the order of officials."},
+{n:51,topic:"POLITY",tags:["PYQ"],q:"The idea of 'Preamble' in the Indian Constitution was borrowed from the Constitution of:",opts:["USA","UK","France","Australia"],ans:0,gem:"Preamble style from USA. 'We the People' phrasing. Also: Liberty, Equality, Fraternity from French Revolution. The Objective Resolution moved by Nehru (1946) became the basis for Preamble."},
+{n:52,topic:"POLITY",tags:["CRITICAL"],q:"A Money Bill can be introduced only in:",opts:["Rajya Sabha","Lok Sabha","Either House","Joint Session"],ans:1,gem:"Money Bills (Article 110) can ONLY be introduced in Lok Sabha. Rajya Sabha can only make recommendations (within 14 days), which Lok Sabha may accept or reject. Rajya Sabha has no power to amend Money Bills."},
+{n:53,topic:"POLITY",tags:["PYQ"],q:"Which Article of the Constitution deals with the election of the Vice President?",opts:["Article 63","Article 65","Article 66","Article 68"],ans:2,gem:"Article 66 = Election of VP. Article 63 = VP of India. Article 65 = VP to act as President. Article 67 = Term of VP. Electoral College for VP = All MPs (including nominated), unlike President (only elected MPs + MLAs)."},
+{n:54,topic:"POLITY",tags:["TRAP"],q:"How many languages are listed in the 8th Schedule of the Indian Constitution currently?",opts:["18","21","22","24"],ans:2,gem:"22 languages (after 92nd Amendment adding Bodo, Dogri, Maithili, Santhali in 2004). Originally 14 languages. TRAP: Older textbooks say 18, some say 21. Current correct answer = 22. English is NOT in 8th Schedule."},
+
+// ─── ECONOMICS (Q55–Q69) ────────────────────────────────────────────────────
+{n:55,topic:"ECONOMICS",tags:["PYQ","CRITICAL"],q:"Union Budget 2025–26 was presented by Finance Minister Nirmala Sitharaman on:",opts:["January 31, 2025","February 1, 2025","February 28, 2025","March 1, 2025"],ans:1,gem:"February 1, 2025 — this is now a tradition since 2017 (changed from last day of February). FM Nirmala Sitharaman presented her 8th consecutive budget, setting a record. Budget theme 2025–26: 'Viksit Bharat'."},
+{n:56,topic:"ECONOMICS",tags:["CRITICAL"],q:"The 'Laffer Curve' in economics shows the relationship between:",opts:["GDP growth and inflation","Tax rates and tax revenue","Exports and imports","Employment and wages"],ans:1,gem:"Laffer Curve: at 0% and 100% tax rates, revenue = 0. Optimal tax rate maximises revenue. Concept by Arthur Laffer. Used to justify 'trickle-down economics'. SSC and banking exams love this."},
+{n:57,topic:"ECONOMICS",tags:["PYQ","TRAP"],q:"Which Five Year Plan in India gave the highest priority to agriculture?",opts:["First Five Year Plan","Second Five Year Plan","Third Five Year Plan","Fourth Five Year Plan"],ans:0,gem:"First FYP (1951–56) prioritised agriculture and community development. Second FYP (Mahalanobis Plan) prioritised heavy industries. TRAP: Some think first plan was about industry. 'First = Farm' is the memory trick."},
+{n:58,topic:"ECONOMICS",tags:["CRITICAL"],q:"The term 'Stagflation' refers to:",opts:["High inflation with high growth","High inflation with stagnant economic growth","Deflation with high unemployment","Low inflation with high growth"],ans:1,gem:"Stagflation = Stagnation + Inflation. First occurred prominently in 1970s due to oil shocks. Difficult for policymakers: stimulus worsens inflation, tight money worsens stagnation. Coined by Iain Macleod (UK politician, 1965)."},
+{n:59,topic:"ECONOMICS",tags:["PYQ"],q:"NABARD (National Bank for Agriculture and Rural Development) was established in:",opts:["1972","1982","1992","2002"],ans:1,gem:"NABARD established on July 12, 1982 based on B. Sivaraman Committee. It is the apex institution for rural and agricultural credit in India. Headquarters: Mumbai. Refinances rural cooperative banks and RRBs."},
+{n:60,topic:"ECONOMICS",tags:["CRITICAL","TRAP"],q:"Which among the following is NOT included in the calculation of GDP?",opts:["Government expenditure","Private consumption","Transfer payments","Gross investment"],ans:2,gem:"TRAP: Transfer payments (pensions, subsidies, social benefits) are NOT included in GDP as they don't represent production of goods/services. GDP = C + I + G + (X-M). Only productive activities count."},
+{n:61,topic:"ECONOMICS",tags:["PYQ"],q:"The headquarters of the International Monetary Fund (IMF) is located in:",opts:["New York","London","Geneva","Washington D.C."],ans:3,gem:"IMF and World Bank both headquartered in Washington D.C. IMF maintains global financial stability and provides loans to countries with balance of payment problems. WTO is in Geneva. UN in New York."},
+{n:62,topic:"ECONOMICS",tags:["CRITICAL"],q:"'Operation Greens' in India aims to boost production of:",opts:["Spices","Tomato, Onion and Potato (TOP)","Pulses","Oilseeds"],ans:1,gem:"Operation Greens launched in Budget 2018–19 to stabilise supply/prices of Tomato, Onion, Potato (TOP crops). Extended to all fruits and vegetables during COVID. Similar to Operation Flood (milk) and Operation Black Board."},
+{n:63,topic:"ECONOMICS",tags:["PYQ"],q:"The 'SLR' (Statutory Liquidity Ratio) is the ratio of a bank's liquid assets to its:",opts:["Total deposits","Net demand and time liabilities","Total advances","Capital and reserves"],ans:1,gem:"SLR = (Liquid assets / Net Demand and Time Liabilities) × 100. Banks must maintain SLR in form of gold, cash, and government securities. RBI uses SLR to control credit expansion."},
+{n:64,topic:"ECONOMICS",tags:["TRAP"],q:"'Repo Rate' is the rate at which:",opts:["Banks borrow from RBI","RBI borrows from banks","Banks lend to customers","Government borrows from RBI"],ans:0,gem:"Repo Rate = rate at which commercial banks borrow from RBI by selling securities. Reverse Repo = rate at which RBI borrows from banks. High Repo Rate → expensive borrowing → less money in market → controls inflation."},
+{n:65,topic:"ECONOMICS",tags:["PYQ"],q:"The Economic Survey of India is presented before the Union Budget by:",opts:["Prime Minister's Office","Finance Ministry (DEA)","NITI Aayog","RBI"],ans:1,gem:"Economic Survey is prepared by the Department of Economic Affairs (Finance Ministry) under the Chief Economic Adviser (CEA). It reviews the economy's performance of the past year and gives outlook for next year."},
+{n:66,topic:"ECONOMICS",tags:["CRITICAL"],q:"Which sector contributes the MOST to India's GDP (as per recent estimates)?",opts:["Agriculture","Industry","Services","Manufacturing"],ans:2,gem:"Services sector contributes ~54–56% to India's GDP (IT, banking, trade, real estate). Industry ~25–27%. Agriculture ~15–18%. Yet agriculture employs ~45% of workforce — this imbalance is a key economic challenge."},
+{n:67,topic:"ECONOMICS",tags:["PYQ"],q:"The 'Gross Enrolment Ratio' (GER) is an indicator used in which sector?",opts:["Healthcare","Education","Agriculture","Industry"],ans:1,gem:"GER = (Number of students enrolled at a level / Population in that age group) × 100. Used to measure access to education. India's GER in higher education is ~28–30% (as per AISHE reports). UNESCO uses this globally."},
+{n:68,topic:"ECONOMICS",tags:["CRITICAL","TRAP"],q:"Which index is used to measure the Human Development Index (HDI)?",opts:["Only GDP per capita","Life expectancy + Education + GNI per capita","GDP + Gini Coefficient + Poverty rate","SENSEX + WPI + CPI"],ans:1,gem:"HDI = (Life expectancy index + Education index + GNI per capita index) / 3. Published annually by UNDP. India's HDI rank ~134 (2024). Education index = mean years of schooling + expected years of schooling."},
+{n:69,topic:"ECONOMICS",tags:["PYQ"],q:"What is the full form of 'SEBI'?",opts:["Securities Exchange Board of India","Securities and Exchange Board of India","Stock Exchange Bureau of India","Securities Equity Board of India"],ans:1,gem:"SEBI = Securities and Exchange Board of India. Established 1988, given statutory powers in 1992. Headquarters: Mumbai. Regulates stock markets, mutual funds, FIIs. Chairman is appointed by the Government of India."},
+
+// ─── SCIENCE (Q70–Q89) ──────────────────────────────────────────────────────
+{n:70,topic:"SCIENCE",tags:["PYQ","CRITICAL"],q:"Which gas is responsible for the 'Greenhouse Effect' in Earth's atmosphere?",opts:["Oxygen","Nitrogen","Carbon Dioxide","Ozone"],ans:2,gem:"CO2 is the primary greenhouse gas by human contribution. Others: CH4, N2O, water vapour (most abundant naturally), CFCs. Ozone depletion is a separate issue. CRITICAL: SSC asks 'primary cause' = CO2."},
+{n:71,topic:"SCIENCE",tags:["PYQ"],q:"The SI unit of electric current is:",opts:["Volt","Ohm","Ampere","Watt"],ans:2,gem:"Ampere (A) is the SI base unit of current. Volt = potential difference. Ohm = resistance. Watt = power (= Volt × Ampere). Coulomb = charge (Ampere × second). Named after André-Marie Ampère."},
+{n:72,topic:"SCIENCE",tags:["CRITICAL","TRAP"],q:"Which vitamin is produced by the human body when exposed to sunlight?",opts:["Vitamin A","Vitamin B12","Vitamin C","Vitamin D"],ans:3,gem:"Vitamin D (calciferol) is synthesised in skin when UV-B light strikes 7-dehydrocholesterol. TRAP: Vitamin C is from citrus (external). Vitamin D deficiency = rickets (children), osteomalacia (adults). The 'sunshine vitamin'."},
+{n:73,topic:"SCIENCE",tags:["PYQ"],q:"The process by which green plants prepare their food using sunlight is called:",opts:["Respiration","Transpiration","Photosynthesis","Chemosynthesis"],ans:2,gem:"Photosynthesis: 6CO2 + 6H2O + light energy → C6H12O6 + 6O2. Light reaction in thylakoids; dark reaction (Calvin cycle) in stroma. Chlorophyll absorbs red and blue light, reflects green — that's why plants look green."},
+{n:74,topic:"SCIENCE",tags:["CRITICAL"],q:"Which blood group is known as the 'Universal Donor'?",opts:["A","B","AB","O"],ans:3,gem:"O negative (O-) is universal donor for red cells because it lacks A, B, and Rh antigens. AB positive is universal recipient. In reality, blood matching is always done before transfusion. Discovered by Karl Landsteiner (1901)."},
+{n:75,topic:"SCIENCE",tags:["PYQ","TRAP"],q:"Newton's Second Law of Motion states that force equals:",opts:["mass × velocity","mass × acceleration","mass × displacement","momentum × time"],ans:1,gem:"F = ma (force = mass × acceleration). Also expressed as F = dp/dt (rate of change of momentum). TRAP: F = mv is momentum, not force. Newton's laws are SSC staples — First (Inertia), Second (F=ma), Third (Action-Reaction)."},
+{n:76,topic:"SCIENCE",tags:["PYQ"],q:"The chemical formula of Common Salt (table salt) is:",opts:["NaOH","NaCl","Na2CO3","NaHCO3"],ans:1,gem:"NaCl = Sodium Chloride (common salt). NaOH = caustic soda. Na2CO3 = washing soda. NaHCO3 = baking soda. Na2SO4·10H2O = Glauber's salt. These sodium compounds are frequent SSC Chemistry questions."},
+{n:77,topic:"SCIENCE",tags:["CRITICAL"],q:"The powerhouse of the cell is:",opts:["Nucleus","Ribosome","Mitochondria","Golgi Apparatus"],ans:2,gem:"Mitochondria produce ATP via cellular respiration (Krebs cycle + oxidative phosphorylation). They have their own DNA (circular, like bacteria) — supporting the endosymbiotic theory. 'Power plant = Mito, Post office = Golgi'."},
+{n:78,topic:"SCIENCE",tags:["PYQ"],q:"Which metal is the best conductor of electricity?",opts:["Gold","Copper","Silver","Aluminium"],ans:2,gem:"Silver has highest electrical conductivity, followed by Copper, then Gold, then Aluminium. But copper is most used commercially due to cost. Gold is used in microchips to prevent corrosion despite lower conductivity."},
+{n:79,topic:"SCIENCE",tags:["TRAP"],q:"Peristalsis is the movement of food through the:",opts:["Lungs","Digestive tract","Blood vessels","Lymphatic system"],ans:1,gem:"Peristalsis = wave-like muscular contractions propelling food through the digestive tract (oesophagus, stomach, intestines). TRAP: Some confuse with heartbeat (cardiac muscle). Peristalsis is involuntary smooth muscle movement."},
+{n:80,topic:"SCIENCE",tags:["CRITICAL"],q:"The ozone layer is found in which layer of the Earth's atmosphere?",opts:["Troposphere","Stratosphere","Mesosphere","Thermosphere"],ans:1,gem:"Ozone layer (ozonesphere) is in the stratosphere, 15–35 km altitude. Absorbs harmful UV-B and UV-C radiation. Depletion by CFCs (chlorofluorocarbons) caused 'ozone hole' over Antarctica, measured since 1985."},
+{n:81,topic:"SCIENCE",tags:["PYQ"],q:"DNA was first discovered by:",opts:["James Watson","Francis Crick","Friedrich Miescher","Rosalind Franklin"],ans:2,gem:"Friedrich Miescher (1869) first isolated DNA from white blood cells and called it 'nuclein'. Watson and Crick proposed the double helix structure (1953). Franklin's X-ray crystallography was crucial evidence. Miescher is the real discoverer."},
+{n:82,topic:"SCIENCE",tags:["CRITICAL","TRAP"],q:"Which metal is liquid at room temperature?",opts:["Gallium","Mercury","Bromine","Cesium"],ans:1,gem:"Mercury (Hg) is a metal liquid at room temperature (~25°C). Gallium melts at 29.8°C (liquefies in your hand!). Bromine is a liquid NON-METAL. TRAP: SSC might call Bromine a liquid metal — it's not, it's a halogen (non-metal)."},
+{n:83,topic:"SCIENCE",tags:["PYQ"],q:"The unit of measurement of frequency is:",opts:["Decibel","Hertz","Joule","Watt"],ans:1,gem:"Hertz (Hz) = cycles per second = SI unit of frequency. Named after Heinrich Hertz. Human hearing range: 20 Hz–20,000 Hz. Ultrasound > 20,000 Hz. Infrasound < 20 Hz. Decibel measures loudness/sound intensity."},
+{n:84,topic:"SCIENCE",tags:["CRITICAL"],q:"Which disease is caused by the deficiency of Vitamin C?",opts:["Rickets","Pellagra","Scurvy","Beriberi"],ans:2,gem:"Scurvy = Vitamin C (ascorbic acid) deficiency → bleeding gums, weak joints. Rickets = Vitamin D. Pellagra = Niacin (B3). Beriberi = Thiamine (B1). Night blindness = Vitamin A. These vitamin-disease pairs are must-know for SSC."},
+{n:85,topic:"SCIENCE",tags:["PYQ"],q:"The speed of sound in air at 0°C is approximately:",opts:["300 m/s","331 m/s","343 m/s","360 m/s"],ans:1,gem:"Speed of sound in air at 0°C ≈ 331 m/s. At 25°C ≈ 346 m/s (increases with temperature). Speed of light = 3×10⁸ m/s. Sound travels faster in solids > liquids > gases. SSC standard answer = 331 m/s at 0°C."},
+{n:86,topic:"SCIENCE",tags:["TRAP"],q:"The human kidney filters blood to produce urine. The functional unit of the kidney is:",opts:["Neuron","Nephron","Alveolus","Villus"],ans:1,gem:"Nephron is the structural and functional unit of kidney (~1 million per kidney). Neuron = nerve cell. Alveolus = lung gas exchange. Villus = intestinal absorption. Each nephron has Bowman's capsule, Loop of Henle, collecting duct."},
+{n:87,topic:"SCIENCE",tags:["PYQ","CRITICAL"],q:"Which element has the highest electronegativity?",opts:["Oxygen","Nitrogen","Chlorine","Fluorine"],ans:3,gem:"Fluorine (F) has the highest electronegativity (3.98 on Pauling scale). Electronegativity increases up and right on the periodic table. Order: F > O > Cl > N. Fluorine is the most reactive non-metal element."},
+{n:88,topic:"SCIENCE",tags:["PYQ"],q:"The process of converting iron ore into iron using a blast furnace is called:",opts:["Smelting","Refining","Sintering","Calcination"],ans:0,gem:"Smelting = reducing metal ore with heat (coke/charcoal) to extract metal. In blast furnace: Fe2O3 + CO → Fe + CO2. Refining = purifying extracted metal. Calcination = heating without air. Sintering = compacting ore."},
+{n:89,topic:"SCIENCE",tags:["CRITICAL"],q:"Which among the following is NOT a base metal in chemistry?",opts:["Iron","Zinc","Lead","Gold"],ans:3,gem:"Gold is a noble/precious metal (does not oxidise or corrode easily). Base metals (iron, copper, zinc, lead, aluminium, nickel) react with air/water/acids. Gold, silver, platinum = precious metals. Gold is used in jewellery precisely because it doesn't corrode."},
+
+// ─── CURRENT AFFAIRS (Q90–Q109) ─────────────────────────────────────────────
+{n:90,topic:"CURRENT AFFAIRS",tags:["CRITICAL"],q:"Which country hosted the G20 Summit in 2024?",opts:["India","Brazil","South Africa","USA"],ans:1,gem:"Brazil's Rio de Janeiro hosted the G20 Summit in November 2024. India hosted G20 in New Delhi (2023). South Africa will host in 2025. The 2024 theme was 'Building a Just World and a Sustainable Planet'."},
+{n:91,topic:"CURRENT AFFAIRS",tags:["CRITICAL"],q:"India's 'Operation Sindoor' (2025) was a military strike against terrorist infrastructure in:",opts:["Bangladesh","China","Pakistan and Pakistan-Occupied Kashmir","Afghanistan"],ans:2,gem:"Operation Sindoor (May 7, 2025) — India's precision missile strikes on 9 terrorist camps in Pakistan and PoK, targeting groups behind the Pahalgam terror attack (April 22, 2025). A landmark military action using Brahmos and Scalp missiles."},
+{n:92,topic:"CURRENT AFFAIRS",tags:["CRITICAL"],q:"The Pahalgam terror attack (April 2025) targeted tourists in which district of J&K?",opts:["Sopore","Anantnag (Baisaran Valley)","Pulwama","Baramulla"],ans:1,gem:"The Pahalgam attack of April 22, 2025 at Baisaran Valley (meadow near Pahalgam), Anantnag district killed 26 civilians, mostly Hindu tourists. It triggered Operation Sindoor. The attack was attributed to The Resistance Front (TRF)."},
+{n:93,topic:"CURRENT AFFAIRS",tags:["CRITICAL"],q:"Who won the Nobel Peace Prize in 2024?",opts:["Greta Thunberg","Nihon Hidankyo","Malala Yousafzai","Antonio Guterres"],ans:1,gem:"Nihon Hidankyo (Japanese organization of atomic bomb survivors — Hibakusha) won the 2024 Nobel Peace Prize for their work towards a world free of nuclear weapons, 79 years after Hiroshima and Nagasaki."},
+{n:94,topic:"CURRENT AFFAIRS",tags:["CRITICAL"],q:"India's first indigenously built nuclear-powered ballistic missile submarine (SSBN) is:",opts:["INS Arihant","INS Arighat","INS Chakra","INS Vikrant"],ans:0,gem:"INS Arihant (commissioned 2016) is India's first indigenous SSBN. INS Arighat was the second, commissioned August 2024. INS Chakra is a leased Russian submarine. INS Vikrant is India's first indigenous aircraft carrier."},
+{n:95,topic:"CURRENT AFFAIRS",tags:["CRITICAL"],q:"Who became the Prime Minister of the United Kingdom in 2024?",opts:["Boris Johnson","Rishi Sunak","Keir Starmer","Jeremy Corbyn"],ans:2,gem:"Keir Starmer (Labour Party) became UK PM in July 2024 after Labour won a landslide general election, ending 14 years of Conservative rule. Rishi Sunak was the outgoing PM. Starmer is a former Director of Public Prosecutions."},
+{n:96,topic:"CURRENT AFFAIRS",tags:["CRITICAL"],q:"The 2024 Paris Olympics was the ____ edition of the Summer Olympic Games.",opts:["30th","32nd","33rd","34th"],ans:2,gem:"Paris 2024 was the 33rd Summer Olympics (officially Games of the XXXIII Olympiad). Paris last hosted in 1900 and 1924. India won 6 medals (1 Silver, 5 Bronze). Neeraj Chopra won Silver in javelin."},
+{n:97,topic:"CURRENT AFFAIRS",tags:["CRITICAL"],q:"Which Indian became the first woman to climb Mt Everest four times?",opts:["Santosh Yadav","Anshu Jamsenpa","Phurba Tamang","Savita Kanswal"],ans:1,gem:"Anshu Jamsenpa (from Arunachal Pradesh) holds the record for fastest double ascent of Everest in same season. However, for 4 times Everest — Phurba Tamang (Sherpa woman) achieved it. This area sees frequent updates; verify current record."},
+{n:98,topic:"CURRENT AFFAIRS",tags:["CRITICAL"],q:"India's GDP growth rate for FY 2024–25 was estimated at approximately:",opts:["6.2%","6.4%","7.2%","8.5%"],ans:1,gem:"India's GDP growth for FY2024–25 was estimated at ~6.4% (NSO first advance estimate). RBI projected 6.6%. India remained the fastest-growing major economy. FY2023–24 growth was 8.2%."},
+{n:99,topic:"CURRENT AFFAIRS",tags:["CRITICAL"],q:"The Unified Pension Scheme (UPS) announced in 2024 will be implemented from:",opts:["April 1, 2024","April 1, 2025","January 1, 2025","October 1, 2024"],ans:1,gem:"UPS announced August 24, 2024 for Central Government employees, effective from April 1, 2025. It guarantees 50% of average basic pay as pension after 25 years of service — a blend of Old Pension Scheme (OPS) and NPS."},
+{n:100,topic:"CURRENT AFFAIRS",tags:["CRITICAL"],q:"Which mission did ISRO successfully complete in 2023, making India the first country to land near the lunar South Pole?",opts:["Chandrayaan-1","Chandrayaan-2","Chandrayaan-3","Aditya-L1"],ans:2,gem:"Chandrayaan-3's Vikram lander successfully landed near the lunar South Pole on August 23, 2023. India became the 4th country to achieve soft lunar landing and the FIRST to land near the south pole. August 23 = National Space Day."},
+{n:101,topic:"CURRENT AFFAIRS",tags:["CRITICAL"],q:"Who was appointed as the new Chief Justice of India in 2024?",opts:["D.Y. Chandrachud","Sanjiv Khanna","B.R. Gavai","N.V. Ramana"],ans:1,gem:"Justice Sanjiv Khanna was appointed the 51st Chief Justice of India on November 11, 2024, succeeding D.Y. Chandrachud. He served till May 2025. Justice B.R. Gavai (first Dalit CJI) took over in May 2025."},
+{n:102,topic:"CURRENT AFFAIRS",tags:["CRITICAL"],q:"The FIFA World Cup 2026 will be jointly hosted by:",opts:["USA, Mexico, Canada","USA, Brazil, Argentina","Brazil, France, Spain","UK, France, Germany"],ans:0,gem:"FIFA World Cup 2026 will be co-hosted by USA, Canada, and Mexico — first time three nations host it. 48 teams will participate (expanded from 32). Final to be played at MetLife Stadium, New Jersey (USA). Called 'United 2026'."},
+{n:103,topic:"CURRENT AFFAIRS",tags:["CRITICAL"],q:"India's first vertical-lift maritime bridge was inaugurated in 2024 in which state?",opts:["Goa","Kerala","Maharashtra","Tamil Nadu"],ans:1,gem:"The New Pamban Bridge in Rameswaram, Tamil Nadu — India's first vertical-lift railway bridge — was inaugurated. It replaces the 100-year-old Pamban Bridge. The vertical section lifts to allow ships to pass through Palk Strait."},
+{n:104,topic:"CURRENT AFFAIRS",tags:["CRITICAL"],q:"The 'Vikshit Bharat' (Developed India) vision sets the target year for India becoming a developed nation as:",opts:["2035","2040","2047","2050"],ans:2,gem:"Viksit Bharat @2047 — India aims to become a developed nation by 2047, marking 100 years of independence. PM Modi's flagship vision covering economic, social, and governance goals. Also called 'India @100'."},
+{n:105,topic:"CURRENT AFFAIRS",tags:["CRITICAL"],q:"Donald Trump won the US Presidential Election in November 2024 against which Democratic candidate?",opts:["Joe Biden","Bernie Sanders","Kamala Harris","Hillary Clinton"],ans:2,gem:"Donald Trump defeated Vice President Kamala Harris in November 2024, becoming the 47th US President (he was also the 45th). Kamala Harris would have been the first female, Black, and South Asian-origin US President. Trump took office January 20, 2025."},
+{n:106,topic:"CURRENT AFFAIRS",tags:["CRITICAL"],q:"Which country became the newest member of NATO in 2024?",opts:["Ukraine","Georgia","Sweden","Moldova"],ans:2,gem:"Sweden officially joined NATO as its 32nd member in March 2024. Finland had joined in April 2023 (31st member). Both ended decades of military non-alignment triggered by Russia's invasion of Ukraine (2022)."},
+{n:107,topic:"CURRENT AFFAIRS",tags:["CRITICAL"],q:"The Nari Shakti Vandan Adhiniyam (Women's Reservation Bill) provides for reservation of seats for women in Lok Sabha and State Assemblies at:",opts:["25%","30%","33%","50%"],ans:2,gem:"Women's Reservation Bill (108th Constitutional Amendment) provides 33.3% (1/3rd) reservation for women in Lok Sabha, State Assemblies, and Delhi Assembly. Passed September 2023. Comes into force after next Census and delimitation."},
+{n:108,topic:"CURRENT AFFAIRS",tags:["CRITICAL"],q:"India's first 'bullet train' project runs between which two cities?",opts:["Delhi–Lucknow","Mumbai–Ahmedabad","Chennai–Bangalore","Pune–Mumbai"],ans:1,gem:"Mumbai–Ahmedabad High-Speed Rail Corridor (508 km) is India's first bullet train project, using Japanese Shinkansen technology. NHSRCL is implementing it. Estimated speed: 320 km/h. Target completion revised to 2028."},
+{n:109,topic:"CURRENT AFFAIRS",tags:["CRITICAL"],q:"Which Indian won the Booker Prize in 2024?",opts:["Arundhati Roy","Banu Mushtaq","Anuk Arudpragasam","No Indian won in 2024"],ans:3,gem:"The 2024 Booker Prize was won by Percival Everett (USA) for his novel 'James'. No Indian author won in 2024. Banu Mushtaq won the International Booker Prize 2025. Arundhati Roy won the Booker in 1997 for 'The God of Small Things'."},
+
+// ─── STATIC GK (Q110–Q124) ──────────────────────────────────────────────────
+{n:110,topic:"STATIC GK",tags:["PYQ","CRITICAL"],q:"The National Song of India ('Vande Mataram') was composed by:",opts:["Rabindranath Tagore","Bankim Chandra Chattopadhyay","Subramanya Bharati","Sarojini Naidu"],ans:1,gem:"Vande Mataram by Bankim Chandra Chattopadhyay from novel 'Anandamath' (1882). Rabindranath Tagore composed 'Jana Gana Mana' (National Anthem). TRAP: SSC frequently tests this difference. First sung at 1896 INC session."},
+{n:111,topic:"STATIC GK",tags:["PYQ"],q:"The 'Dronacharya Award' is given for excellence in:",opts:["Sports Performance","Sports Coaching","Military Service","Literary Achievement"],ans:1,gem:"Dronacharya Award = Outstanding coaches who produce medal-winning sportspersons at international events. Named after Guru Drona from Mahabharata. Arjuna Award = individual sports performance. Rajiv Gandhi Khel Ratna = highest sports honour."},
+{n:112,topic:"STATIC GK",tags:["PYQ"],q:"Who wrote the book 'Discovery of India'?",opts:["Mahatma Gandhi","Jawaharlal Nehru","Rajendra Prasad","Sardar Patel"],ans:1,gem:"Nehru wrote 'Discovery of India' while in Ahmadnagar Fort Prison (1944). Also wrote 'Glimpses of World History' and 'An Autobiography'. Gandhi wrote 'My Experiments with Truth'. SSC repeatedly tests these author-book pairs."},
+{n:113,topic:"STATIC GK",tags:["CRITICAL","TRAP"],q:"The highest civilian award of India is:",opts:["Padma Bhushan","Padma Vibhushan","Bharat Ratna","Padma Shri"],ans:2,gem:"Bharat Ratna (civilian) > Padma Vibhushan > Padma Bhushan > Padma Shri. TRAP: Some confuse Padma Vibhushan with the highest. Bharat Ratna can now also be given for excellence in any field, including public service. Instituted 1954."},
+{n:114,topic:"STATIC GK",tags:["PYQ"],q:"The ICC Cricket World Cup 2023 was won by:",opts:["India","Australia","South Africa","England"],ans:1,gem:"Australia won the ICC Cricket World Cup 2023, defeating India in the final at Narendra Modi Stadium, Ahmedabad (November 19, 2023). Australia's 6th ODI World Cup title. India had an unbeaten streak before the final."},
+{n:115,topic:"STATIC GK",tags:["PYQ"],q:"'Sare Jahan Se Accha' was written by:",opts:["Muhammad Iqbal","Faiz Ahmed Faiz","Mirza Ghalib","Sahir Ludhianvi"],ans:0,gem:"Muhammad Iqbal (Allama Iqbal) wrote 'Saare Jahan Se Achha' in 1904. He also wrote Pakistan's national anthem. Ironically, he later became a strong proponent of a separate Muslim homeland. Carried by Indian space missions too!"},
+{n:116,topic:"STATIC GK",tags:["PYQ"],q:"The 'Wimbledon Championship' is played on which surface?",opts:["Clay","Grass","Hard court","Carpet"],ans:1,gem:"Wimbledon (UK) = grass courts. French Open (Roland Garros) = clay. US Open = hard court. Australian Open = hard court. Only Wimbledon still uses grass — making it unique in the Grand Slam calendar."},
+{n:117,topic:"STATIC GK",tags:["CRITICAL"],q:"India's PSLV is manufactured by which organisation?",opts:["DRDO","HAL","ISRO","BEL"],ans:2,gem:"PSLV (Polar Satellite Launch Vehicle) and GSLV are built by ISRO. DRDO handles defence research. HAL makes aircraft. Antrix Corporation (ISRO's commercial arm) markets launches. PSLV has had 55+ consecutive successful launches."},
+{n:118,topic:"STATIC GK",tags:["PYQ"],q:"Who is the author of 'Arthashastra'?",opts:["Vatsyayana","Chanakya (Kautilya)","Manu","Narada"],ans:1,gem:"Arthashastra by Chanakya (Kautilya/Vishnugupta) — a treatise on statecraft, economic policy, and military strategy. Written ~4th century BCE. Rediscovered in 1905 by R. Shamasastry. Vatsyayana wrote 'Kamasutra'."},
+{n:119,topic:"STATIC GK",tags:["PYQ"],q:"The Khajuraho temples were built by which dynasty?",opts:["Chandellas","Paramaras","Pratiharas","Rashtrakultas"],ans:0,gem:"Khajuraho temples (Madhya Pradesh) built by Chandella dynasty (950–1050 CE). Known for erotic sculptures (only 10% of total carvings). UNESCO World Heritage Site. They represent Nagara style of temple architecture."},
+{n:120,topic:"STATIC GK",tags:["TRAP"],q:"The 'Abel Prize' is awarded for excellence in which field?",opts:["Literature","Peace","Mathematics","Physics"],ans:2,gem:"Abel Prize (Norway) = Mathematics equivalent of Nobel (since 2003). Named after Niels Henrik Abel. Nobel Prize does NOT have a Mathematics category (sometimes Fields Medal is considered equivalent — but that's awarded every 4 years)."},
+{n:121,topic:"STATIC GK",tags:["PYQ"],q:"Who is known as the 'Iron Man of India'?",opts:["Jawaharlal Nehru","B.R. Ambedkar","Sardar Vallabhbhai Patel","Bal Gangadhar Tilak"],ans:2,gem:"Sardar Vallabhbhai Patel = 'Iron Man of India' for integrating 562 princely states into India. Hyderabad = Police Action (1948). Junagadh, Travancore, Bhopal all integrated. Statue of Unity (world's tallest) dedicated to him."},
+{n:122,topic:"STATIC GK",tags:["PYQ"],q:"The sport of 'Kabaddi' originated in which country?",opts:["China","Japan","India","Pakistan"],ans:2,gem:"Kabaddi originated in ancient India, with roots in Tamil Nadu and Maharashtra. India has won all World Kabaddi Federation World Cups (men's). Pro Kabaddi League is the second highest-attended sports league in India."},
+{n:123,topic:"STATIC GK",tags:["PYQ"],q:"The 'Man Booker Prize' (International Booker Prize 2025) was won by which Indian-origin author?",opts:["Salman Rushdie","Jhumpa Lahiri","Banu Mushtaq","Arundhati Roy"],ans:2,gem:"Banu Mushtaq (Kannada author) won the International Booker Prize 2025 for her short story collection 'Heart Lamp' (translated by Deepa Bhasthi). First Kannada author and first in regional Indian language to win this prize."},
+{n:124,topic:"STATIC GK",tags:["CRITICAL"],q:"The Reserve Bank of India (RBI) was established in:",opts:["1930","1935","1947","1949"],ans:1,gem:"RBI established April 1, 1935 under RBI Act 1934. Nationalised in 1949. First Governor: Sir Osborne Smith. First Indian Governor: C.D. Deshmukh (1943). Current Governor: Sanjay Malhotra (from December 2024)."},
+
+// ─── ENVIRONMENT (Q125–Q132) ─────────────────────────────────────────────────
+{n:125,topic:"ENVIRONMENT",tags:["PYQ","CRITICAL"],q:"The 'Paris Agreement' on climate change aims to limit global warming to well below:",opts:["1°C above pre-industrial levels","2°C above pre-industrial levels","3°C above pre-industrial levels","4°C above pre-industrial levels"],ans:1,gem:"Paris Agreement (2015) aims to limit warming to well below 2°C above pre-industrial levels and pursue efforts to limit it to 1.5°C. India ratified it in 2016. USA re-joined under Biden (2021), left again under Trump (2025)."},
+{n:126,topic:"ENVIRONMENT",tags:["PYQ"],q:"Which among the following is a 'Biosphere Reserve' in India that is part of UNESCO's World Network?",opts:["Corbett National Park","Nilgiri Biosphere Reserve","Bandipur Tiger Reserve","Kanha National Park"],ans:1,gem:"Nilgiri Biosphere Reserve (first in India, 1986) is a UNESCO World Network of Biosphere Reserve. Includes Nagarhole, Mudumalai, Wayanad, Silent Valley. India has 18 biosphere reserves, 12 in UNESCO network."},
+{n:127,topic:"ENVIRONMENT",tags:["CRITICAL","TRAP"],q:"The 'Ramsar Convention' is related to the conservation of:",opts:["Migratory birds","Wetlands","Coral reefs","Mountain ecosystems"],ans:1,gem:"Ramsar Convention on Wetlands of International Importance (1971, Iran). India has 82 Ramsar sites (highest in South Asia). India's latest: Nanjarayan Bird Sanctuary (TN), added 2025. TRAP: Bonn Convention = migratory birds."},
+{n:128,topic:"ENVIRONMENT",tags:["PYQ"],q:"'Project Tiger' was launched in India in:",opts:["1965","1973","1980","1985"],ans:1,gem:"Project Tiger launched April 1, 1973 — first tiger reserve: Jim Corbett (Uttarakhand). Currently 54 tiger reserves in India. India has ~75% of world's wild tigers. Tiger count: ~3,682 (2023 census), a remarkable conservation success."},
+{n:129,topic:"ENVIRONMENT",tags:["CRITICAL"],q:"The 'Green House Effect' on Earth is essential because without it, Earth's average temperature would be approximately:",opts:["0°C","−18°C","−40°C","10°C"],ans:1,gem:"Without greenhouse gases, Earth's average temperature would be −18°C (not the current +15°C). Greenhouse gases trap heat and make Earth habitable. The problem is enhanced greenhouse effect due to human activities raising temperature further."},
+{n:130,topic:"ENVIRONMENT",tags:["PYQ"],q:"The term 'Biodiversity Hot Spot' was coined by:",opts:["E.O. Wilson","Norman Myers","David Attenborough","Rachel Carson"],ans:1,gem:"Norman Myers (British ecologist) coined 'Biodiversity Hotspot' in 1988. E.O. Wilson coined 'Biodiversity'. Rachel Carson wrote 'Silent Spring' (1962) which launched the modern environmental movement. India has 4 biodiversity hotspots."},
+{n:131,topic:"ENVIRONMENT",tags:["TRAP"],q:"Which gas forms the 'ozone' molecule?",opts:["O2","O3","CO2","SO2"],ans:1,gem:"Ozone = O3 (triatomic oxygen). Regular oxygen = O2 (diatomic). Stratospheric ozone protects life from UV-B radiation. Tropospheric ozone (ground level) is a pollutant causing respiratory issues. 'Good ozone up, bad ozone down' — memory aid."},
+{n:132,topic:"ENVIRONMENT",tags:["PYQ"],q:"The 'Convention on Biological Diversity' (CBD) was signed at which event?",opts:["Stockholm Conference 1972","Rio Earth Summit 1992","Kyoto Protocol 1997","Paris Agreement 2015"],ans:1,gem:"CBD (Convention on Biological Diversity) was signed at the Rio Earth Summit (UNCED), June 1992, in Rio de Janeiro, Brazil. It has three objectives: conservation of biodiversity, sustainable use, and fair sharing of genetic resources."},
+
+// ─── COMPUTER & TECHNOLOGY (Q133–Q140) ──────────────────────────────────────
+{n:133,topic:"COMPUTER",tags:["PYQ","CRITICAL"],q:"The full form of 'HTTP' in internet technology is:",opts:["HyperText Transfer Protocol","High Transfer Text Protocol","HyperText Transmission Protocol","High Text Transfer Program"],ans:0,gem:"HTTP = HyperText Transfer Protocol. HTTPS = HTTP Secure (uses SSL/TLS encryption). HTTP is the foundation of data communication on the World Wide Web. Tim Berners-Lee invented WWW and HTTP in 1989 at CERN."},
+{n:134,topic:"COMPUTER",tags:["PYQ"],q:"The binary number system uses which digits?",opts:["0 and 1","0, 1 and 2","0 to 7","0 to 9"],ans:0,gem:"Binary (base 2) uses only 0 and 1. Decimal = base 10 (0-9). Octal = base 8 (0-7). Hexadecimal = base 16 (0-9, A-F). All computer data is ultimately stored/processed in binary. 8 bits = 1 byte; 1024 bytes = 1 KB."},
+{n:135,topic:"COMPUTER",tags:["CRITICAL"],q:"Which company developed the Android operating system?",opts:["Apple","Microsoft","Google","Samsung"],ans:2,gem:"Android was originally developed by Android Inc. (2003), acquired by Google in 2005. Now maintained by Google under Open Handset Alliance. Android is the world's most widely used mobile OS (~72% market share). iOS is Apple's."},
+{n:136,topic:"COMPUTER",tags:["PYQ","TRAP"],q:"RAM stands for:",opts:["Read Access Memory","Random Access Memory","Rapid Access Memory","Read-And-Modify Memory"],ans:1,gem:"RAM (Random Access Memory) = volatile memory that loses data when power is off. ROM (Read Only Memory) = non-volatile. RAM is like your desk (working space); ROM/HDD is like your cabinet (storage). SSC standard answer = Random Access Memory."},
+{n:137,topic:"COMPUTER",tags:["CRITICAL"],q:"What does 'AI' stand for in technology?",opts:["Automated Intelligence","Artificial Intelligence","Advanced Integration","Automated Information"],ans:1,gem:"Artificial Intelligence = simulation of human intelligence by machines. Sub-fields: Machine Learning (learns from data), Deep Learning (neural networks), NLP (language), Computer Vision (images). Term coined by John McCarthy in 1956."},
+{n:138,topic:"COMPUTER",tags:["PYQ"],q:"The first computer virus is considered to be:",opts:["Creeper","Trojan","ILOVEYOU","Morris Worm"],ans:0,gem:"Creeper (1971) — first computer program that replicated and displayed 'I'm the creeper, catch me if you can!' on ARPANET systems. Reaper was created to delete it. The Morris Worm (1988) was the first internet worm causing major damage."},
+{n:139,topic:"COMPUTER",tags:["CRITICAL"],q:"Which technology is the backbone of cryptocurrencies like Bitcoin?",opts:["Cloud Computing","Artificial Intelligence","Blockchain","Internet of Things"],ans:2,gem:"Blockchain = distributed, immutable ledger where transactions are recorded in blocks linked by cryptographic hashes. Bitcoin (2009) by Satoshi Nakamoto was the first cryptocurrency. Blockchain ensures transparency without a central authority."},
+{n:140,topic:"COMPUTER",tags:["PYQ"],q:"The term 'Phishing' in cybersecurity refers to:",opts:["Hacking a computer remotely","Stealing data through deceptive emails/websites","Installing malware via USB","Denial of service attacks"],ans:1,gem:"Phishing = cybercrime where attackers impersonate legitimate entities via emails/fake websites to steal credentials/data. 'Spear phishing' targets specific individuals. Name derived from 'fishing' for information. SSC/banking exam standard."},
+
+// ─── MISCELLANEOUS (Q141–Q150) ───────────────────────────────────────────────
+{n:141,topic:"MISC",tags:["PYQ"],q:"The dance form 'Bharatanatyam' originated in which state?",opts:["Kerala","Andhra Pradesh","Tamil Nadu","Karnataka"],ans:2,gem:"Bharatanatyam originated in Tamil Nadu, derived from ancient Devadasi tradition and texts like Natyashastra. Revived by E. Krishna Iyer and Rukmini Devi Arundale in the 20th century. One of 8 classical dance forms of India."},
+{n:142,topic:"MISC",tags:["PYQ"],q:"'Bihu' is the traditional folk dance of which Indian state?",opts:["Manipur","Assam","Nagaland","Meghalaya"],ans:1,gem:"Bihu dance of Assam is performed during Bihu festivals (Bohag/Rangali, Kongali, Bhogali). The energetic dance with dhol drumming represents agricultural celebration. Assam also has Sattriya dance (classical) and Bagurumba (Bodo tribe)."},
+{n:143,topic:"MISC",tags:["CRITICAL"],q:"'PM-KISAN' scheme provides direct income support of ₹ ____ per year to eligible farmer families.",opts:["₹4,000","₹6,000","₹8,000","₹10,000"],ans:1,gem:"PM-KISAN (Pradhan Mantri Kisan Samman Nidhi) provides ₹6,000/year in 3 installments of ₹2,000 to small and marginal farmers directly via DBT. Launched February 2019. Over 11 crore beneficiaries. SSC frequently asks the amount."},
+{n:144,topic:"MISC",tags:["PYQ"],q:"The 'Hornbill Festival' is celebrated in which state?",opts:["Assam","Meghalaya","Nagaland","Manipur"],ans:2,gem:"Hornbill Festival = 'Festival of Festivals' held in Nagaland every December (1–10). Showcases all Naga tribal cultures, crafts, and music. Named after the hornbill bird (featured in tribal folklore and traditional headdresses)."},
+{n:145,topic:"MISC",tags:["CRITICAL"],q:"The 'Pradhan Mantri Ujjwala Yojana' scheme is related to:",opts:["Housing for all","Providing LPG connections to BPL women","Free health insurance","Digital literacy"],ans:1,gem:"PM Ujjwala Yojana (May 2016) provides free LPG connections to BPL (Below Poverty Line) women households. Target: 8 crore connections by 2020. Phase 2 (2021) expanded eligibility. Aims to reduce cooking with biomass fuels and indoor pollution."},
+{n:146,topic:"MISC",tags:["PYQ"],q:"The 'Yoga Day' is observed internationally on which date every year?",opts:["June 5","June 21","October 2","November 14"],ans:1,gem:"International Yoga Day = June 21 (Summer Solstice — longest day in Northern Hemisphere). Proposed by PM Modi at UN General Assembly (2014); first observed June 21, 2015. UN adopted the resolution with record co-sponsorship from 177 nations."},
+{n:147,topic:"MISC",tags:["PYQ"],q:"Which scheme provides free treatment up to ₹5 lakh per year to poor families?",opts:["PM-JAY / Ayushman Bharat","PM-KISAN","PM Awas Yojana","MGNREGS"],ans:0,gem:"Pradhan Mantri Jan Arogya Yojana (PM-JAY) under Ayushman Bharat provides health cover of ₹5 lakh/year per family for hospitalisation to the bottom 40% of population (~50 crore beneficiaries). World's largest government-funded health scheme."},
+{n:148,topic:"MISC",tags:["CRITICAL"],q:"The 'Swachh Bharat Mission' (Urban) was launched on:",opts:["August 15, 2014","October 2, 2014","November 14, 2014","January 26, 2015"],ans:1,gem:"Swachh Bharat Mission launched October 2, 2014 (Gandhi Jayanti) to eliminate open defecation and improve solid waste management. Phase 2 targets ODF-Plus status. 'Clean India' target achieved Oct 2, 2019 (150th birth anniversary of Gandhi)."},
+{n:149,topic:"MISC",tags:["PYQ"],q:"Which of the following is the correct full form of 'NITI Aayog'?",opts:["National Institution for Transforming India","New India Transformational Initiative","National Integration Territorial Institute","National Infrastructure and Technology Index"],ans:0,gem:"NITI Aayog = National Institution for Transforming India Aayog. Replaced Planning Commission on January 1, 2015. CEO is the operational head; PM is the ex-officio Chairman. It is a think tank, NOT an allocating body (unlike Planning Commission)."},
+{n:150,topic:"MISC",tags:["TRAP"],q:"The 'Pradhan Mantri Fasal Bima Yojana' (PMFBY) is related to:",opts:["Crop insurance for farmers","Irrigation of farmland","Minimum support price","Farmer credit cards"],ans:0,gem:"PMFBY = Pradhan Mantri Fasal Bima Yojana (crop insurance scheme, 2016). Premium: 2% for Kharif, 1.5% for Rabi, 5% for horticulture. Replaces NAIS and MNAIS. Aims to provide financial support to farmers suffering crop failure due to natural calamities."}
+];
+
+// ─── State ───────────────────────────────────────────────────────────────────
+let score=0, attempted=0;
+let answered=new Array(151).fill(null); // null=unattempted, true=correct, false=wrong
+let timerEnabled=false, timerSeconds=1800, timerInterval=null;
+
+// ─── Build DOM ────────────────────────────────────────────────────────────────
+function buildPalette(){
+  const pal=document.getElementById('palette');
+  const mob=document.getElementById('mobile-pal-scroll');
+  for(let i=1;i<=150;i++){
+    const btn=document.createElement('div');
+    btn.className='pnum';btn.id='p'+i;btn.textContent=i;
+    btn.onclick=()=>{
+      document.getElementById('q'+i).scrollIntoView({behavior:'smooth',block:'center'});
+    };
+    pal.appendChild(btn);
+    const btn2=btn.cloneNode(true);
+    btn2.id='mp'+i;
+    btn2.onclick=()=>{document.getElementById('q'+i).scrollIntoView({behavior:'smooth',block:'center'});};
+    mob.appendChild(btn2);
+  }
+}
+
+function tagHTML(t){
+  const map={PYQ:'tag-pyq',CRITICAL:'tag-critical',TRAP:'tag-trap'};
+  return `<span class="tag ${map[t]||'tag-topic'}">${t}</span>`;
+}
+
+function buildQuestions(){
+  const container=document.getElementById('questions-container');
+  QUESTIONS.forEach(q=>{
+    const card=document.createElement('div');
+    card.className='qcard';card.id='q'+q.n;
+    const tagsHTML=q.tags.map(tagHTML).join('')+`<span class="tag tag-topic">${q.topic}</span>`;
+    const optsHTML=q.opts.map((o,i)=>`
+      <div class="opt" id="q${q.n}o${i}" onclick="selectOpt(${q.n},${i})">
+        <span class="opt-label">${['A','B','C','D'][i]}</span>
+        <span>${o}</span>
+      </div>`).join('');
+    card.innerHTML=`
+      <div class="qcard-top">
+        <span class="qnum-badge">Q ${q.n}</span>
+        <div class="topic-tags">${tagsHTML}</div>
+      </div>
+      <div class="qtext">${q.q}</div>
+      <div class="options" id="opts${q.n}">${optsHTML}</div>
+      <div class="result-msg" id="res${q.n}"></div>
+      <div class="gem-box">
+        <button class="gem-toggle" onclick="toggleGem(${q.n})">💎 Live Gem — Click to reveal insight</button>
+        <div class="gem-content" id="gem${q.n}">${q.gem}</div>
+      </div>`;
+    container.appendChild(card);
+  });
+}
+
+function selectOpt(qn,optIdx){
+  if(answered[qn]!==null)return;
+  const q=QUESTIONS[qn-1];
+  const isCorrect=(optIdx===q.ans);
+  answered[qn]=isCorrect;
+  if(isCorrect){score++;attempted++;}else{attempted++;}
+  // Lock all options
+  for(let i=0;i<4;i++){
+    const el=document.getElementById('q'+qn+'o'+i);
+    el.classList.add('locked');
+    if(i===q.ans)el.classList.add('correct-ans');
+    if(i===optIdx&&!isCorrect)el.classList.add('wrong-ans');
+  }
+  const res=document.getElementById('res'+qn);
+  if(isCorrect){
+    res.className='result-msg correct';res.textContent='✅ Correct!';
+  }else{
+    res.className='result-msg wrong';res.textContent=`❌ Wrong! Correct: ${q.opts[q.ans]}`;
+  }
+  // Auto-open gem
+  document.getElementById('gem'+qn).classList.add('open');
+  // Update palette
+  updatePalette(qn,isCorrect);
+  updateScore();
+}
+
+function toggleGem(qn){
+  const g=document.getElementById('gem'+qn);
+  g.classList.toggle('open');
+}
+
+function updatePalette(qn,correct){
+  const cls=correct?'correct':'wrong';
+  const p1=document.getElementById('p'+qn);
+  const p2=document.getElementById('mp'+qn);
+  if(p1){p1.className='pnum '+cls;}
+  if(p2){p2.className='pnum '+cls;}
+}
+
+function updateScore(){
+  document.getElementById('score-badge').textContent=`Score: ${score} / ${attempted} Attempted`;
+}
+
+// ─── Scroll sync ──────────────────────────────────────────────────────────────
+let scrollTimeout=null;
+window.addEventListener('scroll',()=>{
+  if(scrollTimeout)clearTimeout(scrollTimeout);
+  scrollTimeout=setTimeout(()=>{
+    const cards=document.querySelectorAll('.qcard');
+    let best=null,bestDist=Infinity;
+    cards.forEach(c=>{
+      const rect=c.getBoundingClientRect();
+      const dist=Math.abs(rect.top+rect.height/2-window.innerHeight/2);
+      if(dist<bestDist){bestDist=dist;best=c;}
+    });
+    document.querySelectorAll('.pnum.current').forEach(el=>el.classList.remove('current'));
+    if(best){
+      const qn=best.id.replace('q','');
+      const p1=document.getElementById('p'+qn);
+      const p2=document.getElementById('mp'+qn);
+      if(p1&&!p1.classList.contains('correct')&&!p1.classList.contains('wrong'))p1.classList.add('current');
+      if(p2&&!p2.classList.contains('correct')&&!p2.classList.contains('wrong'))p2.classList.add('current');
+    }
+  },80);
+},{passive:true});
+
+// ─── Timer ────────────────────────────────────────────────────────────────────
+function updateTimerDisplay(){
+  const el=document.getElementById('timer-display');
+  if(!timerEnabled){el.textContent='--:--';el.classList.remove('danger');return;}
+  const m=Math.floor(timerSeconds/60).toString().padStart(2,'0');
+  const s=(timerSeconds%60).toString().padStart(2,'0');
+  el.textContent=m+':'+s;
+  if(timerSeconds<300)el.classList.add('danger');else el.classList.remove('danger');
+}
+
+document.getElementById('timer-toggle').addEventListener('click',()=>{
+  timerEnabled=!timerEnabled;
+  const btn=document.getElementById('timer-toggle');
+  if(timerEnabled){
+    btn.textContent='⏱ Disable Timer';
+    timerInterval=setInterval(()=>{
+      if(timerSeconds<=0){clearInterval(timerInterval);showModal();return;}
+      timerSeconds--;updateTimerDisplay();
+    },1000);
+  }else{
+    btn.textContent='⏱ Enable Timer';
+    clearInterval(timerInterval);
+    timerSeconds=1800;
+  }
+  updateTimerDisplay();
+});
+
+// ─── Modal ────────────────────────────────────────────────────────────────────
+function showModal(){
+  const pct=attempted>0?Math.round(score/attempted*100):0;
+  const overall=Math.round(score/150*100);
+  let grade='',gc='';
+  if(overall>=80){grade='🏆 Excellent — Merit Zone!';gc='var(--gold)';}
+  else if(overall>=60){grade='✅ Good — Safe Zone';gc='var(--green)';}
+  else if(overall>=40){grade='⚠️ Average — Needs Revision';gc='var(--blue)';}
+  else{grade='❌ Below Average — Revise Now';gc='var(--red)';}
+  document.getElementById('modal-score').textContent=score+' / 150';
+  document.getElementById('modal-attempted').textContent='Attempted: '+attempted+' questions';
+  document.getElementById('modal-pct').textContent='Accuracy: '+pct+'% | Overall: '+overall+'%';
+  const g=document.getElementById('modal-grade');g.textContent=grade;g.style.color=gc;
+  document.getElementById('modal').classList.add('show');
+}
+document.getElementById('submit-btn').addEventListener('click',showModal);
+document.getElementById('modal-close').addEventListener('click',()=>{
+  document.getElementById('modal').classList.remove('show');
+});
+
+// ─── Init ────────────────────────────────────────────────────────────────────
+buildPalette();
+buildQuestions();
+updateTimerDisplay();
+updateScore();
+</script>
+</body>
+</html>e

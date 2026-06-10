@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSC Selection Phase 14 (2026) — GA Practice Test</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Andika&family=IBM+Plex+Mono:wght@500;600&family=Orbitron:wght@600;700&family=Syne:wght@700;800&display=swap');
+
+        :root {
+            --bg: #0d0f14;
+            --surface: #13161d;
+            --border: #1e2230;
+            --gold: #f5c842;
+            --red: #ff4d4d;
+            --green: #4dff91;
+            --blue: #4db8ff;
+            --purple: #b84dff;
+            --text-primary: #e8e8f0;
+            --text-muted: #7a7f94;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-primary);
+            font-family: 'Andika', sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: rgba(19, 22, 29, 0.95);
+            border-bottom: 2px solid var(--border);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-title-section h1 {
+            font-family: 'Syne', sans-serif;
+            color: var(--gold);
+            font-size: 1.5rem;
+            letter-spacing: 0.5px;
+        }
+
+        .header-title-section p {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 4px;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .timer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .timer-display {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .timer-display.danger {
+            color: var(--red);
+            animation: pulse 1s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { opacity: 1; }
+            to { opacity: 0.5; }
+        }
+
+        .btn-toggle-timer {
+            font-family: 'IBM Plex Mono', monospace;
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 4px 10px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+            margin-top: 4px;
+        }
+
+        .btn-toggle-timer:hover {
+            background: var(--gold);
+            color: var(--bg);
+        }
+
+        .score-badge {
+            font-family: 'Orbitron', sans-serif;
+            background-color: var(--border);
+            padding: 12px 18px;
+            border-radius: 8px;
+            border: 1px solid rgba(245, 200, 66, 0.2);
+            font-size: 0.95rem;
+        }
+
+        .test-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        aside {
+            width: 320px;
+            position: fixed;
+            top: 80px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--surface);
+            border-right: 1px solid var(--border);
+            padding: 20px;
+            overflow-y: auto;
+            z-index: 900;
+        }
+
+        .palette-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .palette-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 6px;
+        }
+
+        .palette-btn {
+            font-family: 'Orbitron', sans-serif;
+            background-color: #1e2230;
+            border: 2px solid transparent;
+            color: var(--text-primary);
+            padding: 8px 0;
+            font-size: 0.75rem;
+            text-align: center;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .palette-btn.current {
+            border-color: var(--gold) !important;
+        }
+
+        .palette-btn.correct {
+            background-color: var(--green) !important;
+            color: var(--bg) !important;
+            font-weight: bold;
+        }
+
+        .palette-btn.wrong {
+            background-color: var(--red) !important;
+            color: var(--text-primary) !important;
+            font-weight: bold;
+        }
+
+        main {
+            margin-left: 320px;
+            flex: 1;
+            padding: 40px;
+            max-width: 900px;
+            margin-bottom: 80px;
+        }
+
+        .badge {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            display: inline-block;
+            text-transform: uppercase;
+            margin-right: 5px;
+        }
+
+        .badge-critical { background-color: rgba(255, 77, 77, 0.15); color: var(--red); border: 1px solid var(--red); }
+        .badge-trap { background-color: rgba(245, 200, 66, 0.15); color: var(--gold); border: 1px solid var(--gold); }
+        .badge-tip { background-color: rgba(77, 255, 145, 0.15); color: var(--green); border: 1px solid var(--green); }
+        .badge-pyq { background-color: rgba(77, 184, 255, 0.15); color: var(--blue); border: 1px solid var(--blue); }
+        .badge-gem { background-color: rgba(184, 77, 255, 0.15); color: var(--purple); border: 1px solid var(--purple); }
+
+        .question-card {
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 35px;
+            scroll-margin-top: 110px;
+            transition: border-color 0.3s;
+        }
+
+        .question-card.active-scroll {
+            border-color: var(--gold);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .q-number {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--gold);
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .q-text {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            color: var(--text-primary);
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            background-color: #1a1e29;
+            border: 1px solid var(--border);
+            padding: 14px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s;
+            min-height: 48px;
+        }
+
+        .option-label:hover {
+            background-color: #222836;
+            border-color: #31374d;
+        }
+
+        .option-label input[type="radio"] {
+            margin-right: 15px;
+            accent-color: var(--gold);
+            width: 18px;
+            height: 18px;
+        }
+
+        .option-label.correct-glow {
+            background-color: rgba(77, 255, 145, 0.12) !important;
+            border-color: var(--green) !important;
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        .option-label.wrong-glow {
+            background-color: rgba(255, 77, 77, 0.12) !important;
+            border-color: var(--red) !important;
+            color: var(--red);
+        }
+
+        .feedback-msg {
+            margin-top: 15px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: none;
+        }
+
+        .feedback-msg.correct { color: var(--green); display: block; }
+        .feedback-msg.wrong { color: var(--red); display: block; }
+
+        .live-gem-box {
+            margin-top: 25px;
+            background-color: rgba(184, 77, 255, 0.05);
+            border-left: 4px solid var(--purple);
+            padding: 16px;
+            border-radius: 0 8px 8px 0;
+            display: none;
+        }
+
+        .live-gem-box.visible {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .live-gem-title {
+            margin-bottom: 8px;
+        }
+
+        .live-gem-text {
+            font-size: 0.95rem;
+            color: #d1c4e9;
+            line-height: 1.5;
+        }
+
+        .submit-section {
+            display: flex;
+            justify-content: center;
+            margin: 50px 0;
+        }
+
+        .btn-submit-test {
+            font-family: 'Orbitron', sans-serif;
+            background-color: var(--gold);
+            color: var(--bg);
+            border: none;
+            padding: 16px 45px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            box-shadow: 0 4px 20px rgba(245, 200, 66, 0.15);
+        }
+
+        .btn-submit-test:hover {
+            transform: scale(1.02);
+            background-color: #e0b434;
+        }
+
+        footer {
+            background-color: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 35px;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .footer-line {
+            width: 60px;
+            height: 2px;
+            background-color: var(--gold);
+            margin: 0 auto 15px;
+        }
+
+        footer p:first-of-type {
+            color: var(--text-primary);
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        footer p:last-of-type {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(5, 6, 8, 0.85);
+            backdrop-filter: blur(6px);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-card {
+            background-color: var(--surface);
+            border: 2px solid var(--gold);
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+        }
+
+        .modal-card h2 {
+            font-family: 'Syne', sans-serif;
+            color: var(--gold);
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .modal-score {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            margin: 20px 0;
+            color: var(--text-primary);
+        }
+
+        .modal-stats {
+            font-family: 'IBM Plex Mono', monospace;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .modal-grade {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.4rem;
+            color: var(--green);
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-modal-close {
+            font-family: 'Orbitron', sans-serif;
+            background-color: var(--border);
+            color: var(--text-primary);
+            border: 1px solid var(--text-muted);
+            padding: 10px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-modal-close:hover {
+            background-color: #292f42;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+                text-align: center;
+            }
+            .header-controls {
+                width: 100%;
+                justify-content: space-between;
+            }
+            aside {
+                position: fixed;
+                top: auto;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                width: 100%;
+                height: 70px;
+                padding: 10px;
+                border-right: none;
+                border-top: 1px solid var(--border);
+                z-index: 1500;
+                display: flex;
+                align-items: center;
+                overflow-x: auto;
+                overflow-y: hidden;
+            }
+            .palette-title { display: none; }
+            .palette-grid {
+                display: flex;
+                flex-direction: row;
+                gap: 8px;
+            }
+            .palette-btn {
+                min-width: 44px;
+                height: 44px;
+                padding: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+            main {
+                margin-left: 0;
+                padding: 20px;
+                margin-bottom: 90px;
+            }
+            .question-card {
+                padding: 20px;
+            }
+            .option-label {
+                padding: 12px 15px;
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-title-section">
+            <h1>SSC SELECTION PHASE 14 — 2026</h1>
+            <p>General Awareness Master Test · 150 Questions</p>
+        </div>
+        <div class="header-controls">
+            <div class="timer-container">
+                <div class="timer-display" id="timer">--:--</div>
+                <button class="btn-toggle-timer" id="timerToggle" onclick="toggleTimer()">⏱ Enable Timer</button>
+            </div>
+            <div class="score-badge" id="liveScore">Score: 0 / 0 Attempted</div>
+        </div>
+    </header>
+
+    <div class="test-container">
+        <aside>
+            <div class="palette-title">Question Palette</div>
+            <div class="palette-grid" id="paletteGrid"></div>
+        </aside>
+
+        <main>
+            <div id="questionsContainer"></div>
+
+            <div class="submit-section">
+                <button class="btn-submit-test" onclick="submitTest()">📊 View Final Score</button>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <div class="footer-line"></div>
+        <p>SSC Phase 14 · 2026 · General Awareness Master Test</p>
+        <p>Crafted for aspirants who aim to master, not just attempt.</p>
+    </footer>
+
+    <div class="modal-overlay" id="scoreModal">
+        <div class="modal-card">
+            <h2>Performance Report</h2>
+            <div class="modal-score" id="modalScoreDisplay">0 / 150</div>
+            <div class="modal-stats" id="modalStatsDisplay"></div>
+            <div class="modal-grade" id="modalGradeDisplay"></div>
+            <button class="btn-modal-close" onclick="closeModal()">Close Window</button>
+        </div>
+    </div>
+
+    <script>
+        const testData = [{"q": "Who among the following Mauryan rulers abdicated his throne and migrated to Shravanabelagola with Bhadrabahu?", "options": ["Chandragupta Maurya", "Bindusara", "Ashoka", "Dasharatha"], "ans": 0, "badges": ["PYQ", "HISTORY"], "gem": "He embraced Jainism and performed Sallekhana (starvation to death). Shravanabelagola remains an important Jain pilgrimage site in Karnataka."}, {"q": "The famous grammarian Patanjali was a contemporary of which of the following Shunga rulers?", "options": ["Pushyamitra Shunga", "Agnimitra", "Vasumitra", "Devabhuti"], "ans": 0, "badges": ["CRITICAL", "HISTORY"], "gem": "Patanjali wrote the 'Mahabhasya' on Panini's Ashtadhyayi during the reign of Pushyamitra, who revived Vedic sacrifices like Ashvamedha."}, {"q": "Which Gupta Emperor is prominently hailed as 'Lichchhavi-dauhitra' (grandson of Lichchhavis) in the Allahabad Pillar Inscription?", "options": ["Chandragupta I", "Samudragupta", "Chandragupta II", "Skandagupta"], "ans": 1, "badges": ["TRAP", "HISTORY"], "gem": "Samudragupta proudly claimed this lineage because his mother, Kumaradevi, belonged to the powerful Lichchhavi clan, boosting Gupta legitimacy."}, {"q": "The system of 'Dag' (branding of horses) and 'Chehra' (descriptive roll of soldiers) was introduced by:", "options": ["Iltutmish", "Balban", "Alauddin Khalji", "Muhammad bin Tughluq"], "ans": 2, "badges": ["PYQ", "HISTORY"], "gem": "This fundamental military reform prevented proxy soldiers and corruption during military operations against Mongol invasions."}, {"q": "In the context of Vijayanagara administration, what did the term 'Amaram' designate?", "options": ["A tax on agricultural land", "Land grants given to military commanders", "A religious tax on temples", "The palace guard force"], "ans": 1, "badges": ["CRITICAL", "HISTORY"], "gem": "Holders of these lands were called Amaranayakas, who maintained a military contingent for the king, similar to the European feudal system."}, {"q": "The Treaty of Purandar (1665 AD) was signed between Chhatrapati Shivaji Maharaj and which representative of the Mughals?", "options": ["Shaista Khan", "Afzal Khan", "Mir Jumla", "Raja Jai Singh I"], "ans": 3, "badges": ["TRAP", "HISTORY"], "gem": "Raja Jai Singh represented Aurangzeb. Shivaji had to surrender 23 of his forts to the Mughals under this treaty."}, {"q": "The Permanent Settlement system of land revenue was introduced in Bengal by Lord Cornwallis in which year?", "options": ["1773", "1784", "1793", "1813"], "ans": 2, "badges": ["PYQ", "HISTORY"], "gem": "It created a class of hereditary landlords (Zamindars) and fixed land revenue values permanently, devastating local peasantry."}, {"q": "Who among the following was the founder of the 'Rahnumai Mazdayasnan Sabha' (Zoroastrian Reform Society) in 1851?", "options": ["Dadabhai Naoroji", "Pherozeshah Mehta", "Dinshaw Wacha", "Sorabjee Shapurjee"], "ans": 0, "badges": ["CRITICAL", "HISTORY"], "gem": "Dadabhai Naoroji, along with Naoroji Furdonji and others, started this to restore the Zoroastrian religion to its pristine purity."}, {"q": "During which national movement did Mahatma Gandhi give the famous call of 'Do or Die'?", "options": ["Non-Cooperation Movement", "Civil Disobedience Movement", "Quit India Movement", "Khilafat Movement"], "ans": 2, "badges": ["TRAP", "HISTORY"], "gem": "Launched on August 8, 1942, at Gowalia Tank Maidan, Mumbai, it led to the immediate arrest of almost all top Congress leaders."}, {"q": "The famous Harappan site of Dholavira, known for its unique water harvesting system, is located in which state?", "options": ["Rajasthan", "Gujarat", "Haryana", "Punjab"], "ans": 1, "badges": ["PYQ", "HISTORY"], "gem": "Dholavira is divided into three distinct parts (unlike other bipartite towns) and features a massive network of stone-cut reservoirs."}, {"q": "The second Buddhist Council was patronized by which king and held at which location?", "options": ["Ajatashatru at Rajgriha", "Kalashoka at Vaishali", "Ashoka at Pataliputra", "Kanishka at Kashmir"], "ans": 1, "badges": ["CRITICAL", "HISTORY"], "gem": "Held around 383 BC, this council witnessed the first major schism in Buddhism, splitting into Sthaviravadins and Mahasanghikas."}, {"q": "Which Delhi Sultan shifted his capital from Delhi to Daulatabad (Devagiri)?", "options": ["Alauddin Khalji", "Ghiyasuddin Tughluq", "Muhammad bin Tughluq", "Firuz Shah Tughluq"], "ans": 2, "badges": ["TRAP", "HISTORY"], "gem": "The move failed drastically due to long distances and lack of water facilities, forcing him to order the entire population back to Delhi."}, {"q": "The famous temple of Kailashanatha at Ellora was carved out of solid rock under the patronage of which Rashtrakuta king?", "options": ["Dantidurga", "Krishna I", "Dhruva", "Amoghavarsha I"], "ans": 1, "badges": ["PYQ", "HISTORY"], "gem": "It represents an architectural marvel of rock-cut monolithic engineering, executed from top to bottom instead of bottom to top."}, {"q": "Who wrote the famous vernacular book 'Ghulamgiri' in 1873, dedicated to the anti-slavery movement?", "options": ["Dr. B.R. Ambedkar", "Jyotirao Phule", "Periyar E.V. Ramasamy", "Sri Narayana Guru"], "ans": 1, "badges": ["CRITICAL", "HISTORY"], "gem": "Phule dedicated this work to the African-American abolitionist movement, drawing parallels with the plight of lower castes in India."}, {"q": "In which year did the partition of Bengal take effect under the viceroyalty of Lord Curzon?", "options": ["1903", "1905", "1907", "1911"], "ans": 1, "badges": ["TRAP", "HISTORY"], "gem": "It took effect on October 16, 1905, giving birth to the Swadeshi Movement, and was eventually annulled in 1911 by Lord Hardinge."}, {"q": "The Santhal Rebellion, one of the earliest tribal uprisings against the British East India Company, occurred in:", "options": ["1820-1821", "1831-1832", "1855-1856", "1899-1900"], "ans": 2, "badges": ["PYQ", "HISTORY"], "gem": "Led by Sidhu and Kanhu Murmu, this fierce tribal rebellion directly preceded the pan-India revolt of 1857."}, {"q": "Which session of the Indian National Congress was presided over by Mahatma Gandhi?", "options": ["1922 Gaya Session", "1924 Belgaum Session", "1925 Kanpur Session", "1929 Lahore Session"], "ans": 1, "badges": ["CRITICAL", "HISTORY"], "gem": "The Belgaum session was the *only* time Mahatma Gandhi acted as the official President of an annual INC session."}, {"q": "The famous silver coin called 'Rupiya' was first issued in medieval India by:", "options": ["Akbar", "Sher Shah Suri", "Iltutmish", "Humayun"], "ans": 1, "badges": ["TRAP", "HISTORY"], "gem": "Sher Shah Suri standardized the silver coin weighing 178 grains, which became the precursor to the modern Indian Currency Rupee."}, {"q": "Which of the following passes connects Srinagar with Leh across the Zanskar Range?", "options": ["Zoji La Pass", "Shipki La Pass", "Nathu La Pass", "Bomdi La Pass"], "ans": 0, "badges": ["PYQ", "GEOGRAPHY"], "gem": "Zoji La is critical for military movements and undergoes massive engineering efforts to stay open during heavy winter snows."}, {"q": "The standard meridian of India (82°30' E) does NOT pass through which of the following states?", "options": ["Uttar Pradesh", "Madhya Pradesh", "Odisha", "Jharkhand"], "ans": 3, "badges": ["CRITICAL", "GEOGRAPHY"], "gem": "It passes through 5 states: Uttar Pradesh, Madhya Pradesh, Chhattisgarh, Odisha, and Andhra Pradesh."}, {"q": "Which river is known as the 'Tsangpo' in Tibet before entering India through Arunachal Pradesh?", "options": ["Indus", "Brahmaputra", "Teesta", "Subansiri"], "ans": 1, "badges": ["TRAP", "GEOGRAPHY"], "gem": "It enters India near Namcha Barwa, making a sharp U-turn known as a Great Bend, where it is called the Dihang or Siang river."}, {"q": "The 'Amravati', 'Bhavani', 'Hemavati', and 'Kabini' are prominent tributaries of which peninsular river?", "options": ["Krishna", "Godavari", "Cauvery", "Mahanadi"], "ans": 2, "badges": ["PYQ", "GEOGRAPHY"], "gem": "Cauvery rises at Talakaveri in the Western Ghats (Karnataka) and forms an extensive fertile delta in Tamil Nadu before entering the Bay of Bengal."}, {"q": "Which type of soil covers the largest total surface area across the Indian landmass?", "options": ["Alluvial Soil", "Black Cotton Soil", "Red and Yellow Soil", "Laterite Soil"], "ans": 0, "badges": ["CRITICAL", "GEOGRAPHY"], "gem": "Alluvial soils cover roughly 40% of India, depositing fine silt across northern plains via Indo-Gangetic river systems."}, {"q": "The shifting cultivation known as 'Jhumming' in Northeast India is termed 'Milpa' in which geographic region?", "options": ["Central America & Mexico", "Brazil", "Central Africa", "Indonesia"], "ans": 0, "badges": ["TRAP", "GEOGRAPHY"], "gem": "It is called Milpa in Central America, Roça in Brazil, and Ladang in Malaysia/Indonesia. Examiners love checking global variants."}, {"q": "Which of the following lines separates the Andaman Islands group from the Nicobar Islands group?", "options": ["8 Degree Channel", "9 Degree Channel", "10 Degree Channel", "Duncan Passage"], "ans": 2, "badges": ["PYQ", "GEOGRAPHY"], "gem": "The 10 Degree Channel is roughly 150 km wide and lies along the 10°N parallel of latitude."}, {"q": "The famous Majuli Island, the largest inhabited river island in the world, is located on which river?", "options": ["Ganga", "Brahmaputra", "Irrawaddy", "Mekong"], "ans": 1, "badges": ["CRITICAL", "GEOGRAPHY"], "gem": "Located in Assam, Majuli was declared a district in 2016, becoming the first island district in India."}, {"q": "Which planetary wind system blows continuously from subtropical high-pressure belts to the equatorial low-pressure belt?", "options": ["Westerlies", "Trade Winds", "Polar Easterlies", "Monsoon Winds"], "ans": 1, "badges": ["TRAP", "GEOGRAPHY"], "gem": "Deflected by the Coriolis effect, they blow as Northeast Trades in the Northern Hemisphere and Southeast Trades in the Southern Hemisphere."}, {"q": "The 'Equinoxes' occur when the sun shines directly vertically over which of the following lines?", "options": ["Tropic of Cancer", "Tropic of Capricorn", "Equator", "Arctic Circle"], "ans": 2, "badges": ["PYQ", "GEOGRAPHY"], "gem": "This occurs twice a year on March 21 and September 23, resulting in equal duration of day and night across the planet."}, {"q": "Which lake is a major Ramsar site and stands as India's largest coastal brackish water lagoon?", "options": ["Chilika Lake", "Vembanad Lake", "Kolleru Lake", "Pulicat Lake"], "ans": 0, "badges": ["CRITICAL", "GEOGRAPHY"], "gem": "Located in Odisha, Chilika hosts massive flocks of migratory birds from Siberia and is home to endangered Irrawaddy dolphins."}, {"q": "The project 'Nathpa Jhakri' is a massive run-of-the-river hydroelectric power installation built across which river?", "options": ["Jhelum", "Chenab", "Ravi", "Sutlej"], "ans": 3, "badges": ["TRAP", "GEOGRAPHY"], "gem": "Located in Himachal Pradesh, it relies on the heavy flow of the Sutlej river to generate over 1,500 MW of power."}, {"q": "Which layer of the Earth's atmosphere contains the ozone layer which protects life from harmful UV rays?", "options": ["Troposphere", "Stratosphere", "Mesosphere", "Thermosphere"], "ans": 1, "badges": ["PYQ", "GEOGRAPHY"], "gem": "The stratosphere extends up to 50 km; temperature increases with altitude here due to absorption of UV radiation by ozone."}, {"q": "The standard boundary line separating India and China is universally designated as the:", "options": ["Radcliffe Line", "Durand Line", "McMahon Line", "Palk Strait"], "ans": 2, "badges": ["CRITICAL", "GEOGRAPHY"], "gem": "Determined during the 1914 Simla Convention, it primarily defines the effective border in the eastern sector (Arunachal Pradesh)."}, {"q": "Which atomic power station in India is entirely indigenously designed and built, without foreign assistance?", "options": ["Tarapur", "Rawatbhata", "Kudankulam", "Kalpakkam"], "ans": 3, "badges": ["TRAP", "GEOGRAPHY"], "gem": "The Madras Atomic Power Station at Kalpakkam (Tamil Nadu) was India's first fully indigenous commercial nuclear plant."}, {"q": "The regular 'Western Disturbances' that cause winter precipitation in Northwest India originate over which water body?", "options": ["Caspian Sea", "Mediterranean Sea", "Red Sea", "Persian Gulf"], "ans": 1, "badges": ["PYQ", "GEOGRAPHY"], "gem": "Brought by jet streams, these shallow cyclonic depressions are highly beneficial for the winter Rabi crops, especially wheat."}, {"q": "Which state stands out as the leading producer of both manganese ore and bauxite in India?", "options": ["Jharkhand", "Odisha", "Chhattisgarh", "Madhya Pradesh"], "ans": 1, "badges": ["CRITICAL", "GEOGRAPHY"], "gem": "Odisha dominates mineral production values for metallic ores due to massive geological formations in the Chota Nagpur extension."}, {"q": "The 'Grand Canyon', an iconic deep gorge carved over millions of years, is located along which river in the United States?", "options": ["Mississippi River", "Missouri River", "Colorado River", "Columbia River"], "ans": 2, "badges": ["TRAP", "GEOGRAPHY"], "gem": "Arid weathering coupled with the swift, sediment-heavy Colorado River carved this spectacular 446 km long canyon system."}, {"q": "The concept of 'Directive Principles of State Policy' (DPSP) in the Indian Constitution was borrowed from:", "options": ["USSR", "USA", "Ireland", "Australia"], "ans": 2, "badges": ["PYQ", "POLITY"], "gem": "Ireland originally adapted it from the Spanish Constitution. It is contained within Part IV of our Constitution (Articles 36 to 51)."}, {"q": "Which article of the Indian Constitution empowers the President to impose President's Rule in a state due to failure of constitutional machinery?", "options": ["Article 352", "Article 356", "Article 360", "Article 365"], "ans": 1, "badges": ["CRITICAL", "POLITY"], "gem": "While Article 356 deals with constitutional breakdown within a state, Article 365 triggers if a state fails to comply with Union directives."}, {"q": "Who acts as the ex-officio Chairman of the Rajya Sabha (Council of States)?", "options": ["The President of India", "The Vice-President of India", "The Speaker of Lok Sabha", "The Prime Minister of India"], "ans": 1, "badges": ["TRAP", "POLITY"], "gem": "Under Article 64, the Vice-President cannot hold any other office of profit and draws their salary primarily as Chairman of Rajya Sabha."}, {"q": "By which Constitutional Amendment Act was the 'Right to Property' deleted from the list of Fundamental Rights?", "options": ["42nd Amendment Act 1976", "44th Amendment Act 1978", "52nd Amendment Act 1985", "86th Amendment Act 2002"], "ans": 1, "badges": ["PYQ", "POLITY"], "gem": "It was converted into a simple legal right under Article 300A in Part XII, ending its status as a core fundamental right."}, {"q": "The 73rd Constitutional Amendment Act, 1992, gave statutory recognition to Panchayats by adding which schedule?", "options": ["Ninth Schedule", "Tenth Schedule", "Eleventh Schedule", "Twelfth Schedule"], "ans": 2, "badges": ["CRITICAL", "POLITY"], "gem": "The Eleventh Schedule contains 29 functional items for rural local bodies, while the Twelfth Schedule covers urban municipalities."}, {"q": "A money bill can be introduced ONLY in which of the following legislative houses?", "options": ["Lok Sabha only", "Rajya Sabha only", "Either House of Parliament", "Joint sitting of both houses"], "ans": 0, "badges": ["TRAP", "POLITY"], "gem": "Article 110 defines a Money Bill. The Speaker of Lok Sabha holds sole authority to certify whether a bill qualifies as a Money Bill."}, {"q": "Which writ issued by the higher judiciary means 'We Command' to enforce performance of public duties?", "options": ["Habeas Corpus", "Mandamus", "Certiorari", "Quo Warrant"], "ans": 1, "badges": ["PYQ", "POLITY"], "gem": "Mandamus is used against public officials, inferior courts, or corporations who fail or refuse to perform mandatory statutory duties."}, {"q": "Who among the following was the Chairman of the Drafting Committee of the Constituent Assembly?", "options": ["Dr. Rajendra Prasad", "Jawaharlal Nehru", "Dr. B.R. Ambedkar", "Sardar Vallabhbhai Patel"], "ans": 2, "badges": ["CRITICAL", "POLITY"], "gem": "Set up on August 29, 1947, the seven-member drafting committee meticulously formulated the initial framework of the working constitution."}, {"q": "The age of voting was reduced from 21 years to 18 years by which Constitutional Amendment Act?", "options": ["61st Amendment Act", "69th Amendment Act", "74th Amendment Act", "86th Amendment Act"], "ans": 0, "badges": ["TRAP", "POLITY"], "gem": "Passed in 1988 under Rajiv Gandhi's government, it amended Article 326 to massively expand young electoral participation."}, {"q": "The structural model of 'Joint Sitting' of both Houses of Parliament (Article 108) is inspired by the constitution of:", "options": ["United Kingdom", "United States", "Australia", "Canada"], "ans": 2, "badges": ["PYQ", "POLITY"], "gem": "The Joint Sitting is summoned by the President and presided over by the Speaker of Lok Sabha to resolve deadlock over ordinary bills."}, {"q": "Which fundamental right cannot be suspended even during a proclamation of national emergency under Article 352?", "options": ["Articles 14 and 19", "Articles 19 and 20", "Articles 20 and 21", "Articles 21 and 22"], "ans": 2, "badges": ["CRITICAL", "POLITY"], "gem": "The 44th Amendment explicitly restricted suspension of Articles 20 (protection against conviction) and 21 (right to life and liberty)."}, {"q": "The Comptroller and Auditor General (CAG) of India submits their annual audit reports directly to:", "options": ["The Prime Minister", "The Finance Minister", "The President of India", "The Public Accounts Committee"], "ans": 2, "badges": ["TRAP", "POLITY"], "gem": "Under Article 151, the CAG reports to the President, who causes them to be laid before each House of Parliament."}, {"q": "The provisions regarding the 'Anti-Defection Law' are enshrined within which schedule of the Indian Constitution?", "options": ["Seventh Schedule", "Eighth Schedule", "Ninth Schedule", "Tenth Schedule"], "ans": 3, "badges": ["PYQ", "POLITY"], "gem": "Added by the 52nd Constitutional Amendment Act of 1985 to curb opportunistic political floor-crossing."}, {"q": "What is the minimum age requirement specified to contest elections for becoming a member of the Legislative Council (Vidhan Parishad) in states?", "options": ["21 years", "25 years", "30 years", "35 years"], "ans": 2, "badges": ["CRITICAL", "POLITY"], "gem": "Just like the Rajya Sabha at the center, state upper houses require candidates to be at least 30 years old, whereas Lok Sabha/Vidhan Sabha requires 25."}, {"q": "Who among the following administers the oath of office to the Governor of an Indian State?", "options": ["The President of India", "The Chief Justice of India", "The Chief Justice of the concerned High Court", "The outgoing Governor"], "ans": 2, "badges": ["TRAP", "POLITY"], "gem": "While governors are appointed directly by the President, their local oath is administered by the respective state's High Court Chief Justice."}, {"q": "The Sarkaria Commission was set up in 1983 by the Government of India to thoroughly examine:", "options": ["Inter-state water disputes", "Center-State relations", "Banking sector reforms", "Electoral system overhauls"], "ans": 1, "badges": ["PYQ", "POLITY"], "gem": "It emphasized keeping the federal fabric strong and recommended cautious application of emergency powers under Article 356."}, {"q": "The official languages recognized by the state are listed under which schedule of the Constitution?", "options": ["Fifth Schedule", "Sixth Schedule", "Seventh Schedule", "Eighth Schedule"], "ans": 3, "badges": ["CRITICAL", "POLITY"], "gem": "Currently, there are 22 officially recognized languages. Originally, the schedule contained only 14 languages."}, {"q": "In the Indian Parliamentary system, what does the 'Question Hour' typically signify?", "options": ["The very first hour of every parliamentary sitting", "The last hour before the house adjourns", "A dedicated period for debating government bills", "The hour immediately following the Zero Hour"], "ans": 0, "badges": ["TRAP", "POLITY"], "gem": "It starts at 11:00 AM daily. Members ask starred (requiring oral answers) and unstarred questions to hold ministries accountable."}, {"q": "The relationship between inflation and unemployment rates is graphically illustrated by which economic curve?", "options": ["Laffer Curve", "Phillips Curve", "Lorenz Curve", "Kuznets Curve"], "ans": 1, "badges": ["PYQ", "ECONOMICS"], "gem": "The Phillips Curve traditionally suggests an inverse relationship, meaning lower unemployment tends to correlate with higher inflation."}, {"q": "In Union Budget 2025-26, what is the target fiscal deficit set for the financial year as a percentage of GDP?", "options": ["4.1%", "4.5%", "4.9%", "5.1%"], "ans": 1, "badges": ["CRITICAL", "ECONOMICS"], "gem": "The government continues on its fiscal consolidation glide path to bring the deficit below 4.5% of GDP by FY26."}, {"q": "Which organization releases the official 'Wholesale Price Index' (WPI) data in India?", "options": ["National Statistical Office (NSO)", "Reserve Bank of India (RBI)", "Office of Economic Adviser (DPIIT)", "NITI Aayog"], "ans": 2, "badges": ["TRAP", "ECONOMICS"], "gem": "WPI is issued by the Ministry of Commerce & Industry, whereas the Consumer Price Index (CPI) is issued by the NSO (Ministry of Statistics)."}, {"q": "The 'Stagflation' condition represents an economic situation characterized by:", "options": ["High inflation coupled with low growth and high unemployment", "Low inflation with rapid industrial expansion", "Deflationary pressures across consecutive quarters", "Hyperinflation with full employment models"], "ans": 0, "badges": ["PYQ", "ECONOMICS"], "gem": "Stagflation is highly tricky for central banks because raising interest rates to curb inflation can worsen unemployment."}, {"q": "Under the revised income tax slabs introduced recently, what is the maximum income threshold that qualifies for full tax rebate under the New Tax Regime?", "options": ["₹5 Lakhs", "₹7 Lakhs", "₹12 Lakhs", "₹10 Lakhs"], "ans": 1, "badges": ["CRITICAL", "ECONOMICS"], "gem": "The rebate under Section 87A ensures zero effective tax liability for individuals earning taxable incomes up to ₹7 Lakhs under the new structural tax system."}, {"q": "What does 'M1' denote within the structural monetary aggregates tracked by the Reserve Bank of India?", "options": ["Broad Money", "Narrow Money", "Reserve Money", "High Powered Money"], "ans": 1, "badges": ["TRAP", "ECONOMICS"], "gem": "M1 consists of currency held by the public + demand deposits with banks + other deposits with RBI. It is highly liquid."}, {"q": "The 'Gini Coefficient' is an essential metric utilized worldwide to measure:", "options": ["National income growth velocity", "Poverty headcount ratios", "Income inequality within a population", "Inflationary distortion of currencies"], "ans": 2, "badges": ["PYQ", "ECONOMICS"], "gem": "A coefficient of 0 indicates perfect equality, while 1 implies absolute inequality where a single individual holds all income."}, {"q": "The Union Budget 2025-26 announced a major capital expenditure (CapEx) outlay of approximately how many lakh crores?", "options": ["₹11.11 Lakh Crores", "₹12.50 Lakh Crores", "₹10.00 Lakh Crores", "₹9.50 Lakh Crores"], "ans": 0, "badges": ["CRITICAL", "ECONOMICS"], "gem": "The massive focus on infrastructure development acts as a multiplier effect to stimulate economic growth."}, {"q": "The minimum interest rate below which a commercial bank is generally not permitted to lend money to its customers is called the:", "options": ["Repo Rate", "Reverse Repo Rate", "MCLR (Marginal Cost of Funds based Lending Rate)", "Bank Rate"], "ans": 2, "badges": ["TRAP", "ECONOMICS"], "gem": "Internal benchmark lending rates like MCLR prevent discretionary underpricing and ensure transparent interest transmission."}, {"q": "Which regulatory body governs and supervises commodity derivatives trading operations across India?", "options": ["SEBI", "RBI", "IRDAI", "PFRDA"], "ans": 0, "badges": ["PYQ", "ECONOMICS"], "gem": "The Forward Markets Commission (FMC) was merged into the Securities and Exchange Board of India (SEBI) in 2015."}, {"q": "The apex financial institution dedicated explicitly to refinancing and monitoring rural and agricultural credit development is:", "options": ["SIDBI", "EXIM Bank", "NABARD", "NHB"], "ans": 2, "badges": ["CRITICAL", "ECONOMICS"], "gem": "Established in 1982 on the recommendations of the B. Sivaraman Committee, NABARD manages institutional rural credits."}, {"q": "When the government's total expenditure exceeds its total revenue receipts (excluding borrowings), the absolute gap is called:", "options": ["Revenue Deficit", "Fiscal Deficit", "Primary Deficit", "Budgetary Deficit"], "ans": 1, "badges": ["TRAP", "ECONOMICS"], "gem": "Fiscal Deficit reflects the exact total borrowing requirements of the government from domestic and external markets during the year."}, {"q": "The famous 'Gresham's Law' in macroeconomic theory states that:", "options": ["Supply creates its own demand", "Bad money drives out good money from circulation", "Tax revenues drop if tax rates cross a critical peak", "Population grows geometrically while food increases arithmetically"], "ans": 1, "badges": ["PYQ", "ECONOMICS"], "gem": "If two forms of commodity money circulate with identical legal values, the undervalued metal disappears into hoards, leaving the cheaper metal circulating."}, {"q": "The national insurance scheme 'Pradhan Mantri Jan Dhan Yojana' (PMJDY) offers what amount of default accident insurance cover to account holders?", "options": ["₹50,000", "₹1 Lakh", "₹2 Lakhs", "₹5 Lakhs"], "ans": 2, "badges": ["CRITICAL", "ECONOMICS"], "gem": "Accounts opened after August 2018 enjoy an enhanced free accident insurance cover of ₹2 Lakhs linked to the native RuPay debit card."}, {"q": "Which economic indicator is derived by subtracting 'Depreciation' from the Gross National Product (GNP)?", "options": ["Gross Domestic Product (GDP)", "Net National Product (NNP)", "Net Domestic Product (NDP)", "Per Capita Income"], "ans": 1, "badges": ["TRAP", "ECONOMICS"], "gem": "NNP measured at factor cost is the purest formal definition of 'National Income' utilized in macroeconomic indices."}, {"q": "What is the physical unit of measurement for astronomical distances equivalent to light travel in one year?", "options": ["Parsec", "Light-year", "Astronomical Unit", "Angstrom"], "ans": 1, "badges": ["PYQ", "SCIENCE"], "gem": "One light-year is approximately 9.46 trillion kilometers. Parsec is even larger, equivalent to 3.26 light-years."}, {"q": "The phenomenal 'Total Internal Reflection' (TIR) occurs only when light travels from:", "options": ["A rarer medium to a denser medium", "A denser medium to a rarer medium", "Air to water medium", "Vacuum to glass medium"], "ans": 1, "badges": ["CRITICAL", "SCIENCE"], "gem": "The angle of incidence must also exceed the critical angle. This concept forms the foundation of modern optical fiber communications."}, {"q": "Which component of the human blood plays the primary role in triggering blood coagulation and clotting at injury sites?", "options": ["Erythrocytes (RBCs)", "Leukocytes (WBCs)", "Thrombocytes (Platelets)", "Blood Plasma proteins"], "ans": 2, "badges": ["TRAP", "SCIENCE"], "gem": "Platelets release thromboplastin, converting prothrombin into thrombin, which eventually forms a fibrin net to trap cells."}, {"q": "Which chemical element is mixed with natural rubber during the industrial process of 'Vulcanization' to add elasticity and tensile strength?", "options": ["Phosphorus", "Sulphur", "Carbon Black", "Silicon"], "ans": 1, "badges": ["PYQ", "SCIENCE"], "gem": "Invented by Charles Goodyear, sulphur forms strong cross-links between polymer chains, preventing rubber from softening when heated."}, {"q": "The chemical compound widely designated as 'Plaster of Paris' is structurally characterized as:", "options": ["Calcium Sulphate Dihydrate", "Calcium Sulphate Hemihydrate", "Magnesium Sulphate Heptahydrate", "Calcium Carbonate Monohydrate"], "ans": 1, "badges": ["CRITICAL", "SCIENCE"], "gem": "Its formula is CaSO4 · 0.5H2O. It is prepared by heating gypsum (CaSO4 · 2H2O) carefully to 120°C."}, {"q": "Which human endocrine gland is often called the 'Master Gland' due to its regulatory hormones controlling other glands?", "options": ["Thyroid Gland", "Adrenal Gland", "Pituitary Gland", "Pancreas"], "ans": 2, "badges": ["TRAP", "SCIENCE"], "gem": "Though called the master gland, the pituitary itself is controlled by neurohormones from the hypothalamus."}, {"q": "The deficiency of which water-soluble vitamin directly leads to the medical condition called 'Scurvy'?", "options": ["Vitamin B1 (Thiamine)", "Vitamin B12 (Cyanocobalamin)", "Vitamin C (Ascorbic Acid)", "Vitamin K (Phylloquinone)"], "ans": 2, "badges": ["PYQ", "SCIENCE"], "gem": "Vitamin C is essential for collagen synthesis. Scurvy causes spongy gums, loose teeth, and delayed wound healing."}, {"q": "What is the primary operational fuel source inside a standard hydrogen fuel cell commercial vehicle?", "options": ["Liquid Hydrogen only", "Compressed Hydrogen Gas", "Methanol-Hydrogen mix", "Water extraction electrolysis"], "ans": 1, "badges": ["CRITICAL", "SCIENCE"], "gem": "Fuel cells generate electricity by combining compressed hydrogen gas with atmospheric oxygen, emitting only pure water vapor."}, {"q": "The sudden pitch or frequency change of a passing ambulance siren to an observer is explained by:", "options": ["Raman Effect", "Doppler Effect", "Tyndall Effect", "Tyndall Scattering"], "ans": 1, "badges": ["TRAP", "SCIENCE"], "gem": "As the source approaches, sound waves are compressed, causing higher perceived frequency; as it moves away, waves stretch out."}, {"q": "Which chemical acid is prominently found in ants' stings and causes painful burning sensations?", "options": ["Acetic Acid", "Formic Acid (Methanoic Acid)", "Citric Acid", "Oxalic Acid"], "ans": 1, "badges": ["PYQ", "SCIENCE"], "gem": "Baking soda (sodium bicarbonate) or calamine lotion can neutralize this acidic sting effectively due to their basic nature."}, {"q": "The process of conversion of solid camphor directly into gaseous vapor without passing through the liquid phase is called:", "options": ["Evaporation", "Sublimation", "Condensation", "Distillation"], "ans": 1, "badges": ["CRITICAL", "SCIENCE"], "gem": "Other common subliming substances include dry ice (solid CO2), iodine crystals, and naphthalene balls."}, {"q": "Which cell organelle is universally labeled as the 'Powerhouse of the Cell' due to ATP synthesis?", "options": ["Lysosome", "Golgi Apparatus", "Ribosome", "Mitochondria"], "ans": 3, "badges": ["TRAP", "SCIENCE"], "gem": "Mitochondria contain their own circular DNA and 70S ribosomes, supporting the endosymbiotic theory of evolution."}, {"q": "An optical instrument designed with a concave mirror can be effectively used as a:", "options": ["Rear-view mirror in automobiles", "Shaving mirror or dentist probe mirror", "Security mirror in large malls", "Streetlight reflector lens"], "ans": 1, "badges": ["PYQ", "SCIENCE"], "gem": "Concave mirrors form magnified, virtual, and erect images when an object is held close within its focal length."}, {"q": "What is the common name of Sodium Carbonate Decahydrate (Na2CO3 · 10H2O)?", "options": ["Baking Soda", "Washing Soda", "Bleaching Powder", "Slaked Lime"], "ans": 1, "badges": ["CRITICAL", "SCIENCE"], "gem": "Baking soda is Sodium Bicarbonate (NaHCO3), a common confusion point for candidates under pressure."}, {"q": "The symbiotic association between an alga and a fungus is biologically known as a:", "options": ["Mycorrhiza", "Lichen", "Bryophyte", "Parasite"], "ans": 1, "badges": ["TRAP", "SCIENCE"], "gem": "Lichens act as highly sensitive bioindicators for air pollution, especially for atmospheric sulfur dioxide (SO2) levels."}, {"q": "Sound waves are classified mechanical waves that cannot travel through which medium?", "options": ["Solid steel bars", "Water columns", "Pure Vacuum", "Compressed Air gas"], "ans": 2, "badges": ["PYQ", "SCIENCE"], "gem": "Sound requires a material medium to propagate via longitudinal compressions and rarefactions; hence it cannot cross space."}, {"q": "Which alloy consists essentially of Copper and Zinc?", "options": ["Bronze", "Brass", "Solder", "Stainless Steel"], "ans": 1, "badges": ["CRITICAL", "SCIENCE"], "gem": "Brass is Copper + Zinc. Bronze is Copper + Tin. Remembering this prevents losing easy marks."}, {"q": "The specific plant tissue responsible for transporting manufactured organic food molecules from leaves to other plant sections is:", "options": ["Xylem", "Phloem", "Parenchyma", "Sclerenchyma"], "ans": 1, "badges": ["TRAP", "SCIENCE"], "gem": "Xylem moves water unidirectionally upwards, whereas Phloem conducts food bidirectionally to roots and growing tips."}, {"q": "An athlete runs fast for a distance and feels severe muscular cramps due to accumulation of:", "options": ["Pyruvic Acid", "Lactic Acid", "Ethanol Alcohol", "Carbon Dioxide"], "ans": 1, "badges": ["PYQ", "SCIENCE"], "gem": "Cramps result from anaerobic respiration in muscles during intense exercise when oxygen supply becomes insufficient."}, {"q": "The escape velocity of any object launched from the surface of the Earth is approximately:", "options": ["9.8 km/s", "11.2 km/s", "8.5 km/s", "4.2 km/s"], "ans": 1, "badges": ["CRITICAL", "SCIENCE"], "gem": "Escape velocity is independent of the mass of the projectile and depends solely on the planet's mass and radius."}, {"q": "Which nation officially hosted the 2024 Summer Olympic Games?", "options": ["United States", "Japan", "France", "Australia"], "ans": 2, "badges": ["PYQ", "CURRENT AFFAIRS"], "gem": "Held in Paris, this historic event introduced breaking (breakdancing) as an Olympic sport and featured opening ceremonies along the Seine River."}, {"q": "Who was awarded the prestigious 59th Jnanpith Award for contributions to Indian literature?", "options": ["Damodar Mauzo", "Gulzar and Jagadguru Rambhadracharya", "Gyan Chaturvedi", "Nilamani Phookan"], "ans": 1, "badges": ["CRITICAL", "CURRENT AFFAIRS"], "gem": "The award was jointly conferred upon celebrated Urdu poet Gulzar and Sanskrit scholar Jagadguru Rambhadracharya."}, {"q": "India's first fully indigenous AI semiconductor chip, designed for deep learning models, is developed under which initiative?", "options": ["Project Shakti", "Bharat SemiAI", "Pragati Chipset", "Param Core"], "ans": 0, "badges": ["TRAP", "CURRENT AFFAIRS"], "gem": "IIT Madras led Project Shakti to build indigenous microprocessors, laying foundations for advanced national edge computing systems."}, {"q": "What is India's rank in the World Press Freedom Index 2024 published by Reporters Without Borders?", "options": ["135th", "142nd", "159th", "161st"], "ans": 2, "badges": ["PYQ", "CURRENT AFFAIRS"], "gem": "India scored 159th out of 180 countries evaluated, highlighting ongoing structural challenges across South Asian media frameworks."}, {"q": "The joint military exercise 'NOMADIC ELEPHANT' is conducted annually between India and which nation?", "options": ["Mongolia", "Kazakhstan", "Kyrgyzstan", "Uzbekistan"], "ans": 0, "badges": ["CRITICAL", "CURRENT AFFAIRS"], "gem": "This bilateral exercise alternates locations and focuses heavily on counter-insurgency and counter-terrorism operations in mountainous terrain."}, {"q": "Who assumed office as the regular Chief Justice of India (CJI) following Justice D.Y. Chandrachud?", "options": ["Justice Sanjiv Khanna", "Justice B.R. Gavai", "Justice Surya Kant", "Justice Hrishikesh Roy"], "ans": 0, "badges": ["TRAP", "CURRENT AFFAIRS"], "gem": "Justice Sanjiv Khanna succeeded as the 51st Chief Justice of India, ensuring institutional continuity across judicial benches."}, {"q": "The pathbreaking deep-space mission 'Europa Clipper', launched to examine an icy moon of Jupiter, belongs to:", "options": ["ISRO", "ESA", "NASA", "JAXA"], "ans": 2, "badges": ["PYQ", "CURRENT AFFAIRS"], "gem": "Launched late 2024, Europa Clipper aims to evaluate the habitability of Europa's subsurface liquid oceans."}, {"q": "Which Indian state launched the 'Kalaignar Magalir Urimai Thogai' scheme providing monthly cash assistance to women?", "options": ["Kerala", "Tamil Nadu", "Andhra Pradesh", "Karnataka"], "ans": 1, "badges": ["CRITICAL", "CURRENT AFFAIRS"], "gem": "The scheme provides a monthly financial entitlement of ₹1,000 to eligible women heads of families across Tamil Nadu."}, {"q": "The Global Innovation Index 2024 ranks India at which position among global economies?", "options": ["39th", "40th", "46th", "52nd"], "ans": 0, "badges": ["TRAP", "CURRENT AFFAIRS"], "gem": "India secured the 39th rank, showing steady progress in knowledge outputs, venture capital inflows, and ICT services."}, {"q": "The 2024 Nobel Prize in Physics was awarded to John J. Hopfield and Geoffrey E. Hinton for foundational discoveries in:", "options": ["Quantum dot technology", "Attosecond light pulses", "Machine learning with artificial neural networks", "Exoplanet discovery models"], "ans": 2, "badges": ["PYQ", "CURRENT AFFAIRS"], "gem": "Hinton, often called the 'Godfather of AI', received this unique award for backpropagation and neural network developments."}, {"q": "Which country officially joined the BRICS alliance as a full member effective January 2024?", "options": ["Argentina", "Saudi Arabia", "Iran", "Indonesia"], "ans": 2, "badges": ["CRITICAL", "CURRENT AFFAIRS"], "gem": "Iran, Egypt, Ethiopia, and the UAE formally integrated into the expanded BRICS bloc, while Argentina declined the invitation."}, {"q": "The pristine 'Dhordo' village, awarded the Best Tourism Village title by UNWTO, is located in which state?", "options": ["Rajasthan", "Gujarat", "Madhya Pradesh", "Himachal Pradesh"], "ans": 1, "badges": ["TRAP", "CURRENT AFFAIRS"], "gem": "Located in the Rann of Kutch, Dhordo is globally renowned for hosting the colorful annual Rann Utsav festival."}, {"q": "Who was elected as the new Prime Minister of the United Kingdom in July 2024?", "options": ["Rishi Sunak", "Keir Starmer", "Boris Johnson", "Liz Truss"], "ans": 1, "badges": ["PYQ", "CURRENT AFFAIRS"], "gem": "Keir Starmer led the Labour Party to a landslide victory, ending 14 years of consecutive Conservative Party governance."}, {"q": "The ambitious 'Project Akashdeep' recently initiated by the Indian Air Force focuses on:", "options": ["Indigenous missile defense shields", "AI-driven drone swarm networking", "Deep-space surveillance radars", "Digital integration of air command logistics"], "ans": 3, "badges": ["CRITICAL", "CURRENT AFFAIRS"], "gem": "It aims to digitalize legacy documentation and streamline comprehensive operational readiness indicators using localized secure intranets."}, {"q": "The massive international port project 'Vadhavan Port', approved by the Union Cabinet, is to be constructed in:", "options": ["Gujarat", "Maharashtra", "Kerala", "Tamil Nadu"], "ans": 1, "badges": ["TRAP", "CURRENT AFFAIRS"], "gem": "Located near Palghar, Vadhavan will be built as an all-weather, deep-draft mega port with an investment exceeding ₹76,000 crore."}, {"q": "Which cinematic feature film won the Best Feature Film award at the 70th National Film Awards?", "options": ["Rocketry: The Nambi Effect", "Aattam", "Brahmastra", "Ponniyin Selvan: I"], "ans": 1, "badges": ["PYQ", "CURRENT AFFAIRS"], "gem": "The acclaimed Malayalam film 'Aattam', directed by Anand Ekarshi, won the prestigious apex honors along with best screenplay."}, {"q": "India's mega naval infrastructure project 'INS Jatayu' was recently commissioned at which strategic location?", "options": ["Car Nicobar", "Minicoy Island", "Kavaratti", "Visakhapatnam"], "ans": 1, "badges": ["CRITICAL", "CURRENT AFFAIRS"], "gem": "Located in Lakshadweep, INS Jatayu enhances India's operational surveillance capabilities over vital Sea Lines of Communication (SLOC) in the Western Indian Ocean."}, {"q": "The specialized global environmental treaty 'Kunming-Montreal Global Biodiversity Framework' aims to protect what percentage of lands and oceans by 2030?", "options": ["20%", "30%", "40%", "50%"], "ans": 1, "badges": ["TRAP", "CURRENT AFFAIRS"], "gem": "Popularly known as the '30 by 30' target, it commits global signatories to bring 30% of degraded terrestrial and marine ecosystems under effective conservation."}, {"q": "Who won the prestigious 2024 Men's Singles title at Wimbledon?", "options": ["Novak Djokovic", "Carlos Alcaraz", "Jannik Sinner", "Daniil Medvedev"], "ans": 1, "badges": ["PYQ", "CURRENT AFFAIRS"], "gem": "The Spanish young sensation Alcaraz defeated Novak Djokovic in a stunning consecutive straight-set victory to retain his title."}, {"q": "Which regulatory framework did the RBI launch in late 2024 to curb growing digital financial fraud networks?", "options": ["DIGI-SHIELD", "DIGITA (Digital India Trust Agency)", "FRAUD-TRACK", "SECURE-NET"], "ans": 1, "badges": ["CRITICAL", "CURRENT AFFAIRS"], "gem": "DIGITA verifies financial apps, maintaining a public registry of authorized lending platforms to combat illegal fintech entities."}, {"q": "The prestigious 'Bhartendu Harishchandra Award' is given by the Government of India for outstanding original work in:", "options": ["Classical Dance forms", "Hindi Journalism and Mass Communication", "Sanskrit Poetry writing", "Environmental Journalism"], "ans": 1, "badges": ["PYQ", "STATIC GK"], "gem": "Instituted by the Ministry of Information and Broadcasting, it aims to encourage high-quality creative research in Hindi literature."}, {"q": "The famous 'Thomas Cup' is an international championship trophy associated exclusively with which sport?", "options": ["Table Tennis", "Men's Badminton", "Women's Tennis", "Golf Tournaments"], "ans": 1, "badges": ["CRITICAL", "STATIC GK"], "gem": "While the Thomas Cup represents the premier international team event for men's badminton, the Uber Cup is its female equivalent."}, {"q": "Who wrote the iconic vintage memoir 'The Discovery of India' while imprisoned at Ahmednagar Fort?", "options": ["Mahatma Gandhi", "Subhas Chandra Bose", "Jawaharlal Nehru", "Bal Gangadhar Tilak"], "ans": 2, "badges": ["TRAP", "STATIC GK"], "gem": "Written between 1942 and 1946, this text provides an elegant, sweeping analysis of Indian cultural evolution and philosophical history."}, {"q": "The headquarters of the 'International Solar Alliance' (ISA) is located at which city?", "options": ["Geneva, Switzerland", "Nairobi, Kenya", "Gurugram, India", "Paris, France"], "ans": 2, "badges": ["PYQ", "STATIC GK"], "gem": "Launched jointly by India and France at COP21 in Paris, ISA is the first treaty-based intergovernmental body headquartered in India."}, {"q": "Who was the first Indian sportsperson to secure an individual Olympic Gold medal?", "options": ["K.D. Jadhav", "Abhinav Bindra", "Neeraj Chopra", "Leander Paes"], "ans": 1, "badges": ["CRITICAL", "STATIC GK"], "gem": "Abhinav Bindra achieved this in the 10m Air Rifle event at the 2008 Beijing Olympics. Neeraj Chopra became the second at Tokyo 2020."}, {"q": "The highest civilian award of India, the Bharat Ratna, was awarded for the first time in 1954 to three recipients. Who among the following was NOT one of them?", "options": ["C. Rajagopalachari", "Dr. S. Radhakrishnan", "Dr. C.V. Raman", "Jawaharlal Nehru"], "ans": 3, "badges": ["TRAP", "STATIC GK"], "gem": "Jawaharlal Nehru received the Bharat Ratna later in 1955. The initial three recipients in 1954 were Rajagopalachari, Radhakrishnan, and Raman."}, {"q": "The classic folk dance form 'Cheraw', featuring rhythmic movements over long bamboo poles, belongs to which state?", "options": ["Mizoram", "Nagaland", "Manipur", "Tripura"], "ans": 0, "badges": ["PYQ", "STATIC GK"], "gem": "Commonly known as the 'Bamboo Dance', it is performed during festive occasions like Chapchar Kut in Mizoram."}, {"q": "The global security agency 'INTERPOL' (International Criminal Police Organization) has its permanent headquarters at:", "options": ["Vienna, Austria", "Lyon, France", "Brussels, Belgium", "Geneva, Switzerland"], "ans": 1, "badges": ["CRITICAL", "STATIC GK"], "gem": "Established in 1923, Interpol facilitates global police cooperation and issues red notices for fugitive apprehensions."}, {"q": "The famous Booker Prize winning novel 'The God of Small Things' was written by which Indian author?", "options": ["Kiran Desai", "Arundhati Roy", "Salman Rushdie", "Aravind Adiga"], "ans": 1, "badges": ["TRAP", "STATIC GK"], "gem": "Published in 1997, it explores the intricate social dynamics of caste, family, and forbidden love in Ayemenem, Kerala."}, {"q": "The popular 'Hornbill Festival' is celebrated annually in the first week of December in which state?", "options": ["Arunachal Pradesh", "Meghalaya", "Nagaland", "Mizoram"], "ans": 2, "badges": ["PYQ", "STATIC GK"], "gem": "Known as the 'Festival of Festivals', it showcases the rich traditional heritage and folk culture of all Naga tribes together."}, {"q": "The national sports award 'Major Dhyan Chand Khel Ratna Award' carries a cash prize of:", "options": ["₹15 Lakhs", "₹20 Lakhs", "₹25 Lakhs", "₹50 Lakhs"], "ans": 2, "badges": ["CRITICAL", "STATIC GK"], "gem": "It is the highest sporting honor in India. The cash prize was upwardly revised to ₹25 Lakhs from the previous ₹7.5 Lakhs."}, {"q": "Which international organization publishes the annual 'World Economic Outlook' report?", "options": ["World Bank", "International Monetary Fund (IMF)", "World Economic Forum (WEF)", "WTO"], "ans": 1, "badges": ["TRAP", "STATIC GK"], "gem": "The World Bank publishes 'Global Economic Prospects', creating a common trap for candidates who confuse the two premier financial reports."}, {"q": "Who among the following was the first woman to be elected as the President of the United Nations General Assembly?", "options": ["Sarojini Naidu", "Vijaya Lakshmi Pandit", "Rajkumari Amrit Kaur", "Sucheta Kripalani"], "ans": 1, "badges": ["PYQ", "STATIC GK"], "gem": "Elected to the eighth session in 1953, Vijaya Lakshmi Pandit was a veteran diplomat and the sister of Jawaharlal Nehru."}, {"q": "The deep-water port of Chabahar, developed strategically with active Indian investment, is located in which nation?", "options": ["Oman", "Iran", "Pakistan", "United Arab Emirates"], "ans": 1, "badges": ["CRITICAL", "STATIC GK"], "gem": "It offers India a crucial maritime transit route to Afghanistan and Central Asian landlocked markets bypassing overland Pakistani territories."}, {"q": "The historic 'Ramon Magsaysay Award', often called Asia's Nobel Prize, is named after a former president of which nation?", "options": ["Indonesia", "Malaysia", "Philippines", "Thailand"], "ans": 2, "badges": ["TRAP", "STATIC GK"], "gem": "Established in 1957, this international award honors individuals demonstrating exceptional integrity in governance and public service."}, {"q": "The phenomenon of 'Eutrophication' in aquatic bodies is primarily triggered by structural runoff rich in:", "options": ["Heavy metals like Mercury", "Nitrates and Phosphates", "Sulphuric Acid deposits", "Microplastics wastes"], "ans": 1, "badges": ["PYQ", "ENVIRONMENT"], "gem": "Nutrient enrichment causes rapid algal blooms, which deplete dissolved oxygen levels, leading to the collapse of local fish populations."}, {"q": "The famous 'Minamata Convention' is an international environmental treaty signed to protect human health from:", "options": ["Lead poisoning", "Cadmium toxicity", "Mercury pollution", "Arsenic contamination"], "ans": 2, "badges": ["CRITICAL", "ENVIRONMENT"], "gem": "Signed in 2013 in Japan, it targets industrial emissions of mercury compounds that cause severe neurological disorders."}, {"q": "In which year was the landmark Wildlife (Protection) Act enacted by the Parliament of India?", "options": ["1968", "1972", "1980", "1986"], "ans": 1, "badges": ["TRAP", "ENVIRONMENT"], "gem": "The Act provides stringent schedules for protecting wild animals. The Environment Protection Act was passed later in 1986."}, {"q": "What is the primary organic compound responsible for the corporate destruction of the Antarctic stratospheric ozone layer?", "options": ["Carbon Dioxide ($CO_2$)", "Methane ($CH_4$)", "Chlorofluorocarbons (CFCs)", "Nitrous Oxide ($N_2O$)"], "ans": 2, "badges": ["PYQ", "ENVIRONMENT"], "gem": "UV light breaks CFCs down to release free chlorine atoms, each capable of breaking apart tens of thousands of ozone molecules."}, {"q": "The conceptual 'Red Data Book', listing endangered global flora and fauna species, is published by:", "options": ["WWF", "IUCN", "UNEP", "Greenpeace"], "ans": 1, "badges": ["CRITICAL", "ENVIRONMENT"], "gem": "The International Union for Conservation of Nature (IUCN) categorizes threatened species into Extinct, Critically Endangered, Vulnerable, etc."}, {"q": "Which national park stands out as the world's only floating wildlife sanctuary?", "options": ["Keibul Lamjao National Park", "Kaziranga National Park", "Sundarbans National Park", "Namdapha National Park"], "ans": 0, "badges": ["TRAP", "ENVIRONMENT"], "gem": "Located on Loktak Lake in Manipur, it features floating decomposed plant matter mats locally called 'Phumdis' and hosts endangered Sangai deer."}, {"q": "The ecological 'Ten Percent Law' of energy transfer through progressive trophic food chains was formulated by:", "options": ["Arthur Tansley", "Raymond Lindeman", "Charles Elton", "Eugene Odum"], "ans": 1, "badges": ["PYQ", "ENVIRONMENT"], "gem": "Lindeman's law states that only about 10% of organic energy is transferred to the next level; the rest is lost as metabolic heat."}, {"q": "The foundational international protocol 'Kyoto Protocol' (1997) targets the reduction of which atmospheric hazard?", "options": ["Ozone-depleting substances", "Greenhouse gas emissions", "Transboundary hazardous wastes", "Persistent Organic Pollutants"], "ans": 1, "badges": ["CRITICAL", "ENVIRONMENT"], "gem": "Kyoto established legally binding targets for developed countries to curb greenhouse gases, paving the way for the Paris Agreement."}, {"q": "Which computer memory layout acts as an ultra-high-speed buffer between the main RAM and CPU core?", "options": ["Virtual Memory", "Cache Memory", "Secondary Flash Memory", "EEPROM"], "ans": 1, "badges": ["PYQ", "COMPUTER"], "gem": "Cache memory stores frequently accessed data instructions to reduce average access latency for the processor."}, {"q": "What is the full expansion of the networking protocol acronym 'HTTPS' used across modern web browsers?", "options": ["Hypertext Transfer Protocol Standard", "Hypertext Transfer Protocol Secure", "Hyperlink Text Transmission System", "High-level Transfer Protocol Service"], "ans": 1, "badges": ["CRITICAL", "COMPUTER"], "gem": "The 'S' signifies encryption using Transport Layer Security (TLS/SSL), protecting transmitted data from interception."}, {"q": "In computer science, a standalone malicious software program designed to self-replicate and spread to other network nodes without human interaction is called a:", "options": ["Trojan Horse", "Computer Worm", "Spyware", "Logic Bomb"], "ans": 1, "badges": ["TRAP", "COMPUTER"], "gem": "Unlike viruses which require executing an infected host file, worms exploit system vulnerabilities to spread independently across networks."}, {"q": "Which programming language was developed by James Gosling at Sun Microsystems and launched in 1995?", "options": ["Python", "C++", "Java", "JavaScript"], "ans": 2, "badges": ["PYQ", "COMPUTER"], "gem": "Java was designed with the philosophy of 'Write Once, Run Anywhere' (WORA) using a platform-independent Java Virtual Machine (JVM)."}, {"q": "What does the abbreviation 'IPv6' stand for within global internet protocols, and what is its address length?", "options": ["Internet Protocol version 6, 64-bit", "Internet Protocol version 6, 128-bit", "Internet Programming version 6, 32-bit", "Interconnection Protocol version 6, 256-bit"], "ans": 1, "badges": ["CRITICAL", "COMPUTER"], "gem": "IPv6 provides a massive address pool to accommodate the global explosion of Internet of Things (IoT) devices."}, {"q": "Which open-source operating system kernel was originally written by a Finnish student in 1991?", "options": ["Unix", "Linux", "FreeBSD", "Ubuntu"], "ans": 1, "badges": ["TRAP", "COMPUTER"], "gem": "Linus Torvalds created Linux. Today it runs nearly all global supercomputers, cloud mainframes, and Android smartphones."}, {"q": "In database management systems (DBMS), a structural column that uniquely identifies every distinct row within a table is designated as the:", "options": ["Foreign Key", "Primary Key", "Composite Key", "Candidate Key"], "ans": 1, "badges": ["PYQ", "COMPUTER"], "gem": "A Primary Key column must contain unique values and cannot accept null values, ensuring strict data integrity."}, {"q": "The specialized technology 'Blockchain', forming the architecture of modern cryptocurrencies, relies fundamentally on:", "options": ["Centralized cloud databases", "Distributed ledger technology with cryptography", "Quantum computation logic gates", "High-speed parallel file transfer protocols"], "ans": 1, "badges": ["CRITICAL", "COMPUTER"], "gem": "By storing data across peer-to-peer networks using cryptographic hashes, blockchains ensure transaction records are immutable."}, {"q": "The classical dance form 'Sattriya', recognized as one of India's major classical dances, originated in which state?", "options": ["Manipur", "Odisha", "Assam", "Kerala"], "ans": 2, "badges": ["PYQ", "MISCELLANEOUS"], "gem": "Introduced by the 15th-century Vaishnavite saint Srimanta Sankardev, it was traditionally performed by celibate monks inside monastery halls (Sattras)."}, {"q": "The world-famous 'Surajkund International Crafts Mela' is organized annually by which state tourism department?", "options": ["Rajasthan", "Punjab", "Haryana", "Uttar Pradesh"], "ans": 2, "badges": ["CRITICAL", "MISCELLANEOUS"], "gem": "Held in Faridabad, Haryana, this vibrant fair showcases traditional regional handlooms and crafts from across India and partner nations."}, {"q": "Under the Pradhan Mantri Matsya Sampada Yojana (PMMSY), what is the primary target sector being modernized?", "options": ["Dairy production systems", "Fisheries development and blue economy", "Organic horticulture expansion", "Beekeeping and honey exports"], "ans": 1, "badges": ["TRAP", "MISCELLANEOUS"], "gem": "Launched to address critical gaps in the fisheries value chain, it aims to sustainably boost production, quality, and fishers' incomes."}, {"q": "The spectacular style of painting known as 'Pattachitra', done traditionally on pieces of cloth, belongs to which state?", "options": ["West Bengal", "Odisha", "Bihar", "Madhya Pradesh"], "ans": 1, "badges": ["PYQ", "MISCELLANEOUS"], "gem": "Closely linked to the cult of Lord Jagannath, these intricate paintings feature vibrant natural mineral colors and epic mythological narratives."}, {"q": "The historical monument 'Gol Gumbaz', housing the tomb of Muhammad Adil Shah, features the world's second-largest dome. Where is it located?", "options": ["Hyderabad, Telangana", "Vijayapura (Bijapur), Karnataka", "Aurangabad, Maharashtra", "Gwalior, Madhya Pradesh"], "ans": 1, "badges": ["CRITICAL", "MISCELLANEOUS"], "gem": "Built in the 17th century, its famous Whispering Gallery echoes any faint sound multiple times along the inner circular vault."}, {"q": "The unique central welfare scheme 'PM-MITRA' recently launched by the Government of India aims to boost infrastructure in which sector?", "options": ["Renewable Energy parks", "Textile and Apparel manufacturing hubs", "Micro-irrigation networks", "Pharmaceutical research labs"], "ans": 1, "badges": ["TRAP", "MISCELLANEOUS"], "gem": "PM-MITRA sets up Integrated Textile Regions and Apparel parks to build world-class industrial infrastructure under a 5F vision."}, {"q": "The celebrated multi-day spring festival 'Chapchar Kut' is the most significant annual cultural event celebrated in:", "options": ["Nagaland", "Mizoram", "Arunachal Pradesh", "Meghalaya"], "ans": 1, "badges": ["PYQ", "MISCELLANEOUS"], "gem": "Celebrated after clearing bamboo forests for shifting cultivation (Jhum), it features vibrant community dances and traditional feasts."}, {"q": "The architectural style characterized by a blend of North Indian Nagara and South Indian Dravida elements is classified as:", "options": ["Vesara Style", "Kalinga Style", "Hoysala Style", "Pala Style"], "ans": 0, "badges": ["CRITICAL", "MISCELLANEOUS"], "gem": "Vesara flourished under the Chalukyas and Rashtrakutas. It is prominently seen in the temples of Badami and Pattadakal."}, {"q": "The 'PM-VIKAS' (Pradhan Mantri Vishwakarma Kaushal Samman) scheme provides financial and training support primarily to:", "options": ["Tribal organic farming communities", "Traditional artisans and craftspeople", "Unemployed engineering graduates", "Rural school teachers"], "ans": 1, "badges": ["TRAP", "MISCELLANEOUS"], "gem": "It covers 18 traditional trades, offering skill upgrading, digital transaction incentives, and collateral-free enterprise development credit lines."}, {"q": "The unique tribal festival called 'Medaram Jatara' (Sammakka Saralamma Jatara), second only to Kumbh Mela in gathering size, is celebrated in:", "options": ["Andhra Pradesh", "Telangana", "Chhattisgarh", "Madhya Pradesh"], "ans": 1, "badges": ["PYQ", "MISCELLANEOUS"], "gem": "Celebrated by the Koya tribe, this state festival honors a heroic mother-daughter duo who fought unjust taxes imposed by historic rulers."}];
+
+        let timerEnabled = false;
+        let timeLeft = 1800; 
+        let timerInterval = null;
+        let answeredCount = 0;
+        let scoreCount = 0;
+        const userAnswers = {}; 
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderPaletteGrid();
+            renderQuestionCards();
+            setupScrollSync();
+        });
+
+        function renderPaletteGrid() {
+            const grid = document.getElementById('paletteGrid');
+            grid.innerHTML = '';
+            testData.forEach((qItem, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'palette-btn';
+                btn.id = `palette-btn-${index}`;
+                btn.innerText = index + 1;
+                btn.onclick = () => {
+                    document.getElementById(`q-card-${index}`).scrollIntoView({ behavior: 'smooth' });
+                };
+                grid.appendChild(btn);
+            });
+        }
+
+        function renderQuestionCards() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            testData.forEach((qItem, index) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                card.id = `q-card-${index}`;
+
+                let badgeHTML = '';
+                qItem.badges.forEach(b => {
+                    badgeHTML += `<span class="badge badge-${b.toLowerCase().replace(' ', '-')}">${b}</span>`;
+                });
+
+                let optionsHTML = '';
+                qItem.options.forEach((opt, optIdx) => {
+                    const optionChar = String.fromCharCode(65 + optIdx); 
+                    optionsHTML += `
+                        <label class="option-label" id="label-${index}-${optIdx}">
+                            <input type="radio" name="question-${index}" value="${optIdx}" onclick="evaluateAnswer(${index}, ${optIdx})">
+                            <span><strong>${optionChar}.</strong> ${opt}</span>
+                        </label>
+                    `;
+                });
+
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div class="q-number">Q ${index + 1}</div>
+                        <div class="card-tags">${badgeHTML}</div>
+                    </div>
+                    <div class="q-text">${qItem.q}</div>
+                    <div class="options-container" id="options-box-${index}">
+                        ${optionsHTML}
+                    </div>
+                    <div class="feedback-msg" id="feedback-${index}"></div>
+                    <div class="live-gem-box" id="gem-${index}">
+                        <div class="live-gem-title">
+                            <span class="badge badge-gem">💎 Live Gem</span>
+                        </div>
+                        <div class="live-gem-text">${qItem.gem}</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function evaluateAnswer(qIndex, selectedOptIdx) {
+            if (userAnswers[qIndex] !== undefined) return; 
+
+            userAnswers[qIndex] = selectedOptIdx;
+            answeredCount++;
+
+            const qItem = testData[qIndex];
+            const correctOptIdx = qItem.ans;
+            const feedback = document.getElementById(`feedback-${qIndex}`);
+            const gemBox = document.getElementById(`gem-${qIndex}`);
+            const paletteBtn = document.getElementById(`palette-btn-${qIndex}`);
+
+            const inputs = document.querySelectorAll(`#options-box-${qIndex} input`);
+            inputs.forEach(input => input.disabled = true);
+
+            if (selectedOptIdx === correctOptIdx) {
+                scoreCount++;
+                document.getElementById(`label-${qIndex}-${selectedOptIdx}`).classList.add('correct-glow');
+                feedback.innerText = "✅ Correct!";
+                feedback.className = "feedback-msg correct";
+                paletteBtn.classList.add('correct');
+            } else {
+                document.getElementById(`label-${qIndex}-${selectedOptIdx}`).classList.add('wrong-glow');
+                document.getElementById(`label-${qIndex}-${correctOptIdx}`).classList.add('correct-glow');
+                const correctChar = String.fromCharCode(65 + correctOptIdx);
+                feedback.innerText = `❌ Wrong! Correct: ${correctChar}. ${qItem.options[correctOptIdx]}`;
+                feedback.className = "feedback-msg wrong";
+                paletteBtn.classList.add('wrong');
+            }
+
+            gemBox.classList.add('visible');
+            updateLiveScoreDisplay();
+        }
+
+        function updateLiveScoreDisplay() {
+            document.getElementById('liveScore').innerText = `Score: ${scoreCount} / ${answeredCount} Attempted`;
+        }
+
+        function toggleTimer() {
+            const btn = document.getElementById('timerToggle');
+            const display = document.getElementById('timer');
+
+            if (!timerEnabled) {
+                timerEnabled = true;
+                btn.innerText = "⏱ Disable Timer";
+                btn.style.borderColor = "var(--red)";
+                btn.style.color = "var(--red)";
+                runTimerLogic();
+                timerInterval = setInterval(runTimerLogic, 1000);
+            } else {
+                timerEnabled = false;
+                clearInterval(timerInterval);
+                btn.innerText = "⏱ Enable Timer";
+                btn.style.borderColor = "var(--gold)";
+                btn.style.color = "var(--gold)";
+                display.innerText = "--:--";
+                display.classList.remove('danger');
+            }
+        }
+
+        function runTimerLogic() {
+            if (!timerEnabled) return;
+
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                document.getElementById('timer').innerText = "00:00";
+                autoSubmitOnExpiry();
+                return;
+            }
+
+            timeLeft--;
+            const mins = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+            const secs = (timeLeft % 60).toString().padStart(2, '0');
+            const display = document.getElementById('timer');
+            display.innerText = `${mins}:${secs}`;
+
+            if (timeLeft <= 300) {
+                display.classList.add('danger');
+            }
+        }
+
+        function setupScrollSync() {
+            window.addEventListener('scroll', () => {
+                const cards = document.querySelectorAll('.question-card');
+                let currentActiveIdx = 0;
+
+                cards.forEach((card, idx) => {
+                    const rect = card.getBoundingClientRect();
+                    if (rect.top <= 150) {
+                        currentActiveIdx = idx;
+                    }
+                });
+
+                document.querySelectorAll('.palette-btn').forEach(btn => btn.classList.remove('current'));
+                cards.forEach(c => c.classList.remove('active-scroll'));
+
+                const activePaletteBtn = document.getElementById(`palette-btn-${currentActiveIdx}`);
+                if (activePaletteBtn) {
+                    activePaletteBtn.classList.add('current');
+                    if (window.innerWidth <= 768) {
+                        activePaletteBtn.parentElement.scrollTo({
+                            left: activePaletteBtn.offsetLeft - 20,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+                if(cards[currentActiveIdx]) {
+                    cards[currentActiveIdx].classList.add('active-scroll');
+                }
+            });
+        }
+
+        function submitTest() {
+            clearInterval(timerInterval);
+            const totalQuestions = testData.length;
+            const percentage = Math.round((scoreCount / totalQuestions) * 100);
+            
+            let grade = 'D - Scope to Improve';
+            if (percentage >= 85) grade = 'S - Outstanding Achievement';
+            else if (percentage >= 70) grade = 'A - Excellent Core';
+            else if (percentage >= 50) grade = 'B - Good Practice';
+            else if (percentage >= 33) grade = 'C - Average Standing';
+
+            document.getElementById('modalScoreDisplay').innerText = `${scoreCount} / ${totalQuestions}`;
+            document.getElementById('modalStatsDisplay').innerHTML = `Percentage: ${percentage}% <br> Total Attempted: ${answeredCount} / ${totalQuestions}`;
+            document.getElementById('modalGradeDisplay').innerText = `Grade: ${grade}`;
+
+            document.getElementById('scoreModal').classList.add('active');
+        }
+
+        function autoSubmitOnExpiry() {
+            submitTest();
+        }
+
+        function closeModal() {
+            document.getElementById('scoreModal').classList.remove('active');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body class="en-mode">
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">08 June 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">08 ஜூன் 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <!-- Sidebar TOC -->
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Tech</span><span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Infrastructure · Transport</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Chennai to Implement Intelligent Transport System (ITS) by August</span>
+                        <span class="lang-ta">சென்னையில் போக்குவரத்து நெரிசலை குறைக்க ஆகஸ்ட் முதல் நுண்ணறிவு போக்குவரத்து திட்டம் (ITS)</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">To permanently resolve traffic congestion in Chennai, the Greater Chennai Corporation is set to implement the Intelligent Transport System (ITS) by August. Funded by the Japan International Cooperation Agency (JICA) at a cost of ₹530 crores, this AI-driven project will replace manual traffic management with automated AI signals across 165 junctions. The system will calculate vehicle density, adjust signal timings dynamically, automatically fine traffic violators at 10 key locations, and track 2,940 city buses via GPS.</p>
+                    <p class="lang-ta">சென்னை மக்களின் தீராத பிரச்னையாக இருக்கும் போக்குவரத்து நெரிசலைத் தீர்க்க, ஜப்பான் சர்வதேச கூட்டுறவு முகமையின் (JICA) நிதி உதவியுடன் ரூ.530 கோடியில் நுண்ணறிவு போக்குவரத்து திட்டத்தை (Intelligent Transport System - ITS) ஆகஸ்ட் மாதத்திற்குள் செயல்படுத்த மாநகராட்சி திட்டமிட்டுள்ளது. இத்திட்டத்தின் கீழ் 165 சந்திப்புகளில் செயற்கை நுண்ணறிவு (AI) தொழில்நுட்பம் கொண்ட சிக்னல்கள் அமைக்கப்படும். இது வாகனங்களின் எண்ணிக்கையை கணக்கிட்டு சிக்னல் நேரத்தை தானாகவே மாற்றியமைக்கும். மேலும் அதிவேகமாக செல்பவர்களுக்கு தானியங்கி மூலம் அபராதம் விதிக்கும் கேமராக்கள் 10 இடங்களில் அமைக்கப்படும். 2,940 மாநகரப் பேருந்துகளில் ஜிபிஎஸ் கருவி பொருத்தப்பட்டு கண்காணிக்கப்படும்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Governance Hook:</strong> JICA (Japan International Cooperation Agency) frequently funds major infrastructure projects in Tamil Nadu, including the Chennai Metro and Chennai Peripheral Ring Road.</span><span class="lang-ta"><strong>ஆளுமை குறிப்பு:</strong> சென்னை மெட்ரோ, சென்னை சுற்றுவட்டச் சாலை உள்ளிட்ட தமிழகத்தின் பல முக்கிய உள்கட்டமைப்பு திட்டங்களுக்கு ஜப்பான் சர்வதேச கூட்டுறவு முகமை (JICA) நிதியுதவி வழங்கி வருகிறது.</span></li>
+                            <li><span class="badge bg-tip">TIP</span><span class="lang-en">Chennai currently has 63 lakh registered vehicles. Only 400 roads out of 35,000 roads/streets bear the brunt of the traffic.</span><span class="lang-ta">தற்போது சென்னையில் 63 லட்சம் வாகனங்கள் உள்ளன. மொத்தமுள்ள 35,000 சாலைகளில் சுமார் 400 முக்கிய சாலைகளில் மட்டுமே போக்குவரத்து நெரிசல் ஏற்படுகிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Agriculture · Geography</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Mettur Dam Unlikely to Open for Kuruvai Cultivation on June 12</span>
+                        <span class="lang-ta">மேட்டூரில் இருந்து ஜூன் 12-ல் பாசனத்துக்கு தண்ணீர் திறக்க வாய்ப்பில்லை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">For the 60th time in its 91-year history, the Mettur Dam will likely miss its customary June 12 opening date for the Kuruvai paddy cultivation in the Cauvery Delta region due to insufficient water storage. Currently, the dam's water level stands at 79.82 feet with a storage of just 41.77 TMC, while 330 TMC is required for the entire Kuruvai, Samba, and Thaladi seasons. Officials state water can only be released in late August or early September once Karnataka dams (Kabini, Krishnaraja Sagar) fill up and release surplus water.</p>
+                    <p class="lang-ta">மேட்டூர் அணை வரலாற்றில் 91 ஆண்டுகளில் 60-வது முறையாக, போதிய நீர் இருப்பு இல்லாத காரணத்தால், காவிரி டெல்டா பாசனத்திற்காக (குறுவை சாகுபடி) வழக்கமான ஜூன் 12-ம் தேதியன்று தண்ணீர் திறக்கப்பட வாய்ப்பில்லை. குறுவை, சம்பா, தாளடி ஆகிய முப்போக சாகுபடிக்கும் 330 டி.எம்.சி தண்ணீர் தேவைப்படும் நிலையில், தற்போது அணையின் நீர்மட்டம் 79.82 அடியாகவும், நீர் இருப்பு 41.77 டி.எம்.சி ஆகவும் மட்டுமே உள்ளது. கர்நாடக அணைகளான கபினி மற்றும் கிருஷ்ணராஜ சாகர் நிரம்பி உபரி நீர் திறக்கப்பட்டால் மட்டுமே ஆகஸ்ட் இறுதி அல்லது செப்டம்பர் தொடக்கத்தில் தண்ணீர் திறக்க வாய்ப்புள்ளதாக நீர்வளத்துறை வட்டாரங்கள் தெரிவிக்கின்றன.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Geography Hook (Unit 3):</strong> The Cauvery Delta region spans 12 districts including Salem, Erode, Trichy, Karur, Thanjavur, Tiruvarur, and Nagapattinam, covering 16.05 lakh acres.</span><span class="lang-ta"><strong>புவியியல் குறிப்பு (Unit 3):</strong> காவிரி டெல்டா பாசனப் பகுதி சேலம், ஈரோடு, திருச்சி, கரூர், தஞ்சாவூர், திருவாரூர், நாகப்பட்டினம் உள்ளிட்ட 12 மாவட்டங்களில் 16.05 லட்சம் ஏக்கர் பரப்பளவைக் கொண்டுள்ளது.</span></li>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en">The traditional date for opening the Mettur dam for Delta irrigation is <strong>June 12</strong>. Out of 91 years, it has been opened exactly on June 12 only 20 times.</span><span class="lang-ta">டெல்டா பாசனத்திற்கு மேட்டூர் அணை திறக்கப்படும் வழக்கமான நாள் <strong>ஜூன் 12</strong> ஆகும். 91 ஆண்டுகளில் 20 முறை மட்டுமே சரியாக ஜூன் 12-ல் திறக்கப்பட்டுள்ளது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Health · Public Safety</span>
+                        <span class="badge bg-tip">MODERATE</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">108 Ambulance Response Time Improved to 6.14 Minutes in Chennai</span>
+                        <span class="lang-ta">சென்னையில் 108 ஆம்புலன்ஸ் சேவை 6.14 நிமிடங்களில் கிடைக்கும் வகையில் மேம்பாடு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Health and Family Welfare Department announced that the response time for 108 emergency ambulances has been significantly reduced. Due to new initiatives like the "Avsaram 108" app, GPS tracking, and WhatsApp integration, the average response time is now 6.14 minutes in Chennai and 11.22 minutes state-wide (down from the previous 13 minutes). Currently, 1,353 ambulances are operated across Tamil Nadu by the GVK EMRI Green Health Services.</p>
+                    <p class="lang-ta">108 அவசரகால ஆம்புலன்ஸ் சேவையின் வருகை நேரம் கணிசமாகக் குறைக்கப்பட்டுள்ளதாக மக்கள் நல்வாழ்வுத்துறை தெரிவித்துள்ளது. "அவசரம் 108" செயலி, வாட்ஸ்அப் (WhatsApp) மூலம் இருப்பிடப் பகிர்வு மற்றும் ஜிபிஎஸ் (GPS) கண்காணிப்பு போன்ற புதிய முன்னெடுப்புகளால், ஆம்புலன்ஸ் வரும் சராசரி நேரம் சென்னையில் 6.14 நிமிடங்களாகவும், மாநிலம் முழுவதும் 11.22 நிமிடங்களாகவும் (முன்பு 13 நிமிடங்களாக இருந்தது) குறைந்துள்ளது. தற்போது தமிழகம் முழுவதும் GVK EMRI நிறுவனம் மூலம் 1,353 ஆம்புலன்ஸ்கள் இயக்கப்பட்டு வருகின்றன.</p>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Culture · HR&CE</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Govt Plans to Abolish Paid Darshan System in Temples</span>
+                        <span class="lang-ta">கோயில்களில் கட்டண தரிசன முறையை ரத்து செய்ய அரசு பரிசீலனை: அமைச்சர் சேகர்பாபு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Hindu Religious and Charitable Endowments (HR&CE) Minister P.K. C Ramesh announced that the government is consulting with the Chief Minister to abolish the "paid darshan" (Kattana Darshan) system in temples to ensure equality for all devotees. He criticized the previous government for commercializing spirituality. An exclusive online token system will soon be introduced for senior citizens, pregnant women, and differently-abled individuals, ensuring crowd control at major shrines like Tiruvannamalai, Tiruchendur, and Palani.</p>
+                    <p class="lang-ta">அனைத்து பக்தர்களுக்கும் சம உரிமை கிடைப்பதை உறுதி செய்யும் வகையில், கோயில்களில் "கட்டண தரிசன" முறையை ரத்து செய்வது குறித்து முதல்வருடன் ஆலோசித்து முடிவெடுக்கப்படும் என இந்து சமய அறநிலையத்துறை அமைச்சர் C Rameshதெரிவித்தார். முந்தைய ஆட்சியில் ஆன்மிகம் முழுமையாக வணிகமயமாக்கப்பட்டதாக அவர் விமர்சித்தார். மூத்த குடிமக்கள், கர்ப்பிணிகள் மற்றும் மாற்றுத்திறனாளிகளுக்கு முன்னுரிமை அளிக்க சிறப்பு ஆன்லைன் டோக்கன் முறை விரைவில் அறிமுகப்படுத்தப்படும். இதன் மூலம் திருவண்ணாமலை, திருச்செந்தூர், பழனி போன்ற முக்கிய தலங்களில் கூட்ட நெரிசல் தவிர்க்கப்படும்.</p>
+                </div>
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National / Central News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Economy · Inflation</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Domestic LPG Cylinder Prices Hiked by ₹29; Centre Cites Global Conflict</span>
+                        <span class="lang-ta">சமையல் எரிவாயு சிலிண்டர் விலை மேலும் ரூ.29 உயர்வு: சர்வதேச சந்தை நிலவரமே காரணம் என மத்திய அரசு விளக்கம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Oil marketing companies have increased the price of 14.2 kg domestic LPG cylinders by ₹29, raising the price in Chennai to ₹957.50. This is the second hike in four months, totaling an ₹89 increase. The Central Government clarified that the hike is necessary because the international Saudi Contract Price (CP)—the global benchmark—has surged by 46% (from $543 to $790 per tonne) due to the Middle East conflict and shipping disruptions in the Strait of Hormuz. Despite the hike, India's LPG prices remain among the lowest globally.</p>
+                    <p class="lang-ta">வீட்டு உபயோக சமையல் எரிவாயு (LPG) சிலிண்டர் விலையை எண்ணெய் நிறுவனங்கள் ரூ.29 உயர்த்தியுள்ளன. இதனால் சென்னையில் இதன் விலை ரூ.957.50 ஆக அதிகரித்துள்ளது. கடந்த 4 மாதங்களில் இது இரண்டாவது முறையாகும் (மொத்தம் ரூ.89 உயர்வு). மத்திய கிழக்கு போர் மற்றும் ஹோர்முஸ் ஜலசந்தியில் ஏற்பட்டுள்ள கப்பல் போக்குவரத்து தடங்கல்களால், சர்வதேச அளவுகோலான சவூதி ஒப்பந்த விலை (CP) 46 சதவீதம் (ஒரு டன்னுக்கு $543-லிருந்து $790 ஆக) அதிகரித்துள்ளதே இந்த விலையேற்றத்திற்குக் காரணம் என மத்திய அரசு விளக்கமளித்துள்ளது. எனினும், உலக நாடுகளை ஒப்பிடுகையில் இந்தியாவில் எல்பிஜி விலை குறைவாகவே உள்ளதாக அரசு தெரிவித்துள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Geography/IR Hook:</strong> The Strait of Hormuz is a highly strategic chokepoint between the Persian Gulf and the Gulf of Oman, critical for global oil and LNG transport.</span><span class="lang-ta"><strong>புவியியல் குறிப்பு:</strong> பெர்சிய வளைகுடாவிற்கும் ஓமன் வளைகுடாவிற்கும் இடையே அமைந்துள்ள ஹோர்முஸ் ஜலசந்தி, உலகளாவிய கச்சா எண்ணெய் மற்றும் எல்என்ஜி (LNG) கப்பல் போக்குவரத்துக்கு மிக முக்கியமான உத்திசார் பாதையாகும்.</span></li>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Scheme Note:</strong> The PM Ujjwala Yojana provides free LPG connections to women from BPL households.</span><span class="lang-ta"><strong>திட்டக் குறிப்பு:</strong> வறுமைக்கோட்டிற்கு கீழ் உள்ள குடும்பங்களைச் சேர்ந்த பெண்களுக்கு இலவச சமையல் எரிவாயு இணைப்பு வழங்கும் திட்டம் பிஎம் உஜ்வாலா யோஜனா (PM Ujjwala Yojana) ஆகும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Education · Investigation</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">NEET-UG Re-exam Scheduled for June 21 Following Massive Paper Leak Scam</span>
+                        <span class="lang-ta">நீட் வினாத்தாள் கசிவு மோசடி எதிரொலி: நீட் மறுதேர்வு ஜூன் 21-ல் நடைபெறும் என NTA அறிவிப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Following widespread protests over paper leak allegations, the National Testing Agency (NTA) cancelled the recent NEET-UG exam (taken by 22 lakh students) and announced a re-exam on June 21, which will now be conducted in a hybrid digital mode to prevent leaks. The CBI has arrested multiple individuals, including a botany professor from Pune who was part of the NTA's question paper setting panel, uncovering a massive "Solver Gang Mafia" operating out of Rajasthan and Bihar. The NTA has released the exam city intimation slips for the upcoming re-test.</p>
+                    <p class="lang-ta">வினாத்தாள் கசிவு புகாரைத் தொடர்ந்து நாடு முழுவதும் வெடித்த போராட்டங்களால், 22 லட்சம் மாணவர்கள் எழுதிய நீட் (NEET-UG) தேர்வை ரத்து செய்த தேசிய தேர்வு முகமை (NTA), ஜூன் 21-ம் தேதி மறுதேர்வு நடைபெறும் என அறிவித்துள்ளது. முறைகேடுகளைத் தவிர்க்க இத்தேர்வு ஹைப்ரிட்-டிஜிட்டல் முறையில் நடைபெறும். என்டிஏ-வின் வினாத்தாள் தயாரிப்புக் குழுவில் இடம்பெற்றிருந்த புனேவைச் சேர்ந்த தாவரவியல் பேராசிரியர் உட்பட பலரை சிபிஐ (CBI) கைது செய்துள்ளது. ராஜஸ்தான் மற்றும் பீகாரை மையமாகக் கொண்டு இயங்கும் வினாத்தாள் கசிவு மாஃபியாக்கள் ("Solver Gang Mafia") இதில் ஈடுபட்டுள்ளது அம்பலமாகியுள்ளது. மறுதேர்வுக்கான நகர ஒதுக்கீட்டு சீட்டுகளை NTA தற்போது வெளியிட்டுள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en">The National Testing Agency (NTA) conducts NEET. Education Minister Dharmendra Pradhan is facing severe backlash and demands for resignation over the "Vyapam-style" scams.</span><span class="lang-ta">நீட் தேர்வை நடத்துவது தேசிய தேர்வு முகமை (NTA) ஆகும். மத்திய கல்வித்துறை அமைச்சர் தர்மேந்திர பிரதான் இந்த மாபெரும் முறைகேடுகளுக்காக பதவி விலக வேண்டும் என்ற கோரிக்கை வலுத்துள்ளது.</span></li>
+                            <li><span class="lang-en">The Centre previously appointed a high-level committee headed by former ISRO Chief Dr. K. Radhakrishnan to reform the NTA and the examination process.</span><span class="lang-ta">முன்னாள் இஸ்ரோ தலைவர் டாக்டர் கே. ராதாகிருஷ்ணன் தலைமையில் என்டிஏ (NTA) மற்றும் தேர்வு முறைகளில் சீர்திருத்தம் கொண்டுவர மத்திய அரசு ஒரு உயர்மட்டக் குழுவை அமைத்திருந்தது குறிப்பிடத்தக்கது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · Alliances</span>
+                        <span class="badge bg-tip">MODERATE</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">INDIA Bloc Holds Crucial Meeting in Delhi Without TMC, AAP, and DMK</span>
+                        <span class="lang-ta">டெல்லியில் இன்று ‘இண்டி’ கூட்டணி கூட்டம்: மம்தா பானர்ஜி, திமுக புறக்கணிப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The opposition INDIA bloc is holding a crucial meeting in New Delhi today (June 8) to discuss its future action plan ahead of the 2029 Lok Sabha elections. According to Congress General Secretary Jairam Ramesh, 23 parties have confirmed their participation. However, major allies including Mamata Banerjee's Trinamool Congress (TMC), Arvind Kejriwal's Aam Aadmi Party (AAP), and Tamil Nadu's DMK are boycotting the meeting. The DMK boycotted following Congress's recent alliance with the ruling TVK party in Tamil Nadu, alleging betrayal.</p>
+                    <p class="lang-ta">2029 மக்களவைத் தேர்தலை கருத்தில் கொண்டு, எதிர்கட்சிகளின் எதிர்கால செயல்திட்டங்களை வகுக்க 'இண்டி' (INDIA) கூட்டணியின் முக்கிய ஆலோசனைக் கூட்டம் புதுடெல்லியில் இன்று (ஜூன் 8) நடைபெறுகிறது. இக்கூட்டத்தில் 23 கட்சிகள் பங்கேற்பதை உறுதி செய்துள்ளதாக காங்கிரஸ் பொதுச்செயலாளர் ஜெய்ராம் ரமேஷ் தெரிவித்துள்ளார். இருப்பினும், மம்தா பானர்ஜியின் திரிணமூல் காங்கிரஸ் (TMC), அரவிந்த் கெஜ்ரிவாலின் ஆம் ஆத்மி (AAP) மற்றும் தமிழகத்தின் திமுக ஆகிய முக்கிய கூட்டணி கட்சிகள் இக்கூட்டத்தைப் புறக்கணித்துள்ளன. தமிழகத்தில் ஆளும் தவெக-வுடன் (TVK) காங்கிரஸ் கூட்டணி அமைத்துள்ளதால், தங்களுக்கு துரோகம் இழைக்கப்பட்டுவிட்டதாகக் கூறி திமுக இக்கூட்டத்தை புறக்கணித்துள்ளது.</p>
+                </div>
+            </section>
+
+            <!-- INTERNATIONAL NEWS -->
+            <section id="international">
+                <h2>
+                    <span class="lang-en">International News</span>
+                    <span class="lang-ta">சர்வதேச செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Technology · Nuclear Energy</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">US Plans to Sell Small Modular Reactors (SMRs) to India</span>
+                        <span class="lang-ta">சிறிய ரக அணு உலைகளை இந்தியாவுக்கு விற்க அமெரிக்கா திட்டம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The United States is exploring plans to sell advanced Small Modular Reactors (SMRs) to India and other friendly nations. Private US companies like Antares (with its "Mark-0" test reactor), Westinghouse (eVinci), and Radiant (Kaleidos) are displaying their micro-reactors ahead of the US 250th Independence Day. India currently generates 9 GW of nuclear power and aims to reach 100 GW by 2047, recently relaxing civil nuclear liability laws to invite private participation, making it a prime market for US micro-reactors.</p>
+                    <p class="lang-ta">அமெரிக்கா தனது நாட்டில் தயாரிக்கப்படும் அதிநவீன சிறிய ரக அணு உலைகளை (Small Modular Reactors - SMR) இந்தியா உள்ளிட்ட நட்பு நாடுகளுக்கு விற்க திட்டமிட்டுள்ளது. அன்டாரெஸ் (Antares), வெஸ்டிங்ஹவுஸ், ரேடியன்ட் போன்ற அமெரிக்க தனியார் நிறுவனங்கள் தங்களது மைக்ரோ அணு உலைகளை காட்சிப்படுத்தி வருகின்றன. இந்தியா தற்போது 9 ஜிகாவாட் அணு மின்சாரத்தை உற்பத்தி செய்யும் நிலையில், 2047-க்குள் 100 ஜிகாவாட்டாக உயர்த்த இலக்கு நிர்ணயித்துள்ளது. இதற்காக தனியாரை அனுமதிக்கும் வகையில் சட்டங்களை திருத்தியுள்ளதால், அமெரிக்காவின் இந்த சிறிய அணு உலைகளுக்கு இந்தியா மிகப்பெரிய சந்தையாக உருவெடுத்துள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Science & Tech Hook:</strong> SMRs are advanced nuclear reactors that have a power capacity of up to 300 MW(e) per unit. Their compact, factory-assembled nature makes them safer, cheaper, and easier to deploy than traditional large reactors.</span><span class="lang-ta"><strong>அறிவியல் குறிப்பு:</strong> சிறிய மாடுலர் ரியாக்டர்கள் (SMR) என்பவை ஒரு யூனிட்டிற்கு 300 மெகாவாட் வரை மின் உற்பத்தி திறன் கொண்ட மேம்பட்ட அணு உலைகள் ஆகும். இவற்றை தொழிற்சாலையிலேயே தயாரித்து தேவைப்படும் இடத்திற்கு எளிதில் கொண்டு செல்ல முடியும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Diplomacy · India-Nepal</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">India-Nepal Border Issues Will be Solved Bilaterally: Nepal FM</span>
+                        <span class="lang-ta">இந்தியாவுடனான எல்லைப் பிரச்சனைக்கு பேச்சுவார்த்தை மூலம் தீர்வு காணப்படும்: நேபாள வெளியுறவுத்துறை அமைச்சர்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">During a three-day visit to India, Nepal's Foreign Minister Shishir Khanal met his Indian counterpart S. Jaishankar to strengthen bilateral ties. Responding to queries about Nepal's PM suggesting Chinese or British mediation for border issues, Khanal clarified that Nepal only needs historical records from Britain and explicitly stated that neither China nor Britain will be invited to mediate. He expressed Nepal's preference to solve border disputes directly with India through bilateral dialogues.</p>
+                    <p class="lang-ta">மூன்று நாள் சுற்றுப்பயணமாக இந்தியா வந்த நேபாள வெளியுறவுத்துறை அமைச்சர் சிசிர் கனல், இந்திய வெளியுறவுத்துறை அமைச்சர் எஸ். ஜெய்சங்கரை சந்தித்து இருதரப்பு உறவுகளை வலுப்படுத்துவது குறித்து ஆலோசனை நடத்தினார். எல்லைப் பிரச்னையில் சீனா அல்லது பிரிட்டன் தலையிட வேண்டும் என நேபாள பிரதமர் கூறியது குறித்த கேள்விக்கு பதிலளித்த அவர், "எல்லை வரையறை தொடர்பான வரலாற்று ஆவணங்களை மட்டுமே பிரிட்டனிடம் கேட்டுள்ளோம். இதில் தலையிட அவர்களையோ சீனாவையோ நாங்கள் அழைக்கவில்லை. இந்தியாவுடனான எல்லைப் பிரச்னைக்கு இருதரப்பு பேச்சுவார்த்தை மூலமே தீர்வு காண விரும்புகிறோம்" எனத் தெளிவுபடுத்தினார்.</p>
+                </div>
+            </section>
+
+            <!-- ECONOMY & TECH -->
+            <section id="economy">
+                <h2>
+                    <span class="lang-en">Economy & Technology</span>
+                    <span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Technology · AI Future</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">AI Will Create New Opportunities for Youth, No Need to Fear: Sundar Pichai</span>
+                        <span class="lang-ta">இளைஞர்களுக்கு செயற்கை நுண்ணறிவு (A.I) புதிய வாய்ப்புகளை உருவாக்கும்: சுந்தர் பிச்சை தகவல்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Google CEO Sundar Pichai dismissed fears that Artificial Intelligence (AI) will cause massive job losses. He stated that like any major technological revolution in the past, AI will ultimately create a plethora of new opportunities and economic growth for the younger generation. He highlighted that AI tools will empower even those who do not know how to code, enhancing various sectors and improving productivity across the board.</p>
+                    <p class="lang-ta">செயற்கை நுண்ணறிவு (A.I) தொழில்நுட்பத்தால் பெருமளவில் வேலைவாய்ப்புகள் பறிபோகும் என்ற அச்சத்தை கூகுள் (Google) நிறுவன சிஇஓ சுந்தர் பிச்சை நிராகரித்துள்ளார். கடந்த காலங்களில் ஏற்பட்ட பல தொழில்நுட்ப புரட்சிகளைப் போலவே, AI தொழில்நுட்பமும் இளைஞர்களுக்குப் பல புதிய வாய்ப்புகளையும், பொருளாதார வளர்ச்சியையுமே உருவாக்கித் தரும் என்று அவர் கூறினார். மென்பொருள் கோடிங் (Coding) எழுதத் தெரியாதவர்கள் கூட AI மூலம் அதனை எளிதாகக் கற்றுக் கொள்ள முடியும் என்றும், இது பல்வேறு துறைகளை மேம்படுத்தும் என்றும் அவர் தெரிவித்தார்.</p>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Corporate Fraud · CBI</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">CBI Raids Multiple Locations over ₹661 Crore Fraud Involving HDFC & IndusInd</span>
+                        <span class="lang-ta">HDFC, IndusInd வங்கிகள் தொடர்புடைய ரூ.661 கோடி முறைகேடு வழக்கு: சிபிஐ சோதனை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Central Bureau of Investigation (CBI) conducted raids at six locations across Chandigarh, Panchkula, and the Delhi NCR region in connection with a ₹661 crore financial fraud. The case involves Haryana government officials and bank executives illegally diverting state funds to HDFC and IndusInd bank branches. The fraud has severely impacted 8 departments of the Haryana Government and 2 departments of the Chandigarh UT administration.</p>
+                    <p class="lang-ta">ஹரியானா மாநில அரசுக்கு சொந்தமான ரூ.661 கோடி நிதியை ஹெச்டிஎஃப்சி (HDFC) மற்றும் இண்டஸ்இண்ட் (IndusInd) வங்கிகளுக்கு முறைகேடாக மாற்றிய குற்றச்சாட்டு தொடர்பாக, சண்டிகர், பஞ்ச்குலா மற்றும் டெல்லி என்சிஆர் (NCR) உள்ளிட்ட 6 இடங்களில் சிபிஐ அதிகாரிகள் திடீர் சோதனை நடத்தினர். வங்கி அதிகாரிகளுடன் இணைந்து அரசு அதிகாரிகள் இந்த முறைகேட்டில் ஈடுபட்டது அம்பலமாகியுள்ளது. இம்முறைகேடால் ஹரியானா அரசின் 8 துறைகளும், சண்டிகர் யூனியன் பிரதேசத்தின் 2 துறைகளும் கடுமையாக பாதிக்கப்பட்டுள்ளன.</p>
+                </div>
+            </section>
+            
+            <!-- SPORTS -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports</span>
+                    <span class="lang-ta">விளையாட்டு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Tennis · French Open</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Alexander Zverev Wins First Grand Slam at French Open 2026</span>
+                        <span class="lang-ta">பிரெஞ்சு ஓபன் டென்னிஸ்: ஜெர்மனியின் அலெக்ஸாண்டர் ஸ்வெரெவ் சாம்பியன்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Germany's Alexander Zverev clinched his maiden Grand Slam title by winning the Men's Singles at the French Open (Roland Garros). He defeated Italy's Flavio Cobolli in a grueling 5-set final match lasting 4 hours and 16 minutes (6-1, 4-6, 6-4, 6-7, 6-1). Zverev becomes the first German man to win the French Open since Henner Henkel in 1937. In Women's Doubles, Katerina Siniakova (Czech Republic) and Taylor Townsend (USA) won the championship.</p>
+                    <p class="lang-ta">பிரெஞ்சு ஓபன் டென்னிஸ் ஆடவர் ஒற்றையர் பிரிவில் ஜெர்மனியின் அலெக்ஸாண்டர் ஸ்வெரெவ் (Alexander Zverev) சாம்பியன் பட்டம் வென்று தனது நீண்ட காலக் கனவான முதல் கிராண்ட்ஸ்லாம் பட்டத்தைக் கைப்பற்றினார். 4 மணி நேரம் 16 நிமிடங்கள் நீடித்த இறுதிப் போட்டியில் அவர் இத்தாலியின் ஃபிளாவியோ கோபோலியை (Flavio Cobolli) 5 செட்களில் வீழ்த்தினார். 1937-ம் ஆண்டிற்குப் பிறகு பிரெஞ்சு ஓபனை வெல்லும் முதல் ஜெர்மன் வீரர் என்ற பெருமையை அவர் பெற்றார். மகளிர் இரட்டையர் பிரிவில் செக் குடியரசின் கேதரினா சினியகோவா மற்றும் அமெரிக்காவின் டெய்லர் டவுன்சென்ட் ஜோடி சாம்பியன் பட்டம் வென்றது.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Chess · Siblings Record</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Siblings Praggnanandhaa & Vaishali Secure Historic Chess Double</span>
+                        <span class="lang-ta">செஸ்: பிரக்ஞானந்தா மற்றும் வைஷாலி ஆகியோர் சாம்பியன் பட்டம் வென்று சாதனை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Indian Grandmaster R. Praggnanandhaa (20) created history by winning the prestigious Norway Chess tournament in Oslo, becoming the first Indian to do so. He defeated World No.1 Magnus Carlsen twice during the event. Concurrently, his sister R. Vaishali (24) won the WR Women's Rapid Chess Tour in Tokyo, marking an extraordinary double victory for the siblings on the global stage. Additionally, 19-year-old Savitha Shri from Chennai won the Asian Women's Individual Chess Championship in Mongolia.</p>
+                    <p class="lang-ta">நார்வேயின் ஒஸ்லோவில் நடைபெற்ற புகழ்பெற்ற நார்வே செஸ் தொடரில் இந்தியாவின் இளம் கிராண்ட்மாஸ்டர் ஆர். பிரக்ஞானந்தா சாம்பியன் பட்டம் வென்று வரலாற்றுச் சாதனை படைத்துள்ளார். இத்தொடரில் உலகின் நம்பர் 1 வீரரான மேக்னஸ் கார்ல்செனை இரண்டு முறை அவர் வீழ்த்தியுள்ளார். அதே நேரத்தில், டோக்கியோவில் நடைபெற்ற டபிள்யூ.ஆர் (WR) மகளிர் ரேபிட் செஸ் தொடரில் அவரது சகோதரி ஆர். வைஷாலி சாம்பியன் பட்டம் வென்றார். இதன் மூலம் சர்வதேச அரங்கில் அண்ணன் - தங்கை இருவரும் மகுடம் சூடியுள்ளனர். மேலும் மங்கோலியாவில் நடைபெற்ற ஆசிய மகளிர் தனிநபர் செஸ் போட்டியில் சென்னையைச் சேர்ந்த சவிதா ஸ்ரீ (19) சாம்பியன் பட்டம் வென்றுள்ளார்.</p>
+                </div>
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Which nodal agency in India is responsible for conducting the NEET-UG examination, which recently faced a massive paper leak controversy?</span>
+                        <span class="lang-ta">கேள்வி: சமீபத்தில் வினாத்தாள் கசிவு மோசடியில் சிக்கிய நீட் (NEET-UG) தேர்வை இந்தியாவில் நடத்தும் தேசிய தேர்வு முகமை எது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">National Testing Agency (NTA)</span><br><br>
+                                <strong>Context:</strong> The NTA cancelled the May 3 NEET exam due to the solver gang leak and scheduled a hybrid re-exam for June 21.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">தேசிய தேர்வு முகமை (National Testing Agency - NTA)</span><br><br>
+                                <strong>பின்னணி:</strong> வினாத்தாள் கசிவு காரணமாக மே 3-ல் நடந்த தேர்வை ரத்து செய்த NTA, ஜூன் 21-ம் தேதி மறுதேர்வை அறிவித்துள்ளது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Who recently became the first German man since 1937 to win the French Open Men's Singles title?</span>
+                        <span class="lang-ta">கேள்வி: 1937-ம் ஆண்டிற்குப் பிறகு பிரெஞ்சு ஓபன் டென்னிஸ் ஆடவர் ஒற்றையர் பிரிவில் சாம்பியன் பட்டம் வென்ற முதல் ஜெர்மன் வீரர் யார்?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Alexander Zverev</span><br><br>
+                                <strong>Context:</strong> Zverev defeated Italy's Flavio Cobolli to win his first career Grand Slam.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">அலெக்ஸாண்டர் ஸ்வெரெவ்</span><br><br>
+                                <strong>பின்னணி:</strong> இறுதிப்போட்டியில் இத்தாலியின் ஃபிளாவியோ கோபோலியை வீழ்த்தி அவர் தனது முதல் கிராண்ட்ஸ்லாம் பட்டத்தை வென்றார்.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">Chennai ITS Project</span><span class="lang-ta">சென்னை ITS திட்டம்</span></td>
+                                <td><span class="lang-en">State/Transport</span><span class="lang-ta">மாநிலம்/போக்குவரத்து</span></td>
+                                <td><span class="lang-en">JICA funded ₹530 Cr AI traffic system by August.</span><span class="lang-ta">ரூ.530 கோடியில் நுண்ணறிவு போக்குவரத்து திட்டம் ஆகஸ்டில் அமல்.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">NEET Re-exam June 21</span><span class="lang-ta">நீட் மறுதேர்வு ஜூன் 21</span></td>
+                                <td><span class="lang-en">National/Education</span><span class="lang-ta">தேசியம்/கல்வி</span></td>
+                                <td><span class="lang-en">NTA announces re-exam due to solver-gang leaks.</span><span class="lang-ta">வினாத்தாள் கசிவால் NTA நீட் மறுதேர்வை அறிவித்தது.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">LPG Price Hike ₹29</span><span class="lang-ta">எரிவாயு விலை ரூ.29 உயர்வு</span></td>
+                                <td><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></td>
+                                <td><span class="lang-en">Hike due to 46% rise in Saudi CP from ME conflict.</span><span class="lang-ta">சவூதி ஒப்பந்த விலை 46% உயர்ந்ததால் சிலிண்டர் விலை ஏற்றம்.</span></td>
+                                <td><span class="badge bg-tip">MED</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">Zverev wins French Open</span><span class="lang-ta">ஸ்வெரெவ் சாம்பியன்</span></td>
+                                <td><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></td>
+                                <td><span class="lang-en">First German to win French Open men's singles since 1937.</span><span class="lang-ta">1937-க்கு பின் பிரெஞ்சு ஓபனை வெல்லும் முதல் ஜெர்மன் வீரர்.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">US SMRs for India</span><span class="lang-ta">இந்தியாவுக்கு US அணு உலை</span></td>
+                                <td><span class="lang-en">Intl/Sci-Tech</span><span class="lang-ta">சர்வதேசம்/அறிவியல்</span></td>
+                                <td><span class="lang-en">US plans to sell Small Modular Reactors to India.</span><span class="lang-ta">சிறிய ரக அணு உலைகளை இந்தியாவுக்கு விற்க அமெரிக்கா திட்டம்.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani Chennai 08-06-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி சென்னை 08-06-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source text detailed state, national, and international news for 08 June 2026. 
+State news highlighted that over 3 lakh students applied for engineering counselling (TNEA). Mettur dam will unlikely open on June 12 for Kuruvai due to lack of water. HR&CE minister P.K. C Ramesh indicated plans to abolish paid darshans in temples. 108 Ambulance response times dropped to 6.14 mins in Chennai. Greater Chennai Corporation will implement the JICA-funded Intelligent Transport System (ITS) to ease traffic by August. DMK chief M.K. Stalin criticized the TVK government, stating it won't last 3 months. Dhanushkodi's submerged road emerged after 62 years due to low tides.
+National news detailed the NTA scheduling the NEET-UG re-exam for June 21 after the paper leak scandal involving CBI raids on solver gangs. LPG domestic cylinder prices were hiked by Rs 29 due to global Saudi CP rates. The INDIA bloc meets in Delhi today without TMC, AAP, and DMK. CBI raided locations linked to a Rs 661 Cr Haryana Govt bank fraud. 
+Internationally, the US plans to sell Small Modular Reactors (SMRs) to India. Nepal FM stated border issues with India will be solved directly, with no third-party mediation. Kuwait jailed a news anchor for pro-Iran tweets. Israel attacked Hezbollah targets in Lebanon.
+Sports coverage praised the historic chess wins by siblings Praggnanandhaa (Norway) and Vaishali (Tokyo). Savitha Shri won Asian Women's chess. Zverev won the French Open Men's Singles. India declared at 564/8 in their Test match against Afghanistan.]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூல உரைகள் 08 ஜூன் 2026 க்கான செய்திகளைக் கொண்டிருந்தன.
+மாநில செய்திகளில், பொறியியல் படிப்பிற்கு 3 லட்சம் மாணவர்கள் விண்ணப்பித்துள்ளனர். நீர் இருப்பு குறைவால் ஜூன் 12-ல் மேட்டூர் அணை திறக்கப்பட வாய்ப்பில்லை. கோயில்களில் கட்டண தரிசனம் ரத்து செய்ய ஆலோசிக்கப்படுவதாக அமைச்சர் சேகர்பாபு தெரிவித்தார். 108 ஆம்புலன்ஸ் வருகை நேரம் சென்னையில் 6.14 நிமிடங்களாக குறைந்துள்ளது. போக்குவரத்து நெரிசலை குறைக்க ஆகஸ்டில் நுண்ணறிவு போக்குவரத்து திட்டம் (ITS) அமலுக்கு வருகிறது. தவெக ஆட்சி 3 மாதம் கூட நீடிக்காது என மு.க. ஸ்டாலின் விமர்சித்தார். தனுஷ்கோடியில் 62 ஆண்டுகளுக்குப் பின் தரைப்பாலம் வெளியே தெரிந்தது.
+தேசிய அளவில், வினாத்தாள் கசிவு மோசடி காரணமாக ரத்து செய்யப்பட்ட நீட் தேர்வு மீண்டும் ஜூன் 21-ல் நடைபெறும் என NTA அறிவித்துள்ளது. சர்வதேச சந்தை நிலவரத்தால் சமையல் எரிவாயு விலை ரூ.29 உயர்ந்தது. டெல்லியில் இண்டி கூட்டணி கூட்டம் திமுக, திரிணமூல், ஆம் ஆத்மி புறக்கணிப்புடன் நடைபெறுகிறது. ஹரியானா அரசின் ரூ.661 கோடி வங்கி முறைகேடு தொடர்பாக சிபிஐ சோதனை நடத்தியது.
+சர்வதேச அளவில், இந்தியாவுக்கு சிறிய ரக அணு உலைகளை விற்க அமெரிக்கா திட்டம். நேபாள எல்லைப் பிரச்னையில் நேரடி பேச்சுவார்த்தை நடைபெறும் என அந்நாட்டு அமைச்சர் தகவல். குவைத்தில் செய்தி வாசிப்பாளருக்கு 3 ஆண்டு சிறை. லெபனானில் இஸ்ரேல் தாக்குதல்.
+விளையாட்டு: நார்வே செஸ்ஸில் பிரக்ஞானந்தாவும், டோக்கியோவில் வைஷாலியும், ஆசிய செஸ்ஸில் சவிதா ஸ்ரீயும் சாம்பியன் பட்டம் வென்றனர். பிரெஞ்சு ஓபனில் அலெக்ஸாண்டர் ஸ்வெரெவ் சாம்பியன். ஆப்கானிஸ்தானுக்கு எதிரான டெஸ்டில் இந்தியா 564/8 ரன்கள் குவிப்பு.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 08 June 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+    </script>
+</body>
+</html>

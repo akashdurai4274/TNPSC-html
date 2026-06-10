@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body class="en-mode">
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">07 June 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">07 ஜூன் 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <!-- Sidebar TOC -->
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Finance</span><span class="lang-ta">பொருளாதாரம் & நிதி</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Infrastructure · Transport</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Madras HC Orders South-Bound Omni Buses to Operate Only from Kilambakkam</span>
+                        <span class="lang-ta">தென் மாவட்டங்களுக்குச் செல்லும் ஆம்னி பேருந்துகள் கிளாம்பாக்கத்தில் இருந்து மட்டுமே இயக்கப்பட வேண்டும்: உயர்நீதிமன்றம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Madras High Court has dismissed pleas challenging the State Transport Commissioner's order, mandating that all private omni buses traveling to southern districts must operate exclusively from the newly built Kilambakkam Bus Terminus (KMBT). The court ruled that operators cannot apply directly to the CMDA for bus terminal approvals without local body clearance. The judgment ensures traffic decongestion in Chennai by shifting the operational hub for southern routes out of Koyambedu.</p>
+                    <p class="lang-ta">தென் மாவட்டங்களுக்குச் செல்லும் அனைத்து தனியார் ஆம்னி பேருந்துகளும் புதிதாக கட்டப்பட்டுள்ள கிளாம்பாக்கம் பேருந்து நிலையத்திலிருந்து (KMBT) மட்டுமே இயக்கப்பட வேண்டும் என்ற மாநிலப் போக்குவரத்து ஆணையரின் உத்தரவை எதிர்த்துத் தொடரப்பட்ட வழக்குகளை சென்னை உயர்நீதிமன்றம் தள்ளுபடி செய்தது. உள்ளாட்சி அமைப்புகளின் அனுமதியின்றி பேருந்து முனையங்களுக்கு சிஎம்டிஏ-விடம் (CMDA) நேரடியாக விண்ணப்பிக்க முடியாது என நீதிமன்றம் தீர்ப்பளித்துள்ளது. கோயம்பேட்டிலிருந்து தென் மாவட்டப் பேருந்துகளை மாற்றுவதன் மூலம் சென்னையில் போக்குவரத்து நெரிசலைக் குறைப்பதை இத்தீர்ப்பு உறுதி செய்கிறது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Infrastructure Hook:</strong> Kilambakkam Bus Terminus is officially named Kalaignar Centenary Bus Terminus (KCBT), developed by the CMDA to alleviate traffic at Koyambedu (CMBT).</span><span class="lang-ta"><strong>உள்கட்டமைப்பு குறிப்பு:</strong> கோயம்பேடு (CMBT) பேருந்து நிலைய நெரிசலைக் குறைப்பதற்காக சிஎம்டிஏ-வால் உருவாக்கப்பட்ட கிளாம்பாக்கம் பேருந்து நிலையத்திற்கு 'கலைஞர் நூற்றாண்டு பேருந்து முனையம்' (KCBT) என அதிகாரப்பூர்வமாகப் பெயரிடப்பட்டுள்ளது.</span></li>
+                            <li><span class="badge bg-tip">TIP</span><span class="lang-en">The HC allowed omni buses with their own garages in Koyambedu to operate from Porur toll plaza and Surapet, but they must ultimately route through Kilambakkam for southern districts.</span><span class="lang-ta">கோயம்பேட்டில் சொந்தமாக நிறுத்துமிடம் உள்ள ஆம்னி பேருந்துகள் போரூர் சுங்கச்சாவடி மற்றும் சூரப்பட்டியிலிருந்து இயங்க நீதிமன்றம் அனுமதித்தது, ஆனால் தென் மாவட்டங்களுக்குச் செல்பவை கிளாம்பாக்கம் வழியாகவே செல்ல வேண்டும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Education · Teachers</span>
+                        <span class="badge bg-tip">MODERATE</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Special TET Exam Training for Teachers Begins on June 8</span>
+                        <span class="lang-ta">சிறப்பு 'டெட்' (TET) தேர்வு: ஆசிரியர்களுக்கு ஆன்லைன் பயிற்சி நாளை தொடக்கம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">To assist teachers serving in government and government-aided schools who need to clear the Teacher Eligibility Test (TET) for continued service and promotions, the School Education Department is launching online training classes from June 8 to June 30. The Supreme Court has mandated TET clearance for all teachers. The special TET exams are scheduled to be held on July 4 and 5 for around 1.75 lakh affected teachers in the state.</p>
+                    <p class="lang-ta">அரசு மற்றும் அரசு உதவி பெறும் பள்ளிகளில் பணியாற்றும் ஆசிரியர்கள், பணித் தொடர்ச்சி மற்றும் பதவி உயர்வு பெறுவதற்காக ஆசிரியர் தகுதித் தேர்வில் (TET) தேர்ச்சி பெற ஏதுவாக, பள்ளிக் கல்வித்துறை சார்பில் ஜூன் 8 முதல் ஜூன் 30 வரை இணையவழி பயிற்சி வகுப்புகள் தொடங்கப்பட உள்ளன. அனைத்து ஆசிரியர்களுக்கும் டெட் தேர்ச்சி கட்டாயம் என உச்ச நீதிமன்றம் உத்தரவிட்டுள்ளது. இதற்காக மாநிலம் முழுவதும் உள்ள சுமார் 1.75 லட்சம் ஆசிரியர்களுக்கு ஜூலை 4 மற்றும் 5-ம் தேதிகளில் சிறப்பு டெட் தேர்வு நடைபெறவுள்ளது.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · Religion</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Tiruparankundram Deepam Row: Custom Will Continue, Says Minister PTR</span>
+                        <span class="lang-ta">திருப்பரங்குன்றம் தீப விவகாரம்: முந்தைய நடைமுறையே தொடரும் என அமைச்சர் பி.டி.ஆர். பழனிவேல் தியாகராஜன் விளக்கம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Minister for IT and Digital Services, P.T.R. Palanivel Thiagarajan, assured that the traditional customs for lighting the Karthigai Deepam at Tiruparankundram hill will continue as before, based on people's wishes. He stated that the government will not allow religious forces to politicize the issue. Earlier, the Law Minister's remarks on the matter had sparked controversy, with BJP leaders demanding that the government strictly follow the court's orders regarding the deepam.</p>
+                    <p class="lang-ta">திருப்பரங்குன்றம் மலையில் கார்த்திகை தீபம் ஏற்றுவது தொடர்பான விவகாரத்தில், மக்களின் விருப்பப்படி முந்தைய காலங்களில் இருந்த நடைமுறையே தொடர்ந்து பின்பற்றப்படும் என தகவல் தொழில்நுட்பத்துறை அமைச்சர் பி.டி.ஆர். பழனிவேல் தியாகராஜன் உறுதியளித்தார். இந்த விவகாரத்தில் மதவாத சக்திகள் அரசியல் செய்ய அரசு அனுமதிக்காது என்றும் அவர் தெரிவித்தார். முன்னதாக, இது தொடர்பாக சட்டத்துறை அமைச்சர் கூறிய கருத்து சர்ச்சையை ஏற்படுத்திய நிலையில், தீபம் ஏற்றுவது தொடர்பாக நீதிமன்ற உத்தரவை அரசு கண்டிப்பாகப் பின்பற்ற வேண்டும் என பாஜக தலைவர்கள் வலியுறுத்தியிருந்தனர்.</p>
+                </div>
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National / Central News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Economy · GDP</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">PM Modi Reviews Economy with EAC-PM: FY26 GDP Clocked at 7.7%</span>
+                        <span class="lang-ta">பொருளாதார ஆலோசனைக் குழுவுடன் (EAC-PM) பிரதமர் மோடி ஆலோசனை: 2025-26 ஜிடிபி வளர்ச்சி 7.7% ஆகப் பதிவு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Prime Minister Narendra Modi chaired a crucial meeting with the Economic Advisory Council to the Prime Minister (EAC-PM) to discuss measures for accelerating India's growth amidst global uncertainties like the Middle East conflict. Official data released showed India's GDP growth for the financial year 2025-26 stood robust at 7.7% (with Q4 at 7.8%). However, due to global volatility, the projected GDP growth for the current FY 2026-27 has been revised down to 6.6% by the RBI.</p>
+                    <p class="lang-ta">மத்திய கிழக்கு போர் போன்ற உலகளாவிய நெருக்கடிகளுக்கு மத்தியில் இந்தியாவின் பொருளாதார வளர்ச்சியை விரைவுபடுத்துவதற்கான நடவடிக்கைகள் குறித்து பிரதமர் நரேந்திர மோடி, பிரதமருக்கான பொருளாதார ஆலோசனைக் குழுவுடன் (EAC-PM) முக்கிய ஆலோசனை நடத்தினார். அதிகாரப்பூர்வ தரவுகளின்படி, 2025-26 நிதியாண்டில் இந்தியாவின் மொத்த உள்நாட்டு உற்பத்தி (GDP) வளர்ச்சி 7.7 சதவீதமாக (4-ம் காலாண்டில் 7.8%) வலுவாகப் பதிவாகியுள்ளது. இருப்பினும், உலகளாவிய நிலையற்ற தன்மை காரணமாக, நடப்பு 2026-27 நிதியாண்டுக்கான ஜிடிபி வளர்ச்சி 6.6 சதவீதமாக ரிசர்வ் வங்கியால் திருத்தியமைக்கப்பட்டுள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en"><strong>Economy Hook:</strong> The Economic Advisory Council to the Prime Minister (EAC-PM) is a <strong>non-constitutional, non-statutory, independent body</strong> constituted to give economic advice to the Government of India.</span><span class="lang-ta"><strong>பொருளாதாரக் குறிப்பு:</strong> பிரதமருக்கான பொருளாதார ஆலோசனைக் குழு (EAC-PM) என்பது இந்திய அரசுக்கு பொருளாதார ஆலோசனைகளை வழங்குவதற்காக அமைக்கப்பட்ட <strong>அரசியலமைப்புச் சட்டத்திலோ அல்லது நாடாளுமன்றச் சட்டத்திலோ குறிப்பிடப்படாத ஒரு சுதந்திரமான அமைப்பாகும்</strong>.</span></li>
+                            <li><span class="lang-en">Currently, the EAC-PM is chaired by Bibek Debroy.</span><span class="lang-ta">தற்போது, EAC-PM இன் தலைவராக விவேக் தேப்ராய் உள்ளார்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Economy · Foreign Investment</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">FDI in India Surges 18% to $58.8 Billion in FY 2025-26; Singapore Top Investor</span>
+                        <span class="lang-ta">2025-26 நிதியாண்டில் அந்நிய நேரடி முதலீடு (FDI) 18% உயர்ந்து $58.8 பில்லியனாக அதிகரிப்பு; சிங்கப்பூர் முதலிடம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Foreign Direct Investment (FDI) into India increased by 18% to reach $58.84 billion during the 2025-26 financial year, driven by strong inflows in the Jan-March quarter. Singapore remained the top investing country with $19.8 billion, followed by Mauritius and the USA. Notably, FDI from the USA doubled from the previous year. Sector-wise, the Computer Software and Hardware sector attracted the highest inflows, while Maharashtra secured the top position among states, followed by Karnataka and Gujarat.</p>
+                    <p class="lang-ta">2025-26 நிதியாண்டில் இந்தியாவுக்கான அந்நிய நேரடி முதலீடு (FDI) 18 சதவீதம் அதிகரித்து 58.84 பில்லியன் டாலர்களை எட்டியுள்ளது; ஜனவரி-மார்ச் காலாண்டில் அதிக முதலீடுகள் பெறப்பட்டதே இதற்கு முக்கியக் காரணமாகும். 19.8 பில்லியன் டாலர்களுடன் சிங்கப்பூர் தொடர்ந்து முதலிடத்தில் உள்ளது; மொரிஷியஸ் மற்றும் அமெரிக்கா அடுத்தடுத்த இடங்களில் உள்ளன. குறிப்பாக, அமெரிக்காவிலிருந்து வந்த முதலீடு முந்தைய ஆண்டை விட இருமடங்காக அதிகரித்துள்ளது. துறைகள் வாரியாகப் பார்த்தால், கணினி மென்பொருள் மற்றும் வன்பொருள் துறை அதிக முதலீட்டை ஈர்த்துள்ளது. மாநிலங்களில் மகாராஷ்டிரா முதலிடத்திலும், கர்நாடகா மற்றும் குஜராத் அடுத்தடுத்த இடங்களிலும் உள்ளன.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Economy Hook:</strong> The Department for Promotion of Industry and Internal Trade (DPIIT) under the Ministry of Commerce and Industry compiles and releases FDI data in India.</span><span class="lang-ta"><strong>பொருளாதாரக் குறிப்பு:</strong> வர்த்தகம் மற்றும் தொழில்துறை அமைச்சகத்தின் கீழ் இயங்கும் தொழில் மற்றும் உள்நாட்டு வர்த்தக மேம்பாட்டுத் துறை (DPIIT) இந்தியாவில் அந்நிய நேரடி முதலீட்டுத் தரவுகளைத் தொகுத்து வெளியிடுகிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Consumer Affairs · Packaging</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Centre Mandates Standard Packaging Sizes for Edible Oils</span>
+                        <span class="lang-ta">சமையல் எண்ணெய்களுக்கு ஒரே மாதிரியான பேக்கிங் அளவுகள் கட்டாயம்: மத்திய அரசு உத்தரவு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Ministry of Consumer Affairs has directed all edible oil companies to strictly follow standardized packaging sizes to help consumers easily compare prices. The nine permitted pack sizes are 200ml, 500ml, 1L, 2L, 3L, 4L, 5L, 15L, and 20L. Packets under 200ml are exempted to ensure affordability for the poor. The rule applies to all domestically produced and imported oils, and companies have been given three months to comply.</p>
+                    <p class="lang-ta">நுகர்வோர் விலைகளை எளிதாக ஒப்பிட்டுப் பார்க்க உதவும் வகையில், சமையல் எண்ணெய் நிறுவனங்கள் அனைத்தும் ஒரே மாதிரியான பேக்கிங் (Packaging) அளவுகளைக் கண்டிப்பாகப் பின்பற்ற வேண்டும் என மத்திய நுகர்வோர் விவகாரத்துறை அமைச்சகம் உத்தரவிட்டுள்ளது. 200 மி.லி, 500 மி.லி, 1 லிட்டர், 2 லிட்டர், 3 லிட்டர், 4 லிட்டர், 5 லிட்டர், 15 லிட்டர் மற்றும் 20 லிட்டர் ஆகிய 9 அளவுகள் மட்டுமே அனுமதிக்கப்பட்டுள்ளன. ஏழைகளின் நலன் கருதி 200 மி.லிட்டருக்கு குறைவான பேக்கெட்டுகளுக்கு இதிலிருந்து விலக்கு அளிக்கப்பட்டுள்ளது. உள்நாட்டில் உற்பத்தியாகும் மற்றும் இறக்குமதி செய்யப்படும் அனைத்து எண்ணெய்களுக்கும் இது பொருந்தும்; நிறுவனங்கள் இதனைப் பின்பற்ற 3 மாத கால அவகாசம் அளிக்கப்பட்டுள்ளது.</p>
+                </div>
+            </section>
+
+            <!-- INTERNATIONAL NEWS -->
+            <section id="international">
+                <h2>
+                    <span class="lang-en">International News</span>
+                    <span class="lang-ta">சர்வதேச செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Diplomacy · UNGA</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">India Slams Pakistan at UNGA over Kashmir Issue; Demands UNSC Reforms</span>
+                        <span class="lang-ta">ஐ.நா பொதுச் சபையில் காஷ்மீர் விவகாரம்: பாகிஸ்தானுக்கு இந்தியா கடும் கண்டனம்; பாதுகாப்பு கவுன்சிலில் சீர்திருத்தம் தேவை என வலியுறுத்தல்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">India's Permanent Representative to the UN, Ambassador Parvathaneni Harish, strongly condemned Pakistan for misusing the UN General Assembly platform to raise the Jammu & Kashmir issue, reiterating that J&K is an integral part of India. Harish also emphasized the urgent need to reform the UN Security Council (UNSC). He argued that the 1945-era structure is outdated and demanded an expansion in both permanent (to 11 members) and non-permanent (to 15 or 16 members) categories to reflect contemporary geopolitical realities.</p>
+                    <p class="lang-ta">ஐ.நா. பொதுச் சபைக் கூட்டத்தில் ஜம்மு காஷ்மீர் விவகாரத்தை எழுப்பிய பாகிஸ்தானுக்கு, ஐ.நா.வுக்கான இந்தியாவின் நிரந்தரத் தூதர் பர்வதனேனி ஹரீஷ் கடும் கண்டனம் தெரிவித்தார்; ஜம்மு காஷ்மீர் இந்தியாவின் ஒருங்கிணைந்த பகுதி என்பதை அவர் மீண்டும் வலியுறுத்தினார். மேலும், ஐ.நா. பாதுகாப்பு கவுன்சிலில் (UNSC) சீர்திருத்தம் செய்ய வேண்டியதன் அவசியத்தையும் அவர் சுட்டிக்காட்டினார். 1945-ம் காலக்கட்டத்தின் கட்டமைப்பு தற்போது காலாவதியாகிவிட்டது எனக் கூறிய அவர், தற்கால பூகோள அரசியல் யதார்த்தங்களைப் பிரதிபலிக்கும் வகையில், நிரந்தர உறுப்பினர்களின் எண்ணிக்கையை 11 ஆகவும், தற்காலிக உறுப்பினர்களின் எண்ணிக்கையை 15 அல்லது 16 ஆகவும் அதிகரிக்க வேண்டும் என கோரிக்கை விடுத்தார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en">India has been pushing for UNSC reforms alongside the G4 nations (Brazil, Germany, India, and Japan).</span><span class="lang-ta">பிரேசில், ஜெர்மனி, இந்தியா மற்றும் ஜப்பான் ஆகிய நாடுகளை உள்ளடக்கிய G4 நாடுகளுடன் இணைந்து ஐ.நா பாதுகாப்பு கவுன்சிலில் சீர்திருத்தங்களை இந்தியா வலியுறுத்தி வருகிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Nuclear Tech · US-India</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">US Nuclear Chief: India is a Strong Partner for Nuclear Energy Growth</span>
+                        <span class="lang-ta">அணுசக்தி துறையில் சிறப்பான கூட்டாளி இந்தியா: அமெரிக்க அணுசக்தி கூட்டமைப்பு (NEI) தலைவர் தகவல்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Maria Korsnick, President of the US Nuclear Energy Institute (NEI), stated that India, with its strong supply chain and top-tier engineering experts, is an ideal partner for the US in the nuclear tech sector. With India relaxing liability rules for private players, a 20-member US delegation recently visited India to explore investment opportunities. India aims to increase its nuclear power capacity from 8.78 GW to 100 GW by 2047, while the US plans to scale from 100 GW to 400 GW, opening massive avenues for joint development, especially in Small Modular Reactors (SMRs).</p>
+                    <p class="lang-ta">வலுவான விநியோகச் சங்கிலி மற்றும் தலைசிறந்த பொறியியல் நிபுணர்களைக் கொண்டுள்ள இந்தியா, அணுசக்தித் துறையில் அமெரிக்காவின் சிறப்பான கூட்டாளியாகத் திகழும் என அமெரிக்க அணுசக்தி கூட்டமைப்பின் (NEI) தலைவர் மரியா கோர்ஸ்னிக் தெரிவித்துள்ளார். அணுசக்தித் துறையில் தனியாரை அனுமதிக்கும் வகையில் பொறுப்பு விதிகளை (Liability rules) இந்திய அரசு தளர்த்தியுள்ள நிலையில், முதலீட்டு வாய்ப்புகளை ஆராய 20 பேர் கொண்ட அமெரிக்கக் குழு அண்மையில் இந்தியா வந்தது. இந்தியா தனது அணு மின் உற்பத்தித் திறனை 8.78 ஜிகாவாட்டில் இருந்து 2047-க்குள் 100 ஜிகாவாட்டாக அதிகரிக்கத் திட்டமிட்டுள்ளது. அதே நேரத்தில் அமெரிக்கா 100 ஜிகாவாட்டில் இருந்து 400 ஜிகாவாட்டாக உயர்த்தத் திட்டமிட்டுள்ளது. இது, குறிப்பாக சிறிய மாடுலர் ரியாக்டர்கள் (SMR) தயாரிப்பில் கூட்டு வளர்ச்சிக்கான பெரிய வாய்ப்புகளை உருவாக்குகிறது.</p>
+                </div>
+            </section>
+            
+            <!-- SPORTS -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports</span>
+                    <span class="lang-ta">விளையாட்டு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Chess · Historic Double</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Historic Chess Double: Praggnanandhaa Wins Norway Chess, Sister Vaishali Wins WR Chess Tour</span>
+                        <span class="lang-ta">செஸ்ஸில் வரலாற்றுச் சாதனை: நார்வே செஸ்ஸில் பிரக்ஞானந்தாவும், டபிள்யூ.ஆர் (WR) செஸ்ஸில் சகோதரி வைஷாலியும் சாம்பியன்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In a phenomenal day for Indian chess, 18-year-old Grandmaster R. Praggnanandhaa won the prestigious Norway Chess tournament by defeating Germany's Vincent Keymer in the final round, finishing atop the leaderboard with 18 points. He becomes the first Indian to win this title, having also beaten World No.1 Magnus Carlsen earlier in the event. In parallel, his sister R. Vaishali secured the title at the WR Women's Chess Tour held in Tokyo, Japan, capping off an extraordinary sibling double-victory on the international stage.</p>
+                    <p class="lang-ta">இந்திய செஸ் விளையாட்டுக்கு இது ஒரு மிகச்சிறப்பான நாளாகும்; 18 வயது கிராண்ட்மாஸ்டர் ஆர். பிரக்ஞானந்தா, நார்வே செஸ் போட்டியின் இறுதிச் சுற்றில் ஜெர்மனியின் வின்சென்ட் கீமரை வீழ்த்தி 18 புள்ளிகளுடன் முதலிடம் பிடித்து சாம்பியன் பட்டம் வென்றார். இப்போட்டியில் முன்னதாக உலகின் நம்பர் 1 வீரரான மேக்னஸ் கார்ல்செனையும் வீழ்த்திய பிரக்ஞானந்தா, இப்பட்டத்தை வெல்லும் முதல் இந்தியர் என்ற பெருமையைப் பெற்றார். இதே வேளையில், ஜப்பான் தலைநகர் டோக்கியோவில் நடைபெற்ற டபிள்யூ.ஆர் (WR) மகளிர் செஸ் தொடரில் அவரது சகோதரி ஆர். வைஷாலி சாம்பியன் பட்டம் வென்றார். இதன் மூலம் சர்வதேச அரங்கில் அண்ணன் - தங்கை இருவரும் ஒரே நேரத்தில் மகுடம் சூடி வரலாற்றுச் சாதனை படைத்துள்ளனர்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Football & Hockey · Asia Cups</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">India Dominates Asia: Women Win SAFF Football (6th Title), Men Win U-18 Junior Asia Cup Hockey</span>
+                        <span class="lang-ta">ஆசிய அரங்கில் இந்தியாவின் ஆதிக்கம்: தெற்காசிய கால்பந்தில் மகளிர் அணி சாம்பியன் (6-வது முறை), ஆசிய ஜூனியர் ஹாக்கியில் ஆடவர் அணி சாம்பியன்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en"><strong>Football:</strong> The Indian Women's Football team clinched their 6th SAFF (South Asian Football Federation) Championship title by defeating Bangladesh 3-1 in the final held in Margao, Goa.<br><strong>Hockey:</strong> The Indian Men's U-18 Hockey team won the Junior Asia Cup by defeating Japan 4-1 in the final held in Kakamigahara, Japan. Striker Ashis Kumar Topno scored 17 goals in the tournament. The Indian Women's U-18 team won the Bronze medal by beating South Korea 3-0.</p>
+                    <p class="lang-ta"><strong>கால்பந்து:</strong> கோவாவின் மார்கோவாவில் நடைபெற்ற தெற்காசிய கால்பந்து சம்மேளன (SAFF) சாம்பியன்ஷிப் இறுதிப் போட்டியில், இந்திய மகளிர் கால்பந்து அணி வங்கதேசத்தை 3-1 என்ற கோல் கணக்கில் வீழ்த்தி 6-வது முறையாக சாம்பியன் பட்டம் வென்றது.<br><strong>ஹாக்கி:</strong> ஜப்பானின் ககாமிகஹாராவில் நடைபெற்ற 18 வயதுக்குட்பட்டோருக்கான ஆசிய ஜூனியர் ஹாக்கி இறுதிப் போட்டியில், இந்திய ஆடவர் அணி ஜப்பானை 4-1 என்ற கோல் கணக்கில் வீழ்த்தி சாம்பியன் ஆனது. ஸ்ட்ரைக்கர் ஆஷிஸ் குமார் இத்தொடரில் 17 கோல்களை அடித்தார். இந்திய மகளிர் அணி 3-0 என தென்கொரியாவை வீழ்த்தி வெண்கலப் பதக்கம் வென்றது.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Tennis · French Open</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">French Open: 19-Year-Old Mirra Andreeva Wins Women's Singles Title</span>
+                        <span class="lang-ta">பிரெஞ்சு ஓபன் டென்னிஸ்: 19 வயது இளம் வீராங்கனை மிரா ஆண்ட்ரீவா சாம்பியன்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Russian teenage sensation Mirra Andreeva (19 years old) secured her first Grand Slam title by winning the French Open Women's Singles. She defeated Poland's Maja Chwalinska 6-3, 6-2 in straight sets. Andreeva becomes the second youngest player to win the French Open after Monica Seles (who won at 18 in 1992), and the first player born after 2005 to win a Grand Slam title.</p>
+                    <p class="lang-ta">ரஷ்யாவின் 19 வயது இளம் டென்னிஸ் வீராங்கனையான மிரா ஆண்ட்ரீவா, பிரெஞ்சு ஓபன் மகளிர் ஒற்றையர் பிரிவில் சாம்பியன் பட்டம் வென்று தனது முதல் கிராண்ட்ஸ்லாம் பட்டத்தைக் கைப்பற்றினார். இறுதிப் போட்டியில் அவர் போலந்தின் மாஜா ச்வாலின்ஸ்காவை 6-3, 6-2 என்ற நேர் செட்களில் வீழ்த்தினார். 1992-ல் 18 வயதில் பட்டம் வென்ற மோனிகா செலஸுக்குப் பிறகு பிரெஞ்சு ஓபனை வெல்லும் இரண்டாவது இளம் வீராங்கனை என்ற பெருமையையும், 2005-க்கு பிறகு பிறந்து கிராண்ட்ஸ்லாம் வென்ற முதல் வீராங்கனை என்ற பெருமையையும் ஆண்ட்ரீவா பெற்றுள்ளார்.</p>
+                </div>
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: The Economic Advisory Council to the Prime Minister (EAC-PM) is a:</span>
+                        <span class="lang-ta">கேள்வி: பிரதமருக்கான பொருளாதார ஆலோசனைக் குழு (EAC-PM) என்பது ஒரு:</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Non-constitutional, non-statutory, independent body</span><br><br>
+                                <strong>Context:</strong> PM Modi recently reviewed India's economic growth strategies with the EAC-PM following the release of the 7.7% GDP growth data for FY26.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">அரசியலமைப்பு மற்றும் சட்டப்பூர்வமற்ற ஒரு சுதந்திரமான அமைப்பு</span><br><br>
+                                <strong>பின்னணி:</strong> 2025-26 நிதியாண்டில் 7.7% ஜிடிபி வளர்ச்சி பதிவு செய்யப்பட்டதையடுத்து, பிரதமர் மோடி EAC-PM குழுவுடன் ஆலோசனை நடத்தினார்.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Which country was the largest source of Foreign Direct Investment (FDI) into India during the financial year 2025-26?</span>
+                        <span class="lang-ta">கேள்வி: 2025-26 நிதியாண்டில் இந்தியாவிற்கு அதிக அளவில் அந்நிய நேரடி முதலீட்டை (FDI) வழங்கிய நாடு எது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Singapore</span><br><br>
+                                <strong>Context:</strong> Total FDI surged by 18% to $58.8 Billion. Singapore topped the list with $19.8 Billion, followed by Mauritius and the USA.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">சிங்கப்பூர்</span><br><br>
+                                <strong>பின்னணி:</strong> மொத்த FDI 18% உயர்ந்து $58.8 பில்லியனாக அதிகரித்துள்ளது. இதில் $19.8 பில்லியன் முதலீட்டுடன் சிங்கப்பூர் முதலிடத்தில் உள்ளது. மொரிஷியஸ் மற்றும் அமெரிக்கா அடுத்தடுத்த இடங்களில் உள்ளன.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">Norway Chess & WR Chess</span><span class="lang-ta">நார்வே செஸ் & WR செஸ்</span></td>
+                                <td><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></td>
+                                <td><span class="lang-en">Praggnanandhaa and Vaishali secure historic sibling double victory.</span><span class="lang-ta">பிரக்ஞானந்தா மற்றும் வைஷாலி சாம்பியன் பட்டம் வென்று வரலாற்றுச் சாதனை.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">FDI Inflows FY26</span><span class="lang-ta">2025-26 FDI முதலீடு</span></td>
+                                <td><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></td>
+                                <td><span class="lang-en">Surges 18% to $58.8 Bn. Singapore is the top investor.</span><span class="lang-ta">18% உயர்ந்து $58.8 பில்லியன். சிங்கப்பூர் முதலிடம்.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">Omni Buses Route</span><span class="lang-ta">ஆம்னி பேருந்து வழித்தடம்</span></td>
+                                <td><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></td>
+                                <td><span class="lang-en">Madras HC orders southbound buses to use only Kilambakkam terminus.</span><span class="lang-ta">தென் மாவட்ட பேருந்துகள் கிளாம்பாக்கத்திலிருந்து மட்டுமே இயங்க ஐகோர்ட் உத்தரவு.</span></td>
+                                <td><span class="badge bg-tip">MED</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">India wins SAFF Football</span><span class="lang-ta">தெற்காசிய கால்பந்தில் சாம்பியன்</span></td>
+                                <td><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></td>
+                                <td><span class="lang-en">Indian women win 6th SAFF title beating Bangladesh.</span><span class="lang-ta">வங்கதேசத்தை வீழ்த்தி இந்திய மகளிர் அணி 6-வது முறையாக சாம்பியன்.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">EAC-PM GDP Review</span><span class="lang-ta">EAC-PM ஜிடிபி ஆலோசனை</span></td>
+                                <td><span class="lang-en">National/Economy</span><span class="lang-ta">தேசியம்/பொருளாதாரம்</span></td>
+                                <td><span class="lang-en">PM Modi reviews robust 7.7% GDP growth for FY26.</span><span class="lang-ta">2025-26 நிதியாண்டின் 7.7% ஜிடிபி வளர்ச்சி குறித்து பிரதமர் மோடி ஆலோசனை.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani Chennai 07-06-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி சென்னை 07-06-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source text detailed state, national, and international news for 07 June 2026. 
+State news highlighted the Madras HC order restricting south-bound omni buses to the Kilambakkam terminus. Minister PTR stated that the deepam customs at Tiruparankundram will continue without political interference. EPS claimed no one could break AIADMK amidst 4 ex-ministers moving to TVK. CM Stalin remarked on the political shifts. Special TET online training for teachers begins June 8. 
+National news focused on PM Modi reviewing economic parameters with the EAC-PM, noting a 7.7% GDP growth for FY25-26. Domestic LPG prices were hiked by Rs 29. FDI into India jumped 18% to $58.8 Billion, with Singapore leading. The Govt mandated standard packaging sizes for edible oils. NTA refuted rumors of a NEET-UG re-exam paper leak. 
+Internationally, India's UN envoy Parvathaneni Harish slammed Pakistan over Kashmir and demanded UNSC reforms. The US NEI chief praised India as a key nuclear tech partner. Red pandas arrived in Taiwan from China. Israel struck Lebanon, killing 9. 
+Sports coverage celebrated a massive double for Indian chess: Praggnanandhaa winning Norway Chess and Vaishali winning the WR Women's Chess Tour in Tokyo. Indian women won the SAFF football championship against Bangladesh, and U-18 men won the Junior Asia Cup hockey. Mirra Andreeva won the French Open. Shreyas Iyer was named captain of the T20 squad against Ireland/England, with 15-year-old Vaibhav Suryavanshi making his debut.]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூல உரைகள் 07 ஜூன் 2026 க்கான செய்திகளைக் கொண்டிருந்தன.
+மாநில செய்திகளில், தென் மாவட்ட ஆம்னி பேருந்துகள் கிளாம்பாக்கத்தில் இருந்து மட்டுமே இயங்க வேண்டும் என ஐகோர்ட் உத்தரவிட்டது. திருப்பரங்குன்றம் தீப விவகாரத்தில் பழைய நடைமுறையே தொடரும் என அமைச்சர் பி.டி.ஆர். கூறினார். அதிமுகவை யாராலும் உடைக்க முடியாது என ஈபிஎஸ் கூறினார். 4 முன்னாள் அமைச்சர்கள் தவெகவில் இணைந்தனர். டெட் தேர்வுக்கான ஆசிரியர்களின் ஆன்லைன் பயிற்சி ஜூன் 8 தொடக்கம்.
+தேசிய அளவில், பொருளாதார ஆலோசனைக் குழுவுடன் பிரதமர் மோடி ஆலோசனை நடத்தினார் (2025-26 ஜிடிபி 7.7%). சமையல் எரிவாயு சிலிண்டர் விலை ரூ.29 உயர்வு. இந்தியாவின் அந்நிய நேரடி முதலீடு 18% உயர்ந்து $58.8 பில்லியனானது (சிங்கப்பூர் முதலிடம்). சமையல் எண்ணெய்களுக்கு சீரான பேக்கிங் அளவுகளை மத்திய அரசு கட்டாயமாக்கியது. நீட் வினாத்தாள் கசிவு வதந்தியை NTA மறுத்தது.
+சர்வதேச அளவில், ஐ.நா பொதுச் சபையில் காஷ்மீர் குறித்துப் பேசிய பாகிஸ்தானை இந்தியா கண்டித்தது; UNSC சீர்திருத்தங்களை வலியுறுத்தியது. அணுசக்தி துறையில் இந்தியா சிறந்த கூட்டாளி என அமெரிக்க NEI தலைவர் கூறினார். சீனாவில் இருந்து தைவானுக்கு சிவப்பு பாண்டாக்கள் வந்தன. லெபனான் மீது இஸ்ரேல் தாக்குதல் (9 பேர் பலி).
+விளையாட்டு: நார்வே செஸ்ஸில் பிரக்ஞானந்தாவும், டோக்கியோ WR செஸ்ஸில் வைஷாலியும் சாம்பியன் பட்டம் வென்று சாதனை. தெற்காசிய கால்பந்தில் வங்கதேசத்தை வீழ்த்தி இந்திய மகளிர் அணி சாம்பியன். ஜூனியர் ஆசிய கோப்பை ஹாக்கியில் இந்திய ஆடவர் அணி சாம்பியன். பிரெஞ்சு ஓபனில் 19 வயது மிரா ஆண்ட்ரீவா சாம்பியன். அயர்லாந்து/இங்கிலாந்து டி20 தொடருக்கு ஸ்ரேயாஸ் ஐயர் கேப்டனாக நியமனம்; 15 வயது வைபவ் சூர்யவன்ஷி அறிமுகம்.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 07 June 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+    </script>
+</body>
+</html>

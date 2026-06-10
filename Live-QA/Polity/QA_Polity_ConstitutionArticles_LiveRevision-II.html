@@ -1,0 +1,1848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QA_Polity_ConstitutionArticles_LiveRevision</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Andika:wght@400;700&family=Orbitron:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14;
+    --bg2: #13161e;
+    --bg3: #1a1d27;
+    --gold: #f5c842;
+    --gold-dim: #b8930e;
+    --red: #e84040;
+    --red-dim: #7a1a1a;
+    --green: #3ecf6e;
+    --green-dim: #1a4d30;
+    --blue: #4a9eff;
+    --blue-dim: #1a2d4d;
+    --purple: #b47aff;
+    --purple-dim: #2d1a4d;
+    --orange: #ff7a3d;
+    --text: #e8e8e8;
+    --text-muted: #8a8fa8;
+    --border: #2a2d3a;
+    --easy: #3ecf6e;
+    --medium: #f5c842;
+    --hard: #e84040;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Andika', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0d0f14 0%, #13161e 40%, #1a1426 100%);
+    border-bottom: 2px solid var(--gold);
+    padding: 48px 40px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(245,200,66,0.06) 0%, transparent 60%);
+  }
+  .hero-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(24px, 4vw, 42px);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 10px;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero-sub {
+    font-family: 'Andika', sans-serif;
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  .meta-pills {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .pill {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .pill-gold { background: rgba(245,200,66,0.15); color: var(--gold); border: 1px solid var(--gold-dim); }
+  .pill-blue { background: rgba(74,158,255,0.15); color: var(--blue); border: 1px solid #1a3d7a; }
+  .pill-green { background: rgba(62,207,110,0.15); color: var(--green); border: 1px solid #1a4d30; }
+  .pill-red { background: rgba(232,64,64,0.15); color: var(--red); border: 1px solid var(--red-dim); }
+  .pill-purple { background: rgba(180,122,255,0.15); color: var(--purple); border: 1px solid #3d1a7a; }
+
+  /* STICKY TOC */
+  .toc-bar {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(13,15,20,0.97);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 40px;
+    display: flex; gap: 6px; flex-wrap: wrap; align-items: center;
+    backdrop-filter: blur(8px);
+  }
+  .toc-bar span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--gold);
+    margin-right: 8px;
+    letter-spacing: 2px;
+  }
+  .toc-link {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 3px 10px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .toc-link:hover { color: var(--gold); border-color: var(--gold); }
+
+  /* FILTER BUTTONS */
+  .filter-bar {
+    padding: 20px 40px;
+    display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg2);
+  }
+  .filter-bar-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 2px;
+    margin-right: 6px;
+  }
+  .fbtn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+  }
+  .fbtn:hover, .fbtn.active { background: var(--gold); color: #000; border-color: var(--gold); font-weight: 600; }
+  .fbtn.f-easy:hover, .fbtn.f-easy.active { background: var(--easy); border-color: var(--easy); color: #000; }
+  .fbtn.f-medium:hover, .fbtn.f-medium.active { background: var(--medium); border-color: var(--medium); color: #000; }
+  .fbtn.f-hard:hover, .fbtn.f-hard.active { background: var(--hard); border-color: var(--hard); color: #fff; }
+  .fbtn.f-gem:hover, .fbtn.f-gem.active { background: var(--purple); border-color: var(--purple); color: #000; }
+  .fbtn.f-pyq:hover, .fbtn.f-pyq.active { background: var(--blue); border-color: var(--blue); color: #000; }
+
+  /* LEGEND */
+  .legend-row {
+    padding: 14px 40px;
+    display: flex; gap: 16px; flex-wrap: wrap;
+    background: var(--bg3);
+    border-bottom: 1px solid var(--border);
+  }
+  .legend-item {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .legend-dot {
+    width: 10px; height: 10px; border-radius: 3px;
+  }
+
+  /* MAIN CONTENT */
+  .main { padding: 0 40px 60px; max-width: 1100px; margin: 0 auto; }
+
+  /* SECTION HEADERS */
+  .section-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 32px 0 16px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-title::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(to right, var(--gold-dim), transparent);
+  }
+
+  /* OVERVIEW CARD */
+  .overview-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin-bottom: 32px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+  }
+  .ov-stat { text-align: center; }
+  .ov-stat .num {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--gold);
+  }
+  .ov-stat .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+  }
+
+  /* Q CARDS */
+  .q-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .q-card:hover { border-color: #3a3d4d; }
+  .q-card.has-gem { border-color: rgba(180,122,255,0.3); }
+  .q-card.has-pyq { border-color: rgba(74,158,255,0.3); }
+  .q-card.has-gem.has-pyq { border-color: rgba(180,122,255,0.4); }
+
+  .q-header {
+    padding: 16px 20px;
+    display: flex; align-items: flex-start; gap: 14px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg3);
+  }
+  .q-num-badge {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    background: var(--gold);
+    color: #000;
+    padding: 4px 10px;
+    border-radius: 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .q-meta {
+    flex: 1;
+  }
+  .q-badges {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px;
+  }
+  .badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .badge-easy { background: rgba(62,207,110,0.2); color: var(--easy); border: 1px solid rgba(62,207,110,0.4); }
+  .badge-medium { background: rgba(245,200,66,0.2); color: var(--medium); border: 1px solid rgba(245,200,66,0.4); }
+  .badge-hard { background: rgba(232,64,64,0.2); color: var(--red); border: 1px solid rgba(232,64,64,0.4); }
+  .badge-factual { background: rgba(74,158,255,0.15); color: var(--blue); border: 1px solid rgba(74,158,255,0.3); }
+  .badge-conceptual { background: rgba(245,200,66,0.12); color: var(--gold); border: 1px solid rgba(245,200,66,0.3); }
+  .badge-trap { background: rgba(232,64,64,0.15); color: #ff7a7a; border: 1px solid rgba(232,64,64,0.3); }
+  .badge-application { background: rgba(62,207,110,0.12); color: var(--green); border: 1px solid rgba(62,207,110,0.3); }
+  .badge-tnpsc { background: rgba(180,122,255,0.12); color: var(--purple); border: 1px solid rgba(180,122,255,0.3); }
+  .badge-ssc { background: rgba(255,122,61,0.12); color: var(--orange); border: 1px solid rgba(255,122,61,0.3); }
+
+  .q-question {
+    font-family: 'Andika', sans-serif;
+    font-size: 15px;
+    color: #fff;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+  .q-question-tamil {
+    font-family: 'Andika', sans-serif;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  .q-body { padding: 20px; }
+
+  .answer-block {
+    background: rgba(62,207,110,0.06);
+    border: 1px solid rgba(62,207,110,0.2);
+    border-left: 3px solid var(--green);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+  }
+  .answer-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--green);
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+  }
+  .answer-text {
+    font-family: 'Andika', sans-serif;
+    font-size: 15px;
+    color: var(--green);
+    font-weight: 700;
+  }
+
+  .explanation-block {
+    background: rgba(245,200,66,0.04);
+    border: 1px solid rgba(245,200,66,0.15);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+  }
+  .explanation-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .explanation-text {
+    font-family: 'Andika', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* CALLOUT BOXES */
+  .callout {
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    border-left: 3px solid;
+  }
+  .callout-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .callout-text {
+    font-family: 'Andika', sans-serif;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+  .callout-critical {
+    background: rgba(232,64,64,0.08);
+    border-color: var(--red);
+  }
+  .callout-critical .callout-label { color: var(--red); }
+  .callout-critical .callout-text { color: #ffb3b3; }
+
+  .callout-trap {
+    background: rgba(245,200,66,0.08);
+    border-color: var(--gold);
+  }
+  .callout-trap .callout-label { color: var(--gold); }
+  .callout-trap .callout-text { color: #ffe08a; }
+
+  .callout-tip {
+    background: rgba(62,207,110,0.08);
+    border-color: var(--green);
+  }
+  .callout-tip .callout-label { color: var(--green); }
+  .callout-tip .callout-text { color: #a0f0c0; }
+
+  .callout-pyq {
+    background: rgba(74,158,255,0.08);
+    border-color: var(--blue);
+    box-shadow: 0 0 12px rgba(74,158,255,0.1);
+  }
+  .callout-pyq .callout-label { color: var(--blue); }
+  .callout-pyq .callout-text { color: #a8d0ff; }
+
+  .callout-gem {
+    background: rgba(180,122,255,0.08);
+    border-color: var(--purple);
+    box-shadow: 0 0 16px rgba(180,122,255,0.12);
+  }
+  .callout-gem .callout-label { color: var(--purple); }
+  .callout-gem .callout-text { color: #d0aaff; }
+
+  /* CROSS-REFERENCE */
+  .cross-ref {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    background: var(--bg3);
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+    padding: 6px 12px;
+    margin-bottom: 10px;
+    display: inline-block;
+  }
+
+  /* OPTIONS TABLE */
+  .options-list {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-bottom: 12px;
+  }
+  .opt {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--bg3);
+    color: var(--text-muted);
+  }
+  .opt.correct {
+    background: rgba(62,207,110,0.15);
+    border-color: var(--green);
+    color: var(--green);
+    font-weight: 700;
+  }
+  .opt.wrong {
+    text-decoration: line-through;
+    opacity: 0.5;
+    color: var(--red);
+  }
+
+  /* SUMMARY CARD */
+  .summary-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 24px;
+  }
+  .summary-card ul { list-style: none; padding: 0; }
+  .summary-card ul li {
+    font-size: 14px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .summary-card ul li:last-child { border-bottom: none; }
+  .summary-card ul li::before {
+    content: '▸';
+    color: var(--gold);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* PREDICTION */
+  .prediction-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px; margin-bottom: 24px;
+  }
+  .pred-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--gold);
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+  .pred-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+  .pred-q {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .pred-why {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  /* FLASHCARD TABLE */
+  .flash-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+    font-size: 13px;
+  }
+  .flash-table th {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: var(--bg3);
+    color: var(--gold);
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 2px solid var(--gold-dim);
+  }
+  .flash-table td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .flash-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+  .flash-table tr:hover td { background: rgba(245,200,66,0.04); }
+  .flash-table .ft-q { color: var(--text); }
+  .flash-table .ft-a { color: var(--green); font-weight: 700; font-family: 'IBM Plex Mono', monospace; }
+
+  /* MASTER CHEAT */
+  .cheat-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 24px;
+  }
+  .cheat-table th {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    background: var(--bg3);
+    padding: 12px 14px;
+    text-align: left;
+    border-bottom: 2px solid var(--gold-dim);
+  }
+  .cheat-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .cheat-table .col-art { font-family: 'Orbitron', monospace; color: var(--gold); font-weight: 700; font-size: 12px; white-space: nowrap; }
+  .cheat-table .col-topic { color: #fff; font-weight: 700; }
+  .cheat-table .col-note { color: var(--text-muted); font-size: 12px; }
+  .cheat-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+
+  /* FOOTER */
+  .footer {
+    background: var(--bg2);
+    border-top: 2px solid var(--gold-dim);
+    padding: 28px 40px;
+    text-align: center;
+  }
+  .footer-brand {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .footer-sub {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+  }
+
+  /* HIDDEN by filter */
+  .q-card.hidden { display: none; }
+
+  /* HIGHLIGHT */
+  mark {
+    background: rgba(245,200,66,0.25);
+    color: var(--gold);
+    padding: 1px 3px;
+    border-radius: 3px;
+  }
+  strong.g { color: var(--green); }
+  strong.r { color: var(--red); }
+  strong.b { color: var(--blue); }
+  strong.p { color: var(--purple); }
+  strong.gold { color: var(--gold); }
+
+  @media (max-width: 768px) {
+    .hero, .main { padding-left: 20px; padding-right: 20px; }
+    .toc-bar, .filter-bar, .legend-row { padding-left: 20px; padding-right: 20px; }
+    .footer { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO HEADER -->
+<div class="hero">
+  <div class="hero-label">📜 High-Yield Q&amp;A Revision Crack Sheet · SP Academy Live Session</div>
+  <h1>Indian Polity: <span>Constitution Articles</span><br>&amp; Amendments</h1>
+  <div class="hero-sub">YouTube Live Session · Tamil Medium → English + Tamil Output · TNPSC / SSC Target</div>
+  <div class="meta-pills">
+    <span class="pill pill-gold">📚 20 Questions Covered</span>
+    <span class="pill pill-blue">🏛️ TNPSC Gr.1 / Gr.2 / Gr.4</span>
+    <span class="pill pill-blue">📝 SSC CGL / CHSL</span>
+    <span class="pill pill-green">✅ Articles 85 → 371A</span>
+    <span class="pill pill-purple">💎 13 Live Gems</span>
+    <span class="pill pill-red">⚡ 7 PYQ Alerts</span>
+    <span class="pill pill-gold">🏅 Constitutional Amendments Focus</span>
+  </div>
+</div>
+
+<!-- STICKY TOC -->
+<div class="toc-bar">
+  <span>TOC →</span>
+  <a class="toc-link" href="#parliament">Parliament</a>
+  <a class="toc-link" href="#salaries">Speaker Salaries</a>
+  <a class="toc-link" href="#judiciary">Supreme Court</a>
+  <a class="toc-link" href="#lawoff">Law Officers</a>
+  <a class="toc-link" href="#ut">Union Territories</a>
+  <a class="toc-link" href="#panchayat">Panchayat & ULBs</a>
+  <a class="toc-link" href="#classical">Classical Language</a>
+  <a class="toc-link" href="#emergency">Emergency</a>
+  <a class="toc-link" href="#fr">Fundamental Rights</a>
+  <a class="toc-link" href="#offlang">Official Languages</a>
+  <a class="toc-link" href="#highcourt">High Court</a>
+  <a class="toc-link" href="#schedules">7th Schedule</a>
+  <a class="toc-link" href="#reservation">Reservation (EWS)</a>
+  <a class="toc-link" href="#basic">Basic Structure</a>
+  <a class="toc-link" href="#42nd">42nd Amendment</a>
+  <a class="toc-link" href="#president">President's Power</a>
+  <a class="toc-link" href="#governor">Governor</a>
+  <a class="toc-link" href="#nagaland">Nagaland / UT Formation</a>
+  <a class="toc-link" href="#flash">Flashcards</a>
+  <a class="toc-link" href="#cheat">Cheat Card</a>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <span class="filter-bar-label">FILTER:</span>
+  <button class="fbtn active" onclick="filterCards('all')">All</button>
+  <button class="fbtn f-easy" onclick="filterCards('easy')">🟢 Easy</button>
+  <button class="fbtn f-medium" onclick="filterCards('medium')">🟡 Medium</button>
+  <button class="fbtn f-hard" onclick="filterCards('hard')">🔴 Hard</button>
+  <button class="fbtn f-gem" onclick="filterCards('gem')">💎 Gems Only</button>
+  <button class="fbtn f-pyq" onclick="filterCards('pyq')">🏆 PYQ Only</button>
+</div>
+
+<!-- LEGEND -->
+<div class="legend-row">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--easy)"></div> Easy</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--medium)"></div> Medium</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--hard)"></div> Hard</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div> [CRITICAL]</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div> [TRAP]</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div> [TIP]</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div> [PYQ]</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div> [GEM]</div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+<!-- SESSION OVERVIEW -->
+<div class="section-title" id="overview">SESSION OVERVIEW</div>
+<div class="overview-card">
+  <div class="ov-stat"><div class="num">20</div><div class="label">Questions</div></div>
+  <div class="ov-stat"><div class="num">13</div><div class="label">Live Gems</div></div>
+  <div class="ov-stat"><div class="num">7</div><div class="label">PYQ Alerts</div></div>
+  <div class="ov-stat"><div class="num">18+</div><div class="label">Articles Covered</div></div>
+  <div class="ov-stat"><div class="num">8</div><div class="label">Amendments Covered</div></div>
+</div>
+<div class="summary-card" style="margin-bottom:32px;">
+  <ul>
+    <li>Parliament sessions, prorogation, and dissolution — Article 85 (Central) vs. Article 174 (State)</li>
+    <li>Speaker &amp; Deputy Speaker salary — Article 97; Rajya Sabha Chairman/Deputy Chairman — same concept</li>
+    <li>Supreme Court's law binding on all courts — Article 141; Ordinance power — Articles 123 &amp; 213</li>
+    <li>Attorney General (Art. 76) vs. Advocate General of State (Art. 165) — the +89 trick</li>
+    <li>Union Territory regulations by President — Article 240; Only Delhi &amp; Puducherry have Legislatures</li>
+    <li>Panchayat elections — Art. 243K; Municipality elections — Art. 243ZA</li>
+    <li>First Classical Language: Tamil (Oct 12, 2004); Total 11 Classical Languages now</li>
+    <li>National Emergency (Art. 352), State Emergency/President's Rule (Art. 356), Financial Emergency (Art. 360 — never invoked)</li>
+    <li>Articles 20 &amp; 21 cannot be suspended even during emergency</li>
+    <li>Official Languages: Started with 14; Now 22; Amendments 21st (Sindhi), 71st, 92nd added languages</li>
+  </ul>
+</div>
+
+<!-- GROUP 1: PARLIAMENT -->
+<div class="section-title" id="parliament">GROUP 1 · PARLIAMENT</div>
+
+<div class="q-card has-gem has-pyq" data-diff="medium" data-gem="1" data-pyq="1">
+  <div class="q-header">
+    <div class="q-num-badge">Q1</div>
+    <div class="q-meta">
+      <div class="q-badges">
+        <span class="badge badge-medium">Medium</span>
+        <span class="badge badge-factual">Factual</span>
+        <span class="badge badge-tnpsc">TNPSC Gr.2/4</span>
+        <span class="badge badge-ssc">SSC</span>
+      </div>
+      <div class="q-question">Which Article deals with Sessions of Parliament, Prorogation, and Dissolution?</div>
+      <div class="q-question-tamil">பாராளுமன்ற அமர்வுகள், ஒத்திவைப்பு மற்றும் கலைப்பு பற்றி எந்த சரத்து விவரிக்கிறது?</div>
+    </div>
+  </div>
+  <div class="q-body">
+    <div class="options-list">
+      <span class="opt">A) Art. 82</span>
+      <span class="opt">B) Art. 83</span>
+      <span class="opt">C) Art. 84</span>
+      <span class="opt correct">D) Art. 85 ✓</span>
+    </div>
+    <div class="answer-block">
+      <div class="answer-label">✅ ANSWER</div>
+      <div class="answer-text">Article 85 — Sessions of Parliament, Prorogation and Dissolution</div>
+    </div>
+    <div class="explanation-block">
+      <div class="explanation-label">📌 EXPLANATION</div>
+      <div class="explanation-text">
+        <strong class="gold">Prorogation</strong> = Adjournment with a fixed date announced (session suspended for a period).<br>
+        <strong class="gold">Dissolution</strong> = Ending of Lok Sabha without a fixed date (no date given for reconvening).<br><br>
+        The teacher introduced a key memory formula: <mark>Central Govt Article + 89 = State Govt Article</mark><br>
+        → Art. 85 (Parliament Sessions) + 89 = <strong class="g">Art. 174</strong> (State Legislature Sessions)<br>
+        The same concept (Sessions/Prorogation/Dissolution) for State Legislatures is covered under <strong class="g">Article 174</strong>.
+      </div>
+    </div>
+    <div class="callout callout-gem">
+      <div class="callout-label">💎 LIVE GEM — The +89 Formula</div>
+      <div class="callout-text">
+        <strong>Teacher's Golden Trick:</strong> For nearly all Central Government articles, adding 89 gives you the equivalent State Government article.<br>
+        Examples: Art. 85 (Parliament Sessions) + 89 = Art. 174 (State Legislature Sessions) | Art. 76 (AG of India) + 89 = Art. 165 (Advocate General of State) | Art. 123 (Ordinance by President) + 89 = Art. 213 (Ordinance by Governor)<br>
+        <em>⚠️ Teacher noted: This formula works reliably up to around Article 140. Beyond 140, some deviations occur.</em>
+      </div>
+    </div>
+    <div class="callout callout-pyq">
+      <div class="callout-label">🏆 PYQ ALERT</div>
+      <div class="callout-text">This concept (Parliament Sessions) appeared in TNPSC Group 2 exams. The distinction between Prorogation (fixed date) and Dissolution (no date, Lok Sabha dissolved) is a favourite one-liner trap.</div>
+    </div>
+  </div>
+</div>
+
+<!-- GROUP 2: SPEAKER SALARIES -->
+<div class="section-title" id="salaries">GROUP 2 · SPEAKER / CHAIRMAN SALARIES</div>
+
+<div class="q-card has-gem" data-diff="hard" data-gem="1" data-pyq="0">
+  <div class="q-header">
+    <div class="q-num-badge">Q2</div>
+    <div class="q-meta">
+      <div class="q-badges">
+        <span class="badge badge-hard">Hard</span>
+        <span class="badge badge-factual">Factual</span>
+        <span class="badge badge-tnpsc">TNPSC Gr.1/2</span>
+        <span class="badge badge-ssc">SSC</span>
+      </div>
+      <div class="q-question">Which Article deals with the Salaries and Allowances of the Speaker, Deputy Speaker (Lok Sabha) and Chairman, Deputy Chairman (Rajya Sabha)?</div>
+      <div class="q-question-tamil">தலைவர், துணை தலைவர் (மக்களவை) மற்றும் சபாநாயகர், துணை சபாநாயகர் (மாநிலங்களவை) ஆகியோரின் சம்பளம் மற்றும் படிகள் பற்றி எந்த சரத்து?</div>
+    </div>
+  </div>
+  <div class="q-body">
+    <div class="options-list">
+      <span class="opt">A) Art. 98</span>
+      <span class="opt">B) Art. 99</span>
+      <span class="opt correct">C) Art. 97 ✓</span>
+      <span class="opt">D) Art. 110</span>
+    </div>
+    <div class="answer-block">
+      <div class="answer-label">✅ ANSWER</div>
+      <div class="answer-text">Article 97 — Salaries and Allowances of the Chairman, Deputy Chairman, Speaker, and Deputy Speaker</div>
+    </div>
+    <div class="explanation-block">
+      <div class="explanation-label">📌 EXPLANATION</div>
+      <div class="explanation-text">
+        <strong class="gold">Lok Sabha</strong> = Speaker (Sabhapathi / சபாநாயகர்) + Deputy Speaker (Deputy Sabhapathi)<br>
+        <strong class="gold">Rajya Sabha</strong> = Chairman (Sabhapath / சேர்மன்) + Deputy Chairman (Deputy Sabhapathi / துணை சேர்மன்)<br><br>
+        Key related articles to memorize:<br>
+        • <mark>Art. 93</mark> — Election of Speaker and Deputy Speaker of Lok Sabha (very frequently asked)<br>
+        • <mark>Art. 97</mark> — Salaries &amp; Allowances of Speaker, Deputy Speaker, Chairman, Deputy Chairman<br>
+        • <mark>Art. 110</mark> — Definition of Money Bill (அப்படி கேட்பாங்க — asked in TNPSC very often)<br>
+      </div>
+    </div>
+    <div class="callout callout-gem">
+      <div class="callout-label">💎 LIVE GEM</div>
+      <div class="callout-text">
+        <strong>Article 110 — Money Bill (மணி பில்)</strong>: The teacher stressed this as a standalone high-frequency question. <em>"TNPSC students — Article 110 is Money Bill. Don't forget this."</em><br>
+        Also: <strong>Article 93</strong> = Election of Lok Sabha Speaker — asked "adikadi" (repeatedly) in exams.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GROUP 3: SUPREME COURT / JUDICIARY -->
+<div class="section-title" id="judiciary">GROUP 3 · SUPREME COURT & JUDICIARY</div>
+
+<div class="q-card has-pyq has-gem" data-diff="medium" data-gem="1" data-pyq="1">
+  <div class="q-header">
+    <div class="q-num-badge">Q3</div>
+    <div class="q-meta">
+      <div class="q-badges">
+        <span class="badge badge-medium">Medium</span>
+        <span class="badge badge-factual">Factual</span>
+        <span class="badge badge-tnpsc">TNPSC Gr.2/4</span>
+        <span class="badge badge-ssc">SSC</span>
+      </div>
+      <div class="q-question">Which Article states that the law declared by the Supreme Court shall be binding on all courts in India?</div>
+      <div class="q-question-tamil">உச்ச நீதிமன்றத்தால் அறிவிக்கப்பட்ட சட்டம் அனைத்து நீதிமன்றங்களுக்கும் கட்டுப்படும் என்று எந்த சரத்து விவரிக்கிறது?</div>
+    </div>
+  </div>
+  <div class="q-body">
+    <div class="options-list">
+      <span class="opt">A) Art. 139</span>
+      <span class="opt wrong">B) Art. 142 (some students answered this)</span>
+      <span class="opt correct">C) Art. 141 ✓</span>
+      <span class="opt">D) Art. 143</span>
+    </div>
+    <div class="answer-block">
+      <div class="answer-label">✅ ANSWER</div>
+      <div class="answer-text">Article 141 — Law declared by Supreme Court to be binding on all courts</div>
+    </div>
+    <div class="explanation-block">
+      <div class="explanation-label">📌 EXPLANATION</div>
+      <div class="explanation-text">
+        The Supreme Court is the apex court for the entire India. Whatever law/judgment the Supreme Court declares becomes <strong class="gold">binding</strong> on all subordinate courts — High Courts, District Courts, Subordinate Courts.<br><br>
+        Related Supreme Court articles:<br>
+        • <mark>Art. 141</mark> — SC law binding on all courts<br>
+        • <mark>Art. 142</mark> — Enforcement of decrees of Supreme Court (not the same!)<br>
+        • <mark>Art. 123</mark> — Ordinance power of <strong>President</strong> (central govt)<br>
+        • <mark>Art. 213</mark> — Ordinance power of <strong>Governor</strong> (state govt)
+      </div>
+    </div>
+    <div class="callout callout-trap">
+      <div class="callout-label">🪤 TRAP NOTE</div>
+      <div class="callout-text">Students commonly confuse Art. 141 with Art. 142. <strong>Art. 141 = SC's declared law binding on ALL courts.</strong> Art. 142 = enforcement of decrees by Supreme Court for complete justice. These are tested with very similar answer options.</div>
+    </div>
+    <div class="callout callout-gem">
+      <div class="callout-label">💎 LIVE GEM — Article 123 (Ordinance)</div>
+      <div class="callout-text">
+        Teacher spontaneously added: <strong>Article 123</strong> = <strong>Ordinance-making power of the President</strong> (Avara Sattam / அவசர சட்டம் in English = Ordinance).<br>
+        Using +89 trick: Art. 123 + 89 = <strong>Art. 213</strong> = Ordinance-making power of the <strong>Governor</strong>.<br><br>
+        Bonus: Teacher mentioned <strong>Special Leave Petition (SLP)</strong> was asked in Group 2 recently — students should check the article for SLP (Article 136).
+      </div>
+    </div>
+    <div class="callout callout-pyq">
+      <div class="callout-label">🏆 PYQ ALERT</div>
+      <div class="callout-text">Art. 141 appeared in TNPSC Group 2 (2017, 2019). Art. 123 (Ordinance by President) also appeared in Group 2/4 exams multiple times.</div>
+    </div>
+  </div>
+</div>
+
+<!-- GROUP 4: LAW OFFICERS -->
+<div class="section-title" id="lawoff">GROUP 4 · LAW OFFICERS</div>
+
+<div class="q-card has-gem has-pyq" data-diff="medium" data-gem="1" data-pyq="1">
+  <div class="q-header">
+    <div class="q-num-badge">Q4</div>
+    <div class="q-meta">
+      <div class="q-badges">
+        <span class="badge badge-medium">Medium</span>
+        <span class="badge badge-factual">Factual</span>
+        <span class="badge badge-tnpsc">TNPSC Gr.2/4</span>
+        <span class="badge badge-ssc">SSC</span>
+      </div>
+      <div class="q-question">Which Article describes the Advocate General of a State?</div>
+      <div class="q-question-tamil">மாநில அட்வகேட் ஜெனரல் பற்றி எந்த சரத்து விவரிக்கிறது?</div>
+    </div>
+  </div>
+  <div class="q-body">
+    <div class="options-list">
+      <span class="opt">A) Art. 76 (AG of India)</span>
+      <span class="opt wrong">B) Art. 167 (wrong — some students)</span>
+      <span class="opt correct">C) Art. 165 ✓</span>
+      <span class="opt">D) Art. 163</span>
+    </div>
+    <div class="answer-block">
+      <div class="answer-label">✅ ANSWER</div>
+      <div class="answer-text">Article 165 — Advocate General of a State</div>
+    </div>
+    <div class="explanation-block">
+      <div class="explanation-label">📌 EXPLANATION</div>
+      <div class="explanation-text">
+        Just as individuals hire lawyers for their cases, governments have their own legal representatives:<br><br>
+        • <mark>Art. 76</mark> — <strong class="gold">Attorney General of India</strong> = Central Govt's top legal officer, highest law officer in India<br>
+        • <mark>Art. 165</mark> — <strong class="gold">Advocate General of a State</strong> = State Govt's legal officer<br><br>
+        Formula: Art. 76 + 89 = Art. 165 ✓<br><br>
+        Key fact about AG of India: He/She can attend Parliament sessions but <strong class="red">cannot vote</strong>.
+      </div>
+    </div>
+    <div class="callout callout-gem">
+      <div class="callout-label">💎 LIVE GEM</div>
+      <div class="callout-text">
+        <strong>Attorney General of India</strong> — the highest law officer of India — has the right to address Parliament (both Houses) but <strong>has NO right to vote</strong>. This distinction is frequently tested.<br>
+        Students who answered Art. 167 were told: <em>"If you put 167, consider your answer wasted — 165 is the correct answer."</em>
+      </div>
+    </div>
+    <div class="callout callout-pyq">
+      <div class="callout-label">🏆 PYQ ALERT</div>
+      <div class="callout-text">Art. 76 vs. Art. 165 (AG vs. Advocate General) is a classic TNPSC comparison question. Also asked in SSC CGL: "Who is the highest law officer of India?" → AG of India (Art. 76).</div>
+    </div>
+  </div>
+</div>
+
+<!-- GROUP 5: UNION TERRITORIES -->
+<div class="section-title" id="ut">GROUP 5 · UNION TERRITORIES</div>
+
+<div class="q-card has-gem" data-diff="hard" data-gem="1" data-pyq="0">
+  <div class="q-header">
+    <div class="q-num-badge">Q5</div>
+    <div class="q-meta">
+      <div class="q-badges">
+        <span class="badge badge-hard">Hard</span>
+        <span class="badge badge-conceptual">Conceptual</span>
+        <span class="badge badge-tnpsc">TNPSC Gr.1/2</span>
+      </div>
+      <div class="q-question">Which Article gives the President the power to make regulations for Union Territories?</div>
+      <div class="q-question-tamil">யூனியன் பிரதேசங்களுக்கான விதிமுறைகளை உருவாக்க ஜனாதிபதியின் அதிகாரம் பற்றி எந்த சரத்து?</div>
+    </div>
+  </div>
+  <div class="q-body">
+    <div class="options-list">
+      <span class="opt">A) Art. 238</span>
+      <span class="opt">B) Art. 239</span>
+      <span class="opt correct">C) Art. 240 ✓</span>
+      <span class="opt">D) Art. 242</span>
+    </div>
+    <div class="answer-block">
+      <div class="answer-label">✅ ANSWER</div>
+      <div class="answer-text">Article 240 — Power of President to make regulations for certain Union Territories</div>
+    </div>
+    <div class="explanation-block">
+      <div class="explanation-label">📌 EXPLANATION</div>
+      <div class="explanation-text">
+        Union Territories are under the <strong class="gold">direct control of the President of India</strong>. Each UT is administered through a <strong class="gold">Lieutenant Governor (LG)</strong> who acts under the power of the President.<br><br>
+        <strong>Key Facts:</strong><br>
+        • India currently has <mark>8 Union Territories</mark> (as of 2024)<br>
+        • Only <strong>2 UTs have Legislatures</strong>: <strong class="g">Delhi</strong> and <strong class="g">Puducherry (Pondicherry)</strong><br>
+        • All other 6 UTs have no legislature (population too small)<br>
+        • Even if Delhi/Puducherry elects a CM, the <strong class="red">Lt. Governor has more power</strong> than the CM in UTs<br>
+        • This is because UTs fall directly under the President (Central Govt)
+      </div>
+    </div>
+    <div class="callout callout-gem">
+      <div class="callout-label">💎 LIVE GEM — UT Legislature Trick</div>
+      <div class="callout-text">
+        Only <strong>Delhi</strong> and <strong>Puducherry</strong> have State Legislatures among all 8 UTs. In these UTs, even though a CM is elected, the Lieutenant Governor holds more power than the Chief Minister — because UTs are under Presidential control.<br>
+        Total UTs = <strong>8</strong> (Students who wrote 7 or 9 are considered "in coma stage" by the teacher 😄)<br>
+        <strong>Current Total: 28 States + 8 UTs = 36 divisions</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GROUP 6: PANCHAYAT & URBAN LOCAL BODIES -->
+<div class="section-title" id="panchayat">GROUP 6 · PANCHAYATS & URBAN LOCAL BODIES</div>
+
+<div class="q-card has-gem has-pyq" data-diff="easy" data-gem="1" data-pyq="1">
+  <div class="q-header">
+    <div class="q-num-badge">Q6</div>
+    <div class="q-meta">
+      <div class="q-badges">
+        <span class="badge badge-easy">Easy</span>
+        <span class="badge badge-factual">Factual</span>
+        <span class="badge badge-tnpsc">TNPSC Gr.4/VAO</span>
+        <span class="badge badge-ssc">SSC</span>
+      </div>
+      <div class="q-question">Which Article deals with Elections to Panchayats?</div>
+      <div class="q-question-tamil">பஞ்சாயத்துகளுக்கான தேர்தல் பற்றி எந்த சரத்து விவரிக்கிறது?</div>
+    </div>
+  </div>
+  <div class="q-body">
+    <div class="options-list">
+      <span class="opt">A) Art. 243H</span>
+      <span class="opt">B) Art. 243I</span>
+      <span class="opt">C) Art. 243J</span>
+      <span class="opt correct">D) Art. 243K ✓</span>
+    </div>
+    <div class="answer-block">
+      <div class="answer-label">✅ ANSWER</div>
+      <div class="answer-text">Article 243K — Elections to Panchayats</div>
+    </div>
+    <div class="explanation-block">
+      <div class="explanation-label">📌 EXPLANATION</div>
+      <div class="explanation-text">
+        Memory technique from teacher: <em>"If you make someone a Panchayat President — that's an election. Remember 243K as soon as you see 'Panchayat election'."</em><br><br>
+        Equally important — <strong class="gold">Municipalities (Urban Local Bodies)</strong> elections:<br>
+        • <mark>Art. 243ZA</mark> = Elections to Municipalities / Municipal Corporations
+      </div>
+    </div>
+    <div class="callout callout-gem">
+      <div class="callout-label">💎 LIVE GEM — Panchayat ↔ Municipality Pair</div>
+      <div class="callout-text">
+        The teacher taught a <strong>paired memory rule</strong>: "Whenever you see Panchayat — immediately think Municipality. They always come together in exams."<br>
+        → <strong>Panchayat Elections = Art. 243K</strong> | <strong>Municipality Elections = Art. 243ZA</strong><br>
+        Both articles are in Part IX and Part IX-A of the Constitution (added by the 73rd and 74th Amendments respectively).
+      </div>
+    </div>
+    <div class="callout callout-pyq">
+      <div class="callout-label">🏆 PYQ ALERT</div>
+      <div class="callout-text">Art. 243K (Panchayat elections) has appeared multiple times in TNPSC Group 4/VAO exams. The 73rd and 74th Amendments (Panchayati Raj and Nagarpalika Acts) are high-yield topics.</div>
+    </div>
+  </div>
+</div>
+
+<!-- GROUP 7: CLASSICAL LANGUAGE -->
+<div class="section-title" id="classical">GROUP 7 · CLASSICAL LANGUAGE STATUS</div>
+
+<div class="q-card has-gem has-pyq" data-diff="easy" data-gem="1" data-pyq="1">
+  <div class="q-header">
+    <div class="q-num-badge">Q7</div>
+    <div class="q-meta">
+      <div class="q-badges">
+        <span class="badge badge-easy">Easy</span>
+        <span class="badge badge-factual">Factual</span>
+        <span class="badge badge-tnpsc">TNPSC Gr.4/VAO</span>
+      </div>
+      <div class="q-question">Which was the first language to be granted Classical Language status in India?</div>
+      <div class="q-question-tamil">இந்தியாவில் செம்மொழியாக அறிவிக்கப்பட்ட முதல் மொழி எது?</div>
+    </div>
+  </div>
+  <div class="q-body">
+    <div class="answer-block">
+      <div class="answer-label">✅ ANSWER</div>
+      <div class="answer-text">Tamil — October 12, 2004 (first Classical Language of India)</div>
+    </div>
+    <div class="explanation-block">
+      <div class="explanation-label">📌 EXPLANATION</div>
+      <div class="explanation-text">
+        <strong class="gold">Sequence of Classical Language grants:</strong><br>
+        1st → <mark>Tamil</mark> — October 12, 2004<br>
+        2nd → <mark>Sanskrit</mark><br>
+        Other Classical Languages followed later.<br><br>
+        <strong>Total Classical Languages in India (2024): 11</strong><br>
+        (Tamil, Sanskrit, Kannada, Telugu, Malayalam, Odia, Marathi, Pali, Prakit, Assamese, Bengali)
+      </div>
+    </div>
+    <div class="callout callout-gem">
+      <div class="callout-label">💎 LIVE GEM — Odia Renaming + 96th Amendment</div>
+      <div class="callout-text">
+        Teacher gave a connected question: "Orissa (state) was renamed Odisha, and the language 'Oriya' was renamed 'Odia' — which Amendment did this?"<br>
+        → <strong>96th Constitutional Amendment Act, 2011</strong><br>
+        This is a favourite TNPSC trick question. Students who wrote "2003" were corrected sharply.
+      </div>
+    </div>
+    <div class="callout callout-pyq">
+      <div class="callout-label">🏆 PYQ ALERT</div>
+      <div class="callout-text">The first Classical Language (Tamil, 2004) has appeared in TNPSC exams. Also, the 96th Amendment (Odia) is a known one-liner in recent exams.</div>
+    </div>
+  </div>
+</div>
+
+<!-- GROUP 8: EMERGENCY PROVISIONS -->
+<div class="section-title" id="emergency">GROUP 8 · EMERGENCY PROVISIONS</div>
+
+<div class="q-card has-gem has-pyq" data-diff="easy" data-gem="1" data-pyq="1">
+  <div class="q-header">
+    <div class="q-num-badge">Q8</div>
+    <div class="q-meta">
+      <div class="q-badges">
+        <span class="badge badge-easy">Easy</span>
+        <span class="badge badge-factual">Factual</span>
+        <span class="badge badge-tnpsc">TNPSC Gr.2/4</span>
+        <span class="badge badge-ssc">SSC</span>
+      </div>
+      <div class="q-question">Which Article deals with Financial Emergency in India?</div>
+      <div class="q-question-tamil">நிதி நெருக்கடி பற்றி எந்த சரத்து கூறுகிறது?</div>
+    </div>
+  </div>
+  <div class="q-body">
+    <div class="options-list">
+      <span class="opt">A) Art. 352</span>
+      <span class="opt">B) Art. 356</span>
+      <span class="opt wrong">C) Art. 92 (wrong answer)</span>
+      <span class="opt correct">D) Art. 360 ✓</span>
+    </div>
+    <div class="answer-block">
+      <div class="answer-label">✅ ANSWER</div>
+      <div class="answer-text">Article 360 — Financial Emergency (never proclaimed in India till date)</div>
+    </div>
+    <div class="explanation-block">
+      <div class="explanation-label">📌 EXPLANATION</div>
+      <div class="explanation-text">
+        <strong class="gold">Three types of Emergency in India:</strong><br>
+        • <mark>Art. 352</mark> — <strong>National Emergency</strong> (Rashtriya Avasara Kalanilaai / தேசிய அவசர கால நிலை) — External aggression or armed rebellion<br>
+        • <mark>Art. 356</mark> — <strong>State Emergency / President's Rule</strong> (Rajya Avasara Kaala Nilai) — Constitutional machinery in a state fails<br>
+        • <mark>Art. 360</mark> — <strong>Financial Emergency</strong> (Nidhi Nerukadi Nilai / நிதி நெருக்கடி) — Threat to financial stability of India<br><br>
+        <strong class="red">CRITICAL FACT: Art. 360 (Financial Emergency) has NEVER been proclaimed in India till date!</strong><br>
+        Art. 352 and Art. 356 have been invoked, but Art. 360 has NOT.
+      </div>
+    </div>
+    <div class="callout callout-gem">
+      <div class="callout-label">💎 LIVE GEM — National Emergency History</div>
+      <div class="callout-text">
+        National Emergency (Art. 352) was proclaimed THREE times:<br>
+        1. <strong>1962</strong> — Indo-China War (External threat)<br>
+        2. <strong>1971</strong> — Indo-Pakistan War (External threat)<br>
+        3. <strong>1975</strong> — Internal disturbance (by Indira Gandhi — internal political emergency)<br><br>
+        The question asked: "Which year was National Emergency NOT proclaimed?" — Answer is <strong>1965</strong> (Indo-Pakistan 1965 war did NOT lead to a National Emergency proclamation).<br>
+        ⚠️ Read questions carefully: "which was NOT proclaimed" vs "which WAS proclaimed" — a classic exam trap!
+      </div>
+    </div>
+    <div class="callout callout-pyq">
+      <div class="callout-label">🏆 PYQ ALERT</div>
+      <div class="callout-text">Art. 360 (Financial Emergency never invoked) is a standalone PYQ in TNPSC Group 2/4 and SSC. "Which emergency was never proclaimed in India?" is a direct question type.</div>
+    </div>
+  </div>
+</div>
+
+<div class="q-card has-gem" data-diff="medium" data-gem="1" data-pyq="0">
+  <div class="q-header">
+    <div class="q-num-badge">Q9</div>
+    <div class="q-meta">
+      <div class="q-badges">
+        <span class="badge badge-medium">Medium</span>
+        <span class="badge badge-factual">Factual</span>
+        <span class="badge badge-tnpsc">TNPSC Gr.1/2</span>
+      </div>
+      <div class="q-question">In the following years — 1962, 1965, 1971, 1975 — in which year was National Emergency NOT proclaimed?</div>
+      <div class="q-question-tamil">1962, 1965, 1971, 1975 ஆண்டுகளில் எந்த ஆண்டில் தேசிய அவசர நிலை அறிவிக்கப்படவில்லை?</div>
+    </div>
+  </div>
+  <div class="q-body">
+    <div class="options-list">
+      <span class="opt">A) 1962</span>
+      <span class="opt correct">B) 1965 ✓</span>
+      <span class="opt">C) 1971</span>
+      <span class="opt">D) 1975</span>
+    </div>
+    <div class="answer-block">
+      <div class="answer-label">✅ ANSWER</div>
+      <div class="answer-text">1965 — National Emergency was NOT proclaimed during the 1965 Indo-Pakistan War</div>
+    </div>
+    <div class="explanation-block">
+      <div class="explanation-label">📌 EXPLANATION</div>
+      <div class="explanation-text">
+        The 1965 Indo-Pakistan War happened but did NOT lead to a National Emergency under Art. 352. The Emergency was proclaimed in 1962 (China war), 1971 (Pakistan war), and 1975 (internal).<br><br>
+        There are two types of National Emergency:<br>
+        • <strong>External National Emergency</strong> — external aggression (1962, 1971)<br>
+        • <strong>Internal National Emergency</strong> — internal armed rebellion (1975)
+      </div>
+    </div>
+    <div class="callout callout-trap">
+      <div class="callout-label">🪤 TRAP NOTE</div>
+      <div class="callout-text">The question says "was NOT proclaimed" — many students see "1962, 1971, 1975" and answer hastily. The keyword is <strong>"NOT"</strong>. 1965 war happened but NO emergency was declared. Always read the complete question!</div>
+    </div>
+  </div>
+</div>
+
+<!-- GROUP 9: FUNDAMENTAL RIGHTS -->
+<div class="section-title" id="fr">GROUP 9 · FUNDAMENTAL RIGHTS DURING EMERGENCY</div>
+
+<div class="q-card has-gem has-pyq" data-diff="hard" data-gem="1" data-pyq="1">
+  <div class="q-header">
+    <div class="q-num-badge">Q10</div>
+    <div class="q-meta">
+      <div class="q-badges">
+        <span class="badge badge-hard">Hard</span>
+        <span class="badge badge-conceptual">Conceptual</span>
+        <span class="badge badge-tnpsc">TNPSC Gr.1/2</span>
+        <span class="badge badge-ssc">SSC</span>
+      </div>
+      <div class="q-question">Under which Articles can the President NOT suspend Fundamental Rights even during a National Emergency?</div>
+      <div class="q-question-tamil">எந்த சூழ்நிலையிலும் குடியரசு தலைவரால் எந்த சரத்துகளின் கீழ் வழங்கப்பட்ட உரிமைகளை தடை செய்ய முடியாது?</div>
+    </div>
+  </div>
+  <div class="q-body">
+    <div class="answer-block">
+      <div class="answer-label">✅ ANSWER</div>
+      <div class="answer-text">Articles 20 and 21 — These two Fundamental Rights can NEVER be suspended, not even during National Emergency</div>
+    </div>
+    <div class="explanation-block">
+      <div class="explanation-label">📌 EXPLANATION</div>
+      <div class="explanation-text">
+        Part III of the Constitution contains <strong>6 Fundamental Rights</strong> available to every individual.<br>
+        During National Emergency (Art. 352) or State Emergency (Art. 356), some Fundamental Rights can be suspended automatically.<br><br>
+        BUT — <strong class="gold">Two rights that can NEVER be taken away under any emergency:</strong><br>
+        • <mark>Art. 20</mark> — <strong>Protection in respect of conviction for offences</strong> (No ex-post-facto law, no double jeopardy, no self-incrimination)<br>
+        • <mark>Art. 21</mark> — <strong>Protection of life and personal liberty</strong> (Right to Life)<br><br>
+        These two rights are permanent and irrevocable — even in emergency.
+      </div>
+    </div>
+    <div class="callout callout-gem">
+      <div class="callout-label">💎 LIVE GEM</div>
+      <div class="callout-text">
+        Teacher said: <em>"Even if life itself goes, these rights don't go — like a farmer who refuses to leave his land even in hardship."</em><br>
+        <strong>Mnemonic: "20-21 = Two for Life"</strong> — Art. 20 protects against criminal conviction abuse; Art. 21 protects your life and liberty. Both are ABSOLUTE — no President, no emergency can remove them.
+      </div>
+    </div>
+    <div class="callout callout-pyq">
+      <div class="callout-label">🏆 PYQ ALERT</div>
+      <div class="callout-text">This is a high-frequency TNPSC and SSC question: "Which Fundamental Rights cannot be suspended even during emergency?" → Art. 20 and 21. Appeared in TNPSC Group 1 prelims and SSC CGL multiple times.</div>
+    </div>
+  </div>
+</div>
+
+<!-- GROUP 10: OFFICIAL LANGUAGES -->
+<div class="section-title" id="offlang">GROUP 10 · OFFICIAL LANGUAGES (8th SCHEDULE)</div>
+
+<div class="q-card has-gem has-pyq" data-diff="medium" data-gem="1" data-pyq="1">
+  <div class="q-header">
+    <div class="q-num-badge">Q11</div>
+    <div class="q-meta">
+      <div class="q-badges">
+        <span class="badge badge-medium">Medium</span>
+        <span class="badge badge-factual">Factual</span>
+        <span class="badge badge-tnpsc">TNPSC Gr.2/4</span>
+        <span class="badge badge-ssc">SSC</span>
+      </div>
+      <div class="q-question">Which language was added as an Official Language by the 21st Constitutional Amendment Act?</div>
+      <div class="q-question-tamil">21வது சட்டதிருத்தத்தினால் ஆட்சி மொழியாக சேர்க்கப்பட்ட மொழி எது?</div>
+    </div>
+  </div>
+  <div class="q-body">
+    <div class="options-list">
+      <span class="opt">A) Konkani</span>
+      <span class="opt">B) Manipuri</span>
+      <span class="opt">C) Santhali</span>
+      <span class="opt correct">D) Sindhi ✓</span>
+    </div>
+    <div class="answer-block">
+      <div class="answer-label">✅ ANSWER</div>
+      <div class="answer-text">Sindhi — added by the 21st Constitutional Amendment Act</div>
+    </div>
+    <div class="explanation-block">
+      <div class="explanation-label">📌 EXPLANATION</div>
+      <div class="explanation-text">
+        The <strong class="gold">8th Schedule</strong> (Eighth Schedule) of the Constitution lists Official Languages.<br><br>
+        At the time of Constitution adoption: <mark>14 languages</mark><br>
+        Current total: <mark>22 Official Languages</mark><br><br>
+        <strong>Three key Amendments that added languages:</strong><br>
+        • <strong>21st Amendment</strong> → Added <mark>Sindhi</mark> (1 language added)<br>
+        • <strong>71st Amendment</strong> → Added <mark>Konkani, Manipuri, Nepali</mark> (3 languages added)<br>
+        • <strong>92nd Amendment</strong> → Added <mark>Bodo, Dongri, Maithili, Santhali</mark> (4 languages added)<br><br>
+        Total added: 1 + 3 + 4 = 8 → 14 + 8 = <strong>22</strong> ✓
+      </div>
+    </div>
+    <div class="callout callout-gem">
+      <div class="callout-label">💎 LIVE GEM — Language Amendment Shortcut</div>
+      <div class="callout-text">
+        <strong>Easy memory formula: 21 → 71 → 92 (adds 1, 3, 4 languages respectively)</strong><br>
+        • 21st: <strong>Sindhi</strong> (1)<br>
+        • 71st: <strong>Konkani, Manipuri, Nepali</strong> (3)<br>
+        • 92nd: <strong>Bodo, Dongri (Dogri), Maithili, Santhali</strong> (4)<br>
+        <em>Note: Options A, B, C (Konkani, Manipuri, Santhali) were added by DIFFERENT amendments — classic exam trap!</em>
+      </div>
+    </div>
+    <div class="callout callout-pyq">
+      <div class="callout-label">🏆 PYQ ALERT</div>
+      <div class="callout-text">Official Languages + Amendment number is a repeatedly asked TNPSC question. "Which amendment added Sindhi?" (21st) and "Which amendment added Bodo and Maithili?" (92nd) both appeared in Group 2 exams.</div>
+    </div>
+  </div>
+</div>
+
+<!-- GROUP 11: HIGH COURT -->
+<div class="section-title" id="highcourt">GROUP 11 · HIGH COURT JURISDICTION</div>
+
+<div class="q-card has-gem" data-diff="medium" data-gem="1" data-pyq="0">
+  <div class="q-header">
+    <div class="q-num-badge">Q12</div>
+    <div class="q-meta">
+      <div class="q-badges">
+        <span class="badge badge-medium">Medium</span>
+        <span class="badge badge-factual">Factual</span>
+        <span class="badge badge-tnpsc">TNPSC Gr.2</span>
+        <span class="badge badge-ssc">SSC</span>
+      </div>
+      <div class="q-question">Which Constitutional Amendment empowered Parliament to establish a common High Court for two or more States and Union Territories?</div>
+      <div class="q-question-tamil">இரண்டு அல்லது அதற்கு மேற்பட்ட மாநிலங்களுக்கும் யூனியன் பிரதேசங்களுக்கும் பொதுவான உயர்நீதிமன்றத்தை நிறுவ பாராளுமன்றத்திற்கு அதிகாரம் வழங்கிய திருத்த சட்டம் எது?</div>
+    </div>
+  </div>
+  <div class="q-body">
+    <div class="options-list">
+      <span class="opt">A) 5th Amendment</span>
+      <span class="opt correct">B) 7th Amendment (1956) ✓</span>
+      <span class="opt">C) 12th Amendment</span>
+      <span class="opt">D) 15th Amendment</span>
+    </div>
+    <div class="answer-block">
+      <div class="answer-label">✅ ANSWER</div>
+      <div class="answer-text">7th Constitutional Amendment Act, 1956 — established common High Court for 2 or more States/UTs</div>
+    </div>
+    <div class="explanation-block">
+      <div class="explanation-label">📌 EXPLANATION</div>
+      <div class="explanation-text">
+        The <strong class="gold">7th Amendment (1956)</strong> was a major amendment that reorganized states. It allowed Parliament to create a single High Court to have jurisdiction over two or more States or Union Territories.<br><br>
+        This is why a single court sometimes covers multiple jurisdictions — e.g., one HC for Goa + Daman &amp; Diu, etc.
+      </div>
+    </div>
+    <div class="callout callout-gem">
+      <div class="callout-label">💎 LIVE GEM — 7th Amendment Importance</div>
+      <div class="callout-text">
+        The <strong>7th Amendment (1956)</strong> is a multifaceted amendment — it:<br>
+        1. Reorganized states on linguistic basis (States Reorganisation Act 1956)<br>
+        2. Allowed common High Court for multiple states/UTs<br>
+        3. Also related to the concept of one Governor for two states (see Q16)<br>
+        The year <strong>1956</strong> is key — remember "7th Amendment = 1956 = States Reorganisation."
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GROUP 12: 7TH SCHEDULE -->
+<div class="section-title" id="schedules">GROUP 12 · 7TH SCHEDULE — DISTRIBUTION OF POWERS</div>
+
+<div class="q-card has-gem" data-diff="hard" data-gem="1" data-pyq="0">
+  <div class="q-header">
+    <div class="q-num-badge">Q13</div>
+    <div class="q-meta">
+      <div class="q-badges">
+        <span class="badge badge-hard">Hard</span>
+        <span class="badge badge-conceptual">Conceptual</span>
+        <span class="badge badge-tnpsc">TNPSC Gr.1/2</span>
+      </div>
+      <div class="q-question">By what majority can Parliament amend any list contained in the 7th Schedule of the Constitution?</div>
+      <div class="q-question-tamil">ஏழாவது அட்டவணையில் அடங்கியுள்ள எந்த பட்டியலையும் திருத்தம் செய்ய நாடாளுமன்றம் எந்த பெருமான்மையை பின்பற்ற வேண்டும்?</div>
+    </div>
+  </div>
+  <div class="q-body">
+    <div class="answer-block">
+      <div class="answer-label">✅ ANSWER</div>
+      <div class="answer-text">Special Majority (2/3rd of members present and voting) + Ratification by at least half of State Legislatures</div>
+    </div>
+    <div class="explanation-block">
+      <div class="explanation-label">📌 EXPLANATION</div>
+      <div class="explanation-text">
+        The <strong class="gold">7th Schedule</strong> of the Constitution deals with <strong>Distribution of Powers</strong> between Centre and States:<br>
+        • <strong>Union List</strong> (மத்திய பட்டியல்) — Only Central Govt can legislate<br>
+        • <strong>State List</strong> (மாநில பட்டியல்) — Only State Govt can legislate<br>
+        • <strong>Concurrent List</strong> (பொதுப்பட்டியல்) — Both Centre &amp; State can legislate<br><br>
+        To amend any of these lists:<br>
+        → Parliament needs <mark>Special Majority</mark> (2/3 of members present &amp; voting) AND<br>
+        → Ratification by at least <mark>half the State Legislatures</mark> (14 out of 28 states)
+      </div>
+    </div>
+    <div class="callout callout-gem">
+      <div class="callout-label">💎 LIVE GEM — Types of Majority</div>
+      <div class="callout-text">
+        <strong>Types of Majority in Indian Parliament:</strong><br>
+        • <strong>Simple Majority</strong> — More than half of present &amp; voting members<br>
+        • <strong>Absolute Majority</strong> — More than half of total membership (regardless of attendance)<br>
+        • <strong>Special Majority (Art. 368)</strong> — 2/3 of present &amp; voting members<br>
+        • <strong>Special Majority + State Ratification</strong> — For 7th Schedule and federal structure changes<br><br>
+        7th Schedule amendment requires the <strong>most difficult</strong> procedure — both Parliament special majority AND half-state ratification.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GROUP 13: EWS RESERVATION -->
+<div class="section-title" id="reservation">GROUP 13 · RESERVATION — EWS (103rd AMENDMENT)</div>
+
+<div class="q-card has-gem has-pyq" data-diff="hard" data-gem="1" data-pyq="1">
+  <div class="q-header">
+    <div class="q-num-badge">Q14</div>
+    <div class="q-meta">
+      <div class="q-badges">
+        <span class="badge badge-hard">Hard</span>
+        <span class="badge badge-factual">Factual</span>
+        <span class="badge badge-tnpsc">TNPSC Gr.1/2</span>
+        <span class="badge badge-ssc">SSC</span>
+      </div>
+      <div class="q-question">Which Article was added to the Constitution by the 103rd Constitutional Amendment Act for providing 10% EWS reservation to economically weaker sections?</div>
+      <div class="q-question-tamil">103வது சட்டதிருத்தம் மூலம் பொருளாதாரத்தில் பின்தங்கிய பிரிவினருக்கு 10% இட ஒதுக்கீடு வழங்க எந்த சரத்து சேர்க்கப்பட்டது?</div>
+    </div>
+  </div>
+  <div class="q-body">
+    <div class="options-list">
+      <span class="opt">A) Art. 15(5)</span>
+      <span class="opt correct">B) Art. 15(6) and Art. 16(6) ✓</span>
+      <span class="opt">C) Art. 16(4)</span>
+      <span class="opt">D) Art. 16(4A)</span>
+    </div>
+    <div class="answer-block">
+      <div class="answer-label">✅ ANSWER</div>
+      <div class="answer-text">Article 15(6) and Article 16(6) — both added by the 103rd Constitutional Amendment Act</div>
+    </div>
+    <div class="explanation-block">
+      <div class="explanation-label">📌 EXPLANATION</div>
+      <div class="explanation-text">
+        The <strong class="gold">103rd Amendment Act</strong> (2019) introduced <strong>10% reservation for Economically Weaker Sections (EWS)</strong> in education and government jobs for those NOT covered under existing SC/ST/OBC reservations.<br><br>
+        Two new sub-clauses were inserted:<br>
+        • <mark>Art. 15(6)</mark> — EWS reservation in educational institutions<br>
+        • <mark>Art. 16(6)</mark> — EWS reservation in government employment<br><br>
+        Historical context: The <strong>Sambhakam Durairaj Case</strong> was the first case on reservations, which led to the First Amendment adding Art. 15(4) and 16(4).
+      </div>
+    </div>
+    <div class="callout callout-gem">
+      <div class="callout-label">💎 LIVE GEM — Reservation History Timeline</div>
+      <div class="callout-text">
+        <strong>Reservation in Constitution — Evolution:</strong><br>
+        1. <strong>1st Amendment</strong> → Added Art. 15(4) and 16(4) — basis: Sampath Durairaj case<br>
+        2. Later amendments added 16(4A), 16(4B) for SCs/STs in promotions<br>
+        3. <strong>103rd Amendment (2019)</strong> → Added Art. 15(6) and 16(6) for EWS (10% quota)<br><br>
+        <em>Teacher's exact words: "Two articles were born from the 103rd Amendment — Art. 15(6) and Art. 16(6)."</em>
+      </div>
+    </div>
+    <div class="callout callout-pyq">
+      <div class="callout-label">🏆 PYQ ALERT</div>
+      <div class="callout-text">The 103rd Amendment (EWS reservation) appeared in TNPSC Group 2 (2021) and SSC CGL (2022). The Article numbers 15(6) and 16(6) are important one-liners.</div>
+    </div>
+  </div>
+</div>
+
+<!-- GROUP 14: BASIC STRUCTURE DOCTRINE -->
+<div class="section-title" id="basic">GROUP 14 · BASIC STRUCTURE DOCTRINE</div>
+
+<div class="q-card has-gem has-pyq" data-diff="hard" data-gem="1" data-pyq="1">
+  <div class="q-header">
+    <div class="q-num-badge">Q15</div>
+    <div class="q-meta">
+      <div class="q-badges">
+        <span class="badge badge-hard">Hard</span>
+        <span class="badge badge-conceptual">Conceptual</span>
+        <span class="badge badge-tnpsc">TNPSC Gr.1/2</span>
+        <span class="badge badge-ssc">SSC</span>
+      </div>
+      <div class="q-question">In which case did the Supreme Court rule that Parliament cannot amend Fundamental Rights under Article 368 — establishing the "Basic Structure Doctrine"?</div>
+      <div class="q-question-tamil">ஆர்டிகல் 368ன் கீழ் பண்டமூல உரிமைகளை திருத்த முடியாது என்று உச்ச நீதிமன்றம் எந்த வழக்கில் தீர்ப்பளித்தது?</div>
+    </div>
+  </div>
+  <div class="q-body">
+    <div class="answer-block">
+      <div class="answer-label">✅ ANSWER</div>
+      <div class="answer-text">Golak Nath vs. State of Punjab (1967) — SC held Parliament cannot amend Fundamental Rights under Art. 368</div>
+    </div>
+    <div class="explanation-block">
+      <div class="explanation-label">📌 EXPLANATION</div>
+      <div class="explanation-text">
+        <strong class="gold">Article 368</strong> = Amendment of the Constitution (the article that defines how the Constitution can be amended).<br><br>
+        <strong>Golak Nath vs. State of Punjab (1967):</strong> This case arose from land reform laws. The Golak Nath family owned 500 acres of land. Land ceiling laws required returning all above 30 acres to the government. They challenged this in court. The Supreme Court ruled that Parliament <strong>cannot amend Fundamental Rights</strong> through Art. 368.<br><br>
+        This led to a conflict between Parliament and Judiciary — eventually resolved by the <strong>Kesavananda Bharati Case (1973)</strong> which established the <strong>"Basic Structure Doctrine"</strong> — Parliament can amend but cannot destroy the basic structure of the Constitution.
+      </div>
+    </div>
+    <div class="callout callout-gem">
+      <div class="callout-label">💎 LIVE GEM — Constitutional Cases Series</div>
+      <div class="callout-text">
+        Teacher promised a dedicated video on landmark constitutional cases. Key cases to know:<br>
+        1. <strong>Golak Nath vs. Punjab (1967)</strong> — FRs cannot be amended<br>
+        2. <strong>Kesavananda Bharati vs. Kerala (1973)</strong> — Basic Structure Doctrine established<br>
+        3. <strong>Minerva Mills vs. Union of India (1980)</strong> — Struck down parts of 42nd Amendment<br>
+        4. <strong>Indra Sawhney vs. Union of India (1992)</strong> — 50% reservation cap confirmed<br>
+        These cases are TNPSC Group 1 and SSC CGL staples.
+      </div>
+    </div>
+    <div class="callout callout-pyq">
+      <div class="callout-label">🏆 PYQ ALERT</div>
+      <div class="callout-text">Golak Nath Case + Kesavananda Bharati Case are recurring TNPSC Group 1/2 and SSC questions. "Which case established Basic Structure Doctrine?" = Kesavananda Bharati (1973). "Which case said FRs cannot be amended?" = Golak Nath (1967).</div>
+    </div>
+  </div>
+</div>
+
+<!-- GROUP 15: 42ND AMENDMENT -->
+<div class="section-title" id="42nd">GROUP 15 · 42ND AMENDMENT — CONCURRENT LIST</div>
+
+<div class="q-card has-gem" data-diff="medium" data-gem="1" data-pyq="0">
+  <div class="q-header">
+    <div class="q-num-badge">Q16</div>
+    <div class="q-meta">
+      <div class="q-badges">
+        <span class="badge badge-medium">Medium</span>
+        <span class="badge badge-factual">Factual</span>
+        <span class="badge badge-tnpsc">TNPSC Gr.2</span>
+        <span class="badge badge-ssc">SSC</span>
+      </div>
+      <div class="q-question">Which subject was transferred to the Concurrent List by the 42nd Constitutional Amendment (1976)?</div>
+      <div class="q-question-tamil">42வது சட்டதிருத்தம் 1976 மூலம் பொதுப்பட்டியலுக்கு மாற்றப்பட்ட விஷயம் எது?</div>
+    </div>
+  </div>
+  <div class="q-body">
+    <div class="options-list">
+      <span class="opt">A) Education</span>
+      <span class="opt">B) Forests</span>
+      <span class="opt correct">C) Marriage (NOT transferred) → Correct = Education ✓</span>
+      <span class="opt">D) Weights &amp; Measures</span>
+    </div>
+    <div class="answer-block">
+      <div class="answer-label">✅ ANSWER</div>
+      <div class="answer-text">Education, Forests, Weights &amp; Measures, Administration of Justice, Protection of Wild Animals &amp; Birds — all 5 transferred to Concurrent List. "Marriage" was NOT transferred.</div>
+    </div>
+    <div class="explanation-block">
+      <div class="explanation-label">📌 EXPLANATION</div>
+      <div class="explanation-text">
+        The <strong class="gold">42nd Amendment (1976)</strong> — called the "Mini-Constitution" — transferred <strong>5 subjects</strong> from the State List to the <strong>Concurrent List</strong>:<br>
+        1. <mark>Education</mark><br>
+        2. <mark>Forests</mark><br>
+        3. <mark>Weights and Measures</mark><br>
+        4. <mark>Administration of Justice (including constitution of all courts except SC and HCs)</mark><br>
+        5. <mark>Protection of Wild Animals and Birds</mark><br><br>
+        <strong class="red">Marriage was NOT transferred</strong> — this was the trap in the question!
+      </div>
+    </div>
+    <div class="callout callout-gem">
+      <div class="callout-label">💎 LIVE GEM — 42nd Amendment Nickname</div>
+      <div class="callout-text">
+        The <strong>42nd Amendment (1976)</strong> is nicknamed <em>"Mini-Constitution"</em> because it made the most sweeping changes to the Constitution. It was passed during the Emergency period (1975-77). Key additions:<br>
+        • Added "Socialist," "Secular," and "Integrity" to the Preamble<br>
+        • Added Fundamental Duties (Art. 51A)<br>
+        • Extended Parliament's tenure from 5 to 6 years (later reversed by 44th Amendment)<br>
+        • Transferred 5 subjects to Concurrent List<br>
+        <em>Many parts of the 42nd Amendment were struck down in Minerva Mills case (1980).</em>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GROUP 16: PRESIDENT'S POWER (44TH AMENDMENT) -->
+<div class="section-title" id="president">GROUP 16 · PRESIDENT'S RECONSIDERATION POWER</div>
+
+<div class="q-card has-gem" data-diff="hard" data-gem="1" data-pyq="0">
+  <div class="q-header">
+    <div class="q-num-badge">Q17</div>
+    <div class="q-meta">
+      <div class="q-badges">
+        <span class="badge badge-hard">Hard</span>
+        <span class="badge badge-factual">Factual</span>
+        <span class="badge badge-tnpsc">TNPSC Gr.1/2</span>
+        <span class="badge badge-ssc">SSC</span>
+      </div>
+      <div class="q-question">Which Constitutional Amendment states that the President may once send back Cabinet advice for reconsideration?</div>
+      <div class="q-question-tamil">குடியரசு தலைவர் கேபினட் வழங்கும் ஆலோசனையை ஒருமுறை பரிசீலனைக்கு திருப்பி அனுப்பலாம் என்று எந்த திருத்தம் கூறுகிறது?</div>
+    </div>
+  </div>
+  <div class="q-body">
+    <div class="options-list">
+      <span class="opt">A) 41st Amendment</span>
+      <span class="opt">B) 42nd Amendment</span>
+      <span class="opt correct">C) 44th Amendment (1978) ✓</span>
+      <span class="opt">D) 45th Amendment</span>
+    </div>
+    <div class="answer-block">
+      <div class="answer-label">✅ ANSWER</div>
+      <div class="answer-text">44th Constitutional Amendment Act, 1978 — President can send back Cabinet advice once for reconsideration</div>
+    </div>
+    <div class="explanation-block">
+      <div class="explanation-label">📌 EXPLANATION</div>
+      <div class="explanation-text">
+        <strong class="gold">Article 74</strong> — Council of Ministers headed by the Prime Minister shall aid and advise the President.<br><br>
+        Originally, the President was bound by Cabinet advice. The <strong>44th Amendment (1978)</strong> added a provision: The President may return the advice <strong>once</strong> for reconsideration. However, if the Cabinet sends back the same advice again, the President is <strong>bound</strong> to act on it.<br><br>
+        The 44th Amendment also reversed some provisions of the 42nd Amendment (e.g., restored 5-year term of Parliament).
+      </div>
+    </div>
+    <div class="callout callout-gem">
+      <div class="callout-label">💎 LIVE GEM — 44th Amendment vs 42nd</div>
+      <div class="callout-text">
+        The <strong>44th Amendment (1978)</strong> was a corrective to the 42nd Amendment (1976). Key reversals:<br>
+        • Restored Parliament's term from 6 years back to 5 years<br>
+        • Gave President the power to return Cabinet advice once<br>
+        • Restored Right to Property from Fundamental Right to a legal right (Art. 300A)<br>
+        <em>Passed by the Janata Government after Emergency ended.</em>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GROUP 17: GOVERNOR -->
+<div class="section-title" id="governor">GROUP 17 · GOVERNOR FOR MULTIPLE STATES</div>
+
+<div class="q-card has-gem" data-diff="medium" data-gem="1" data-pyq="0">
+  <div class="q-header">
+    <div class="q-num-badge">Q18</div>
+    <div class="q-meta">
+      <div class="q-badges">
+        <span class="badge badge-medium">Medium</span>
+        <span class="badge badge-factual">Factual</span>
+        <span class="badge badge-tnpsc">TNPSC Gr.2</span>
+        <span class="badge badge-ssc">SSC</span>
+      </div>
+      <div class="q-question">Which Constitutional Amendment allows the same person to be Governor of two States simultaneously?</div>
+      <div class="q-question-tamil">ஒரே நேரத்தில் ஒருவர் இரண்டு மாநிலங்களுக்கு ஆளுநராக இருக்கலாம் என்று எந்த சட்டதிருத்தம் கூறுகிறது?</div>
+    </div>
+  </div>
+  <div class="q-body">
+    <div class="options-list">
+      <span class="opt">A) 6th Amendment</span>
+      <span class="opt correct">B) 7th Amendment (1956) ✓</span>
+      <span class="opt">C) 12th Amendment</span>
+      <span class="opt">D) 14th Amendment</span>
+    </div>
+    <div class="answer-block">
+      <div class="answer-label">✅ ANSWER</div>
+      <div class="answer-text">7th Constitutional Amendment Act, 1956 — allows same Governor to serve two States</div>
+    </div>
+    <div class="explanation-block">
+      <div class="explanation-label">📌 EXPLANATION</div>
+      <div class="explanation-text">
+        The <strong class="gold">7th Amendment (1956)</strong> (States Reorganisation) enabled one person to serve as Governor of more than one state simultaneously — to save administrative cost and ensure efficiency.<br><br>
+        Real-world example: Tamil Nadu and Kerala sometimes share a Governor. Recently, Tamilisai Soundararajan was simultaneously Governor of Telangana and Puducherry. Currently, Tamil Nadu's Governor RN Ravi also served Kerala.
+      </div>
+    </div>
+    <div class="callout callout-gem">
+      <div class="callout-label">💎 LIVE GEM — Current Affairs Link</div>
+      <div class="callout-text">
+        Teacher gave a live current affairs example: After Tamil Nadu elections, the newly elected CM went to the Governor seeking invitation to form the government. The same Governor was also serving as Governor of Kerala. This is constitutionally valid under the <strong>7th Amendment (1956)</strong>.<br>
+        <em>"This is how constitutional knowledge connects to today's news — which is why studying Polity is exciting!"</em>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GROUP 18: NAGALAND -->
+<div class="section-title" id="nagaland">GROUP 18 · NAGALAND & PUDUCHERRY FORMATION</div>
+
+<div class="q-card has-gem" data-diff="hard" data-gem="1" data-pyq="0">
+  <div class="q-header">
+    <div class="q-num-badge">Q19</div>
+    <div class="q-meta">
+      <div class="q-badges">
+        <span class="badge badge-hard">Hard</span>
+        <span class="badge badge-factual">Factual</span>
+        <span class="badge badge-tnpsc">TNPSC Gr.1/2</span>
+      </div>
+      <div class="q-question">Under which Constitutional Amendment and Article was the State of Nagaland formed with special provisions under Art. 371A?</div>
+      <div class="q-question-tamil">ஆர்டிகல் 371A கீழ் சிறப்பு பாதுகாப்புடன் நாகாலாந்த மாநிலம் எந்த திருத்தத்தின் கீழ் உருவானது?</div>
+    </div>
+  </div>
+  <div class="q-body">
+    <div class="options-list">
+      <span class="opt">A) 12th Amendment</span>
+      <span class="opt correct">B) 13th Amendment ✓</span>
+      <span class="opt">C) 14th Amendment</span>
+      <span class="opt">D) 15th Amendment</span>
+    </div>
+    <div class="answer-block">
+      <div class="answer-label">✅ ANSWER</div>
+      <div class="answer-text">13th Constitutional Amendment — Nagaland formation with special provisions under Art. 371A</div>
+    </div>
+    <div class="explanation-block">
+      <div class="explanation-label">📌 EXPLANATION</div>
+      <div class="explanation-text">
+        <strong class="gold">Art. 371A</strong> provides special protection to Nagaland — Parliament cannot pass laws on Naga customary law, social and religious practices without the consent of the Nagaland Legislative Assembly.<br><br>
+        Related formation amendments:<br>
+        • <mark>13th Amendment</mark> → <strong>Nagaland</strong> (Art. 371A)<br>
+        • <mark>14th Amendment</mark> → <strong>Puducherry (Pondicherry)</strong> added as a UT with legislature<br>
+      </div>
+    </div>
+    <div class="callout callout-gem">
+      <div class="callout-label">💎 LIVE GEM — Special Provisions States</div>
+      <div class="callout-text">
+        Several states have <strong>special provisions under Art. 371</strong> to protect their unique customs and identity:<br>
+        • <strong>Art. 371</strong> — Maharashtra, Gujarat<br>
+        • <strong>Art. 371A</strong> — Nagaland<br>
+        • <strong>Art. 371B</strong> — Assam<br>
+        • <strong>Art. 371C</strong> — Manipur<br>
+        • <strong>Art. 371D/E</strong> — Andhra Pradesh/Telangana<br>
+        • <strong>Art. 371F</strong> — Sikkim<br>
+        • <strong>Art. 371G</strong> — Mizoram<br>
+        • <strong>Art. 371H</strong> — Arunachal Pradesh<br>
+        • <strong>Art. 371J</strong> — Karnataka (Hyderabad-Karnataka region)
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GROUP 19: HOMEWORK Q -->
+<div class="section-title" id="hw">GROUP 19 · HOMEWORK QUESTION</div>
+
+<div class="q-card" data-diff="hard" data-gem="0" data-pyq="0">
+  <div class="q-header">
+    <div class="q-num-badge">Q20</div>
+    <div class="q-meta">
+      <div class="q-badges">
+        <span class="badge badge-hard">Hard</span>
+        <span class="badge badge-conceptual">Conceptual</span>
+        <span class="badge badge-tnpsc">TNPSC Gr.1/2</span>
+      </div>
+      <div class="q-question">[HOMEWORK] The power to amend the Constitution is contained in which Part of the Constitution?</div>
+      <div class="q-question-tamil">அரசியலமைப்பை திருத்தும் அதிகாரம் எந்த பகுதியில் உள்ளது?</div>
+    </div>
+  </div>
+  <div class="q-body">
+    <div class="options-list">
+      <span class="opt">A) Part 9</span>
+      <span class="opt">B) Part 12</span>
+      <span class="opt">C) Part 20</span>
+      <span class="opt">D) Part 21</span>
+    </div>
+    <div class="answer-block">
+      <div class="answer-label">✅ ANSWER</div>
+      <div class="answer-text">Part XX (Part 20) — Amendment of the Constitution (Article 368)</div>
+    </div>
+    <div class="explanation-block">
+      <div class="explanation-label">📌 EXPLANATION</div>
+      <div class="explanation-text">
+        <strong class="gold">Part XX</strong> (Part 20) of the Indian Constitution contains <strong>Article 368</strong> which provides for the amendment of the Constitution. This is the ONLY article in Part XX.<br><br>
+        The Constitution had 395 Articles when it came into force on January 26, 1950. Currently it has 440+ Articles due to various amendments.
+      </div>
+    </div>
+    <div class="callout callout-critical">
+      <div class="callout-label">⚠️ CRITICAL — Total Articles</div>
+      <div class="callout-text">At commencement (Jan 26, 1950): 395 Articles. Currently: 440+ Articles (due to insertions by amendments). This number keeps growing with new amendments.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- 2026 PREDICTION -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="section-title" id="predict">🔮 2026 EXAM PREDICTION — HIGH-PROBABILITY QUESTIONS</div>
+<div class="prediction-grid">
+  <div class="pred-card">
+    <div class="pred-label">PREDICTION 01 · HIGH CONFIDENCE</div>
+    <div class="pred-q">Which emergency provision has NEVER been invoked in India? → Art. 360 (Financial Emergency)</div>
+    <div class="pred-why">Teacher stressed this repeatedly. Direct factual one-liner. Appeared in 2019, 2022 TNPSC.</div>
+  </div>
+  <div class="pred-card">
+    <div class="pred-label">PREDICTION 02 · HIGH CONFIDENCE</div>
+    <div class="pred-q">Articles 20 &amp; 21 cannot be suspended even during National Emergency — true/false or direct MCQ</div>
+    <div class="pred-why">Extremely high-frequency topic. TNPSC Group 1 prelims 2023 included FRs during emergency.</div>
+  </div>
+  <div class="pred-card">
+    <div class="pred-label">PREDICTION 03 · MEDIUM CONFIDENCE</div>
+    <div class="pred-q">Which Amendment added Sindhi to the 8th Schedule? → 21st Amendment</div>
+    <div class="pred-why">Language amendments are perennial favourites. The 21 → 71 → 92 sequence is a pattern question.</div>
+  </div>
+  <div class="pred-card">
+    <div class="pred-label">PREDICTION 04 · HIGH CONFIDENCE</div>
+    <div class="pred-q">What did the 103rd Amendment add? → Art. 15(6) and 16(6) for EWS 10% reservation</div>
+    <div class="pred-why">Recent amendment (2019). SSC CGL 2022-23 asked this. Very likely in TNPSC 2026.</div>
+  </div>
+  <div class="pred-card">
+    <div class="pred-label">PREDICTION 05 · MEDIUM CONFIDENCE</div>
+    <div class="pred-q">Golak Nath vs. Punjab — what was the Supreme Court's ruling on Art. 368?</div>
+    <div class="pred-why">TNPSC Group 1 topic. Constitutional law cases are increasingly asked in mains and prelims.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- QUICK FLASHCARD TABLE -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="section-title" id="flash">⚡ QUICK FLASHCARD TABLE — RAPID REVISION</div>
+<table class="flash-table">
+  <thead>
+    <tr><th>#</th><th>QUESTION</th><th>ANSWER</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>1</td><td class="ft-q">Parliament Sessions, Prorogation &amp; Dissolution — Article?</td><td class="ft-a">Art. 85</td></tr>
+    <tr><td>2</td><td class="ft-q">State Legislature Sessions, Prorogation &amp; Dissolution — Article?</td><td class="ft-a">Art. 174</td></tr>
+    <tr><td>3</td><td class="ft-q">Speaker &amp; Deputy Speaker election (Lok Sabha) — Article?</td><td class="ft-a">Art. 93</td></tr>
+    <tr><td>4</td><td class="ft-q">Speaker &amp; Chairman salaries — Article?</td><td class="ft-a">Art. 97</td></tr>
+    <tr><td>5</td><td class="ft-q">Money Bill definition — Article?</td><td class="ft-a">Art. 110</td></tr>
+    <tr><td>6</td><td class="ft-q">SC law binding on all courts — Article?</td><td class="ft-a">Art. 141</td></tr>
+    <tr><td>7</td><td class="ft-q">Ordinance by President — Article?</td><td class="ft-a">Art. 123</td></tr>
+    <tr><td>8</td><td class="ft-q">Ordinance by Governor — Article?</td><td class="ft-a">Art. 213</td></tr>
+    <tr><td>9</td><td class="ft-q">Attorney General of India — Article?</td><td class="ft-a">Art. 76</td></tr>
+    <tr><td>10</td><td class="ft-q">Advocate General of a State — Article?</td><td class="ft-a">Art. 165</td></tr>
+    <tr><td>11</td><td class="ft-q">President's power to regulate UTs — Article?</td><td class="ft-a">Art. 240</td></tr>
+    <tr><td>12</td><td class="ft-q">UTs with Legislatures (2 only)?</td><td class="ft-a">Delhi &amp; Puducherry</td></tr>
+    <tr><td>13</td><td class="ft-q">Total Union Territories in India (2024)?</td><td class="ft-a">8</td></tr>
+    <tr><td>14</td><td class="ft-q">Elections to Panchayats — Article?</td><td class="ft-a">Art. 243K</td></tr>
+    <tr><td>15</td><td class="ft-q">Elections to Municipalities — Article?</td><td class="ft-a">Art. 243ZA</td></tr>
+    <tr><td>16</td><td class="ft-q">First Classical Language of India?</td><td class="ft-a">Tamil (Oct 12, 2004)</td></tr>
+    <tr><td>17</td><td class="ft-q">Total Classical Languages in India (2024)?</td><td class="ft-a">11</td></tr>
+    <tr><td>18</td><td class="ft-q">Odia language renamed — which Amendment?</td><td class="ft-a">96th Amendment, 2011</td></tr>
+    <tr><td>19</td><td class="ft-q">National Emergency — Article?</td><td class="ft-a">Art. 352</td></tr>
+    <tr><td>20</td><td class="ft-q">State Emergency / President's Rule — Article?</td><td class="ft-a">Art. 356</td></tr>
+    <tr><td>21</td><td class="ft-q">Financial Emergency — Article?</td><td class="ft-a">Art. 360</td></tr>
+    <tr><td>22</td><td class="ft-q">Financial Emergency — ever invoked?</td><td class="ft-a">NEVER</td></tr>
+    <tr><td>23</td><td class="ft-q">National Emergency NOT proclaimed in?</td><td class="ft-a">1965</td></tr>
+    <tr><td>24</td><td class="ft-q">FRs that cannot be suspended even in emergency?</td><td class="ft-a">Art. 20 &amp; Art. 21</td></tr>
+    <tr><td>25</td><td class="ft-q">Total Official Languages (8th Schedule) now?</td><td class="ft-a">22</td></tr>
+    <tr><td>26</td><td class="ft-q">21st Amendment added which language?</td><td class="ft-a">Sindhi</td></tr>
+    <tr><td>27</td><td class="ft-q">71st Amendment added 3 languages?</td><td class="ft-a">Konkani, Manipuri, Nepali</td></tr>
+    <tr><td>28</td><td class="ft-q">92nd Amendment added 4 languages?</td><td class="ft-a">Bodo, Dongri, Maithili, Santhali</td></tr>
+    <tr><td>29</td><td class="ft-q">Common HC for 2+ states — which Amendment?</td><td class="ft-a">7th Amendment (1956)</td></tr>
+    <tr><td>30</td><td class="ft-q">7th Schedule — three lists?</td><td class="ft-a">Union, State, Concurrent</td></tr>
+    <tr><td>31</td><td class="ft-q">103rd Amendment added — Articles?</td><td class="ft-a">Art. 15(6) &amp; 16(6)</td></tr>
+    <tr><td>32</td><td class="ft-q">EWS reservation percentage?</td><td class="ft-a">10%</td></tr>
+    <tr><td>33</td><td class="ft-q">Amendment of the Constitution — Article?</td><td class="ft-a">Art. 368 (Part XX)</td></tr>
+    <tr><td>34</td><td class="ft-q">Golak Nath case — year?</td><td class="ft-a">1967</td></tr>
+    <tr><td>35</td><td class="ft-q">5 subjects transferred to Concurrent List — which Amendment?</td><td class="ft-a">42nd Amendment (1976)</td></tr>
+    <tr><td>36</td><td class="ft-q">President can return Cabinet advice once — which Amendment?</td><td class="ft-a">44th Amendment (1978)</td></tr>
+    <tr><td>37</td><td class="ft-q">Same Governor for 2 states — which Amendment?</td><td class="ft-a">7th Amendment (1956)</td></tr>
+    <tr><td>38</td><td class="ft-q">Nagaland formation — which Amendment?</td><td class="ft-a">13th Amendment</td></tr>
+    <tr><td>39</td><td class="ft-q">Puducherry as UT with Legislature — which Amendment?</td><td class="ft-a">14th Amendment</td></tr>
+    <tr><td>40</td><td class="ft-q">Articles at Constitution commencement (1950)?</td><td class="ft-a">395 Articles</td></tr>
+  </tbody>
+</table>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- MASTER CHEAT CARD -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="section-title" id="cheat">📋 MASTER CHEAT CARD — KEY ARTICLES & AMENDMENTS</div>
+<table class="cheat-table">
+  <thead>
+    <tr><th>ARTICLE / AMENDMENT</th><th>TOPIC</th><th>EXAM NOTE</th></tr>
+  </thead>
+  <tbody>
+    <tr><td class="col-art">Art. 85</td><td class="col-topic">Parliament Sessions, Prorogation &amp; Dissolution</td><td class="col-note">+89 → Art. 174 (States)</td></tr>
+    <tr><td class="col-art">Art. 93</td><td class="col-topic">Election of Lok Sabha Speaker &amp; Deputy Speaker</td><td class="col-note">Very frequently asked</td></tr>
+    <tr><td class="col-art">Art. 97</td><td class="col-topic">Salaries: Speaker, Dy. Speaker, RS Chairman, Dy. Chairman</td><td class="col-note">Tricky — one article for all 4</td></tr>
+    <tr><td class="col-art">Art. 110</td><td class="col-topic">Money Bill (Definition)</td><td class="col-note">TNPSC stalwart — never skip</td></tr>
+    <tr><td class="col-art">Art. 123</td><td class="col-topic">President's Ordinance Power</td><td class="col-note">+89 → Art. 213 (Governor)</td></tr>
+    <tr><td class="col-art">Art. 141</td><td class="col-topic">SC law binding on all courts</td><td class="col-note">≠ Art. 142 (enforcement)</td></tr>
+    <tr><td class="col-art">Art. 165</td><td class="col-topic">Advocate General of State</td><td class="col-note">76 + 89 = 165</td></tr>
+    <tr><td class="col-art">Art. 174</td><td class="col-topic">State Legislature Sessions, Prorogation &amp; Dissolution</td><td class="col-note">Mirror of Art. 85</td></tr>
+    <tr><td class="col-art">Art. 213</td><td class="col-topic">Governor's Ordinance Power</td><td class="col-note">123 + 89 = 213</td></tr>
+    <tr><td class="col-art">Art. 240</td><td class="col-topic">President's power to regulate UTs</td><td class="col-note">President = Head of UTs</td></tr>
+    <tr><td class="col-art">Art. 243K</td><td class="col-topic">Elections to Panchayats</td><td class="col-note">Pair with 243ZA (Municipalities)</td></tr>
+    <tr><td class="col-art">Art. 243ZA</td><td class="col-topic">Elections to Municipalities</td><td class="col-note">74th Amendment</td></tr>
+    <tr><td class="col-art">Art. 352</td><td class="col-topic">National Emergency</td><td class="col-note">Proclaimed: 1962, 1971, 1975</td></tr>
+    <tr><td class="col-art">Art. 356</td><td class="col-topic">President's Rule (State Emergency)</td><td class="col-note">Many times invoked in states</td></tr>
+    <tr><td class="col-art">Art. 360</td><td class="col-topic">Financial Emergency</td><td class="col-note">NEVER invoked in India!</td></tr>
+    <tr><td class="col-art">Art. 368</td><td class="col-topic">Amendment of the Constitution</td><td class="col-note">Part XX — only article in Part 20</td></tr>
+    <tr><td class="col-art">Art. 20 &amp; 21</td><td class="col-topic">FRs that cannot be suspended in Emergency</td><td class="col-note">Absolute rights — no exception</td></tr>
+    <tr><td class="col-art">7th Amendment (1956)</td><td class="col-topic">States Reorganisation; Common HC; One Governor for 2 States</td><td class="col-note">Year 1956 = Key</td></tr>
+    <tr><td class="col-art">13th Amendment</td><td class="col-topic">Formation of Nagaland; Art. 371A</td><td class="col-note">Special protection for Naga customs</td></tr>
+    <tr><td class="col-art">14th Amendment</td><td class="col-topic">Puducherry as UT with Legislature</td><td class="col-note">One of 2 UTs with legislature</td></tr>
+    <tr><td class="col-art">21st Amendment</td><td class="col-topic">Sindhi added to 8th Schedule</td><td class="col-note">1 language added</td></tr>
+    <tr><td class="col-art">42nd Amendment (1976)</td><td class="col-topic">Mini Constitution; Preamble words; FDs; 5 subjects to Concurrent List</td><td class="col-note">Emergency period; largely reversed by 44th</td></tr>
+    <tr><td class="col-art">44th Amendment (1978)</td><td class="col-topic">Corrected 42nd; President can return Cabinet advice once</td><td class="col-note">Janata Govt; restored 5-yr term</td></tr>
+    <tr><td class="col-art">71st Amendment</td><td class="col-topic">Konkani, Manipuri, Nepali added to 8th Schedule</td><td class="col-note">3 languages</td></tr>
+    <tr><td class="col-art">92nd Amendment</td><td class="col-topic">Bodo, Dongri, Maithili, Santhali added to 8th Schedule</td><td class="col-note">4 languages; 22 total now</td></tr>
+    <tr><td class="col-art">96th Amendment (2011)</td><td class="col-topic">Oriya renamed Odia; Orissa renamed Odisha</td><td class="col-note">Year 2011</td></tr>
+    <tr><td class="col-art">103rd Amendment (2019)</td><td class="col-topic">EWS 10% reservation — Art. 15(6) and 16(6)</td><td class="col-note">Recent; high exam relevance</td></tr>
+  </tbody>
+</table>
+
+<!-- MAGIC FORMULA BOX -->
+<div class="callout callout-gem" style="margin-bottom: 32px;">
+  <div class="callout-label">💎 MASTER GEM — The +89 FORMULA (Teach to Everyone!)</div>
+  <div class="callout-text">
+    <strong>Central Govt Article + 89 = Equivalent State Govt Article</strong><br><br>
+    Art. <strong>85</strong> (Parliament Sessions) → + 89 → Art. <strong>174</strong> (State Legislature Sessions)<br>
+    Art. <strong>76</strong> (Attorney General, India) → + 89 → Art. <strong>165</strong> (Advocate General, State)<br>
+    Art. <strong>123</strong> (President's Ordinance) → + 89 → Art. <strong>213</strong> (Governor's Ordinance)<br>
+    Art. <strong>66</strong> (Election of VP) → + 89 → Art. <strong>155</strong> (Appointment of Governor)<br><br>
+    ⚠️ <em>Limitation: This formula works best up to ~Article 140. Beyond that, deviations occur.</em>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-brand">SP ACADEMY · LIVE REVISION CRACK SHEET</div>
+  <div class="footer-sub" style="margin-top:6px;">Indian Polity · Constitution Articles &amp; Amendments · TNPSC / SSC Target 2026</div>
+  <div class="footer-sub" style="margin-top:8px;">📞 9150624564 / 8610174564 · Next Batch: June 15 · Online Classes: 10 AM – 1 PM</div>
+  <div class="footer-sub" style="margin-top:6px; color: rgba(138,143,168,0.5);">Generated from YouTube Live Session | All Q&amp;A translated from Tamil to English | For educational use</div>
+</div>
+
+<script>
+function filterCards(type) {
+  // Update button states
+  document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+
+  const cards = document.querySelectorAll('.q-card');
+  cards.forEach(card => {
+    card.classList.remove('hidden');
+    const diff = card.dataset.diff;
+    const hasGem = card.dataset.gem === '1';
+    const hasPyq = card.dataset.pyq === '1';
+
+    if (type === 'all') return;
+    if (type === 'easy' && diff !== 'easy') card.classList.add('hidden');
+    if (type === 'medium' && diff !== 'medium') card.classList.add('hidden');
+    if (type === 'hard' && diff !== 'hard') card.classList.add('hidden');
+    if (type === 'gem' && !hasGem) card.classList.add('hidden');
+    if (type === 'pyq' && !hasPyq) card.classList.add('hidden');
+  });
+}
+</script>
+</body>
+</html>

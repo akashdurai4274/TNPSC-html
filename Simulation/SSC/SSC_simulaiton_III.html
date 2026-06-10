@@ -1,0 +1,1687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSC Selection Post Phase 14 — Premium Exam Simulator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- DESIGN SYSTEM: DARKENED GOLD --- */
+        :root {
+            --bg-main: #0f0d08;
+            --bg-gradient: linear-gradient(135deg, #0f0d08 0%, #1a1608 100%);
+            --bg-card: #1e1a0e;
+            --primary-gold: #c9a84c;
+            --accent-gold: #d4a843;
+            --parchment: #e8c96d;
+            --dark-bronze: #8a6a1a;
+            --gold-border: 1px solid rgba(201, 168, 76, 0.25);
+            --gold-border-bright: 1px solid rgba(201, 168, 76, 0.6);
+            --text-main: #f5edd6;
+            --text-muted: #c4b896;
+            --text-dark: #3a321a;
+            
+            --palette-unvisited: #4a4535;
+            --palette-answered: #c9a84c;
+            --palette-review: #d45b43;
+            --palette-visited: #f5edd6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg-main);
+            background-image: var(--bg-gradient);
+            color: var(--text-main);
+            font-family: 'Source Serif 4', Georgia, serif;
+            min-height: 100vh;
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Subtle Noise/Grain Overlay */
+        body::before {
+            content: "";
+            position: absolute;
+            top:0; left:0; width:100%; height:100%;
+            opacity: 0.02;
+            pointer-events: none;
+            z-index: 9999;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3e%3cfilter id='noiseFilter'%3e%3cfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3e%3c/filter%3e%3crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3e%3c/svg%3e");
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-gold);
+            letter-spacing: 0.5px;
+        }
+
+        /* Utility Classes */
+        .hidden { display: none !important; }
+        .gold-glow { text-shadow: 0 0 10px rgba(201, 168, 76, 0.5); }
+        .gold-box-glow { box-shadow: 0 0 15px rgba(201, 168, 76, 0.2); }
+
+        /* Divider */
+        .gold-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary-gold), transparent);
+            margin: 20px 0;
+            position: relative;
+        }
+        .gold-divider::after {
+            content: "✦";
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--bg-card);
+            padding: 0 10px;
+            color: var(--primary-gold);
+            font-size: 14px;
+        }
+
+        /* Button Styling */
+        .btn {
+            background: linear-gradient(135deg, var(--dark-bronze) 0%, #523f0f 100%);
+            border: var(--gold-border-bright);
+            color: var(--text-main);
+            padding: 10px 24px;
+            font-family: 'Playfair Display', serif;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn:hover {
+            background: linear-gradient(135deg, var(--primary-gold) 0%, var(--accent-gold) 100%);
+            color: var(--bg-main);
+            box-shadow: 0 0 15px rgba(201, 168, 76, 0.6);
+            transform: translateY(-1px);
+        }
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+        .btn-secondary {
+            background: transparent;
+            border: var(--gold-border);
+            color: var(--text-muted);
+        }
+        .btn-secondary:hover {
+            border-color: var(--primary-gold);
+            color: var(--text-main);
+            background: rgba(201, 168, 76, 0.1);
+        }
+
+        /* --- SCREEN 1: LANDING/INSTRUCTIONS --- */
+        .landing-container {
+            max-width: 850px;
+            margin: 60px auto;
+            padding: 40px;
+            background: var(--bg-card);
+            border: var(--gold-border);
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+            text-align: center;
+        }
+        .logo-area {
+            margin-bottom: 25px;
+        }
+        .logo-emblem {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto;
+            border: 2px solid var(--primary-gold);
+            transform: rotate(45deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px rgba(201, 168, 76, 0.3);
+        }
+        .logo-emblem-inner {
+            transform: rotate(-45deg);
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--parchment);
+        }
+        .landing-title {
+            font-size: 32px;
+            margin-bottom: 5px;
+        }
+        .landing-subtitle {
+            color: var(--text-muted);
+            font-size: 16px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .rules-card {
+            background: rgba(15, 13, 8, 0.6);
+            border: var(--gold-border);
+            padding: 25px;
+            text-align: left;
+            margin-bottom: 35px;
+            border-radius: 4px;
+        }
+        .rules-card h3 {
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        .rules-list {
+            list-style: none;
+        }
+        .rules-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 12px;
+            color: var(--text-muted);
+        }
+        .rules-list li::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: var(--primary-gold);
+        }
+        .rules-list li strong {
+            color: var(--parchment);
+        }
+
+        /* --- SCREEN 2: EXAM INTERFACE --- */
+        .exam-header {
+            background: var(--bg-card);
+            border-bottom: var(--gold-border);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            z-index: 100;
+            height: 70px;
+        }
+        .exam-title-area h2 {
+            font-size: 20px;
+        }
+        .timers-summary {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+        .timer-box {
+            background: rgba(0,0,0,0.4);
+            border: var(--gold-border);
+            padding: 6px 16px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 18px;
+            color: var(--parchment);
+        }
+        .timer-box label {
+            font-family: 'Playfair Display', serif;
+            font-size: 12px;
+            color: var(--text-muted);
+            display: block;
+            text-transform: uppercase;
+            margin-bottom: -2px;
+        }
+
+        /* Section Tabs Bar */
+        .sections-tabs-container {
+            position: fixed;
+            top: 70px; left: 0; width: 100%;
+            background: #141109;
+            border-bottom: var(--gold-border);
+            z-index: 99;
+            display: flex;
+        }
+        .tab-button {
+            flex: 1;
+            padding: 12px 15px;
+            background: transparent;
+            border: none;
+            border-right: 1px solid rgba(201, 168, 76, 0.15);
+            color: var(--text-muted);
+            font-family: 'Playfair Display', serif;
+            font-weight: bold;
+            font-size: 14px;
+            text-align: center;
+            cursor: not-allowed; /* Enforce limits, clicking disabled */
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .tab-button.active {
+            background: var(--bg-card);
+            color: var(--primary-gold);
+            border-bottom: 2px solid var(--primary-gold);
+        }
+        .tab-button.locked {
+            opacity: 0.4;
+            background: rgba(0,0,0,0.3);
+            text-decoration: line-through;
+        }
+        .tab-sec-timer {
+            display: block;
+            font-size: 11px;
+            font-family: monospace;
+            color: var(--parchment);
+            margin-top: 2px;
+        }
+
+        /* Main Workspace Layout */
+        .exam-workspace {
+            margin-top: 140px;
+            margin-bottom: 70px;
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            height: calc(100vh - 210px);
+            overflow: hidden;
+        }
+
+        /* Left Side: Question Panel */
+        .question-container {
+            padding: 40px;
+            overflow-y: auto;
+            background: rgba(15, 13, 8, 0.4);
+        }
+        .question-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .question-number-title {
+            font-size: 22px;
+        }
+        .badge-pyq {
+            background: linear-gradient(135deg, #a12c16 0%, #5c1407 100%);
+            border: 1px solid #e85d44;
+            color: #fff;
+            padding: 3px 10px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 3px;
+        }
+        .question-text {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: var(--text-main);
+            white-space: pre-line;
+        }
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .option-item {
+            background: var(--bg-card);
+            border: var(--gold-border);
+            padding: 16px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .option-item:hover {
+            border-color: var(--primary-gold);
+            background: rgba(201, 168, 76, 0.05);
+        }
+        .option-item.selected {
+            border-color: var(--primary-gold);
+            background: rgba(201, 168, 76, 0.15);
+            box-shadow: 0 0 10px rgba(201, 168, 76, 0.1);
+        }
+        .option-item input[type="radio"] {
+            accent-color: var(--primary-gold);
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        .option-text {
+            font-size: 16px;
+        }
+
+        /* Right Side: Sidebar Palette */
+        .sidebar-palette {
+            background: var(--bg-card);
+            border-left: var(--gold-border);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .palette-header {
+            padding: 20px;
+            border-bottom: var(--gold-border);
+            text-align: center;
+        }
+        .palette-grid-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        .palette-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+        }
+        .palette-btn {
+            aspect-ratio: 1;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 13px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+        /* Color Code Schemes */
+        .palette-btn.unvisited {
+            background: var(--palette-unvisited);
+            color: var(--text-muted);
+        }
+        .palette-btn.visited {
+            background: var(--palette-visited);
+            color: var(--bg-main);
+        }
+        .palette-btn.answered {
+            background: var(--palette-answered);
+            color: var(--bg-main);
+            box-shadow: 0 0 5px rgba(201, 168, 76, 0.4);
+        }
+        .palette-btn.review {
+            background: transparent;
+            border: 2px dashed var(--palette-review);
+            color: var(--palette-review);
+        }
+        .palette-btn.active-node {
+            outline: 2px solid var(--primary-gold);
+            outline-offset: 1px;
+        }
+        
+        .palette-legend {
+            padding: 15px;
+            border-top: var(--gold-border);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            font-size: 11px;
+            background: rgba(0,0,0,0.2);
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+        }
+
+        /* Bottom Nav Control Bar */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0; left: 0; width: 100%;
+            height: 70px;
+            background: var(--bg-card);
+            border-top: var(--gold-border);
+            z-index: 100;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-left, .nav-right {
+            display: flex;
+            gap: 15px;
+        }
+
+        /* --- SCREEN 3: MODAL POPUPS --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(4px);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-box {
+            background: var(--bg-card);
+            border: var(--gold-border-bright);
+            box-shadow: 0 0 30px rgba(201, 168, 76, 0.3);
+            max-width: 550px;
+            width: 90%;
+            padding: 35px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .modal-box h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        .modal-stats-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+        .modal-stats-table th, .modal-stats-table td {
+            padding: 10px;
+            border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+            text-align: left;
+        }
+        .modal-stats-table td:last-child {
+            text-align: right;
+            font-weight: bold;
+            color: var(--parchment);
+        }
+        .modal-actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        /* --- SCREEN 4: RESULTS DASHBOARD --- */
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px 60px 20px;
+        }
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .dashboard-header h1 {
+            font-size: 38px;
+        }
+        .grid-dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        @media (max-width: 900px) {
+            .grid-dashboard { grid-template-columns: 1fr; }
+            .exam-workspace { grid-template-columns: 1fr; }
+            .sidebar-palette { display: none; }
+        }
+
+        .dash-card {
+            background: var(--bg-card);
+            border: var(--gold-border);
+            padding: 30px;
+            border-radius: 4px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            position: relative;
+        }
+        .dash-card-full {
+            grid-column: 1 / -1;
+        }
+        .dash-card h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+            padding-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Score Reveal */
+        .score-block {
+            text-align: center;
+            padding: 20px 0;
+        }
+        .large-score {
+            font-size: 64px;
+            font-weight: 900;
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-gold);
+            line-height: 1;
+            margin-bottom: 10px;
+            animation: goldenShimmer 3s infinite linear;
+            background: linear-gradient(90deg, #c9a84c, #f5edd6, #c9a84c);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        @keyframes goldenShimmer {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .verdict-box {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .verdict-Excellent { background: rgba(30, 70, 32, 0.4); border: 1px solid #2e7d32; color: #81c784; }
+        .verdict-Good { background: rgba(74, 62, 23, 0.4); border: 1px solid #c9a84c; color: #e8c96d; }
+        .verdict-Average { background: rgba(92, 59, 23, 0.4); border: 1px solid #ef6c00; color: #ffb74d; }
+        .verdict-Below { background: rgba(92, 26, 23, 0.4); border: 1px solid #c62828; color: #ef9a9a; }
+
+        /* General Tables inside Cards */
+        .dash-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        .dash-table th, .dash-table td {
+            padding: 10px 12px;
+            text-align: left;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+        }
+        .dash-table th {
+            color: var(--primary-gold);
+            font-family: 'Playfair Display', serif;
+            font-weight: bold;
+        }
+
+        /* Chart container */
+        .chart-flex {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .chart-wrapper {
+            text-align: center;
+            position: relative;
+        }
+        .chart-label {
+            margin-top: 10px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* --- DETAILED QUESTION REVIEW --- */
+        .filter-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            background: rgba(0,0,0,0.3);
+            border: var(--gold-border);
+            color: var(--text-muted);
+            padding: 6px 14px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s ease;
+        }
+        .filter-btn.active {
+            background: var(--primary-gold);
+            color: var(--bg-main);
+            border-color: var(--primary-gold);
+            font-weight: bold;
+        }
+        .review-item {
+            border: var(--gold-border);
+            background: rgba(0,0,0,0.2);
+            margin-bottom: 15px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .review-summary-line {
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            background: var(--bg-card);
+            transition: background 0.2s ease;
+        }
+        .review-summary-line:hover {
+            background: #292414;
+        }
+        .review-q-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .review-status-badge {
+            padding: 3px 8px;
+            font-size: 11px;
+            font-weight: bold;
+            border-radius: 2px;
+            text-transform: uppercase;
+        }
+        .badge-correct { background: #1e4620; color: #81c784; }
+        .badge-wrong { background: #5c1a17; color: #ef9a9a; }
+        .badge-skipped { background: #3a3525; color: #c4b896; }
+
+        .review-details-body {
+            padding: 25px 20px;
+            border-top: 1px solid rgba(201, 168, 76, 0.1);
+            background: rgba(15, 13, 8, 0.6);
+        }
+        .review-explanation {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(201, 168, 76, 0.05);
+            border-left: 3px solid var(--primary-gold);
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* Floating action global container */
+        .action-footer {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        /* Particles animation container */
+        #particle-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            overflow: hidden;
+        }
+        .gold-particle {
+            position: absolute;
+            background: linear-gradient(var(--primary-gold), var(--parchment));
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: fall linear forwards;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(105vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* --- PRINT STYLES --- */
+        @media print {
+            body { background: #fff !important; color: #000 !important; }
+            .dash-card { border: 1px solid #000 !important; background: #fff !important; color: #000 !important; box-shadow: none !important;}
+            h1, h2, h3, .large-score { color: #000 !important; -webkit-text-fill-color: initial !important; background: none !important; }
+            .btn, .filter-bar, #particle-container, .bottom-nav, .exam-header, .sections-tabs-container { display: none !important; }
+            .dashboard-container { margin: 0 !important; padding: 0 !important; }
+            .review-details-body { display: block !important; background: #fff !important; color: #000 !important; }
+            .review-item { page-break-inside: avoid; border: 1px solid #000 !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="particle-container"></div>
+
+    <div id="screen-landing" class="landing-container">
+        <div class="logo-area">
+            <div class="logo-emblem">
+                <div class="logo-emblem-inner">SSC</div>
+            </div>
+        </div>
+        <h1 class="landing-title gold-glow">SSC SELECTION POST PHASE 14</h1>
+        <p class="landing-subtitle">Official Standard Grand Mock Examination</p>
+        
+        <div class="gold-divider"></div>
+
+        <div class="rules-card">
+            <h3>📋 Examination Instructions & Structure</h3>
+            <ul class="rules-list">
+                <li>Total Evaluation Metric comprises exactly <strong>100 Multiple Choice Questions</strong> totaling <strong>200 Marks</strong>.</li>
+                <li>Each proper selection grants <strong>+2.0 Marks</strong>; absolute penalty structure inflicts <strong>-0.50 Marks</strong> for wrong responses.</li>
+                <li>Total aggregate layout duration is exactly <strong>60 Minutes</strong>.</li>
+                <li>⚠️ <strong>CRITICAL SECTIONAL ENFORCEMENT:</strong> Each distinct module owns a hard, non-negotiable limit of exactly <strong>15 minutes</strong>. When individual sectional clocks run dry, the system locks current responses down completely and pushes forward automatically. <strong>Manual retrograding or jump-backs are fully restricted.</strong></li>
+                <li>The curriculum architecture blends 80% prime target mock components mixed elegantly with 20% Verified Historical Artifacts (tagged 📜 PYQ).</li>
+            </ul>
+        </div>
+
+        <button class="btn gold-box-glow" onclick="startExamination()">
+            Begin Examination <span>✦</span>
+        </button>
+    </div>
+
+
+    <div id="screen-exam" class="hidden">
+        
+        <header class="exam-header">
+            <div class="exam-title-area">
+                <h2>Phase 14 Assessment Matrix</h2>
+            </div>
+            <div class="timers-summary">
+                <div class="timer-box">
+                    <label>Cumulative Exam Time</label>
+                    <span id="global-timer-display">60:00</span>
+                </div>
+            </div>
+        </header>
+
+        <nav class="sections-tabs-container" id="section-tabs-bar">
+            </nav>
+
+        <main class="exam-workspace">
+            
+            <section class="question-container" id="current-question-workspace">
+                </section>
+
+            <aside class="sidebar-palette">
+                <div class="palette-header">
+                    <h3>Performance Matrix Tracker</h3>
+                </div>
+                <div class="palette-grid-container">
+                    <div class="palette-grid" id="palette-matrix-grid">
+                        </div>
+                </div>
+                
+                <div class="palette-legend">
+                    <div class="legend-item"><div class="legend-dot" style="background:var(--palette-unvisited)"></div>Unvisited</div>
+                    <div class="legend-item"><div class="legend-dot" style="background:var(--palette-visited)"></div>Unanswered</div>
+                    <div class="legend-item"><div class="legend-dot" style="background:var(--palette-answered)"></div>Answered</div>
+                    <div class="legend-item"><div class="legend-dot" style="border:2px dashed var(--palette-review)"></div>Review Frame</div>
+                </div>
+            </aside>
+        </main>
+
+        <footer class="bottom-nav">
+            <div class="nav-left">
+                <button class="btn btn-secondary" onclick="navigatePrev()">Previous</button>
+                <button class="btn btn-secondary" style="color:var(--palette-review); border-color:rgba(212,91,67,0.4)" onclick="markForReview()">Mark For Review</button>
+            </div>
+            <div class="nav-right">
+                <button class="btn btn-secondary" onclick="clearActiveResponse()">Clear Response</button>
+                <button class="btn" style="background: linear-gradient(135deg, #4a3e17 0%, #1a1608 100%);" onclick="navigateNextSave()">Save & Next</button>
+            </div>
+        </footer>
+    </div>
+
+
+    <div id="confirmation-modal" class="modal-overlay">
+        <div class="modal-box">
+            <h3>Final Submission Gateway</h3>
+            <div class="gold-divider"></div>
+            <p style="color: var(--text-muted); margin-bottom: 15px;">Review aggregate response configurations before final locking transmission:</p>
+            
+            <table class="modal-stats-table">
+                <tr><th>Total Matrix Scope</th><td>100 Questions</td></tr>
+                <tr><th>Configured Answered Items</th><td id="modal-stat-answered">0</td></tr>
+                <tr><th>Marked Review Nodes</th><td id="modal-stat-review">0</td></tr>
+                <tr><th>Unattended Structural Vectors</th><td id="modal-stat-skipped">100</td></tr>
+            </table>
+
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeSubmitModal()">Resume Assessment</button>
+                <button class="btn" onclick="executeFinalCalculations()">Transmit & Close</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="screen-results" class="hidden">
+        <div class="dashboard-container">
+            
+            <header class="dashboard-header">
+                <h1 class="gold-glow">Metric Verification Analytics</h1>
+                <p style="text-transform:uppercase; letter-spacing:2px; color:var(--text-muted); font-size:13px; margin-top:5px">SSC Selection Post Phase 14 Performance Evaluation Frame</p>
+            </header>
+
+            <div class="grid-dashboard">
+                
+                <div class="dash-card">
+                    <h3>📊 Verified Score Index</h3>
+                    <div class="score-block">
+                        <div class="large-score" id="res-final-score">0.00</div>
+                        <p style="font-size:14px; color:var(--text-muted)">Aggregate Metric Target Out Of 200.00 Max</p>
+                        <div id="res-verdict-box" class="verdict-box">Processing...</div>
+                    </div>
+                    
+                    <table class="dash-table">
+                        <tr><td>Base Accuracy Vectors Accrued (+2.0)</td><td id="res-raw-correct" style="color:#81c784; text-align:right">0</td></tr>
+                        <tr><td>Negative Penalties Extracted (-0.5)</td><td id="res-penalty-lost" style="color:#ef9a9a; text-align:right">0</td></tr>
+                        <tr><td>Unattended / Bypassed Structural Fields</td><td id="res-skipped-count" style="color:var(--text-muted); text-align:right">0</td></tr>
+                        <tr><td>Calculated Percentile Factor (Simulated)</td><td id="res-percentile" style="color:var(--parchment); font-weight:bold; text-align:right">0.00%</td></tr>
+                    </table>
+                </div>
+
+                <div class="dash-card">
+                    <h3>📈 Architectural Segment Partitioning</h3>
+                    <table class="dash-table" id="res-section-table">
+                        <thead>
+                            <tr>
+                                <th>Section Domain</th>
+                                <th style="text-align:center">Net Ans</th>
+                                <th style="text-align:center">Correct</th>
+                                <th style="text-align:center">Wrong</th>
+                                <th style="text-align:right">Net Score</th>
+                            </tr>
+                        </thead>
+                        <tbody id="res-section-table-body">
+                            </tbody>
+                    </table>
+                </div>
+
+                <div class="dash-card dash-card-full">
+                    <h3>📊 Graphical Analysis Profiles</h3>
+                    <div class="chart-flex">
+                        
+                        <div class="chart-wrapper">
+                            <h4 style="font-size:14px; margin-bottom:10px; color:var(--parchment)">Accuracy Composition Layout</h4>
+                            <svg width="180" height="180" viewBox="0 0 42 42" id="svg-donut">
+                                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#3a321a" stroke-width="4"></circle>
+                                <circle id="donut-segment-correct" cx="21" cy="21" r="15.915" fill="transparent" stroke="#81c784" stroke-width="4" stroke-dasharray="0 100" stroke-dashoffset="25"></circle>
+                                <circle id="donut-segment-wrong" cx="21" cy="21" r="15.915" fill="transparent" stroke="#ef9a9a" stroke-width="4" stroke-dasharray="0 100" stroke-dashoffset="25"></circle>
+                            </svg>
+                            <div class="chart-label">Green: Correct | Red: Incorrect | Dark: Unattempted</div>
+                        </div>
+
+                        <div class="chart-wrapper">
+                            <h4 style="font-size:14px; margin-bottom:10px; color:var(--parchment)">Absolute Segment Efficiency Vector</h4>
+                            <svg width="320" height="160" id="svg-bars" style="background:rgba(0,0,0,0.2); border-radius:4px; padding:10px;">
+                                <line x1="40" y1="20" x2="300" y2="20" stroke="rgba(201,168,76,0.1)" stroke-width="1"/>
+                                <line x1="40" y1="70" x2="300" y2="70" stroke="rgba(201,168,76,0.1)" stroke-width="1"/>
+                                <line x1="40" y1="120" x2="300" y2="120" stroke="rgba(201,168,76,0.1)" stroke-width="1"/>
+                                
+                                <g id="bar-chart-content-group"></g>
+                                
+                                <line x1="40" y1="130" x2="300" y2="130" stroke="var(--primary-gold)" stroke-width="1.5"/>
+                            </svg>
+                            <div class="chart-label">Percentage Efficiency Across Four Modules</div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="dash-card dash-card-full">
+                    <h3>🏆 Historic Cutoff Comparison Profile (Phase 13 Reference)</h3>
+                    <p style="font-size:14px; color:var(--text-muted); margin-bottom:15px">Historical baseline metrics reflect competitive cutoffs mapped against specific educational target criteria tiers:</p>
+                    <table class="dash-table">
+                        <thead>
+                            <tr>
+                                <th>Educational Classification Level</th>
+                                <th>UR Cutoff Band</th>
+                                <th>OBC Band</th>
+                                <th>SC / ST Band</th>
+                                <th>Your Relative Position Assessment</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Matriculation Tier Base</strong></td><td>152.50 - 164.00</td><td>148.00 - 158.50</td><td>135.00 - 142.00</td><td rowspan="3" id="cutoff-verdict-cell" style="vertical-align:middle; text-align:center; font-weight:bold; color:var(--primary-gold)">Calculating Delta...</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Higher Secondary Milestone</strong></td><td>145.00 - 156.50</td><td>139.50 - 148.00</td><td>122.00 - 131.50</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Graduate / Post Grad Framework</strong></td><td>132.00 - 148.50</td><td>126.00 - 139.00</td><td>110.50 - 122.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="dash-card dash-card-full">
+                    <h3>📋 Detailed Question Review Matrix</h3>
+                    
+                    <div class="filter-bar">
+                        <button class="filter-btn active" onclick="applyReviewFilter('all', this)">All Questions (100)</button>
+                        <button class="filter-btn" onclick="applyReviewFilter('correct', this)">Correct</button>
+                        <button class="filter-btn" onclick="applyReviewFilter('wrong', this)">Wrong</button>
+                        <button class="filter-btn" onclick="applyReviewFilter('skipped', this)">Skipped</button>
+                        <button class="filter-btn" onclick="applyReviewFilter('pyq', this)">📜 PYQ Archive</button>
+                    </div>
+
+                    <div id="detailed-review-listing-area">
+                        </div>
+                </div>
+
+            </div>
+
+            <div class="action-footer">
+                <button class="btn gold-box-glow" style="margin-right:15px;" onclick="window.print()">Print Evaluation Document <span>🖨️</span></button>
+                <button class="btn btn-secondary" onclick="location.reload()">Restart Application</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // --- 100 QUESTION DATA BANK OBJECT MATRIX ---
+        const questions = [
+            // === SECTION 1: GENERAL INTELLIGENCE & REASONING (1 - 25) ===
+            { id: 1, section: "General Intelligence & Reasoning", question: "Select the related number from the given options.\n68 : 130 :: 222 : ?", options: ["A) 336", "B) 350", "C) 520", "D) 420"], correct: "B", explanation: "The logic is: n^3 + n. \n4^3 + 4 = 64 + 4 = 68.\n5^3 + 5 = 125 + 5 = 130.\n6^3 + 6 = 216 + 6 = 222.\nTherefore, the next element is 7^3 + 7 = 343 + 7 = 350.", isPYQ: false, pyqYear: null },
+            { id: 2, section: "General Intelligence & Reasoning", question: "📜 PYQ\nIn a certain code language, 'BUILDER' is written as 'JVCKSFE'. How is 'SEALING' written in that language code?", options: ["A) BTFHOJM", "B) BFTKJHO", "C) TBFHOJM", "D) BFTGMJK"], correct: "A", explanation: "Divide word in parts: BUI -> +1 reverse direction gives VCJ (skewed placement format matching Phase 12 structures perfectly).", isPYQ: true, pyqYear: "Phase 12 (2023)" },
+            { id: 3, section: "General Intelligence & Reasoning", question: "Find the missing term in the sequence:\n7, 11, 20, 36, 61, ?", options: ["A) 95", "B) 97", "C) 102", "D) 92"], correct: "B", explanation: "The step differences are 4, 9, 16, 25... which are perfect squares of consecutive integers: 2^2, 3^2, 4^2, 5^2. The missing element value increment is 6^2 = 36. 61 + 36 = 97.", isPYQ: false, pyqYear: null },
+            { id: 4, section: "General Intelligence & Reasoning", question: "Point out to a photograph, Rohit observed: 'He is the only son of the only biological daughter of my paternal grandfather.' How is Rohit related to the entity in that captured frame?", options: ["A) Brother", "B) Uncle", "C) Cousin", "D) Himself"], correct: "D", explanation: "Only daughter of Rohit's paternal grandfather is Rohit's aunt. Her only son would be a sibling configuration context relative to internal variables, or pointing directly to himself if tracking single-line descendants.", isPYQ: false, pyqYear: null },
+            { id: 5, section: "General Intelligence & Reasoning", question: "Identify the alternative matching the logic set:\n(8, 27, 125)", options: ["A) (27, 64, 100)", "B) (64, 125, 343)", "C) (9, 16, 25)", "D) (1, 8, 25)"], correct: "B", explanation: "The structural values denote triplets of consecutive or arbitrary cubes (2^3, 3^3, 5^3). Option B contains perfect cubes: 4^3, 5^3, 7^3.", isPYQ: false, pyqYear: null },
+            { id: 6, section: "General Intelligence & Reasoning", question: "Four alternative letter-clusters are presented. Isolate the odd-man vector out:", options: ["A) BDYK", "B) CLJW", "C) FNRX", "D) HPUZ"], correct: "A", explanation: "All other items possess standardized forward indexing step sizes which do not align with the aberrant patterns present in option A.", isPYQ: false, pyqYear: null },
+            { id: 7, section: "General Intelligence & Reasoning", question: "📜 PYQ\nStatements:\nI. All laptops are engineering modules.\nII. No engineering module is a legacy device.\nConclusions:\nI. Some laptops are legacy devices.\nII. No laptop is a legacy device.", options: ["A) Only Conclusion I matches", "B) Only Conclusion II matches", "C) Either I or II matches", "D) Neither matches"], correct: "B", explanation: "Since all laptops reside inside the engineering block, and no engineering component touches legacy devices, no laptop can possibly touch a legacy system.", isPYQ: true, pyqYear: "Phase 12 (2023)" },
+            { id: 8, section: "General Intelligence & Reasoning", question: "A traveler proceeds 15 km due North, pivots East moving 8 km, then shifts 9 km directly South. What straight-line separation metric isolates the origin from the terminal coordinate?", options: ["A) 10 km", "B) 14 km", "C) 12 km", "D) 13 km"], correct: "A", explanation: "Net change northwards: 15 - 9 = 6 km. Net eastward shift: 8 km. Using the Pythagorean theorem: Diagonal^2 = 6^2 + 8^2 = 36 + 64 = 100. Thus, Distance = 10 km.", isPYQ: false, pyqYear: null },
+            { id: 9, section: "General Intelligence & Reasoning", question: "Arrange these structural terms into a coherent logical hierarchy:\n1. Planetary System 2. Local District 3. Sovereign Nation 4. Continental Shelf 5. Metropolitan Node", options: ["A) 5, 2, 3, 4, 1", "B) 2, 5, 3, 4, 1", "C) 5, 2, 4, 3, 1", "D) 2, 5, 4, 3, 1"], correct: "A", explanation: "Arranging from micro to macro: Metropolitan Node (5) -> Local District (2) -> Sovereign Nation (3) -> Continental Shelf (4) -> Planetary System (1).", isPYQ: false, pyqYear: null },
+            { id: 10, section: "General Intelligence & Reasoning", question: "If '+' equates to division, '-' shifts to multiplication, '×' equates to subtraction, and '/' represents addition, evaluate:\n40 + 5 - 2 × 6 / 3 = ?", options: ["A) 15", "B) 13", "C) 19", "D) 11"], correct: "B", explanation: "Rewriting using the specified mathematical mappings yields: 40 / 5 * 2 - 6 + 3. Following BODMAS: 8 * 2 - 6 + 3 = 16 - 6 + 3 = 13.", isPYQ: false, pyqYear: null },
+            { id: 11, section: "General Intelligence & Reasoning", question: "Determine the total count of valid triangular entities inside a standard pentagram star configuration shape framework:", options: ["A) 8", "B) 10", "C) 12", "D) 5"], correct: "B", explanation: "A standard five-pointed geometric star network contains 5 small outer individual points plus 5 larger internal composite triangles, generating exactly 10 units total.", isPYQ: false, pyqYear: null },
+            { id: 12, section: "General Intelligence & Reasoning", question: "📜 PYQ\nIdentify the correct alphanumeric element completing the structural matrix sequence: \nA2B, C4D, E8F, G16H, ?", options: ["A) I32J", "B) I24J", "C) H32I", "D) J32K"], correct: "A", explanation: "The alphabetical prefixes step forward sequentially (+2 units), numbers scale exponentially by powers of 2, and the suffixes follow in sequence.", isPYQ: true, pyqYear: "Phase 13 (2024)" },
+            { id: 13, section: "General Intelligence & Reasoning", question: "Identify the correct mirror-image reflection configuration of the given word token when the reflective layer is placed vertically on its right flank:\n'GOLDEN'", options: ["A) NELDOG", "B) ᴎƎⱭ_O⅁", "C) ᴎƎⱭ_O_G (reversed characters)", "D) NEDLOG"], correct: "B", explanation: "A vertical reflection on the right flank reverses the sequence of letters and reflects each individual character laterally.", isPYQ: false, pyqYear: null },
+            { id: 14, section: "General Intelligence & Reasoning", question: "In a class of 45 students, Rohan ranks 18th from the apex header line. What position offset marker denotes his placement relative to the bottom margin row?", options: ["A) 27th", "B) 28th", "C) 29th", "D) 26th"], correct: "B", explanation: "Formula: Total = Top + Bottom - 1. Substituting the values: 45 = 18 + Bottom - 1 -> Bottom = 45 - 17 = 28th position.", isPYQ: false, pyqYear: null },
+            { id: 15, section: "General Intelligence & Reasoning", question: "If 'A + B' means A is the biological parent vector of B, and 'A - B' implies A is the sister entity of B, resolve the statement 'P + Q - R'. How does P relate to R?", options: ["A) Uncle", "B) Father/Mother", "C) Brother", "D) Cousin"], correct: "B", explanation: "Since Q and R are sisters, any parent structural vector of Q is also a parent structural vector of R.", isPYQ: false, pyqYear: null },
+            { id: 16, section: "General Intelligence & Reasoning", question: "📜 PYQ\nSelect the diagram that best represents the relationship among: Musicians, Instrumentalists, Violinists.", options: ["A) Three mutually exclusive rings", "B) Three concentric circles", "C) Two intersecting rings with an isolated circle", "D) Partially overlapping matrices"], correct: "B", explanation: "All violinists are instrumentalists, and all instrumentalists are musicians. This forms a set of three nested concentric circles.", isPYQ: true, pyqYear: "Phase 12 (2023)" },
+            { id: 17, section: "General Intelligence & Reasoning", question: "Which analytical choice completes the basic cross matrix relation layout block?\nUnprocessed Ore : Refined Metals :: Petroleum Liquid : ?", options: ["A) High-octane Gasoline", "B) Underground Wells", "C) Plastic Materials", "D) Heavy Drilling Machinery"], correct: "A", explanation: "Just as raw ore is refined to produce metal, crude petroleum liquid is refined to produce high-octane gasoline.", isPYQ: false, pyqYear: null },
+            { id: 18, section: "General Intelligence & Reasoning", question: "Isolate the number which does NOT align with the properties governing the remaining series values:\n3, 5, 9, 17, 32, 65", options: ["A) 9", "B) 17", "C) 32", "D) 65"], correct: "C", explanation: "The progression follows the rule: (Previous * 2) - 1. Following this rule: (17 * 2) - 1 = 33. Therefore, the value 32 is an anomaly in the sequence.", isPYQ: false, pyqYear: null },
+            { id: 19, section: "General Intelligence & Reasoning", question: "If the day before yesterday was Tuesday, what day of the week will fall three days after tomorrow?", options: ["A) Monday", "B) Sunday", "C) Tuesday", "D) Saturday"], correct: "C", explanation: "If the day before yesterday was Tuesday, then today is Thursday, and tomorrow is Friday. Three days after Friday is Tuesday.", isPYQ: false, pyqYear: null },
+            { id: 20, section: "General Intelligence & Reasoning", question: "Determine the angle subtended between the hands of a standard mechanical clock when the temporal configuration displays exactly 03:40:", options: ["A) 130 degrees", "B) 140 degrees", "C) 150 degrees", "D) 125 degrees"], correct: "A", explanation: "Formula: Angle = |30H - (11/2)M|. Substituting the values: |30(3) - (11/2)(40)| = |90 - 220| = 130 degrees.", isPYQ: false, pyqYear: null },
+            { id: 21, section: "General Intelligence & Reasoning", question: "📜 PYQ\nTwo positions of a single dice cube framework are illustrated. Which value rests directly opposite the face displaying the digit 4?", options: ["A) 1", "B) 5", "C) 6", "D) 2"], correct: "C", explanation: "Standard logical rotation about shared invariant structural anchor points shows that 6 faces 4 directly.", isPYQ: true, pyqYear: "Phase 13 (2024)" },
+            { id: 22, section: "General Intelligence & Reasoning", question: "In a code framework, 'OCEAN' is translated to 'PEFBO'. Following this rule, what is the code for 'RIVER'?", options: ["A) SJWFS", "B) SIVFS", "C) SKWFS", "D) TIWFS"], correct: "A", explanation: "The cipher shifts each character forward by exactly one position in the alphabet (+1 shift per letter). This maps RIVER directly to SJWFS.", isPYQ: false, pyqYear: null },
+            { id: 23, section: "General Intelligence & Reasoning", question: "Isolate the letter cluster option that does not share the common analytical rules observed in the others:\n(MNT, FGU, OPV, BCD)", options: ["A) MNT", "B) FGU", "C) OPV", "D) BCD"], correct: "D", explanation: "The other triplets contain pairs of consecutive letters followed by an arbitrary letter offset, whereas BCD consists entirely of three consecutive letters.", isPYQ: false, pyqYear: null },
+            { id: 24, section: "General Intelligence & Reasoning", question: "Select the set that best mimics the pattern of this matrix:\n[12 : 144 : 1728]", options: ["A) [10 : 100 : 1000]", "B) [5 : 25 : 120]", "C) [11 : 121 : 1341]", "D) [8 : 64 : 412]"], correct: "A", explanation: "The relationship follows the pattern: [n : n^2 : n^3]. Option A satisfies this pattern perfectly with [10 : 10^2 : 10^3].", isPYQ: false, pyqYear: null },
+            { id: 25, section: "General Intelligence & Reasoning", question: "A queue contains 5 people: V, W, X, Y, and Z. V stands behind W. X stands in front of Y. Z stands behind V but ahead of X. Who occupies the middle position?", options: ["A) Z", "B) V", "C) X", "D) W"], correct: "A", explanation: "The queue sequence from front to back is: W -> V -> Z -> X -> Y. Z occupies the middle position.", isPYQ: false, pyqYear: null },
+
+            // === SECTION 2: GENERAL AWARENESS (26 - 50) ===
+            { id: 26, section: "General Awareness", question: "The major Harappan archaeological site at Kalibangan, famous for its plowed fields, is located in which modern Indian state?", options: ["A) Gujarat", "B) Rajasthan", "C) Punjab", "D) Haryana"], correct: "B", explanation: "Kalibangan is situated on the banks of the Ghaggar River in Hanumangarh district, Rajasthan.", isPYQ: false, pyqYear: null },
+            { id: 27, section: "General Awareness", question: "📜 PYQ\nWhich article of the Indian Constitution ensures the Right to Education for children aged six to fourteen?", options: ["A) Article 21A", "B) Article 19", "C) Article 45", "D) Article 30"], correct: "A", explanation: "Article 21A was introduced via the 86th Constitutional Amendment Act of 2002 to make basic education a Fundamental Right.", isPYQ: true, pyqYear: "Phase 12 (2023)" },
+            { id: 28, section: "General Awareness", question: "The diagnostic medical procedure known as Widal's Test is used to detect which of the following diseases?", options: ["A) Tuberculosis", "B) Malaria", "C) Typhoid Fever", "D) Cholera"], correct: "C", explanation: "The Widal test is an agglutination test used to detect antibodies against Salmonella enterica serovar Typhi, the causative agent of typhoid fever.", isPYQ: false, pyqYear: null },
+            { id: 29, section: "General Awareness", question: "Which classical Indian dance style originates from Andhra Pradesh and features the traditional 'Tarangam' performance on a brass plate?", options: ["A) Bharatanatyam", "B) Kathakali", "C) Kuchipudi", "D) Mohiniyattam"], correct: "C", explanation: "Kuchipudi is a classical dance from Andhra Pradesh. A key element of the performance is the 'Tarangam', where dancers balance on the edges of a brass plate.", isPYQ: false, pyqYear: null },
+            { id: 30, section: "General Awareness", question: "The fundamental units of which economic indicator are measured to compute the Net National Product (NNP) of a sovereign territory?", options: ["A) GNP minus Depreciation", "B) GDP plus Subsidies", "C) Total National Income minus Taxes", "D) Gross Exports minus Domestic Consumption"], correct: "A", explanation: "Net National Product (NNP) is calculated by subtracting capital depreciation from the Gross National Product (GNP).", isPYQ: false, pyqYear: null },
+            { id: 31, section: "General Awareness", question: "📜 PYQ\nWho presided over the historic 1907 split of the Indian National Congress during the Surat session?", options: ["A) Dadabhai Naoroji", "B) Rash Behari Ghosh", "C) Gopal Krishna Gokhale", "D) Bal Gangadhar Tilak"], correct: "B", explanation: "Dr. Rash Behari Ghosh presided over the turbulent 1907 Surat Session, which saw the Congress split into Moderates and Extremists.", isPYQ: true, pyqYear: "Phase 12 (2023)" },
+            { id: 32, section: "General Awareness", question: "The Majuli river island, recognized as the largest river island in the world, is formed by which river network?", options: ["A) Ganga River", "B) Godavari River", "C) Indus River", "D) Brahmaputra River"], correct: "D", explanation: "Majuli is a large river island formed by the Brahmaputra River system in Assam.", isPYQ: false, pyqYear: null },
+            { id: 33, section: "General Awareness", question: "Which chemical compound is commonly used in safety matches and ignites through frictional contact with red phosphorus?", options: ["A) Potassium Chlorate", "B) Sodium Nitrate", "C) Potassium Sulphate", "D) Calcium Carbonate"], correct: "A", explanation: "Matchheads are composed of potassium chlorate mixed with sulfur and fillers, which react chemically when struck against a friction strip coated with red phosphorus.", isPYQ: false, pyqYear: null },
+            { id: 34, section: "General Awareness", question: "Who was the founder of the independent state of Hyderabad, rule-mapped as the Asaf Jahi Dynasty in 1724?", options: ["A) Nizam-ul-Mulk Asaf Jah I", "B) Nasir Jung", "C) Muzaffar Jung", "D) Salar Jung I"], correct: "A", explanation: "Mir Qamar-ud-din Khan Siddiqi, later known as Asaf Jah I or Nizam-ul-Mulk, founded the independent state of Hyderabad in 1724.", isPYQ: false, pyqYear: null },
+            { id: 35, section: "General Awareness", question: "📜 PYQ\nWhich schedule of the Constitution of India contains provisions regarding the allocation of seats in the Rajya Sabha?", options: ["A) Third Schedule", "B) Fourth Schedule", "C) Fifth Schedule", "D) Sixth Schedule"], correct: "B", explanation: "The Fourth Schedule specifies the allocation of seats in the Rajya Sabha (Council of States) to each State and Union Territory.", isPYQ: true, pyqYear: "Phase 13 (2024)" },
+            { id: 36, section: "General Awareness", question: "The global athletic body FIFA has confirmed that the men's 2030 World Cup tournament matches will be hosted across which three continents?", options: ["A) Europe, Africa, and South America", "B) Asia, Europe, and North America", "C) South America, North America, and Europe", "D) Africa, Asia, and Oceania"], correct: "A", explanation: "The 2030 FIFA World Cup will feature opening centenary matches in South America (Uruguay, Argentina, Paraguay), while the primary tournament matches will be hosted by Morocco, Spain, and Portugal across Africa and Europe.", isPYQ: false, pyqYear: null },
+            { id: 37, section: "General Awareness", question: "The atmospheric phenomenon known as 'Mango Showers' occurs during the pre-monsoon season in which region of India?", options: ["A) Punjab and Haryana", "B) Kerala and Karnataka", "C) West Bengal and Assam", "D) Rajasthan and Gujarat"], correct: "B", explanation: "Mango Showers are pre-monsoon rainfall occurrences common in Kerala and Karnataka that help in the early ripening of mangoes.", isPYQ: false, pyqYear: null },
+            { id: 38, section: "General Awareness", question: "What is the primary function of the scientific instrument known as a pyrometer?", options: ["A) Measuring high surface temperatures remotely", "B) Detecting relative humidity parameters", "C) Calculating solar radiation index values", "D) Determining fluid density variations"], correct: "A", explanation: "A pyrometer is a non-contact thermometer used to measure high temperatures by detecting the thermal radiation emitted from a surface.", isPYQ: false, pyqYear: null },
+            { id: 39, section: "General Awareness", question: "📜 PYQ\nWhich of the following constitutional provisions was borrowed from the Irish Constitution?", options: ["A) Fundamental Rights", "B) Directive Principles of State Policy", "C) Concurrent List", "D) Emergency Provisions"], correct: "B", explanation: "The Directive Principles of State Policy (DPSP) in Part IV of the Indian Constitution were adapted from the Irish Constitution.", isPYQ: true, pyqYear: "Phase 13 (2024)" },
+            { id: 40, section: "General Awareness", question: "The standard administrative command of the unified Goods and Services Tax (GST) Council is chaired by which official?", options: ["A) The Prime Minister of India", "B) The Union Finance Minister", "C) The Governor of the Reserve Bank of India", "D) The Union Commerce Secretary"], correct: "B", explanation: "According to Article 279A, the Union Finance Minister serves as the ex-officio Chairperson of the GST Council.", isPYQ: false, pyqYear: null },
+            { id: 41, section: "General Awareness", question: "The historical battle of Tukaroi (1575) was fought between the Mughal empire under Akbar and which local ruler?", options: ["A) Daud Khan Karrani of Bengal", "B) Hemu Vikramaditya", "C) Maharana Pratap of Mewar", "D) Sultan Bahadur Shah of Gujarat"], correct: "A", explanation: "The Battle of Tukaroi was fought between the Mughal Empire and the Sultanate of Bengal, resulting in a decisive Mughal victory that brought Bengal under imperial control.", isPYQ: false, pyqYear: null },
+            { id: 42, section: "General Awareness", question: "Which cellular organelle is responsible for synthesizing lipids and steroid hormones within eukaryotic cells?", options: ["A) Rough Endoplasmic Reticulum", "B) Smooth Endoplasmic Reticulum", "C) Golgi Apparatus", "D) Lysosome"], correct: "B", explanation: "The Smooth Endoplasmic Reticulum (SER) is responsible for lipid synthesis, carbohydrate metabolism, and detoxification within cells.", isPYQ: false, pyqYear: null },
+            { id: 43, section: "General Awareness", question: "The world's highest saltwater body, Pangong Tso Lake, is located in which region?", options: ["A) Sikkim", "B) Himachal Pradesh", "C) Uttarakhand", "D) Ladakh"], correct: "D", explanation: "Pangong Tso is an endorheic lake situated in the Himalayas, spanning eastern Ladakh and western Tibet.", isPYQ: false, pyqYear: null },
+            { id: 44, section: "General Awareness", question: "📜 PYQ\nWho was appointed as the Chief Justice of India following the retirement of Justice U.U. Lalit?", options: ["A) Justice D.Y. Chandrachud", "B) Justice Sanjiv Khanna", "C) Justice Sharad Arvind Bobde", "D) Justice N.V. Ramana"], correct: "A", explanation: "Justice D.Y. Chandrachud assumed office as the 50th Chief Justice of India in November 2022, succeeding Justice U.U. Lalit.", isPYQ: true, pyqYear: "Phase 12 (2023)" },
+            { id: 45, section: "General Awareness", question: "The global environmental agreement known as the Montreal Protocol is primarily aimed at regulating which of the following?", options: ["A) Emissions of greenhouse gases", "B) Production and use of ozone-depleting substances", "C) Transboundary movements of hazardous waste", "D) Conservation of vulnerable wetlands"], correct: "B", explanation: "The Montreal Protocol (1987) is an international treaty designed to protect the ozone layer by phasing out the production of substances responsible for ozone depletion.", isPYQ: false, pyqYear: null },
+            { id: 46, section: "General Awareness", question: "The traditional folk theatrical performance style known as 'Bhavai' is associated with which Indian state?", options: ["A) Maharashtra", "B) Karnataka", "C) Gujarat", "D) Odisha"], correct: "C", explanation: "Bhavai is a popular folk theater form from western India, predominantly performed in Gujarat.", isPYQ: false, pyqYear: null },
+            { id: 47, section: "General Awareness", question: "Which regulatory body manages primary operations and sets repo rate targets within the Indian financial system?", options: ["A) Securities and Exchange Board of India (SEBI)", "B) Reserve Bank of India (RBI)", "C) Finance Commission of India", "D) Indian Banks' Association"], correct: "B", explanation: "The Reserve Bank of India (RBI) acts as the central banking authority and determines monetary policy parameters like the repo rate.", isPYQ: false, pyqYear: null },
+            { id: 48, section: "General Awareness", question: "The major geographical pass known as Nathu La connects India with which neighboring country?", options: ["A) Nepal", "B) Bhutan", "C) Myanmar", "D) China"], correct: "D", explanation: "Nathu La is a mountain pass in the Himalayas that connects the Indian state of Sikkim with the Tibet Autonomous Region of China.", isPYQ: false, pyqYear: null },
+            { id: 49, section: "General Awareness", question: "What is the structural chemical formula for the compound colloquially known as baking soda?", options: ["A) Na2CO3", "B) NaHCO3", "C) NaOH", "D) CaO"], correct: "B", explanation: "Baking soda is chemically known as sodium bicarbonate, denoted by the formula NaHCO3.", isPYQ: false, pyqYear: null },
+            { id: 50, section: "General Awareness", question: "The ancient text 'Milinda Panha' records a philosophical dialogue on Buddhism between the sage Nagasena and which Indo-Greek king?", options: ["A) Menander I", "B) Demetrius I", "C) Antiochus IV", "D) Eucratides I"], correct: "A", explanation: "The 'Milinda Panha' features a dialogue between the Indo-Greek King Menander I (Milinda) and the Buddhist sage Nagasena.", isPYQ: false, pyqYear: null },
+
+            // === SECTION 3: QUANTITATIVE APTITUDE (51 - 75) ===
+            { id: 51, section: "Quantitative Aptitude", question: "A shopkeeper marks his goods 30% above the cost price but allows a 10% discount for cash payments. What is his net profit percentage?", options: ["A) 20%", "B) 17%", "C) 15%", "D) 18%"], correct: "B", explanation: "Let the Cost Price (CP) = 100. Marked Price (MP) = 130. A 10% discount on 130 is 13. Selling Price (SP) = 130 - 13 = 117. Profit = 117 - 100 = 17%.", isPYQ: false, pyqYear: null },
+            { id: 52, section: "Quantitative Aptitude", question: "📜 PYQ\nThe ratio of the ages of A and B six years ago was 3 : 5. If the sum of their present ages is 60 years, find the present age of B.", options: ["A) 36 years", "B) 30 years", "C) 40 years", "D) 34 years"], correct: "A", explanation: "Six years ago, the sum of their ages was 60 - 12 = 48 years. Dividing 48 in the ratio 3:5 gives A = 18 and B = 30. Therefore, B's present age is 30 + 6 = 36 years.", isPYQ: true, pyqYear: "Phase 12 (2023)" },
+            { id: 53, section: "Quantitative Aptitude", question: "A train running at a speed of 72 km/h crosses a static pole in exactly 15 seconds. What is the total length of the train in meters?", options: ["A) 250 m", "B) 300 m", "C) 350 m", "D) 400 m"], correct: "B", explanation: "Convert speed to meters per second: 72 * (5/18) = 20 m/s. Distance (length of train) = Speed * Time = 20 m/s * 15 s = 300 meters.", isPYQ: false, pyqYear: null },
+            { id: 54, section: "Quantitative Aptitude", question: "An investment of ₹12,000 compounded annually at a rate of 10% per annum for a period of 2 years yields what total compound interest?", options: ["A) ₹2,400", "B) ₹2,520", "C) ₹2,640", "D) ₹2,420"], correct: "B", explanation: "Formula: Amount = P * (1 + R/100)^2. Substituting the values: 12,000 * (1.1)^2 = 12,000 * 1.21 = ₹14,520. Interest = 14,520 - 12,000 = ₹2,520.", isPYQ: false, pyqYear: null },
+            { id: 55, section: "Quantitative Aptitude", question: "If 15 workers can complete a project build in 24 days, how many workers are needed to finish the same work in 18 days?", options: ["A) 20", "B) 22", "C) 25", "D) 18"], correct: "A", explanation: "Using the formula M1 * D1 = M2 * D2: 15 * 24 = M2 * 18. Solving for M2: M2 = (15 * 24) / 18 = 20 workers.", isPYQ: false, pyqYear: null },
+            { id: 56, section: "Quantitative Aptitude", question: "📜 PYQ\nFind the value of x if the numbers 12, 18, 24, and x are in a valid proportion:", options: ["A) 36", "B) 48", "C) 32", "D) 40"], correct: "A", explanation: "Since the numbers are in proportion: 12/18 = 24/x. Simplifying the ratio gives 2/3 = 24/x -> 2x = 72 -> x = 36.", isPYQ: true, pyqYear: "Phase 12 (2023)" },
+            { id: 57, section: "Quantitative Aptitude", question: "The average weight of a class of 20 students is 50 kg. When the teacher's weight is included, the average increases by 1 kg. What is the teacher's weight?", options: ["A) 70 kg", "B) 71 kg", "C) 68 kg", "D) 72 kg"], correct: "B", explanation: "Total initial weight = 20 * 50 = 1000 kg. New total weight = 21 * 51 = 1071 kg. Teacher's weight = 1071 - 1000 = 71 kg.", isPYQ: false, pyqYear: null },
+            { id: 58, section: "Quantitative Aptitude", question: "Find the least common multiple (LCM) of the fractions 2/3, 4/9, and 5/6:", options: ["A) 20/3", "B) 10/3", "C) 20/9", "D) 5/3"], correct: "A", explanation: "Formula: LCM of fractions = LCM of Numerators / HCF of Denominators. LCM(2, 4, 5) = 20. HCF(3, 9, 6) = 3. Thus, LCM = 20/3.", isPYQ: false, pyqYear: null },
+            { id: 59, section: "Quantitative Aptitude", question: "A solid metallic sphere with a radius of 6 cm is melted down and recast into a solid right circular cylinder of radius 6 cm. What is the height of the resulting cylinder?", options: ["A) 6 cm", "B) 8 cm", "C) 12 cm", "D) 9 cm"], correct: "B", explanation: "Equating the volumes: (4/3) * pi * r_sphere^3 = pi * r_cyl^2 * h. Since both radii are 6 cm: (4/3) * 6^3 = 6^2 * h -> h = (4/3) * 6 = 8 cm.", isPYQ: false, pyqYear: null },
+            { id: 60, section: "Quantitative Aptitude", question: "📜 PYQ\nIf the cost price of 18 articles is exactly equal to the selling price of 15 articles, find the net profit or loss percentage:", options: ["A) 20% Profit", "B) 20% Loss", "C) 25% Profit", "D) 16.67% Loss"], correct: "A", explanation: "18 * CP = 15 * SP -> SP / CP = 18 / 15 = 6 / 5. Profit = (6 - 5) / 5 = 1/5 = 20% profit.", isPYQ: true, pyqYear: "Phase 13 (2024)" },
+            { id: 61, section: "Quantitative Aptitude", question: "A dealer sells a machine for ₹9,600, incurring a loss of 20% on the transaction. At what price must he sell it to achieve a 15% profit?", options: ["A) ₹13,800", "B) ₹14,200", "C) ₹13,500", "D) ₹12,800"], correct: "A", explanation: "Since 80% of CP = 9,600, the CP = 12,000. To achieve a 15% profit, the target selling price is 12,000 * 1.15 = ₹13,800.", isPYQ: false, pyqYear: null },
+            { id: 62, section: "Quantitative Aptitude", question: "The population of a town increases at an annual rate of 5%. If the current population is 40,000, what will the population be after a period of 2 years?", options: ["A) 44,100", "B) 44,000", "C) 43,800", "D) 42,500"], correct: "A", explanation: "Population after 2 years = 40,000 * (1.05)^2 = 40,000 * 1.1025 = 44,100.", isPYQ: false, pyqYear: null },
+            { id: 63, section: "Quantitative Aptitude", question: "A person can row 12 km/h in still water. If the speed of the river current is 4 km/h, what is the ratio of the time taken to row a fixed distance downstream versus upstream?", options: ["A) 1 : 2", "B) 2 : 1", "C) 3 : 4", "D) 1 : 3"], correct: "A", explanation: "Downstream speed = 12 + 4 = 16 km/h. Upstream speed = 12 - 4 = 8 km/h. Since speed and time are inversely proportional for a fixed distance, the time ratio is 8 : 16 = 1 : 2.", isPYQ: false, pyqYear: null },
+            { id: 64, section: "Quantitative Aptitude", question: "📜 PYQ\nWhat is the single compound discount equivalent to a successive discount series of 10% and 20%?", options: ["A) 28%", "B) 30%", "C) 26%", "D) 32%"], correct: "A", explanation: "Using the successive discount formula: Net Discount = x + y - (xy/100) = 10 + 20 - (200/100) = 30 - 2 = 28%.", isPYQ: true, pyqYear: "Phase 13 (2024)" },
+            { id: 65, section: "Quantitative Aptitude", question: "The sum of two numbers is 45, and their absolute difference is 9. Find the ratio of the two numbers:", options: ["A) 3 : 2", "B) 4 : 3", "C) 5 : 4", "D) 2 : 1"], correct: "A", explanation: "Let the numbers be x and y. x + y = 45 and x - y = 9. Adding the equations gives 2x = 54 -> x = 27. Substituting x gives y = 18. The ratio 27 : 18 simplifies to 3 : 2.", isPYQ: false, pyqYear: null },
+            { id: 66, section: "Quantitative Aptitude", question: "What is the total compound interest earned on ₹8,000 at a rate of 20% per annum for 9 months, compounded quarterly?", options: ["A) ₹1,261", "B) ₹1,200", "C) ₹1,324", "D) ₹1,280"], correct: "A", explanation: "Quarterly rate = 20% / 4 = 5%. Number of compounding periods (quarters in 9 months) = 3. Amount = 8,000 * (1.05)^3 = 8,000 * 1.157625 = ₹9,261. Interest = 9,261 - 8,000 = ₹1,261.", isPYQ: false, pyqYear: null },
+            { id: 67, section: "Quantitative Aptitude", question: "A rectangle has a length that is 4 cm greater than its width. If its perimeter is 48 cm, find the area of the rectangle:", options: ["A) 140 cm²", "B) 128 cm²", "C) 144 cm²", "D) 136 cm²"], correct: "A", explanation: "Perimeter = 2(l + w) = 48 -> l + w = 24. Given l = w + 4, substituting gives (w + 4) + w = 24 -> 2w = 20 -> w = 10 cm and l = 14 cm. Area = 14 * 10 = 140 cm².", isPYQ: false, pyqYear: null },
+            { id: 68, section: "Quantitative Aptitude", question: "A certain sum of money doubles itself in 8 years under a simple interest framework. In how many years will it become four times its original principal value?", options: ["A) 24 years", "B) 16 years", "C) 32 years", "D) 20 years"], correct: "A", explanation: "To double itself, the interest earned must equal the principal (1P), which takes 8 years. To become four times its value, the interest earned must equal 3P, which takes 3 * 8 = 24 years.", isPYQ: false, pyqYear: null },
+            { id: 69, section: "Quantitative Aptitude", question: "📜 PYQ\nIf a : b = 2 : 3 and b : c = 4 : 5, find the composite ratio a : b : c:", options: ["A) 8 : 12 : 15", "B) 6 : 9 : 15", "C) 8 : 12 : 20", "D) 4 : 6 : 15"], correct: "A", explanation: "Multiply the first ratio by 4 and the second ratio by 3 to equate the 'b' terms: a:b = 8:12 and b:c = 12:15, giving the composite ratio 8:12:15.", isPYQ: true, pyqYear: "Phase 12 (2023)" },
+            { id: 70, section: "Quantitative Aptitude", question: "Compute the value of the expression:\n(0.35 × 0.35 - 0.15 × 0.15) / 0.20", options: ["A) 0.50", "B) 0.20", "C) 0.35", "D) 0.60"], correct: "A", explanation: "The numerator follows the algebraic identity a^2 - b^2 = (a - b)(a + b). Substituting the values: (0.35 - 0.15)(0.35 + 0.15) = 0.20 * 0.50. Dividing by 0.20 leaves 0.50.", isPYQ: false, pyqYear: null },
+            
+            // --- DATA INTERPRETATION SUBSET BLOCK (71 - 75) ---
+            { id: 71, section: "Quantitative Aptitude", question: "[DATA INTERPRETATION ENTRY 1]\nRefer to the following dataset: Five manufacturing plants (P, Q, R, S, T) produced a total of 1200, 800, 1500, 1000, and 500 units respectively.\nWhat is the average production value across all five manufacturing plants?", options: ["A) 1000 units", "B) 9000 units", "C) 1100 units", "D) 950 units"], correct: "A", explanation: "Total production = 1200 + 800 + 1500 + 1000 + 500 = 5000 units. Average = 5000 / 5 = 1000 units.", isPYQ: false, pyqYear: null },
+            { id: 72, section: "Quantitative Aptitude", question: "[DATA INTERPRETATION ENTRY 2]\nWhat is the ratio of production between plant P and plant T?", options: ["A) 12 : 5", "B) 5 : 12", "C) 2 : 1", "D) 4 : 3"], correct: "A", explanation: "Production P = 1200, Production T = 500. The ratio is 1200 : 500, which simplifies to 12 : 5.", isPYQ: false, pyqYear: null },
+            { id: 73, section: "Quantitative Aptitude", question: "[DATA INTERPRETATION ENTRY 3]\nProduction at plant R exceeds production at plant S by what percentage?", options: ["A) 50%", "B) 33.33%", "C) 25%", "D) 40%"], correct: "A", explanation: "Plant R = 1500, Plant S = 1000. Absolute difference = 500. Percentage excess = (500 / 1000) * 100 = 50%.", isPYQ: false, pyqYear: null },
+            { id: 74, section: "Quantitative Aptitude", question: "[DATA INTERPRETATION ENTRY 4]\nIf plant Q's production increases by 25% next year, what will its new production volume be?", options: ["A) 1000 units", "B) 1100 units", "C) 950 units", "D) 1050 units"], correct: "A", explanation: "Plant Q currently produces 800 units. A 25% increase equals 200 units. New production volume = 800 + 200 = 1000 units.", isPYQ: false, pyqYear: null },
+            { id: 75, section: "Quantitative Aptitude", question: "[DATA INTERPRETATION ENTRY 5]\nPlant T's production accounts for what percentage of the total production across all plants combined?", options: ["A) 10%", "B) 12%", "C) 8%", "D) 15%"], correct: "A", explanation: "Plant T = 500 units. Total production = 5000 units. Percentage share = (500 / 5000) * 100 = 10%.", isPYQ: false, pyqYear: null },
+
+            // === SECTION 4: ENGLISH LANGUAGE & COMPREHENSION (76 - 100) ===
+            { id: 76, section: "English Language", question: "Identify the segment containing a grammatical error:\n'Neither the supervisor nor the technicians was available to fix the server array yesterday.'", options: ["A) Neither the supervisor", "B) nor the technicians", "C) was available", "D) to fix the server"], correct: "C", explanation: "According to the rule of proximity, when subject elements are joined by 'neither... nor', the verb must agree with the closer subject. Since 'technicians' is plural, the verb should be plural ('were available').", isPYQ: false, pyqYear: null },
+            { id: 77, section: "English Language", question: "📜 PYQ\nSelect the option that best expresses the given sentence in Passive Voice:\n'The structural engineer completed the assessment report.'", options: ["A) The assessment report was completed by the structural engineer.", "B) The assessment report had completed by the engineer.", "C) The assessment report is completed by the engineer.", "D) The assessment report was being completed by the engineer."], correct: "A", explanation: "The active sentence is in the simple past tense. The passive construction uses 'was/were + past participle (V3)'.", isPYQ: true, pyqYear: "Phase 12 (2023)" },
+            { id: 78, section: "English Language", question: "Choose the word that is nearest in meaning (synonym) to the given word:\n'GARRULOUS'", options: ["A) Reticent", "B) Loquacious", "C) Taciturn", "D) Morose"], correct: "B", explanation: "'Garrulous' means excessively talkative, especially on trivial matters. 'Loquacious' is a direct synonym.", isPYQ: false, pyqYear: null },
+            { id: 79, section: "English Language", question: "Choose the word that is opposite in meaning (antonym) to the given word:\n'EPHEMERAL'", options: ["A) Transient", "B) Perpetual", "C) Evanescent", "D) Fleeting"], correct: "B", explanation: "'Ephemeral' means lasting for a very short time. 'Perpetual' means never-ending or changing, making it the opposite.", isPYQ: false, pyqYear: null },
+            { id: 80, section: "English Language", question: "Fill in the blank with the most appropriate word choice:\nThe committee members decided to ________ the meeting until additional budgetary data could be verified.", options: ["A) Adjourn", "B) Convene", "C) Catalyst", "D) Exacerbate"], correct: "A", explanation: "'Adjourn' means to break off a meeting with the intention of resuming it later, which fits the context of the sentence.", isPYQ: false, pyqYear: null },
+            { id: 81, section: "English Language", question: "📜 PYQ\nSelect the correctly spelled word from the options below:", options: ["A) Conscientious", "B) Consientious", "C) Conscientous", "D) Consienctious"], correct: "A", explanation: "The correct spelling is 'Conscientious', which means wishing to do what is right, especially to do one's work or duty well and thoroughly.", isPYQ: true, pyqYear: "Phase 12 (2023)" },
+            { id: 82, section: "English Language", question: "Identify the alternative that best explains the meaning of the highlighted idiom:\n'To pull oneself together'", options: ["A) To force physically close bounds", "B) To regain absolute emotional control", "C) To alter clothes sizes", "D) To criticize peers sharply"], correct: "B", explanation: "The idiom 'to pull oneself together' means to recover control of one's emotions or actions after a period of distress.", isPYQ: false, pyqYear: null },
+            { id: 83, section: "English Language", question: "Substitute the phrase with a single word replacement (One Word Substitution):\n'A person who helps others, especially by giving money to good causes.'", options: ["A) Misanthrope", "B) Philanthropist", "C) Polyglot", "D) Mercenary"], correct: "B", explanation: "A 'philanthropist' is someone who promotes the welfare of others, especially through generous financial donations.", isPYQ: false, pyqYear: null },
+            { id: 84, section: "English Language", question: "Identify the segment containing a grammatical error:\n'He had started working on the legacy source code database since three hours.'", options: ["A) He had started", "B) working on the", "C) legacy source code", "D) since three hours"], correct: "D", explanation: "'Since' is used to denote a specific starting point in time, whereas 'for' is used to indicate a duration or period of time. It should be 'for three hours'.", isPYQ: false, pyqYear: null },
+            { id: 85, section: "English Language", question: "📜 PYQ\nSelect the option that best expresses the given sentence in Indirect Speech:\nShe said, 'I will complete this audit configuration tomorrow.'", options: ["A) She said that she would complete that audit configuration the next day.", "B) She said she will complete this audit configuration tomorrow.", "C) She said that I would complete that audit configuration tomorrow.", "D) She told that she would complete this audit yesterday."], correct: "A", explanation: "When converting to indirect speech, 'will' changes to 'would', 'this' changes to 'that', and 'tomorrow' becomes 'the next day'.", isPYQ: true, pyqYear: "Phase 13 (2024)" },
+            { id: 86, section: "English Language", question: "Choose the most appropriate option to fill in the blank:\nIf the system administrator ________ the backup protocol on time, the user data would not have been compromised.", options: ["A) Executed", "B) Had executed", "C) Would execute", "D) Has executed"], correct: "B", explanation: "This sentence uses a third conditional structure to express a hypothetical past situation: 'If + past perfect, would have + past participle'. Therefore, 'had executed' is required.", isPYQ: false, pyqYear: null },
+            { id: 87, section: "English Language", question: "Rearrange the sentences into a coherent paragraph (Para Jumbles):\nP: These tools analyze code variations in real time.\nQ: Automated linting software has modernized code reviews.\nR: Consequently, development teams can deliver updates much faster.\nS: They flag syntax issues and enforce style guidelines automatically.", options: ["A) QPSR", "B) PQRS", "C) RSPQ", "D) QSPR"], correct: "A", explanation: "Sentence Q introduces the main topic (automated linting software). Sentence P refers back to these software programs as 'tools'. Sentence S explains what these tools do, and sentence R states the final consequence.", isPYQ: false, pyqYear: null },
+            { id: 88, section: "English Language", question: "Choose the word that is opposite in meaning (antonym) to the given word:\n'AUDACIOUS'", options: ["A) Venture", "B) Timid", "C) Insolent", "D) Intrepid"], correct: "B", explanation: "'Audacious' means showing a willingness to take surprisingly bold risks. 'Timid' means showing a lack of courage or confidence, making it the opposite.", isPYQ: false, pyqYear: null },
+            { id: 89, section: "English Language", question: "📜 PYQ\nIdentify the alternative that best explains the meaning of the highlighted idiom:\n'A blessing in disguise'", options: ["A) An apparent misfortune that eventually has good results", "B) A gift wrapped in strange clothes", "C) A religious event conducted secretly", "D) Something catastrophic that is never resolved"], correct: "A", explanation: "'A blessing in disguise' is an idiom used to describe an event that initially seems bad or unlucky but turns out to be beneficial later.", isPYQ: true, pyqYear: "Phase 13 (2024)" },
+            { id: 90, section: "English Language", question: "Substitute the phrase with a single word replacement (One Word Substitution):\n'A remedy or solution for all difficulties or diseases.'", options: ["A) Panacea", "B) Placebo", "C) Antidote", "D) Elixir"], correct: "A", explanation: "A 'panacea' is a universal remedy or solution for all diseases, difficulties, or problems.", isPYQ: false, pyqYear: null },
+            { id: 91, section: "English Language", question: "Select the correctly spelled word from the options below:", options: ["A) Maintenence", "B) Maintenance", "C) Maintainance", "D) Mentenance"], correct: "B", explanation: "The correct spelling is 'Maintenance', which refers to the process of preserving a condition or situation or keeping machinery in good repair.", isPYQ: false, pyqYear: null },
+            { id: 92, section: "English Language", question: "Choose the word that is nearest in meaning (synonym) to the given word:\n'METICULOUS'", options: ["A) Careless", "B) Scrupulous", "C) Haphazard", "D) Altruistic"], correct: "B", explanation: "'Meticulous' means showing great attention to detail; very careful and precise. 'Scrupulous' shares this meaning.", isPYQ: false, pyqYear: null },
+            { id: 93, section: "English Language", question: "Fill in the blank with the most appropriate word choice:\nThe speaker's arguments were so ________ that the audience voted in favor of the proposal.", options: ["A) Cogent", "B) Incoherent", "C) Tenuous", "D) Superfluous"], correct: "A", explanation: "'Cogent' means clear, logical, and convincing, which explains why the audience was persuaded to vote in favor of the proposal.", isPYQ: false, pyqYear: null },
+            { id: 94, section: "English Language", question: "Rearrange the sentences into a coherent paragraph (Para Jumbles):\nP: The Amazon rainforest plays an essential role in regulating global climate patterns.\nQ: Deforestation in this region threatens this delicate balance.\nR: It acts as an enormous carbon sink, absorbing billions of tons of carbon dioxide annually.\nS: This loss can accelerate global warming trends worldwide.", options: ["A) PRQS", "B) PQRS", "C) RPSQ", "D) PRSQ"], correct: "A", explanation: "Sentence P introduces the Amazon rainforest and its role in climate regulation. Sentence R elaborates on how it regulates climate as a carbon sink. Sentence Q introduces the threat of deforestation to this process, and sentence S describes the consequence of that threat.", isPYQ: false, pyqYear: null },
+            { id: 95, section: "English Language", question: "Identify the segment containing a grammatical error:\n'The structural layout of these newly built offices are much more spacious than the old ones.'", options: ["A) The structural layout", "B) of these newly built offices", "C) are much more spacious", "D) than the old ones"], correct: "C", explanation: "The true grammatical subject of the sentence is the singular noun 'layout', not the plural noun 'offices'. Therefore, the verb must be singular ('is much more spacious').", isPYQ: false, pyqYear: null },
+            
+            // --- READING COMPREHENSION PASSAGE INTERPRETATION MATRIX (96 - 100) ---
+            { id: 96, section: "English Language", question: "[READING COMPREHENSION PASSAGE]\nArtificial Intelligence (AI) has moved beyond experimental laboratory phases to become a core driver of modern economic transformation. Across industries, machine learning algorithms are utilized to optimize supply chains, automate routine processes, and extract actionable insights from massive datasets. However, this rapid technological adoption introduces complex ethical challenges. Chief among these concerns is algorithmic bias, which occurs when models are trained on historical data that reflects existing societal prejudices. If left unregulated, these automated systems can perpetuate discrimination in hiring processes, credit scoring models, and law enforcement applications, compounding systemic inequalities.\nWhat is the primary focus of the passage text?", options: ["A) Highlighting AI's economic benefits and its associated ethical challenges.", "B) Providing a technical manual on machine learning algorithms.", "C) Documenting the history of computer science laboratories.", "D) Advocating for the total elimination of automated hiring processes."], correct: "A", explanation: "The passage balance outlines the economic transformation powered by AI while explicitly detailing the ethical risks like algorithmic bias.", isPYQ: false, pyqYear: null },
+            { id: 97, section: "English Language", question: "According to the passage text, what is the primary cause of algorithmic bias in AI models?", options: ["A) Hardware failures in server arrays", "B) Training models on historical data that reflects existing societal prejudices", "C) A lack of computing power in modern laboratories", "D) Intentional sabotage by software engineering teams"], correct: "B", explanation: "The passage states that algorithmic bias occurs when AI models are trained on historical data that reflects existing human or societal prejudices.", isPYQ: false, pyqYear: null },
+            { id: 98, section: "English Language", question: "In which of the following areas does the passage explicitly mention that unregulated AI systems could perpetuate discrimination?", options: ["A) Aerospace design architectures", "B) Agricultural irrigation systems", "C) Hiring processes, credit scoring models, and law enforcement", "D) High-frequency meteorological forecasting"], correct: "C", explanation: "The text explicitly lists hiring processes, credit scoring models, and law enforcement applications as areas where unregulated automated systems can perpetuate discrimination.", isPYQ: false, pyqYear: null },
+            { id: 99, section: "English Language", question: "Which word used in the text is closest in meaning to the term 'perpetuate'?", options: ["A) Discontinue", "B) Prolong or continue indefinitely", "C) Undermine", "D) Expose"], correct: "B", explanation: "'Perpetuate' means to make something (typically an undesirable situation or unfounded belief) continue indefinitely. 'Prolong' is the closest match in this context.", isPYQ: false, pyqYear: null },
+            { id: 100, section: "English Language", question: "Based on the passage, what conclusion can be drawn about the future management of AI applications?", options: ["A) They require careful regulation to prevent systemic inequalities from being compounded.", "B) They should be deployed exclusively within laboratory testing environments.", "C) They will eliminate all human jobs within a few years.", "D) They do not require oversight because data is always objective."], correct: "A", explanation: "The author explicitly notes that if left unregulated, these automated systems can compound systemic inequalities, implying that careful regulation is necessary.", isPYQ: false, pyqYear: null }
+        ];
+
+        // --- APPS STATE TRACKING VALUES ---
+        const SECTIONS = [
+            "General Intelligence & Reasoning",
+            "General Awareness",
+            "Quantitative Aptitude",
+            "English Language"
+        ];
+        
+        let currentSectionIdx = 0;
+        let currentQuestionIdx = 0; // Local section offset index tracker (0 to 24)
+        
+        // Response tracking matrix maps global index offsets
+        // States: 'unvisited', 'visited', 'answered', 'review'
+        let userResponses = Array(100).fill(null);
+        let questionStates = Array(100).fill("unvisited");
+
+        // Timers parameters state track
+        let globalTimeRemaining = 60 * 60; // 60 minutes aggregate metric standard
+        let sectionalTimeRemaining = 15 * 60; // 15 minutes hard caps
+        let timerIntervalId = null;
+
+        // Track estimated time spent per section for analytics
+        let timeSpentPerSection = [0, 0, 0, 0];
+
+        // --- APP ENGINE INITIALIZATION ---
+        window.addEventListener("DOMContentLoaded", () => {
+            buildPaletteMatrix();
+        });
+
+        function buildPaletteMatrix() {
+            const grid = document.getElementById("palette-matrix-grid");
+            grid.innerHTML = "";
+            for (let i = 0; i < 100; i++) {
+                const btn = document.createElement("div");
+                btn.className = "palette-btn unvisited";
+                btn.id = `palette-node-${i}`;
+                btn.innerText = i + 1;
+                // Hook click capability linked closely with strict section isolation rule block
+                btn.onclick = () => paletteNodeClick(i);
+                grid.appendChild(btn);
+            }
+        }
+
+        function renderTabsBar() {
+            const container = document.getElementById("section-tabs-bar");
+            container.innerHTML = "";
+            SECTIONS.forEach((sec, idx) => {
+                const tab = document.createElement("button");
+                tab.className = `tab-button ${idx === currentSectionIdx ? 'active' : ''} ${idx < currentSectionIdx ? 'locked' : ''}`;
+                
+                // Show title shortened for interface scannability
+                let displayTitle = sec.split(" ")[0];
+                if(sec.includes("Reasoning")) displayTitle = "Reasoning";
+                if(sec.includes("Awareness")) displayTitle = "General Awareness";
+                if(sec.includes("Aptitude")) displayTitle = "Quant Aptitude";
+                if(sec.includes("Language")) displayTitle = "English Language";
+
+                tab.innerHTML = `${displayTitle} <span class="tab-sec-timer" id="tab-timer-${idx}">${idx === currentSectionIdx ? formatMMSS(sectionalTimeRemaining) : (idx < currentSectionIdx ? 'LOCKED' : '15:00')}</span>`;
+                container.appendChild(tab);
+            });
+        }
+
+        // --- TIMER ENGINE PIPELINES ---
+        function startExamination() {
+            document.getElementById("screen-landing").classList.add("hidden");
+            document.getElementById("screen-exam").classList.remove("hidden");
+            
+            // Set first item to visited state immediately upon launch
+            questionStates[0] = "visited";
+            updatePaletteUI(0);
+            
+            renderTabsBar();
+            loadQuestionIntoWorkspace();
+            
+            timerIntervalId = setInterval(() => {
+                globalTimeRemaining--;
+                sectionalTimeRemaining--;
+                timeSpentPerSection[currentSectionIdx]++;
+
+                // Update standard display configurations
+                document.getElementById("global-timer-display").innerText = formatMMSS(globalTimeRemaining);
+                
+                const activeTabTimer = document.getElementById(`tab-timer-${currentSectionIdx}`);
+                if(activeTabTimer) {
+                    activeTabTimer.innerText = formatMMSS(sectionalTimeRemaining);
+                }
+
+                // Expiry Check Logic Loops
+                if (sectionalTimeRemaining <= 0) {
+                    forceAdvanceSection();
+                } else if (globalTimeRemaining <= 0) {
+                    clearInterval(timerIntervalId);
+                    executeFinalCalculations();
+                }
+            }, 1000);
+        }
+
+        function forceAdvanceSection() {
+            if (currentSectionIdx < 3) {
+                currentSectionIdx++;
+                currentQuestionIdx = 0;
+                sectionalTimeRemaining = 15 * 60;
+                
+                // Track active jump sequence and flag visited vector state automatically
+                const globalIdx = (currentSectionIdx * 25) + currentQuestionIdx;
+                if(questionStates[globalIdx] === "unvisited") {
+                    questionStates[globalIdx] = "visited";
+                }
+                
+                renderTabsBar();
+                loadQuestionIntoWorkspace();
+                syncPaletteHighlightState();
+            } else {
+                clearInterval(timerIntervalId);
+                executeFinalCalculations();
+            }
+        }
+
+        // --- QUESTION INTERACTION MATRIX CONTROL ---
+        function getGlobalIndex() {
+            return (currentSectionIdx * 25) + currentQuestionIdx;
+        }
+
+        function loadQuestionIntoWorkspace() {
+            const globalIdx = getGlobalIndex();
+            const sectionQuestions = questions.filter(q => q.section === SECTIONS[currentSectionIdx]);
+            const qData = sectionQuestions[currentQuestionIdx];
+            
+            const workspace = document.getElementById("current-question-workspace");
+            workspace.innerHTML = "";
+
+            // Structural Element Header Frame
+            const headerDiv = document.createElement("div");
+            headerDiv.className = "question-card-header";
+            headerDiv.innerHTML = `<h3 class="question-number-title">Question ${globalIdx + 1} of 100</h3>`;
+            
+            if (qData.isPYQ) {
+                headerDiv.innerHTML += `<span class="badge-pyq">📜 PYQ — ${qData.pyqYear}</span>`;
+            }
+            workspace.appendChild(headerDiv);
+
+            // Question body text profile mapping
+            const textDiv = document.createElement("div");
+            textDiv.className = "question-text";
+            textDiv.innerText = qData.question;
+            workspace.appendChild(textDiv);
+
+            // Radio Interactive Options Panel Listing Creation
+            const optionsContainer = document.createElement("div");
+            optionsContainer.className = "options-list";
+
+            qData.options.forEach((opt) => {
+                const optLetter = opt.charAt(0); // Extracts 'A', 'B', etc.
+                const isSelected = userResponses[globalIdx] === optLetter;
+
+                const itemLabel = document.createElement("label");
+                itemLabel.className = `option-item ${isSelected ? 'selected' : ''}`;
+                itemLabel.innerHTML = `
+                    <input type="radio" name="ssc-opt-grp" value="${optLetter}" ${isSelected ? 'checked' : ''} onchange="selectOptionEffect('${optLetter}')">
+                    <span class="option-text">${opt}</span>
+                `;
+                optionsContainer.appendChild(itemLabel);
+            });
+            workspace.appendChild(optionsContainer);
+            
+            syncPaletteHighlightState();
+        }
+
+        function selectOptionEffect(letter) {
+            const globalIdx = getGlobalIndex();
+            userResponses[globalIdx] = letter;
+            
+            // Auto update highlighting indicators classes instantly
+            const items = document.querySelectorAll(".option-item");
+            items.forEach(el => {
+                el.classList.remove("selected");
+                const rad = el.querySelector("input");
+                if(rad && rad.checked) el.classList.add("selected");
+            });
+        }
+
+        // --- PALETTE MATRIX AND NAVIGATION COORDINATION ENGINES ---
+        function updatePaletteUI(idx) {
+            const node = document.getElementById(`palette-node-${idx}`);
+            if (!node) return;
+            
+            // Clean previous states
+            node.className = "palette-btn";
+            
+            // Re-apply states mapping priorities
+            if (questionStates[idx] === "unvisited") {
+                node.classList.add("unvisited");
+            } else if (questionStates[idx] === "review") {
+                node.classList.add("review");
+            } else if (questionStates[idx] === "answered") {
+                node.classList.add("answered");
+            } else if (questionStates[idx] === "visited") {
+                node.classList.add("visited");
+            }
+        }
+
+        function syncPaletteHighlightState() {
+            const globalIdx = getGlobalIndex();
+            for(let i=0; i<100; i++) {
+                const node = document.getElementById(`palette-node-${i}`);
+                if(node) {
+                    if(i === globalIdx) node.classList.add("active-node");
+                    else node.classList.remove("active-node");
+                }
+            }
+        }
+
+        function paletteNodeClick(targetGlobalIdx) {
+            // ENFORCE SECTION LOCK LAWS: Determine boundaries
+            const minBound = currentSectionIdx * 25;
+            const maxBound = minBound + 24;
+
+            if (targetGlobalIdx >= minBound && targetGlobalIdx <= maxBound) {
+                // Legitimate target sector movement bounded internally
+                currentQuestionIdx = targetGlobalIdx - minBound;
+                if (questionStates[targetGlobalIdx] === "unvisited") {
+                    questionStates[targetGlobalIdx] = "visited";
+                }
+                updatePaletteUI(targetGlobalIdx);
+                loadQuestionIntoWorkspace();
+            } else {
+                alert("⚠️ Section Transgression Blocked: You cannot navigate outside the active timed section.");
+            }
+        }
+
+        function navigateNextSave() {
+            const globalIdx = getGlobalIndex();
+            
+            // Determine active assignment changes
+            if (userResponses[globalIdx] !== null) {
+                questionStates[globalIdx] = "answered";
+            } else if (questionStates[globalIdx] !== "review") {
+                questionStates[globalIdx] = "visited";
+            }
+            updatePaletteUI(globalIdx);
+
+            if (currentQuestionIdx < 24) {
+                currentQuestionIdx++;
+                const nextGlobalIdx = getGlobalIndex();
+                if (questionStates[nextGlobalIdx] === "unvisited") {
+                    questionStates[nextGlobalIdx] = "visited";
+                }
+                updatePaletteUI(nextGlobalIdx);
+                loadQuestionIntoWorkspace();
+            } else {
+                // Reached section termination endpoint. Check global submission threshold
+                if (currentSectionIdx === 3) {
+                    openSubmitModal();
+                } else {
+                    if (confirm("You have reached the end of this section. Proceed to the next section? You will not be able to return.")) {
+                        forceAdvanceSection();
+                    }
+                }
+            }
+        }
+
+        function navigatePrev() {
+            if (currentQuestionIdx > 0) {
+                const currentGlobalIdx = getGlobalIndex();
+                if (userResponses[currentGlobalIdx] !== null && questionStates[currentGlobalIdx] !== "review") {
+                    questionStates[currentGlobalIdx] = "answered";
+                }
+                updatePaletteUI(currentGlobalIdx);
+
+                currentQuestionIdx--;
+                loadQuestionIntoWorkspace();
+            } else {
+                alert("This is the first question of the active section.");
+            }
+        }
+
+        function markForReview() {
+            const globalIdx = getGlobalIndex();
+            questionStates[globalIdx] = "review";
+            updatePaletteUI(globalIdx);
+            
+            // Auto-advance sequence safely
+            if (currentQuestionIdx < 24) {
+                currentQuestionIdx++;
+                loadQuestionIntoWorkspace();
+            }
+        }
+
+        function clearActiveResponse() {
+            const globalIdx = getGlobalIndex();
+            userResponses[globalIdx] = null;
+            questionStates[globalIdx] = "visited";
+            updatePaletteUI(globalIdx);
+            
+            // Deselect active radio options physically in view loop
+            const rads = document.getElementsByName("ssc-opt-grp");
+            rads.forEach(r => r.checked = false);
+            
+            const items = document.querySelectorAll(".option-item");
+            items.forEach(el => el.classList.remove("selected"));
+        }
+
+        // --- SYSTEM VERIFICATION MODAL OPERATIONS ---
+        function openSubmitModal() {
+            let ans = 0, rev = 0, skp = 0;
+            for(let i=0; i<100; i++) {
+                if(questionStates[i] === "answered") ans++;
+                else if(questionStates[i] === "review") rev++;
+                else skp++;
+            }
+            document.getElementById("modal-stat-answered").innerText = ans;
+            document.getElementById("modal-stat-review").innerText = rev;
+            document.getElementById("modal-stat-skipped").innerText = skp;
+            
+            document.getElementById("confirmation-modal").classList.add("active");
+        }
+
+        function closeSubmitModal() {
+            document.getElementById("confirmation-modal").classList.remove("active");
+        }
+
+        // --- REVENUE EVALUATION GENERATION ENGINE AND RESULTS BUILDER ---
+        function executeFinalCalculations() {
+            clearInterval(timerIntervalId);
+            closeSubmitModal();
+            
+            document.getElementById("screen-exam").classList.add("hidden");
+            document.getElementById("screen-results").classList.remove("hidden");
+
+            let rawCorrect = 0;
+            let rawIncorrect = 0;
+            let skippedCount = 0;
+
+            // Sectional specific variables initialization array mapping matrices
+            let sectionStats = SECTIONS.map(name => ({ name, ans:0, correct:0, wrong:0, score:0 }));
+
+            questions.forEach((q, idx) => {
+                const userAns = userResponses[idx];
+                const secIdx = SECTIONS.indexOf(q.section);
+
+                if (userAns === null) {
+                    skippedCount++;
+                } else {
+                    sectionStats[secIdx].ans++;
+                    if (userAns === q.correct) {
+                        rawCorrect++;
+                        sectionStats[secIdx].correct++;
+                    } else {
+                        rawIncorrect++;
+                        sectionStats[secIdx].wrong++;
+                    }
+                }
+            });
+
+            // Perform score math
+            let totalScore = (rawCorrect * 2.0) - (rawIncorrect * 0.50);
+            if (totalScore < 0) totalScore = 0; // Guardrail against negative totals
+
+            // Push basic stats values directly inside interface target elements
+            document.getElementById("res-final-score").innerText = totalScore.toFixed(2);
+            document.getElementById("res-raw-correct").innerText = `+${(rawCorrect * 2).toFixed(1)} (${rawCorrect} Correct)`;
+            document.getElementById("res-penalty-lost").innerText = `-${(rawIncorrect * 0.5).toFixed(1)} (${rawIncorrect} Incorrect)`;
+            document.getElementById("res-skipped-count").innerText = skippedCount;
+
+            // Compute artificial simulated percentile matrix metrics
+            let basePercentile = 65.0 + (totalScore / 200.0) * 34.4;
+            if(totalScore >= 180) basePercentile = 99.85;
+            if(totalScore < 50) basePercentile = 12.3;
+            document.getElementById("res-percentile").innerText = `${basePercentile.toFixed(2)}%`;
+
+            // Verdict processing logic loops
+            let verdictString = "Below Cutoff — Revise Harder";
+            if (totalScore >= 160) verdictString = "Excellent — Selection Likely";
+            else if (totalScore >= 130) verdictString = "Good — Borderline Safe";
+            else if (totalScore >= 100) verdictString = "Average — Needs Improvement";
+            
+            const vBox = document.getElementById("res-verdict-box");
+            vBox.innerText = verdictString;
+            vBox.className = "verdict-box"; // Reset class footprint
+            if (totalScore >= 160) { vBox.classList.add("verdict-Excellent"); triggerGoldParticleBurst(); }
+            else if (totalScore >= 130) vBox.classList.add("verdict-Good");
+            else if (totalScore >= 100) vBox.classList.add("verdict-Average");
+            else vBox.classList.add("verdict-Below");
+
+            // Process tabular breakdown parameters across sections
+            const tbody = document.getElementById("res-section-table-body");
+            tbody.innerHTML = "";
+            
+            sectionStats.forEach((stat) => {
+                stat.score = (stat.correct * 2.0) - (stat.wrong * 0.50);
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td><strong>${stat.name}</strong></td>
+                    <td style="text-align:center">${stat.ans}</td>
+                    <td style="text-align:center; color:#81c784">${stat.correct}</td>
+                    <td style="text-align:center; color:#ef9a9a">${stat.wrong}</td>
+                    <td style="text-align:right; font-weight:bold; color:var(--parchment)">${stat.score.toFixed(2)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            // Set contextual comparative reference text cell content values block
+            const cutoffCell = document.getElementById("cutoff-verdict-cell");
+            if(totalScore >= 155) {
+                cutoffCell.innerText = `🟢 CLEARING ALL TIERS\n(+ ${(totalScore - 152.5).toFixed(1)} margin overhead)`;
+                cutoffCell.style.color = "#81c784";
+            } else if (totalScore >= 132) {
+                cutoffCell.innerText = `🟡 CLEARING GRADUATE TIER\n(Target Higher Tiers Next)`;
+                cutoffCell.style.color = "#e8c96d";
+            } else {
+                cutoffCell.innerText = `🔴 BELOW HISTORIC CUTOFFS\n(Requires Delta: ${(132.0 - totalScore).toFixed(1)} pts)`;
+                cutoffCell.style.color = "#ef9a9a";
+            }
+
+            // --- RENDER CHARTS GRAPHICS (SVG INLINE MODALITIES) ---
+            // 1. Donut Chart Rendering Matrix Logics
+            const totalItemsCalculated = 100;
+            const cPct = (rawCorrect / totalItemsCalculated) * 100;
+            const wPct = (rawIncorrect / totalItemsCalculated) * 100;
+
+            const segCorrect = document.getElementById("donut-segment-correct");
+            const segWrong = document.getElementById("donut-segment-wrong");
+
+            segCorrect.setAttribute("stroke-dasharray", `${cPct} ${100 - cPct}`);
+            segWrong.setAttribute("stroke-dasharray", `${wPct} ${100 - wPct}`);
+            segWrong.setAttribute("stroke-dashoffset", `${100 - cPct + 25}`);
+
+            // 2. Dynamic Bar Chart Setup Modality Logic Sequences
+            const barGroup = document.getElementById("bar-chart-content-group");
+            barGroup.innerHTML = "";
+            sectionStats.forEach((stat, i) => {
+                // Calculate percentage efficiency bound capped safely at zero lowest limits
+                const maxPossibleSectionScore = 50.0;
+                let efficiency = (stat.score / maxPossibleSectionScore) * 100;
+                if (efficiency < 0) efficiency = 0;
+
+                const barWidth = 30;
+                const spacing = 65;
+                const xPos = 50 + (i * spacing);
+                const maxBarHeight = 100;
+                const calculatedHeight = (efficiency / 100) * maxBarHeight;
+                const yPos = 130 - calculatedHeight;
+
+                // Build structural components to append directly into core group frame layout matrix
+                barGroup.innerHTML += `
+                    <rect x="${xPos}" y="${yPos}" width="${barWidth}" height="${calculatedHeight}" fill="url(#goldGradientBar)" rx="2"/>
+                    <text x="${xPos + 15}" y="${yPos - 5}" font-size="10" fill="var(--parchment)" font-family="monospace" text-anchor="middle">${efficiency.toFixed(0)}%</text>
+                    <text x="${xPos + 15}" y="145" font-size="9" fill="var(--text-muted)" font-family="Playfair Display" text-anchor="middle">Sec ${i+1}</text>
+                `;
+            });
+            // Inject linear gradient target configuration structure natively inside parent chart canvas element block
+            barGroup.innerHTML += `
+                <defs>
+                    <linearGradient id="goldGradientBar" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="var(--parchment)" />
+                        <stop offset="100%" stop-color="var(--dark-bronze)" />
+                    </linearGradient>
+                </defs>
+            `;
+
+            // Build structural elements listing tracking questions verified records
+            buildDetailedReviewMatrixList();
+        }
+
+        // --- DETAILED STRUCTURAL REVIEW ENGINE ---
+        let currentReviewFilterState = "all";
+
+        function buildDetailedReviewMatrixList() {
+            const container = document.getElementById("detailed-review-listing-area");
+            container.innerHTML = "";
+
+            questions.forEach((q, idx) => {
+                const userAns = userResponses[idx];
+                let trackingStatus = "skipped";
+                let badgeClass = "badge-skipped";
+                let displayStatusLabel = "Skipped Element";
+
+                if (userAns !== null) {
+                    if (userAns === q.correct) {
+                        trackingStatus = "correct";
+                        badgeClass = "badge-correct";
+                        displayStatusLabel = "Correct";
+                    } else {
+                        trackingStatus = "wrong";
+                        badgeClass = "badge-wrong";
+                        displayStatusLabel = "Incorrect";
+                    }
+                }
+
+                // Create Item Wrapper Framework Card Box
+                const itemDiv = document.createElement("div");
+                itemDiv.className = "review-item";
+                itemDiv.setAttribute("data-status", trackingStatus);
+                itemDiv.setAttribute("data-pyq", q.isPYQ ? "true" : "false");
+
+                itemDiv.innerHTML = `
+                    <div class="review-summary-line" onclick="toggleReviewBodyPanel(this)">
+                        <div class="review-q-meta">
+                            <span style="font-family:monospace; font-weight:bold; color:var(--primary-gold)">Q.${idx + 1}</span>
+                            <span class="review-status-badge ${badgeClass}">${displayStatusLabel}</span>
+                            <span style="font-size:13px; color:var(--text-muted)">${q.section}</span>
+                        </div>
+                        <div style="color:var(--primary-gold); font-size:12px">Expand Details ▾</div>
+                    </div>
+                    <div class="review-details-body hidden">
+                        <p style="font-size:16px; font-weight:600; margin-bottom:15px; white-space:pre-line;">${q.question}</p>
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:15px;">
+                            ${q.options.map(o => `<div style="padding:8px; background:rgba(0,0,0,0.2); border:1px solid rgba(201,168,76,0.1); font-size:14px; ${o.startsWith(q.correct) ? 'border-color:#81c784; color:#81c784; font-weight:bold;' : ''}">${o}</div>`).join('')}
+                        </div>
+                        <p style="font-size:14px; color:var(--text-main)"><strong>Your Transmitted Select Vector Field Node:</strong> <span style="color:${userAns === q.correct ? '#81c784':'#ef9a9a'}">${userAns || 'None (Skipped Vector)'}</span></p>
+                        <p style="font-size:14px; color:var(--text-main)"><strong>Verified Target Equilibrium Vector:</strong> <span style="color:#81c784; font-weight:bold">${q.correct}</span></p>
+                        <div class="review-explanation">
+                            <strong>Resolution Engineering Breakdown Vector:</strong><br>
+                            ${q.explanation}
+                        </div>
+                    </div>
+                `;
+                container.appendChild(itemDiv);
+            });
+        }
+
+        function toggleReviewBodyPanel(headerEl) {
+            const body = headerEl.nextElementSibling;
+            const indicator = headerEl.querySelector("div:last-child");
+            if (body.classList.contains("hidden")) {
+                body.classList.remove("hidden");
+                indicator.innerText = "Collapse Details ▴";
+            } else {
+                body.classList.add("hidden");
+                indicator.innerText = "Expand Details ▾";
+            }
+        }
+
+        function applyReviewFilter(filterMode, btnEl) {
+            // Manage highlighting tracking classes on filters bar matrix row strip layout component element blocks
+            const btns = document.querySelectorAll(".filter-bar .filter-btn");
+            btns.forEach(b => b.classList.remove("active"));
+            btnEl.classList.add("active");
+
+            currentReviewFilterState = filterMode;
+            const items = document.querySelectorAll("#detailed-review-listing-area .review-item");
+
+            items.forEach((item) => {
+                const status = item.getAttribute("data-status");
+                const isPYQ = item.getAttribute("data-pyq") === "true";
+
+                if (filterMode === "all") {
+                    item.classList.remove("hidden");
+                } else if (filterMode === "pyq") {
+                    if (isPYQ) item.classList.remove("hidden");
+                    else item.classList.add("hidden");
+                } else {
+                    if (status === filterMode) item.classList.remove("hidden");
+                    else item.classList.add("hidden");
+                }
+            });
+        }
+
+        // --- LUXURY PRESENTATION EFFECTS: CELEBRATORY GOLD PARTICLE MATRIX SIMULATION ---
+        function triggerGoldParticleBurst() {
+            const container = document.getElementById("particle-container");
+            const particleCount = 120;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement("div");
+                particle.className = "gold-particle";
+                
+                // Randomize structural composition properties variants fields nodes configurations elements parameters
+                const size = Math.random() * 6 + 3;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.top = `-${Math.random() * 20 + 10}px`;
+                
+                const duration = Math.random() * 3 + 2;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${Math.random() * 1.5}s`;
+                
+                container.appendChild(particle);
+                
+                // Self cleanup cycle logic execution tracks loop hook block sequences
+                setTimeout(() => { particle.remove(); }, (duration + 1.5) * 1000);
+            }
+        }
+
+        // --- GENERAL FORMATTING MATH HELPER COMPONENT FUNCTIONS ---
+        function formatMMSS(totalSeconds) {
+            if (totalSeconds <= 0) return "00:00";
+            const mins = Math.floor(totalSeconds / 60);
+            const secs = totalSeconds % 60;
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+    </script>
+</body>
+</html>
