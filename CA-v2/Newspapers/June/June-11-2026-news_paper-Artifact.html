@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            .nav-links { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 2rem 1rem; }
+            header h1 { font-size: 1.6rem; letter-spacing: 1px; }
+            .tagline { font-size: 0.95rem; }
+            nav.sticky-top { padding: 0.75rem 1rem; gap: 0.5rem; }
+            .toggle-btn { padding: 0.4rem 0.8rem; font-size: 0.85rem; }
+            .layout-container { padding: 1rem 0.75rem; gap: 1rem; }
+            main { max-width: 100%; }
+            .legend-row { flex-direction: column; gap: 0.5rem; }
+            .news-card { padding: 1rem; }
+            .news-card h3 { font-size: 1.15rem; }
+            .card-meta { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+            table { font-size: 0.8rem; }
+            th, td { padding: 0.6rem; }
+            .raw-text-panel { font-size: 0.75rem; padding: 1rem; }
+            footer { padding: 1.5rem 1rem; }
+        }
+
+        @media (max-width: 480px) {
+            header h1 { font-size: 1.25rem; }
+            nav.sticky-top { flex-wrap: wrap; }
+            table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .news-card { border-left-width: 3px; }
+        }
+
+        /* ── Light Mode ── */
+        html.light-mode { color-scheme: light; }
+        html.light-mode body { background-color: #f5f6fa; color: #1a1c2e; }
+        html.light-mode h1, html.light-mode h2, html.light-mode h3, html.light-mode h4 { color: #b8840a; }
+        html.light-mode .news-card { background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        html.light-mode .legend-row { background: #ffffff; border: 1px solid #d4d8e8; }
+        html.light-mode .raw-text-panel { background: #f0f2f8; color: #4e5478; }
+        html.light-mode details { background: rgba(0,0,0,0.02); border-color: #d4d8e8; }
+        html.light-mode th { background: #b8840a; }
+        html.light-mode td { border-color: #d4d8e8; }
+        html.light-mode tr:nth-child(even) { background: rgba(0,0,0,0.03); }
+        html.light-mode nav.sticky-top { background: rgba(245,246,250,0.96); border-color: #d4d8e8; }
+        html.light-mode .nav-links a { color: #1a1c2e; }
+        html.light-mode .toggle-btn { background: #b8840a; }
+        html.light-mode hr { border-color: rgba(0,0,0,0.1); }
+        html.light-mode .answer-reveal { background: rgba(30,122,74,0.08); }
+        html.light-mode aside ul { border-color: #d4d8e8; }
+        html.light-mode aside a { color: #6e7498; }
+        html.light-mode aside a:hover, html.light-mode aside a.active { color: #b8840a; }
+        html.light-mode .category-pill { color: #6e7498; }
+
+        /* Theme toggle button */
+        #themeToggleBtn {
+            position: fixed; bottom: 24px; right: 24px; z-index: 9998;
+            width: 42px; height: 42px; border-radius: 50%;
+            background: rgba(13,15,20,0.92); border: 1px solid rgba(245,200,66,0.35);
+            color: #f5c842; font-size: 16px; line-height: 1; cursor: pointer;
+            backdrop-filter: blur(8px); box-shadow: 0 2px 14px rgba(0,0,0,0.45);
+            display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+        }
+        html.light-mode #themeToggleBtn {
+            background: rgba(245,246,250,0.92); border-color: rgba(184,132,10,0.35);
+            color: #b8840a; box-shadow: 0 2px 14px rgba(0,0,0,0.15);
+        }
+    </style>
+    <script>(function(){if(localStorage.getItem('arivoam-theme')==='light'){document.documentElement.classList.add('light-mode');}})()</script>
+</head>
+<body class="en-mode">
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">11 June 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">11 ஜூன் 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <!-- Sidebar TOC -->
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Tech</span><span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Obituary · Arts & Culture</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Legendary Tamil Film Director Bharathiraja (84) Passes Away</span>
+                        <span class="lang-ta">புகழ்பெற்ற திரைப்பட இயக்குநர் "இயக்குநர் இமயம்" பாரதிராஜா (84) காலமானார்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Renowned Tamil film director Bharathiraja, affectionately known as "Iyakkunar Imayam," passed away in Chennai on June 10, 2026, at the age of 84 due to age-related illness. Born in Allinagaram near Theni, he revolutionized Tamil cinema by moving it out of studios and into rural landscapes, starting with his debut blockbuster "16 Vayathinile" (1977). He received the Padma Shri in 2004 (which he later offered to return in 2009 protesting the Sri Lankan Tamil genocide) and six National Film Awards. CM Joseph Vijay paid his respects and announced that the funeral would be held with full state honors.</p>
+                    <p class="lang-ta">தமிழ் திரையுலகில் "இயக்குநர் இமயம்" எனப் போற்றப்படும் புகழ்பெற்ற இயக்குநர் பாரதிராஜா (84) உடல்நலக் குறைவால் ஜூன் 10, 2026 அன்று சென்னையில் காலமானார். தேனி அருகேயுள்ள அல்லிநகரத்தில் பிறந்த இவர், 1977-ல் வெளிவந்த தனது முதல் படமான "16 வயதினிலே" மூலம் ஸ்டுடியோக்களுக்குள் முடங்கிக் கிடந்த தமிழ் சினிமாவை கிராமத்து மண்வாசனைக்குக் கொண்டு சென்றார். 2004-ம் ஆண்டு பத்மஸ்ரீ விருது பெற்றார் (2009-ல் ஈழத்தமிழர் படுகொலையைக் கண்டித்து இவ்விருதைத் திரும்ப ஒப்படைப்பதாக அறிவித்தார்). மேலும் 6 தேசிய விருதுகளையும் வென்றுள்ளார். முதல்வர் ஜோசப் விஜய் நேரில் அஞ்சலி செலுத்தியதுடன், பாரதிராஜாவின் இறுதிச்சடங்கு முழு அரசு மரியாதையுடன் நடைபெறும் என அறிவித்தார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-gem">GEM</span><span class="lang-en"><strong>Cultural Impact:</strong> Bharathiraja is credited with introducing the "village genre" (Gramiya Thiraippadam) into mainstream commercial Tamil cinema, breaking the dominance of urban/mythological themes.</span><span class="lang-ta"><strong>கலாச்சாரத் தாக்கம்:</strong> நகர மற்றும் புராணப் படங்களின் ஆதிக்கத்தை உடைத்து, தமிழ் சினிமாவில் "கிராமியத் திரைப்படங்கள்" என்ற புதிய பரிமாணத்தை உருவாக்கிய பெருமை இவரையே சேரும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · Centre-State Relations</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">CM Joseph Vijay Meets President & Key Leaders in Delhi</span>
+                        <span class="lang-ta">டெல்லியில் குடியரசுத் தலைவர், சோனியா காந்தி, டி.ராஜா உள்ளிட்டோரை சந்தித்தார் முதல்வர் விஜய்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">During a three-day official visit to New Delhi, Tamil Nadu Chief Minister Joseph Vijay met President Droupadi Murmu and Vice President C.P. Radhakrishnan to discuss state welfare projects. He also held significant political meetings with Congress leaders Sonia Gandhi and Rahul Gandhi, and CPI General Secretary D. Raja, thanking them for their support in forming the TVK-led alliance government in Tamil Nadu. Concurrently, Puducherry CM N. Rangasamy skipped the NITI Aayog meeting chaired by PM Modi, holding multiple portfolios himself after failing to appoint new ministers.</p>
+                    <p class="lang-ta">மூன்று நாள் அரசு முறைப் பயணமாக டெல்லி சென்ற தமிழக முதல்வர் ஜோசப் விஜய், குடியரசுத் தலைவர் திரௌபதி முர்மு மற்றும் குடியரசு துணைத் தலைவர் சி.பி. ராதாகிருஷ்ணன் ஆகியோரை சந்தித்து மாநில நலத்திட்டங்கள் குறித்து விவாதித்தார். மேலும், தமிழகத்தில் தவெக தலைமையிலான கூட்டணி ஆட்சி அமைய ஆதரவளித்ததற்காக காங்கிரஸ் தலைவர்கள் சோனியா காந்தி, ராகுல் காந்தி மற்றும் இந்திய கம்யூனிஸ்ட் கட்சியின் பொதுச்செயலாளர் டி. ராஜா ஆகியோரையும் நேரில் சந்தித்து நன்றி தெரிவித்தார். அதே வேளையில், டெல்லியில் பிரதமர் மோடி தலைமையில் நடைபெறும் நிதி ஆயோக் கூட்டத்தை புதுச்சேரி முதல்வர் என். ரங்கசாமி புறக்கணித்துள்ளார்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Governance · Tribal Welfare</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Tamil Nadu Wins Central Govt Award for Tribal Welfare Schemes</span>
+                        <span class="lang-ta">பழங்குடியினர் நலத் திட்டங்களில் சிறந்து விளங்கும் தமிழக அரசுக்கு ரூ.5 லட்சம் பரிசு வழங்கி மத்திய அரசு கௌரவிப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Union Ministry of Tribal Affairs has awarded ₹5 lakhs to the Tamil Nadu Government for its exemplary implementation of the Integrated Tribal Development Program (ITDP). In a national conference held in New Delhi, Tamil Nadu was recognized as a "High-Performing State". Specifically, the Kallakurichi district administration was lauded for securing higher education for tribal students, forming horticulture producer groups in the Kalvarayan Hills, and distributing 9,547 land titles under the Forest Rights Act.</p>
+                    <p class="lang-ta">ஒருங்கிணைந்த பழங்குடியினர் மேம்பாட்டுத் திட்டங்களை (ITDP) சிறப்பாகச் செயல்படுத்தியதற்காக, மத்திய பழங்குடியினர் நல அமைச்சகம் தமிழக அரசுக்கு ரூ.5 லட்சம் பரிசு வழங்கி கௌரவித்துள்ளது. டெல்லியில் நடைபெற்ற தேசிய மாநாட்டில், தமிழகம் "உயர் செயல் திறன் கொண்ட மாநிலமாக" அங்கீகரிக்கப்பட்டது. குறிப்பாக, கள்ளக்குறிச்சி மாவட்டத்தில் பழங்குடியின மாணவர்களுக்கு உயர்கல்வி வழங்குதல், கல்வராயன் மலையில் தோட்டக்கலை உற்பத்தியாளர் குழுக்களை உருவாக்குதல் மற்றும் வன உரிமைச் சட்டத்தின் கீழ் 9,547 நிலப் பட்டாக்களை வழங்குதல் ஆகிய சிறப்பான செயல்பாடுகள் பாராட்டப்பட்டன.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Scheme Hook:</strong> The Scheduled Tribes and Other Traditional Forest Dwellers (Recognition of Forest Rights) Act, 2006, recognizes the rights of forest-dwelling tribal communities to forest resources.</span><span class="lang-ta"><strong>திட்டக் குறிப்பு:</strong> 2006-ம் ஆண்டின் வன உரிமைச் சட்டம் (Forest Rights Act), காடுகளில் வசிக்கும் பழங்குடியின சமூகங்களுக்கு வன வளங்கள் மீதான உரிமைகளை உறுதி செய்கிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Health · Epidemic Alert</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Shigella Bacteria Outbreak in Kerala; Tamil Nadu Borders on High Alert</span>
+                        <span class="lang-ta">கேரளாவில் ஷிகெல்லா பாக்டீரியா தொற்று: தமிழக எல்லை மாவட்டங்களில் மருத்துவக் கண்காணிப்பு தீவிரம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Following the confirmation of the highly contagious 'Shigella' bacterial infection among students in Wayanad, Kerala, the Tamil Nadu government has intensified medical surveillance in border districts including Theni, Coimbatore, and Kanyakumari. Over 350 individuals in Kerala are showing symptoms. Shigella spreads through contaminated water and food, causing severe intestinal distress, diarrhea, fever, and stomach pain. Health officials have urged the public to consume boiled water and maintain strict hygiene.</p>
+                    <p class="lang-ta">கேரள மாநிலம் வயநாட்டில் உள்ள மாணவர்களிடையே வேகமாகப் பரவும் 'ஷிகெல்லா' (Shigella) பாக்டீரியா தொற்று உறுதி செய்யப்பட்டதையடுத்து, தேனி, கோயம்புத்தூர் மற்றும் கன்னியாகுமரி உள்ளிட்ட தமிழக எல்லை மாவட்டங்களில் மருத்துவக் கண்காணிப்பு தீவிரப்படுத்தப்பட்டுள்ளது. கேரளாவில் 350-க்கும் மேற்பட்டோருக்கு அறிகுறி காணப்படுகிறது. அசுத்தமான நீர் மற்றும் உணவு மூலம் பரவும் இத்தொற்று, கடுமையான குடல் பாதிப்பு, வயிற்றுப்போக்கு, காய்ச்சல் மற்றும் வயிற்றுவலியை ஏற்படுத்துகிறது. காய்ச்சிய குடிநீரைப் பருகுமாறும், சுகாதாரத்தைப் பேணுமாறும் சுகாதாரத்துறை அறிவுறுத்தியுள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Science Hook:</strong> Shigellosis is an infectious disease caused by a group of bacteria called Shigella. It primarily affects the digestive system, causing severe diarrhea (sometimes bloody).</span><span class="lang-ta"><strong>அறிவியல் குறிப்பு:</strong> ஷிகெல்லோசிஸ் என்பது ஷிகெல்லா என்ற பாக்டீரியாவால் ஏற்படும் ஒரு தொற்று நோயாகும். இது முக்கியமாக செரிமான மண்டலத்தை பாதித்து கடுமையான வயிற்றுப்போக்கை (சில நேரங்களில் இரத்தத்துடன்) ஏற்படுத்துகிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National / Central News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · Historical Record</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">PM Modi Breaks Jawaharlal Nehru's Record for Continuous Days in Office Post-1952</span>
+                        <span class="lang-ta">தொடர்ச்சியாக அதிக நாட்கள் பிரதமராக இருந்த நேருவின் சாதனையை முறியடித்தார் நரேந்திர மோடி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">On June 10, 2026, Prime Minister Narendra Modi completed 4,399 continuous days in office, breaking India's first PM Jawaharlal Nehru's record of 4,398 continuous days as the elected Prime Minister post the 1952 general elections. (Note: Nehru served over 16 years overall if counting his 1947-1952 interim tenure). National and global leaders, including US Ex-President Donald Trump, Italy's Giorgia Meloni, and Sri Lanka's Anura Kumara Dissanayake, sent congratulatory messages. The NDA held a special meeting in Delhi to celebrate the milestone.</p>
+                    <p class="lang-ta">1952 பொதுத் தேர்தலுக்குப் பிறகு மக்களால் தேர்ந்தெடுக்கப்பட்டு தொடர்ச்சியாக 4,398 நாட்கள் பிரதமராக இருந்த ஜவஹர்லால் நேருவின் சாதனையை முறியடித்து, ஜூன் 10, 2026 அன்று பிரதமர் நரேந்திர மோடி 4,399 நாட்களை நிறைவு செய்தார். (குறிப்பு: 1947-1952 இடைக்கால அரசையும் சேர்த்தால் நேரு 16 ஆண்டுகளுக்கும் மேல் பதவி வகித்துள்ளார்). அமெரிக்க முன்னாள் அதிபர் டொனால்ட் டிரம்ப், இத்தாலி பிரதமர் ஜார்ஜியா மெலோனி, இலங்கை அதிபர் அனுர குமார திசாநாயக்க உள்ளிட்ட உலகத் தலைவர்கள் மோடிக்கு வாழ்த்து தெரிவித்தனர். இந்த மைல்கல்லைக் கொண்டாட டெல்லியில் தேசிய ஜனநாயகக் கூட்டணியின் சிறப்புக் கூட்டம் நடைபெற்றது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en"><strong>Polity Hook:</strong> While Modi broke the record for continuous days post-1952 elections, Jawaharlal Nehru remains the longest-serving Prime Minister of India overall (16 years, 286 days). Indira Gandhi is the second longest-serving overall (15 years, 350 days).</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> 1952 தேர்தலுக்குப் பிறகு தொடர்ச்சியாக அதிக நாட்கள் பதவியிலிருந்த சாதனையை மோடி முறியடித்திருந்தாலும், ஒட்டுமொத்தமாக இந்தியாவின் நீண்ட காலப் பிரதமராக ஜவஹர்லால் நேருவே (16 ஆண்டுகள், 286 நாட்கள்) உள்ளார். இந்திரா காந்தி இரண்டாவது இடத்தில் (15 ஆண்டுகள், 350 நாட்கள்) உள்ளார்.</span></li>
+                            <li><span class="lang-en">Congress leader Jairam Ramesh criticized this celebration, stating that Modi's current tenure relies entirely on coalition support (NDA), unlike Nehru's absolute majorities.</span><span class="lang-ta">நேரு பெற்ற தனிப்பெரும்பான்மையைப் போலல்லாமல், மோடியின் தற்போதைய ஆட்சி கூட்டணி ஆதரவையே (NDA) நம்பியுள்ளது என காங்கிரஸ் தலைவர் ஜெய்ராம் ரமேஷ் விமர்சித்துள்ளார்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Defence · Space Security</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Indian Navy Signs ₹449 Crore Deal for Anti-Satellite Jammers</span>
+                        <span class="lang-ta">செயற்கைக்கோள்களை முடக்கும் கருவிகள்: இந்திய கடற்படை ரூ.449 கோடியில் ஒப்பந்தம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Ministry of Defence has signed a ₹449 crore contract with Bengaluru-based HSEL to procure 20 advanced anti-satellite jammer systems for the Indian Navy. These systems will protect Indian naval ships by blocking enemy surveillance satellites from tracking their movements. Designed and developed indigenously with 75% local components, this procurement significantly boosts India's maritime security and self-reliance (Aatmanirbharta) in defence technology.</p>
+                    <p class="lang-ta">இந்திய கடற்படைக் கப்பல்களை எதிரி நாடுகளின் உளவுச் செயற்கைக்கோள்கள் கண்காணிப்பதைத் தடுக்கும் வகையில், செயற்கைக்கோள்களை முடக்கும் 20 அதிநவீன ஜாமர் (Jammer) கருவிகளை வாங்க பாதுகாப்பு அமைச்சகம் பெங்களூரைச் சேர்ந்த HSEL நிறுவனத்துடன் ரூ.449 கோடிக்கு ஒப்பந்தம் செய்துள்ளது. 75 சதவீத உள்நாட்டு உதிரிபாகங்களுடன் முழுமையாக இந்தியாவிலேயே வடிவமைக்கப்பட்ட இந்தக் கருவிகள், இந்தியாவின் கடல்சார் பாதுகாப்பையும், பாதுகாப்புத் துறையில் தற்சார்பையும் (Aatmanirbharta) மேம்படுத்துகின்றன.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Economy · Fuel Consumption</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">India's Fuel Consumption Drops by 6.5% in May; LPG Use Plummets 20.5%</span>
+                        <span class="lang-ta">மே மாதத்தில் இந்தியாவின் எரிபொருள் நுகர்வு 6.5% சரிவு; எல்பிஜி (LPG) பயன்பாடு 20.5% வீழ்ச்சி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">India's total fuel consumption dropped by 6.5% to 1.99 crore metric tonnes in May 2026, primarily driven by global supply chain disruptions caused by conflicts in the Middle East. High crude oil prices resulting in increased retail petrol and diesel rates have dampened demand. Notably, Domestic LPG consumption plummeted by 20.5% due to supply bottlenecks in the Strait of Hormuz. Conversely, aviation fuel demand remained steady despite flight cancellations.</p>
+                    <p class="lang-ta">மத்திய கிழக்கு நாடுகளில் நிலவும் போர்ச் சூழல் மற்றும் உலகளாவிய விநியோகச் சங்கிலி பாதிப்புகளால், 2026 மே மாதத்தில் இந்தியாவின் மொத்த எரிபொருள் நுகர்வு 6.5 சதவீதம் சரிந்து 1.99 கோடி மெட்ரிக் டன்னாகக் குறைந்துள்ளது. கச்சா எண்ணெய் விலை உயர்வால் பெட்ரோல், டீசல் விலை அதிகரித்ததே இதற்குக் காரணமாகும். குறிப்பாக, ஹோர்முஸ் ஜலசந்தியில் ஏற்பட்ட போக்குவரத்துத் தடையால் வீட்டு உபயோக சமையல் எரிவாயு (LPG) நுகர்வு 20.5 சதவீதம் வீழ்ச்சியடைந்துள்ளது. ஆனால் விமான எரிபொருள் பயன்பாடு சீராக உள்ளது.</p>
+                </div>
+            </section>
+
+            <!-- INTERNATIONAL NEWS -->
+            <section id="international">
+                <h2>
+                    <span class="lang-en">International News</span>
+                    <span class="lang-ta">சர்வதேச செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Conflict · Strait of Hormuz</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">3 Indian Sailors Missing After Missile Strike on Cargo Ship Near Oman</span>
+                        <span class="lang-ta">ஓமன் அருகே சரக்குக் கப்பல் மீது ஏவுகணைத் தாக்குதல்: 3 இந்திய மாலுமிகள் மாயம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">A Palau-flagged cargo ship, carrying chemicals and oil products, was struck by a missile 20 nautical miles northeast of Oman's Sohar port, sparking a massive fire. Out of the 24 Indian sailors on board, the Omani Navy rescued 21, but 3 remain missing. The attack occurred near the strategic Strait of Hormuz, where tensions between the US and Iran have escalated. The Indian Ministry of External Affairs strongly condemned the attack and is coordinating rescue operations.</p>
+                    <p class="lang-ta">ஓமனின் சோஹார் துறைமுகத்திற்கு வடகிழக்கே 20 கடல் மைல் தொலைவில், ரசாயனங்கள் மற்றும் எண்ணெய் பொருட்களை ஏற்றிச் சென்ற பலாவு நாட்டு கொடி ஏந்திய சரக்குக் கப்பல் மீது ஏவுகணைத் தாக்குதல் நடத்தப்பட்டதில் பெரும் தீ விபத்து ஏற்பட்டது. கப்பலில் இருந்த 24 இந்திய மாலுமிகளில் 21 பேரை ஓமன் கடற்படை மீட்ட நிலையில், 3 பேரைக் காணவில்லை. அமெரிக்கா-ஈரான் இடையே பதற்றம் நிலவும் ஹோர்முஸ் ஜலசந்தி அருகே இத்தாக்குதல் நிகழ்ந்துள்ளது. இத்தாக்குதலுக்குக் கண்டனம் தெரிவித்துள்ள இந்திய வெளியுறவுத்துறை அமைச்சகம், மீட்புப் பணிகளைத் தீவிரப்படுத்தியுள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Geography Hook:</strong> The Strait of Hormuz is a crucial chokepoint connecting the Persian Gulf to the Gulf of Oman and the Arabian Sea. About 20% of the world's petroleum passes through this strait.</span><span class="lang-ta"><strong>புவியியல் குறிப்பு:</strong> பெர்சிய வளைகுடாவை ஓமன் வளைகுடா மற்றும் அரபிக்கடலுடன் இணைக்கும் முக்கிய நீர்வழிப்பாதை ஹோர்முஸ் ஜலசந்தி ஆகும். உலகின் கச்சா எண்ணெய் போக்குவரத்தில் சுமார் 20% இதன் வழியாகவே நடக்கிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Diplomacy · US-Iran</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">US Helicopter Downed; Tensions Escalate as US Strikes Iran</span>
+                        <span class="lang-ta">அமெரிக்க ஹெலிகாப்டர் வீழ்த்தப்பட்டது; ஈரானுக்கு பதிலடி கொடுத்த அமெரிக்கா</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The temporary ceasefire between the US and Iran was shattered after a US military helicopter collided with an Iranian drone over the Strait of Hormuz. In retaliation, US President Donald Trump ordered airstrikes on Iran early Wednesday. Iran responded by firing missiles at US bases in Jordan, Kuwait, and Bahrain. Trump also accused Iran of smuggling oil out of the country in violation of sanctions, vowing severe consequences.</p>
+                    <p class="lang-ta">ஹோர்முஸ் ஜலசந்திப் பகுதியில் ஈரானின் ட்ரோன் ஒன்றுடன் மோதி அமெரிக்க ராணுவ ஹெலிகாப்டர் வீழ்ந்ததையடுத்து, இரு நாடுகளுக்கும் இடையிலான போர்நிறுத்த ஒப்பந்தம் முடிவுக்கு வந்தது. இதற்குப் பதிலடியாக, புதன்கிழமை அதிகாலை ஈரான் மீது அமெரிக்க அதிபர் டொனால்ட் டிரம்ப் வான்வழித் தாக்குதலுக்கு உத்தரவிட்டார். பதிலுக்கு ஜோர்டான், குவைத், பஹ்ரைனில் உள்ள அமெரிக்கத் தளங்கள் மீது ஈரான் ஏவுகணைகளை வீசியது. மேலும், தடைகளை மீறி ஈரான் எண்ணெய் கடத்துவதாக டிரம்ப் குற்றம் சாட்டியுள்ளார்.</p>
+                </div>
+            </section>
+
+            <!-- ECONOMY & FINANCE -->
+            <section id="economy">
+                <h2>
+                    <span class="lang-en">Economy & Technology</span>
+                    <span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Trade · Export Growth</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">India Exports Electronics to USA and China; Market Reaches New Heights</span>
+                        <span class="lang-ta">அமெரிக்கா, சீனாவுக்கு மின்னணுப் பொருட்கள் ஏற்றுமதி: மத்திய அமைச்சர் அஸ்வினி வைஷ்ணவ் தகவல்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Union IT Minister Ashwini Vaishnaw stated that India's electronics manufacturing has reached a point where the country is now exporting complex electronic goods to global giants like the USA and China. Last year alone, India exported ₹35,000 crore worth of electronics to China. From being a net importer of mobile phones in 2014, India is now a massive exporter. The government is also training 75,000 students specifically for the semiconductor sector to build self-reliance.</p>
+                    <p class="lang-ta">இந்தியாவின் மின்னணுப் பொருட்கள் உற்பத்தித் துறை மிகப்பெரிய வளர்ச்சியை அடைந்துள்ளதாகவும், அமெரிக்கா, சீனா போன்ற வல்லரசு நாடுகளுக்கு நாம் மின்னணுப் பொருட்களை ஏற்றுமதி செய்து வருவதாகவும் மத்திய தகவல் தொழில்நுட்பத்துறை அமைச்சர் அஸ்வினி வைஷ்ணவ் தெரிவித்தார். கடந்த ஆண்டு மட்டும் சீனாவுக்கு ரூ.35,000 கோடி மதிப்பிலான மின்னணுப் பொருட்கள் ஏற்றுமதி செய்யப்பட்டுள்ளன. 2014-ல் மொபைல் போன்களை அதிக அளவில் இறக்குமதி செய்த இந்தியா, தற்போது பெரிய அளவில் ஏற்றுமதி செய்கிறது. செமிகண்டக்டர் துறையில் தற்சார்பை அடைய 75,000 மாணவர்களுக்கு அரசு பயிற்சி அளித்து வருகிறது.</p>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Finance · Microfinance</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Centre Extends Credit Guarantee Scheme for Microfinance Institutions (MFIs)</span>
+                        <span class="lang-ta">நுண்நிதி நிறுவனங்களுக்கான (MFI) கடன் உத்தரவாதத் திட்டத்தை நீட்டித்தது மத்திய அரசு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Union Finance Ministry has approved the extension of the Credit Guarantee Scheme (CGS) for Microfinance Institutions (MFIs) up to August 31, 2026, or until the guarantee limit of ₹20,000 crore is exhausted. Additionally, the maximum loan limit provided by large NBFC-MFIs to other microfinance institutions has been increased from ₹300 crore to ₹1,000 crore. This move aims to ensure liquidity and support grass-root lending.</p>
+                    <p class="lang-ta">நுண்நிதி நிறுவனங்களுக்கான (MFIs) கடன் உத்தரவாதத் திட்டத்தை (CGS) ஆகஸ்ட் 31, 2026 வரையோ அல்லது ரூ.20,000 கோடி உத்திரவாத வரம்பு முடிவடையும் வரையோ நீட்டிக்க மத்திய நிதியமைச்சகம் ஒப்புதல் அளித்துள்ளது. மேலும், பெரிய வங்கி அல்லாத நிதி நிறுவனங்கள் (NBFC-MFI) பிற சிறு நுண்நிதி நிறுவனங்களுக்கு வழங்கும் அதிகபட்ச கடன் வரம்பு ரூ.300 கோடியில் இருந்து ரூ.1,000 கோடியாக உயர்த்தப்பட்டுள்ளது. அடித்தட்டு மக்களுக்கான கடன் வசதியை உறுதி செய்ய இம்முடிவு எடுக்கப்பட்டுள்ளது.</p>
+                </div>
+            </section>
+            
+            <!-- SPORTS -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports</span>
+                    <span class="lang-ta">விளையாட்டு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Football · Global Event</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">2026 FIFA World Cup Kicks Off with 48 Teams Across 3 Host Nations</span>
+                        <span class="lang-ta">2026 உலகக் கோப்பை கால்பந்து திருவிழா இன்று தொடக்கம்: 3 நாடுகளில் 48 அணிகள் பங்கேற்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The 23rd edition of the FIFA World Cup commences today (June 11) with an expanded format featuring 48 teams (up from 32). For the first time in history, the tournament is being co-hosted by three nations: the USA, Canada, and Mexico. The opening matches feature Mexico vs. South Africa and South Korea vs. Czech Republic. The tournament will span 16 cities, concluding on July 19. A massive prize pool of ₹6,236 crore has been allocated, with the winner taking home ₹476 crore.</p>
+                    <p class="lang-ta">23-வது ஃபிஃபா (FIFA) உலகக் கோப்பை கால்பந்துப் போட்டிகள் இன்று (ஜூன் 11) தொடங்குகின்றன. வரலாற்றில் முதல்முறையாக அணிகளின் எண்ணிக்கை 32-லிருந்து 48-ஆக உயர்த்தப்பட்டுள்ளது. மேலும் அமெரிக்கா, கனடா, மெக்சிகோ ஆகிய 3 நாடுகள் இணைந்து இப்போட்டியை நடத்துவது இதுவே முதல்முறையாகும். முதல் ஆட்டத்தில் மெக்சிகோ-தென்னாப்பிரிக்கா மோதுகின்றன. 16 நகரங்களில் நடைபெறும் இத்தொடரின் இறுதிப் போட்டி ஜூலை 19 அன்று நடைபெறும். இத்தொடருக்கான மொத்த பரிசுத் தொகை ரூ.6,236 கோடியாகும்; சாம்பியன் அணிக்கு ரூ.476 கோடி வழங்கப்படும்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en"><strong>New Format:</strong> The 48 teams are divided into 12 groups of 4. A new knockout round, the "Round of 32," has been introduced before the traditional Round of 16.</span><span class="lang-ta"><strong>புதிய வடிவம்:</strong> 48 அணிகளும் தலா 4 வீதம் 12 குழுக்களாகப் பிரிக்கப்பட்டுள்ளன. வழக்கமான "ரவுண்ட் ஆஃப் 16" சுற்றுக்கு முன்பு, "ரவுண்ட் ஆஃப் 32" என்ற புதிய நாக்-அவுட் சுற்று அறிமுகப்படுத்தப்பட்டுள்ளது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Who holds the record for the longest continuous tenure as the elected Prime Minister of India post-1952 general elections?</span>
+                        <span class="lang-ta">கேள்வி: 1952 பொதுத் தேர்தலுக்குப் பிறகு மக்களால் தேர்ந்தெடுக்கப்பட்டு தொடர்ச்சியாக அதிக நாட்கள் பிரதமராக பதவி வகித்தவர் யார்?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Narendra Modi</span><br><br>
+                                <strong>Context:</strong> PM Modi completed 4,399 continuous days on June 10, 2026, breaking Jawaharlal Nehru's post-1952 continuous elected tenure record of 4,398 days. (Note: Nehru's overall tenure including the interim govt is still the longest).
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">நரேந்திர மோடி</span><br><br>
+                                <strong>பின்னணி:</strong> ஜவஹர்லால் நேருவின் சாதனையை (4,398 நாட்கள்) முறியடித்து, ஜூன் 10, 2026 அன்று நரேந்திர மோடி 4,399 நாட்களை நிறைவு செய்தார். (இடைக்கால அரசையும் சேர்த்தால் நேருவே ஒட்டுமொத்தமாக அதிக காலம் பதவி வகித்துள்ளார்).
+                            </span>
+                        </div>
+                    </details>
+                </div>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Which three countries are co-hosting the 2026 FIFA World Cup?</span>
+                        <span class="lang-ta">கேள்வி: 2026 ஃபிஃபா (FIFA) உலகக் கோப்பை கால்பந்துப் போட்டியை இணைந்து நடத்தும் மூன்று நாடுகள் எவை?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">USA, Canada, and Mexico</span><br><br>
+                                <strong>Context:</strong> For the first time, 48 teams are participating, and the tournament is being jointly hosted by these three North American nations.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">அமெரிக்கா, கனடா, மற்றும் மெக்சிகோ</span><br><br>
+                                <strong>பின்னணி:</strong> வரலாற்றில் முதல்முறையாக 48 அணிகளுடன் இந்த 3 வட அமெரிக்க நாடுகள் இணைந்து உலகக் கோப்பையை நடத்துகின்றன.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">Director Bharathiraja Dies</span><span class="lang-ta">இயக்குநர் பாரதிராஜா மறைவு</span></td>
+                                <td><span class="lang-en">State/Obituary</span><span class="lang-ta">மாநிலம்/இரங்கல்</span></td>
+                                <td><span class="lang-en">Age 84; Revolutionized Tamil rural cinema.</span><span class="lang-ta">வயது 84; கிராமிய சினிமாவின் முன்னோடி.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">PM Modi's Record</span><span class="lang-ta">மோடியின் சாதனை</span></td>
+                                <td><span class="lang-en">National/Polity</span><span class="lang-ta">தேசியம்/அரசியல்</span></td>
+                                <td><span class="lang-en">4,399 continuous days; breaks Nehru's post-'52 record.</span><span class="lang-ta">4,399 நாட்கள்; நேருவின் சாதனையை முறியடித்தார்.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">FIFA 2026 World Cup</span><span class="lang-ta">2026 FIFA உலகக் கோப்பை</span></td>
+                                <td><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></td>
+                                <td><span class="lang-en">48 Teams; Hosted by USA, Canada, Mexico.</span><span class="lang-ta">48 அணிகள்; அமெரிக்கா, கனடா, மெக்சிகோவில் நடக்கிறது.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">Anti-Satellite Jammers</span><span class="lang-ta">செயற்கைக்கோள் முடக்கும் கருவி</span></td>
+                                <td><span class="lang-en">Defence</span><span class="lang-ta">பாதுகாப்பு</span></td>
+                                <td><span class="lang-en">Indian Navy signs ₹449 Cr deal for 20 systems.</span><span class="lang-ta">ரூ.449 கோடியில் இந்திய கடற்படை ஒப்பந்தம்.</span></td>
+                                <td><span class="badge bg-tip">MED</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">Tribal Welfare Award</span><span class="lang-ta">பழங்குடியினர் நல விருது</span></td>
+                                <td><span class="lang-en">State/Governance</span><span class="lang-ta">மாநிலம்/ஆளுமை</span></td>
+                                <td><span class="lang-en">TN Govt receives ₹5L award from Centre.</span><span class="lang-ta">தமிழக அரசுக்கு ரூ.5 லட்சம் வழங்கி மத்திய அரசு பாராட்டு.</span></td>
+                                <td><span class="badge bg-tip">MED</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani Chennai 11-06-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி சென்னை 11-06-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source text detailed state, national, and international news for 11 June 2026. 
+State news prominently covered the demise of legendary Tamil Film Director Bharathiraja (84). CM Joseph Vijay visited Delhi, met the President, Vice President, Sonia Gandhi, and Rahul Gandhi to thank them for supporting the TVK alliance. Gold prices fell by Rs 3200 per sovereign. "Singappen" Special Action Force was launched with 2545 cops and a 357 Cr budget. The State Tribal Welfare dept won a 5L prize from the Centre. Shigella bacteria outbreaks in Kerala prompted border checks in TN. 
+National news highlighted PM Modi breaking Nehru's record of continuous days in office as elected PM (4399 days). The NDA alliance celebrated this milestone. The Navy procured 20 anti-satellite jammers for 449 Cr. Fuel consumption in India dropped by 6.5%.
+Internationally, a Houthi missile attack near Oman left 3 Indian sailors missing. Tensions between the US and Iran escalated following a helicopter crash in the Strait of Hormuz. Pakistan bombed Afghanistan. 
+Sports coverage detailed the kickoff of the 2026 FIFA World Cup with 48 teams in North America (USA, Canada, Mexico). In badminton, Sindhu advanced while others faced early exits.]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூல உரைகள் 11 ஜூன் 2026 க்கான செய்திகளைக் கொண்டிருந்தன.
+மாநில செய்திகளில், புகழ்பெற்ற திரைப்பட இயக்குநர் பாரதிராஜாவின் (84) மறைவு முக்கியச் செய்தியாக இடம்பெற்றது. முதல்வர் ஜோசப் விஜய் டெல்லி சென்று, குடியரசுத் தலைவர், சோனியா காந்தி உள்ளிட்டோரை சந்தித்தார். தங்கம் விலை சவரனுக்கு ரூ.3200 குறைந்தது. பெண்கள் பாதுகாப்புக்காக 2545 காவலர்களுடன் "சிங்கப்பெண் சிறப்பு அதிரடிப்படை" ரூ.357 கோடியில் தொடங்கப்பட்டது. தமிழக பழங்குடியினர் நலத்துறை மத்திய அரசின் பரிசை வென்றது. கேரளாவில் ஷிகெல்லா தொற்று பரவுவதால் தமிழக எல்லைகளில் மருத்துவக் கண்காணிப்பு தீவிரப்படுத்தப்பட்டுள்ளது.
+தேசிய அளவில், தொடர்ச்சியாக அதிக நாட்கள் பிரதமராக இருந்த நேருவின் சாதனையை நரேந்திர மோடி முறியடித்தார். செயற்கைக்கோள்களை முடக்கும் 20 ஜாமர்களை கடற்படை ரூ.449 கோடியில் வாங்குகிறது. இந்தியாவில் எரிபொருள் நுகர்வு 6.5 சதவீதம் குறைந்தது.
+சர்வதேச அளவில், ஓமன் அருகே சரக்குக் கப்பல் மீதான தாக்குதலில் 3 இந்தியர்கள் மாயம். ஹோர்முஸ் ஜலசந்தியில் அமெரிக்க ஹெலிகாப்டர் விபத்துக்குள்ளானதால், அமெரிக்கா-ஈரான் இடையே மோதல் வெடித்தது. ஆப்கானிஸ்தானில் பாகிஸ்தான் குண்டுவீச்சு.
+விளையாட்டு: 2026 ஃபிஃபா உலகக் கோப்பை 48 அணிகளுடன் வட அமெரிக்காவில் இன்று தொடங்குகிறது. பேட்மிண்டனில் சிந்து அடுத்த சுற்றுக்கு முன்னேறினார்.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 11 June 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <button id="themeToggleBtn" title="Toggle light/dark mode" onclick="toggleTheme()">☀</button>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+
+        function toggleTheme() {
+            var isLight = document.documentElement.classList.toggle('light-mode');
+            localStorage.setItem('arivoam-theme', isLight ? 'light' : 'dark');
+            document.getElementById('themeToggleBtn').innerHTML = isLight ? '☽' : '☀';
+        }
+
+        (function() {
+            var saved = localStorage.getItem('arivoam-theme');
+            var btn = document.getElementById('themeToggleBtn');
+            if (saved === 'light') {
+                document.documentElement.classList.add('light-mode');
+                if (btn) btn.innerHTML = '☽';
+            } else {
+                if (btn) btn.innerHTML = '☀';
+            }
+        })();
+    </script>
+</body>
+</html>

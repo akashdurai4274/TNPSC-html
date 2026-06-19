@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TNPSC 100 MCQs Current Affairs Drill</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Andika:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Orbitron:wght@500&family=Syne:wght@400;600;700;800&display=swap');
+
+    :root {
+      --bg: #0d0f14;
+      --surface: #13161e;
+      --surface2: #1a1e2a;
+      --border: #242836;
+      --gold: #f5c842;
+      --gold-dim: #c9a230;
+      --gold-glow: rgba(245, 200, 66, 0.08);
+      --text: #e8e6df;
+      --muted: #8a8a9a;
+      --accent-blue: #5b8dee;
+      --accent-green: #4caf7d;
+      --accent-red: #e05c5c;
+      --accent-purple: #9b72cf;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Andika', sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 80px;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    .syne {
+      font-family: 'Syne', sans-serif;
+    }
+
+    .mono {
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    /* TOPBAR */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 24px;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .tnpsc-badge {
+      background: var(--gold-glow);
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .topbar-title {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .topbar-date {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      color: var(--gold-dim);
+    }
+
+    /* HERO SECTION */
+    .hero {
+      padding: 64px 24px;
+      position: relative;
+      overflow: hidden;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, var(--gold-glow) 0%, rgba(13, 15, 20, 0) 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 24px;
+      line-height: 1.2;
+    }
+
+    .tag-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+
+    .tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .tag.gold {
+      background: rgba(245, 200, 66, 0.1);
+      color: var(--gold);
+      border: 1px solid rgba(245, 200, 66, 0.3);
+    }
+
+    .tag.blue {
+      background: rgba(91, 141, 238, 0.1);
+      color: var(--accent-blue);
+      border: 1px solid rgba(91, 141, 238, 0.3);
+    }
+
+    .tag.green {
+      background: rgba(76, 175, 125, 0.1);
+      color: var(--accent-green);
+      border: 1px solid rgba(76, 175, 125, 0.3);
+    }
+
+    /* NAV PILLS */
+    .nav-pills {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+    }
+
+    .nav-pill {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: transparent;
+    }
+
+    .nav-pill:hover,
+    .nav-pill.active {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: var(--gold-glow);
+    }
+
+    /* STATS BAR */
+    .stats-bar {
+      display: flex;
+      gap: 16px;
+      max-width: 1100px;
+      margin: 0 auto 32px;
+      padding: 0 24px;
+      flex-wrap: wrap;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--gold-dim);
+      border-radius: 4px;
+      padding: 12px 16px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+      min-width: 150px;
+    }
+
+    .stat-val {
+      color: var(--gold);
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    /* QUESTION GRID */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      border-left: 4px solid var(--gold);
+      padding: 24px;
+      position: relative;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .q-num {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 14px;
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .diff-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .cat-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      padding: 2px 8px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--muted);
+    }
+
+    .mcq-q {
+      font-size: 15px;
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+
+    .stmt-intro {
+      font-size: 14px;
+      color: var(--muted);
+      font-style: italic;
+      margin-bottom: 12px;
+    }
+
+    ul.stmt-list {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 16px;
+    }
+
+    ul.stmt-list li {
+      font-size: 14px;
+      margin-bottom: 8px;
+      display: flex;
+      gap: 12px;
+    }
+
+    ul.stmt-list li::before {
+      content: attr(data-n) '.';
+      font-family: 'IBM Plex Mono', monospace;
+      color: var(--gold);
+    }
+
+    ul.mcq-options {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul.mcq-options li {
+      margin-bottom: 8px;
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .card:not(.locked) ul.mcq-options li:hover {
+      border-color: var(--gold);
+      background: var(--gold-glow);
+    }
+
+    ul.mcq-options li.selected {
+      border-color: var(--gold);
+      background: var(--gold-glow);
+    }
+
+    ul.mcq-options li.correct {
+      border-color: var(--accent-green) !important;
+      background: rgba(76, 175, 125, 0.1) !important;
+    }
+
+    ul.mcq-options li.incorrect {
+      border-color: var(--accent-red) !important;
+      background: rgba(224, 92, 92, 0.1) !important;
+    }
+
+    .opt-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .opt-text {
+      font-size: 14px;
+    }
+
+    .card.locked ul.mcq-options li {
+      pointer-events: none;
+    }
+
+    /* ACCORDION */
+    .toggle-btn {
+      border: 1.5px solid var(--gold);
+      background: transparent;
+      color: var(--gold);
+      border-radius: 20px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .toggle-btn:hover {
+      background: var(--gold-glow);
+    }
+
+    .toggle-btn svg {
+      width: 12px;
+      height: 12px;
+      transition: transform 0.3s ease;
+    }
+
+    .toggle-btn.active svg {
+      transform: rotate(180deg);
+    }
+
+    .q-body {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, opacity 0.25s ease;
+      margin-top: 16px;
+      background: var(--surface2);
+      border-left: 3px solid var(--gold);
+      border-radius: 4px;
+      padding: 0 16px;
+    }
+
+    .q-body.open {
+      padding: 14px 16px;
+    }
+
+    .mcq-answer {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      color: var(--accent-green);
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+      display: block;
+      font-weight: 600;
+    }
+
+    .mcq-explain {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.8;
+      margin-bottom: 12px;
+    }
+
+    .examiner-tip {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      color: var(--gold);
+      background: var(--gold-glow);
+      border-left: 2px solid var(--gold);
+      padding: 8px 12px;
+      margin-top: 8px;
+    }
+
+    /* PROGRESS BAR */
+    .progress-strip {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--surface);
+      border-top: 1px solid var(--gold);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      z-index: 100;
+    }
+
+    .prog-text {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+
+    .prog-track {
+      flex: 1;
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .prog-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--gold);
+      transition: width 0.3s ease;
+    }
+
+    @media (max-width: 680px) {
+      .topbar-title {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: 32px;
+      }
+
+      .stats-bar {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="topbar-left">
+      <div class="tnpsc-badge">TNPSC Group 1</div>
+      <div class="topbar-title mono">Monthly Current Affairs · 100 Questions Drill</div>
+    </div>
+    <div class="topbar-date mono">MARCH 2026</div>
+  </header>
+
+  <section class="hero">
+    <h1>March 2026 Current Affairs</h1>
+    <div class="tag-row">
+      <span class="tag gold">100 Questions</span>
+      <span class="tag blue">Source: Shanju Current Affairs</span>
+      <span class="tag green">TNPSC / RRB / SSC</span>
+    </div>
+    <div class="nav-pills" id="filter-nav">
+      <button class="nav-pill active" data-filter="All">All</button>
+      <button class="nav-pill" data-filter="Polity">Polity</button>
+      <button class="nav-pill" data-filter="Economy">Economy</button>
+      <button class="nav-pill" data-filter="Science">Science & Tech</button>
+      <button class="nav-pill" data-filter="Environment">Environment</button>
+      <button class="nav-pill" data-filter="International">International</button>
+      <button class="nav-pill" data-filter="TN Affairs">TN Affairs</button>
+      <button class="nav-pill" data-filter="National">National</button>
+    </div>
+  </section>
+
+  <div class="stats-bar">
+    <div class="stat-card"><span>Total Questions</span><span class="stat-val">100</span></div>
+    <div class="stat-card"><span>Direct MCQ</span><span class="stat-val">90</span></div>
+    <div class="stat-card"><span>Statement-Type</span><span class="stat-val">10</span></div>
+    <div class="stat-card"><span>TN-Specific</span><span class="stat-val">15</span></div>
+  </div>
+
+  <main id="q-grid"></main>
+
+  <div class="progress-strip">
+    <div class="prog-text" id="progress-text">Answered: 0 / 100</div>
+    <div class="prog-track">
+      <div class="prog-fill" id="progress-fill"></div>
+    </div>
+  </div>
+
+  <script>
+    const qData = [
+      { id: 1, isStmt: false, cat: "National", diff: "easy", q: "Where was the nationwide HPV vaccination drive launched?", stmt: [], opts: ["A|Madhya Pradesh", "B|Rajasthan", "C|Gujarat", "D|Maharashtra"], ans: "B", exp: "The nationwide HPV (Human Papillomavirus) vaccination drive to combat cervical cancer was officially launched in Rajasthan.", tip: "HPV vaccine is crucial for preventing cervical cancer among young women." },
+      { id: 2, isStmt: false, cat: "National", diff: "medium", q: "Where was India's first State Innovation Mission launched?", stmt: [], opts: ["A|Assam", "B|Sikkim", "C|Tripura", "D|Meghalaya"], ans: "C", exp: "Tripura launched India's first State Innovation Mission to foster local entrepreneurship and technological advancements.", tip: "Missions like these align with NITI Aayog's Atal Innovation Mission." },
+      { id: 3, isStmt: false, cat: "Science", diff: "hard", q: "What is the name of the Anti-Submarine Warfare Shallow Water Craft commissioned at the Chennai Port?", stmt: [], opts: ["A|INS Kavaratti", "B|INS Kadmatt", "C|Anjadip", "D|Amini"], ans: "C", exp: "Anjadip, an anti-submarine warfare shallow water craft, was recently commissioned at Chennai Port.", tip: "ASW crafts enhance coastal defense and surveillance capabilities." },
+      { id: 4, isStmt: false, cat: "Economy", diff: "medium", q: "Where was India's first semiconductor ATMP plant inaugurated?", stmt: [], opts: ["A|Karnataka", "B|Gujarat", "C|Tamil Nadu", "D|Maharashtra"], ans: "B", exp: "India's first semiconductor ATMP (Assembly, Testing, Marking, and Packaging) plant was inaugurated in Gujarat.", tip: "ATMP plants are a critical step towards India's self-reliance in chip manufacturing." },
+      { id: 5, isStmt: false, cat: "International", diff: "medium", q: "Where will the India-France National Centre of Excellence be set up?", stmt: [], opts: ["A|New Delhi", "B|Maharashtra", "C|Uttar Pradesh", "D|Puducherry"], ans: "C", exp: "The India-France National Centre of Excellence is slated to be established in Uttar Pradesh.", tip: "Bilateral CoEs usually focus on sustainable development and technology transfer." },
+      { id: 6, isStmt: false, cat: "Polity", diff: "hard", q: "Which committee is associated with the operations and regulations of DigiLocker?", stmt: [], opts: ["A|Srikrishna Committee", "B|Ajay Sahni Committee", "C|Rao Committee", "D|Kasturirangan Committee"], ans: "B", exp: "The Ajay Sahni Committee was constituted to oversee matters related to the DigiLocker ecosystem.", tip: "DigiLocker falls under the Digital India initiative." },
+      { id: 7, isStmt: true, cat: "National", diff: "easy", q: "Consider the following statements regarding Important Days:", stmt: ["Civil Accounts Day is observed on March 1.", "It marks the foundation of the Indian Civil Accounts Service (ICAS)."], opts: ["A|1 only", "B|2 only", "C|Both 1 and 2", "D|Neither 1 nor 2"], ans: "C", exp: "Civil Accounts Day is observed annually on March 1 to commemorate the creation of the Indian Civil Accounts Service.", tip: "ICAS functions under the Department of Expenditure." },
+      { id: 8, isStmt: false, cat: "TN Affairs", diff: "medium", q: "Where was Tamil Nadu's first Dark Sky Park inaugurated?", stmt: [], opts: ["A|Kodaikanal", "B|Kolli Hills", "C|Yelagiri", "D|Ooty"], ans: "B", exp: "Tamil Nadu's first Dark Sky Park was inaugurated at Kolli Hills to promote astrotourism and reduce light pollution.", tip: "Dark Sky Parks are essential for astronomical observations." },
+      { id: 9, isStmt: false, cat: "Polity", diff: "medium", q: "Which Union Ministry launched the 'Rajmarg Pravesh' web portal?", stmt: [], opts: ["A|Ministry of Home Affairs", "B|Ministry of Road Transport and Highways", "C|Ministry of Rural Development", "D|Ministry of Railways"], ans: "B", exp: "The Ministry of Road Transport and Highways launched the 'Rajmarg Pravesh' portal to streamline highway access permissions.", tip: "Digital portals ensure transparency in infrastructure projects." },
+      { id: 10, isStmt: false, cat: "International", diff: "hard", q: "The Amondawa tribes, recently in the news, belong to which country?", stmt: [], opts: ["A|Peru", "B|Colombia", "C|Brazil", "D|Venezuela"], ans: "C", exp: "The Amondawa are an indigenous tribal group residing in the Amazon basin of Brazil.", tip: "Tribes in the Amazon face threats from deforestation and illegal mining." },
+      { id: 11, isStmt: false, cat: "Environment", diff: "easy", q: "On which day is World Wildlife Day observed globally?", stmt: [], opts: ["A|March 1", "B|March 3", "C|March 5", "D|March 10"], ans: "B", exp: "World Wildlife Day is observed on March 3 to celebrate and raise awareness about the world's wild animals and plants.", tip: "March 3 marks the adoption of CITES in 1973." },
+      { id: 12, isStmt: false, cat: "National", diff: "medium", q: "Which Indian state launched 'Project Hanuman'?", stmt: [], opts: ["A|Uttar Pradesh", "B|Madhya Pradesh", "C|Andhra Pradesh", "D|Karnataka"], ans: "C", exp: "Project Hanuman was officially launched by the state government of Andhra Pradesh.", tip: "State-specific projects often target regional biodiversity or cultural heritage." },
+      { id: 13, isStmt: false, cat: "Environment", diff: "medium", q: "Where is the Debrigarh Wildlife Sanctuary located?", stmt: [], opts: ["A|Chhattisgarh", "B|Odisha", "C|Jharkhand", "D|West Bengal"], ans: "B", exp: "Debrigarh Wildlife Sanctuary is a prominent protected area located in the state of Odisha.", tip: "Odisha is home to critical sanctuaries near the Hirakud Reservoir." },
+      { id: 14, isStmt: false, cat: "Environment", diff: "medium", q: "Which city created a record for the largest mega plantation campaign?", stmt: [], opts: ["A|Indore", "B|Varanasi", "C|Surat", "D|Bhopal"], ans: "B", exp: "Varanasi established a new record by successfully executing a mega sapling plantation campaign.", tip: "Urban afforestation aligns with the Nagar Van Yojana objectives." },
+      { id: 15, isStmt: false, cat: "Science", diff: "easy", q: "Where was the Mobile World Congress (MWC) 2026 held?", stmt: [], opts: ["A|USA", "B|Germany", "C|Spain", "D|France"], ans: "C", exp: "The Mobile World Congress 2026, the premier event for the connectivity industry, was hosted in Spain (Barcelona).", tip: "MWC is the largest annual gathering for the telecom sector." },
+      { id: 16, isStmt: false, cat: "TN Affairs", diff: "hard", q: "In which district is the Kumarikalpalayam archaeological site located?", stmt: [], opts: ["A|Erode", "B|Salem", "C|Coimbatore", "D|Tiruppur"], ans: "D", exp: "The Kumarikalpalayam archaeological site, shedding light on ancient Tamil history, is situated in Tiruppur district.", tip: "TN State Archaeology Department is actively excavating multiple sites simultaneously." },
+      { id: 17, isStmt: true, cat: "TN Affairs", diff: "medium", q: "Consider the following statements about 'Punal':", stmt: ["It is an integrated drinking water grievance redressal centre.", "It was launched by the Government of Tamil Nadu."], opts: ["A|1 only", "B|2 only", "C|Both 1 and 2", "D|Neither 1 nor 2"], ans: "C", exp: "Both statements are correct. Tamil Nadu launched 'Punal' to address and resolve public drinking water grievances swiftly.", tip: "E-governance platforms are heavily promoted under the TN Digital Policy." },
+      { id: 18, isStmt: false, cat: "TN Affairs", diff: "medium", q: "What is the prize money associated with the prestigious 'Kalaichemmal Award' in Tamil Nadu?", stmt: [], opts: ["A|₹ 50,000", "B|₹ 1 Lakh", "C|₹ 2 Lakhs", "D|₹ 5 Lakhs"], ans: "B", exp: "The Kalaichemmal Award carries a cash prize of ₹ 1 Lakh, honoring exceptional contributions to arts.", tip: "Awards for arts and literature reflect state patronage of cultural heritage." },
+      { id: 19, isStmt: false, cat: "Economy", diff: "medium", q: "Which state exported its GI-tagged 'Karbi Anglong Ginger' to London?", stmt: [], opts: ["A|Assam", "B|Meghalaya", "C|Manipur", "D|Nagaland"], ans: "A", exp: "Assam successfully flagged off the export consignment of its geographically indicated Karbi Anglong Ginger to London.", tip: "GI tags help in premium pricing for agricultural exports." },
+      { id: 20, isStmt: false, cat: "National", diff: "hard", q: "Who is the author of the book 'Mahatma: A Great Communicator'?", stmt: [], opts: ["A|Ramachandra Guha", "B|Dheeraj Kakadia", "C|Shashi Tharoor", "D|Gopalkrishna Gandhi"], ans: "B", exp: "The book 'Mahatma: A Great Communicator' was authored by Dheeraj Kakadia.", tip: "Books on Gandhi frequently explore his unmatched mass mobilization skills." },
+      { id: 21, isStmt: false, cat: "TN Affairs", diff: "medium", q: "Where was an Olympic Academy inaugurated recently in Tamil Nadu?", stmt: [], opts: ["A|Chennai", "B|Madurai", "C|Nilgiris", "D|Coimbatore"], ans: "C", exp: "A dedicated Olympic Academy was recently inaugurated in the Nilgiris district to foster high-altitude sports training.", tip: "High-altitude training improves cardiovascular endurance for athletes." },
+      { id: 22, isStmt: false, cat: "TN Affairs", diff: "easy", q: "The 'Tamil Nadu Women Entrepreneur Empowerment Scheme' falls under which state department?", stmt: [], opts: ["A|Social Welfare Dept", "B|Finance Dept", "C|Rural Development Dept", "D|MSME Dept"], ans: "D", exp: "The scheme is administered by the MSME (Micro, Small and Medium Enterprises) department to boost female-led businesses.", tip: "MSME schemes often provide capital subsidies and interest subvention." },
+      { id: 23, isStmt: false, cat: "Environment", diff: "hard", q: "Who won the AJT Johnsingh Wildlife Conservation Award?", stmt: [], opts: ["A|Ravi Chellam", "B|Romulus Whitaker", "C|K. Ullas Karanth", "D|Vaithianathan Krishnamoorthy"], ans: "D", exp: "Vaithianathan Krishnamoorthy was honored with the AJT Johnsingh Wildlife Conservation Award.", tip: "AJT Johnsingh was a pioneer in field biology and conservation in India." },
+      { id: 24, isStmt: true, cat: "National", diff: "medium", q: "Consider the following concerning the Population Census 2027:", stmt: ["The official mascots are Pragati and Vikas.", "The census operations are conducted by NITI Aayog."], opts: ["A|1 only", "B|2 only", "C|Both 1 and 2", "D|Neither 1 nor 2"], ans: "A", exp: "Statement 1 is correct. Statement 2 is incorrect because the census is conducted by the Registrar General under the Ministry of Home Affairs.", tip: "Census data determines political representation and resource allocation." },
+      { id: 25, isStmt: false, cat: "Polity", diff: "medium", q: "Which Indian state introduced an incentive for families to have three children?", stmt: [], opts: ["A|Andhra Pradesh", "B|Kerala", "C|Sikkim", "D|Assam"], ans: "A", exp: "Andhra Pradesh introduced specific incentives to encourage families to have three children, countering demographic aging concerns.", tip: "Southern states are experiencing TFRs (Total Fertility Rates) well below the replacement level of 2.1." },
+      { id: 26, isStmt: false, cat: "International", diff: "easy", q: "Where is the Raisina Dialogue 2025-26 being hosted?", stmt: [], opts: ["A|New Delhi", "B|Mumbai", "C|Bengaluru", "D|Hyderabad"], ans: "A", exp: "The Raisina Dialogue, India's premier conference on geopolitics and geoeconomics, is annually hosted in New Delhi.", tip: "It is co-hosted by the MEA and the Observer Research Foundation (ORF)." },
+      { id: 27, isStmt: false, cat: "TN Affairs", diff: "medium", q: "Who among the following was recently appointed as an Information Commissioner of Tamil Nadu?", stmt: [], opts: ["A|Iraianbu", "B|Atulya Misra", "C|Sylendra Babu", "D|V. Irai Anbu"], ans: "B", exp: "Atulya Misra (along with Abhay Kumar Singh) was appointed as an Information Commissioner of Tamil Nadu.", tip: "The State Information Commission falls under the RTI Act, 2005." },
+      { id: 28, isStmt: false, cat: "Polity", diff: "hard", q: "Which state passed legislation banning social media for children under 13?", stmt: [], opts: ["A|Kerala", "B|Karnataka", "C|Andhra Pradesh", "D|Maharashtra"], ans: "C", exp: "Andhra Pradesh took a legislative step to ban social media usage for children under 13 to protect mental health.", tip: "This mirrors global regulatory trends like Florida's recent tech laws." },
+      { id: 29, isStmt: false, cat: "National", diff: "medium", q: "Which state launched the 'MeHealth' mobile application?", stmt: [], opts: ["A|Kerala", "B|Telangana", "C|Odisha", "D|Punjab"], ans: "A", exp: "The MeHealth app was launched by Kerala to streamline digital health records and telemedicine services.", tip: "Kerala frequently pioneers digital health infrastructure in India." },
+      { id: 30, isStmt: false, cat: "National", diff: "medium", q: "Where will the Cycling League of India be held?", stmt: [], opts: ["A|Pune", "B|Chandigarh", "C|Bhopal", "D|Ahmedabad"], ans: "D", exp: "The Cycling League of India is scheduled to take place in Ahmedabad, promoting competitive cycling.", tip: "Sports leagues are key drivers for non-cricket athletic development." },
+      { id: 31, isStmt: false, cat: "TN Affairs", diff: "easy", q: "What is the name of the official Instagram page launched by the TN Government to spread awareness about Bharathiyar?", stmt: [], opts: ["A|Mahakavi Hub", "B|Bharathi Kaaviyam", "C|Pudhumai Penn", "D|Bharathiyar Illam"], ans: "D", exp: "The TN government launched 'Bharathiyar Illam' on Instagram to digitally connect the youth with his revolutionary poetry.", tip: "Digital outreach is part of modernizing cultural heritage dissemination." },
+      { id: 32, isStmt: false, cat: "National", diff: "medium", q: "Where was the International Santhal Conference held?", stmt: [], opts: ["A|Ranchi", "B|Raipur", "C|Darjeeling", "D|Patna"], ans: "C", exp: "The International Santhal Conference took place in Darjeeling, West Bengal, celebrating Santhali culture.", tip: "Santhali is recognized in the 8th Schedule of the Indian Constitution." },
+      { id: 33, isStmt: false, cat: "National", diff: "medium", q: "Where was India's first 'Ring Metro' officially inaugurated?", stmt: [], opts: ["A|Delhi", "B|Mumbai", "C|Bengaluru", "D|Kolkata"], ans: "A", exp: "Delhi inaugurated India's first Ring Metro corridor, designed to reduce transit times across the NCR.", tip: "Ring corridors prevent central station congestion." },
+      { id: 34, isStmt: false, cat: "National", diff: "medium", q: "Where will the first Khelo India Tribal Games take place?", stmt: [], opts: ["A|Jharkhand", "B|Odisha", "C|Chhattisgarh", "D|Madhya Pradesh"], ans: "C", exp: "Chhattisgarh is set to host the inaugural Khelo India Tribal Games, promoting indigenous sporting talent.", tip: "Khelo India is the flagship sports scheme by the Union Government." },
+      { id: 35, isStmt: false, cat: "National", diff: "easy", q: "When is International Women's Day observed annually?", stmt: [], opts: ["A|March 4", "B|March 8", "C|March 12", "D|March 20"], ans: "B", exp: "International Women's Day is celebrated on March 8 to focus on women's rights and gender equality.", tip: "UN themes for Women's Day guide global policy discussions for the year." },
+      { id: 36, isStmt: false, cat: "National", diff: "hard", q: "Where was India's first Riverine Lighthouse established?", stmt: [], opts: ["A|West Bengal", "B|Bihar", "C|Assam", "D|Andhra Pradesh"], ans: "C", exp: "India's first riverine lighthouse was established in Assam on the Brahmaputra river to aid inland navigation.", tip: "Inland waterways (like NW-2) are critical for cost-effective logistics." },
+      { id: 37, isStmt: true, cat: "Economy", diff: "hard", q: "Consider the following statements regarding the 'Sudarshan' tool:", stmt: ["It is an AI-powered surveillance tool.", "It was launched by the Reserve Bank of India (RBI)."], opts: ["A|1 only", "B|2 only", "C|Both 1 and 2", "D|Neither 1 nor 2"], ans: "A", exp: "Statement 1 is correct. Statement 2 is incorrect as the Sudarshan AI tool was launched by SEBI to monitor capital markets.", tip: "SEBI uses AI to detect insider trading and market manipulations." },
+      { id: 38, isStmt: false, cat: "International", diff: "medium", q: "The 'Lamitiye' joint military exercise is conducted between India and which country?", stmt: [], opts: ["A|Maldives", "B|Madagascar", "C|Seychelles", "D|Mauritius"], ans: "C", exp: "Lamitiye is a biennial joint military exercise between the Indian Army and the Seychelles Defence Forces.", tip: "Military diplomacy in the Indian Ocean is vital for maritime security." },
+      { id: 39, isStmt: false, cat: "TN Affairs", diff: "easy", q: "Where was the 'Kattranai Thoorum Arivu' statue inaugurated?", stmt: [], opts: ["A|Chennai", "B|Madurai", "C|Trichy", "D|Tirunelveli"], ans: "A", exp: "The statue embodying the Thirukkural concept of continuous learning was inaugurated in Chennai.", tip: "Thirukkural couplets are central to TN government's ideological messaging." },
+      { id: 40, isStmt: false, cat: "Polity", diff: "hard", q: "Which state ranked first in the implementation of the Inter-operable Criminal Justice System (ICJS 2.0)?", stmt: [], opts: ["A|Uttar Pradesh", "B|Gujarat", "C|Uttarakhand", "D|Madhya Pradesh"], ans: "C", exp: "Uttarakhand secured the top position in successfully implementing the ICJS 2.0 framework.", tip: "ICJS integrates police (CCTNS), e-courts, and prison databases." },
+      { id: 41, isStmt: false, cat: "Science", diff: "medium", q: "Which country approved the world's first stem cell therapy for treating Parkinson's disease?", stmt: [], opts: ["A|USA", "B|Germany", "C|South Korea", "D|Japan"], ans: "D", exp: "Japan became the first nation to officially approve stem cell therapy for Parkinson's disease treatment.", tip: "Stem cells can regenerate damaged dopamine-producing neurons." },
+      { id: 42, isStmt: false, cat: "TN Affairs", diff: "medium", q: "What is the name of the online analytics portal providing comprehensive data on cancer cases in Tamil Nadu?", stmt: [], opts: ["A|TN-CRST", "B|TN-ONCO", "C|CANCER-TN", "D|CARE-TN"], ans: "A", exp: "TN-CRST is the state's dedicated online analytics portal to track and map cancer demographics.", tip: "Data mapping is essential for targeted healthcare funding." },
+      { id: 43, isStmt: false, cat: "International", diff: "easy", q: "Where was the International Malaria Conference held?", stmt: [], opts: ["A|New Delhi", "B|Geneva", "C|Nairobi", "D|Bangkok"], ans: "A", exp: "The International Malaria Conference was hosted in New Delhi, focusing on eradication strategies.", tip: "India aims to eliminate Malaria by 2030." },
+      { id: 44, isStmt: false, cat: "Economy", diff: "medium", q: "Which state topped the Fiscal Health Index 2026?", stmt: [], opts: ["A|Maharashtra", "B|Gujarat", "C|Odisha", "D|Karnataka"], ans: "C", exp: "Odisha topped the Fiscal Health Index, demonstrating excellent fiscal deficit management and revenue generation.", tip: "Fiscal prudence is mandated by the FRBM Act." },
+      { id: 45, isStmt: false, cat: "National", diff: "easy", q: "When is 'No Smoking Day' globally observed?", stmt: [], opts: ["A|March 8", "B|March 10", "C|April 7", "D|May 31"], ans: "B", exp: "No Smoking Day is observed on March 10 to encourage people to quit tobacco.", tip: "World No Tobacco Day is a separate event on May 31." },
+      { id: 46, isStmt: false, cat: "Environment", diff: "medium", q: "Where was the Indian Orchid Festival recently held?", stmt: [], opts: ["A|Assam", "B|Meghalaya", "C|Sikkim", "D|Arunachal Pradesh"], ans: "C", exp: "Sikkim hosted the Indian Orchid Festival to showcase its rich floristic diversity.", tip: "Sikkim is organically certified and biodiversity-rich." },
+      { id: 47, isStmt: false, cat: "National", diff: "medium", q: "Who was conferred with the CK Nayudu Lifetime Achievement Award recently?", stmt: [], opts: ["A|Rahul Dravid", "B|Ravi Shastri", "C|Sunil Gavaskar", "D|Kapil Dev"], ans: "A", exp: "Rahul Dravid was honored with the CK Nayudu Lifetime Achievement Award by the BCCI.", tip: "This is the highest honor bestowed by BCCI on former cricketers." },
+      { id: 48, isStmt: false, cat: "TN Affairs", diff: "easy", q: "Where is the Udangudi Thermal Power Plant located?", stmt: [], opts: ["A|Cuddalore", "B|Ennore", "C|Ramanathapuram", "D|Thoothukudi"], ans: "D", exp: "The Udangudi Thermal Power Plant is situated in the Thoothukudi district of Tamil Nadu.", tip: "Thermal projects remain a significant part of the state's baseload energy mix." },
+      { id: 49, isStmt: false, cat: "Polity", diff: "hard", q: "Which state recently passed a new Freedom of Religion Bill?", stmt: [], opts: ["A|Madhya Pradesh", "B|Uttar Pradesh", "C|Chhattisgarh", "D|Assam"], ans: "C", exp: "Chhattisgarh passed the Freedom of Religion Bill aiming to regulate religious conversions.", tip: "Article 25 guarantees freedom of religion but subject to public order." },
+      { id: 50, isStmt: false, cat: "Science", diff: "hard", q: "Where is the world's first autonomous maritime shipbuilding and system centre built?", stmt: [], opts: ["A|Kerala", "B|Andhra Pradesh", "C|Gujarat", "D|Maharashtra"], ans: "B", exp: "Andhra Pradesh hosts the world's first autonomous maritime shipbuilding and systems center.", tip: "Autonomous shipping relies heavily on AI and IoT sensors." },
+      { id: 51, isStmt: true, cat: "TN Affairs", diff: "medium", q: "Consider the following statements regarding recent literary awards:", stmt: ["Vairamuthu received the 60th Jnanpith Award.", "The Jnanpith is the highest literary award in India."], opts: ["A|1 only", "B|2 only", "C|Both 1 and 2", "D|Neither 1 nor 2"], ans: "C", exp: "Both statements are correct based on the transcript's mention of Vairamuthu receiving the Jnanpith Award.", tip: "The Jnanpith Award is presented annually by the Bharatiya Jnanpith." },
+      { id: 52, isStmt: false, cat: "TN Affairs", diff: "medium", q: "Who is set to receive the Sangita Kalanidhi Award?", stmt: [], opts: ["A|Sudha Ragunathan", "B|T.M. Krishna", "C|Jayanthi Kumaresh", "D|Aruna Sairam"], ans: "C", exp: "Renowned Veena player Jayanthi Kumaresh was named for the Sangita Kalanidhi Award.", tip: "The award is conferred by the Madras Music Academy." },
+      { id: 53, isStmt: false, cat: "International", diff: "medium", q: "'Freedom Shield' is a joint military exercise between the USA and which country?", stmt: [], opts: ["A|Japan", "B|Philippines", "C|South Korea", "D|Taiwan"], ans: "C", exp: "Freedom Shield is a major joint military drill conducted between the USA and South Korea.", tip: "These drills aim to deter aggression from North Korea." },
+      { id: 54, isStmt: false, cat: "TN Affairs", diff: "medium", q: "Who won the Sahitya Akademi Award 2025 for Tamil?", stmt: [], opts: ["A|Imayam", "B|S. Ramakrishnan", "C|Tamil Selvan", "D|Rajathi Salma"], ans: "C", exp: "Tamil Selvan was awarded the prestigious Sahitya Akademi Award for the Tamil language for 2025.", tip: "The Sahitya Akademi recognizes literature in 24 languages." },
+      { id: 55, isStmt: false, cat: "Environment", diff: "easy", q: "Where is Asia's largest Tulip Garden inaugurated?", stmt: [], opts: ["A|Shimla", "B|Manali", "C|Srinagar", "D|Pahalgam"], ans: "C", exp: "Asia's largest Tulip Garden, the Indira Gandhi Memorial Tulip Garden, is located in Srinagar, J&K.", tip: "It opens annually in spring to boost regional tourism." },
+      { id: 56, isStmt: false, cat: "National", diff: "medium", q: "Name the app launched by the Ministry of Education for competitive exam preparation.", stmt: [], opts: ["A|SATHEE", "B|DIKSHA", "C|SWAYAM", "D|NIPUN"], ans: "A", exp: "The SATHEE portal/app was launched to provide free coaching to students for competitive exams.", tip: "It was developed in collaboration with IIT Kanpur." },
+      { id: 57, isStmt: false, cat: "TN Affairs", diff: "hard", q: "In which archaeological excavation was a 'Torpedo Bottle' discovered?", stmt: [], opts: ["A|Keezhadi", "B|Sivagalai", "C|Vembakottai", "D|Kodumanal"], ans: "C", exp: "A rare torpedo bottle was excavated at the Vembakottai site in Virudhunagar district.", tip: "Torpedo bottles were historically designed to be stored on their sides." },
+      { id: 58, isStmt: false, cat: "TN Affairs", diff: "easy", q: "Which of the following archaeological sites is located in Thoothukudi district?", stmt: [], opts: ["A|Keezhadi", "B|Arikamedu", "C|Gangaikonda Cholapuram", "D|Adichanallur"], ans: "D", exp: "Adichanallur is a globally significant Iron Age archaeological site in Thoothukudi district.", tip: "It is one of the oldest excavated urn burial sites in Tamil Nadu." },
+      { id: 59, isStmt: false, cat: "National", diff: "easy", q: "Where is the Bharat Tribal Fest 2026 being held?", stmt: [], opts: ["A|Raipur", "B|Ranchi", "C|New Delhi", "D|Bhubaneswar"], ans: "C", exp: "The Bharat Tribal Fest 2026 was organized in New Delhi to showcase indigenous culture and commerce.", tip: "AADI Mahotsav is another major tribal festival held in Delhi." },
+      { id: 60, isStmt: false, cat: "National", diff: "medium", q: "Who received the Polly Umrigar Award recently?", stmt: [], opts: ["A|Virat Kohli", "B|Rohit Sharma", "C|Shubman Gill", "D|Jasprit Bumrah"], ans: "C", exp: "Shubman Gill was awarded the Polly Umrigar Award for his outstanding performances in international cricket.", tip: "The award is given to the best international cricketer of the year by BCCI." },
+      { id: 61, isStmt: false, cat: "Science", diff: "hard", q: "Who is the first woman to head operations at an Indian Nuclear Plant?", stmt: [], opts: ["A|R.M. Natchammai", "B|Tessy Thomas", "C|Muthayya Vanitha", "D|Ritu Karidhal"], ans: "A", exp: "R.M. Natchammai became the first woman to direct operations at a nuclear power station in India.", tip: "Breaking gender barriers in core STEM and nuclear fields is a national priority." },
+      { id: 62, isStmt: false, cat: "Economy", diff: "medium", q: "The 'Bhavya Scheme' is associated with the development of:", stmt: [], opts: ["A|Textile Mills", "B|Industrial Parks", "C|Smart Cities", "D|Solar Farms"], ans: "B", exp: "The Bhavya Scheme was launched specifically to support and develop large-scale Industrial Parks.", tip: "Industrial parks aggregate infrastructure to reduce manufacturing logistics costs." },
+      { id: 63, isStmt: true, cat: "Polity", diff: "medium", q: "Consider the following regarding Postal Ballots in India:", stmt: ["Voters aged 85 and above are eligible for postal ballots.", "It is facilitated by the Election Commission of India."], opts: ["A|1 only", "B|2 only", "C|Both 1 and 2", "D|Neither 1 nor 2"], ans: "C", exp: "Both statements are correct. The ECI recently revised the age threshold for senior citizens to use postal ballots to 85 years.", tip: "Postal ballots are also available for Essential Service Workers." },
+      { id: 64, isStmt: false, cat: "Science", diff: "hard", q: "Which state launched its first indigenous sounding rocket recently?", stmt: [], opts: ["A|Kerala", "B|Odisha", "C|Gujarat", "D|Tamil Nadu"], ans: "C", exp: "Gujarat successfully launched its first state-backed sounding rocket for atmospheric research.", tip: "Sounding rockets study the upper atmosphere and ionosphere." },
+      { id: 65, isStmt: false, cat: "Economy", diff: "medium", q: "Where was India's first LPG ATM established?", stmt: [], opts: ["A|Mumbai", "B|Gurugram", "C|Pune", "D|Noida"], ans: "B", exp: "India's first automated LPG ATM was launched in Gurugram, Haryana.", tip: "It aims to provide 24/7 access to cooking gas cylinders." },
+      { id: 66, isStmt: false, cat: "Environment", diff: "medium", q: "Where is the Kalinjar Hill located?", stmt: [], opts: ["A|Madhya Pradesh", "B|Bihar", "C|Rajasthan", "D|Uttar Pradesh"], ans: "D", exp: "The Kalinjar Hill, known for its historical fort and biodiversity, is located in Uttar Pradesh.", tip: "Kalinjar Fort has significant medieval history tied to Sher Shah Suri." },
+      { id: 67, isStmt: false, cat: "Economy", diff: "medium", q: "Name the brand launched by the Ministry of Tribal Affairs to promote tribal products.", stmt: [], opts: ["A|Trifed", "B|Van Dhan", "C|Raisa", "D|Aadi"], ans: "C", exp: "The Ministry of Tribal Affairs launched the 'Raisa' brand to market premium tribal handicrafts and organic goods globally.", tip: "Branding increases the market value of indigenous products." },
+      { id: 68, isStmt: false, cat: "Economy", diff: "hard", q: "What is the name of the scheme launched to financially support Indian exporters?", stmt: [], opts: ["A|NIRVIK", "B|RELIEF", "C|RODTEP", "D|NIRYAT"], ans: "B", exp: "The 'RELIEF' scheme was launched to provide strategic and financial support to Indian exporters facing global headwinds.", tip: "Exports are a crucial component of India's GDP growth strategy." },
+      { id: 69, isStmt: false, cat: "International", diff: "medium", q: "Where is the Prambanan Temple located?", stmt: [], opts: ["A|Cambodia", "B|Thailand", "C|Indonesia", "D|Vietnam"], ans: "C", exp: "The Prambanan Temple, a 9th-century Hindu temple compound, is located in Indonesia.", tip: "It is a UNESCO World Heritage site and reflects historical Indian cultural influence." },
+      { id: 70, isStmt: false, cat: "International", diff: "medium", q: "Which country recently withdrew from the World Health Organization (WHO)?", stmt: [], opts: ["A|USA", "B|Argentina", "C|Brazil", "D|Russia"], ans: "B", exp: "Argentina recently announced its withdrawal from the World Health Organization.", tip: "Such withdrawals impact global coordinated health responses." },
+      { id: 71, isStmt: false, cat: "National", diff: "easy", q: "Where is the Lipulekh Pass located?", stmt: [], opts: ["A|Himachal Pradesh", "B|Sikkim", "C|Arunachal Pradesh", "D|Uttarakhand"], ans: "D", exp: "The Lipulekh Pass is a strategic Himalayan pass located in Uttarakhand, near the borders of India, Nepal, and China.", tip: "It is used by pilgrims traveling to Kailash Mansarovar." },
+      { id: 72, isStmt: false, cat: "International", diff: "medium", q: "Which country topped the Global Terrorism Index 2026 for being the most impacted?", stmt: [], opts: ["A|Afghanistan", "B|Syria", "C|Pakistan", "D|Iraq"], ans: "C", exp: "Pakistan topped the Global Terrorism Index as the country most heavily impacted by terrorist activities.", tip: "The index is produced by the Institute for Economics & Peace (IEP)." },
+      { id: 73, isStmt: true, cat: "National", diff: "medium", q: "Consider the following about the book 'Karuna: The Power of Compassion':", stmt: ["It is authored by Kailash Satyarthi.", "The author is a Nobel Peace Prize laureate."], opts: ["A|1 only", "B|2 only", "C|Both 1 and 2", "D|Neither 1 nor 2"], ans: "C", exp: "Both statements are correct. Kailash Satyarthi, a Nobel laureate, authored this book on the transformative power of compassion.", tip: "Satyarthi leads the 'Bachpan Bachao Andolan'." },
+      { id: 74, isStmt: false, cat: "National", diff: "hard", q: "Where will the World Indoor Athletics Championship 2028 take place?", stmt: [], opts: ["A|Maharashtra", "B|Gujarat", "C|Odisha", "D|Kerala"], ans: "C", exp: "Odisha is set to host the World Indoor Athletics Championship in 2028.", tip: "Odisha has established itself as the 'Sports Capital of India'." },
+      { id: 75, isStmt: false, cat: "Environment", diff: "easy", q: "When is World Water Day observed?", stmt: [], opts: ["A|March 15", "B|March 22", "C|April 22", "D|June 5"], ans: "B", exp: "World Water Day is observed globally on March 22 to highlight the importance of freshwater.", tip: "Goal 6 of the SDGs focuses on clean water and sanitation." },
+      { id: 76, isStmt: false, cat: "National", diff: "medium", q: "Which state primarily celebrates the 'Sarhul' Festival?", stmt: [], opts: ["A|Chhattisgarh", "B|Odisha", "C|Jharkhand", "D|Bihar"], ans: "C", exp: "Sarhul is a major spring festival celebrated by tribal communities in Jharkhand, marking the new year.", tip: "Nature worship is central to the Sarhul festivities." },
+      { id: 77, isStmt: false, cat: "Economy", diff: "hard", q: "Which ministry launched the 'PRARAMBH 2026' initiative?", stmt: [], opts: ["A|Ministry of Education", "B|Ministry of Commerce", "C|Ministry of Finance", "D|Ministry of MSME"], ans: "C", exp: "The Finance Ministry launched the PRARAMBH 2026 initiative for structural financial sector reforms.", tip: "Financial reforms often target banking NPAs and credit expansion." },
+      { id: 78, isStmt: false, cat: "Polity", diff: "hard", q: "When did the National Dental Commission Act come into force?", stmt: [], opts: ["A|Jan 1", "B|Feb 15", "C|March 19", "D|April 1"], ans: "C", exp: "The National Dental Commission Act officially came into force on March 19, replacing the outdated Dental Council.", tip: "It aims to standardize dental education across the country." },
+      { id: 79, isStmt: false, cat: "National", diff: "medium", q: "Who received the Women Empowerment Award for Art & Culture?", stmt: [], opts: ["A|Shreya Ghoshal", "B|Vidya Balan", "C|Rituparna Sengupta", "D|Nandita Das"], ans: "C", exp: "Actress Rituparna Sengupta was awarded the Women Empowerment Award for her contributions to art and culture.", tip: "Cultural awards recognize soft power and social impact." },
+      { id: 80, isStmt: false, cat: "Environment", diff: "easy", q: "When is World Tuberculosis (TB) Day observed?", stmt: [], opts: ["A|March 14", "B|March 24", "C|April 7", "D|May 12"], ans: "B", exp: "World TB Day is observed on March 24 to raise public awareness about the devastating health consequences of TB.", tip: "India has a target to eliminate TB by 2025." },
+      { id: 81, isStmt: false, cat: "Economy", diff: "easy", q: "Which country is the world's largest producer of coconuts?", stmt: [], opts: ["A|India", "B|Indonesia", "C|Philippines", "D|Brazil"], ans: "A", exp: "India holds the top position globally as the largest producer of coconuts.", tip: "Kerala, Tamil Nadu, and Karnataka are the leading producing states." },
+      { id: 82, isStmt: false, cat: "International", diff: "medium", q: "Where was the 'Exercise Kakadu 2026' held?", stmt: [], opts: ["A|India", "B|Japan", "C|USA", "D|Australia"], ans: "D", exp: "Exercise Kakadu is a premier multilateral regional maritime engagement hosted by the Royal Australian Navy.", tip: "The Indian Navy regularly participates to enhance interoperability." },
+      { id: 83, isStmt: true, cat: "Polity", diff: "medium", q: "Consider the following statements on the Uniform Civil Code (UCC) Bills:", stmt: ["Uttarakhand was the first state to pass a UCC bill post-independence.", "Gujarat is the second state to pass a UCC bill."], opts: ["A|1 only", "B|2 only", "C|Both 1 and 2", "D|Neither 1 nor 2"], ans: "C", exp: "Both statements are correct. Following Uttarakhand's lead, Gujarat became the second state to pass a Uniform Civil Code.", tip: "Article 44 of the DPSP directs the State to secure a UCC." },
+      { id: 84, isStmt: false, cat: "Environment", diff: "medium", q: "Where is the Bura Chapori Wildlife Sanctuary located?", stmt: [], opts: ["A|West Bengal", "B|Assam", "C|Arunachal Pradesh", "D|Meghalaya"], ans: "B", exp: "The Bura Chapori Wildlife Sanctuary is located on the south bank of the Brahmaputra River in Assam.", tip: "It acts as a critical corridor for the Indian Rhinoceros." },
+      { id: 85, isStmt: false, cat: "Environment", diff: "easy", q: "According to recent global reports, which is the most polluted country in the world?", stmt: [], opts: ["A|India", "B|Bangladesh", "C|China", "D|Pakistan"], ans: "D", exp: "Pakistan was ranked as the most polluted country globally in recent air quality assessments.", tip: "PM2.5 levels are the primary indicator of severe air pollution." },
+      { id: 86, isStmt: false, cat: "National", diff: "medium", q: "Which ministry launched the 'Reform Express' initiative?", stmt: [], opts: ["A|Ministry of Finance", "B|Ministry of Railways", "C|Ministry of Education", "D|Ministry of Commerce"], ans: "B", exp: "The Ministry of Railways launched the 'Reform Express' initiative to overhaul railway administration and services.", tip: "Modernization of railways includes Vande Bharat trains and station redevelopment." },
+      { id: 87, isStmt: false, cat: "Polity", diff: "medium", q: "Which ministry introduced the PRISM-SG portal?", stmt: [], opts: ["A|Ministry of Road Transport and Highways", "B|Ministry of Power", "C|Ministry of Defence", "D|Ministry of Home Affairs"], ans: "A", exp: "The Ministry of Road Transport and Highways introduced the PRISM-SG portal for structural governance of roads.", tip: "Portals enhance data-driven decision making for infrastructure." },
+      { id: 88, isStmt: false, cat: "International", diff: "medium", q: "Where is the 52nd G7 Summit scheduled to be held?", stmt: [], opts: ["A|Italy", "B|Japan", "C|France", "D|Germany"], ans: "C", exp: "France is the designated host for the 52nd G7 Summit, bringing together advanced economies.", tip: "G7 summits heavily influence global macroeconomic policies." },
+      { id: 89, isStmt: false, cat: "National", diff: "hard", q: "Who won the Saraswati Samman Award for 2025?", stmt: [], opts: ["A|Siva Sankari", "B|Ramashankar Singh", "C|Ramkumar Mukhopadhyay", "D|Vasdev Mohi"], ans: "C", exp: "Ramkumar Mukhopadhyay was honored with the prestigious Saraswati Samman Award for literary excellence.", tip: "The award is instituted by the KK Birla Foundation." },
+      { id: 90, isStmt: false, cat: "National", diff: "easy", q: "When is World Theatre Day observed?", stmt: [], opts: ["A|March 21", "B|March 24", "C|March 27", "D|March 31"], ans: "C", exp: "World Theatre Day is celebrated worldwide on March 27 to promote the art of theatre.", tip: "It was initiated by the International Theatre Institute (ITI)." },
+      { id: 91, isStmt: true, cat: "International", diff: "hard", q: "Consider the following statements regarding 'Operation Urja Suraksha':", stmt: ["It was launched by the Indian Navy.", "It aims to protect energy shipments through the Strait of Hormuz."], opts: ["A|1 only", "B|2 only", "C|Both 1 and 2", "D|Neither 1 nor 2"], ans: "C", exp: "Both statements are correct. The Indian Navy launched Op Urja Suraksha to safeguard critical oil shipments in the volatile Strait of Hormuz.", tip: "The Strait of Hormuz is the world's most important oil chokepoint." },
+      { id: 92, isStmt: false, cat: "Science", diff: "medium", q: "Which country launched the world's first freight-only bullet train?", stmt: [], opts: ["A|China", "B|Germany", "C|Japan", "D|France"], ans: "C", exp: "Japan inaugurated the world's first freight-only bullet train to accelerate high-value cargo logistics.", tip: "Japan's Shinkansen technology remains globally leading." },
+      { id: 93, isStmt: false, cat: "International", diff: "medium", q: "Who was recently elected as the Prime Minister of Nepal?", stmt: [], opts: ["A|Pushpa Kamal Dahal", "B|Balendra Shah", "C|K.P. Sharma Oli", "D|Sher Bahadur Deuba"], ans: "B", exp: "Balendra Shah was noted as the newly elected Prime Minister of Nepal in the current affairs context.", tip: "Nepal's political stability is crucial for India's neighborhood first policy." },
+      { id: 94, isStmt: false, cat: "National", diff: "easy", q: "When is Universal Acceptance Day observed?", stmt: [], opts: ["A|March 15", "B|March 20", "C|March 28", "D|April 5"], ans: "C", exp: "Universal Acceptance Day is observed on March 28 to promote multilingual internet systems.", tip: "It ensures all domain names are treated equally regardless of language." },
+      { id: 95, isStmt: false, cat: "Polity", diff: "medium", q: "Which state launched the 'MLA Track' portal?", stmt: [], opts: ["A|Tamil Nadu", "B|Karnataka", "C|Kerala", "D|Andhra Pradesh"], ans: "C", exp: "Kerala launched the 'MLA Track' portal to increase legislative transparency and constituency tracking.", tip: "Digital transparency initiatives strengthen democratic accountability." },
+      { id: 96, isStmt: false, cat: "National", diff: "hard", q: "The 'Morung' Education System is traditionally practiced in which state?", stmt: [], opts: ["A|Assam", "B|Nagaland", "C|Mizoram", "D|Manipur"], ans: "B", exp: "The Morung is an indigenous youth dormitory and traditional education system practiced by tribes in Nagaland.", tip: "The PM recently praised the system for preserving indigenous knowledge." },
+      { id: 97, isStmt: false, cat: "Economy", diff: "medium", q: "What is India's official inflation target band set for the period 2026-31?", stmt: [], opts: ["A|2% to 6%", "B|3% to 5%", "C|4% with a tolerance band of +/- 2%", "D|5% fixed"], ans: "C", exp: "The Government retained the inflation target at 4% (with a +/- 2% tolerance band) for the 2026-31 framework.", tip: "The RBI's Monetary Policy Committee mandates this target." },
+      { id: 98, isStmt: false, cat: "International", diff: "hard", q: "Which is the first Southeast Asian nation to ban social media for children under 16?", stmt: [], opts: ["A|Malaysia", "B|Singapore", "C|Indonesia", "D|Thailand"], ans: "C", exp: "Indonesia became the first SE Asian country to implement a blanket social media ban for children under 16.", tip: "Cyberbullying and mental health crises are driving global regulatory actions." },
+      { id: 99, isStmt: false, cat: "National", diff: "medium", q: "Who is appointed as the Brand Ambassador for the Population Census 2027?", stmt: [], opts: ["A|Amitabh Bachchan", "B|Mary Kom", "C|Sudarsan Pattnaik", "D|Neeraj Chopra"], ans: "C", exp: "Renowned sand artist Sudarsan Pattnaik was appointed as the brand ambassador to promote the 2027 Census.", tip: "Awareness campaigns are vital to ensure 100% census coverage." },
+      { id: 100, isStmt: false, cat: "National", diff: "easy", q: "What is the name of the official Telegram channel for daily current affairs mentioned by the instructor?", stmt: [], opts: ["A|TNPSC Masters", "B|Shanju Current Affairs", "C|Tamil Current Affairs", "D|TNPSC Winners"], ans: "B", exp: "The instructor directed students to the 'Shanju Current Affairs' Telegram channel for downloading the class PDFs.", tip: "Always verify your sources for authentic study materials." }
+    ];
+
+    function renderQuestions(filter) {
+      const grid = document.getElementById('q-grid');
+      let html = '';
+
+      qData.forEach(q => {
+        if (filter !== 'All' && q.cat !== filter) return;
+
+        let isStmt = q.isStmt;
+        let wrapperClass = isStmt ? "stmt-mcq card" : "mcq-block card";
+        let stmtHtml = "";
+        if (isStmt) {
+          stmtHtml = `<div class="stmt-intro">Which of the statements given above is/are correct?</div><ul class="stmt-list">`;
+          q.stmt.forEach((s, i) => { stmtHtml += `<li data-n="${i + 1}">${s}</li>`; });
+          stmtHtml += `</ul>`;
+        }
+
+        let optsHtml = `<ul class="mcq-options">`;
+        q.opts.forEach(o => {
+          let parts = o.split('|');
+          let label = parts[0]; let text = parts[1];
+          optsHtml += `<li data-opt="${label}"><span class="opt-label">${label}</span><span class="opt-text">${text}</span></li>`;
+        });
+        optsHtml += `</ul>`;
+
+        let diffColor = q.diff === 'easy' ? 'var(--accent-green)' : (q.diff === 'medium' ? 'var(--gold)' : 'var(--accent-red)');
+
+        html += `
+    <div class="${wrapperClass}" data-category="${q.cat}" data-id="${q.id}">
+      <div class="card-header">
+        <div class="q-num">Q.${String(q.id).padStart(3, '0')}</div>
+        <div class="card-meta">
+          <span class="diff-dot" style="background:${diffColor}"></span>
+          <span class="cat-tag">${q.cat}</span>
+        </div>
+      </div>
+      <div class="mcq-q">${q.q}</div>
+      ${stmtHtml}
+      ${optsHtml}
+      <button class="toggle-btn" style="display:none;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        <span>REVEAL ANSWER</span>
+      </button>
+      <div class="q-body">
+         <div class="mcq-answer" data-ans="${q.ans}">✔ CORRECT ANSWER: ${q.ans}</div>
+         <div class="mcq-explain">${q.exp}</div>
+         <div class="examiner-tip"><strong>Examiner's Tip:</strong> ${q.tip}</div>
+      </div>
+    </div>
+    `;
+      });
+      grid.innerHTML = html;
+      updateProgress();
+    }
+
+    function updateProgress() {
+      let total = document.querySelectorAll('#q-grid .card').length;
+      let answered = document.querySelectorAll('#q-grid .card[data-answered="true"]').length;
+      document.getElementById('progress-text').textContent = `Answered: ${answered} / ${total}`;
+      document.getElementById('progress-fill').style.width = total > 0 ? `${(answered / total) * 100}%` : '0%';
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderQuestions('All');
+
+      // Filter Logic
+      document.getElementById('filter-nav').addEventListener('click', (e) => {
+        if (e.target.classList.contains('nav-pill')) {
+          document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('active'));
+          e.target.classList.add('active');
+          renderQuestions(e.target.dataset.filter);
+        }
+      });
+
+      // Interaction Logic (Event Delegation)
+      document.getElementById('q-grid').addEventListener('click', (e) => {
+        // Option Click
+        let li = e.target.closest('.mcq-options li');
+        if (li) {
+          let card = li.closest('.card');
+          if (card.dataset.answered === "true") return;
+          card.dataset.answered = "true";
+          card.classList.add('locked');
+
+          let selectedOpt = li.dataset.opt;
+          let qBody = card.querySelector('.q-body');
+          let answerDiv = qBody.querySelector('.mcq-answer');
+          let correctOpt = answerDiv.dataset.ans;
+
+          card.querySelectorAll('.mcq-options li').forEach(item => {
+            if (item.dataset.opt === correctOpt) item.classList.add('correct');
+          });
+
+          if (selectedOpt === correctOpt) {
+            li.classList.add('selected', 'correct');
+          } else {
+            li.classList.add('selected', 'incorrect');
+          }
+
+          let toggleBtn = card.querySelector('.toggle-btn');
+          toggleBtn.style.display = 'flex';
+          toggleBtn.classList.add('active');
+          toggleBtn.querySelector('span').textContent = 'HIDE ANSWER';
+          qBody.classList.add('open');
+          qBody.style.maxHeight = qBody.scrollHeight + "px";
+          qBody.style.opacity = "1";
+
+          updateProgress();
+          return;
+        }
+
+        // Toggle Button Click
+        let btn = e.target.closest('.toggle-btn');
+        if (btn) {
+          let card = btn.closest('.card');
+          let qBody = card.querySelector('.q-body');
+          if (btn.classList.contains('active')) {
+            qBody.style.maxHeight = '0px';
+            qBody.style.opacity = '0';
+            qBody.classList.remove('open');
+            btn.classList.remove('active');
+            btn.querySelector('span').textContent = 'REVEAL ANSWER';
+          } else {
+            qBody.classList.add('open');
+            qBody.style.maxHeight = qBody.scrollHeight + "px";
+            qBody.style.opacity = "1";
+            btn.classList.add('active');
+            btn.querySelector('span').textContent = 'HIDE ANSWER';
+          }
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

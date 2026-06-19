@@ -1,0 +1,604 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            .nav-links { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 2rem 1rem; }
+            header h1 { font-size: 1.6rem; letter-spacing: 1px; }
+            .tagline { font-size: 0.95rem; }
+            nav.sticky-top { padding: 0.75rem 1rem; gap: 0.5rem; }
+            .toggle-btn { padding: 0.4rem 0.8rem; font-size: 0.85rem; }
+            .layout-container { padding: 1rem 0.75rem; gap: 1rem; }
+            main { max-width: 100%; }
+            .legend-row { flex-direction: column; gap: 0.5rem; }
+            .news-card { padding: 1rem; }
+            .news-card h3 { font-size: 1.15rem; }
+            .card-meta { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+            table { font-size: 0.8rem; }
+            th, td { padding: 0.6rem; }
+            .raw-text-panel { font-size: 0.75rem; padding: 1rem; }
+            footer { padding: 1.5rem 1rem; }
+        }
+
+        @media (max-width: 480px) {
+            header h1 { font-size: 1.25rem; }
+            nav.sticky-top { flex-wrap: wrap; }
+            table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .news-card { border-left-width: 3px; }
+        }
+    </style>
+</head>
+<body class="en-mode">
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">18 June 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">18 ஜூன் 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <!-- Sidebar TOC -->
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Tech</span><span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · Assembly Session</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">17th TN Legislative Assembly Session Begins Today with Governor's Address</span>
+                        <span class="lang-ta">ஆளுநர் உரையுடன் இன்று தொடங்குகிறது 17-வது தமிழக சட்டப்பேரவைக் கூட்டத்தொடர்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The first session of the newly elected 17th Tamil Nadu Legislative Assembly begins today (June 18) with the customary address by Governor R.N. Ravi in English, followed by its Tamil translation read by Speaker J.C.D. Prabhakar. This session comes after CM Joseph Vijay proved his majority with 144 MLAs on May 13. The Business Advisory Committee (BAC), headed by the Speaker, has been formed to decide the session's duration. Edappadi K. Palaniswami has been officially recognized as the AIADMK Legislature Party Leader.</p>
+                    <p class="lang-ta">புதிதாகத் தேர்ந்தெடுக்கப்பட்ட 17-வது தமிழக சட்டப்பேரவையின் முதல் கூட்டத்தொடர் இன்று (ஜூன் 18) ஆளுநர் ஆர்.என். ரவியின் உரையுடன் தொடங்குகிறது. ஆளுநர் ஆங்கிலத்தில் உரையாற்ற, அதன் தமிழாக்கத்தைப் பேரவைத் தலைவர் ஜே.சி.டி. பிரபாகர் வாசிப்பார். மே 13 அன்று முதல்வர் ஜோசப் விஜய் 144 எம்.எல்.ஏ.க்களின் ஆதரவுடன் பெரும்பான்மையை நிரூபித்த பிறகு நடைபெறும் முதல் கூட்டத்தொடர் இதுவாகும். பேரவைத் தலைவர் தலைமையிலான அலுவல் ஆய்வுக்குழு அமைக்கப்பட்டுள்ளது. அதிமுக சட்டப்பேரவைக் குழுத் தலைவராக எடப்பாடி பழனிசாமி அதிகாரப்பூர்வமாக அங்கீகரிக்கப்பட்டுள்ளார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Polity Hook:</strong> Article 176(1) of the Indian Constitution mandates the Governor to address the Legislative Assembly at the commencement of the first session after each general election and at the first session of each year.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> சரத்து 176(1)-இன் படி, ஒவ்வொரு பொதுத் தேர்தலுக்குப் பிறகும் நடைபெறும் முதல் கூட்டத்தொடரிலும், ஒவ்வொரு ஆண்டின் முதல் கூட்டத்தொடரிலும் ஆளுநர் சட்டப்பேரவையில் உரையாற்றுவது கட்டாயமாகும்.</span></li>
+                            <li><span class="badge bg-tip">TIP</span><span class="lang-en">Business Advisory Committee decides the time-table of the house. It is always chaired by the Speaker.</span><span class="lang-ta">அலுவல் ஆய்வுக்குழு பேரவையின் கால அட்டவணையை முடிவு செய்கிறது. இதன் தலைவராக எப்போதும் பேரவைத் தலைவரே இருப்பார்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Inter-State Relations · Water Dispute</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Mullaperiyar Dam: Kerala CM Announces Bilateral Talks with Tamil Nadu</span>
+                        <span class="lang-ta">முல்லைப் பெரியாறு அணை: தமிழகத்துடன் இருதரப்புப் பேச்சுவார்த்தை நடைபெறும் என கேரள முதல்வர் அறிவிப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Kerala Chief Minister V.D. Satheesan announced that bilateral talks will be held with the Tamil Nadu government regarding the Mullaperiyar Dam issue. Built in 1895 and maintained by Tamil Nadu, Kerala has been raising safety concerns and pushing for the construction of a new dam, while Tamil Nadu insists the current structure is safe. The talks are expected to occur after the Kerala state budget presentation on June 19.</p>
+                    <p class="lang-ta">முல்லைப் பெரியாறு அணை விவகாரம் குறித்து தமிழக அரசுடன் இருதரப்புப் பேச்சுவார்த்தை நடத்தப்படும் என கேரள முதல்வர் வி.டி. சதீசன் அறிவித்துள்ளார். 1895-ஆம் ஆண்டு கட்டப்பட்ட இந்த அணையைத் தமிழகம் பராமரித்து வருகிறது. ஆனால், அணையின் பாதுகாப்பு குறித்துக் கவலை தெரிவிக்கும் கேரளா, புதிய அணை கட்ட வேண்டும் எனத் தொடர்ந்து வலியுறுத்தி வருகிறது. ஜூன் 19-ஆம் தேதி கேரள பட்ஜெட் தாக்கலான பிறகு இப்பேச்சுவார்த்தை நடைபெறும் என எதிர்பார்க்கப்படுகிறது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Geography Hook:</strong> The Mullaperiyar Dam is located on the Periyar River in Kerala but is operated by Tamil Nadu under a 999-year lease agreement made during British rule (1886) by John Pennycuick.</span><span class="lang-ta"><strong>புவியியல் குறிப்பு:</strong> முல்லைப் பெரியாறு அணை கேரளாவில் உள்ள பெரியாறு ஆற்றின் குறுக்கே அமைந்துள்ளது. ஆனால், இது ஆங்கிலேயர் ஆட்சி காலத்தில் (1886) ஜான் பென்னிகுயிக் என்பவரால் போடப்பட்ட 999 வருட குத்தகை ஒப்பந்தத்தின் கீழ் தமிழகத்தால் இயக்கப்படுகிறது.</span></li>
+                            <li><span class="badge bg-critical">CRITICAL</span><span class="lang-en"><strong>Polity Hook:</strong> Inter-State Water Disputes fall under Article 262. Parliament enacted the Inter-State River Water Disputes Act, 1956. However, the Mullaperiyar issue has predominantly been handled by the Supreme Court (Article 131).</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> மாநிலங்களுக்கு இடையிலான நதிநீர் பிரச்சினைகள் சரத்து 262-இன் கீழ் வருகின்றன. முல்லைப் பெரியாறு விவகாரம் பெரும்பாலும் உச்சநீதிமன்றத்தால் (சரத்து 131 - மூல அதிகார வரம்பு) கையாளப்படுகிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Infrastructure · Space Tech</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">TN Govt & IN-SPACe Sign MoU for ₹100 Crore Space Tech Facility in Kulasekarapattinam</span>
+                        <span class="lang-ta">குலசேகரப்பட்டினத்தில் விண்வெளி வாகனங்கள் பொது தொழில்நுட்ப வசதி மையம்: தமிழக அரசு - IN-SPACe இடையே ஒப்பந்தம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Tamil Nadu Government and IN-SPACe (Indian National Space Promotion and Authorization Centre) have signed a crucial MoU to establish a 'Space Vehicles Common Tech Facility Centre' at Kulasekarapattinam in Thoothukudi district. IN-SPACe will provide equipment worth ₹100 crore, while the TN Government will allocate land and basic infrastructure. This facility, located near the upcoming ISRO launch pad, will offer global-standard testing, assembly, and quality assurance for space vehicles, significantly reducing costs for private space startups.</p>
+                    <p class="lang-ta">தூத்துக்குடி மாவட்டம் குலசேகரப்பட்டினத்தில் 'விண்வெளி வாகனங்கள் பொது தொழில்நுட்ப வசதி மையத்தை' அமைப்பதற்காகத் தமிழக அரசும் IN-SPACe நிறுவனமும் ஒப்பந்தம் மேற்கொண்டுள்ளன. இதன்படி IN-SPACe நிறுவனம் ரூ.100 கோடி மதிப்பிலான உபகரணங்களை வழங்கும்; தமிழக அரசு நிலம் மற்றும் அடிப்படை உட்கட்டமைப்புகளை ஏற்படுத்தும். இஸ்ரோவின் புதிய ஏவுதளத்திற்கு அருகில் அமையவுள்ள இம்மையம், தனியார் விண்வெளி நிறுவனங்களுக்குத் தேவையான அதிநவீன சோதனை மற்றும் தர உறுதி வசதிகளை வழங்கி, அவர்களின் செலவைக் கணிசமாகக் குறைக்கும்.</p>
+                </div>
+
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National / Central News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Defence · Manufacturing</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">India's Defence Production Hits Record High of ₹1.78 Lakh Crore in 2025-26</span>
+                        <span class="lang-ta">இந்தியாவின் பாதுகாப்புத் தளவாட உற்பத்தி வரலாறு காணாத அளவில் ரூ.1.78 லட்சம் கோடியாக உயர்வு (2025-26)</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">India's defence manufacturing sector has achieved a new milestone, with the total value of defence production reaching a record ₹1.78 lakh crore in the financial year 2025-26, marking a 15.6% growth from the previous year. Defence Minister Rajnath Singh lauded the achievement. The contribution of Public Sector Undertakings (PSUs) stands at 76%, while the private sector contributes 24%. Private sector production alone touched ₹42,000 crore, reflecting the success of the 'Make in India' and 'Atmanirbhar Bharat' initiatives.</p>
+                    <p class="lang-ta">2025-26 ஆம் நிதியாண்டில் இந்தியாவின் பாதுகாப்புத் தளவாட உற்பத்தி வரலாறு காணாத வகையில் ரூ.1.78 லட்சம் கோடியை எட்டியுள்ளது (முந்தைய ஆண்டை விட 15.6% வளர்ச்சி). இதற்காகப் பாதுகாப்புத்துறை அமைச்சர் ராஜ்நாத் சிங் பாராட்டு தெரிவித்தார். மொத்த உற்பத்தியில் பொதுத்துறை நிறுவனங்களின் (PSUs) பங்களிப்பு 76% ஆகவும், தனியார் துறையின் பங்களிப்பு 24% ஆகவும் உள்ளது. தனியார் துறையின் உற்பத்தி மட்டும் ரூ.42,000 கோடியைத் தொட்டுள்ளது, இது 'மேக் இன் இந்தியா' மற்றும் 'தற்சார்பு இந்தியா' திட்டங்களின் வெற்றியைக் காட்டுகிறது.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Law & Justice · Cyber Security</span>
+                        <span class="badge bg-trap">TRAP</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Telegram Challenges Central Govt's Ban in Delhi High Court</span>
+                        <span class="lang-ta">மத்திய அரசின் தடையை எதிர்த்து தில்லி உயர்நீதிமன்றத்தில் 'டெலிகிராம்' (Telegram) நிறுவனம் வழக்கு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The messaging app Telegram has filed a petition in the Delhi High Court challenging the Central Government's temporary ban imposed on it until June 22 (ahead of the NEET re-exam). The ban was enacted to curb the spread of leaked question papers and fake rumors. Telegram's CEO Pavel Durov alleged that the ban might be a conspiracy orchestrated by rival communication giants (hinting at Reliance/Meta) to disrupt Telegram's operations in India. He also noted that simply banning an app will not stop leaks, as perpetrators use VPNs and proxy servers.</p>
+                    <p class="lang-ta">நீட் மறுதேர்வுக்கு முன்னதாக வினாத்தாள் கசிவு மற்றும் வதந்திகளைத் தடுக்கும் நோக்கில், டெலிகிராம் செயலிக்கு ஜூன் 22 வரை மத்திய அரசு தற்காலிகத் தடை விதித்திருந்தது. இத்தடையை எதிர்த்து டெலிகிராம் நிறுவனம் தில்லி உயர்நீதிமன்றத்தில் வழக்கு தொடர்ந்துள்ளது. இந்தியாவில் டெலிகிராமின் சேவையை முடக்க, போட்டி நிறுவனங்களான ரிலையன்ஸ்/மெட்டா ஆகியோரின் சதியாக இது இருக்கலாம் என டெலிகிராம் சிஇஓ பாவெல் துரோவ் குற்றம் சாட்டினார். செயலியை முடக்குவதால் வினாத்தாள் கசிவைத் தடுக்க முடியாது என்றும், விபிஎன் (VPN) மூலம் கசிவுகள் தொடரும் என்றும் அவர் கூறினார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Cyber Law Hook:</strong> The ban was enforced under Section 69A of the IT Act, 2000. Do not confuse this with Section 66A, which was struck down by the Supreme Court as unconstitutional.</span><span class="lang-ta"><strong>சைபர் சட்டக் குறிப்பு:</strong> தகவல் தொழில்நுட்பச் சட்டம் 2000, பிரிவு 69A-இன் கீழ் இந்தத் தடை விதிக்கப்பட்டுள்ளது. உச்சநீதிமன்றத்தால் அரசியலமைப்புக்கு முரணானது என ரத்து செய்யப்பட்ட பிரிவு 66A உடன் இதைக் குழப்பிக் கொள்ள வேண்டாம்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+            </section>
+
+            <!-- INTERNATIONAL NEWS -->
+            <section id="international">
+                <h2>
+                    <span class="lang-en">International News</span>
+                    <span class="lang-ta">சர்வதேச செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Diplomacy · Trade & Security</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">G7 Summit: PM Modi Proposes IMEC Revival; Trump Promises US Protection for India</span>
+                        <span class="lang-ta">ஜி7 உச்சி மாநாடு: IMEC திட்டத்தை மீண்டும் தொடங்க பிரதமர் மோடி யோசனை; இந்தியாவைப் பாதுகாப்போம் என டிரம்ப் உறுதி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">At the G7 Summit in Evian, France, PM Modi emphasized the need to revive the India-Middle East-Europe Economic Corridor (IMEC), which was stalled due to the US-Iran/Israel conflict. He proposed a global coalition to accelerate trade and connectivity. Concurrently, PM Modi held a high-profile meeting with US President Donald Trump, raising concerns about the safety of Indian sailors following the recent US military strike in Yemen waters. Trump praised Modi as a tough negotiator and assured that the US would defend India if attacked by any nation.</p>
+                    <p class="lang-ta">பிரான்சின் எவியான் நகரில் நடைபெற்ற ஜி7 உச்சி மாநாட்டில், அமெரிக்கா-ஈரான்/இஸ்ரேல் மோதலால் தடைபட்ட இந்தியா-மத்திய கிழக்கு-ஐரோப்பா பொருளாதார வழித்தட (IMEC) திட்டத்தை மீண்டும் தொடங்க வேண்டும் எனப் பிரதமர் மோடி வலியுறுத்தினார். மேலும், ஏமன் கடல் பகுதியில் அமெரிக்க ராணுவம் நடத்திய தாக்குதலில் இந்திய மாலுமிகள் உயிரிழந்தது குறித்து அதிபர் டிரம்புடன் மோடி கவலை தெரிவித்தார். மோடியைச் சிறந்த பேச்சாளர் எனப் புகழ்ந்த டிரம்ப், இந்தியாவின் மீது எந்த நாடு தாக்குதல் நடத்தினாலும் அமெரிக்கா இந்தியாவைப் பாதுகாக்கும் என உறுதியளித்தார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-tip">TIP</span><span class="lang-en"><strong>Geopolitics Hook:</strong> The IMEC project (announced during the G20 summit in New Delhi) aims to connect India to Europe via the UAE, Saudi Arabia, Jordan, and Israel. It is seen as a counter to China's Belt and Road Initiative (BRI).</span><span class="lang-ta"><strong>புவிசார் அரசியல் குறிப்பு:</strong> IMEC திட்டம் (புதுதில்லி ஜி20 மாநாட்டில் அறிவிக்கப்பட்டது) ஐக்கிய அரபு அமீரகம், சவுதி அரேபியா, ஜோர்டான் மற்றும் இஸ்ரேல் வழியாக இந்தியாவை ஐரோப்பாவுடன் இணைக்கத் திட்டமிடப்பட்டுள்ளது. இது சீனாவின் BRI திட்டத்திற்குப் போட்டியாகக் கருதப்படுகிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Trade · FTAs</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">India-UK FTA to Kick off on July 15; India-EU FTA by Year-End</span>
+                        <span class="lang-ta">இந்தியா-பிரிட்டன் தடையில்லா வர்த்தக ஒப்பந்தம் ஜூலை 15 முதல் அமல்; இந்தியா-ஐரோப்பிய யூனியன் ஒப்பந்தம் இந்த ஆண்டு இறுதிக்குள் கையெழுத்தாகும்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">PM Modi announced that the much-awaited Free Trade Agreement (FTA) between India and the UK will officially come into effect on July 15, 2026. This comprehensive pact will boost bilateral trade, investments, and opportunities for MSMEs and startups. Furthermore, following bilateral talks at the G7 Summit, EU Commission President Ursula von der Leyen confirmed that the India-EU FTA will be signed by the end of this year, eliminating or reducing tariffs on 99% of India's exports to the EU.</p>
+                    <p class="lang-ta">இந்தியா மற்றும் பிரிட்டன் இடையிலான बहुஎதிர்பார்க்கப்பட்ட தடையில்லா வர்த்தக ஒப்பந்தம் (FTA) ஜூலை 15, 2026 முதல் அதிகாரப்பூர்வமாக அமலுக்கு வரும் எனப் பிரதமர் மோடி அறிவித்தார். இது இருதரப்பு வர்த்தகம், முதலீடுகள் மற்றும் சிறு, குறு தொழில்களுக்கான வாய்ப்புகளை அதிகரிக்கும். மேலும், ஜி7 மாநாட்டின் இடையே நடந்த சந்திப்பைத் தொடர்ந்து, இந்தியா-ஐரோப்பிய யூனியன் இடையிலான தடையற்ற வர்த்தக ஒப்பந்தம் இந்த ஆண்டு இறுதிக்குள் கையெழுத்தாகும் என ஐரோப்பிய யூனியன் தலைவர் உர்சுலா வான் டெர் லெயென் உறுதிப்படுத்தினார். இதன் மூலம் ஐரோப்பாவுக்கான இந்தியாவின் 99% ஏற்றுமதிகளுக்கு வரி நீக்கப்படும் அல்லது குறைக்கப்படும்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Defence · USA</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">US Renames 'Indo-Pacific Command' Back to 'Pacific Command'</span>
+                        <span class="lang-ta">அமெரிக்காவின் 'இந்தோ-பசிபிக் படைப்பிரிவு' மீண்டும் 'பசிபிக் படைப்பிரிவு' எனப் பெயர் மாற்றம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The US Defense Department has officially dropped the prefix 'Indo' from the 'US Indo-Pacific Command', reverting its name back to the 'US Pacific Command'. The name was originally changed to Indo-Pacific Command in 2018 during Donald Trump's first term to highlight the growing strategic connectivity between the Indian and Pacific Oceans. The Pentagon clarified that this is merely a return to historical tradition and does not alter the command's operational boundaries or its commitment to regional allies like India.</p>
+                    <p class="lang-ta">அமெரிக்க ராணுவத்தின் 'இந்தோ-பசிபிக் படைப்பிரிவு' (US Indo-Pacific Command) என்ற பெயரிலிருந்து 'இந்தோ' நீக்கப்பட்டு, மீண்டும் 'பசிபிக் படைப்பிரிவு' எனப் பெயர் மாற்றம் செய்யப்பட்டுள்ளது. இந்திய மற்றும் பசிபிக் பெருங்கடல்களுக்கு இடையிலான உத்திசார் இணைப்பை வலியுறுத்தும் விதமாக 2018-ல் டொனால்ட் டிரம்பின் முதல் பதவிக்காலத்தில் இது இந்தோ-பசிபிக் என மாற்றப்பட்டது. தற்போதைய பெயர் மாற்றம் வெறும் வரலாற்று மரபுக்குத் திரும்புவதே தவிர, படைப்பிரிவின் செயல்பாட்டு எல்லைகளையோ அல்லது இந்தியா போன்ற நட்பு நாடுகளுடனான உறவையோ பாதிக்காது என பென்டகன் விளக்கமளித்துள்ளது.</p>
+                </div>
+
+            </section>
+
+            <!-- ECONOMY & FINANCE -->
+            <section id="economy">
+                <h2>
+                    <span class="lang-en">Economy & Tech</span>
+                    <span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Technology · DPI & AI</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Integration of AI and Digital Public Infrastructure (DPI) Reshaping India's Finance Sector</span>
+                        <span class="lang-ta">செயற்கை நுண்ணறிவு (AI) மற்றும் எண்ம பொது உள்கட்டமைப்பின் (DPI) இணைப்பு: இந்தியாவின் நிதித்துறையில் பெரும் மாற்றம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">A deep-dive article highlights how India's massive Digital Public Infrastructure (DPI) — comprising Aadhaar, UPI, and Account Aggregator networks — is increasingly being integrated with Artificial Intelligence (AI). UPI processes over 49% of global real-time digital payments. Now, AI is revolutionizing this space by predicting spending patterns, detecting frauds in real-time, and enabling voice-based native language transactions for rural MSMEs. This DPI-AI convergence is driving extreme financial inclusion without relying on private western platforms.</p>
+                    <p class="lang-ta">ஆதார், யுபிஐ (UPI) மற்றும் கணக்கு ஒருங்கிணைப்பாளர் வலைப்பின்னல்களை உள்ளடக்கிய இந்தியாவின் மாபெரும் எண்ம பொது உள்கட்டமைப்பு (DPI), செயற்கை நுண்ணறிவுடன் (AI) எவ்வாறு இணைக்கப்படுகிறது என்பதை ஒரு கட்டுரை விளக்குகிறது. உலகளாவிய டிஜிட்டல் பணப் பரிவர்த்தனைகளில் 49%-க்கும் அதிகமானவை UPI மூலம் நடக்கின்றன. தற்போது, AI மூலம் செலவு முறைகளைக் கணித்தல், மோசடிகளை உடனுக்குடன் கண்டறிதல் மற்றும் கிராமப்புற சிறு வணிகர்களுக்குக் குரல் வழி தாய்மொழிப் பரிவர்த்தனைகளைச் சாத்தியமாக்குதல் ஆகியவை நடைபெறுகின்றன. மேற்கத்திய தனியார் தளங்களை நம்பியிருக்காமல், இந்தியாவின் இந்த DPI-AI இணைப்பு மாபெரும் நிதி உள்ளடக்கத்தை உருவாக்குகிறது.</p>
+                </div>
+            </section>
+            
+            <!-- SPORTS -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports</span>
+                    <span class="lang-ta">விளையாட்டு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Football · FIFA World Cup</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Lionel Messi Scores Hat-Trick; Becomes Oldest Player to Do So & Ties Klose's Record</span>
+                        <span class="lang-ta">உலகக் கோப்பை: மெஸ்ஸி ஹாட்ரிக் கோல் சாதனை; அதிக வயதில் ஹாட்ரிக் அடித்தவர் & குளோஸின் சாதனையை சமன் செய்தார்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In the FIFA World Cup match held in Kansas City, defending champions Argentina defeated Algeria 3-0. Captain Lionel Messi scored all three goals (a hat-trick) making history. At 38 years and 357 days, he became the oldest player to score a World Cup hat-trick (breaking Cristiano Ronaldo's 2018 record). Moreover, Messi has now tied the all-time record for the most World Cup goals (16), equaling Germany's Miroslav Klose. He is also the first player to feature in 6 World Cup tournaments.</p>
+                    <p class="lang-ta">அமெரிக்காவின் கன்சாஸ் சிட்டியில் நடைபெற்ற உலகக் கோப்பை கால்பந்துப் போட்டியில், நடப்பு சாம்பியனான அர்ஜென்டினா 3-0 என அல்ஜீரியாவை வீழ்த்தியது. கேப்டன் லியோனல் மெஸ்ஸி மூன்று கோல்களையும் (ஹாட்ரிக்) அடித்து வரலாறு படைத்தார். 38 ஆண்டுகள் மற்றும் 357 நாட்களில், உலகக் கோப்பையில் ஹாட்ரிக் அடித்த அதிக வயதுடைய வீரர் என்ற சாதனையை அவர் படைத்தார் (ரொனால்டோவின் 2018 சாதனையை முறியடித்தார்). மேலும், உலகக் கோப்பையில் அதிக கோல் அடித்த ஜெர்மனியின் மிரோஸ்லாவ் குளோஸின் சாதனையையும் (16 கோல்கள்) மெஸ்ஸி சமன் செய்துள்ளார். 6 உலகக் கோப்பைகளில் விளையாடிய முதல் வீரர் இவரே ஆவார்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Cricket · Women's T20 WC</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">India Women Thump Netherlands by 95 Runs in T20 World Cup</span>
+                        <span class="lang-ta">மகளிர் டி20 உலகக் கோப்பை: நெதர்லாந்தை 95 ரன்கள் வித்தியாசத்தில் வீழ்த்தியது இந்தியா</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In their 10th Group match of the ICC Women's T20 World Cup, India secured a massive 95-run victory against the Netherlands. Batting first, India posted a formidable 209/5, largely driven by Smriti Mandhana's explosive 74 and Shafali Verma's 55. In chase, the Netherlands was restricted to 114 runs in 17.3 overs. Radha Yadav was the standout bowler for India, claiming 4 wickets for 19 runs.</p>
+                    <p class="lang-ta">ஐசிசி மகளிர் டி20 உலகக் கோப்பையின் 10-வது குரூப் ஆட்டத்தில், இந்தியா 95 ரன்கள் வித்தியாசத்தில் நெதர்லாந்தை அபாரமாக வீழ்த்தியது. முதலில் ஆடிய இந்தியா, ஸ்மிருதி மந்தனா (74 ரன்கள்) மற்றும் ஷஃபாலி வர்மா (55 ரன்கள்) ஆகியோரின் சிறப்பான ஆட்டத்தால் 20 ஓவர்களில் 209/5 என்ற பெரிய ஸ்கோரை எடுத்தது. பின்னர் ஆடிய நெதர்லாந்து 17.3 ஓவர்களில் 114 ரன்களுக்குச் சுருண்டது. இந்திய வீராங்கனை ராதா யாதவ் சிறப்பாகப் பந்துவீசி 4 விக்கெட்டுகளை வீழ்த்தினார்.</p>
+                </div>
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: According to the Indian Constitution, the adjudication of disputes relating to waters of inter-state rivers or river valleys is handled under which Article?</span>
+                        <span class="lang-ta">கேள்வி: இந்திய அரசியலமைப்பின்படி, மாநிலங்களுக்கு இடையிலான நதிநீர் அல்லது நதிப் பள்ளத்தாக்குகள் தொடர்பான தகராறுகள் எந்தச் சரத்தின் கீழ் கையாளப்படுகின்றன?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Article 262</span><br><br>
+                                <strong>Context:</strong> Kerala CM announced bilateral talks regarding the Mullaperiyar Dam. Article 262 allows Parliament to adjudicate inter-state water disputes, leading to the Inter-State Water Disputes Act of 1956. However, the Mullaperiyar case is primarily heard by the SC under its original jurisdiction (Article 131).
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">சரத்து 262</span><br><br>
+                                <strong>பின்னணி:</strong> முல்லைப் பெரியாறு அணை குறித்து இருதரப்புப் பேச்சுவார்த்தை நடைபெறும் என கேரள முதல்வர் அறிவித்தார். நதிநீர் தகராறுகளைத் தீர்க்க நாடாளுமன்றத்திற்கு அதிகாரம் அளிப்பது சரத்து 262 ஆகும். ஆனால், முல்லைப் பெரியாறு விவகாரம் சரத்து 131-இன் கீழ் உச்சநீதிமன்றத்தால் விசாரிக்கப்படுகிறது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Who holds the record for the most number of goals scored in the history of the FIFA Men's World Cup, currently tied at 16 goals?</span>
+                        <span class="lang-ta">கேள்வி: ஃபிஃபா ஆடவர் உலகக் கோப்பை வரலாற்றில் அதிக கோல்கள் (16 கோல்கள்) அடித்த சாதனையை தற்போது சமன் செய்துள்ளவர் / தன்வசம் வைத்துள்ளவர் யார்?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Miroslav Klose & Lionel Messi</span><br><br>
+                                <strong>Context:</strong> Lionel Messi scored a hat-trick against Algeria, making him the oldest player to do so at 38 years, and bringing his total World Cup goals to 16, tying with Germany's Miroslav Klose.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">மிரோஸ்லாவ் குளோஸ் & லியோனல் மெஸ்ஸி</span><br><br>
+                                <strong>பின்னணி:</strong> அல்ஜீரியாவுக்கு எதிரான போட்டியில் மெஸ்ஸி ஹாட்ரிக் கோல் அடித்தார். இதன் மூலம் உலகக் கோப்பையில் அதிக கோல் (16) அடித்த ஜெர்மனியின் குளோஸின் சாதனையை அவர் சமன் செய்தார்.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">TN Assembly Session</span><span class="lang-ta">சட்டப்பேரவைக் கூட்டம்</span></td>
+                                <td><span class="lang-en">State/Polity</span><span class="lang-ta">மாநிலம்/அரசியல்</span></td>
+                                <td><span class="lang-en">Starts with Governor R.N. Ravi's address. EPS recognized as AIADMK leader.</span><span class="lang-ta">ஆளுநர் உரையுடன் தொடக்கம். இபிஎஸ் எதிர்க்கட்சித் தலைவராக அங்கீகாரம்.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">Space Tech Facility</span><span class="lang-ta">விண்வெளி தொழில்நுட்ப மையம்</span></td>
+                                <td><span class="lang-en">State/Sci-Tech</span><span class="lang-ta">மாநிலம்/அறிவியல்</span></td>
+                                <td><span class="lang-en">IN-SPACe & TN Govt to build ₹100 Cr facility at Kulasekarapattinam.</span><span class="lang-ta">குலசேகரப்பட்டினத்தில் ரூ.100 கோடியில் அமையவுள்ளது.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">Defence Production</span><span class="lang-ta">பாதுகாப்பு உற்பத்தி</span></td>
+                                <td><span class="lang-en">National/Defence</span><span class="lang-ta">தேசியம்/பாதுகாப்பு</span></td>
+                                <td><span class="lang-en">Hits record ₹1.78 Lakh Crore in 2025-26.</span><span class="lang-ta">2025-26-ல் ரூ.1.78 லட்சம் கோடியாக உயர்வு.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">G7 Summit & IMEC</span><span class="lang-ta">ஜி7 மாநாடு & IMEC</span></td>
+                                <td><span class="lang-en">Intl/Diplomacy</span><span class="lang-ta">சர்வதேசம்/உறவுகள்</span></td>
+                                <td><span class="lang-en">Modi proposes IMEC revival; Trump promises protection for India.</span><span class="lang-ta">IMEC திட்டத்தை மீண்டும் தொடங்க மோடி யோசனை.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">Messi Hat-trick</span><span class="lang-ta">மெஸ்ஸி ஹாட்ரிக் சாதனை</span></td>
+                                <td><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></td>
+                                <td><span class="lang-en">Oldest to score WC hat-trick; ties Klose's 16 goal record.</span><span class="lang-ta">அதிக வயதில் ஹாட்ரிக்; 16 உலகக்கோப்பை கோல்கள் சாதனை சமன்.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani Chennai 18-06-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி சென்னை 18-06-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source text detailed state, national, and international news for 18 June 2026. 
+State news covered the commencement of the 17th TN Legislative Assembly Session with the Governor's address. EPS was officially recognized as AIADMK Legislative Party Leader. Madras High Court refused to stay by-elections in 4 constituencies. Viralimalai constituency was declared vacant. Kerala CM V.D. Satheesan announced bilateral talks on Mullaperiyar Dam. A ₹100 crore Space Tech Facility is to be built at Kulasekarapattinam by IN-SPACe and TN Govt. Southern Railway asked to remove 159 TASMAC shops near stations.
+National news: India's defence production reached a record ₹1.78 lakh crore. Telegram filed a case in the Delhi HC against the central govt's temporary ban. Rajya Sabha elections held in Jharkhand and Mizoram. RSS office in Ranchi attacked with petrol bombs. 
+International news: PM Modi met US President Trump at the G7 Summit in France, discussing the IMEC corridor and sailors' safety. Trump praised Modi and stated the US would protect India. India-UK FTA begins July 15. US reverted 'Indo-Pacific Command' back to 'Pacific Command'. Kerala CM's daughter Veena was questioned by the ED for 9 hours. 
+Economy: An article on AI integration with Digital Public Infrastructure (DPI) in India. Gem and jewellery exports dropped by 2.49% in May. SpaceX bought Indian-origin AI startup 'Culture' for $60 billion.
+Sports: Lionel Messi scored a hat-trick in Argentina's 3-0 win against Algeria, tying the all-time World Cup goal record (16). India Women beat Netherlands by 95 runs in the T20 World Cup. India A beat Afghanistan A by 170 runs in ODI.]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூல உரைகள் 18 ஜூன் 2026 க்கான செய்திகளைக் கொண்டிருந்தன.
+மாநில செய்திகளில், 17-வது சட்டப்பேரவை ஆளுநர் உரையுடன் தொடங்குகிறது. இபிஎஸ் அதிமுக பேரவைக் குழுத் தலைவராக அங்கீகாரம். 4 தொகுதிகள் இடைத்தேர்தலுக்குத் தடை விதிக்க உயர்நீதிமன்றம் மறுப்பு. விராலிமலை தொகுதி காலியானதாக அறிவிப்பு. முல்லைப் பெரியாறு அணை குறித்து பேச்சுவார்த்தை நடக்கும் என கேரள முதல்வர் அறிவிப்பு. குலசேகரப்பட்டினத்தில் ரூ.100 கோடியில் விண்வெளி தொழில்நுட்ப மையம் அமையவுள்ளது. ரயில் நிலையங்கள் அருகேயுள்ள 159 டாஸ்மாக் கடைகளை அகற்றக் கோரிக்கை.
+தேசிய அளவில்: பாதுகாப்பு உற்பத்தி ரூ.1.78 லட்சம் கோடியாக உயர்வு. தடையை எதிர்த்து டெலிகிராம் வழக்கு. ஜார்க்கண்ட், மிசோரமில் மாநிலங்களவைத் தேர்தல். ராஞ்சியில் ஆர்எஸ்எஸ் அலுவலகம் மீது பெட்ரோல் குண்டுவீச்சு.
+சர்வதேச அளவில்: ஜி7 மாநாட்டில் அதிபர் டிரம்புடன் பிரதமர் மோடி சந்திப்பு (IMEC மற்றும் இந்திய மாலுமிகள் பாதுகாப்பு குறித்து பேச்சு). இந்தியாவைப் பாதுகாப்போம் என டிரம்ப் உறுதி. ஜூலை 15 முதல் இந்தியா-பிரிட்டன் தடையில்லா வர்த்தக ஒப்பந்தம் அமல். 'இந்தோ-பசிபிக் படைப்பிரிவு' மீண்டும் 'பசிபிக் படைப்பிரிவு' என பெயர் மாற்றம். கேரள முதல்வரின் மகள் வீணாவிடம் அமலாக்கத்துறை 9 மணிநேரம் விசாரணை.
+பொருளாதாரம்: இந்தியாவில் AI மற்றும் DPI இணைப்பு குறித்த கட்டுரை. மே மாதத்தில் நகைகள் ஏற்றுமதி 2.49% சரிவு. ஸ்பேஸ் எக்ஸ் நிறுவனம் 60 பில்லியன் டாலருக்கு 'கல்ச்சர்' ஏஐ ஸ்டார்ட்-அப்பை வாங்கியது.
+விளையாட்டு: உலகக்கோப்பையில் அல்ஜீரியாவை 3-0 என வீழ்த்திய அர்ஜென்டினா; மெஸ்ஸி ஹாட்ரிக் சாதனை (16 கோல்கள் சாதனையை சமன் செய்தார்). டி20 உலகக்கோப்பையில் நெதர்லாந்தை 95 ரன்கள் வித்தியாசத்தில் இந்தியா வீழ்த்தியது. இந்தியா ஏ அணி ஆப்கானிஸ்தானை 170 ரன்கள் வித்தியாசத்தில் வென்றது.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 18 June 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+    </script>
+</body>
+</html>

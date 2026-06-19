@@ -1,0 +1,669 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            .nav-links { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 2rem 1rem; }
+            header h1 { font-size: 1.6rem; letter-spacing: 1px; }
+            .tagline { font-size: 0.95rem; }
+            nav.sticky-top { padding: 0.75rem 1rem; gap: 0.5rem; }
+            .toggle-btn { padding: 0.4rem 0.8rem; font-size: 0.85rem; }
+            .layout-container { padding: 1rem 0.75rem; gap: 1rem; }
+            main { max-width: 100%; }
+            .legend-row { flex-direction: column; gap: 0.5rem; }
+            .news-card { padding: 1rem; }
+            .news-card h3 { font-size: 1.15rem; }
+            .card-meta { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+            table { font-size: 0.8rem; }
+            th, td { padding: 0.6rem; }
+            .raw-text-panel { font-size: 0.75rem; padding: 1rem; }
+            footer { padding: 1.5rem 1rem; }
+        }
+
+        @media (max-width: 480px) {
+            header h1 { font-size: 1.25rem; }
+            nav.sticky-top { flex-wrap: wrap; }
+            table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .news-card { border-left-width: 3px; }
+        }
+    </style>
+</head>
+<body class="en-mode">
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">17 June 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">17 ஜூன் 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <!-- Sidebar TOC -->
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Tech</span><span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">History · Heritage</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">11th Century 'Anaimangalam' Chola Copper Plates Return to India from Netherlands</span>
+                        <span class="lang-ta">நெதர்லாந்திலிருந்து இந்தியா திரும்புகின்றன 11-ஆம் நூற்றாண்டைச் சேர்ந்த சோழர் கால 'ஆனைமங்கலம்' செப்பேடுகள்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In a historic moment for Tamil heritage, the famous 11th-century Chola copper plates, known as the 'Anaimangalam Copper Plates' (or Leiden Plates), have been handed over to Prime Minister Modi during his foreign visit and will return to India from the Netherlands. Consisting of 21 large plates (issued by Rajendra Chola I) and 3 smaller plates (issued by Kulothunga Chola I), they have been preserved at Leiden University since 1862. The larger plates document Rajaraja Chola I granting the revenue of Anaimangalam village to the Chudamani Vihara, a Buddhist monastery in Nagapattinam, highlighting the religious tolerance of the Chola empire. They are written in both Sanskrit (tracing royal lineage) and Tamil (detailing the grant and achievements).</p>
+                    <p class="lang-ta">தமிழர் வரலாற்றுப் பொக்கிஷமான 11-ஆம் நூற்றாண்டைச் சேர்ந்த சோழர் கால 'ஆனைமங்கலம் செப்பேடுகள்' (லீடன் செப்பேடுகள்), பிரதமர் மோடியின் வெளிநாட்டுப் பயணத்தின் போது நெதர்லாந்தில் இருந்து இந்தியாவிடம் ஒப்படைக்கப்பட்டன. 1862 முதல் நெதர்லாந்தின் லீடன் பல்கலைக்கழகத்தில் பாதுகாக்கப்பட்டு வந்த இவை, 21 பெரிய செப்பேடுகளையும் (ராஜேந்திர சோழன் காலத்தது), 3 சிறிய செப்பேடுகளையும் (முதலாம் குலோத்துங்கன் காலத்தது) கொண்டவை. ராஜராஜ சோழன் நாகப்பட்டினத்தில் அமைந்திருந்த 'சூடாமணி விகாரம்' என்ற பௌத்த மடாலயத்திற்கு ஆனைமங்கலம் கிராமத்தை மானியமாக வழங்கியதை பெரிய செப்பேடுகள் பதிவு செய்துள்ளன. இது சோழர்களின் மத சகிப்புத்தன்மையை உணர்த்துகிறது. இவை சமஸ்கிருதம் (வம்சாவளி) மற்றும் தமிழ் (சாதனைகள் மற்றும் மானியம்) ஆகிய இரு மொழிகளிலும் பொறிக்கப்பட்டுள்ளன.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>History Hook:</strong> The Leiden Copper Plates (ஆனைமங்கலம் செப்பேடுகள்) are critical primary sources for Chola history. Chudamani Vihara was built by the Srivijaya King Mara Vijayottungavarman with Rajaraja I's permission.</span><span class="lang-ta"><strong>வரலாற்று குறிப்பு:</strong> ஆனைமங்கலம் செப்பேடுகள் (லீடன் செப்பேடுகள்) சோழர் கால வரலாற்றை அறிய உதவும் முக்கிய சான்றுகளாகும். ராஜராஜ சோழனின் அனுமதியுடன் ஸ்ரீவிஜய மன்னர் மாற விஜயோத்துங்கவர்மனால் நாகப்பட்டினத்தில் சூடாமணி விகாரம் கட்டப்பட்டது.</span></li>
+                            <li><span class="lang-en"><strong>5 Major Chola Copper Plates:</strong> Thiruvalangadu, Karanthai, Thirukkalar, Esalam, and Anaimangalam.</span><span class="lang-ta"><strong>சோழர்களின் 5 முக்கிய செப்பேடுகள்:</strong> திருவாலங்காடு, கரந்தை, திருக்களார், எசாலம் மற்றும் ஆனைமங்கலம்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Economy · State Finances</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">TN Government Releases White Paper: State Debt Hits ₹13.18 Lakh Crore</span>
+                        <span class="lang-ta">தமிழக அரசின் வெள்ளை அறிக்கை வெளியீடு: மாநிலத்தின் கடன் சுமை ரூ.13.18 லட்சத்து கோடியாக உயர்வு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Finance Minister Maria Vilson released a 'White Paper' on Tamil Nadu's financial status at the Secretariat, highlighting that the total state debt has ballooned to ₹13.18 lakh crore (up from ₹5.13 lakh crore in April 2021). The per capita debt stands at ₹1,28,934. The report attributes the crisis to severe losses in public sector units (like TANGEDCO and Transport Corporations), a drop in the State's Own Tax Revenue (SOTR) to 5.45% of GSDP, and structural expenditure issues (64.4% of revenue goes to salaries, pensions, and interest). Currently, for every ₹100 earned, the state spends ₹145.</p>
+                    <p class="lang-ta">தமிழகத்தின் நிதிநிலை குறித்த 'வெள்ளை அறிக்கையை' தலைமைச் செயலகத்தில் நிதியமைச்சர் மரியா வில்சன் வெளியிட்டார். அதன்படி, ஏப்ரல் 2021-ல் ரூ.5.13 லட்சத்து கோடியாக இருந்த மாநிலத்தின் மொத்த கடன் சுமை தற்போது ரூ.13.18 லட்சத்து கோடியாக உயர்ந்துள்ளது. தற்போதைய தனிநபர் கடன் சுமை ரூ.1,28,934 ஆக உள்ளது. பொதுத்துறை நிறுவனங்களான மின்சார வாரியம் மற்றும் போக்குவரத்துக் கழகங்களில் ஏற்பட்ட நஷ்டம், மாநிலத்தின் சொந்த வரி வருவாய் (SOTR) 5.45% ஆகக் குறைந்தது மற்றும் கட்டாயச் செலவினங்கள் (ஊதியம், ஓய்வூதியம், வட்டி) 64.4% ஆக உள்ளது ஆகியவை இந்த நிதி நெருக்கடிக்கு முக்கியக் காரணங்களாகக் கூறப்பட்டுள்ளன. அரசுக்கு ரூ.100 வருவாய் வந்தால், ரூ.145 செலவாகிறது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Polity Hook:</strong> Article 293 of the Constitution deals with the borrowing powers of State Governments. States cannot raise external commercial borrowings directly without the Centre's consent.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> சரத்து 293 மாநில அரசுகளின் கடன் வாங்கும் அதிகாரம் பற்றிக் கூறுகிறது. மத்திய அரசின் அனுமதியின்றி மாநிலங்கள் வெளிநாடுகளில் இருந்து நேரடியாகக் கடன் பெற முடியாது.</span></li>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en"><strong>Revenue Deficit vs Fiscal Deficit:</strong> Revenue Deficit is the excess of revenue expenditure over revenue receipts. The report projects an unprecedented Revenue Deficit of ₹78,324 Crore for 2025-26.</span><span class="lang-ta"><strong>பொருளாதாரக் குறிப்பு:</strong> வருவாய்ப் பற்றாக்குறை (Revenue Deficit) என்பது வருவாய் வரவுகளை விட வருவாய்ச் செலவினங்கள் அதிகமாக இருப்பதைக் குறிக்கும். 2025-26-ல் இது வரலாறு காணாத வகையில் ரூ.78,324 கோடியாக இருக்கும் எனக் கணிக்கப்பட்டுள்ளது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Agriculture · Loan Waiver</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">CM Vijay Orders Full Crop Loan Waiver up to ₹75,000 for Cooperative Bank Borrowers</span>
+                        <span class="lang-ta">கூட்டுறவு வங்கிகளில் ரூ.75,000 வரையிலான பயிர்க்கடன் முழு தள்ளுபடி: முதல்வர் விஜய் உத்தரவு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Modifying an earlier announcement to quell farmer protests, Chief Minister Joseph Vijay has ordered a full waiver of crop loans up to ₹75,000 obtained by small and marginal farmers from cooperative banks (between May 1, 2025, and Feb 28, 2026). For farmers who borrowed above ₹75,000, a flat waiver of ₹35,000 will be provided. This revised scheme will benefit 14,43,504 farmers and cost the state exchequer an estimated ₹5,932.23 crore. The government has to clear these dues to the RBI within 45 to 60 days.</p>
+                    <p class="lang-ta">விவசாயிகளின் போராட்டங்களைத் தொடர்ந்து முந்தைய அறிவிப்பில் திருத்தம் செய்துள்ள முதல்வர் ஜோசப் விஜய், கூட்டுறவு வங்கிகளில் சிறு, குறு விவசாயிகள் பெற்ற ரூ.75,000 வரையிலான பயிர்க்கடன்களை முழுமையாகத் தள்ளுபடி செய்து உத்தரவிட்டுள்ளார் (மே 1, 2025 முதல் பிப் 28, 2026 வரை பெற்றவை). ரூ.75,000-க்கு மேல் கடன் பெற்றவர்களுக்கு ரூ.35,000 தள்ளுபடி செய்யப்படும். இதன் மூலம் 14,43,504 விவசாயிகள் பயனடைவார்கள். இதனால் அரசுக்கு சுமார் ரூ.5,932.23 கோடி கூடுதல் செலவு ஏற்படும். இத்தொகையை 45 முதல் 60 நாட்களுக்குள் இந்திய ரிசர்வ் வங்கிக்கு மாநில அரசு செலுத்த வேண்டும்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Infrastructure · TANGEDCO</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">₹15,032 Crore Project Ordered for Uninterrupted Power Supply; 231 New Substations</span>
+                        <span class="lang-ta">தடையற்ற மின் விநியோகத்திற்கு ரூ.15,032 கோடியில் திட்டம்: 231 புதிய துணை மின் நிலையங்கள் அமைப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">To ensure uninterrupted power distribution and address frequent outages, Chief Minister Joseph Vijay chaired an Energy Department review meeting. He ordered a massive ₹15,032 crore project to establish 231 new substations across Tamil Nadu. Additionally, 15,058 field staff will be recruited to handle power fault rectifications. A dedicated WhatsApp service will soon be integrated with the complaint management system (Minnagam - 9498794987).</p>
+                    <p class="lang-ta">தடையற்ற மின் விநியோகத்தை உறுதி செய்யவும், அடிக்கடி ஏற்படும் மின்தடைகளைச் சரிசெய்யவும் எரிசக்தித் துறை ஆய்வுக் கூட்டத்தில் முதல்வர் ஜோசப் விஜய் ஆலோசனை நடத்தினார். தமிழகம் முழுவதும் ரூ.15,032 கோடியில் 231 புதிய துணை மின் நிலையங்களை அமைக்க அவர் உத்தரவிட்டுள்ளார். மேலும், மின் பழுது நீக்கும் பணிகளுக்காக புதிதாக 15,058 களப்பணியாளர்கள் நியமிக்கப்படுவார்கள். 'மின்னகம்' (9498794987) குறைதீர் அமைப்புடன் விரைவில் வாட்ஸ்அப் சேவையும் இணைக்கப்பட உள்ளது.</p>
+                </div>
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National / Central News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Tech · Cybersecurity</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Telegram App Temporarily Blocked in India Until June 22 over NEET Paper Leak Rumours</span>
+                        <span class="lang-ta">நீட் வினாத்தாள் கசிவு வதந்திகள்: 'டெலிகிராம்' செயலிக்கு ஜூன் 22 வரை இந்தியாவில் தற்காலிகத் தடை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Following recommendations from the National Testing Agency (NTA), the Ministry of Electronics and Information Technology (MeitY) has ordered the temporary blocking of the 'Telegram' messaging app in India until June 22. This drastic action was taken under Section 69A of the IT Act, 2000, to curb the rampant spread of fake NEET question papers and misinformation by fraudulent gangs aiming to extort money from students ahead of the NEET re-exam scheduled for June 21. Telegram's feature allowing users to edit past messages without an 'edited' tag was specifically cited as a vulnerability exploited by scammers.</p>
+                    <p class="lang-ta">தேசியத் தேர்வு முகமையின் (NTA) பரிந்துரையின் அடிப்படையில், 'டெலிகிராம்' செய்திப் பகிர்வு செயலிக்கு இந்தியாவில் ஜூன் 22 வரை தற்காலிகத் தடை விதித்து மத்திய மின்னணு மற்றும் தகவல் தொழில்நுட்ப அமைச்சகம் (MeitY) உத்தரவிட்டுள்ளது. தகவல் தொழில்நுட்பச் சட்டம் 2000-இன் 69A பிரிவின் கீழ் இந்த நடவடிக்கை எடுக்கப்பட்டுள்ளது. ஜூன் 21 அன்று நடைபெற உள்ள நீட் மறுதேர்வுக்கு முன்னதாக, போலியான வினாத்தாள்களைப் பரப்பி மாணவர்களிடம் பணம் பறிக்கும் மோசடி கும்பல்களின் செயல்களைத் தடுக்கும் நோக்கில் இம்முடிவு எடுக்கப்பட்டுள்ளது. டெலிகிராம் செயலியில் உள்ள, 'திருத்தப்பட்டது' (edited) என்ற குறிப்பின்றி பழைய செய்திகளைத் திருத்தும் வசதியை மோசடி கும்பல்கள் தவறாகப் பயன்படுத்தியதே இதற்கு முக்கியக் காரணமாகும்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Cyber Law Hook:</strong> Section 69A of the Information Technology Act, 2000 empowers the Central Government to block public access to any information online to protect the sovereignty, integrity, and security of India, or public order. The famous <em>Shreya Singhal vs Union of India (2015)</em> case upheld the constitutionality of Section 69A while striking down Section 66A.</span><span class="lang-ta"><strong>சைபர் சட்டக் குறிப்பு:</strong> தகவல் தொழில்நுட்பச் சட்டம் 2000-இன் 69A பிரிவு, இந்தியாவின் இறையாண்மை, பாதுகாப்பு அல்லது பொது ஒழுங்கைப் பாதுகாக்க இணையத்தில் உள்ள எந்தவொரு தகவலையும் முடக்கும் அதிகாரத்தை மத்திய அரசுக்கு வழங்குகிறது. புகழ் பெற்ற <em>ஸ்ரேயா சிங்கால் vs இந்திய ஒன்றியம் (2015)</em> வழக்கில் உச்சநீதிமன்றம் 69A பிரிவை உறுதி செய்தது (66A பிரிவை ரத்து செய்தது).</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Economy · Macro Indicators</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">WPI Inflation Surges to 9.68%; New Base Year 2022-23 Introduced</span>
+                        <span class="lang-ta">மொத்த விற்பனை விலை பணவீக்கம் 9.68% ஆக உயர்வு; புதிய அடிப்படை ஆண்டு (2022-23) அறிமுகம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">India's Wholesale Price Index (WPI) inflation surged to a steep 9.68% in May. Concurrently, the Central Government introduced a revised WPI series adopting 2022-23 as the new base year (replacing 2011-12). This new calculation method increases the basket of tracked commodities from 697 to 957 to accurately reflect current consumption patterns. Furthermore, the government launched the Producer Price Index (PPI) for the first time. As per the new policy, WPI and PPI will be published together for the next 5 years, after which the WPI system will be entirely phased out in favor of the PPI.</p>
+                    <p class="lang-ta">இந்தியாவின் மொத்த விற்பனை விலை பணவீக்கம் (WPI) மே மாதத்தில் 9.68% ஆக கடுமையாக உயர்ந்துள்ளது. இதற்கிடையே, WPI-ஐ கணக்கிடுவதற்கான புதிய அடிப்படை ஆண்டாக 2022-23-ஐ (முன்பு 2011-12) மத்திய அரசு அறிமுகப்படுத்தியுள்ளது. தற்போதைய நுகர்வு முறைகளைத் துல்லியமாகப் பிரதிபலிக்கும் வகையில், கணக்கிடப்படும் பொருட்களின் எண்ணிக்கை 697-லிருந்து 957 ஆக அதிகரிக்கப்பட்டுள்ளது. மேலும், முதல்முறையாக உற்பத்தியாளர் விலை குறியீடு (Producer Price Index - PPI) அறிமுகப்படுத்தப்பட்டுள்ளது. புதிய கொள்கையின்படி, அடுத்த 5 ஆண்டுகளுக்கு WPI மற்றும் PPI இரண்டும் இணைந்து வெளியிடப்படும்; அதன் பிறகு WPI முறை முழுமையாகக் கைவிடப்பட்டு PPI மட்டுமே நடைமுறையில் இருக்கும்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en"><strong>Economy Hook:</strong> Base year changes are critical. WPI base year changed to 2022-23. The transition from WPI to PPI (Producer Price Index) aligns India with global IMF/World Bank standards, as PPI measures price changes from the perspective of the producer rather than the wholesale buyer.</span><span class="lang-ta"><strong>பொருளாதாரக் குறிப்பு:</strong> அடிப்படை ஆண்டு மாற்றங்கள் முக்கியம். WPI அடிப்படை ஆண்டு 2022-23 ஆக மாற்றப்பட்டுள்ளது. WPI-யிலிருந்து PPI-க்கு (உற்பத்தியாளர் விலை குறியீடு) மாறுவது IMF/உலக வங்கி உலகளாவிய தரநிலைகளுடன் இந்தியாவை இணைக்கிறது. PPI என்பது மொத்த விற்பனையாளரை விட உற்பத்தியாளரின் பார்வையில் விலையில் ஏற்படும் மாற்றங்களை அளவிடுகிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Governance · Census 2027</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Census 2027 Phase 1 Completed in 23 States; TN Self-Enumeration from July 17</span>
+                        <span class="lang-ta">2027 மக்கள் தொகை கணக்கெடுப்பு: 23 மாநிலங்களில் முதற்கட்டப் பணி நிறைவு; தமிழகத்தில் ஜூலை 17 முதல் சுய பதிவு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Union Government announced that Phase 1 of the 2027 Census (House Listing and Housing Census) has been successfully completed in 23 States and Union Territories. For the first time, a digital self-enumeration portal allowing citizens to fill out 33 predefined questions online is being used. In Tamil Nadu, the 15-day window for self-enumeration will begin on July 17. The entire census operation is allocated a budget of ₹11,718 crore and marks India's 8th census post-independence.</p>
+                    <p class="lang-ta">2027-ஆம் ஆண்டுக்கான மக்கள் தொகை கணக்கெடுப்பின் முதற்கட்டப் பணிகள் (வீடுகள் பட்டியல் மற்றும் வீடுகள் கணக்கெடுப்பு) 23 மாநிலங்கள் மற்றும் யூனியன் பிரதேசங்களில் வெற்றிகரமாக நிறைவடைந்துள்ளதாக மத்திய அரசு தெரிவித்துள்ளது. முதல்முறையாக, பொதுமக்கள் தாங்களாகவே இணையதளத்தில் 33 கேள்விகளுக்குப் பதிலளிக்கும் சுய பதிவு வசதி (Self-enumeration) அறிமுகப்படுத்தப்பட்டுள்ளது. தமிழகத்தில் இதற்கான 15 நாள் அவகாசம் ஜூலை 17-ஆம் தேதி தொடங்கும். ரூ.11,718 கோடி நிதி ஒதுக்கீட்டில் நடைபெறும் இக்கணக்கெடுப்பு, சுதந்திர இந்தியாவின் 8-வது மக்கள் தொகை கணக்கெடுப்பாகும்.</p>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Economy · CAG Report</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">CAG Report: 13 States Hit Revenue Surplus in FY25; 15 States Face Deficit</span>
+                        <span class="lang-ta">சிஏஜி (CAG) அறிக்கை: 13 மாநிலங்கள் வருவாய் உபரியை எட்டின; 15 மாநிலங்களில் பற்றாக்குறை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">A Comptroller and Auditor General (CAG) report released by K. Sanjay Murthy revealed that 13 states (including UP, Gujarat, Jharkhand, Manipur) achieved a revenue surplus in the 2024-25 financial year. Conversely, 15 states (including Tamil Nadu, Punjab, Rajasthan, West Bengal, Kerala) faced a revenue deficit. The report highlighted a 131% increase in state expenditure over the last decade, jumping from ₹22.18 lakh crore in FY16 to ₹51.20 lakh crore in FY25, heavily driven by committed expenditures and subsidies.</p>
+                    <p class="lang-ta">தலைமை கணக்குத் தணிக்கையாளர் (CAG) கே. சஞ்சய் மூர்த்தி வெளியிட்ட அறிக்கையின்படி, 2024-25 நிதியாண்டில் உத்தரப் பிரதேசம், குஜராத், ஜார்க்கண்ட் உள்ளிட்ட 13 மாநிலங்கள் வருவாய் உபரியை எட்டியுள்ளன. அதே வேளையில், தமிழ்நாடு, பஞ்சாப், ராஜஸ்தான், மேற்கு வங்கம், கேரளா உள்ளிட்ட 15 மாநிலங்கள் வருவாய்ப் பற்றாக்குறையைச் சந்தித்துள்ளன. கடந்த 10 ஆண்டுகளில் மாநிலங்களின் செலவினம் 131% உயர்ந்துள்ளது (2015-16-ல் ரூ.22.18 லட்சம் கோடியிலிருந்து 2024-25-ல் ரூ.51.20 லட்சம் கோடியாக அதிகரிப்பு) என அறிக்கை சுட்டிக்காட்டுகிறது. கட்டாயச் செலவினங்கள் மற்றும் மானியங்களே இதற்கு முக்கியக் காரணமாகும்.</p>
+                </div>
+
+            </section>
+
+            <!-- INTERNATIONAL NEWS -->
+            <section id="international">
+                <h2>
+                    <span class="lang-en">International News</span>
+                    <span class="lang-ta">சர்வதேச செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Diplomacy · G7 Summit</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">PM Modi Attends G7 Summit in Evian, France; Holds Talks with US President Trump</span>
+                        <span class="lang-ta">பிரான்சின் எவியான் நகரில் ஜி7 உச்சி மாநாடு: அமெரிக்க அதிபர் டிரம்புடன் பிரதமர் மோடி சந்திப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Prime Minister Narendra Modi attended the G7 Summit held in Evian, France, as a special invitee for the 8th consecutive time. During the summit, he held a brief informal meeting with US President Donald Trump, with an official bilateral dialogue scheduled next. Addressing the 'New Cooperation' session, PM Modi emphasized that global cooperation must be based on equality and solidarity, avoiding unipolar dependency. He also reiterated India's commitment to the Global South and stressed the collective responsibility to ensure maritime security in the Strait of Hormuz amid the US-Iran conflict.</p>
+                    <p class="lang-ta">பிரான்சின் எவியான் (Evian) நகரில் நடைபெறும் ஜி7 உச்சி மாநாட்டில், 8-வது முறையாகச் சிறப்பு அழைப்பாளராகப் பிரதமர் நரேந்திர மோடி பங்கேற்றார். மாநாட்டின் இடையே அமெரிக்க அதிபர் டொனால்ட் டிரம்பை சந்தித்து அவர் சுருக்கமாக உரையாடினார்; அதிகாரப்பூர்வ இருதரப்புப் பேச்சுவார்த்தை விரைவில் நடைபெற உள்ளது. 'புதிய கூட்டுறவு' என்ற அமர்வில் பேசிய மோடி, உலகளாவிய கூட்டுறவு என்பது சமத்துவம் மற்றும் ஒற்றுமையை அடிப்படையாகக் கொண்டிருக்க வேண்டும் என்றும், ஒருவரையே சார்ந்து செயல்படும் நிலை இருக்கக்கூடாது என்றும் வலியுறுத்தினார். உலகளாவிய தெற்கு (Global South) நாடுகளுக்கான இந்தியாவின் அர்ப்பணிப்பை உறுதிபடத் தெரிவித்த அவர், அமெரிக்கா-ஈரான் மோதலுக்கு மத்தியில் ஹோர்முஸ் ஜலசந்தியில் கடல்சார் பாதுகாப்பை உறுதி செய்வது உலக நாடுகளின் கூட்டுப் பொறுப்பு என்றார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-tip">TIP</span><span class="lang-en"><strong>G7 Members:</strong> Canada, France, Germany, Italy, Japan, UK, USA. India is not a member but is frequently invited to represent the Global South.</span><span class="lang-ta"><strong>ஜி7 நாடுகள்:</strong> கனடா, பிரான்ஸ், ஜெர்மனி, இத்தாலி, ஜப்பான், பிரிட்டன், அமெரிக்கா. இந்தியா இதில் உறுப்பினர் அல்ல; இருப்பினும் உலகளாவிய தெற்கு நாடுகளின் குரலாகத் தொடர்ந்து அழைக்கப்படுகிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Geopolitics · Middle East</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">US-Iran Peace Deal Faces Lebanon Hurdle; Imminent Signing in Switzerland</span>
+                        <span class="lang-ta">அமெரிக்கா-ஈரான் அமைதி ஒப்பந்தத்தில் லெபனான் விவகாரம் சிக்கல்; சுவிட்சர்லாந்தில் விரைவில் கையெழுத்து</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The highly anticipated peace and ceasefire agreement between the US and Iran, mediated by Pakistan and Qatar, is set to be signed in Lucerne, Switzerland. However, Iran has explicitly laid down a condition that Israeli forces must completely withdraw from occupied territories in Lebanon for the treaty to be fully honored. Meanwhile, Israel's PM Benjamin Netanyahu stated their forces would remain in Lebanon as long as necessary to counter Hezbollah, frustrating US President Trump, who wants to end the war swiftly.</p>
+                    <p class="lang-ta">பாகிஸ்தான் மற்றும் கத்தார் நாடுகளின் மத்தியஸ்தத்தில், அமெரிக்கா-ஈரான் இடையிலான அமைதி மற்றும் போர் நிறுத்த ஒப்பந்தம் சுவிட்சர்லாந்தின் லூசர்ன் (Lucerne) நகரில் கையெழுத்தாக உள்ளது. ஆனால், ஆக்கிரமிக்கப்பட்ட லெபனான் பகுதிகளில் இருந்து இஸ்ரேலியப் படைகள் முழுமையாக வெளியேறினால் மட்டுமே ஒப்பந்தம் முழுமையாக ஏற்கப்படும் என ஈரான் நிபந்தனை விதித்துள்ளது. இதற்கிடையே, ஹிஸ்புல்லாக்களை எதிர்கொள்ளத் தேவையான வரை லெபனானில் இஸ்ரேல் படைகள் நீடிக்கும் என அந்நாட்டுப் பிரதமர் நெதன்யாகு தெரிவித்துள்ளார். போரை விரைவில் முடிக்க விரும்பும் அமெரிக்க அதிபர் டிரம்பிற்கு இது அதிருப்தியை ஏற்படுத்தியுள்ளது.</p>
+                </div>
+
+            </section>
+
+            <!-- ECONOMY & FINANCE -->
+            <section id="economy">
+                <h2>
+                    <span class="lang-en">Economy & Tech</span>
+                    <span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Tech · AI Investment</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">HCL Tech Acquires 10.46% Stake in Indian AI Startup 'Sarvam AI' for ₹2,200 Crore</span>
+                        <span class="lang-ta">இந்திய ஏஐ (AI) ஸ்டார்ட்-அப் 'சர்வோ ஏஐ'யில் ரூ.2,200 கோடி முதலீடு செய்யும் ஹெச்சிஎல் டெக்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Leading Indian IT major HCL Tech announced an investment of $234 million (approximately ₹2,200 crore) in 'Sarvam AI', a prominent Indian artificial intelligence startup. With this funding, HCL Tech acquires a 10.46% stake in Sarvam AI, elevating the startup's total valuation to $1.5 Billion. Sarvam AI focuses on building native Indian GenAI models and will use the funds to expand research and apply AI across various critical sectors in India.</p>
+                    <p class="lang-ta">இந்தியாவிற்கான சொந்த செயற்கை நுண்ணறிவு (AI) தொழில்நுட்பங்களை உருவாக்குவதில் முன்னணியில் உள்ள 'சர்வோ ஏஐ' (Sarvam AI) ஸ்டார்ட்-அப் நிறுவனத்தில், இந்தியாவின் முன்னணி ஐடி நிறுவனமான ஹெச்சிஎல் டெக் (HCL Tech) $234 மில்லியன் (சுமார் ரூ.2,200 கோடி) முதலீடு செய்துள்ளது. இதன் மூலம் சர்வோ ஏஐ-யின் 10.46% பங்குகளை ஹெச்சிஎல் கைப்பற்றுகிறது; அந்நிறுவனத்தின் மொத்த மதிப்பு $1.5 பில்லியனாக உயர்ந்துள்ளது. அடுத்தகட்ட ஏஐ ஆராய்ச்சிகளுக்கும், இந்தியாவின் முக்கியத் துறைகளில் ஏஐ பயன்பாட்டை விரிவுபடுத்தவும் இந்த நிதி பயன்படுத்தப்படும்.</p>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Macro Indicators · Trade</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">India Records Current Account Surplus of $4.7 Billion in April 2026</span>
+                        <span class="lang-ta">ஏப்ரல் 2026-ல் இந்தியாவின் நடப்புக் கணக்கு $4.7 பில்லியன் உபரியாகப் பதிவு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Starting the 2026-27 financial year on a strong note, India recorded a Current Account Surplus of $4.7 Billion in April (compared to a deficit of $4.8 Billion in the same month last year). This positive shift was heavily supported by robust services exports and an increase in inward remittances from Indians living abroad. While the merchandise trade deficit stood at $27.9 Billion, the net services revenue surged to $18.6 Billion.</p>
+                    <p class="lang-ta">2026-27 நிதியாண்டின் முதல் மாதமான ஏப்ரலில், இந்தியாவின் நடப்புக் கணக்கு (Current Account) $4.7 பில்லியன் உபரியாகப் பதிவாகியுள்ளது (கடந்த ஆண்டு இதே மாதத்தில் $4.8 பில்லியன் பற்றாக்குறை நிலவியது). சேவைகள் துறையின் ஏற்றுமதி அதிகரிப்பு மற்றும் வெளிநாடுகளில் வாழும் இந்தியர்கள் அனுப்பும் பணம் (Remittances) அதிகரித்ததே இந்தச் சாதகமான சூழலுக்கு முக்கியக் காரணமாகும். சரக்கு வர்த்தகப் பற்றாக்குறை $27.9 பில்லியனாக இருந்தாலும், சேவைகள் துறையின் நிகர வருவாய் $18.6 பில்லியனாக உயர்ந்துள்ளது.</p>
+                </div>
+            </section>
+            
+            <!-- SPORTS -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports</span>
+                    <span class="lang-ta">விளையாட்டு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Hockey · FIH Nations Cup</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Indian Women's Hockey Team Beats Japan to Enter Nations Cup Semifinals</span>
+                        <span class="lang-ta">நேஷன்ஸ் கோப்பை ஹாக்கி: ஜப்பானை வீழ்த்தி அரையிறுதிக்கு முன்னேறியது இந்திய மகளிர் அணி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In the ongoing FIH Nations Cup women's hockey tournament held in Auckland, New Zealand, the Indian women's team defeated Japan 2-1 in their second Group A match, securing a spot in the semifinals. After a goalless first half, Japan scored first. However, India bounced back with goals from captain Salima Tete (who deflected a shot by Nikki Pradhan) and Lalremsiami, ensuring a hard-fought victory.</p>
+                    <p class="lang-ta">நியூசிலாந்தின் ஆக்லாந்து நகரில் நடைபெறும் நேஷன்ஸ் கோப்பை (FIH Nations Cup) மகளிர் ஹாக்கிப் போட்டியில், இந்திய அணி தனது 2-வது ஆட்டத்தில் (குரூப் ஏ) பலம் வாய்ந்த ஜப்பானை 2-1 என்ற கோல் கணக்கில் வீழ்த்தி அரையிறுதிக்குத் தகுதி பெற்றது. முதல் பாதியில் கோல் எதுவும் விழாத நிலையில், ஜப்பான் முதல் கோலை அடித்தது. பின்னர் சுதாரித்த இந்திய அணிக்காக கேப்டன் சலீமா டெட்டே மற்றும் லால்ரெம்சியாமியா ஆகியோர் கோலடித்து வெற்றியை உறுதி செய்தனர்.</p>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Football · FIFA World Cup</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">FIFA World Cup: Rare Day of 4 Draws; Spain Held by Cape Verde 0-0</span>
+                        <span class="lang-ta">உலகக் கோப்பை கால்பந்து: ஒரே நாளில் 4 ஆட்டங்கள் டிரா; ஸ்பெயினை கோலின்றி தடுத்தது கேப் வெர்டே</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The ongoing FIFA World Cup witnessed a historic day with four matches ending in draws, a rarity last seen in 1958. In a massive upset in Atlanta, tournament favorites Spain (World No. 2) were held to a 0-0 draw by underdogs Cape Verde (World No. 67). Cape Verde's 40-year-old goalkeeper Vozinha was the hero, making 7 crucial saves. In other matches, Belgium drew 1-1 with Egypt, Uruguay drew 1-1 with Saudi Arabia, and Iran tied 2-2 with New Zealand. Sarpreet Singh, playing for New Zealand, became the first player of Indian origin to start a World Cup match.</p>
+                    <p class="lang-ta">நடைபெற்று வரும் உலகக் கோப்பை கால்பந்துப் போட்டியில், ஒரே நாளில் நடந்த 4 ஆட்டங்களும் டிராவில் முடிந்து வரலாறு படைக்கப்பட்டது (இதற்கு முன் 1958-ல் இதுபோல் நடந்தது). பலம் வாய்ந்த ஸ்பெயின் (தரவரிசையில் 2-வது இடம்) அணியை, கத்துக்குட்டியான கேப் வெர்டே (67-வது இடம்) 0-0 என கோலின்றி தடுத்து நிறுத்தி அதிர்ச்சியளித்தது. கேப் வெர்டேவின் 40 வயதான கோல்கீப்பர் வோசின்ஹா 7 சிறப்பான தடுப்புகளைச் செய்து ஆட்டநாயகன் ஆனார். மற்ற ஆட்டங்களில் பெல்ஜியம்-எகிப்து (1-1), உருகுவே-சவுதி அரேபியா (1-1), ஈரான்-நியூசிலாந்து (2-2) என டிராவில் முடிந்தன. நியூசிலாந்து அணிக்காக விளையாடிய சர்ப்ரீத் சிங், உலகக் கோப்பையில் ஆட்டத்தைத் தொடங்கிய இந்திய வம்சாவளியைச் சேர்ந்த முதல் வீரர் என்ற பெருமையைப் பெற்றார்.</p>
+                </div>
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Which Chola king originally granted the revenue of Anaimangalam village to the Chudamani Vihara in Nagapattinam, as recorded in the Leiden Copper Plates?</span>
+                        <span class="lang-ta">கேள்வி: லீடன் செப்பேடுகளில் (ஆனைமங்கலம் செப்பேடுகள்) பதிவு செய்யப்பட்டுள்ளபடி, நாகப்பட்டினத்தில் உள்ள சூடாமணி விகாரத்திற்கு ஆனைமங்கலம் கிராமத்தின் வருவாயை மானியமாக வழங்கிய சோழ மன்னர் யார்?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Rajaraja Chola I</span><br><br>
+                                <strong>Context:</strong> The 11th-century Anaimangalam Copper plates were handed over to PM Modi by the Netherlands. Rajaraja I made the grant, and it was executed and recorded in the plates during the reign of his son, Rajendra Chola I.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">முதலாம் ராஜராஜ சோழன்</span><br><br>
+                                <strong>பின்னணி:</strong> 11-ஆம் நூற்றாண்டைச் சேர்ந்த ஆனைமங்கலம் செப்பேடுகளை நெதர்லாந்து அரசு பிரதமர் மோடியிடம் ஒப்படைத்தது. மானியத்தை வழங்கியது ராஜராஜன்; அதனைச் செப்பேடுகளில் பதிவு செய்து செயல்படுத்தியது அவரது மகன் முதலாம் ராஜேந்திர சோழன் ஆவார்.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Under which Section of the Information Technology Act, 2000 does the Central Government have the power to block public access to any information or app (e.g., Telegram) for national security or public order?</span>
+                        <span class="lang-ta">கேள்வி: தகவல் தொழில்நுட்பச் சட்டம் 2000-இன் எந்தப் பிரிவின் கீழ், தேசியப் பாதுகாப்பு அல்லது பொது ஒழுங்கைக் கருத்தில் கொண்டு இணையத் தகவல்களையோ அல்லது செயலிகளையோ (உ.ம்: டெலிகிராம்) முடக்கும் அதிகாரம் மத்திய அரசுக்கு உள்ளது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Section 69A</span><br><br>
+                                <strong>Context:</strong> MeitY ordered the temporary blocking of the Telegram app until June 22 using Section 69A to prevent the spread of leaked NEET question papers and fake rumors.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">பிரிவு 69A</span><br><br>
+                                <strong>பின்னணி:</strong> நீட் வினாத்தாள் கசிவு மற்றும் போலி வதந்திகள் பரவுவதைத் தடுக்க, பிரிவு 69A-ஐ பயன்படுத்தி ஜூன் 22 வரை டெலிகிராம் செயலிக்கு மத்திய அரசு தற்காலிகத் தடை விதித்தது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: The Wholesale Price Index (WPI) inflation is officially calculated by which Ministry/Department in India?</span>
+                        <span class="lang-ta">கேள்வி: இந்தியாவில் மொத்த விற்பனை விலை குறியீடு (WPI) பணவீக்கம் எந்த அமைச்சகம்/துறையால் அதிகாரப்பூர்வமாகக் கணக்கிடப்படுகிறது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Office of the Economic Adviser, Ministry of Commerce and Industry</span><br><br>
+                                <strong>Context:</strong> The government introduced a new WPI series changing the base year to 2022-23 and launched the Producer Price Index (PPI) to replace WPI eventually.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">பொருளாதார ஆலோசகர் அலுவலகம், வர்த்தகம் மற்றும் தொழில்துறை அமைச்சகம்</span><br><br>
+                                <strong>பின்னணி:</strong> WPI அடிப்படை ஆண்டை 2022-23 ஆக மாற்றி புதிய குறியீட்டை அரசு அறிமுகப்படுத்தியதுடன், எதிர்காலத்தில் WPI-க்கு மாற்றாக உற்பத்தியாளர் விலை குறியீட்டையும் (PPI) கொண்டுவந்துள்ளது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">TN White Paper</span><span class="lang-ta">தமிழக வெள்ளை அறிக்கை</span></td>
+                                <td><span class="lang-en">State/Economy</span><span class="lang-ta">மாநிலம்/பொருளாதாரம்</span></td>
+                                <td><span class="lang-en">TN debt reaches ₹13.18L Cr; SOTR fell to 5.45%.</span><span class="lang-ta">கடன் ரூ.13.18L கோடியாக உயர்வு; SOTR 5.45% ஆக சரிவு.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">Crop Loan Waiver</span><span class="lang-ta">பயிர்க்கடன் தள்ளுபடி</span></td>
+                                <td><span class="lang-en">State/Agriculture</span><span class="lang-ta">மாநிலம்/வேளாண்மை</span></td>
+                                <td><span class="lang-en">Up to ₹75k waived for Co-op borrowers (Cost: ₹5932 Cr).</span><span class="lang-ta">கூட்டுறவு வங்கிகளில் ரூ.75k வரை தள்ளுபடி.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">Anaimangalam Plates</span><span class="lang-ta">ஆனைமங்கலம் செப்பேடுகள்</span></td>
+                                <td><span class="lang-en">State/Heritage</span><span class="lang-ta">மாநிலம்/வரலாறு</span></td>
+                                <td><span class="lang-en">11th-century Chola plates return from Netherlands.</span><span class="lang-ta">11-ஆம் நூற்றாண்டு சோழர் செப்பேடுகள் வருகை.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">Telegram Blocked</span><span class="lang-ta">டெலிகிராம் தடை</span></td>
+                                <td><span class="lang-en">National/Tech</span><span class="lang-ta">தேசியம்/தொழில்நுட்பம்</span></td>
+                                <td><span class="lang-en">App blocked till June 22 via Sec 69A of IT Act.</span><span class="lang-ta">69A பிரிவின் கீழ் ஜூன் 22 வரை செயலி முடக்கம்.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">WPI Base Year</span><span class="lang-ta">WPI அடிப்படை ஆண்டு</span></td>
+                                <td><span class="lang-en">National/Economy</span><span class="lang-ta">தேசியம்/பொருளாதாரம்</span></td>
+                                <td><span class="lang-en">Base year changed to 2022-23; PPI introduced.</span><span class="lang-ta">2022-23 ஆக மாற்றம்; PPI அறிமுகம்.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani Chennai 17-06-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி சென்னை 17-06-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source text detailed state, national, and international news for 17 June 2026. 
+State news covered CM Vijay ordering crop loan waiver up to Rs 75,000 for coop bank borrowers, costing Rs 5,932 crore. Finance Minister Maria Vilson released a White Paper on TN Finances stating TN debt reached Rs 13.18 lakh crore, and SOTR decreased. Anaimangalam Chola Copper plates returning to India from the Netherlands. Rs 15,032 cr allotted for uninterrupted power supply via 231 new substations. Anna Univ and Brakes India signed MoU for a skill centre. CM's election win in Trichy East challenged. School Education Minister announced private school licenses go online from July 1. Yellow alert issued for 7 TN districts due to heavy rain. 
+National news: Telegram app temporarily blocked until June 22 due to NEET paper leak rumors. WPI inflation hit 9.68%; new base year 2022-23 announced. Phase 1 of 2027 Census completed in 23 states. CAG report on state finances showed 13 states achieved revenue surplus. PM Rojgar scheme benefited over 60 lakh youth. 
+International news: PM Modi attended the G7 Summit in Evian, France, and met US President Trump. Modi also visited Slovakia. US-Iran peace deal to be signed in Switzerland, but Lebanon issue persists. HCL Tech acquired 10.46% stake in Sarvam AI for Rs 2,200 crore. Current Account Surplus of $4.7 Bn logged in April.
+Sports: FIFA World Cup saw 4 draws in a single day, including Spain 0-0 Cape Verde. Indian women's hockey team beat Japan 2-1 to reach Nations Cup semis. TNPL teams released retained players list.]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூல உரைகள் 17 ஜூன் 2026 க்கான செய்திகளைக் கொண்டிருந்தன.
+மாநில செய்திகளில், கூட்டுறவு வங்கிகளில் ரூ.75,000 வரையிலான பயிர்க்கடன் தள்ளுபடி செய்ய முதல்வர் விஜய் உத்தரவிட்டார்; அரசுக்கு ரூ.5,932 கோடி செலவு. நிதியமைச்சர் மரியா வில்சன் வெளியிட்ட வெள்ளை அறிக்கையில், தமிழகத்தின் கடன் சுமை ரூ.13.18 லட்சம் கோடியாக உயர்ந்தது மற்றும் சொந்த வரி வருவாய் சரிந்தது சுட்டிக்காட்டப்பட்டது. நெதர்லாந்திலிருந்து ஆனைமங்கலம் சோழர் செப்பேடுகள் இந்தியா திரும்புகின்றன. தடையற்ற மின்சாரத்திற்காக 231 துணை மின் நிலையங்கள் அமைக்க ரூ.15,032 கோடி ஒதுக்கீடு. அண்ணா பல்கலை - பிரேக்ஸ் இந்தியா இடையே திறன் மேம்பாட்டு மையத்திற்கு ஒப்பந்தம். திருச்சி கிழக்கு தொகுதியில் முதல்வரின் வெற்றியை எதிர்த்து வழக்கு. தனியார் பள்ளி உரிமங்கள் ஜூலை 1 முதல் இணையவழியில் வழங்கப்படும் என அமைச்சர் அறிவிப்பு. தமிழகத்தில் 7 மாவட்டங்களுக்கு மஞ்சள் எச்சரிக்கை.
+தேசிய அளவில்: நீட் வினாத்தாள் கசிவு வதந்தியால் டெலிகிராம் செயலிக்கு ஜூன் 22 வரை தற்காலிகத் தடை. WPI பணவீக்கம் 9.68% ஆக உயர்வு; அடிப்படை ஆண்டு 2022-23 ஆக மாற்றம். 23 மாநிலங்களில் 2027 மக்கள் தொகை கணக்கெடுப்பின் முதற்கட்டம் நிறைவு. 13 மாநிலங்கள் வருவாய் உபரியை எட்டியதாக சிஏஜி அறிக்கை. 60 லட்சத்துக்கும் மேற்பட்டோருக்கு பிரதமர் வேலைவாய்ப்பு திட்டம் மூலம் பலன்.
+சர்வதேச அளவில்: பிரான்சின் எவியான் நகரில் ஜி7 உச்சி மாநாட்டில் பிரதமர் மோடி பங்கேற்பு, டிரம்புடன் சந்திப்பு. ஸ்லோவாக்கியாவில் மோடி பயணம். அமெரிக்கா-ஈரான் அமைதி ஒப்பந்தம் சுவிட்சர்லாந்தில் கையெழுத்து, லெபனான் சிக்கல் நீடிப்பு. சர்வோ ஏஐ-யில் ரூ.2,200 கோடி முதலீடு செய்த ஹெச்சிஎல் டெக். ஏப்ரல் நடப்புக் கணக்கு உபரி $4.7 பில்லியன்.
+விளையாட்டு: உலகக் கோப்பை கால்பந்தில் ஸ்பெயின் 0-0 கேப் வெர்டே உட்பட 4 ஆட்டங்கள் டிரா. நேஷன்ஸ் கோப்பையில் ஜப்பானை 2-1 என வீழ்த்தி அரையிறுதியில் இந்திய மகளிர் ஹாக்கி அணி. டிஎன்பிஎல் தக்கவைக்கப்பட்ட வீரர்கள் பட்டியல் வெளியீடு.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 17 June 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+    </script>
+</body>
+</html>

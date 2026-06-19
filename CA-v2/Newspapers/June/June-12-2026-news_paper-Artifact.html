@@ -1,0 +1,595 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            .nav-links { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 2rem 1rem; }
+            header h1 { font-size: 1.6rem; letter-spacing: 1px; }
+            .tagline { font-size: 0.95rem; }
+            nav.sticky-top { padding: 0.75rem 1rem; gap: 0.5rem; }
+            .toggle-btn { padding: 0.4rem 0.8rem; font-size: 0.85rem; }
+            .layout-container { padding: 1rem 0.75rem; gap: 1rem; }
+            main { max-width: 100%; }
+            .legend-row { flex-direction: column; gap: 0.5rem; }
+            .news-card { padding: 1rem; }
+            .news-card h3 { font-size: 1.15rem; }
+            .card-meta { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+            table { font-size: 0.8rem; }
+            th, td { padding: 0.6rem; }
+            .raw-text-panel { font-size: 0.75rem; padding: 1rem; }
+            footer { padding: 1.5rem 1rem; }
+        }
+
+        @media (max-width: 480px) {
+            header h1 { font-size: 1.25rem; }
+            nav.sticky-top { flex-wrap: wrap; }
+            table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .news-card { border-left-width: 3px; }
+        }
+    </style>
+</head>
+<body class="en-mode">
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">12 June 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">12 ஜூன் 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <!-- Sidebar TOC -->
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Tech</span><span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Governance · NITI Aayog</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">CM Joseph Vijay at NITI Aayog: Demands NEET Exemption, AIIMS for Coimbatore, and Rs 3,284 Cr for Samagra Shiksha</span>
+                        <span class="lang-ta">நிதி ஆயோக் கூட்டத்தில் முதல்வர் விஜய்: நீட் விலக்கு, கோவைக்கு எய்ம்ஸ் மற்றும் சமக்ர சிக்‌ஷா திட்டத்திற்கு ரூ.3,284 கோடி நிதி ஒதுக்கீடு கோரிக்கை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Participating in the 11th NITI Aayog meeting chaired by PM Modi in New Delhi, Tamil Nadu CM Joseph Vijay assured constructive cooperation with the Centre to achieve the 'Viksit Bharat 2047' vision. He stated that TN is working towards a 1.5 Trillion USD economy by 2036. The CM strongly opposed the NEET exam, asking for state-level admissions based on Class 12 marks. He urged the immediate release of Rs 3,284 crore pending under the Samagra Shiksha scheme without enforcing the National Education Policy or three-language formula. He also proposed a second AIIMS for Coimbatore, promising free land, and demanded Thirukkural be declared a 'National Literature'.</p>
+                    <p class="lang-ta">புதுடெல்லியில் பிரதமர் மோடி தலைமையில் நடைபெற்ற 11-வது நிதி ஆயோக் கூட்டத்தில் பங்கேற்ற தமிழக முதல்வர் ஜோசப் விஜய், 'வளர்ந்த இந்தியா 2047' (Viksit Bharat 2047) இலக்கை அடைய மத்திய அரசுக்கு ஆக்கபூர்வமான ஒத்துழைப்பை வழங்குவதாக உறுதியளித்தார். 2036-க்குள் 1.5 டிரில்லியன் டாலர் பொருளாதாரத்தை எட்ட தமிழகம் செயல்பட்டு வருவதாகக் கூறினார். நீட் தேர்வுக்குக் கடும் எதிர்ப்புத் தெரிவித்த அவர், பிளஸ் 2 மதிப்பெண்கள் அடிப்படையில் மாநில அளவிலான சேர்க்கைக்கு அனுமதி கோரினார். தேசிய கல்விக் கொள்கை அல்லது மும்மொழி கொள்கையை கட்டாயப்படுத்தாமல், சமக்ர சிக்‌ஷா (Samagra Shiksha) திட்டத்தின் கீழ் நிலுவையில் உள்ள ரூ.3,284 கோடியை உடனே விடுவிக்க வலியுறுத்தினார். கோவையில் 2-வது எய்ம்ஸ் மருத்துவமனை அமைக்க இலவச நிலம் வழங்குவதாக உறுதியளித்ததுடன், திருக்குறளை 'தேசிய இலக்கியமாக' அறிவிக்கவும் அவர் கோரிக்கை விடுத்தார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Governance Hook:</strong> NITI Aayog (National Institution for Transforming India) replaced the Planning Commission on Jan 1, 2015. It operates on the principle of "Cooperative Federalism".</span><span class="lang-ta"><strong>ஆளுமை குறிப்பு:</strong> திட்டக் குழுவிற்கு மாற்றாக 1 ஜனவரி 2015 அன்று நிதி ஆயோக் (NITI Aayog) தொடங்கப்பட்டது. இது "கூட்டுறவு கூட்டாட்சி" (Cooperative Federalism) தத்துவத்தின் அடிப்படையில் செயல்படுகிறது.</span></li>
+                            <li><span class="lang-en"><strong>Scheme Hook:</strong> 'Samagra Shiksha' is an overarching programme for the school education sector extending from pre-school to class 12.</span><span class="lang-ta"><strong>திட்டக் குறிப்பு:</strong> 'சமக்ர சிக்‌ஷா' (Samagra Shiksha) என்பது முன்பருவக் கல்வி முதல் 12-ம் வகுப்பு வரையிலான பள்ளிக் கல்வித் துறைக்கான ஒருங்கிணைந்த திட்டமாகும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Health · E-Governance</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">App-Based Appointment System to be Introduced in Tamil Nadu Government Hospitals</span>
+                        <span class="lang-ta">தமிழக அரசு மருத்துவமனைகளில் 'ஆப்' (App) மூலம் முன்பதிவு செய்யும் நடைமுறை அறிமுகம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">To significantly reduce patient waiting times, Health Minister Dr. K. Arun Raj announced the introduction of an online appointment system in all government hospitals across Tamil Nadu. Similar to private hospitals, patients can book their consultations via a dedicated app using their Aadhaar card between 8 AM and 9 AM. The minister highlighted that many high-end procedures (like cardiology, maternity, and stroke treatments), which cost up to Rs 60,000-80,000 in private care, are done completely free in GHs under the CM's Health Insurance Scheme.</p>
+                    <p class="lang-ta">நோயாளிகள் காத்திருக்கும் நேரத்தைக் குறைக்க, தமிழகம் முழுவதும் உள்ள அரசு மருத்துவமனைகளில் ஆன்லைன் மூலம் முன்பதிவு செய்யும் முறையை அறிமுகப்படுத்த உள்ளதாக சுகாதாரத்துறை அமைச்சர் டாக்டர் கே. அருண் ராஜ் அறிவித்துள்ளார். தனியார் மருத்துவமனைகளைப் போலவே, நோயாளிகள் ஒரு பிரத்யேக செயலி (App) மூலம் ஆதார் அட்டையைப் பயன்படுத்தி காலை 8 மணி முதல் 9 மணி வரை தங்களது முன்பதிவைச் செய்யலாம். தனியார் மருத்துவமனைகளில் ரூ.60,000 முதல் 80,000 வரை செலவாகும் இதய சிகிச்சை, மகப்பேறு, பக்கவாதம் போன்ற உயர்தர சிகிச்சைகள், முதல்வரின் காப்பீட்டுத் திட்டத்தின் கீழ் அரசு மருத்துவமனைகளில் முற்றிலும் இலவசமாக வழங்கப்படுவதாக அமைச்சர் சுட்டிக்காட்டினார்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · Alliances</span>
+                        <span class="badge bg-trap">TRAP</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">CPI Exits DMK Alliance in Tamil Nadu Citing Ideological Differences</span>
+                        <span class="lang-ta">கருத்து வேறுபாடு: திமுக கூட்டணியிலிருந்து இந்திய கம்யூனிஸ்ட் கட்சி (CPI) விலகல்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In a major political shift, the Communist Party of India (CPI) State Secretary M. Veerapandian announced the party's exit from the DMK-led alliance. The decision was taken at the party's executive committee meeting. Veerapandian criticized the DMK leadership's recent remarks aligning with right-wing ideologies and stated that the current political climate makes it impossible for CPI to remain in the alliance. In response, DMK Org. Secretary R.S. Bharathi stated the DMK is unbothered by the exit and confident in its own strength.</p>
+                    <p class="lang-ta">தமிழக அரசியலில் பெரும் மாற்றமாக, திமுக தலைமையிலான கூட்டணியிலிருந்து விலகுவதாக இந்திய கம்யூனிஸ்ட் கட்சியின் (CPI) மாநிலச் செயலாளர் மு. வீரபாண்டியன் அறிவித்துள்ளார். அக்கட்சியின் நிர்வாகக் குழு கூட்டத்தில் இம்முடிவு எடுக்கப்பட்டது. திமுக தலைமையின் சமீபத்திய வலதுசாரி சார்பு கருத்துக்களை விமர்சித்த அவர், தற்போதைய அரசியல் சூழலில் சிபிஐ கூட்டணியில் தொடர முடியாது என்றார். இதற்குப் பதிலளித்த திமுக அமைப்புச் செயலாளர் ஆர்.எஸ். பாரதி, கூட்டணியிலிருந்து சிபிஐ விலகியதால் திமுகவுக்கு எவ்வித கவலையும் இல்லை என்றும், தங்கள் கட்சியின் சொந்த பலத்தில் நம்பிக்கை உள்ளதாகவும் தெரிவித்தார்.</p>
+                </div>
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National / Central News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Judiciary · Women's Rights</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Supreme Court Fixes Homemaker's Minimum Monthly Income at ₹30,000 in Compensation Case</span>
+                        <span class="lang-ta">இல்லத்தரசிகளின் மாத வருமானம் ரூ.30,000 ஆக நிர்ணயம்: மோட்டார் வாகன விபத்து இழப்பீடு வழக்கில் உச்சநீதிமன்றம் வரலாற்றுச் சிறப்புமிக்க தீர்ப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In a landmark judgment recognizing the unpaid labor of women, the Supreme Court of India fixed the minimum notional monthly income of a homemaker at ₹30,000 while deciding a motor accident compensation claim. A bench of Justices Sanjiv Khanna and N. Kotiswar Singh enhanced the compensation for a family whose mother died in a 2001 accident. The court stated that a homemaker is a "nation builder" and noted that unpaid care work accounts for 15% to 17% of India's total economic output (GDP), which often goes unrecognised.</p>
+                    <p class="lang-ta">பெண்களின் ஊதியம் பெறாத உழைப்பை அங்கீகரிக்கும் வரலாற்றுச் சிறப்புமிக்க தீர்ப்பில், மோட்டார் வாகன விபத்து இழப்பீடு கோரும் வழக்கில், இல்லத்தரசியின் குறைந்தபட்ச மாத வருமானத்தை ரூ.30,000 ஆக இந்திய உச்சநீதிமன்றம் நிர்ணயித்துள்ளது. 2001-ம் ஆண்டு நடந்த விபத்தில் தாயை இழந்த குடும்பத்தினருக்கான இழப்பீட்டை நீதிபதிகள் சஞ்சீவ் கண்ணா, என். கோடீஸ்வர் சிங் ஆகியோர் அடங்கிய அமர்வு உயர்த்தியது. இல்லத்தரசியை "தேசத்தைக் கட்டமைப்பவர்" என வர்ணித்த நீதிமன்றம், இந்தியாவின் மொத்த உள்நாட்டு உற்பத்தியில் (GDP) 15% முதல் 17% வரை ஊதியம் பெறாத பராமரிப்புப் பணிகளே பங்களிக்கின்றன என்றும், இது பெரும்பாலும் அங்கீகரிக்கப்படுவதில்லை என்றும் சுட்டிக்காட்டியது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Polity Hook:</strong> This aligns with Article 14 (Equality) and Article 15 (Prohibition of discrimination on grounds of sex). It brings economic visibility to the invisible labor of women.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> இது சரத்து 14 (சமத்துவம்) மற்றும் சரத்து 15 (பாலின அடிப்படையில் பாகுபாட்டிற்குத் தடை) ஆகியவற்றுடன் ஒத்துப் போகிறது. பெண்களின் கண்ணுக்குத் தெரியாத உழைப்புக்கு இது பொருளாதார அங்கீகாரத்தை அளிக்கிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · Historical Record</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">PM Narendra Modi Completes 4,399 Continuous Days; Surpasses Nehru's Post-1952 Record</span>
+                        <span class="lang-ta">தொடர்ச்சியாக அதிக நாட்கள் பிரதமராக இருந்த நேருவின் சாதனையை முறியடித்தார் நரேந்திர மோடி (1952 தேர்தலுக்குப் பிறகு)</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">On June 10, 2026, Prime Minister Narendra Modi completed 4,399 continuous days in office, breaking India's first PM Jawaharlal Nehru's record of 4,398 continuous days as the elected Prime Minister post the 1952 general elections. PM Modi, who assumed office on May 26, 2014, received congratulatory messages globally. However, it is important to note that if Nehru's interim government tenure (1947-1952) is included, Nehru remains the longest-serving Prime Minister overall (over 16 years).</p>
+                    <p class="lang-ta">1952 பொதுத் தேர்தலுக்குப் பிறகு மக்களால் தேர்ந்தெடுக்கப்பட்டு தொடர்ச்சியாக 4,398 நாட்கள் பிரதமராக இருந்த ஜவஹர்லால் நேருவின் சாதனையை முறியடித்து, ஜூன் 10, 2026 அன்று பிரதமர் நரேந்திர மோடி 4,399 நாட்களை நிறைவு செய்தார். மே 26, 2014 அன்று பதவியேற்ற பிரதமர் மோடிக்கு உலகெங்கிலும் இருந்து வாழ்த்துகள் குவிந்தன. இருப்பினும், நேருவின் இடைக்கால அரசுப் பதவிக்காலத்தையும் (1947-1952) சேர்த்தால், நேருவே ஒட்டுமொத்தமாக அதிக காலம் பதவி வகித்த பிரதமர் (16 ஆண்டுகளுக்கும் மேல்) என்பதை நினைவில் கொள்ள வேண்டும்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Defence · Indigenization</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Indian Army Receives 106 Indigenous "Turbojet" Kamikaze Drones</span>
+                        <span class="lang-ta">இந்திய ராணுவத்திற்கு 106 உள்நாட்டு "டர்போஜெட்" (Turbojet) காமிகேஸ் ட்ரோன்கள் விநியோகம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Boost to Aatmanirbhar Bharat: GMPV, an indigenous defense technology firm, has successfully supplied 106 highly precise "Turbojet" kamikaze drones (unmanned aerial vehicles) to the Indian Army. These drones can operate efficiently in challenging electromagnetic environments. They have a striking range of up to 180 km and can travel at a maximum speed of 450 km/h, designed to autonomously target enemy radar systems, weapon depots, and command centers.</p>
+                    <p class="lang-ta">தற்சார்பு இந்தியா (Aatmanirbhar Bharat) திட்டத்திற்கு ஊக்கம்: உள்நாட்டு பாதுகாப்பு தொழில்நுட்ப நிறுவனமான GMPV, இந்திய ராணுவத்திற்கு மிகத் துல்லியமாகத் தாக்கும் 106 "டர்போஜெட்" காமிகேஸ் ட்ரோன்களை (ஆளில்லா விமானங்கள்) வெற்றிகரமாக வழங்கியுள்ளது. இந்த ட்ரோன்கள் சவாலான மின்காந்த சூழல்களிலும் திறம்பட செயல்படக்கூடியவை. இவை 180 கி.மீ தொலைவு வரை சென்று, மணிக்கு அதிகபட்சமாக 450 கி.மீ வேகத்தில் பயணிக்கக்கூடியவை. எதிரிகளின் ரேடார் அமைப்புகள், ஆயுதக் கிடங்குகள் மற்றும் கட்டுப்பாட்டு மையங்களை தானியங்கியாகத் தாக்கி அழிக்கும் வகையில் வடிவமைக்கப்பட்டுள்ளன.</p>
+                </div>
+            </section>
+
+            <!-- INTERNATIONAL NEWS -->
+            <section id="international">
+                <h2>
+                    <span class="lang-en">International News</span>
+                    <span class="lang-ta">சர்வதேச செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Conflict · Middle East</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">3 Indian Sailors Missing After US Strike on Cargo Ship in Gulf of Oman; Trump Announces Ceasefire</span>
+                        <span class="lang-ta">ஓமன் வளைகுடாவில் சரக்குக் கப்பல் மீது அமெரிக்கா தாக்குதல்: 3 இந்திய மாலுமிகள் மாயம்; போர்நிறுத்தத்தை அறிவித்தார் டிரம்ப்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Tensions in the Middle East peaked as a US military aircraft fired a missile at a cargo ship (M.T. Shorea) near Oman's Sohar port, adjacent to the strategic Strait of Hormuz. The strike, part of a blockade against Iran, caused massive fire. While the Omani Navy rescued 22 Indians, 3 Indian sailors (from UP and HP) tragically lost their lives. India strongly condemned the attack. Shortly after threatening to bomb Iran's oil reserves, US President Donald Trump abruptly announced a ceasefire agreement (mediated by Saudi, UAE, Qatar, etc.) to halt all airstrikes.</p>
+                    <p class="lang-ta">முக்கியத்துவம் வாய்ந்த ஹோர்முஸ் ஜலசந்திக்கு அருகிலுள்ள ஓமனின் சோஹார் துறைமுகப் பகுதியில் சரக்குக் கப்பல் (எம்.டி. ஷோரியா) மீது அமெரிக்க ராணுவ விமானம் ஏவுகணைத் தாக்குதல் நடத்தியதால் மத்திய கிழக்கில் பதற்றம் உச்சத்தை எட்டியது. ஈரானுக்கு எதிரான முற்றுகையின் ஒரு பகுதியாக நடந்த இத்தாக்குதலால் கப்பலில் பெரும் தீ விபத்து ஏற்பட்டது. ஓமன் கடற்படை 22 இந்தியர்களை மீட்ட போதிலும், 3 இந்திய மாலுமிகள் (UP மற்றும் HP-ஐச் சேர்ந்தவர்கள்) பரிதாபமாக உயிரிழந்தனர். இத்தாக்குதலுக்கு இந்தியா கடும் கண்டனம் தெரிவித்துள்ளது. ஈரானின் எண்ணெய் வளங்கள் மீது குண்டுவீசுவதாக எச்சரித்த சிறிது நேரத்திலேயே, அனைத்து வான்வழித் தாக்குதல்களையும் நிறுத்துவதற்கான போர்நிறுத்த ஒப்பந்தத்தை (சவுதி, ஐக்கிய அரபு அமீரகம், கத்தார் போன்றவற்றின் மத்தியஸ்தத்துடன்) அமெரிக்க அதிபர் டொனால்ட் டிரம்ப் திடீரென அறிவித்தார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Geography Hook:</strong> The Strait of Hormuz connects the Persian Gulf to the Gulf of Oman and the Arabian Sea. It is the world's most important oil chokepoint.</span><span class="lang-ta"><strong>புவியியல் குறிப்பு:</strong> ஹோர்முஸ் ஜலசந்தி பெர்சிய வளைகுடாவை ஓமன் வளைகுடா மற்றும் அரபிக்கடலுடன் இணைக்கிறது. இது உலகின் மிக முக்கியமான கச்சா எண்ணெய் போக்குவரத்து நீர்வழிப்பாதையாகும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Tech · Child Safety</span>
+                        <span class="badge bg-trap">TRAP</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Canada Introduces Bill to Regulate Social Media for Children Under 16</span>
+                        <span class="lang-ta">கனடாவில் 16 வயதுக்குட்பட்ட குழந்தைகளுக்கான சமூக ஊடக பயன்பாட்டைக் கட்டுப்படுத்த புதிய மசோதா</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Canadian government (Minister of Culture Mark Miller) has introduced a new bill in Parliament aimed at regulating social media usage for minors under 16 years of age. The legislation targets not only traditional social media platforms but also AI chatbots like ChatGPT. Platforms that fail to ensure adequate safety features for children will face severe restrictions.</p>
+                    <p class="lang-ta">16 வயதுக்குட்பட்ட சிறார்களின் சமூக ஊடகப் பயன்பாட்டைக் கட்டுப்படுத்தும் நோக்கில், கனடா நாடாளுமன்றத்தில் (கலாச்சார அமைச்சர் மார்க் மில்லர்) புதிய மசோதா அறிமுகப்படுத்தப்பட்டுள்ளது. இந்த மசோதா பாரம்பரிய சமூக ஊடக தளங்களை மட்டுமின்றி, சாட்ஜிபிடி (ChatGPT) போன்ற செயற்கை நுண்ணறிவு (AI) சாட்பாட்களையும் குறிவைக்கிறது. குழந்தைகளுக்குப் போதுமான பாதுகாப்பு அம்சங்களை உறுதி செய்யத் தவறும் நிறுவனங்கள் மீது கடுமையான கட்டுப்பாடுகள் விதிக்கப்படும்.</p>
+                </div>
+            </section>
+
+            <!-- ECONOMY & FINANCE -->
+            <section id="economy">
+                <h2>
+                    <span class="lang-en">Economy & Finance</span>
+                    <span class="lang-ta">பொருளாதாரம் & நிதி</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Macroeconomics · State Targets</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Rs 10.98 Lakh Crore Annual Credit Plan Set for Tamil Nadu for FY 2026-27</span>
+                        <span class="lang-ta">2026-27 நிதியாண்டில் தமிழ்நாட்டிற்கு ரூ.10.98 லட்சம் கோடி கடன் வழங்க இலக்கு நிர்ணயம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">State Finance Minister N. Murugan released the Annual Credit Plan of ₹10.98 Lakh Crore for Tamil Nadu for the financial year 2026-27 during the 186th State Level Bankers' Committee (SLBC) meeting convened by Indian Overseas Bank (IOB) in Chennai. This target is 12% higher than the previous year. Of this allocation, a massive ₹6,51,628 Crore is earmarked for the Agriculture sector, and ₹3,97,799 Crore is designated for the MSME sector.</p>
+                    <p class="lang-ta">சென்னையில் இந்தியன் ஓவர்சீஸ் வங்கி (IOB) சார்பாக நடைபெற்ற 186-வது மாநில அளவிலான வங்கியாளர்கள் குழு (SLBC) கூட்டத்தில், 2026-27 நிதியாண்டிற்கான ரூ.10.98 லட்சம் கோடி மதிப்பிலான வருடாந்திர கடன் திட்டத்தை மாநில நிதியமைச்சர் என். முருகன் வெளியிட்டார். இந்த இலக்கு முந்தைய ஆண்டை விட 12% அதிகமாகும். இதில், விவசாயத் துறைக்கு அதிகபட்சமாக ரூ.6,51,628 கோடியும், குறு, சிறு மற்றும் நடுத்தர தொழில் (MSME) நிறுவனங்களுக்கு ரூ.3,97,799 கோடியும் வழங்க இலக்கு நிர்ணயிக்கப்பட்டுள்ளது.</p>
+                </div>
+            </section>
+            
+            <!-- SPORTS -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports</span>
+                    <span class="lang-ta">விளையாட்டு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Cricket · ICC T20</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">10th ICC Women's T20 World Cup Begins in England & Wales</span>
+                        <span class="lang-ta">10-வது ஐசிசி (ICC) மகளிர் டி20 உலகக் கோப்பை இங்கிலாந்து & வேல்ஸில் தொடக்கம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The 10th edition of the ICC Women's T20 World Cup kicked off in England and Wales. For the first time, 12 teams are participating (up from the usual 10), featuring debutants Netherlands and returning team Ireland. Australia, having won the title 6 times, enters as the heavy favorite aiming for a 7th crown. The total prize pool has been significantly hiked by 10% to ₹83.92 Crore, with the Champion taking home ₹22.40 Crore. The Indian team is led by Harmanpreet Kaur with Smriti Mandhana as deputy.</p>
+                    <p class="lang-ta">10-வது ஐசிசி மகளிர் டி20 உலகக் கோப்பை போட்டிகள் இங்கிலாந்து மற்றும் வேல்ஸில் தொடங்கியுள்ளன. வரலாற்றில் முதல்முறையாக, வழக்கமான 10 அணிகளுக்குப் பதிலாக 12 அணிகள் இதில் பங்கேற்கின்றன; நெதர்லாந்து அறிமுக அணியாகவும், அயர்லாந்து மீண்டும் திரும்பும் அணியாகவும் களமிறங்குகின்றன. 6 முறை சாம்பியன் பட்டம் வென்ற ஆஸ்திரேலியா 7-வது முறையாகக் கோப்பையை வெல்லும் முனைப்பில் உள்ளது. மொத்தப் பரிசுத் தொகை 10% உயர்த்தப்பட்டு ரூ.83.92 கோடியாக அறிவிக்கப்பட்டுள்ளது; சாம்பியன் அணிக்கு ரூ.22.40 கோடி கிடைக்கும். ஹர்மன்ப்ரீத் கவுர் தலைமையில், ஸ்மிருதி மந்தனாவை துணை கேப்டனாகக் கொண்டு இந்திய அணி களமிறங்குகிறது.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Tennis · Grand Slam</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Wimbledon Hikes Prize Money by 20%; Winners to Get ₹45.98 Crore</span>
+                        <span class="lang-ta">விம்பிள்டன் பரிசுத் தொகை 20% உயர்வு: சாம்பியன் பட்டம் வெல்வோருக்கு ரூ.45.98 கோடி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Wimbledon tennis tournament management announced a historic 20% increase in its total prize pool for the 2026 season, bringing the total pot to a staggering ₹821 Crore. The Men's and Women's singles champions will each receive ₹45.98 Crore. Even players exiting in the first round will receive ₹1 Crore. This marks the first time in the tournament's history that prize money has been increased by 20% in a single year.</p>
+                    <p class="lang-ta">2026-ம் ஆண்டுக்கான விம்பிள்டன் டென்னிஸ் போட்டியின் மொத்தப் பரிசுத் தொகையை வரலாற்றில் முதல்முறையாக 20% உயர்த்தி நிர்வாகம் அறிவித்துள்ளது; இதனால் மொத்தப் பரிசுத் தொகை ரூ.821 கோடியாக உயர்ந்துள்ளது. ஆண்கள் மற்றும் பெண்கள் ஒற்றையர் பிரிவில் சாம்பியன் பட்டம் வெல்வோருக்கு தலா ரூ.45.98 கோடி வழங்கப்படும். முதல் சுற்றிலேயே வெளியேறும் வீரர்களுக்கும் தலா ரூ.1 கோடி கிடைக்கும். ஒரே ஆண்டில் பரிசுத் தொகை 20% உயர்த்தப்படுவது இத்தொடரின் வரலாற்றில் இதுவே முதல்முறையாகும்.</p>
+                </div>
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Which constitutional provision enables the Supreme Court to pass unique decrees ensuring complete justice, similar to its directive recognizing a homemaker's notional income?</span>
+                        <span class="lang-ta">கேள்வி: இல்லத்தரசியின் உழைப்பிற்கு வருமானம் நிர்ணயித்தது போல, முழுமையான நீதியை (Complete Justice) நிலைநாட்ட உச்சநீதிமன்றத்திற்கு சிறப்பு அதிகாரம் அளிக்கும் அரசியலமைப்புச் சரத்து எது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Article 142</span><br><br>
+                                <strong>Context:</strong> While the news discusses compensation enhancement mapping to gender equality (Arts 14/15), the SC often uses its extraordinary powers to bridge legal gaps for complete justice. Here, fixing ₹30,000 sets a strong precedent recognizing unpaid labor (15% of GDP).
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">சரத்து 142</span><br><br>
+                                <strong>பின்னணி:</strong> இந்தச் செய்தி பாலின சமத்துவத்தை (சரத்து 14/15) வலியுறுத்துகிறது. எனினும், சட்டத்தில் உள்ள இடைவெளிகளை நிரப்பி முழுமையான நீதியை வழங்க உச்சநீதிமன்றம் தனது சிறப்பு அதிகாரத்தைப் பயன்படுத்துகிறது. ஊதியம் பெறாத உழைப்பை (GDP-யில் 15%) அங்கீகரித்து ரூ.30,000 நிர்ணயித்தது ஒரு வலுவான முன்னுதாரணமாகும்.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: When was the NITI Aayog established, replacing the erstwhile Planning Commission?</span>
+                        <span class="lang-ta">கேள்வி: முன்னாள் திட்டக் குழுவிற்கு மாற்றாக, நிதி ஆயோக் (NITI Aayog) எந்த ஆண்டு தோற்றுவிக்கப்பட்டது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">January 1, 2015</span><br><br>
+                                <strong>Context:</strong> PM Modi chaired the 11th Governing Council meeting of NITI Aayog. The body was formed in 2015 to foster cooperative federalism.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">ஜனவரி 1, 2015</span><br><br>
+                                <strong>பின்னணி:</strong> பிரதமர் மோடி தலைமையில் நிதி ஆயோக்கின் 11-வது நிர்வாகக் குழு கூட்டம் நடைபெற்றது. கூட்டுறவு கூட்டாட்சியை ஊக்குவிக்கும் நோக்கில் 2015-ல் இது அமைக்கப்பட்டது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">NITI Aayog 11th Meet</span><span class="lang-ta">நிதி ஆயோக் 11-வது கூட்டம்</span></td>
+                                <td><span class="lang-en">National/Polity</span><span class="lang-ta">தேசியம்/ஆளுமை</span></td>
+                                <td><span class="lang-en">TN demands 3,284 Cr for Samagra Shiksha.</span><span class="lang-ta">சமக்ர சிக்‌ஷா திட்டத்திற்கு தமிழகம் ரூ.3284 கோடி கேட்பு.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">SC on Homemakers</span><span class="lang-ta">இல்லத்தரசிகள் வருமானம்</span></td>
+                                <td><span class="lang-en">National/Judiciary</span><span class="lang-ta">தேசியம்/நீதித்துறை</span></td>
+                                <td><span class="lang-en">Fixed ₹30,000/month notional income.</span><span class="lang-ta">மாத வருமானம் ரூ.30,000 ஆக உச்சநீதிமன்றம் நிர்ணயம்.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">Oman Ship Attack</span><span class="lang-ta">ஓமனில் கப்பல் தாக்குதல்</span></td>
+                                <td><span class="lang-en">Intl/Disaster</span><span class="lang-ta">சர்வதேசம்/பேரழிவு</span></td>
+                                <td><span class="lang-en">US strikes M.T. Shorea; 3 Indians dead.</span><span class="lang-ta">எம்.டி. ஷோரியா கப்பல் மீது அமெரிக்கா தாக்குதல்; 3 இந்தியர்கள் பலி.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">TN Credit Plan</span><span class="lang-ta">தமிழக கடன் திட்டம்</span></td>
+                                <td><span class="lang-en">State/Economy</span><span class="lang-ta">மாநிலம்/பொருளாதாரம்</span></td>
+                                <td><span class="lang-en">₹10.98 Lakh Cr target for FY27 (12% hike).</span><span class="lang-ta">2026-27 நிதியாண்டிற்கு ரூ.10.98 லட்சம் கோடி இலக்கு.</span></td>
+                                <td><span class="badge bg-tip">MED</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">Women's T20 WC</span><span class="lang-ta">மகளிர் டி20 உலகக் கோப்பை</span></td>
+                                <td><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></td>
+                                <td><span class="lang-en">10th edition begins in UK with 12 teams.</span><span class="lang-ta">12 அணிகளுடன் இங்கிலாந்தில் தொடங்கியது.</span></td>
+                                <td><span class="badge bg-tip">MED</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani Chennai 12-06-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி சென்னை 12-06-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source text detailed state, national, and international news for 12 June 2026. 
+State news prominently covered CM Joseph Vijay's demands at the NITI Aayog meeting in Delhi, seeking Rs 3284 Cr for Samagra Shiksha, exemption from NEET, and a 2nd AIIMS in Coimbatore. CPI exited the DMK alliance. Director Bharathiraja was buried with state honors. Chennai hit a peak power demand of 5,014 MW. App-based appointments announced for Govt hospitals. Gold prices dropped.
+National news highlighted the SC fixing a homemaker's income at Rs 30,000. PM Modi completed 4399 continuous days, breaking Nehru's post-1952 record. Indian Army received 106 Kamikaze turbojet drones. Congress plans a 3-month campaign against price rise. 2 villagers were killed in Manipur.
+Internationally, a US strike on a cargo ship near Oman killed 3 Indian sailors; Trump later announced a ceasefire with Iran. Canada introduced a bill to regulate social media for kids under 16. 
+Economy: TN set a credit plan of Rs 10.98 lakh crore. Mutual funds saw a drop in investments due to global tensions.
+Sports: The 10th Women's T20 World Cup started with 12 teams. Wimbledon prize money was hiked by 20% to Rs 45.98 Cr for winners. Bangladesh won a historic ODI series against Australia.]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூல உரைகள் 12 ஜூன் 2026 க்கான செய்திகளைக் கொண்டிருந்தன.
+மாநில செய்திகளில், டெல்லியில் நடந்த நிதி ஆயோக் கூட்டத்தில் முதல்வர் ஜோசப் விஜய் நீட் விலக்கு, சமக்ர சிக்‌ஷா திட்டத்திற்கு ரூ.3284 கோடி, கோவைக்கு எய்ம்ஸ் ஆகியவற்றை கோரியது முக்கியச் செய்தியாக அமைந்தது. திமுக கூட்டணியிலிருந்து சிபிஐ விலகியது. இயக்குநர் பாரதிராஜா அரசு மரியாதையுடன் அடக்கம் செய்யப்பட்டார். சென்னையின் மின்தேவை 5014 மெகாவாட்டை எட்டியது. அரசு மருத்துவமனைகளில் 'ஆப்' மூலம் முன்பதிவு அறிமுகம். தங்கம் விலை குறைந்தது.
+தேசிய அளவில், இல்லத்தரசியின் மாத வருமானத்தை ரூ.30,000 ஆக உச்சநீதிமன்றம் நிர்ணயித்தது. 1952-க்குப் பிறகு தொடர்ச்சியாக 4399 நாட்கள் பிரதமராக இருந்து நேருவின் சாதனையை மோடி முறியடித்தார். ராணுவத்திற்கு 106 காமிகேஸ் ட்ரோன்கள் வழங்கப்பட்டன. விலைவாசி உயர்வுக்கு எதிராக 3 மாத பிரசாரத்தை காங்கிரஸ் அறிவித்தது. மணிப்பூரில் 2 பேர் சுட்டுக்கொலை.
+சர்வதேச அளவில், ஓமன் அருகே கப்பல் மீது அமெரிக்கா நடத்திய தாக்குதலில் 3 இந்தியர்கள் பலி; ஈரானுடனான போர்நிறுத்தத்தை டிரம்ப் அறிவித்தார். கனடாவில் 16 வயதுக்குட்பட்டோருக்கான சமூக ஊடக மசோதா அறிமுகம்.
+பொருளாதாரம்: தமிழகத்திற்கு ரூ.10.98 லட்சம் கோடி கடன் இலக்கு நிர்ணயம். பரஸ்பர நிதிகளில் முதலீடு சரிந்தது.
+விளையாட்டு: 12 அணிகளுடன் 10-வது மகளிர் டி20 உலகக் கோப்பை தொடங்கியது. விம்பிள்டன் பரிசுத் தொகை 20% உயர்வு. ஆஸ்திரேலியாவுக்கு எதிராக வங்கதேசம் வரலாற்று வெற்றி.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 12 June 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+    </script>
+</body>
+</html>

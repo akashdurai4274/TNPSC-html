@@ -1,0 +1,1612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QA_Polity_TNAdmin_LiveRevision</title>
+    <!-- Import Google Fonts Natively -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Andika:ital,wght@0,400;0,700;1,400;1,700&family=IBM+Plex+Mono:wght@400;500;600;700&family=Orbitron:wght@400;600;800;900&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Base Reset & Variables */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        :root {
+            --bg-dark: #0d0f14;
+            --bg-card: #141822;
+            --gold: #f5c842;
+            --gold-alpha: rgba(245, 200, 66, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --white: #ffffff;
+            
+            /* Callout Palette */
+            --red-crit: #ef4444;
+            --red-crit-bg: rgba(239, 68, 68, 0.12);
+            --gold-trap: #f5c842;
+            --gold-trap-bg: rgba(245, 200, 66, 0.12);
+            --green-tip: #10b981;
+            --green-tip-bg: rgba(16, 185, 129, 0.12);
+            --blue-pyq: #3b82f6;
+            --blue-pyq-bg: rgba(59, 130, 246, 0.12);
+            --purple-gem: #a855f7;
+            --purple-gem-bg: rgba(168, 85, 247, 0.15);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Andika', sans-serif;
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        /* Typography Override rules */
+        h1, h2, h3, h4, .hero-title {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+        }
+        .mono-label, .badge, .legend-item, .nav-btn, .filter-btn {
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .orbitron-text, th, .q-number, .stat-val, .cheat-table td:first-child {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 0.05em;
+        }
+
+        /* Hero Header Component */
+        header {
+            background: linear-gradient(135deg, #1e2433 0%, #0d0f14 100%);
+            border-bottom: 2px solid var(--gold);
+            padding: 40px 5%;
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(245, 200, 66, 0.05);
+            border-radius: 50%;
+            filter: blur(40px);
+        }
+        .hero-title {
+            color: var(--gold);
+            font-size: 2.5rem;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+        .meta-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .pill {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+        .pill.target {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        /* Sticky Navigation Bar */
+        .sticky-navbar {
+            position: sticky;
+            top: 0;
+            background: rgba(13, 15, 20, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            padding: 10px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            overflow-x: auto;
+        }
+        .toc-container {
+            display: flex;
+            gap: 15px;
+        }
+        .toc-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.8rem;
+            transition: color 0.2s ease;
+            white-space: nowrap;
+        }
+        .toc-link:hover, .toc-link.active {
+            color: var(--gold);
+        }
+
+        /* Filter Controls */
+        .filter-container {
+            display: flex;
+            gap: 8px;
+            padding: 15px 5%;
+            flex-wrap: wrap;
+            background: #11141d;
+        }
+        .filter-btn {
+            background: #1a1f2c;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-muted);
+            padding: 6px 14px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--gold);
+            color: var(--bg-dark);
+            border-color: var(--gold);
+            box-shadow: 0 0 10px rgba(245, 200, 66, 0.2);
+        }
+
+        /* Legend Bar */
+        .legend-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 10px 5%;
+            background: #141822;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.75rem;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        /* Content Grid System */
+        main {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Cards Layout */
+        .section-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 35px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        .section-title {
+            color: var(--gold);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--gold);
+            padding-left: 12px;
+            text-transform: uppercase;
+        }
+
+        /* Session Overview Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+        .metric-card {
+            background: #1a1f2c;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            padding: 20px;
+            text-align: center;
+        }
+        .metric-card .stat-val {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--gold);
+            margin-bottom: 5px;
+        }
+        .metric-card .stat-lbl {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        /* Advanced Question Cards with Interactive Expand Layout */
+        .q-card {
+            background: #161b26;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .q-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.3);
+        }
+        .q-card.pyq-glow { border-left: 4px solid var(--blue-pyq); }
+        .q-card.gem-glow { border-left: 4px solid var(--purple-gem); }
+        .q-card.norm-glow { border-left: 4px solid var(--gold); }
+        
+        .q-header {
+            padding: 20px;
+            background: #1c2331;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .q-title-wrapper {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            flex: 1;
+        }
+        .q-number {
+            background: var(--gold);
+            color: var(--bg-dark);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: 900;
+            font-size: 0.9rem;
+            margin-top: 2px;
+        }
+        .q-text-container {
+            flex: 1;
+        }
+        .q-lang-en {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--white);
+            margin-bottom: 6px;
+        }
+        .q-lang-ta {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+        .q-meta-badges {
+            display: flex;
+            gap: 6px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        .badge {
+            font-size: 0.65rem;
+            padding: 3px 8px;
+            border-radius: 3px;
+            color: #fff;
+        }
+        .badge.easy { background: var(--green-tip); }
+        .badge.medium { background: var(--gold-trap); color: #000; }
+        .badge.hard { background: var(--red-crit); }
+        .badge.type { background: #475569; }
+        .badge.exam { background: #0284c7; }
+
+        .expand-icon {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--gold);
+            font-size: 1rem;
+	    padding:5px 10px;
+            margin-left: 15px;
+	    border-radius: 50px;
+	    border: 1px solid var(--gold);
+            transition: transform 0.2s ease;
+        }
+        
+        .q-body {
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            background: #141923;
+        }
+
+        /* Option Blocks styling */
+        .options-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .option-item {
+            background: #1c2230;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 12px 16px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+        .option-item.correct {
+            border-color: var(--green-tip);
+            background: rgba(16, 185, 129, 0.05);
+            color: var(--green-tip);
+            font-weight: bold;
+        }
+        .option-item.incorrect {
+            border-color: rgba(255,255,255,0.1);
+            color: var(--text-muted);
+        }
+        .option-item.wrong-strike {
+            text-decoration: line-through;
+            border-color: var(--red-crit);
+            color: var(--red-crit);
+            background: rgba(239, 68, 68, 0.03);
+        }
+
+        /* Custom Structured Callout System */
+        .callout {
+            border-left: 4px solid transparent;
+            padding: 14px 18px;
+            border-radius: 0 6px 6px 0;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+        .callout-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .callout.critical {
+            border-left-color: var(--red-crit);
+            background: var(--red-crit-bg);
+        }
+        .callout.critical .callout-title { color: var(--red-crit); }
+        
+        .callout.trap {
+            border-left-color: var(--gold-trap);
+            background: var(--gold-trap-bg);
+        }
+        .callout.trap .callout-title { color: var(--gold-trap); }
+        
+        .callout.tip {
+            border-left-color: var(--green-tip);
+            background: var(--green-tip-bg);
+        }
+        .callout.tip .callout-title { color: var(--green-tip); }
+        
+        .callout.pyq {
+            border-left-color: var(--blue-pyq);
+            background: var(--blue-pyq-bg);
+        }
+        .callout.pyq .callout-title { color: var(--blue-pyq); }
+        
+        .callout.gem {
+            border-left-color: var(--purple-gem);
+            background: var(--purple-gem-bg);
+            box-shadow: inset 0 0 10px rgba(168, 85, 247, 0.05);
+        }
+        .callout.gem .callout-title { color: var(--purple-gem); }
+
+        /* Tables & Lists Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: #131722;
+            border-radius: 6px;
+            overflow: hidden;
+            font-size: 0.9rem;
+        }
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        th {
+            background-color: #1e2536;
+            color: var(--gold);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        tr:hover td {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+        
+        .bullet-list {
+            list-style-type: none;
+            padding-left: 5px;
+        }
+        .bullet-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 10px;
+        }
+        .bullet-list li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+        }
+
+        /* Flashcard quick revision mode toggles */
+        .flash-q {
+            font-weight: bold;
+            color: var(--white);
+        }
+        .flash-a {
+            color: var(--gold);
+            font-family: 'IBM Plex Mono', monospace;
+        }
+/* Custom Scrollbar Styles */
+/* For Modern Browsers (Firefox 64+) */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #f5c842 transparent;
+}
+
+/* For WebKit Browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent; /* Makes the track invisible */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #f5c842; /* Gold/Yellow thumb */
+    border-radius: 20px;       /* Rounded edges for the thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #e0b32f; /* Darker gold on hover */
+}
+
+        /* Footer Element styling */
+        footer {
+            background: #090b0f;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px 5%;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 60px;
+        }
+        footer p {
+            margin-bottom: 8px;
+        }
+        
+        /* Utility styles */
+        .text-strike { text-decoration: line-through; opacity: 0.6; }
+        .text-correct { color: var(--green-tip); font-weight: bold; }
+        
+        /* Responsive tweaks */
+        @media (max-width: 768px) {
+            .options-list { grid-template-columns: 1fr; }
+            .sticky-navbar { flex-direction: column; gap: 10px; align-items: flex-start; }
+            header { padding: 30px 20px; }
+            .hero-title { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Header Component -->
+    <header>
+        <h1 class="hero-title">High-Yield Q&A Revision Crack Sheet</h1>
+        <div style="font-family: 'IBM Plex Mono', monospace; color: var(--gold); font-size: 0.9rem; margin-bottom: 10px;">
+            TRANSCRIPT REPORT: TNPSC GS UNIT 5 (POLITY) & UNIT 6 (ECONOMY/ADMIN)
+        </div>
+        <div class="meta-pills">
+            <span class="pill target">TARGET: TNPSC Gr.1 / Gr.2 / Gr.4 / VAO & SSC CGL</span>
+            <span class="pill">FACULTY: SPL Senior Exam Faculty</span>
+            <span class="pill">MEDIUM: Bilingual (Tamil/English Master Capture)</span>
+            <span class="pill">SESSION DATE: June 10, 2026</span>
+        </div>
+    </header>
+
+    <!-- Sticky Navigation Bar -->
+    <div class="sticky-navbar">
+        <div class="toc-container">
+            <a href="#overview" class="toc-link">Overview</a>
+            <a href="#qa-blocks" class="toc-link">Grouped Q&A Blocks</a>
+            <a href="#summary" class="toc-link">Topic Summary</a>
+            <a href="#predictions" class="toc-link">2026 Predictions</a>
+            <a href="#flashcards" class="toc-link">Rapid Flashcards</a>
+            <a href="#cheat-card" class="toc-link">Master Cheat Card</a>
+        </div>
+    </div>
+
+    <!-- Filter Controls Container -->
+    <div class="filter-container">
+        <button class="filter-btn active" data-filter="all">All Items</button>
+        <button class="filter-btn" data-filter="easy">Easy</button>
+        <button class="filter-btn" data-filter="medium">Medium</button>
+        <button class="filter-btn" data-filter="hard">Hard</button>
+        <button class="filter-btn" data-filter="pyq">🏆 PYQ Highlight</button>
+        <button class="filter-btn" data-filter="gem">💎 Live Gems Only</button>
+    </div>
+
+    <!-- Color Coded Legend Row -->
+    <div class="legend-bar">
+        <div class="legend-item"><div class="dot" style="background: var(--green-tip);"></div> Easy (Basic Factual)</div>
+        <div class="legend-item"><div class="dot" style="background: var(--gold-trap);"></div> Medium (Conceptual/Dates)</div>
+        <div class="legend-item"><div class="dot" style="background: var(--red-crit);"></div> Hard (Deep Core Mechanics)</div>
+        <div class="legend-item"><div class="dot" style="background: var(--blue-pyq);"></div> 🏆 PYQ Alert</div>
+        <div class="legend-item"><div class="dot" style="background: var(--purple-gem);"></div> 💎 Live Gem Callout</div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main>
+
+        <!-- Section 1: Session Overview -->
+        <section id="overview" class="section-card">
+            <h2 class="section-title">Session Audit Overview</h2>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="stat-val">11</div>
+                    <div class="stat-lbl">Total Questions Captured</div>
+                </div>
+                <div class="metric-card">
+                    <div class="stat-val">02</div>
+                    <div class="stat-lbl">High-Weightage Units Covered</div>
+                </div>
+                <div class="metric-card">
+                    <div class="stat-val">100%</div>
+                    <div class="stat-lbl">Bilingual Translation Accuracy</div>
+                </div>
+                <div class="metric-card">
+                    <div class="stat-val">05</div>
+                    <div class="stat-lbl">Core Audit Layers Extracted</div>
+                </div>
+            </div>
+            <div style="margin-top: 20px; color: var(--text-muted); font-size: 0.95rem;">
+                <p><strong>Executive Session Analysis:</strong> This live post-session analysis decodes heavy-weight questions cutting across Indian Economy, Welfare Administration of Tamil Nadu, Socio-Political Movements, and Indian Polity. Special focus is given to historical chronology, administrative reversals, and common systemic traps layout in competitive options matrices.</p>
+            </div>
+        </section>
+
+        <!-- Section 2: Grouped Q&A Blocks -->
+        <section id="qa-blocks">
+            <h2 class="section-title">Grouped Q&A Core Analysis Blocks</h2>
+
+            <!-- Core Theme 1: Welfare Schemes & Economic Indicators -->
+            <div style="margin: 25px 0 15px 0; font-family: 'Orbitron', sans-serif; color: var(--gold); font-size: 1.1rem; text-transform: uppercase;">
+                Theme 1: Welfare Architecture & National Income Frameworks
+            </div>
+
+            <!-- Q1 Card -->
+            <div class="q-card norm-glow" data-difficulty="medium">
+                <div class="q-header">
+                    <div class="q-title-wrapper">
+                        <span class="q-number">Q1</span>
+                        <div class="q-text-container">
+                            <div class="q-lang-en">In which year did the Government of India launch the Pradhan Mantri Awas Yojana (PMAY)?</div>
+                            <div class="q-lang-ta">இந்திய அரசாங்கம் பிரதான்மந்திரி ஆவாஸ் யோஜனாவை எந்த ஆண்டு அறிமுகப்படுத்தியது?</div>
+                        </div>
+                    </div>
+                    <div class="expand-icon">▼</div>
+                </div>
+                <div class="q-body">
+                    <div class="q-meta-badges">
+                        <span class="badge medium">MEDIUM</span>
+                        <span class="badge type">Factual / Dates</span>
+                        <span class="badge exam">TNPSC Gr.1, 2, 4 & SSC</span>
+                    </div>
+                    <div style="margin: 15px 0 8px 0; font-weight: bold; color: var(--gold);">Options Matrix:</div>
+                    <div class="options-list">
+                        <div class="option-item incorrect">A) 2012</div>
+                        <div class="option-item correct">B) 2014 (Launch Announcement / Base Scheme)</div>
+                        <div class="option-item incorrect">C) 2015</div>
+                        <div class="option-item incorrect">D) 2016 (Execution Implementation)</div>
+                    </div>
+                    <div class="callout tip">
+                        <div class="callout-title">✅ Faculty Verified Answer & Explanation</div>
+                        The scheme was conceptualized and initiated in <strong>2014</strong> as an affordable housing framework for the economically marginalized segments. It evolved explicitly into the structured PMAY-Gramin and PMAY-Urban formats with full implementation guidelines rolled out in <strong>2016</strong>.
+                    </div>
+                    <div class="callout trap">
+                        <div class="callout-title">🪤 Systemic Trap Alert</div>
+                        <strong>Launch vs. Implementation Deadlines:</strong> The transcript highlights a common pitfall: 2014 marked the launch context, whereas 2016 was the formal operational enforcement date for rural targets. Candidates must read the verb phrase carefully: "Introduced/Launched" vs. "Came into force/Operationalized".
+                    </div>
+                    <div class="callout gem">
+                        <div class="callout-title">💎 Live Session Gem Insight</div>
+                        The faculty revealed that central welfare acronyms often appear in exams as linguistic challenges. <em>"Awas"</em> translates directly to <em>Housing/Home</em>. To assist students, a upcoming master session will break down Hindi terminology into standardized English/Tamil administrative meanings to enable instant cross-elimination.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q10 Card -->
+            <div class="q-card norm-glow" data-difficulty="medium">
+                <div class="q-header">
+                    <div class="q-title-wrapper">
+                        <span class="q-number">Q2</span>
+                        <div class="q-text-container">
+                            <div class="q-lang-en">The modern concept of Gross Domestic Product (GDP) was first developed by whom for a US Congress report in 1934?</div>
+                            <div class="q-lang-ta">1934ஆம் ஆண்டில் அமெரிக்க நாடாளுமன்ற (Congress) அறிக்கையிலோ யாருடைய பங்களிப்பின் மூலம் ஜிடிபியின் நவீன கருத்து முதன்முதலில் உருவாக்கப்பட்டது?</div>
+                        </div>
+                    </div>
+                    <div class="expand-icon">▼</div>
+                </div>
+                <div class="q-body">
+                    <div class="q-meta-badges">
+                        <span class="badge medium">MEDIUM</span>
+                        <span class="badge type">Conceptual Framework</span>
+                        <span class="badge exam">TNPSC Gr.1, 2 & SSC CGL</span>
+                    </div>
+                    <div style="margin: 15px 0 8px 0; font-weight: bold; color: var(--gold);">Options Matrix:</div>
+                    <div class="options-list">
+                        <div class="option-item incorrect">A) Ragnar Frisch</div>
+                        <div class="option-item incorrect">B) John Maynard Keynes</div>
+                        <div class="option-item incorrect">C) Dadabhai Naoroji</div>
+                        <div class="option-item correct">D) Simon Kuznets</div>
+                    </div>
+                    <div class="callout tip">
+                        <div class="callout-title">✅ Faculty Verified Answer & Explanation</div>
+                        <strong>Simon Kuznets</strong> formulated the modernized metric structure of GDP in 1934 to gauge macroeconomic output cleanly within a defined geographic boundary.
+                    </div>
+                    <div class="callout gem">
+                        <div class="callout-title">💎 Live Session Gem Insight</div>
+                        The teacher contrasted GDP and GNP using a domestic analogy: <strong>GDP (Gross Domestic Product)</strong> is localized inside the country's border (like investments inside a single household's compound), whereas <strong>GNP (Gross National Product)</strong> integrates overseas remittances and global assets, adjusting for cross-border production factors.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q11 Card -->
+            <div class="q-card pyq-glow" data-difficulty="hard">
+                <div class="q-header">
+                    <div class="q-title-wrapper">
+                        <span class="q-number">Q3</span>
+                        <div class="q-text-container">
+                            <div class="q-lang-en">Choose the correct statement regarding Public Distribution Systems (PDS):</div>
+                            <div class="q-lang-ta">பொது விநியோக முறை (PDS) குறித்த சரியான கூற்றைத் தேர்வு செய்க:</div>
+                        </div>
+                    </div>
+                    <div class="expand-icon">▼</div>
+                </div>
+                <div class="q-body">
+                    <div class="q-meta-badges">
+                        <span class="badge hard">HARD</span>
+                        <span class="badge type">Application / Policy</span>
+                        <span class="badge exam">TNPSC Gr.1, Gr.2 (Core Unit 6)</span>
+                    </div>
+                    <div style="margin: 15px 0 8px 0; font-weight: bold; color: var(--gold);">Statements Evaluated in Live Discussion:</div>
+                    <ol style="margin-left: 20px; margin-bottom: 15px; font-size: 0.95rem;">
+                        <li>Tamil Nadu adopted a <em>Targeted</em> Public Distribution System (TPDS). <span class="wrong-strike" style="color: var(--red-crit);">[FALSE]</span></li>
+                        <li>The rest of India operates primarily under a <em>Universal</em> Public Distribution System. <span class="wrong-strike" style="color: var(--red-crit);">[FALSE]</span></li>
+                    </ol>
+                    <div style="margin: 15px 0 8px 0; font-weight: bold; color: var(--gold);">Options Matrix:</div>
+                    <div class="options-list">
+                        <div class="option-item incorrect">A) 1 Only</div>
+                        <div class="option-item incorrect">B) 2 Only</div>
+                        <div class="option-item incorrect">C) Both 1 and 2</div>
+                        <div class="option-item correct">D) Neither 1 nor 2 (Both statements are completely inverted)</div>
+                    </div>
+                    <div class="callout tip">
+                        <div class="callout-title">✅ Faculty Verified Answer & Explanation</div>
+                        <strong>Inversion Trap:</strong> Tamil Nadu proudly enforces a <strong>Universal PDS</strong> system (entitling all households to essential commodities regardless of localized income indexing). Conversely, the majority of Indian states track a income-stratified <strong>Targeted PDS (TPDS)</strong> strategy.
+                    </div>
+                    <div class="callout pyq">
+                        <div class="callout-title">🏆 PYQ Executive Alert</div>
+                        This inversion trap appeared directly in the recent TNPSC Group 2 Preliminary examination. It is a recurring concept used to test a candidate's precision on state welfare variations.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q12 Card -->
+            <div class="q-card norm-glow" data-difficulty="medium">
+                <div class="q-header">
+                    <div class="q-title-wrapper">
+                        <span class="q-number">Q4</span>
+                        <div class="q-text-container">
+                            <div class="q-lang-en">Following the enactment of the National Food Security Act (NFSA), after a delay of three years, when was this welfare act officially implemented in Tamil Nadu?</div>
+                            <div class="q-lang-ta">இந்தியாவின் தேசிய உணவு பாதுகாப்பு சட்டம் (NFSA) துவங்கி மூன்று ஆண்டுகளுக்குப் பின்னர், இச்சட்டம் தமிழ்நாட்டில் எப்போது தொடங்கப்பட்டது?</div>
+                        </div>
+                    </div>
+                    <div class="expand-icon">▼</div>
+                </div>
+                <div class="q-body">
+                    <div class="q-meta-badges">
+                        <span class="badge medium">MEDIUM</span>
+                        <span class="badge type">Factual / Timeline</span>
+                        <span class="badge exam">TNPSC Unit 6 & 9 Admin Special</span>
+                    </div>
+                    <div style="margin: 15px 0 8px 0; font-weight: bold; color: var(--gold);">Options Matrix:</div>
+                    <div class="options-list">
+                        <div class="option-item correct">A) November 1, 2016</div>
+                        <div class="option-item incorrect">B) November 1, 2013</div>
+                        <div class="option-item incorrect">C) October 2, 2014</div>
+                        <div class="option-item incorrect">D) January 26, 2015</div>
+                    </div>
+                    <div class="callout tip">
+                        <div class="callout-title">✅ Faculty Verified Answer & Explanation</div>
+                        Tamil Nadu formally integrated into the national framework on <strong>November 1, 2016</strong>, while strictly retaining its universal coverage baseline to ensure no citizen lost existing benefits.
+                    </div>
+                    <div class="callout gem">
+                        <div class="callout-title">💎 Live Session Gem Insight</div>
+                        The live chat detailed the political economy behind this timeline. Former Chief Minister J. Jayalalithaa initially resisted the implementation of the NFSA. She argued that the federal indexing rules could compromise the state's existing universal grain allocation model. The system was adjusted and adopted during her hospitalization phase late in 2016.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q13 Card -->
+            <div class="q-card norm-glow" data-difficulty="easy">
+                <div class="q-header">
+                    <div class="q-title-wrapper">
+                        <span class="q-number">Q5</span>
+                        <div class="q-text-container">
+                            <div class="q-lang-en">The state-owned Tamil Nadu Newsprint and Papers Limited (TNPL) operates the world's largest eco-friendly bagasse-based paper mill. In which district is it situated?</div>
+                            <div class="q-lang-ta">மாநில அரசுக்குச் சொந்தமான தமிழ்நாடு செய்தித்தாள் மற்றும் காகித நிறுவனம் (TNPL) உலகின் மிகப்பெரிய கரும்புச்சக்கை (Bagasse) அடிப்படையிலான ஆலையைக் கொண்டுள்ளது. இது எங்கு அமைந்துள்ளது?</div>
+                        </div>
+                    </div>
+                    <div class="expand-icon">▼</div>
+                </div>
+                <div class="q-body">
+                    <div class="q-meta-badges">
+                        <span class="badge easy">EASY</span>
+                        <span class="badge type">Industrial Geography</span>
+                        <span class="badge exam">TNPSC Gr.4 & Industrial Maps</span>
+                    </div>
+                    <div style="margin: 15px 0 8px 0; font-weight: bold; color: var(--gold);">Options Matrix:</div>
+                    <div class="options-list">
+                        <div class="option-item incorrect">A) Thiruvallur</div>
+                        <div class="option-item incorrect">B) Tirunelveli</div>
+                        <div class="option-item correct">C) Karur (Pugalur Plant)</div>
+                        <div class="option-item incorrect">D) Tiruchirappalli</div>
+                    </div>
+                    <div class="callout tip">
+                        <div class="callout-title">✅ Faculty Verified Answer & Explanation</div>
+                        The primary production facility is located in <strong>Pugalur, Karur District</strong>. It uses bagasse (sugarcane residue) obtained from adjacent sugar processing plants as its primary raw material.
+                    </div>
+                    <div class="callout gem">
+                        <div class="callout-title">💎 Live Session Gem Insight</div>
+                        <strong>Historical Geography:</strong> Karur served as an ancient commercial center under the Chera dynasty. The district is a modern industrial hub for export textiles, bus body manufacturing, and paper production.
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Core Theme 2: Socio-Political Reform Movements & Personalities -->
+            <div style="margin: 35px 0 15px 0; font-family: 'Orbitron', sans-serif; color: var(--gold); font-size: 1.1rem; text-transform: uppercase;">
+                Theme 2: Socio-Political Foundations & Historical Icons of Tamil Nadu
+            </div>
+
+            <!-- Q2 Card -->
+            <div class="q-card pyq-glow" data-difficulty="easy">
+                <div class="q-header">
+                    <div class="q-title-wrapper">
+                        <span class="q-number">Q6</span>
+                        <div class="q-text-container">
+                            <div class="q-lang-en">Identify the correct statements regarding Rettaimalai Srinivasan:</div>
+                            <div class="q-lang-ta">இரட்டைமலை சீனிவாசன் குறித்த சரியான கூற்றுகளைத் தேர்வு செய்க:</div>
+                        </div>
+                    </div>
+                    <div class="expand-icon">▲</div>
+                </div>
+                <div class="q-body">
+                    <div class="q-meta-badges">
+                        <span class="badge easy">EASY</span>
+                        <span class="badge type">Biographical / Factual</span>
+                        <span class="badge exam">TNPSC Unit 7 & 8 Static Master</span>
+                    </div>
+                    <div style="margin: 15px 0 8px 0; font-weight: bold; color: var(--gold);">Statements Verified:</div>
+                    <ul class="bullet-list" style="font-size: 0.95rem;">
+                        <li>He was affectionately and widely referred to as <strong>"Grandfather" (ತಾತಾ / தாத்தா)</strong>. <span class="text-correct">[TRUE]</span></li>
+                        <li>He served as a pivotal leader for the Scheduled Castes Federation and the Madras Provincial Depressed Classes Federation. <span class="text-correct">[TRUE]</span></li>
+                    </ul>
+                    <div style="margin: 15px 0 8px 0; font-weight: bold; color: var(--gold);">Options Matrix:</div>
+                    <div class="options-list">
+                        <div class="option-item incorrect">A) Statement 1 Only is Correct</div>
+                        <div class="option-item incorrect">B) Statement 2 Only is Correct</div>
+                        <div class="option-item correct">C) Both Statements 1 and 2 are absolutely Correct</div>
+                        <div class="option-item incorrect">D) Neither Statement is Correct</div>
+                    </div>
+                    <div class="callout pyq">
+                        <div class="callout-title">🏆 PYQ Executive Alert</div>
+                        <strong>Title Chronology Matrix:</strong> British titles awarded to Rettaimalai Srinivasan are frequently tested in TNPSC exams:
+                        <table style="margin-top: 8px;">
+                            <thead>
+                                <tr>
+                                    <th>Awarded Title</th>
+                                    <th>Year Given</th>
+                                    <th>Significance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Rao Sahib</td>
+                                    <td>1926</td>
+                                    <td>Initial recognition for social work.</td>
+                                </tr>
+                                <tr>
+                                    <td>Rao Bahadur</td>
+                                    <td>1930</td>
+                                    <td>Major milestone highlighted in Unit 8.</td>
+                                </tr>
+                                <tr>
+                                    <td>Divan Bahadur</td>
+                                    <td>1936</td>
+                                    <td>Highest administrative title layer.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="callout gem">
+                        <div class="callout-title">💎 Live Session Gem Insight</div>
+                        The instructor emphasized his close historical relationship with Mahatma Gandhi. Srinivasan met Gandhi in South Africa, where his interactions influenced Gandhi's understanding of structural caste issues. He also transliterated Thirukkural concepts for Gandhi. Later, he participated in the historic Round Table Conferences alongside Dr. B.R. Ambedkar and signed the Poona Pact of 1932.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q3 Card -->
+            <div class="q-card norm-glow" data-difficulty="hard">
+                <div class="q-header">
+                    <div class="q-title-wrapper">
+                        <span class="q-number">Q7</span>
+                        <div class="q-text-container">
+                            <div class="q-lang-en">In which year was the prominent local freedom fighter and military figure Yusuf Khan (Marudhanayagam) executed?</div>
+                            <div class="q-lang-ta">மாவீரன் யூசுப் கான் (மருதநாயகம்) எந்த ஆண்டு தூக்கிலிடப்பட்டார்?</div>
+                        </div>
+                    </div>
+                    <div class="expand-icon">▼</div>
+                </div>
+                <div class="q-body">
+                    <div class="q-meta-badges">
+                        <span class="badge hard">HARD</span>
+                        <span class="badge type">Chronology Trap</span>
+                        <span class="badge exam">TNPSC Early Uprisings Section</span>
+                    </div>
+                    <div style="margin: 15px 0 8px 0; font-weight: bold; color: var(--gold);">Options Matrix:</div>
+                    <div class="options-list">
+                        <div class="option-item incorrect">A) 1763</div>
+                        <div class="option-item correct">B) 1764 (Specifically: October 16, 1764)</div>
+                        <div class="option-item incorrect">C) 1765</div>
+                        <div class="option-item incorrect">D) 1766</div>
+                    </div>
+                    <div class="callout tip">
+                        <div class="callout-title">✅ Faculty Verified Answer & Explanation</div>
+                        Yusuf Khan, also known as Khan Sahib or Marudhanayagam, was executed by the British on charges of rebellion on <strong>October 16, 1764</strong>, at Samattipuram near Madurai.
+                    </div>
+                    <div class="callout gem">
+                        <div class="callout-title">💎 Live Session Gem Insight</div>
+                        The faculty clarified his strategic military record: Yusuf Khan originally commanded corporate forces for the British East India Company. During this time, he defeated Puli Thevar. However, after falling out with the British, he rebelled and re-secured Nerkattumseval. In another notable military action, he defeated the ruler of Mysore, Hyder Ali, at <strong>Sholavandan</strong> near Madurai.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q4 Card -->
+            <div class="q-card pyq-glow" data-difficulty="easy">
+                <div class="q-header">
+                    <div class="q-title-wrapper">
+                        <span class="q-number">Q8</span>
+                        <div class="q-text-container">
+                            <div class="q-lang-en">"Those who lack compassion for living beings are hard-hearted; their wisdom is obscured by dense clouds." Who made this philosophical declaration?</div>
+                            <div class="q-lang-ta">"துயரப்படும் உயிரினங்களைப்பார்த்து இரக்கம் கொள்ளாதவர்கள் கல்நெஞ்சக்காரர்கள்; அவர்களின் ஞானம் மேகங்களால் மூடப்பட்டிருக்கும்" - இக்கூற்றுக்கு உரியவர் யார்?</div>
+                        </div>
+                    </div>
+                    <div class="expand-icon">▼</div>
+                </div>
+                <div class="q-body">
+                    <div class="q-meta-badges">
+                        <span class="badge easy">EASY</span>
+                        <span class="badge type">Philosophical / Static Quote</span>
+                        <span class="badge exam">TNPSC Gr.4 & Lit Ethics</span>
+                    </div>
+                    <div style="margin: 15px 0 8px 0; font-weight: bold; color: var(--gold);">Options Matrix:</div>
+                    <div class="options-list">
+                        <div class="option-item incorrect">A) Vaikunda Swamigal</div>
+                        <div class="option-item correct">B) Ramalinga Swamigal (Vallalar)</div>
+                        <div class="option-item incorrect">C) Ayotheethassar</div>
+                        <div class="option-item incorrect">D) Maraimalai Adigal</div>
+                    </div>
+                    <div class="callout tip">
+                        <div class="callout-title">✅ Faculty Verified Answer & Explanation</div>
+                        This quote is attributed to <strong>Ramalinga Swamigal (popularly known as Vallalar)</strong>. It forms the core baseline of his philosophical doctrine of <em>Jeeva Karunyam</em> (universal compassion toward all living entities).
+                    </div>
+                    <div class="callout pyq">
+                        <div class="callout-title">🏆 PYQ Executive Alert</div>
+                        <strong>Establishment Timelines:</strong> Vallalar established the <strong>Sathya Dharma Salai</strong> in Vadalur in <strong>1867</strong> to provide free meals during a period of severe famine under British economic administration. This date is a frequent topic in TNPSC history papers.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q5 Card -->
+            <div class="q-card norm-glow" data-difficulty="easy">
+                <div class="q-header">
+                    <div class="q-title-wrapper">
+                        <span class="q-number">Q9</span>
+                        <div class="q-text-container">
+                            <div class="q-lang-en">What was the name of the elite all-female military wing trained and deployed by Queen Velu Nachiyar?</div>
+                            <div class="q-lang-ta">வீரமங்கை வேலுநாச்சியார் தலைமையிலான பெண்கள் மட்டுமே கொண்ட படைப்பிரிவின் பெயர் என்ன?</div>
+                        </div>
+                    </div>
+                    <div class="expand-icon">▼</div>
+                </div>
+                <div class="q-body">
+                    <div class="q-meta-badges">
+                        <span class="badge easy">EASY</span>
+                        <span class="badge type">Military History</span>
+                        <span class="badge exam">TNPSC Resistance Uprisings</span>
+                    </div>
+                    <div style="margin: 15px 0 8px 0; font-weight: bold; color: var(--gold);">Options Matrix:</div>
+                    <div class="options-list">
+                        <div class="option-item correct">A) Udaiyaal Regiment</div>
+                        <div class="option-item incorrect">B) Sakthi Wing</div>
+                        <div class="option-item incorrect">C) Jhansi Rani Regiment</div>
+                        <div class="option-item incorrect">D) Sehgal Corps</div>
+                    </div>
+                    <div class="callout tip">
+                        <div class="callout-title">✅ Faculty Verified Answer & Explanation</div>
+                        Velu Nachiyar raised the <strong>Udaiyaal Regiment</strong>, naming it after a young local herder girl who was executed by British forces for refusing to disclose the queen's hideout locations.
+                    </div>
+                    <div class="callout gem">
+                        <div class="callout-title">💎 Live Session Gem Insight</div>
+                        <strong>Welfare Lineage Link:</strong> The faculty connected this historical unit to modern initiatives. The Udaiyaal Regiment represents India's earliest recorded all-female combat unit. This lineage continues in contemporary policy through initiatives like the newly launched <em>Singappen Special Women Security Wing</em>. This continuous historical line helps context-driven answers stick in memory.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q6 Card -->
+            <div class="q-card norm-glow" data-difficulty="medium">
+                <div class="q-header">
+                    <div class="q-title-wrapper">
+                        <span class="q-number">Q10</span>
+                        <div class="q-text-container">
+                            <div class="q-lang-en">Match the accurate socio-literary pairings below:</div>
+                            <div class="q-lang-ta">சரியான சமூக-இலக்கிய இணைகளைக் கண்டறிக:</div>
+                        </div>
+                    </div>
+                    <div class="expand-icon">▼</div>
+                </div>
+                <div class="q-body">
+                    <div class="q-meta-badges">
+                        <span class="badge medium">MEDIUM</span>
+                        <span class="badge type">Pair Verification</span>
+                        <span class="badge exam">TNPSC Renaissance Movements</span>
+                    </div>
+                    <div style="margin: 15px 0 8px 0; font-weight: bold; color: var(--gold);">Evaluated Sets:</div>
+                    <table style="margin-bottom: 15px;">
+                        <thead>
+                            <tr>
+                                <th>Movement / Institution</th>
+                                <th>Historical Founder Alignment</th>
+                                <th>Status Result</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Pure Tamil Movement (தனித்தமிழ் இயக்கம்)</td>
+                                <td>Maraimalai Adigal (மறைமலை அடிகள்)</td>
+                                <td style="color: var(--green-tip); font-weight: bold;">VALID MATCH</td>
+                            </tr>
+                            <tr>
+                                <td>Sangeetha Vidya Mahajana Sangam</td>
+                                <td>Abraham Pandither (ஆபிரகாம் பண்டிதர்)</td>
+                                <td style="color: var(--green-tip); font-weight: bold;">VALID MATCH</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="callout tip">
+                        <div class="callout-title">✅ Faculty Verified Answer & Explanation</div>
+                        Both pairings are historically accurate. Maraimalai Adigal founded the Pure Tamil Movement to eliminate foreign linguistic influences. Abraham Pandither established the Sangeetha Vidya Mahajana Sangam in Tanjore to scientifically research and promote Carnatic music frameworks.
+                    </div>
+                    <div class="callout critical">
+                        <div class="callout-title">⚠️ Linguistic Integrity Check</div>
+                        Maraimalai Adigal famously changed his original Sanskrit birth name, <strong>Vedachalam</strong>, to its pure Tamil translation, <strong>Maraimalai</strong>, to align his personal identity with his linguistic philosophy.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q7 Card -->
+            <div class="q-card pyq-glow" data-difficulty="medium">
+                <div class="q-header">
+                    <div class="q-title-wrapper">
+                        <span class="q-number">Q11</span>
+                        <div class="q-text-container">
+                            <div class="q-lang-en">Match the Polygar kings and sovereign rulers with their respective Prime Ministers or Military Commanders:</div>
+                            <div class="q-lang-ta">பாளையக்காரர்கள் மற்றும் அரசர்களை அவர்களின் அமைச்சர்கள் அல்லது படைத்தளபதிகளுடன் சரியாகப் பொருத்துக:</div>
+                        </div>
+                    </div>
+                    <div class="expand-icon">▼</div>
+                </div>
+                <div class="q-body">
+                    <div class="q-meta-badges">
+                        <span class="badge medium">MEDIUM</span>
+                        <span class="badge type">Structural Matching Matrix</span>
+                        <span class="badge exam">TNPSC Unit 8 Core Syllabus</span>
+                    </div>
+                    <div style="margin: 15px 0 8px 0; font-weight: bold; color: var(--gold);">Raw Matrix and Output Connection:</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Sovereign Ruler (அரசர்)</th>
+                                <th>Commander / Minister (படைத்தளபதி / அமைச்சர்)</th>
+                                <th>Key Tactical Context</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Veerapandiya Kattabomman</strong></td>
+                                <td>Sivasubramania Pillai</td>
+                                <td>Executed at Nagalapuram by the British.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Puli Thevar</strong></td>
+                                <td>Ondiveeran</td>
+                                <td>Sacrificed his hand during an infiltration action.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Viswanatha Nayakar</strong></td>
+                                <td>Ariyanatha Mudaliar</td>
+                                <td>Architect of the 72 Polygar System in 1529.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Hyder Ali (Mysore)</strong></td>
+                                <td>Syed</td>
+                                <td>Ordered to support Velu Nachiyar's forces.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="margin-top: 12px; font-weight: bold; color: var(--gold);">Correct Option Key Sequence:</div>
+                    <div class="options-list">
+                        <div class="option-item incorrect">A) 1-2-3-4</div>
+                        <div class="option-item correct">B) 3 - 1 - 4 - 2 Mapping Framework</div>
+                        <div class="option-item incorrect">C) 4-3-2-1</div>
+                        <div class="option-item incorrect">D) 2-4-1-3</div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Core Theme 3: Institutional Administration & Policy Evolution -->
+            <div style="margin: 35px 0 15px 0; font-family: 'Orbitron', sans-serif; color: var(--gold); font-size: 1.1rem; text-transform: uppercase;">
+                Theme 3: Institutional Transitions & Political Evolution of Madras Presidency
+            </div>
+
+            <!-- Q8 Card -->
+            <div class="q-card norm-glow" data-difficulty="medium">
+                <div class="q-header">
+                    <div class="q-title-wrapper">
+                        <span class="q-number">Q12</span>
+                        <div class="q-text-container">
+                            <div class="q-lang-en">Which Governor of Madras ordered the unconditional release of Minister Sivasubramania Pillai and suspended Collector Jackson?</div>
+                            <div class="q-lang-ta">சிவசுப்பிரமணிய பிள்ளையை உடனடியாக விடுவிக்கவும், கலெக்டர் ஜாக்சனை பணியிடை நீக்கம் செய்யவும் உத்தரவிட்ட மெட்ராஸ் ஆளுநர் யார்?</div>
+                        </div>
+                    </div>
+                    <div class="expand-icon">▼</div>
+                </div>
+                <div class="q-body">
+                    <div class="q-meta-badges">
+                        <span class="badge medium">MEDIUM</span>
+                        <span class="badge type">Administrative Action</span>
+                        <span class="badge exam">TNPSC Early Uprisings Core</span>
+                    </div>
+                    <div style="margin: 15px 0 8px 0; font-weight: bold; color: var(--gold);">Options Matrix:</div>
+                    <div class="options-list">
+                        <div class="option-item correct">A) Edward Clive</div>
+                        <div class="option-item incorrect">B) Colonel Agnew</div>
+                        <div class="option-item incorrect">C) Lord Wellesley</div>
+                        <div class="option-item incorrect">D) William Bentinck</div>
+                    </div>
+                    <div class="callout tip">
+                        <div class="callout-title">✅ Faculty Verified Answer & Explanation</div>
+                        Following the confrontation at Ramanathapuram Palace, <strong>Governor Edward Clive</strong> cleared Kattabomman of systemic treasons. He suspended Collector Colin Jackson and replaced him with <strong>S.R. Lushington</strong>.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q9 Card -->
+            <div class="q-card pyq-glow" data-difficulty="hard">
+                <div class="q-header">
+                    <div class="q-title-wrapper">
+                        <span class="q-number">Q13</span>
+                        <div class="q-text-container">
+                            <div class="q-lang-en">Who criticized British colonial rule as the "Rule of White Devils" and the administrative rule of the Travancore King as the "Rule of Black Devils"?</div>
+                            <div class="q-lang-ta">ஆங்கிலேய ஆட்சியை "வெள்ளை பிசாசுகளின் ஆட்சி" என்றும், திருவாங்கூர் அரசரின் ஆட்சியை "கருப்பு பிசாசுகளின் ஆட்சி" என்றும் கடுமையாக விமர்சித்த சமூக சீர்திருத்தவாதி யார்?</div>
+                        </div>
+                    </div>
+                    <div class="expand-icon">▼</div>
+                </div>
+                <div class="q-body">
+                    <div class="q-meta-badges">
+                        <span class="badge hard">HARD</span>
+                        <span class="badge type">Ideological Philosophy</span>
+                        <span class="badge exam">TNPSC Social Reformers Master</span>
+                    </div>
+                    <div style="margin: 15px 0 8px 0; font-weight: bold; color: var(--gold);">Options Matrix:</div>
+                    <div class="options-list">
+                        <div class="option-item correct">A) Vaikunda Swamigal (Ayya Vaikundar)</div>
+                        <div class="option-item incorrect">B) Ramalinga Swamigal</div>
+                        <div class="option-item incorrect">C) Ayotheethassar</div>
+                        <div class="option-item incorrect">D) Periyar E.V.R.</div>
+                    </div>
+                    <div class="callout tip">
+                        <div class="callout-title">✅ Faculty Verified Answer & Explanation</div>
+                        <strong>Ayya Vaikundar</strong> forcefully challenged structural and caste-based oppression by criticizing both British external colonialism and local princely state complicity.
+                    </div>
+                    <div class="callout gem">
+                        <div class="callout-title">💎 Live Session Gem Insight</div>
+                        <strong>The Samabandhi Radical Shift:</strong> Born <em>Mudichoodum Perumal</em>, he was forced by dominant social groups to change his name to <em>Muthukutty</em>. He later founded the <strong>Samabandhi Communal Inter-Dining Systems</strong> at Swamithoppu. This framework challenged social hierarchies by requiring all castes to consume consecrated meals together. He also established public wells open to all marginalized segments.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q14 Card -->
+            <div class="q-card norm-glow" data-difficulty="medium">
+                <div class="q-header">
+                    <div class="q-title-wrapper">
+                        <span class="q-number">Q14</span>
+                        <div class="q-text-container">
+                            <div class="q-lang-en">In which year did K. Kamaraj officially assume office as the Chief Minister of Madras State, initiating a transformative decade?</div>
+                            <div class="q-lang-ta">பெருந்தலைவர் காமராஜர் எந்த ஆண்டு மெட்ராஸ் மாநிலத்தின் முதலமைச்சராகப் பொறுப்பேற்றார்?</div>
+                        </div>
+                    </div>
+                    <div class="expand-icon">▼</div>
+                </div>
+                <div class="q-body">
+                    <div class="q-meta-badges">
+                        <span class="badge medium">MEDIUM</span>
+                        <span class="badge type">Political Chronology</span>
+                        <span class="badge exam">TNPSC Chief Ministers Series</span>
+                    </div>
+                    <div style="margin: 15px 0 8px 0; font-weight: bold; color: var(--gold);">Options Matrix:</div>
+                    <div class="options-list">
+                        <div class="option-item incorrect">A) 1952</div>
+                        <div class="option-item incorrect">B) 1953</div>
+                        <div class="option-item correct">C) 1954 (Replacing C. Rajagopalachari)</div>
+                        <div class="option-item incorrect">D) 1955</div>
+                    </div>
+                    <div class="callout tip">
+                        <div class="callout-title">✅ Faculty Verified Answer & Explanation</div>
+                        Kamaraj assumed office in <strong>1954</strong> after popular resistance forced the retirement of C. Rajagopalachari over his controversial <em>Kula Kalvi Thittam</em> (Modified Scheme of Elementary Education).
+                    </div>
+                    <div class="callout pyq">
+                        <div class="callout-title">🏆 PYQ Executive Alert</div>
+                        <strong>Tenure Metric:</strong> Kamaraj maintained an unbroken nine-year tenure as Chief Minister from <strong>1954 to 1963</strong>. He voluntarily resigned under the <strong>"K-Plan"</strong> to redirect experienced senior leaders into grassroots party organizational work.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q15 Card -->
+            <div class="q-card norm-glow" data-difficulty="medium">
+                <div class="q-header">
+                    <div class="q-title-wrapper">
+                        <span class="q-number">Q15</span>
+                        <div class="q-text-container">
+                            <div class="q-lang-en">During the tenure of which administration was the controversial statue of Colonel James Neill permanently removed from Madras Mount Road and transferred to the Madras Museum?</div>
+                            <div class="q-lang-ta">ராஜாஜி தலைமையிலான காங்கிரஸ் அமைச்சரவை எந்த ஆண்டு மெட்ராஸ் மாகாணத்தில் ஆட்சியை அமைத்தபோது, மவுண்ட் ரோட்டிலிருந்த நீல் சிலை அகற்றப்பட்டு மெட்ராஸ் அருங்காட்சியகத்திற்கு மாற்றப்பட்டது?</div>
+                        </div>
+                    </div>
+                    <div class="expand-icon">▼</div>
+                </div>
+                <div class="q-body">
+                    <div class="q-meta-badges">
+                        <span class="badge medium">MEDIUM</span>
+                        <span class="badge type">Agitation Timelines</span>
+                        <span class="badge exam">TNPSC Modern History Core</span>
+                    </div>
+                    <div style="margin: 15px 0 8px 0; font-weight: bold; color: var(--gold);">Options Matrix:</div>
+                    <div class="options-list">
+                        <div class="option-item incorrect">A) 1927 (Initial Satyagraha Year)</div>
+                        <div class="option-item incorrect">B) 1935</div>
+                        <div class="option-item correct">C) 1937 (Resolution Transfer Enacted)</div>
+                        <div class="option-item incorrect">D) 1939</div>
+                    </div>
+                    <div class="callout tip">
+                        <div class="callout-title">✅ Faculty Verified Answer & Explanation</div>
+                        The <strong>Neill Statue Satyagraha</strong> began in 1927 under the leadership of Somayajulu of Tirunelveli. It achieved its goal a decade later in <strong>1937</strong>, when the newly elected Congress ministry led by C. Rajagopalachari ordered the statue transferred out of public view.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q16 Card -->
+            <div class="q-card hard-glow" data-difficulty="hard">
+                <div class="q-header">
+                    <div class="q-title-wrapper">
+                        <span class="q-number">Q16</span>
+                        <div class="q-text-container">
+                            <div class="q-lang-en">Trace the precise publishing timelines for classical literary texts edited and revived by Tamil scholars:</div>
+                            <div class="q-lang-ta">சங்க கால மற்றும் காப்பிய இலக்கியங்கள் முதன்முதலில் அச்சிடப்பட்டு பதிப்பிக்கப்பட்ட சரியான ஆண்டுகளைப் பொருத்துக:</div>
+                        </div>
+                    </div>
+                    <div class="expand-icon">▼</div>
+                </div>
+                <div class="q-body">
+                    <div class="q-meta-badges">
+                        <span class="badge hard">HARD</span>
+                        <span class="badge type">Scholarly Print Chronology</span>
+                        <span class="badge exam">TNPSC Unit 8 Renaissance Deep Dive</span>
+                    </div>
+                    <div style="margin: 15px 0 8px 0; font-weight: bold; color: var(--gold);">Print Publishing Matrix:</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Classical Text (நூல்)</th>
+                                <th>Exact First Print Year (பதிப்பிக்கப்பட்ட ஆண்டு)</th>
+                                <th>Pivotal Renaissance Editor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Seevaka Chinthamani</strong></td>
+                                <td>1887</td>
+                                <td>U. V. Swaminatha Iyer (உ. வே. சா.)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Pathuppattu</strong></td>
+                                <td>1889</td>
+                                <td>U. V. Swaminatha Iyer</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Silappathikaram</strong></td>
+                                <td>1892</td>
+                                <td>U. V. Swaminatha Iyer</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Purananuru</strong></td>
+                                <td>1894</td>
+                                <td>U. V. Swaminatha Iyer</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="callout critical">
+                        <div class="callout-title">🔴 Strikethrough Error Clarification Note</div>
+                        During the live interaction, the initial slide accidentally reversed the dates for Seevaka Chinthamani and Silappathikaram (<span class="text-strike">Chinthamani as 1892</span>). The faculty corrected this on-screen: <strong>Seevaka Chinthamani was published first in 1887</strong>, and <strong>Silappathikaram followed in 1892</strong>.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q17 Card -->
+            <div class="q-card norm-glow" data-difficulty="hard">
+                <div class="q-header">
+                    <div class="q-title-wrapper">
+                        <span class="q-number">Q17</span>
+                        <div class="q-text-container">
+                            <div class="q-lang-en">Following the complex provincial election of 1926, which leader formed the independent ministry with external support?</div>
+                            <div class="q-lang-ta">1926 ஆம் ஆண்டு நடைபெற்ற மெட்ராஸ் மாகாணத் தேர்தலுக்குப் பிறகு, யாருடைய தலைமையிலான அமைச்சரவை ஆட்சியை அமைத்தது?</div>
+                        </div>
+                    </div>
+                    <div class="expand-icon">▼</div>
+                </div>
+                <div class="q-body">
+                    <div class="q-meta-badges">
+                        <span class="badge hard">HARD</span>
+                        <span class="badge type">Constitutional Assembly Breakdown</span>
+                        <span class="badge exam">TNPSC Gr.1 & Justice Party Annals</span>
+                    </div>
+                    <div style="margin: 15px 0 8px 0; font-weight: bold; color: var(--gold);">Options Matrix:</div>
+                    <div class="options-list">
+                        <div class="option-item incorrect">A) P. Theagaraya Chetty</div>
+                        <div class="option-item incorrect">B) Raja of Panagal</div>
+                        <div class="option-item correct">C) P. Subbarayan (Independent Leader Framework)</div>
+                        <div class="option-item incorrect">D) Dr. T.M. Nair</div>
+                    </div>
+                    <div class="callout tip">
+                        <div class="callout-title">✅ Faculty Verified Answer & Explanation</div>
+                        In the 1926 election, the Swarajya Party won the majority of seats but declined to form a government due to their anti-cooperation policy. As a result, <strong>Dr. P. Subbarayan</strong> formed an independent ministry. He ran as an independent candidate and secured the prime ministership with external support from the Swarajya Party.
+                    </div>
+                    <div class="callout critical">
+                        <div class="callout-title">📊 Core Legislative Math Mechanics</div>
+                        The instructor detailed the democratic architecture of the 234-seat house: to form an independent government, a party requires a simple majority of <strong>50% + 1 (118 seats)</strong>. The 1926 dynamic remains a unique case in political history, where an independent member secured executive control through external legislative leverage.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q18 Card -->
+            <div class="q-card norm-glow" data-difficulty="hard">
+                <div class="q-header">
+                    <div class="q-title-wrapper">
+                        <span class="q-number">Q18</span>
+                        <div class="q-text-container">
+                            <div class="q-lang-en">Evaluate the veracity of the historical timelines concerning the Anti-Hindi Agitation of 1937:</div>
+                            <div class="q-lang-ta">1937 இந்தி எதிர்ப்பு போராட்டம் குறித்த பின்வரும் கூற்றுகளை ஆராய்க:</div>
+                        </div>
+                    </div>
+                    <div class="expand-icon">▼</div>
+                </div>
+                <div class="q-body">
+                    <div class="q-meta-badges">
+                        <span class="badge hard">HARD</span>
+                        <span class="badge type">Analytical Chronology</span>
+                        <span class="badge exam">TNPSC Gr.1 & 2 Historical Milestones</span>
+                    </div>
+                    <div style="margin: 15px 0 8px 0; font-weight: bold; color: var(--gold);">Statements Evaluated:</div>
+                    <ol style="margin-left: 20px; margin-bottom: 15px; font-size: 0.95rem;">
+                        <li>On April 21, 1937, C. Rajagopalachari issued the government order introducing compulsory Hindi education across 125 secondary schools. <span class="wrong-strike" style="color: var(--red-crit);">[FALSE]</span></li>
+                        <li>Periyar E.V.R. organized and conducted a highly influential Anti-Hindi Conference at Salem. <span class="text-correct">[TRUE]</span></li>
+                    </ol>
+                    <div style="margin: 15px 0 8px 0; font-weight: bold; color: var(--gold);">Options Matrix:</div>
+                    <div class="options-list">
+                        <div class="option-item incorrect">A) 1 Only is Correct</div>
+                        <div class="option-item correct">B) 2 Only is Correct (Statement 1 contains an implicit administrative anachronism)</div>
+                        <div class="option-item incorrect">C) Both 1 and 2 are Correct</div>
+                        <div class="option-item incorrect">D) Neither 1 nor 2 is Correct</div>
+                    </div>
+                    <div class="callout trap">
+                        <div class="callout-title">🪤 Deep Chronological Trap Analysis</div>
+                        <strong>The Ministerial Timeline Trap:</strong> In April 1937, Rajagopalachari was not yet in office; a transitional minority ministry led by <strong>K.V. Reddy Naidu</strong> held administrative power. The Congress party did not accept office until July 1937, meaning Rajagopalachari could not have issued the policy directive in April. This distinction requires close attention to structural chronology.
+                    </div>
+                    <div class="callout gem">
+                        <div class="callout-title">💎 Live Session Gem Insight</div>
+                        The conference at Salem initiated a historic protest march. Demonstrators marched from Trichy to Madras, passing through numerous villages to build rural opposition to the language policy before demonstrating outside the Hindu Theological High School in Madras.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q19 Card -->
+            <div class="q-card norm-glow" data-difficulty="easy">
+                <div class="q-header">
+                    <div class="q-title-wrapper">
+                        <span class="q-number">Q19</span>
+                        <div class="q-text-container">
+                            <div class="q-lang-en">In which year was the South Indian Liberal Federation (SILF) formally established in Madras?</div>
+                            <div class="q-lang-ta">தென்னிந்திய நலவுரிமைச் சங்கம் (SILF) எப்போது தோற்றுவிக்கப்பட்டது?</div>
+                        </div>
+                    </div>
+                    <div class="expand-icon">▼</div>
+                </div>
+                <div class="q-body">
+                    <div class="q-meta-badges">
+                        <span class="badge easy">EASY</span>
+                        <span class="badge type">Factual Baseline</span>
+                        <span class="badge exam">TNPSC Group 4 Base Static</span>
+                    </div>
+                    <div style="margin: 15px 0 8px 0; font-weight: bold; color: var(--gold);">Options Matrix:</div>
+                    <div class="options-list">
+                        <div class="option-item incorrect">A) 1912</div>
+                        <div class="option-item correct">B) 1916 (Specifically: November 20, 1916)</div>
+                        <div class="option-item incorrect">C) 1917</div>
+                        <div class="option-item incorrect">D) 1920</div>
+                    </div>
+                    <div class="callout tip">
+                        <div class="callout-title">✅ Faculty Verified Answer & Explanation</div>
+                        The South Indian Liberal Federation (SILF) was established on <strong>November 20, 1916</strong>, at Victoria Public Hall in Madras. It was founded to advocate for non-Brahmin representation and later evolved into the <strong>Justice Party</strong>.
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Section 3: Topic Summary Card -->
+        <section id="summary" class="section-card">
+            <h2 class="section-title">High-Yield Key Takeaways</h2>
+            <ul class="bullet-list" style="font-size: 1rem; color: var(--text-main);">
+                <li><strong>Universal Welfare Blueprint:</strong> Tamil Nadu operates on a Universal PDS model, contrasting with the Targeted PDS (TPDS) framework common in other Indian states.</li>
+                <li><strong>NFSA Alignment Matrix:</strong> The National Food Security Act (NFSA) was adopted by Tamil Nadu on November 1, 2016, following political negotiations to protect the state's existing universal benefits.</li>
+                <li><strong>Macroeconomic Metric Origins:</strong> Economist Simon Kuznets developed the modernized framework for Gross Domestic Product (GDP) in 1934 for a US Congress report.</li>
+                <li><strong>Industrial Leadership:</strong> TNPL in Pugalur, Karur, runs the world's largest paper mill powered by eco-friendly sugarcane bagasse.</li>
+                <li><strong>Socio-Political Evolution:</strong> The Dravidian movement traces a direct organizational lineage from the SILF (1916) to the Justice Party (1917), Self-Respect Movement (1925), Dravidar Kazhagam (1944), and DMK (1949).</li>
+                <li><strong>Biographical Milestones:</strong> Rettaimalai Srinivasan was awarded the Rao Sahib title in 1926, followed by Rao Bahadur in 1930, and Divan Bahadur in 1936.</li>
+                <li><strong>Early Resistance Movements:</strong> Freedom fighter Yusuf Khan (Marudhanayagam) was executed on October 16, 1764, at Samattipuram near Madurai following his rebellion against British forces.</li>
+                <li><strong>Social Reform Milestones:</strong> Saint Vallalar opened the Sathya Dharma Salai at Vadalur in 1867 to address widespread famine.</li>
+                <li><strong>Linguistic Preservation:</strong> Maraimalai Adigal led the Pure Tamil Movement (Thani Tamil Iyakkam) to eliminate non-Tamil vocabulary and protect the language's core structure.</li>
+                <li><strong>Agitation Timelines:</strong> The Neill Statue Satyagraha began in 1927 and succeeded in 1937, when the Rajagopalachari ministry removed the monument from Mount Road to the Madras Museum.</li>
+            </ul>
+        </section>
+
+        <!-- Section 4: 2026 Predictions -->
+        <section id="predictions" class="section-card" style="border: 1px dashed var(--gold);">
+            <h2 class="section-title" style="color: var(--gold);">2026 High-Yield Predictions</h2>
+            <div style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 15px;">
+                Based on current exam patterns, our Senior Audit Faculty has identified three key topics likely to feature in upcoming papers:
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <p><strong>1. Chronology of Dravidian Press Organs:</strong> Questions are likely to test the precise founding order and years of key movement journals, such as <em>Justice</em> (English), <em>Dravidan</em> (Tamil), and <em>Andhra Prakasika</em> (Telugu).</p>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <p><strong>2. Inter-State PDS Structural Comparisons:</strong> Expect analytical questions focusing on the operational differences between Tamil Nadu's Universal PDS and the Targeted PDS (TPDS) model defined by the Union NFSA framework.</p>
+            </div>
+            <div>
+                <p><strong>3. Non-Cooperation and Legislative Transitions:</strong> Questions may target the political dynamics of 1926, specifically how the Swarajya Party's policy of non-cooperation led to the formation of P. Subbarayan's independent ministry.</p>
+            </div>
+        </section>
+
+        <!-- Section 5: Quick Flashcard Table -->
+        <section id="flashcards" class="section-card">
+            <h2 class="section-title">Rapid Revision Flashcards</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 50%;">Core Exam Query</th>
+                        <th style="width: 50%;">High-Yield Retention Answer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="flash-q">Pradhan Mantri Awas Yojana (PMAY) Base Launch Year</td>
+                        <td class="flash-a">2014 (Full execution rollout followed in 2016)</td>
+                    </tr>
+                    <tr>
+                        <td class="flash-q">Rettaimalai Srinivasan's Rao Bahadur Title Year</td>
+                        <td class="flash-a">1930 (Rao Sahib: 1926 | Divan Bahadur: 1936)</td>
+                    </tr>
+                    <tr>
+                        <td class="flash-q">Execution Date and Location of Yusuf Khan</td>
+                        <td class="flash-a">October 16, 1764 — Samattipuram, Madurai</td>
+                    </tr>
+                    <tr>
+                        <td class="flash-q">Founder of Sathya Dharma Salai at Vadalur (1867)</td>
+                        <td class="flash-a">Ramalinga Swamigal (Vallalar)</td>
+                    </tr>
+                    <tr>
+                        <td class="flash-q">Sovereign Leader who formed the All-Female Udaiyaal Regiment</td>
+                        <td class="flash-a">Rani Velu Nachiyar</td>
+                    </tr>
+                    <tr>
+                        <td class="flash-q">Founder of the Sangeetha Vidya Mahajana Sangam</td>
+                        <td class="flash-a">Abraham Pandither (Tanjore)</td>
+                    </tr>
+                    <tr>
+                        <td class="flash-q">Madras Governor who suspended Colin Jackson</td>
+                        <td class="flash-a">Governor Edward Clive</td>
+                    </tr>
+                    <tr>
+                        <td class="flash-q">Year K. Kamaraj assumed office as Chief Minister</td>
+                        <td class="flash-a">1954 (Serving until 1963 under the K-Plan)</td>
+                    </tr>
+                    <tr>
+                        <td class="flash-q">Year Neill Statue was moved to Madras Museum</td>
+                        <td class="flash-a">1937 (Following the Satyagraha launched in 1927)</td>
+                    </tr>
+                    <tr>
+                        <td class="flash-q">First Print Year for classical epic <em>Seevaka Chinthamani</em></td>
+                        <td class="flash-a">1887 (Edited and compiled by U.V. Swaminatha Iyer)</td>
+                    </tr>
+                    <tr>
+                        <td class="flash-q">Independent Prime Minister of Madras in 1926</td>
+                        <td class="flash-a">Dr. P. Subbarayan</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Section 6: Master Cheat Card -->
+        <section id="cheat-card" class="section-card">
+            <h2 class="section-title">Master Executive Cheat Sheet Matrix</h2>
+            <table class="cheat-table">
+                <thead>
+                    <tr>
+                        <th>Core Concept / Event</th>
+                        <th>Primary Metric / Year</th>
+                        <th>Strategic Administrative Focus</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>SILF Establishment</strong></td>
+                        <td>November 20, 1916</td>
+                        <td>Formed at Victoria Public Hall to represent non-Brahmin interests.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Modern GDP Metric</strong></td>
+                        <td>1934</td>
+                        <td>Developed by Simon Kuznets to evaluate economic output within geographic boundaries.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tamil Nadu PDS Model</strong></td>
+                        <td>Universal System</td>
+                        <td>Provides essential commodities to all households regardless of income indexing.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>NFSA Adoption (TN)</strong></td>
+                        <td>November 1, 2016</td>
+                        <td>Integrated federal food security rules while maintaining universal access.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Eco-Friendly Paper Production</strong></td>
+                        <td>TNPL Karur</td>
+                        <td>The world's largest paper mill powered by sugarcane bagasse residue.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pure Tamil Movement</strong></td>
+                        <td>Thani Tamil Iyakkam</td>
+                        <td>Led by Maraimalai Adigal to eliminate external vocabulary from Tamil.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Section 7: Live Session Homework Challenge -->
+        <section class="section-card" style="border: 2px solid var(--purple-gem);">
+            <h3 style="color: var(--purple-gem); margin-bottom: 10px; font-family: 'Syne', sans-serif;">🎯 Live Session Interactive Homework Challenge</h3>
+            <p style="font-size: 1rem; margin-bottom: 12px;"><strong>Question:</strong> Which of the following democratic elections is NOT officially conducted under the mandate of the Central Election Commission of India?</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; font-size: 0.9rem; margin-bottom: 15px;">
+                <div style="background: #1c2230; padding: 10px; border-radius: 4px;">A) President of India</div>
+                <div style="background: #1c2230; padding: 10px; border-radius: 4px;">B) Vice-President of India</div>
+                <div style="background: #1c2230; padding: 10px; border-radius: 4px;">C) Legislative Council Member (MLC)</div>
+                <div style="background: #1c2230; padding: 10px; border-radius: 4px; border: 1px solid var(--purple-gem); color: var(--purple-gem); font-weight: bold;">D) Municipal Corporation Mayor</div>
+            </div>
+            <div class="callout tip" style="margin-bottom: 0;">
+                <div class="callout-title">📌 Senior Faculty Audit Verification Note</div>
+                <strong>Local Body Autonomy:</strong> The Election Commission of India (ECI) conducts elections for the Parliament, State Legislatures, and the offices of the President and Vice-President. Municipal elections, including those for Mayors and local body representatives, are conducted independently by the respective <strong>State Election Commission</strong> under Articles 243K and 243ZA.
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Component -->
+    <footer>
+        <p>© 2026 SPL Academy Channel Live Stream Audits. All Rights Reserved.</p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">Designed for high-performance revision. Authorized for personal educational use by registered competitive exam candidates.</p>
+    </footer>
+
+    <!-- Interactive Toggle Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Setup interactive accordion for question cards
+            const headers = document.querySelectorAll('.q-header');
+            headers.forEach(header => {
+                header.addEventListener('click', () => {
+                    const body = header.nextElementSibling;
+                    const icon = header.querySelector('.expand-icon');
+                    if(body.style.display === 'none' || !body.style.display) {
+                        body.style.display = 'block';
+                        icon.style.transform = 'rotate(180deg)';
+                    } else {
+                        body.style.display = 'none';
+                        icon.style.transform = 'rotate(0deg)';
+                    }
+                });
+            });
+
+            // Setup real-time filtering system
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const cards = document.querySelectorAll('.q-card');
+
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    const filterValue = btn.getAttribute('data-filter');
+
+                    cards.forEach(card => {
+                        const difficulty = card.getAttribute('data-difficulty');
+                        const isPyq = card.classList.contains('pyq-glow');
+                        const isGem = card.classList.contains('gem-glow') || card.querySelector('.callout.gem');
+
+                        if(filterValue === 'all') {
+                            card.style.display = 'block';
+                        } else if(filterValue === 'easy' && difficulty === 'easy') {
+                            card.style.display = 'block';
+                        } else if(filterValue === 'medium' && difficulty === 'medium') {
+                            card.style.display = 'block';
+                        } else if(filterValue === 'hard' && difficulty === 'hard') {
+                            card.style.display = 'block';
+                        } else if(filterValue === 'pyq' && isPyq) {
+                            card.style.display = 'block';
+                        } else if(filterValue === 'gem' && isGem) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

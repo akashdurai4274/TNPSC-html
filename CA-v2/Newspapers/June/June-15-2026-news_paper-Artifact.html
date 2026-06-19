@@ -1,0 +1,587 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            .nav-links { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 2rem 1rem; }
+            header h1 { font-size: 1.6rem; letter-spacing: 1px; }
+            .tagline { font-size: 0.95rem; }
+            nav.sticky-top { padding: 0.75rem 1rem; gap: 0.5rem; }
+            .toggle-btn { padding: 0.4rem 0.8rem; font-size: 0.85rem; }
+            .layout-container { padding: 1rem 0.75rem; gap: 1rem; }
+            main { max-width: 100%; }
+            .legend-row { flex-direction: column; gap: 0.5rem; }
+            .news-card { padding: 1rem; }
+            .news-card h3 { font-size: 1.15rem; }
+            .card-meta { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+            table { font-size: 0.8rem; }
+            th, td { padding: 0.6rem; }
+            .raw-text-panel { font-size: 0.75rem; padding: 1rem; }
+            footer { padding: 1.5rem 1rem; }
+        }
+
+        @media (max-width: 480px) {
+            header h1 { font-size: 1.25rem; }
+            nav.sticky-top { flex-wrap: wrap; }
+            table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .news-card { border-left-width: 3px; }
+        }
+    </style>
+</head>
+<body class="en-mode">
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">15 June 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">15 ஜூன் 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <!-- Sidebar TOC -->
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Tech</span><span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · Alliances</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">TMC (Tamil Maanila Congress) Exits NDA Alliance; To Contest Independently</span>
+                        <span class="lang-ta">தேசிய ஜனநாயகக் கூட்டணியிலிருந்து தமிழ் மாநில காங்கிரஸ் (தமாகா) விலகல்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Tamil Maanila Congress (TMC) leader G.K. Vasan announced the party's exit from the BJP-led National Democratic Alliance (NDA). Following an executive committee meeting attended by 600 functionaries in Chennai, the party unanimously decided to contest upcoming local body elections independently. Vasan cited the lack of party growth over the last 12 years and the need to strengthen grassroots structures as primary reasons. He also noted that contesting on the BJP symbol previously was due to the Election Commission denying them their traditional 'Bicycle' symbol.</p>
+                    <p class="lang-ta">பாஜக தலைமையிலான தேசிய ஜனநாயகக் கூட்டணியிலிருந்து (NDA) விலகுவதாக தமிழ் மாநில காங்கிரஸ் (தமாகா) தலைவர் ஜி.கே. வாசன் அறிவித்துள்ளார். சென்னையில் 600 நிர்வாகிகள் பங்கேற்ற செயற்குழுக் கூட்டத்துக்குப் பிறகு, வரவிருக்கும் உள்ளாட்சித் தேர்தல்களில் தனித்துப் போட்டியிட ஒருமனதாக முடிவெடுக்கப்பட்டது. கடந்த 12 ஆண்டுகளாகக் கட்சியின் வளர்ச்சி இல்லாததும், அடிமட்டக் கட்டமைப்பை வலுப்படுத்த வேண்டியதன் அவசியமுமே முக்கியக் காரணங்கள் என வாசன் தெரிவித்தார். தேர்தல் ஆணையம் தங்களின் பாரம்பரிய 'சைக்கிள்' சின்னத்தை ஒதுக்காததாலேயே முன்பு பாஜக சின்னத்தில் போட்டியிட்டதாகவும் அவர் குறிப்பிட்டார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Polity Hook:</strong> Election symbols are allocated under the Election Symbols (Reservation and Allotment) Order, 1968. A recognized state party gets an exclusive symbol in that state.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> தேர்தல் சின்னங்கள் (ஒதுக்கீடு) ஆணை 1968-இன் படி சின்னங்கள் ஒதுக்கப்படுகின்றன. அங்கீகரிக்கப்பட்ட மாநிலக் கட்சிக்கு அந்த மாநிலத்தில் பிரத்யேக சின்னம் கிடைக்கும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Social Justice · Law & Order</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">VCK Chief Thirumavalavan Demands Immediate Law Against Honour Killings</span>
+                        <span class="lang-ta">ஆணவப் படுகொலைகளைத் தடுக்க உடனடியாக சட்டம் இயற்ற வேண்டும்: திருமாவளவன் வலியுறுத்தல்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Expressing anguish over the rising number of caste-based honour killings in Southern Tamil Nadu, VCK leader Thol. Thirumavalavan has urged the state government to immediately enact a specific law to prevent them. He highlighted that despite Supreme Court directives, neither the Centre nor most states have enacted separate legislation. He requested the TVK government to obtain and act upon the recommendations of the Justice K.N. Basha Commission, which was formed by the previous DMK regime to study this issue.</p>
+                    <p class="lang-ta">தென் தமிழகத்தில் அதிகரித்து வரும் சாதி ரீதியான ஆணவப் படுகொலைகள் குறித்து வேதனை தெரிவித்த விசிக தலைவர் தொல். திருமாவளவன், இவற்றைத் தடுக்க மாநில அரசு உடனடியாகத் தனிச் சட்டம் இயற்ற வேண்டும் என வலியுறுத்தியுள்ளார். உச்சநீதிமன்ற அறிவுறுத்தல்கள் இருந்தும், மத்திய அரசோ பெரும்பாலான மாநில அரசுகளோ தனிச் சட்டம் இயற்றவில்லை என அவர் சுட்டிக்காட்டினார். இந்தப் பிரச்சினையை ஆராய முந்தைய திமுக அரசால் அமைக்கப்பட்ட ஓய்வுபெற்ற நீதிபதி கே.என். பாஷா ஆணையத்தின் பரிந்துரைகளைப் பெற்று தவெக அரசு சட்டம் இயற்ற வேண்டும் என அவர் கோரியுள்ளார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Rights Hook:</strong> Honour killings violate Article 21 (Right to Life and Personal Liberty) and Article 14 (Equality before Law). The SC guideline case often cited is <em>Shakti Vahini vs Union of India (2018)</em>.</span><span class="lang-ta"><strong>உரிமைகள் குறிப்பு:</strong> ஆணவக் கொலைகள் சரத்து 21 (வாழும் உரிமை) மற்றும் சரத்து 14 (சட்டத்தின் முன் அனைவரும் சமம்) ஆகியவற்றை மீறுகின்றன. இது தொடர்பாக உச்சநீதிமன்றம் <em>சக்தி வாஹினி vs இந்திய ஒன்றியம் (2018)</em> வழக்கில் வழிகாட்டுதல்களை வழங்கியுள்ளது.</span></li>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en"><strong>Committee Name:</strong> Justice K.N. Basha Commission (not to be confused with Justice Chandru Commission for school students).</span><span class="lang-ta"><strong>குழு பெயர்:</strong> நீதிபதி கே.என். பாஷா ஆணையம் (பள்ளி மாணவர்களுக்கான நீதிபதி சந்துரு குழுவுடன் குழப்பிக் கொள்ள வேண்டாம்).</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Infrastructure · Transport</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Southern Railway Introduces 23 New Trains Including 3 Amrit Bharat Expresses</span>
+                        <span class="lang-ta">தெற்கு ரயில்வேயில் 23 புதிய ரயில்கள் அறிமுகம்: 3 அம்ரித் பாரத் ரயில்கள் உள்ளடக்கம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Southern Railway has introduced 23 new train services to enhance passenger convenience. This includes 14 trains for Kerala and 5 for Karnataka. Notably, to connect Eastern and Northern Indian states with Tamil Nadu, three Amrit Bharat Express trains have been launched: Siliguri-Nagercoil and Siliguri-Trichy. Other major additions include the Coimbatore-Dhanbad Amrit Bharat Express and the Bengaluru-Ernakulam Vande Bharat Express. Amrit Bharat trains are low-cost, non-AC sleeper/unreserved trains designed for migrant workers and general public.</p>
+                    <p class="lang-ta">பயணிகளின் வசதியை மேம்படுத்தும் வகையில் தெற்கு ரயில்வே 23 புதிய ரயில் சேவைகளை அறிமுகப்படுத்தியுள்ளது. இதில் கேரளாவிற்கு 14 ரயில்களும், கர்நாடகாவிற்கு 5 ரயில்களும் அடங்கும். குறிப்பாக, கிழக்கு மற்றும் வட இந்திய மாநிலங்களைத் தமிழகத்துடன் இணைக்கும் வகையில் சிலிகுரி-நாகர்கோவில் மற்றும் சிலிகுரி-திருச்சி என மூன்று அம்ரித் பாரத் (Amrit Bharat) ரயில்கள் தொடங்கப்பட்டுள்ளன. கோயம்புத்தூர்-தன்பாத் அம்ரித் பாரத் மற்றும் பெங்களூரு-எர்ணாகுளம் வந்தே பாரத் ஆகியவையும் இதில் அடங்கும். அம்ரித் பாரத் ரயில்கள் என்பது புலம் பெயர் தொழிலாளர்கள் மற்றும் சாமானியர்களுக்கான குறைந்த கட்டண ஏசி-இல்லாத ரயில்களாகும்.</p>
+                </div>
+
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National / Central News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · Parliament Dynamics</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">NDA Inches Closer to Two-Thirds Majority in Lok Sabha as TMC Splits; 20+ MPs Rebel</span>
+                        <span class="lang-ta">மக்களவையில் மூன்றில் இரண்டு பங்கு பெரும்பான்மையை நெருங்கும் தேசிய ஜனநாயகக் கூட்டணி; திரிணமூல் காங்கிரஸில் பிளவு (20+ எம்.பி.க்கள் அதிருப்தி)</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The ruling BJP-led National Democratic Alliance (NDA) is inching closer to a two-thirds majority (363 seats) in the Lok Sabha. Out of the total 543 seats, the NDA currently holds 293 MPs. In a major political shift following the TMC's defeat in the West Bengal assembly elections, over 20 dissident Trinamool Congress (TMC) MPs, led by Kakoli Ghosh Dastidar and Sudip Bandyopadhyay, met Lok Sabha Speaker Om Birla. They demanded recognition as a separate bloc, indicating their support for the NDA, which would boost the NDA tally to 313. A two-thirds majority is essential to pass major constitutional amendment bills.</p>
+                    <p class="lang-ta">மக்களவையில் ஆளும் பாஜக தலைமையிலான தேசிய ஜனநாயகக் கூட்டணி (NDA) மூன்றில் இரண்டு பங்கு பெரும்பான்மையை (363 இடங்கள்) நெருங்கி வருகிறது. மொத்தமுள்ள 543 இடங்களில், தற்போது என்டிஏ 293 எம்.பி.க்களைக் கொண்டுள்ளது. மேற்கு வங்க சட்டப்பேரவைத் தேர்தலில் திரிணமூல் காங்கிரஸ் (TMC) தோல்வியடைந்ததைத் தொடர்ந்து, ககோலி கோஷ் தஸ்திதார் மற்றும் சுதீப் பந்தோபாத்யாய் தலைமையிலான 20-க்கும் மேற்பட்ட அதிருப்தி டிஎம்சி எம்.பி.க்கள் மக்களவை சபாநாயகர் ஓம் பிர்லாவை சந்தித்தனர். அவர்கள் தங்களைத் தனி அணியாக அங்கீகரிக்கக் கோரியதுடன், என்டிஏ-க்கு ஆதரவு தெரிவித்துள்ளனர்; இதனால் என்டிஏ பலம் 313 ஆக உயரும். முக்கிய அரசியலமைப்பு திருத்த மசோதாக்களை நிறைவேற்ற மூன்றில் இரண்டு பங்கு பெரும்பான்மை அவசியம்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Constitutional Hook:</strong> The Tenth Schedule (Anti-Defection Law) inserted by the 52nd Amendment (1985) dictates that a split by at least two-thirds of the legislative party's members is exempt from disqualification (after the 91st Amendment, 2003 removed the one-third split exemption).</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> 52-வது திருத்தச் சட்டம் (1985) மூலம் சேர்க்கப்பட்ட பத்தாவது அட்டவணை (கட்சித் தாவல் தடைச் சட்டம்), ஒரு கட்சியின் மூன்றில் இரண்டு பங்கு உறுப்பினர்கள் பிரிந்து சென்றால் அவர்கள் தகுதி நீக்கம் செய்யப்படுவதில் இருந்து விலக்கு அளிக்கிறது (91-வது திருத்தம் 2003-க்குப் பிறகு).</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Energy · Environment</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Union Minister Nitin Gadkari Approves 100% Ethanol Fuel for Vehicles</span>
+                        <span class="lang-ta">வாகனங்களில் 100% எத்தனால் எரிபொருளைப் பயன்படுத்த மத்திய அமைச்சர் நிதின் கட்கரி ஒப்புதல்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Union Minister for Road Transport and Highways Nitin Gadkari signed the file approving the use of 100% ethanol fuel in vehicles, marking a historic step towards green mobility. Speaking at an Ethanol-Biofuel conference in Nagpur, he stated that major automakers like Maruti Suzuki, Toyota, Hyundai, and MG will launch compatible vehicles within a month. Although termed '100%', the fuel will contain 93% to 95% ethanol mixed with 5-7% petrol to ease engine cold starts. This move will significantly insulate India from global crude oil shocks caused by ongoing geopolitical conflicts.</p>
+                    <p class="lang-ta">பசுமைப் போக்குவரத்தை நோக்கிய வரலாற்றுச் சிறப்புமிக்க நகர்வாக, வாகனங்களில் 100% எத்தனால் (Ethanol) எரிபொருளைப் பயன்படுத்தும் கோப்பிற்கு மத்திய சாலைப் போக்குவரத்து மற்றும் நெடுஞ்சாலைத்துறை அமைச்சர் நிதின் கட்கரி கையெழுத்திட்டு ஒப்புதல் அளித்தார். நாக்பூரில் நடந்த எத்தனால்-உயிரி எரிபொருள் மாநாட்டில் பேசிய அவர், மாருதி சுசுகி, டொயோட்டா, ஹூண்டாய் போன்ற முன்னணி நிறுவனங்கள் ஒரு மாதத்திற்குள் இதற்கான வாகனங்களை அறிமுகப்படுத்தும் என்றார். '100%' என்று கூறப்பட்டாலும், இயந்திரங்களை எளிதாக ஸ்டார்ட் செய்ய 93% முதல் 95% எத்தனால் மற்றும் 5-7% பெட்ரோல் கலந்தே பயன்படுத்தப்படும். உலகளாவிய கச்சா எண்ணெய் விலையேற்றப் பிரச்சினைகளுக்கு இது சிறந்த தீர்வாக அமையும்.</p>
+                </div>
+
+            </section>
+
+            <!-- INTERNATIONAL NEWS -->
+            <section id="international">
+                <h2>
+                    <span class="lang-en">International News</span>
+                    <span class="lang-ta">சர்வதேச செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Conflict · Trade Blockade</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">British Forces Capture Russian Oil Tanker 'Smirtov' in the English Channel</span>
+                        <span class="lang-ta">ஆங்கிலக் கால்வாயில் ரஷ்ய எண்ணெய் கப்பலான 'ஸ்மிர்டோவ்'-ஐ சிறைபிடித்தது பிரிட்டன்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In an unprecedented move to block war funding for Russia against Ukraine, British armed forces intercepted and captured a Russian oil tanker named 'Smirtov' in the English Channel. The operation lasted about 6 hours, after which the vessel was anchored and kept under surveillance near the UK's southern coast. British PM Keir Starmer stated this action delivers a massive blow to Russia's war machinery. Britain has already banned over 600 "shadow fleet" Russian ships from entering its ports or using its maritime services to bypass international sanctions.</p>
+                    <p class="lang-ta">உக்ரைனுக்கு எதிரான போருக்கான ரஷ்யாவின் நிதி ஆதாரத்தைத் தடுக்கும் நோக்கில், ஆங்கிலக் கால்வாயில் (English Channel) 'ஸ்மிர்டோவ்' (Smirtov) என்ற ரஷ்ய கச்சா எண்ணெய் கப்பலை பிரிட்டன் ஆயுதப் படைகள் வழிமறித்து சிறைபிடித்தன. சுமார் 6 மணி நேரம் நடந்த இச்சம்பவத்திற்குப் பிறகு, பிரிட்டனின் தென் கடற்கரைக்கு அருகில் அக்கப்பல் நிறுத்திவைக்கப்பட்டு கண்காணிக்கப்படுகிறது. ரஷ்யாவின் போர் நடவடிக்கைக்கு இது பெரும் அடியாக அமையும் என பிரிட்டன் பிரதமர் கீர் ஸ்டார்மர் தெரிவித்தார். சர்வதேசத் தடைகளை மீறும் வகையிலான 600-க்கும் மேற்பட்ட ரஷ்ய 'நிழல் கப்பல்களுக்கு' பிரிட்டன் ஏற்கனவே தடை விதித்துள்ளது குறிப்பிடத்தக்கது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Geography Hook:</strong> The English Channel separates Southern England from Northern France and links the southern part of the North Sea to the Atlantic Ocean. It is the busiest shipping area in the world.</span><span class="lang-ta"><strong>புவியியல் குறிப்பு:</strong> ஆங்கிலக் கால்வாய் தெற்கு இங்கிலாந்தை வடக்கு பிரான்ஸிலிருந்து பிரிக்கிறது மற்றும் வட கடலின் தெற்குப் பகுதியை அட்லாண்டிக் பெருங்கடலுடன் இணைக்கிறது. இது உலகின் மிகவும் பரபரப்பான கப்பல் போக்குவரத்துப் பகுதியாகும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Diplomacy · Tech Alliance</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">PM Modi & French President Macron Inaugurate 'Bharat Innovates' Event in Nice</span>
+                        <span class="lang-ta">பிரான்சின் நைஸ் நகரில் 'பாரத் இன்னோவேட்ஸ்' (Bharat Innovates) நிகழ்வை தொடங்கி வைத்தனர் பிரதமர் மோடி & அதிபர் மேக்ரான்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">During his official visit to Europe, PM Narendra Modi, along with French President Emmanuel Macron, inaugurated the "Bharat Innovates" (Bharat Innovates) event in Nice, France. The event aims to connect leading Indian, French, and global tech startups with venture capital funds. PM Modi emphasized that India's "Reform Express" will not stop, asserting India has transformed from a tech-consuming nation to a tech-providing nation over the last decade. President Macron lauded India as a "Nation of Innovations."</p>
+                    <p class="lang-ta">தனது ஐரோப்பியப் பயணத்தின் ஒரு பகுதியாக, பிரான்சின் நைஸ் (Nice) நகரில் பிரதமர் நரேந்திர மோடி, பிரான்ஸ் அதிபர் இம்மானுவேல் மேக்ரானுடன் இணைந்து "பாரத் இன்னோவேட்ஸ்" (Bharat Innovates) நிகழ்வைத் தொடங்கி வைத்தார். இந்தியா, பிரான்ஸ் மற்றும் உலகளாவிய முன்னணி ஸ்டார்ட்-அப் நிறுவனங்களை முதலீட்டாளர்களுடன் இணைப்பதே இதன் நோக்கமாகும். இந்தியாவின் "சீர்திருத்த எக்ஸ்பிரஸ்" நிற்காமல் தொடர்ந்து பயணிக்கும் எனத் தெரிவித்த மோடி, கடந்த 10 ஆண்டுகளில் இந்தியா தொழில்நுட்பத்தைப் பெறும் நாடாக இருந்து வழங்கும் நாடாக உருவெடுத்துள்ளது என்றார். இந்தியாவைப் "புத்தாக்கங்களின் தேசம்" என அதிபர் மேக்ரான் புகழ்ந்துரைத்தார்.</p>
+                </div>
+
+            </section>
+
+            <!-- ECONOMY & FINANCE -->
+            <section id="economy">
+                <h2>
+                    <span class="lang-en">Economy & Tech</span>
+                    <span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Trade · Imports</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">India's Crude Oil Imports from Russia Hit Record ₹59,000 Crore in May</span>
+                        <span class="lang-ta">ரஷ்யாவிடமிருந்து கச்சா எண்ணெய் கொள்முதல் தொடர்ந்து அதிகரிப்பு: மே மாதத்தில் மட்டும் ரூ.59,000 கோடிக்கு இறக்குமதி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">India's crude oil imports from Russia continue to surge, reaching a record value of ₹59,000 crore in May alone, marking an 8% increase from the previous month. According to the CREA (Centre for Research on Energy and Clean Air) report, India procures 83% of its total Russian oil purchases purely as crude oil. India is now the 2nd largest buyer of Russian crude globally (taking 36% of Russia's exports), just behind China (50%). Despite Western sanctions on Russia, the US has permitted this to prevent a global crude oil shortage.</p>
+                    <p class="lang-ta">ரஷ்யாவிடமிருந்து இந்தியாவின் கச்சா எண்ணெய் கொள்முதல் தொடர்ந்து அதிகரித்து வருகிறது; மே மாதத்தில் மட்டும் இதன் மதிப்பு ரூ.59,000 கோடியை எட்டியுள்ளது (முந்தைய மாதத்தை விட 8% அதிகம்). CREA அமைப்பின் அறிக்கையின்படி, இந்தியா வாங்கும் மொத்த ரஷ்ய எண்ணெய் பொருட்களில் 83% தூய கச்சா எண்ணெயாகும். உலக அளவில் ரஷ்ய கச்சா எண்ணெயை அதிகம் வாங்கும் நாடுகளில் சீனாவுக்கு (50%) அடுத்தபடியாக இந்தியா 2-வது இடத்தில் (36%) உள்ளது. ரஷ்யா மீது மேற்கத்திய நாடுகள் தடை விதித்திருந்தாலும், உலகளாவிய கச்சா எண்ணெய் தட்டுப்பாட்டைத் தவிர்க்க அமெரிக்கா இதற்கு அனுமதி அளித்துள்ளது.</p>
+                </div>
+            </section>
+            
+            <!-- SPORTS -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports</span>
+                    <span class="lang-ta">விளையாட்டு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Cricket · T20 World Cup</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">India Women Beat Pakistan by 64 Runs in T20 World Cup; Smriti Mandhana Stars</span>
+                        <span class="lang-ta">மகளிர் டி20 உலகக் கோப்பை: பாகிஸ்தானை 64 ரன்கள் வித்தியாசத்தில் வீழ்த்தியது இந்தியா (ஸ்மிருதி மந்தனா அசத்தல்)</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In the 6th match of the ICC Women's T20 World Cup held in Birmingham, England, India comfortably defeated traditional rivals Pakistan by 64 runs. Batting first, India posted a solid 170/6 in 20 overs, anchored by Vice-Captain Smriti Mandhana's brilliant 68 off 51 balls. In response, Pakistan was bowled out for just 106 runs in 17 overs. Indian bowlers Deepti Sharma (5/10) and Shreyanka Patil shone with the ball.</p>
+                    <p class="lang-ta">இங்கிலாந்தின் பர்மிங்காம் நகரில் நடைபெற்ற ஐசிசி மகளிர் டி20 உலகக் கோப்பையின் 6-வது ஆட்டத்தில், இந்திய அணி தனது பரம எதிரியான பாகிஸ்தானை 64 ரன்கள் வித்தியாசத்தில் அபாரமாக வீழ்த்தியது. முதலில் பேட் செய்த இந்தியா, துணை கேப்டன் ஸ்மிருதி மந்தனாவின் (51 பந்துகளில் 68 ரன்கள்) சிறப்பான ஆட்டத்தால் 20 ஓவர்களில் 170/6 என்ற வலுவான ஸ்கோரை எட்டியது. பின்னர் ஆடிய பாகிஸ்தான் 17 ஓவர்களில் 106 ரன்களுக்கு சுருண்டது. இந்திய பந்துவீச்சாளர்கள் தீப்தி சர்மா (5 விக்கெட்), ஸ்ரேயங்கா பாட்டீல் ஆகியோர் சிறப்பாகப் பந்துவீசினர்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Archery · World Cup</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Historic Win: India Bags 2 Gold Medals in Archery World Cup Beating South Korea</span>
+                        <span class="lang-ta">வரலாற்று வெற்றி: உலகக் கோப்பை வில்வித்தையில் தென் கொரியாவை வீழ்த்தி 2 தங்கப் பதக்கங்களை வென்றது இந்தியா</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">At the Archery World Cup Stage 3 held in Antalya, Turkey, India scripted history by winning two Gold medals, defeating the dominant South Korean teams in both the Men's Individual Recurve and Mixed Team events. Star archer Dhiraj Bommadevara won his first individual World Cup gold. He also teamed up with Bhajan Kaur (referenced as Kumkum Mohoj in some artifact sources) to win the mixed team gold. India finished 2nd overall in the medal tally, behind China.</p>
+                    <p class="lang-ta">துருக்கியின் அண்டால்யா (Antalya) நகரில் நடைபெற்ற 3-ஆம் கட்ட உலகக் கோப்பை வில்வித்தைப் போட்டியில், பலம் வாய்ந்த தென் கொரியாவை வீழ்த்தி இந்தியா 2 தங்கப் பதக்கங்களை வென்று வரலாறு படைத்தது. ஆடவர் தனிநபர் ரிகர்வ் பிரிவில் நட்சத்திர வீரர் தீரஜ் பொம்மதேவரா தனது முதல் தனிநபர் தங்கத்தை வென்றார். மேலும், அவர் பஜன் கவுர் (சில குறிப்புகளில் குங்கும் மோஹோஜ்) உடன் இணைந்து கலப்பு அணிப் பிரிவிலும் தங்கம் வென்றார். பதக்கப் பட்டியலில் சீனாவுக்கு அடுத்தபடியாக இந்தியா 2-வது இடத்தைப் பிடித்தது.</p>
+                </div>
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: The Tenth Schedule of the Indian Constitution, which deals with anti-defection, allows a group of MPs/MLAs to split from their party without disqualification if they constitute at least what fraction of the legislative party?</span>
+                        <span class="lang-ta">கேள்வி: இந்திய அரசியலமைப்பின் பத்தாவது அட்டவணை (கட்சித் தாவல் தடைச் சட்டம்), ஒரு சட்டமன்றக் கட்சியின் எத்தனை பங்கு உறுப்பினர்கள் பிரிந்து சென்றால் அவர்களைத் தகுதி நீக்கம் செய்வதிலிருந்து விலக்கு அளிக்கிறது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Two-Thirds (2/3)</span><br><br>
+                                <strong>Context:</strong> Over 20 Trinamool Congress (TMC) MPs are demanding recognition as a separate bloc to support the NDA. The 91st Amendment Act (2003) changed the requirement for a valid 'split' from one-third to two-thirds to curb frequent defections.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">மூன்றில் இரண்டு பங்கு (2/3)</span><br><br>
+                                <strong>பின்னணி:</strong> 20-க்கும் மேற்பட்ட திரிணமூல் காங்கிரஸ் எம்.பி.க்கள் என்டிஏ-க்கு ஆதரவளிக்க தங்களைத் தனி அணியாக அங்கீகரிக்கக் கோரியுள்ளனர். அடிக்கடி கட்சி மாறுவதைத் தடுக்க 91-வது திருத்தச் சட்டம் (2003), சட்டபூர்வமான பிளவுக்கான தேவையை மூன்றில் ஒரு பங்கிலிருந்து மூன்றில் இரண்டு பங்காக உயர்த்தியது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Ethanol blending in petrol is primarily promoted by the Government of India under which policy framework to reduce crude oil import dependency?</span>
+                        <span class="lang-ta">கேள்வி: கச்சா எண்ணெய் இறக்குமதி சார்பைக் குறைப்பதற்காக, பெட்ரோலில் எத்தனால் கலப்பதை இந்திய அரசு முதன்மையாக எந்தக் கொள்கைக் கட்டமைப்பின் கீழ் ஊக்குவிக்கிறது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">National Policy on Biofuels, 2018</span><br><br>
+                                <strong>Context:</strong> Union Minister Nitin Gadkari approved the rollout of 100% ethanol-compatible vehicles. The target of 20% ethanol blending was advanced to 2025-26 under the amended Biofuel policy.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">தேசிய உயிரி எரிபொருள் கொள்கை, 2018</span><br><br>
+                                <strong>பின்னணி:</strong> 100% எத்தனால் பயன்படுத்தக்கூடிய வாகனங்களை அறிமுகப்படுத்த மத்திய அமைச்சர் நிதின் கட்கரி ஒப்புதல் அளித்தார். திருத்தப்பட்ட உயிரி எரிபொருள் கொள்கையின் கீழ் 20% எத்தனால் கலப்பதற்கான இலக்கு 2025-26 ஆக முன்கூட்டியே நிர்ணயிக்கப்பட்டது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">TMC Exits NDA</span><span class="lang-ta">NDA-விலிருந்து தமாகா விலகல்</span></td>
+                                <td><span class="lang-en">State/Polity</span><span class="lang-ta">மாநிலம்/அரசியல்</span></td>
+                                <td><span class="lang-en">G.K. Vasan announces party will contest local body polls alone.</span><span class="lang-ta">உள்ளாட்சித் தேர்தலில் தனித்துப் போட்டி என ஜி.கே. வாசன் அறிவிப்பு.</span></td>
+                                <td><span class="badge bg-tip">MED</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">TMC (Bengal) Split</span><span class="lang-ta">திரிணமூல் காங்கிரஸ் பிளவு</span></td>
+                                <td><span class="lang-en">National/Polity</span><span class="lang-ta">தேசியம்/அரசியல்</span></td>
+                                <td><span class="lang-en">20+ MPs rebel; NDA aims for 2/3rd majority (363 seats).</span><span class="lang-ta">20+ எம்.பி.க்கள் அதிருப்தி; 2/3 பெரும்பான்மையை நெருங்கும் NDA.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">100% Ethanol Fuel</span><span class="lang-ta">100% எத்தனால் எரிபொருள்</span></td>
+                                <td><span class="lang-en">Environment</span><span class="lang-ta">சுற்றுச்சூழல்</span></td>
+                                <td><span class="lang-en">Gadkari approves; flex-fuel cars to launch in a month.</span><span class="lang-ta">கட்கரி ஒப்புதல்; ஒரு மாதத்தில் வாகனங்கள் அறிமுகம்.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">UK Captures Russian Ship</span><span class="lang-ta">ரஷ்ய கப்பலை சிறைபிடித்த பிரிட்டன்</span></td>
+                                <td><span class="lang-en">International/IR</span><span class="lang-ta">சர்வதேசம்/உறவுகள்</span></td>
+                                <td><span class="lang-en">Tanker 'Smirtov' intercepted in the English Channel.</span><span class="lang-ta">ஆங்கிலக் கால்வாயில் 'ஸ்மிர்டோவ்' கப்பல் சிறைபிடிப்பு.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">Archery World Cup</span><span class="lang-ta">உலகக் கோப்பை வில்வித்தை</span></td>
+                                <td><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></td>
+                                <td><span class="lang-en">India beats Korea, wins 2 Golds (Dhiraj Bommadevara).</span><span class="lang-ta">கொரியாவை வீழ்த்தி இந்தியா 2 தங்கம் வென்றது (தீரஜ்).</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani Chennai 15-06-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி சென்னை 15-06-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source text detailed state, national, and international news for 15 June 2026. 
+State news covered TMC (G.K. Vasan) deciding to leave the BJP alliance to contest local polls independently. Southern Railway launched 23 new trains. VCK's Thirumavalavan demanded a law against honour killings based on the K.N. Basha commission report. AIADMK's EPS criticized the ruling TVK for crimes against women. Actor Raghava Lawrence hinted at political entry. Actress Gautami quit AIADMK. Egg prices increased to Rs 6.30 in Namakkal. BJP's Karate Thiagarajan proposed dividing Chennai Corporation into 3 parts. 52% water storage in Chennai lakes. 61-day fishing ban ended.
+National news detailed a split in the Trinamool Congress with 20+ MPs ready to support NDA, pushing it closer to a 2/3rd majority. Union Minister Nitin Gadkari approved 100% ethanol fuel for vehicles. Nirmala Sitharaman slammed Rahul Gandhi. 4 arrested in Bihar for NEET paper leak. SIT formed for Ram Mandir fund misuse. FSSAI issued notices to 8 companies for misleading labels. 8 died of lightning in Jharkhand.
+Internationally, Britain captured Russian oil tanker 'Smirtov' in the English Channel. India imported a record Rs 59,000 crore worth of crude oil from Russia in May. PM Modi and President Macron inaugurated the 'Bharat Innovates' event in Nice, France. Trump warned Israel and Iran against attacking each other as a peace deal nears.
+Sports: India women beat Pakistan by 64 runs in T20 WC. Archery World Cup: India won 2 golds defeating South Korea. F1: Lewis Hamilton won the Spanish Grand Prix. FIFA World Cup: Brazil drew 1-1 with Morocco.]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூல உரைகள் 15 ஜூன் 2026 க்கான செய்திகளைக் கொண்டிருந்தன.
+மாநில செய்திகளில், உள்ளாட்சித் தேர்தலில் தனித்துப் போட்டியிட பாஜக கூட்டணியிலிருந்து தமாகா (ஜி.கே. வாசன்) விலகியது. தெற்கு ரயில்வே 23 புதிய ரயில்களை அறிமுகப்படுத்தியது. கே.என். பாஷா ஆணைய அறிக்கையின்படி ஆணவக் கொலைக்கு எதிரான சட்டம் இயற்ற விசிக திருமாவளவன் வலியுறுத்தல். பெண்களுக்கு எதிரான குற்றங்கள் அதிகரிப்பதாக ஆளும் தவெக-வை அதிமுக இபிஎஸ் விமர்சித்தார். நடிகர் ராகவா லாரன்ஸ் அரசியல் பிரவேசம் குறித்து அறிவிக்க உள்ளார். நடிகை கௌதமி அதிமுகவிலிருந்து விலகல். நாமக்கல்லில் முட்டை விலை ரூ.6.30 ஆக உயர்வு. சென்னை மாநகராட்சியை 3 ஆகப் பிரிக்க பாஜக கராத்தே தியாகராஜன் யோசனை. சென்னை ஏரிகளில் 52% நீர் இருப்பு. 61 நாள் மீன்பிடித் தடைக்காலம் முடிந்தது.
+தேசிய அளவில், திரிணமூல் காங்கிரஸில் பிளவு ஏற்பட்டு 20+ எம்.பி.க்கள் என்டிஏ-க்கு ஆதரவு அளிக்கத் தயார், 2/3 பெரும்பான்மையை நெருங்குகிறது. 100% எத்தனால் வாகனங்களுக்கு மத்திய அமைச்சர் கட்கரி ஒப்புதல். ராகுல் காந்தியை நிர்மலா சீதாராமன் விமர்சித்தார். நீட் வினாத்தாள் கசிவு தொடர்பாக பீகாரில் 4 பேர் கைது. ராமர் கோயில் நிதி முறைகேடு குறித்து விசாரிக்க SIT அமைப்பு. தவறான லேபிள்களுக்காக 8 நிறுவனங்களுக்கு FSSAI நோட்டீஸ். ஜார்க்கண்டில் மின்னல் தாக்கி 8 பேர் பலி.
+சர்வதேச அளவில், ஆங்கிலக் கால்வாயில் ரஷ்ய எண்ணெய் கப்பலான 'ஸ்மிர்டோவ்'-ஐ பிரிட்டன் சிறைபிடித்தது. மே மாதத்தில் ரஷ்யாவிலிருந்து ரூ.59,000 கோடிக்கு கச்சா எண்ணெயை இந்தியா இறக்குமதி செய்தது. பிரான்சின் நைஸ் நகரில் 'பாரத் இன்னோவேட்ஸ்' நிகழ்வை பிரதமர் மோடியும் அதிபர் மேக்ரானும் தொடங்கி வைத்தனர். அமைதி ஒப்பந்தம் நெருங்கும் நிலையில் தாக்குதல் நடத்த வேண்டாம் என இஸ்ரேல் மற்றும் ஈரானுக்கு டிரம்ப் எச்சரிக்கை.
+விளையாட்டு: டி20 உலகக் கோப்பையில் பாகிஸ்தானை 64 ரன்கள் வித்தியாசத்தில் இந்தியா வென்றது. உலகக் கோப்பை வில்வித்தை: தென் கொரியாவை வீழ்த்தி இந்தியா 2 தங்கம் வென்றது. F1: ஸ்பானிஷ் கிராண்ட் பிரிக்ஸை லூயிஸ் ஹாமில்டன் வென்றார். உலகக் கோப்பை கால்பந்து: பிரேசில் - மொராக்கோ 1-1 டிரா.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 15 June 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+    </script>
+</body>
+</html>

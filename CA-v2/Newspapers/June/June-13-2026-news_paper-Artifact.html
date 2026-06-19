@@ -1,0 +1,566 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            .nav-links { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 2rem 1rem; }
+            header h1 { font-size: 1.6rem; letter-spacing: 1px; }
+            .tagline { font-size: 0.95rem; }
+            nav.sticky-top { padding: 0.75rem 1rem; gap: 0.5rem; }
+            .toggle-btn { padding: 0.4rem 0.8rem; font-size: 0.85rem; }
+            .layout-container { padding: 1rem 0.75rem; gap: 1rem; }
+            main { max-width: 100%; }
+            .legend-row { flex-direction: column; gap: 0.5rem; }
+            .news-card { padding: 1rem; }
+            .news-card h3 { font-size: 1.15rem; }
+            .card-meta { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+            table { font-size: 0.8rem; }
+            th, td { padding: 0.6rem; }
+            .raw-text-panel { font-size: 0.75rem; padding: 1rem; }
+            footer { padding: 1.5rem 1rem; }
+        }
+
+        @media (max-width: 480px) {
+            header h1 { font-size: 1.25rem; }
+            nav.sticky-top { flex-wrap: wrap; }
+            table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .news-card { border-left-width: 3px; }
+        }
+    </style>
+</head>
+<body class="en-mode">
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">13 June 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">13 ஜூன் 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <!-- Sidebar TOC -->
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Tech</span><span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports / Obituaries</span><span class="lang-ta">விளையாட்டு & இரங்கல்</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Agriculture · Kuruvai Cultivation</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">CM Joseph Vijay Announces ₹134.83 Crore Kuruvai Paddy Cultivation Special Package</span>
+                        <span class="lang-ta">குறுவை நெல் சாகுபடிக்கு ரூ.134.83 கோடியில் சிறப்பு தொகுப்புத் திட்டம்: முதல்வர் ஜோசப் விஜய் அறிவிப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Tamil Nadu Chief Minister Joseph Vijay has announced a special 'Kuruvai Package' worth ₹134.83 crore to support farmers. This aims to boost paddy cultivation despite delayed monsoons and low water storage in the Mettur Dam. Out of the total allocation, ₹77.50 crore is earmarked for Delta districts and ₹57.33 crore for Non-Delta districts. Additionally, the government has ensured 18 hours of uninterrupted 3-phase electricity supply for farmers.</p>
+                    <p class="lang-ta">பருவமழை தாமதம் மற்றும் மேட்டூர் அணையில் போதிய நீர் இருப்பு இல்லாத நிலையிலும், குறுவை நெல் சாகுபடியை ஊக்குவிக்க ரூ.134.83 கோடி மதிப்பீட்டில் சிறப்புத் தொகுப்புத் திட்டத்தை தமிழக முதல்வர் ஜோசப் விஜய் அறிவித்துள்ளார். இதில் காவிரி டெல்டா மாவட்டங்களுக்கு ரூ.77.50 கோடியும், டெல்டா அல்லாத மாவட்டங்களுக்கு ரூ.57.33 கோடியும் ஒதுக்கப்பட்டுள்ளது. மேலும், விவசாயிகளுக்கு நாளொன்றுக்கு 18 மணி நேரம் மும்முனை மின்சாரம் தடையின்றி வழங்கப்படும் எனவும் அவர் அறிவித்துள்ளார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Geography Hook:</strong> Kuruvai is the short-term paddy crop season in Tamil Nadu (June to July/August). Mettur Dam (Stanley Reservoir) is traditionally opened for Kuruvai cultivation on June 12 every year.</span><span class="lang-ta"><strong>புவியியல் குறிப்பு:</strong> குறுவை என்பது தமிழ்நாட்டின் குறுகிய கால நெல் சாகுபடி பருவமாகும் (ஜூன் முதல் ஜூலை/ஆகஸ்ட் வரை). குறுவை சாகுபடிக்காக ஆண்டுதோறும் ஜூன் 12-ம் தேதி மேட்டூர் அணை (ஸ்டான்லி நீர்த்தேக்கம்) திறக்கப்படுவது வழக்கம்.</span></li>
+                            <li><span class="lang-en"><strong>Current Status:</strong> The dam could not be opened this year due to low storage (41.52 TMC / 79.56 ft), mostly attributed to the 'El Nino' effect reducing rainfall.</span><span class="lang-ta"><strong>தற்போதைய நிலை:</strong> 'எல் நினோ' தாக்கத்தால் மழை குறைந்ததால், போதிய நீர் இருப்பு இன்றி (41.52 TMC / 79.56 அடி) இவ்வாண்டு அணை திறக்கப்படவில்லை.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Education · Tech Integration</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">AI, Coding, and Robotics Training in 5,000 Government Schools</span>
+                        <span class="lang-ta">5,000 அரசுப் பள்ளிகளில் செயற்கை நுண்ணறிவு (AI), கோடிங், ரோபோடிக்ஸ் பயிற்சி: அமைச்சர் ராம் மோகன் அறிவிப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">School Education Minister Ram Mohan announced that 5,000 Government Schools across Tamil Nadu will soon introduce specialized training in Artificial Intelligence (AI), Coding, Python, Virtual Reality, HTML, and Robotics. This initiative aims to transition students from mere tech-consumers to tech-creators. Existing teachers will be trained first to implement these courses. He also emphasized that schools should remain secular spaces, explicitly banning religious or caste markers (like colored wristbands) based on Justice Chandru Committee recommendations.</p>
+                    <p class="lang-ta">தமிழகம் முழுவதும் உள்ள 5,000 அரசுப் பள்ளிகளில் செயற்கை நுண்ணறிவு (AI), கோடிங் (Coding), பைத்தான், விர்ச்சுவல் ரியாலிட்டி, HTML மற்றும் ரோபோடிக்ஸ் பயிற்சிகள் விரைவில் தொடங்கப்படும் என பள்ளிக்கல்வித்துறை அமைச்சர் ராம் மோகன் அறிவித்தார். மாணவர்களை வெறும் தொழில்நுட்பப் பயனர்களாக மட்டுமின்றி, புதிய தொழில்நுட்பங்களை உருவாக்குபவர்களாக மாற்றுவதே இதன் நோக்கமாகும். இதற்காக தற்போதுள்ள ஆசிரியர்களுக்கே உயர்தொழில்நுட்ப பயிற்சிகள் வழங்கப்படும். மேலும், நீதிபதி சந்துரு குழுவின் பரிந்துரைப்படி, பள்ளிகளில் சாதி-மத அடையாளங்களுக்கு (வண்ணக் கயிறுகள்) தடை விதிக்கப்பட்டுள்ளதையும் அவர் வலியுறுத்தினார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Social Justice Hook:</strong> The Justice K. Chandru Committee was formed to suggest measures to eradicate caste-related animosity among school and college students in Tamil Nadu.</span><span class="lang-ta"><strong>சமூக நீதி குறிப்பு:</strong> தமிழகத்தில் பள்ளி, கல்லூரி மாணவர்களிடையே சாதியப் பாகுபாடுகளைக் களையப் பரிந்துரைகளை வழங்க ஓய்வுபெற்ற நீதிபதி கே.சந்துரு தலைமையில் இக்குழு அமைக்கப்பட்டது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Judiciary · Constitutional Values</span>
+                        <span class="badge bg-trap">TRAP</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Madras HC Issues Notice on 'Vande Mataram' vs 'Tamil Thai Vaazhthu' Priority Case</span>
+                        <span class="lang-ta">அரசு விழாக்களில் முதலில் 'வந்தே மாதரம்' பாடப்பட வேண்டும் என்ற உத்தரவுக்கு எதிரான வழக்கு: மத்திய, மாநில அரசுகளுக்கு உயர்நீதிமன்றம் நோட்டீஸ்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Madras High Court has ordered the Central and State governments to respond to a petition seeking the cancellation of a recent Union Home Ministry circular. The circular mandated that 'Vande Mataram' must be sung first at government functions, breaking Tamil Nadu's long-standing tradition of starting events with the state anthem, 'Tamil Thai Vaazhthu'. The petitioner argued this dilutes the state's cultural identity. A bench led by Chief Justice S.V. Gangapurwala has given 8 weeks for the response.</p>
+                    <p class="lang-ta">அரசு விழாக்களில் முதலில் 'வந்தே மாதரம்' பாடப்பட வேண்டும் என மத்திய உள்துறை அமைச்சகம் சமீபத்தில் பிறப்பித்த சுற்றறிக்கையை ரத்து செய்யக் கோரிய வழக்கில் பதிலளிக்க மத்திய, மாநில அரசுகளுக்கு சென்னை உயர்நீதிமன்றம் உத்தரவிட்டுள்ளது. தமிழகத்தில் நீண்ட காலமாக 'தமிழ்த்தாய் வாழ்த்து' பாடியே அரசு விழாக்கள் தொடங்கப்படும் நிலையில், புதிய சுற்றறிக்கை மாநில கலாச்சார அடையாளத்தை நீர்த்துப்போகச் செய்வதாக மனுதாரர் வாதிட்டார். இது தொடர்பாக 8 வாரங்களுக்குள் பதிலளிக்க தலைமை நீதிபதி எஸ்.வி. கங்காபுர்வாலா தலைமையிலான அமர்வு உத்தரவிட்டுள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-critical">CRITICAL</span><span class="lang-en"><strong>National vs State Song:</strong> 'Vande Mataram' (composed by Bankim Chandra Chatterjee in Sanskrit/Bengali) is the National Song of India. 'Tamil Thai Vaazhthu' (composed by Manonmaniam Sundaram Pillai) was declared the State Song of Tamil Nadu in 2021 by GO, mandating its singing at the start of all public programs.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> 'வந்தே மாதரம்' (பங்கிம் சந்திர சாட்டர்ஜி இயற்றியது) இந்தியாவின் தேசியப் பாடலாகும். 'தமிழ்த்தாய் வாழ்த்து' (மனோன்மணீயம் சுந்தரனார் இயற்றியது) 2021-ல் தமிழகத்தின் மாநிலப் பாடலாக அரசாணை மூலம் அறிவிக்கப்பட்டது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National / Central News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Education · Entrance Exams</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">NEET-UG Re-exam on June 23: NTA Announces New Reforms</span>
+                        <span class="lang-ta">ஜூன் 23-ல் நீட் மறுதேர்வு: வினாத்தாளில் புதிய சீர்திருத்தங்களை அறிமுகப்படுத்தியது என்.டி.ஏ (NTA)</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Following the cancellation of the May 3 exam due to paper leak allegations, the National Testing Agency (NTA) has scheduled the NEET-UG re-exam for June 23, 2026. To ensure fairness, NTA introduced structural reforms: exam duration has been extended from 180 minutes to 195 minutes (3 hours 15 minutes), and the question paper will now include 4 blank pages (instead of 2) for rough work to prevent malpractices. Security will be multi-tiered under strict vigilance.</p>
+                    <p class="lang-ta">வினாத்தாள் கசிவு குற்றச்சாட்டுகளால் மே 3-ம் தேதி நடந்த தேர்வு ரத்து செய்யப்பட்ட நிலையில், ஜூன் 23, 2026 அன்று நீட்-யுஜி (NEET-UG) மறுதேர்வு நடைபெறும் என தேசிய தேர்வு முகமை (NTA) அறிவித்துள்ளது. முறைகேடுகளைத் தடுக்கவும், நேர்மையை உறுதி செய்யவும் NTA புதிய சீர்திருத்தங்களை அறிமுகப்படுத்தியுள்ளது: தேர்வு நேரம் 180 நிமிடங்களில் இருந்து 195 நிமிடங்களாக (3 மணி 15 நிமிடம்) நீட்டிக்கப்பட்டுள்ளது. மேலும், கணக்கீடுகளைச் செய்ய (Rough work) வினாத்தாளில் 2 வெற்றுப் பக்கங்களுக்குப் பதிலாக 4 பக்கங்கள் சேர்க்கப்பட்டுள்ளன.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Economy · Macro Indicators</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Retail Inflation Rises to 3.93% in May 2026; 5th Consecutive Month of Increase</span>
+                        <span class="lang-ta">மே மாதத்தில் சில்லறை பணவீக்கம் 3.93% ஆக உயர்வு; தொடர்ந்து 5-வது மாதமாக ஏற்றம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Driven by surging food and fuel prices, India's retail inflation (CPI) increased to 3.93% in May 2026. Data released by the Ministry of Statistics and Programme Implementation (MoSPI) showed inflation rising consistently from 2.75% in January. High global crude oil prices have severely impacted input costs. Rural inflation (4.25%) outpaced urban inflation (3.93%), highlighting greater economic stress in villages.</p>
+                    <p class="lang-ta">உணவு மற்றும் எரிபொருள் விலையேற்றத்தால், இந்தியாவின் சில்லறை பணவீக்கம் (CPI) மே 2026-ல் 3.93% ஆக அதிகரித்துள்ளது. மத்திய புள்ளியியல் மற்றும் திட்ட அமலாக்க அமைச்சகம் (MoSPI) வெளியிட்ட தரவுகளின்படி, ஜனவரியில் 2.75% ஆக இருந்த பணவீக்கம் தொடர்ந்து 5-வது மாதமாக உயர்ந்துள்ளது. சர்வதேச கச்சா எண்ணெய் விலை உயர்வு இதற்குக் முக்கிய காரணமாகும். நகர்ப்புற பணவீக்கத்தை (3.93%) விட கிராமப்புற பணவீக்கம் (4.25%) அதிகமாகப் பதிவாகியுள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Economy Hook:</strong> Retail inflation is measured by the Consumer Price Index (CPI), currently calculated with 2012 as the base year (though the article hints at a newly implemented 2024 base year system). The RBI targets CPI inflation at 4% (+/- 2%).</span><span class="lang-ta"><strong>பொருளாதாரக் குறிப்பு:</strong> சில்லறை பணவீக்கம் நுகர்வோர் விலைக் குறியீடு (CPI) மூலம் அளவிடப்படுகிறது. இது தற்போது 2012-ஐ அடிப்படை ஆண்டாகக் கொண்டுள்ளது. இந்திய ரிசர்வ் வங்கி (RBI) பணவீக்கத்தை 4% (+/- 2%) என்ற அளவில் பராமரிக்க இலக்கு நிர்ணயித்துள்ளது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+            </section>
+
+            <!-- INTERNATIONAL NEWS -->
+            <section id="international">
+                <h2>
+                    <span class="lang-en">International News</span>
+                    <span class="lang-ta">சர்வதேச செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Diplomacy · Conflict</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">India Summons US Diplomat Over Death of 3 Indian Sailors in Gulf of Oman</span>
+                        <span class="lang-ta">ஓமன் வளைகுடாவில் கப்பல் மீது அமெரிக்க தாக்குதல்: 3 இந்திய மாலுமிகள் பலியான விவகாரத்தில் அமெரிக்க தூதரை அழைத்து இந்தியா கண்டனம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Ministry of External Affairs (MEA) strongly condemned the US and summoned the acting US diplomat, Jason Mick, after a US naval strike on a cargo ship (MV Chem Pluto / M.T. Shorea) near Oman resulted in the deaths of 3 Indian sailors. The ship was hit by an American missile enforcing a blockade against Iran near the Strait of Hormuz. Following this escalation, US President Donald Trump signaled that a US-Iran peace treaty might be signed this weekend, lifting sanctions on Iran in exchange for halting their nuclear program.</p>
+                    <p class="lang-ta">ஓமன் அருகே ஹோர்முஸ் ஜலசந்தி பகுதியில் சரக்குக் கப்பல் மீது அமெரிக்கக் கடற்படை நடத்திய ஏவுகணைத் தாக்குதலில் 3 இந்திய மாலுமிகள் பரிதாபமாக உயிரிழந்தனர். ஈரானுக்கு எதிரான முற்றுகையின் ஒரு பகுதியாக இத்தாக்குதல் நடந்தது. இதற்குக் கடும் கண்டனம் தெரிவித்த இந்திய வெளியுறவுத்துறை அமைச்சகம், அமெரிக்கப் பொறுப்புத் தூதர் ஜேசன் மிக்குக்கு சம்மன் அனுப்பி நேரில் கண்டனத்தைப் பதிவு செய்தது. இப்பகுதியில் போர் பதற்றம் அதிகரித்துள்ள நிலையில், அமெரிக்கா-ஈரான் இடையிலான அமைதி ஒப்பந்தம் இந்த வார இறுதியில் கையெழுத்தாக உள்ளதாக அதிபர் டொனால்ட் டிரம்ப் தெரிவித்துள்ளார்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Economy · Global Wealth</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Elon Musk Becomes the World's First Trillionaire via SpaceX IPO</span>
+                        <span class="lang-ta">ஸ்பேஸ்எக்ஸ் (SpaceX) பொதுப்பங்கு வெளியீடு: உலகின் முதல் ட்ரில்லியனரானார் எலான் மஸ்க்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Tesla and SpaceX CEO Elon Musk has officially become the world's first "Trillionaire" (Net worth > $1 Trillion). This historic milestone was crossed after his space exploration company, SpaceX, launched its Initial Public Offering (IPO) on the Nasdaq, raising a record-breaking $75 Billion. The IPO shattered the previous record held by Saudi Aramco ($29 Billion in 2019). Musk reiterated his vision of colonizing Mars and making humanity a multi-planetary species.</p>
+                    <p class="lang-ta">டெஸ்லா மற்றும் ஸ்பேஸ்எக்ஸ் (SpaceX) நிறுவனங்களின் சிஇஓ எலான் மஸ்க், அதிகாரப்பூர்வமாக உலகின் முதல் "ட்ரில்லியனராக" (சொத்து மதிப்பு $1 Trillion-ஐத் தாண்டியவர்) உருவெடுத்துள்ளார். அவரது விண்வெளி ஆய்வு நிறுவனமான ஸ்பேஸ்எக்ஸ், நாஸ்டாக் (Nasdaq) பங்குச்சந்தையில் தனது ஆரம்ப பொதுப்பங்கு வெளியீட்டை (IPO) தொடங்கி $75 பில்லியன் நிதியைத் திரட்டியது. இது சவுதி அராம்கோ நிறுவனத்தின் முந்தைய சாதனையை ($29 பில்லியன்) முறியடித்து உலக சாதனை படைத்துள்ளது. மனிதகுலத்தை செவ்வாய் கிரகத்திற்கு அழைத்துச் செல்லும் தனது இலக்கை மஸ்க் மீண்டும் வலியுறுத்தினார்.</p>
+                </div>
+
+            </section>
+            
+            <!-- SPORTS & OBITUARIES -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports & Obituaries</span>
+                    <span class="lang-ta">விளையாட்டு & இரங்கல்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Obituary · Shooting</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Legendary Indian Shooter Jaspal Rana (49) Passes Away</span>
+                        <span class="lang-ta">புகழ்பெற்ற இந்திய துப்பாக்கிச் சுடுதல் வீரர் ஜஸ்பால் ராணா (49) காலமானார்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Former Indian sports shooter and prominent coach Jaspal Rana passed away in Delhi at the age of 49 due to a sudden cardiac arrest. He was a dominant force in shooting, winning 4 Gold medals at the Asian Games and 9 Gold medals at the Commonwealth Games during his prime. He later transitioned to coaching, famously mentoring Manu Bhaker to her Olympic medals. The Government of India honoured him with the Arjuna Award (1994), Padma Shri (1997), and Dronacharya Award (2020).</p>
+                    <p class="lang-ta">முன்னாள் இந்திய துப்பாக்கிச் சுடுதல் வீரரும், தற்போதைய முன்னணி பயிற்சியாளருமான ஜஸ்பால் ராணா (49) திடீர் மாரடைப்பால் டெல்லியில் காலமானார். தனது காலத்தில் ஆசிய விளையாட்டில் 4 தங்கப் பதக்கங்களும், காமன்வெல்த் விளையாட்டில் 9 தங்கப் பதக்கங்களும் வென்று சாதனை படைத்தவர். பின்னர் பயிற்சியாளராக மாறி, ஒலிம்பிக் பதக்கம் வென்ற மனு பாக்கர் போன்ற வீரர்களை உருவாக்கினார். இவருக்கு இந்திய அரசு அர்ஜுனா விருது (1994), பத்மஸ்ரீ (1997), மற்றும் சிறந்த பயிற்சியாளருக்கான துரோணாச்சார்யா விருது (2020) வழங்கி கௌரவித்துள்ளது.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Cricket · Retirements</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">New Zealand Legend Kane Williamson Retires from International Cricket</span>
+                        <span class="lang-ta">சர்வதேச கிரிக்கெட்டிலிருந்து ஓய்வு பெற்றார் நியூசிலாந்து வீரர் கேன் வில்லியம்சன்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Modern-day cricket great and former New Zealand captain Kane Williamson (35) announced his retirement from all formats of international cricket. Having already retired from T20Is last year, he concludes a stellar 16-year career with 19,346 international runs. Under his captaincy, New Zealand won the inaugural ICC World Test Championship and reached two ODI World Cup finals.</p>
+                    <p class="lang-ta">நவீன கிரிக்கெட்டின் தலைசிறந்த பேட்ஸ்மேன்களில் ஒருவரும், நியூசிலாந்து அணியின் முன்னாள் கேப்டனுமான கேன் வில்லியம்சன் (35) அனைத்து வகையான சர்வதேச கிரிக்கெட்டிலிருந்தும் ஓய்வு பெறுவதாக அறிவித்துள்ளார். கடந்த ஆண்டு டி20-ல் இருந்து ஓய்வு பெற்ற அவர், தற்போது 16 ஆண்டுகால சிறப்பான பயணத்தை 19,346 ரன்களுடன் நிறைவு செய்கிறார். இவரது தலைமையில் நியூசிலாந்து அணி முதல் உலக டெஸ்ட் சாம்பியன்ஷிப் கோப்பையை வென்றதுடன், இரண்டு முறை ஒருநாள் உலகக் கோப்பை இறுதிப்போட்டிக்கு முன்னேறியது.</p>
+                </div>
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Which Ministry is responsible for publishing the Consumer Price Index (CPI) data in India?</span>
+                        <span class="lang-ta">கேள்வி: இந்தியாவில் நுகர்வோர் விலைக் குறியீடு (CPI) தரவுகளை வெளியிடும் அமைச்சகம் எது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Ministry of Statistics and Programme Implementation (MoSPI)</span><br><br>
+                                <strong>Context:</strong> MoSPI's National Statistical Office (NSO) reported that retail inflation rose to 3.93% in May 2026.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">புள்ளியியல் மற்றும் திட்ட அமலாக்க அமைச்சகம் (MoSPI)</span><br><br>
+                                <strong>பின்னணி:</strong> MoSPI-யின் தேசிய புள்ளியியல் அலுவலகம் வெளியிட்ட தரவுகளின்படி, மே 2026-ல் சில்லறை பணவீக்கம் 3.93% ஆக உயர்ந்தது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: "Vande Mataram", the National Song of India, was composed by whom and in which language?</span>
+                        <span class="lang-ta">கேள்வி: இந்தியாவின் தேசியப் பாடலான "வந்தே மாதரம்" யாரால், எந்த மொழியில் இயற்றப்பட்டது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Bankim Chandra Chatterjee in Sanskrit/Bengali</span><br><br>
+                                <strong>Context:</strong> A petition was filed in the Madras High Court challenging a central circular that prioritized Vande Mataram over the State Song "Tamil Thai Vaazhthu".
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">பங்கிம் சந்திர சாட்டர்ஜி, சமஸ்கிருதம்/வங்காளம்</span><br><br>
+                                <strong>பின்னணி:</strong> அரசு விழாக்களில் தமிழ்த்தாய் வாழ்த்தை விட 'வந்தே மாதரம்' பாடலுக்கு முன்னுரிமை அளிக்கும் சுற்றறிக்கையை எதிர்த்து சென்னை உயர்நீதிமன்றத்தில் வழக்கு தொடரப்பட்டுள்ளது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">Kuruvai Package</span><span class="lang-ta">குறுவை தொகுப்பு</span></td>
+                                <td><span class="lang-en">State/Agri</span><span class="lang-ta">மாநிலம்/வேளாண்மை</span></td>
+                                <td><span class="lang-en">₹134.83 Cr allocated by CM Vijay.</span><span class="lang-ta">முதல்வர் விஜய்யால் ரூ.134.83 கோடி ஒதுக்கீடு.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">AI in Govt Schools</span><span class="lang-ta">அரசுப் பள்ளிகளில் AI</span></td>
+                                <td><span class="lang-en">State/Education</span><span class="lang-ta">மாநிலம்/கல்வி</span></td>
+                                <td><span class="lang-en">AI, Coding in 5,000 schools; ban on caste bands.</span><span class="lang-ta">5,000 பள்ளிகளில் AI பயிற்சி; சாதி கயிறுகளுக்கு தடை.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">NEET Re-Exam</span><span class="lang-ta">நீட் மறுதேர்வு</span></td>
+                                <td><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></td>
+                                <td><span class="lang-en">June 23; Duration 195 mins.</span><span class="lang-ta">ஜூன் 23; தேர்வு நேரம் 195 நிமிடம்.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">Jaspal Rana Passes Away</span><span class="lang-ta">ஜஸ்பால் ராணா மறைவு</span></td>
+                                <td><span class="lang-en">Obituary/Sports</span><span class="lang-ta">இரங்கல்/விளையாட்டு</span></td>
+                                <td><span class="lang-en">Age 49; Legendary Shooter & Coach.</span><span class="lang-ta">வயது 49; புகழ்பெற்ற துப்பாக்கி சுடுதல் வீரர்.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">Elon Musk Trillionaire</span><span class="lang-ta">எலான் மஸ்க் ட்ரில்லியனர்</span></td>
+                                <td><span class="lang-en">Economy/Tech</span><span class="lang-ta">பொருளாதாரம்/Tech</span></td>
+                                <td><span class="lang-en">SpaceX IPO raises $75 Billion.</span><span class="lang-ta">ஸ்பேஸ்எக்ஸ் IPO மூலம் $75 பில்லியன் திரட்டினார்.</span></td>
+                                <td><span class="badge bg-tip">MED</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani Chennai 13-06-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி சென்னை 13-06-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source text detailed state, national, and international news for 13 June 2026. 
+State news covered CM Joseph Vijay announcing a Rs 134.83 crore special package for Kuruvai paddy cultivation as Mettur Dam was not opened on June 12 due to low water levels. 5,000 Govt schools will start teaching AI, coding, and robotics. Madurai HC ordered the transfer of a farmer shooting case to CBCID and questioned the non-implementation of the 'Cool Lip' ban. A bomb threat was issued to Sub-Registrar offices but turned out to be a hoax. High Court ordered the state/center to reply regarding a circular that mandates singing Vande Mataram first at Govt functions. Nadaswaram artist Lidian Nadaswaram was welcomed at Chennai airport after creating a symphony.
+National news detailed the NTA reforming the NEET re-exam (June 23) by increasing duration to 195 mins. Retail inflation reached 3.93% in May. Smriti Irani's name was found missing from the Amethi voter list. Amit Shah reviewed security for the Amarnath Yatra. The center restricted the bulk sale of petrol/diesel. PM Modi celebrated the NDA's efforts for women empowerment.
+Internationally, a US-Iran peace agreement is expected to be signed over the weekend. India strongly protested to the US acting envoy over the deaths of 3 Indian sailors in an American strike on a cargo ship in the Gulf of Oman. Elon Musk became a trillionaire following the SpaceX IPO.
+Sports news highlighted Mexico and South Korea winning their opening matches at the 2026 FIFA World Cup. Kane Williamson retired from international cricket. Shooting legend Jaspal Rana passed away due to cardiac arrest.]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூல உரைகள் 13 ஜூன் 2026 க்கான செய்திகளைக் கொண்டிருந்தன.
+மாநில செய்திகளில், மேட்டூர் அணை திறக்கப்படாததால் குறுவை சாகுபடிக்காக ரூ.134.83 கோடியில் சிறப்பு தொகுப்புத் திட்டத்தை முதல்வர் ஜோசப் விஜய் அறிவித்தார். 5,000 அரசுப் பள்ளிகளில் செயற்கை நுண்ணறிவு, கோடிங் பயிற்றுவிக்கப்படும் என அமைச்சர் அறிவிப்பு. விவசாயி சுடப்பட்ட வழக்கை சிபிசிஐடி-க்கு மாற்ற மதுரை ஐகோர்ட் உத்தரவு. சார்பதிவாளர் அலுவலகங்களுக்கு வெடிகுண்டு மிரட்டல் (புரளி). அரசு விழாக்களில் வந்தே மாதரம் முதலில் பாடப்பட வேண்டும் என்ற சுற்றறிக்கைக்கு எதிரான வழக்கில் அரசுகளுக்கு ஐகோர்ட் நோட்டீஸ். 
+தேசிய அளவில், நீட் மறுதேர்வுக்கான (ஜூன் 23) நேரத்தை 195 நிமிடங்களாக NTA நீட்டித்தது. மே மாதத்தில் சில்லறை பணவீக்கம் 3.93% ஆக உயர்ந்தது. அமேதி வாக்காளர் பட்டியலில் ஸ்மிருதி ராணியின் பெயர் விடுபட்டது. அமர்நாத் யாத்திரைக்கான பாதுகாப்பை அமித் ஷா ஆய்வு செய்தார். பெட்ரோல், டீசல் மொத்த விற்பனைக்கு தடை. 
+சர்வதேச அளவில், அமெரிக்கா-ஈரான் அமைதி ஒப்பந்தம் இந்த வார இறுதியில் கையெழுத்தாகும் என எதிர்பார்ப்பு. ஓமன் வளைகுடாவில் கப்பல் மீது அமெரிக்கா நடத்திய தாக்குதலில் 3 இந்தியர்கள் பலியானதற்கு அமெரிக்க தூதரிடம் இந்தியா கடும் கண்டனம். ஸ்பேஸ்எக்ஸ் IPO மூலம் எலான் மஸ்க் ட்ரில்லியனரானார்.
+விளையாட்டு: 2026 உலகக் கோப்பை கால்பந்தில் மெக்சிகோ, தென் கொரியா வெற்றி. சர்வதேச கிரிக்கெட்டிலிருந்து கேன் வில்லியம்சன் ஓய்வு. புகழ்பெற்ற துப்பாக்கிச் சுடுதல் வீரர் ஜஸ்பால் ராணா காலமானார்.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 13 June 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body class="en-mode">
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">19 June 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">19 ஜூன் 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <!-- Sidebar TOC -->
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Tech</span><span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · Assembly Session</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Governor's Address Highlights: Social Justice Census, Two-Language Formula & Opposition to NEP</span>
+                        <span class="lang-ta">ஆளுநர் உரை முக்கிய அம்சங்கள்: சமூக நீதி கணக்கெடுப்பு, இருமொழிக் கொள்கை & தேசிய கல்விக் கொள்கைக்கு எதிர்ப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The 17th Tamil Nadu Legislative Assembly session commenced with Governor R.N. Ravi's address. Unlike previous years, the Governor read the full text without skipping any parts. Key policy announcements included conducting a State-level 'Social Justice Census' (caste census) immediately after the Centre's population census. The government strongly reiterated its Two-Language Formula (Tamil & English) and stated strict opposition to the National Education Policy (NEP) 2020 and the imposition of a three-language formula. It also demanded bringing Education back to the State List to abolish exams like NEET.</p>
+                    <p class="lang-ta">17-வது தமிழக சட்டப்பேரவையின் முதல் கூட்டத்தொடர் ஆளுநர் ஆர்.என். ரவியின் உரையுடன் தொடங்கியது. கடந்த ஆண்டுகளைப் போலன்றி, ஆளுநர் அரசு தயாரித்த உரையை முழுமையாக வாசித்தார். முக்கிய அறிவிப்புகளாக: மத்திய அரசின் மக்கள் தொகை கணக்கெடுப்பு முடிந்தவுடன் மாநில அளவில் 'சமூக நீதி கணக்கெடுப்பு' (சாதிவாரி) நடத்தப்படும். தமிழகத்தில் இருமொழிக் கொள்கையே (தமிழ் & ஆங்கிலம்) தொடரும், தேசிய கல்விக் கொள்கை (NEP) மற்றும் மும்மொழிக் கொள்கை திணிப்புக்கு கடும் எதிர்ப்பு தெரிவிக்கப்படும். நீட் தேர்வை ரத்து செய்ய, கல்வியை மாநிலப் பட்டியலுக்குக் கொண்டுவர வலியுறுத்தப்படும் எனத் தெரிவிக்கப்பட்டது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Polity Hook:</strong> Education was moved from the State List to the Concurrent List (List III) by the 42nd Constitutional Amendment Act, 1976. TN demands moving it back.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> 1976-ஆம் ஆண்டின் 42-வது அரசியலமைப்பு திருத்தச் சட்டத்தின் மூலம் கல்வி மாநிலப் பட்டியலிலிருந்து பொதுப் பட்டியலுக்கு (பட்டியல் III) மாற்றப்பட்டது. இதனை மீண்டும் மாநிலப் பட்டியலுக்கு மாற்றத் தமிழகம் கோருகிறது.</span></li>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en"><strong>Language Formula:</strong> TN follows a Two-Language formula (enacted in 1968 under CM C.N. Annadurai). Do not confuse it with the Three-Language formula recommended by NEP 2020.</span><span class="lang-ta"><strong>மொழிக் கொள்கை:</strong> தமிழகம் இருமொழிக் கொள்கையைப் பின்பற்றுகிறது (1968-ல் முதல்வர் அண்ணாதுரையால் சட்டமாக்கப்பட்டது). NEP 2020 பரிந்துரைக்கும் மும்மொழிக் கொள்கையுடன் குழப்பிக் கொள்ள வேண்டாம்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Inter-State Water Dispute</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">TN Assembly to Pass Resolution Against Mekedatu Dam Project</span>
+                        <span class="lang-ta">மேக்கேதாட்டு அணைத் திட்டத்துக்கு எதிராகத் தமிழக சட்டப்பேரவையில் இன்று தீர்மானம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Chief Minister Joseph Vijay will move a special resolution in the TN Legislative Assembly today (June 19) urging the Union Government to reject permission for the Mekedatu dam proposed by Karnataka across the Cauvery River. Karnataka has recently submitted a revised Detailed Project Report (DPR) to the Central Water Commission (CWC) seeking swift approval. TN strongly opposes this, arguing that a new reservoir will severely impact the livelihood of delta farmers. The resolution also asserts that TN will take legal steps to raise the Mullaperiyar Dam's water level from 142 ft to 152 ft as permitted by the Supreme Court.</p>
+                    <p class="lang-ta">காவிரி ஆற்றின் குறுக்கே கர்நாடக அரசு கட்டத் திட்டமிட்டுள்ள மேக்கேதாட்டு அணைத் திட்டத்திற்கு எந்த அனுமதியும் வழங்கக் கூடாது என மத்திய அரசை வலியுறுத்தி, முதல்வர் ஜோசப் விஜய் தமிழக சட்டப்பேரவையில் இன்று (ஜூன் 19) தனித் தீர்மானம் கொண்டு வருகிறார். இத்திட்டத்திற்காக கர்நாடக அரசு மத்திய நீர் ஆணையத்திடம் (CWC) திருத்தப்பட்ட திட்ட அறிக்கையை அளித்துள்ளது. புதிய அணை கட்டப்பட்டால் டெல்டா விவசாயிகளின் வாழ்வாதாரம் பாதிக்கப்படும் எனத் தமிழகம் கடுமையாக எதிர்க்கிறது. மேலும், முல்லைப் பெரியாறு அணை நீர்மட்டத்தை உச்சநீதிமன்றத் தீர்ப்பின்படி 142 அடியிலிருந்து 152 அடியாக உயர்த்தச் சட்டரீதியான நடவடிக்கை எடுக்கப்படும் எனவும் தீர்மானிக்கப்பட உள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Geography Hook:</strong> The Mekedatu project (Goat's leap) is a proposed deep gorge situated at the confluence of the Cauvery River and its tributary Arkavathi in Karnataka.</span><span class="lang-ta"><strong>புவியியல் குறிப்பு:</strong> மேக்கேதாட்டு திட்டம் (ஆடு தாண்டும் பாறை) என்பது கர்நாடகாவில் காவிரி ஆறும் அதன் கிளை நதியான அர்க்காவதியும் சந்திக்கும் இடத்தில் அமைய உள்ள திட்டமாகும்.</span></li>
+                            <li><span class="badge bg-gem">GEM</span><span class="lang-en"><strong>Article 262:</strong> Empowers Parliament to provide for the adjudication of any dispute with respect to the use, distribution, or control of the waters of any inter-state river.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> மாநிலங்களுக்கு இடையிலான நதிநீர் பகிர்வு தொடர்பான தகராறுகளைத் தீர்க்க நாடாளுமன்றத்திற்கு அதிகாரம் அளிப்பது சரத்து 262 ஆகும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Welfare · Employee Rights</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">TN Govt Announces Interim Relief for Retirees Under GPS Pension Scheme</span>
+                        <span class="lang-ta">உறுதி செய்யப்பட்ட ஓய்வூதியத் திட்டம் (GPS): இடைக்கால நிவாரணம் அறிவிப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Pending the finalization of the rules for the newly announced Guaranteed Pension Scheme (GPS), the Tamil Nadu Government has issued a Government Order granting interim relief to government employees and teachers who retire after January 1, 2026. These retirees will receive an interim monthly payout of 30% of their last drawn basic pay or ₹10,000 (whichever is higher), along with the prevalent Dearness Allowance (DA). This stop-gap arrangement prevents financial hardship until the final GPS rules (which promises 50% of the last drawn pay) are implemented.</p>
+                    <p class="lang-ta">உறுதி செய்யப்பட்ட ஓய்வூதியத் திட்டத்தின் (GPS) இறுதி விதிகள் வெளியாகும் வரை, ஜனவரி 1, 2026-க்குப் பிறகு ஓய்வுபெறும் அரசு ஊழியர்கள் மற்றும் ஆசிரியர்களுக்கு இடைக்கால நிவாரணம் வழங்கத் தமிழக அரசு அரசாணை வெளியிட்டுள்ளது. அதன்படி, அவர்கள் கடைசியாகப் பெற்ற அடிப்படை ஊதியத்தில் 30% அல்லது ரூ.10,000 (இதில் எது அதிகமோ அத்தொகை) இடைக்கால நிவாரணமாக வழங்கப்படும். அத்தோடு அகவிலைப்படியும் (DA) வழங்கப்படும். ஜிபிஎஸ் திட்டத்தின் கீழ் கடைசியாகப் பெற்ற ஊதியத்தில் 50% ஓய்வூதியமாக நிர்ணயிக்கும் பணிகள் முடிவடையும் வரை இந்த இடைக்கால ஏற்பாடு நடைமுறையில் இருக்கும்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Governance · Anti-Corruption</span>
+                        <span class="badge bg-trap">TRAP</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">DVAC Raids 40 RTO Offices Across TN; Seizes ₹37.81 Lakh Unaccounted Cash</span>
+                        <span class="lang-ta">40 வட்டாரப் போக்குவரத்து (RTO) அலுவலகங்களில் லஞ்ச ஒழிப்புத்துறை சோதனை: ரூ.37.81 லட்சம் பறிமுதல்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Directorate of Vigilance and Anti-Corruption (DVAC) conducted sudden raids at 60 locations, targeting 40 Regional Transport Offices (RTOs) and Motor Vehicle Inspector Offices across Tamil Nadu. The simultaneous searches resulted in the seizure of ₹37,81,168 in unaccounted money (including digital transfers via UPI/mobile apps). The highest amount of unaccounted cash was seized from the Kallakurichi RTO (₹3.77 lakh), followed by Arakkonam (Ranipet district) and Paramakudi (Ramanathapuram district).</p>
+                    <p class="lang-ta">தமிழகம் முழுவதும் உள்ள 40 வட்டாரப் போக்குவரத்து அலுவலகங்கள் (RTO) மற்றும் மோட்டார் வாகன ஆய்வாளர் அலுவலகங்கள் என மொத்தம் 60 இடங்களில் ஊழல் தடுப்பு மற்றும் கண்காணிப்புப் பிரிவினர் (DVAC) அதிரடி சோதனை நடத்தினர். இச்சோதனையில், கணக்கில் வராத ரூ.37,81,168 பறிமுதல் செய்யப்பட்டது (யுபிஐ/மொபைல் ஆப் டிஜிட்டல் பரிவர்த்தனைகள் உட்பட). அதிகபட்சமாக கள்ளக்குறிச்சி வட்டாரப் போக்குவரத்து அலுவலகத்தில் ரூ.3,77,300 பறிமுதல் செய்யப்பட்டது. அரக்கோணம் (ராணிப்பேட்டை), பரமக்குடி (ராமநாதபுரம்) அடுத்தடுத்த இடங்களில் உள்ளன.</p>
+                </div>
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National / Central News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Welfare · PDS</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Centre to Issue 3 Crore New Ration Cards; PDS System Fully Digitized</span>
+                        <span class="lang-ta">நாடு முழுவதும் மேலும் 3 கோடி புதிய குடும்ப அட்டைகள் (Ration Cards) வழங்க வாய்ப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Union Food and Public Distribution Minister Pralhad Joshi announced that the Centre plans to distribute 3 crore new ration cards nationwide. This comes after the deletion of 2.21 crore ineligible ration cards from the Public Distribution System (PDS) database, allowing states to add genuine beneficiaries. Joshi highlighted that the PDS is now almost entirely digitized, with 98.5% of food grain distribution facilitated through electronic Point of Sale (ePoS) devices featuring biometric Aadhaar authentication. The government is moving towards a 100% digital PDS network.</p>
+                    <p class="lang-ta">நாடு முழுவதும் மேலும் 3 கோடி புதிய குடும்ப அட்டைகள் (Ration Cards) வழங்க வாய்ப்புள்ளதாக மத்திய உணவுத்துறை அமைச்சர் பிரகலாத் ஜோஷி தெரிவித்துள்ளார். பொது விநியோக முறையில் தகுதியற்ற 2.21 கோடி குடும்ப அட்டைகள் மாநில அரசுகளால் நீக்கப்பட்டுள்ளதால், புதிய தகுதியான பயனாளிகளை இணைக்க இந்த வாய்ப்பு ஏற்பட்டுள்ளது. பொது விநியோக முறை டிஜிட்டல் மயமாக்கப்பட்டதன் மூலம் 98.5% உணவு தானிய விநியோகம் ஆதார் பயோமெட்ரிக் சரிபார்ப்புடன் கூடிய மின்னணு கருவிகள் (ePoS) மூலம் மேற்கொள்ளப்படுவதாகவும் அவர் குறிப்பிட்டார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Act Hook:</strong> The distribution relies on the National Food Security Act (NFSA), 2013, which legally entitles up to 75% of the rural population and 50% of the urban population to receive subsidized foodgrains.</span><span class="lang-ta"><strong>சட்டக் குறிப்பு:</strong> இந்த விநியோகம் தேசிய உணவுப் பாதுகாப்புச் சட்டம் (NFSA), 2013-ஐ அடிப்படையாகக் கொண்டது. இது 75% கிராமப்புற மக்களுக்கும் 50% நகர்ப்புற மக்களுக்கும் மானிய விலை உணவு தானியங்களைப் பெறும் சட்டபூர்வ உரிமையை வழங்குகிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · Rajya Sabha Polls</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Rajya Sabha Elections: JMM & Independent Win in Jharkhand; ZPM in Mizoram</span>
+                        <span class="lang-ta">மாநிலங்களவைத் தேர்தல்: ஜார்க்கண்டில் ஜேஎம்எம் (JMM), சுயேச்சை வெற்றி; மிசோரமில் இசட்பிஎம் (ZPM) வெற்றி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Elections were held for three Rajya Sabha seats due to vacancies. In Jharkhand (2 seats), the ruling JMM candidate and a BJP-backed Independent candidate won, resulting in a loss for the Congress candidate due to cross-voting within the INDI Alliance. In Mizoram (1 seat), the ruling Zoram People's Movement (ZPM) candidate secured a comfortable victory. With these results, the BJP-led NDA's strength in the Rajya Sabha has reached 150. (A two-thirds majority in the Rajya Sabha requires 163 seats).</p>
+                    <p class="lang-ta">காலியாக உள்ள 3 மாநிலங்களவை இடங்களுக்கு நடைபெற்ற தேர்தலில் முடிவுகள் அறிவிக்கப்பட்டுள்ளன. ஜார்க்கண்டில் (2 இடங்கள்) ஆளும் ஜேஎம்எம் (JMM) வேட்பாளரும், பாஜக ஆதரவு பெற்ற சுயேச்சை வேட்பாளரும் வெற்றி பெற்றனர். ஆளும் கூட்டணியின் (INDI) எம்எல்ஏக்கள் கட்சி மாறி வாக்களித்ததால் காங்கிரஸ் வேட்பாளர் தோல்வியடைந்தார். மிசோரமில் (1 இடம்) ஆளும் ஜோரம் மக்கள் இயக்கம் (ZPM) வேட்பாளர் வெற்றி பெற்றார். இம்முடிவுகளைத் தொடர்ந்து மாநிலங்களவையில் பாஜக தலைமையிலான தேசிய ஜனநாயகக் கூட்டணியின் பலம் 150 ஆக உயர்ந்துள்ளது. (மாநிலங்களவையில் மூன்றில் இரண்டு பங்கு பெரும்பான்மைக்கு 163 எம்.பி.க்கள் தேவை).</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-critical">CRITICAL</span><span class="lang-en"><strong>Polity Hook:</strong> Rajya Sabha elections are indirect; members are elected by the elected members of State Legislative Assemblies using proportional representation by means of a single transferable vote (Article 80). Allocation of seats is in the Fourth Schedule.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> மாநிலங்களவைத் தேர்தல் மறைமுகமானது; மாநில சட்டப்பேரவைகளின் தேர்ந்தெடுக்கப்பட்ட உறுப்பினர்களால் ஒற்றை மாற்று வாக்கு மூலம் விகிதாச்சார பிரதிநிதித்துவ அடிப்படையில் தேர்ந்தெடுக்கப்படுகின்றனர் (சரத்து 80). இடப்பங்கீடு 4-வது அட்டவணையில் உள்ளது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Law & Justice · Cyber Security</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Central Govt Defends Telegram Ban in Delhi HC; Cites ₹3,086 Cr Fraud in 2025</span>
+                        <span class="lang-ta">டெலிகிராம் தடை: "சட்டவிரோத செயல்களுக்கான தளம்" என தில்லி உயர்நீதிமன்றத்தில் மத்திய அரசு விளக்கம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Defending its temporary ban on the Telegram messaging app (imposed until June 22 over NEET paper leak issues), the Central Government filed an affidavit in the Delhi High Court declaring the app a "haven for illegal activities." The Centre highlighted that Telegram's encrypted channels are increasingly used for drug trafficking, terrorism, and financial frauds. Specifically, the affidavit revealed that in 2025 alone, over 2.75 lakh complaints were registered regarding frauds via Telegram, amounting to scams worth over ₹3,086 crore. The court ordered both parties to submit replies and adjourned the hearing.</p>
+                    <p class="lang-ta">நீட் வினாத்தாள் கசிவு விவகாரத்தில் டெலிகிராம் செயலிக்கு ஜூன் 22 வரை விதிக்கப்பட்ட தடையை ஆதரித்து, தில்லி உயர்நீதிமன்றத்தில் மத்திய அரசு பிரமாணப் பத்திரம் தாக்கல் செய்துள்ளது. அதில், டெலிகிராம் செயலி "சட்டவிரோத செயல்களுக்கான தளமாக" மாறிவிட்டதாகக் குற்றம் சாட்டியுள்ளது. போதைப்பொருள் கடத்தல், பயங்கரவாத செயல்கள் மற்றும் நிதி மோசடிகளுக்கு அது பயன்படுத்தப்படுகிறது. குறிப்பாக, 2025-ஆம் ஆண்டில் மட்டும் டெலிகிராம் மூலம் ரூ.3,086 கோடிக்கும் அதிகமான மோசடிகள் நடந்துள்ளதாக 2.75 லட்சத்துக்கும் மேற்பட்ட புகார்கள் வந்துள்ளதாக அரசு தெரிவித்துள்ளது. இரு தரப்பும் பதில் மனு தாக்கல் செய்ய உத்தரவிட்டு நீதிமன்றம் விசாரணையை ஒத்திவைத்தது.</p>
+                </div>
+
+            </section>
+
+            <!-- INTERNATIONAL NEWS -->
+            <section id="international">
+                <h2>
+                    <span class="lang-en">International News</span>
+                    <span class="lang-ta">சர்வதேச செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Diplomacy · Geopolitics</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Historic 'Islamabad Agreement': US-Iran Peace Deal Formally Signed</span>
+                        <span class="lang-ta">வரலாற்றுச் சிறப்புமிக்க 'இஸ்லாமாபாத் ஒப்பந்தம்': அமெரிக்கா - ஈரான் அமைதி ஒப்பந்தம் கையெழுத்தானது</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Ending a severe 3-month-long regional conflict, the United States and Iran officially signed a peace treaty, termed the 'Islamabad Agreement'. US President Donald Trump (from the G7 Summit in France) and Iranian President Masoud Pezeshkian signed the pact electronically. Pakistan PM Shehbaz Sharif and Qatar acted as official mediators. As a primary condition of the deal, Iran will immediately reopen the strategic Strait of Hormuz to international shipping, and the US Navy will lift its blockade on Iranian ports. The formal in-person ceremony is scheduled in Geneva, Switzerland on June 19.</p>
+                    <p class="lang-ta">3 மாதங்களுக்கும் மேலாக நீடித்த கடுமையான போர்ச் சூழலை முடிவுக்குக் கொண்டுவரும் வகையில், அமெரிக்கா மற்றும் ஈரான் இடையே 'இஸ்லாமாபாத் ஒப்பந்தம்' எனப்படும் அமைதி ஒப்பந்தம் அதிகாரப்பூர்வமாக கையெழுத்தானது. அமெரிக்க அதிபர் டொனால்ட் டிரம்ப் (பிரான்ஸ் ஜி7 மாநாட்டிலிருந்து) மற்றும் ஈரான் அதிபர் மசூத் பெசெஷ்கியான் ஆகியோர் மின்னணு முறையில் இதில் கையெழுத்திட்டனர். பாகிஸ்தான் பிரதமர் ஷெபாஸ் ஷெரீப் மற்றும் கத்தார் நாடுகள் அதிகாரப்பூர்வ மத்தியஸ்தர்களாகச் செயல்பட்டனர். ஒப்பந்தத்தின் முக்கிய நிபந்தனையாக, சர்வதேச கப்பல் போக்குவரத்திற்காக ஹோர்முஸ் ஜலசந்தியை ஈரான் உடனடியாகத் திறக்கும்; அமெரிக்கா ஈரானிய துறைமுகங்கள் மீதான முற்றுகையை விலக்கும். முறையான நிகழ்வு சுவிட்சர்லாந்தின் ஜெனீவாவில் ஜூன் 19-ஆம் தேதி நடைபெறுகிறது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-tip">TIP</span><span class="lang-en"><strong>Geography Hook:</strong> The Strait of Hormuz is a critical choke point connecting the Persian Gulf with the Gulf of Oman and the Arabian Sea. Roughly 20-30% of the world's total global oil consumption passes through this strait.</span><span class="lang-ta"><strong>புவியியல் குறிப்பு:</strong> ஹோர்முஸ் ஜலசந்தி பாரசீக வளைகுடாவை ஓமன் வளைகுடா மற்றும் அரபிக்கடலுடன் இணைக்கும் ஒரு முக்கியமான நீர்ச்சந்தியாகும். உலகின் மொத்த கச்சா எண்ணெய் நுகர்வில் சுமார் 20-30% இந்த ஜலசந்தி வழியாகவே செல்கிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Tech · Global Summits</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">PM Modi Pitches for "Democratisation of Technology" at VivaTech 2026 in Paris</span>
+                        <span class="lang-ta">பாரிஸில் விவாடெக் 2026 மாநாடு: தொழில்நுட்பத்தை ஜனநாயகப்படுத்துவதன் அவசியத்தைப் பிரதமர் மோடி வலியுறுத்தினார்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Addressing VivaTech 2026 in Paris, France (Europe's biggest startup and tech event), Prime Minister Narendra Modi asserted that technology must be democratised to ensure inclusive growth, presenting India's Digital Public Infrastructure (DPI) as a global model. Amid recent US bans on foreign AI models, PM Modi advocated for an "AI for All" policy, stating that Artificial Intelligence must help build a healthier planet rather than creating monopolies. Modi also held talks with French President Emmanuel Macron and top European CEOs to attract investments into India's thriving startup ecosystem (which now boasts 2 lakh startups).</p>
+                    <p class="lang-ta">ஐரோப்பாவின் மிகப்பெரிய ஸ்டார்ட்அப் மற்றும் தொழில்நுட்ப நிகழ்வான விவாடெக் 2026 மாநாட்டில் (பாரிஸ்) உரையாற்றிய பிரதமர் நரேந்திர மோடி, அனைவரையும் உள்ளடக்கிய வளர்ச்சியை உறுதி செய்ய தொழில்நுட்பம் ஜனநாயகப்படுத்தப்பட வேண்டும் என வலியுறுத்தினார். இந்தியாவின் எண்ம பொது உள்கட்டமைப்பை (DPI) உலகளாவிய முன்மாதிரியாக அவர் முன்னிறுத்தினார். வெளிநாட்டு செயற்கை நுண்ணறிவு (AI) மாடல்களுக்கு அமெரிக்கா சமீபத்தில் தடை விதித்துள்ள நிலையில், "அனைவருக்குமான AI" கொள்கையை மோடி ஆதரித்தார்; ஏஐ தொழில்நுட்பம் ஒரு முற்றுரிமையாக இல்லாமல் ஆரோக்கியமான உலகை உருவாக்க உதவ வேண்டும் என்றார். முதலீடுகளை ஈர்க்க பிரான்ஸ் அதிபர் இம்மானுவேல் மேக்ரான் மற்றும் ஐரோப்பிய நிறுவன சிஇஓ-க்களுடனும் மோடி ஆலோசனை நடத்தினார்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Geopolitics · BRICS</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Chinese Foreign Minister Wang Yi to Attend BRICS NSA Summit in New Delhi</span>
+                        <span class="lang-ta">புதுதில்லியில் பிரிக்ஸ் (BRICS) தேசிய பாதுகாப்பு ஆலோசகர்கள் மாநாடு: சீன வெளியுறவுத்துறை அமைச்சர் பங்கேற்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">China confirmed that its Foreign Minister Wang Yi will travel to New Delhi to attend the BRICS National Security Advisors (NSA) summit scheduled for June 22-23. India is chairing the expanded 11-nation BRICS alliance this year. Wang Yi stated that BRICS is evolving into a strong platform ensuring global peace, security cooperation, and multipolar governance, acting as the voice of the Global South. Diplomatic talks regarding the India-China border issue are also expected on the sidelines of the summit.</p>
+                    <p class="lang-ta">புதுதில்லியில் ஜூன் 22-23 தேதிகளில் நடைபெறவுள்ள பிரிக்ஸ் (BRICS) தேசிய பாதுகாப்பு ஆலோசகர்கள் (NSA) மாநாட்டில் சீன வெளியுறவுத்துறை அமைச்சர் வாங் யி பங்கேற்பார் எனச் சீனா உறுதிப்படுத்தியுள்ளது. விரிவுபடுத்தப்பட்ட 11 நாடுகளைக் கொண்ட பிரிக்ஸ் கூட்டமைப்பிற்கு இந்த ஆண்டு இந்தியா தலைமை தாங்குகிறது. உலகளாவிய அமைதி, பாதுகாப்பு மற்றும் பன்முக நிர்வாகத்தை உறுதி செய்யும் வலுவான அமைப்பாகவும், உலகளாவிய தெற்கு (Global South) நாடுகளின் குரலாகவும் பிரிக்ஸ் திகழ்கிறது என வாங் யி தெரிவித்தார். இம்மாநாட்டின் இடையே இந்தியா-சீனா எல்லை விவகாரம் குறித்தும் பேச்சுவார்த்தை நடைபெறும் என எதிர்பார்க்கப்படுகிறது.</p>
+                </div>
+
+            </section>
+
+            <!-- ECONOMY & FINANCE -->
+            <section id="economy">
+                <h2>
+                    <span class="lang-en">Economy & Tech</span>
+                    <span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Markets · IPO</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">NSE Files for India's Largest IPO Worth ₹30,000 Crore with SEBI</span>
+                        <span class="lang-ta">இந்தியாவின் மிகப்பெரிய ஐபிஓ: ரூ.30,000 கோடியில் பங்கு வெளியீட்டுக்கு என்எஸ்இ (NSE) செபியிடம் (SEBI) விண்ணப்பம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The National Stock Exchange (NSE) has filed its Draft Red Herring Prospectus (DRHP) with the market regulator SEBI for an Initial Public Offering (IPO) worth a staggering ₹30,000 crore. This move aims to shatter the previous record set by Hyundai Motor India (₹27,870 crore in Oct 2024). The IPO will be a complete Offer For Sale (OFS), meaning existing shareholders will offload 14.89 crore shares (approx 6% stake). The NSE was previously barred from going public for nearly a decade due to regulatory issues, which it settled with SEBI by paying a ₹1,388 crore penalty.</p>
+                    <p class="lang-ta">இந்தியாவின் மிகப்பெரிய பங்கு வெளியீடாக (IPO), சுமார் ரூ.30,000 கோடி நிதி திரட்ட தேசிய பங்குச் சந்தை (NSE) இந்தியப் பங்கு மற்றும் பரிவர்த்தனை வாரியத்திடம் (SEBI) வரைவு அறிக்கையைத் தாக்கல் செய்துள்ளது. அக்டோபர் 2024-ல் ஹூண்டாய் மோட்டார் இந்தியா திரட்டிய ரூ.27,870 கோடி சாதனையை இது முறியடிக்கும். இந்த வெளியீடு முழுவதும் "விற்பனைக்கான சலுகை" (Offer For Sale - OFS) முறையில் அமையும்; அதாவது தற்போதைய பங்குதாரர்கள் தங்களது 14.89 கோடி பங்குகளை (சுமார் 6%) விற்பனை செய்வார்கள். பல்வேறு ஒழுங்குமுறை சிக்கல்களால் கடந்த 10 ஆண்டுகளாக முடங்கியிருந்த இந்த ஐபிஓ, சமீபத்தில் செபிக்கு ரூ.1,388 கோடி அபராதம் செலுத்தித் தீர்வு கண்ட பிறகு தற்போது சாத்தியமாகியுள்ளது.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Banking · FDI</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Emirates NBD Bank Acquires 60% Stake in RBL Bank for ₹26,015 Crore</span>
+                        <span class="lang-ta">ரத்னாகர் வங்கியின் (RBL Bank) 60% பங்குகளை ரூ.26,015 கோடிக்கு எமிரேட்ஸ் என்பிடி வங்கி வாங்குகிறது</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Board of Directors of India's private sector RBL Bank has approved the allocation of a 60% stake to Dubai-based Emirates NBD Bank. The deal involves the transfer of over 92.91 crore shares at ₹280 per share, valuing the investment at ₹26,015 crore. Following this mega acquisition, RBL's board has been restructured. The Reserve Bank of India (RBI) and the Union Finance Ministry had already granted approval earlier this year allowing Emirates NBD to acquire up to 74% stake in the bank.</p>
+                    <p class="lang-ta">இந்தியாவின் தனியார் துறை வங்கியான ஆர்பிஎல் வங்கியின் (RBL Bank) 60% பங்குகளை துபாயைச் சேர்ந்த எமிரேட்ஸ் என்பிடி (Emirates NBD) வங்கிக்கு ஒதுக்க அதன் இயக்குநர் குழு ஒப்புதல் அளித்துள்ளது. இதன்படி, ரூ.26,015 கோடி மதிப்பில் 92.91 கோடிக்கும் அதிகமான பங்குகள் (ஒரு பங்கு ரூ.280 வீதம்) எமிரேட்ஸ் என்பிடி வங்கிக்கு ஒதுக்கப்பட உள்ளன. இந்த மாபெரும் முதலீட்டைத் தொடர்ந்து வங்கியின் இயக்குநர் குழு மாற்றியமைக்கப்பட்டுள்ளது. ஆர்பிஎல் வங்கியில் எமிரேட்ஸ் வங்கி 74% வரை பங்குகளை வாங்க ரிசர்வ் வங்கியும் (RBI) மத்திய நிதியமைச்சகமும் முன்னதாகவே ஒப்புதல் அளித்திருந்தன.</p>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Macro Indicators · EPF</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Govt Notifies 8.25% Interest Rate for EPF for FY 2025-26</span>
+                        <span class="lang-ta">2025-26 நிதியாண்டுக்கான இபிஎஃப் (EPF) வட்டி விகிதம் 8.25% ஆக அறிவிப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Union Government has officially approved and notified an 8.25% interest rate on Employees' Provident Fund (EPF) deposits for the financial year 2025-26. This rate was recommended earlier in March by the Central Board of Trustees (CBT) of the EPFO, chaired by Labour Minister Mansukh Mandaviya. With the Finance Ministry's final clearance, the interest will be credited to the accounts of over 7 crore active EPFO subscribers by the end of June.</p>
+                    <p class="lang-ta">2025-26 நிதியாண்டுக்கான தொழிலாளர் வருங்கால வைப்பு நிதிக்கு (EPF) 8.25% வட்டி விகிதத்தை வழங்க மத்திய அரசு அதிகாரப்பூர்வமாக ஒப்புதல் அளித்துள்ளது. மத்திய தொழிலாளர் நலத்துறை அமைச்சர் மன்சுக் மாண்டவியா தலைமையிலான இபிஎஃப்ஓ (EPFO) மத்திய அறங்காவலர் குழு கடந்த மார்ச் மாதம் இதனைப் பரிந்துரைத்தது. நிதியமைச்சகத்தின் இறுதி ஒப்புதல் கிடைத்துள்ளதால், 7 கோடிக்கும் அதிகமான சந்தாதாரர்களின் கணக்குகளில் ஜூன் இறுதிக்குள் வட்டித் தொகை வரவு வைக்கப்படும்.</p>
+                </div>
+
+            </section>
+            
+            <!-- SPORTS -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports</span>
+                    <span class="lang-ta">விளையாட்டு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Football · World Cup</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Harry Kane Equals Lineker's Record; Ronaldo Plays 6th World Cup</span>
+                        <span class="lang-ta">உலகக் கோப்பை: ஹாரி கேன் லினேக்கரின் சாதனையை சமன் செய்தார்; ரொனால்டோ 6-வது உலகக் கோப்பையில் பங்கேற்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In global football matches (Copa/Euro/World Cup contexts globally referred to as World Cup in the source snippet), England defeated Croatia 4-2, with captain Harry Kane scoring twice. Kane reached 10 World Cup goals, equaling Gary Lineker's all-time England record. Meanwhile, Portugal drew 1-1 with DR Congo. Cristiano Ronaldo failed to score but made history by appearing in his 6th World Cup tournament, matching Lionel Messi's record. This match also marked Ronaldo's 229th international appearance (an all-time high).</p>
+                    <p class="lang-ta">இங்கிலாந்து அணி 4-2 என்ற கோல் கணக்கில் குரோஷியாவை வீழ்த்தியது; கேப்டன் ஹாரி கேன் 2 கோல்கள் அடித்தார். இதன் மூலம் உலகக் கோப்பையில் 10 கோல்கள் அடித்த கேரி லினேக்கரின் (Gary Lineker) இங்கிலாந்து சாதனையை அவர் சமன் செய்தார். இதற்கிடையே, போர்ச்சுகல் அணி டிஆர் காங்கோவுடன் 1-1 என டிராவில் முடிந்தது. கோல் அடிக்கத் தவறியபோதிலும், கிறிஸ்டியானோ ரொனால்டோ தனது 6-வது உலகக் கோப்பையில் விளையாடி லியோனல் மெஸ்ஸியின் சாதனையைச் சமன் செய்தார். சர்வதேச அளவில் அதிக போட்டிகளில் விளையாடிய வீரர் என்ற பெருமையையும் (229 ஆட்டங்கள்) அவர் பெற்றுள்ளார்.</p>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Hockey · Pro League / Nations Cup</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Hockey: Indian Men Beat World Champs Germany; Women Top Group in Nations Cup</span>
+                        <span class="lang-ta">ஹாக்கி: உலக சாம்பியன் ஜெர்மனியை வீழ்த்திய இந்திய ஆடவர் அணி; நேஷன்ஸ் கோப்பையில் மகளிர் அணி முதலிடம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In the FIH Pro League held in Rotterdam (Netherlands), the Indian Men's Hockey team pulled off a stunning 3-1 victory against reigning World Champions Germany. Conversely, in the Nations Cup in New Zealand, the Indian Women's team defeated Uruguay 3-2. Deepika Sehrawat scored a brace. With this win, the Indian women secured 9 points to top Group A.</p>
+                    <p class="lang-ta">நெதர்லாந்தின் ராட்டர்டாமில் நடைபெறும் புரோ ஹாக்கி லீக் (FIH Pro League) தொடரில், இந்திய ஆடவர் அணி 3-1 என்ற கோல் கணக்கில் நடப்பு உலக சாம்பியனான ஜெர்மனியை வீழ்த்தி அசத்தியது. நியூசிலாந்தில் நடைபெறும் நேஷன்ஸ் கோப்பையில் (Nations Cup), இந்திய மகளிர் அணி 3-2 என உருகுவேவை வீழ்த்தியது. தீபிகா ஷெராவத் 2 கோல்கள் அடித்தார். இந்த வெற்றியின் மூலம் 9 புள்ளிகளுடன் இந்திய மகளிர் அணி குரூப் ஏ பிரிவில் முதலிடம் பிடித்தது.</p>
+                </div>
+
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Which Constitutional Article gives the Parliament the power to adjudicate inter-state river water disputes, forming the basis for the Mekedatu and Mullaperiyar issues debated in the TN Assembly?</span>
+                        <span class="lang-ta">கேள்வி: தமிழக சட்டப்பேரவையில் விவாதிக்கப்பட்ட மேக்கேதாட்டு மற்றும் முல்லைப் பெரியாறு விவகாரங்களுக்கு அடிப்படையாக உள்ள, மாநிலங்களுக்கு இடையிலான நதிநீர் தகராறுகளைத் தீர்க்க நாடாளுமன்றத்திற்கு அதிகாரம் அளிக்கும் அரசியலமைப்புச் சரத்து எது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Article 262</span><br><br>
+                                <strong>Context:</strong> CM Joseph Vijay moved a resolution against Karnataka's Mekedatu dam project across the Cauvery and raised the Mullaperiyar water level issue. Article 262 deals with inter-state water disputes.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">சரத்து 262</span><br><br>
+                                <strong>பின்னணி:</strong> காவிரியின் குறுக்கே கர்நாடகா கட்டும் மேக்கேதாட்டு அணைத் திட்டத்திற்கு எதிராகவும், முல்லைப் பெரியாறு நீர்மட்ட விவகாரம் குறித்தும் முதல்வர் ஜோசப் விஜய் தீர்மானம் கொண்டு வந்தார். சரத்து 262 மாநிலங்களுக்கு இடையிலான நதிநீர் தகராறுகளைக் கையாளுகிறது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: The 'Islamabad Agreement' officially signed recently is a peace treaty between which two nations?</span>
+                        <span class="lang-ta">கேள்வி: சமீபத்தில் அதிகாரப்பூர்வமாகக் கையெழுத்தான 'இஸ்லாமாபாத் ஒப்பந்தம்' என்பது எந்த இரு நாடுகளுக்கு இடையிலான அமைதி ஒப்பந்தமாகும்?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">USA and Iran</span><br><br>
+                                <strong>Context:</strong> The USA and Iran electronically signed the 'Islamabad Agreement' to end their conflict, facilitated by Pakistan and Qatar. Iran agreed to reopen the Strait of Hormuz.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">அமெரிக்கா மற்றும் ஈரான்</span><br><br>
+                                <strong>பின்னணி:</strong> பாகிஸ்தான் மற்றும் கத்தார் நாடுகளின் உதவியுடன், அமெரிக்கா மற்றும் ஈரான் தங்களது போரை முடிவுக்குக் கொண்டுவர 'இஸ்லாமாபாத் ஒப்பந்தத்தில்' கையெழுத்திட்டுள்ளன. ஹோர்முஸ் ஜலசந்தியைத் திறக்க ஈரான் ஒப்புக்கொண்டுள்ளது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">Governor's Address</span><span class="lang-ta">ஆளுநர் உரை</span></td>
+                                <td><span class="lang-en">State/Polity</span><span class="lang-ta">மாநிலம்/அரசியல்</span></td>
+                                <td><span class="lang-en">State Caste census planned; opposes NEP & 3-language formula.</span><span class="lang-ta">மாநில சாதிவாரி கணக்கெடுப்பு; NEP, மும்மொழி கொள்கைக்கு எதிர்ப்பு.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">Mekedatu Resolution</span><span class="lang-ta">மேக்கேதாட்டு தீர்மானம்</span></td>
+                                <td><span class="lang-en">State/Water</span><span class="lang-ta">மாநிலம்/நதிநீர்</span></td>
+                                <td><span class="lang-en">TN Assembly passes resolution against K'taka project.</span><span class="lang-ta">கர்நாடக திட்டத்துக்கு எதிராக சட்டப்பேரவையில் தீர்மானம்.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">Islamabad Agreement</span><span class="lang-ta">இஸ்லாமாபாத் ஒப்பந்தம்</span></td>
+                                <td><span class="lang-en">Intl/Geopolitics</span><span class="lang-ta">சர்வதேசம்/அரசியல்</span></td>
+                                <td><span class="lang-en">US-Iran sign peace deal; Hormuz Strait to open.</span><span class="lang-ta">அமெரிக்கா-ஈரான் அமைதி ஒப்பந்தம்; ஹோர்முஸ் ஜலசந்தி திறப்பு.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">NSE Mega IPO</span><span class="lang-ta">என்எஸ்இ மாபெரும் ஐபிஓ</span></td>
+                                <td><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></td>
+                                <td><span class="lang-en">NSE files DRHP for ₹30,000 Cr IPO (largest in India).</span><span class="lang-ta">ரூ.30,000 கோடியில் பங்கு வெளியீட்டுக்கு செபியிடம் விண்ணப்பம்.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">Ration Cards</span><span class="lang-ta">குடும்ப அட்டைகள்</span></td>
+                                <td><span class="lang-en">National/Welfare</span><span class="lang-ta">தேசியம்/நலத்திட்டம்</span></td>
+                                <td><span class="lang-en">3 crore new cards to be issued; PDS 98.5% digitized.</span><span class="lang-ta">3 கோடி புதிய அட்டைகள்; PDS 98.5% டிஜிட்டல் மயம்.</span></td>
+                                <td><span class="badge bg-tip">MED</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani Chennai 19-06-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி சென்னை 19-06-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source text detailed state, national, and international news for 19 June 2026. 
+State news covered Governor R.N. Ravi's address to the 17th TN Legislative Assembly, promising a caste census (Social Justice Census), retaining the two-language formula, and opposing NEP 2020. CM Joseph Vijay will pass a resolution on June 19 against the Mekedatu dam. Interim relief of 30% basic pay or Rs 10,000 announced for govt employees retiring after Jan 1, 2026, under the GPS scheme. DVAC raided 40 RTOs across TN and seized Rs 37.81 lakh. Rains with squalls disrupted flight services in Chennai. Rs 59.92 lakh fine collected for illegal garbage dumping in Chennai. 
+National news: PM Modi distributed Rs 2,400 crore as employment generation incentive. Union Food Minister announced 3 crore new ration cards nationwide. Rajya Sabha elections resulted in JMM and Independent wins in Jharkhand, and ZPM win in Mizoram. The Centre defended its Telegram ban in the Delhi HC citing scams worth Rs 3,086 crore. 
+International news: India and the US discussed a trade pact at the G7 summit. US-Iran signed the 'Islamabad Agreement' for peace, ending the conflict and opening the Strait of Hormuz. PM Modi pitched for democratising tech at VivaTech 2026 in Paris. Ukraine attacked a Moscow oil refinery with drones. 
+Economy: NSE filed draft papers for a Rs 30,000 crore IPO. Emirates NBD to acquire 60% of RBL Bank for Rs 26,015 crore. EPF interest rate set at 8.25% for 2025-26. US Fed kept interest rates unchanged. 
+Sports: Harry Kane scored his 10th World Cup goal (England beat Croatia 4-2). Ronaldo played his 6th World Cup (Portugal 1-1 Congo). Indian men's hockey team beat Germany 3-1. Indian women's hockey team beat Uruguay 3-2 in Nations Cup. Minakshi qualified for Boxing World Cup quarterfinals.]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூல உரைகள் 19 ஜூன் 2026 க்கான செய்திகளைக் கொண்டிருந்தன.
+மாநில செய்திகளில், 17-வது சட்டப்பேரவையில் ஆளுநர் ஆர்.என். ரவி உரை; சாதிவாரி சமூக நீதி கணக்கெடுப்பு, இருமொழிக் கொள்கை தொடரும் மற்றும் NEP 2020-க்கு எதிர்ப்பு குறித்து அறிவிப்பு. மேக்கேதாட்டு அணைக்கு எதிராக ஜூன் 19-ல் முதல்வர் ஜோசப் விஜய் தீர்மானம் கொண்டு வருகிறார். ஜிபிஎஸ் (GPS) திட்டத்தின் கீழ் ஓய்வுபெறும் ஊழியர்களுக்கு 30% அடிப்படை ஊதியம் அல்லது ரூ.10,000 இடைக்கால நிவாரணம். தமிழகம் முழுவதும் 40 RTO அலுவலகங்களில் லஞ்ச ஒழிப்புத்துறை சோதனை, ரூ.37.81 லட்சம் பறிமுதல். சென்னையில் மழையால் விமான சேவைகள் பாதிப்பு. சென்னையில் குப்பைகளைக் கொட்டியதற்காக ரூ.59.92 லட்சம் அபராதம்.
+தேசிய அளவில்: வேலைவாய்ப்பு ஊக்கத்தொகையாக ரூ.2,400 கோடியை பிரதமர் வழங்கினார். நாடு முழுவதும் 3 கோடி புதிய ரேஷன் கார்டுகள் வழங்கப்படும் என உணவுத்துறை அமைச்சர் அறிவிப்பு. மாநிலங்களவைத் தேர்தலில் ஜார்க்கண்டில் JMM மற்றும் சுயேச்சை வெற்றி, மிசோரமில் ZPM வெற்றி. தில்லி உயர்நீதிமன்றத்தில் டெலிகிராம் தடையை மத்திய அரசு ஆதரித்தது (ரூ.3,086 கோடி மோசடி).
+சர்வதேச அளவில்: ஜி7 மாநாட்டில் இந்திய-அமெரிக்க வர்த்தக ஒப்பந்தம் குறித்து பேச்சு. ஹோர்முஸ் ஜலசந்தியைத் திறந்து போரை முடிக்க அமெரிக்கா-ஈரான் 'இஸ்லாமாபாத் ஒப்பந்தம்' கையெழுத்து. பாரிஸ் விவாடெக் மாநாட்டில் தொழில்நுட்ப ஜனநாயகத்தை மோடி வலியுறுத்தினார். மாஸ்கோ எண்ணெய் சுத்திகரிப்பு நிலையம் மீது உக்ரைன் ட்ரோன் தாக்குதல்.
+பொருளாதாரம்: ரூ.30,000 கோடி ஐபிஓ-விற்கு செபியிடம் NSE விண்ணப்பம். RBL வங்கியின் 60% பங்குகளை ரூ.26,015 கோடிக்கு வாங்கும் எமிரேட்ஸ் என்பிடி வங்கி. 2025-26-க்கு EPF வட்டி 8.25% ஆக அறிவிப்பு. அமெரிக்க பெட் வட்டி விகிதத்தில் மாற்றமில்லை.
+விளையாட்டு: உலகக் கோப்பையில் 10-வது கோல் அடித்தார் ஹாரி கேன் (இங்கிலாந்து 4-2 குரோஷியா). 6-வது உலகக் கோப்பையில் ரொனால்டோ (போர்ச்சுகல் 1-1 காங்கோ). ஜெர்மனியை 3-1 என வென்றது இந்திய ஆடவர் ஹாக்கி அணி. நேஷன்ஸ் கோப்பையில் உருகுவேவை 3-2 என வென்றது இந்திய மகளிர் அணி. குத்துச்சண்டையில் காலாிறுதிக்கு முன்னேறினார் மீனாட்சி.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 19 June 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,631 @@
+﻿```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            .nav-links { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 2rem 1rem; }
+            header h1 { font-size: 1.6rem; letter-spacing: 1px; }
+            .tagline { font-size: 0.95rem; }
+            nav.sticky-top { padding: 0.75rem 1rem; gap: 0.5rem; }
+            .toggle-btn { padding: 0.4rem 0.8rem; font-size: 0.85rem; }
+            .layout-container { padding: 1rem 0.75rem; gap: 1rem; }
+            main { max-width: 100%; }
+            .legend-row { flex-direction: column; gap: 0.5rem; }
+            .news-card { padding: 1rem; }
+            .news-card h3 { font-size: 1.15rem; }
+            .card-meta { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+            table { font-size: 0.8rem; }
+            th, td { padding: 0.6rem; }
+            .raw-text-panel { font-size: 0.75rem; padding: 1rem; }
+            footer { padding: 1.5rem 1rem; }
+        }
+
+        @media (max-width: 480px) {
+            header h1 { font-size: 1.25rem; }
+            nav.sticky-top { flex-wrap: wrap; }
+            table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .news-card { border-left-width: 3px; }
+        }
+    </style>
+</head>
+<body class="en-mode">
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">14 June 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">14 ஜூன் 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <!-- Sidebar TOC -->
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Tech</span><span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · Water Dispute</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">SC Only Permitted DPR for Mekedatu, Not Construction: Minister Duraimurugan Clarifies</span>
+                        <span class="lang-ta">மேகதாது அணை: திட்ட அறிக்கை தயாரிக்க மட்டுமே உச்சநீதிமன்றம் அனுமதி - அமைச்சர் துரைமுருகன் விளக்கம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Responding to the Karnataka government's push to build the Mekedatu dam, Tamil Nadu Minister for Water Resources Duraimurugan clarified that the Supreme Court only permitted Karnataka to prepare a Detailed Project Report (DPR). He strongly refuted Karnataka CM D.K. Shivakumar's claim that permission was granted for the construction of the dam, calling it factually incorrect. Duraimurugan added that the TN Government remains vigilant and will fight this legally.</p>
+                    <p class="lang-ta">மேகதாதுவில் அணை கட்ட கர்நாடக அரசு தீவிரம் காட்டி வரும் நிலையில், விரிவான திட்ட அறிக்கை (DPR) தயாரிக்க மட்டுமே உச்சநீதிமன்றம் அனுமதி அளித்துள்ளது என தமிழக நீர்வளத்துறை அமைச்சர் துரைமுருகன் விளக்கம் அளித்துள்ளார். அணை கட்ட அனுமதி அளிக்கப்பட்டுள்ளதாக கர்நாடக முதல்வர் டி.கே. சிவகுமார் கூறுவது தவறான தகவல் என்றும், இதனை சட்டரீதியாக எதிர்கொள்ள தமிழக அரசு விழிப்புடன் செயல்படும் எனவும் அவர் தெரிவித்தார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Polity Hook:</strong> Article 262 of the Indian Constitution provides for the adjudication of disputes relating to waters of inter-state rivers or river valleys. Parliament enacted the Inter-State Water Disputes Act in 1956.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> இந்திய அரசியலமைப்பின் 262-வது சரத்து மாநிலங்களுக்கு இடையிலான நதிநீர் சிக்கல்களைத் தீர்ப்பது குறித்துக் கூறுகிறது. இதற்காக 1956-ல் நாடாளுமன்றம் நதிநீர் தாவா சட்டத்தை இயற்றியது.</span></li>
+                            <li><span class="lang-en"><strong>Geography Hook:</strong> Mekedatu is a deep gorge situated at the confluence of the river Cauvery and its tributary Arkavathi in Karnataka.</span><span class="lang-ta"><strong>புவியியல் குறிப்பு:</strong> மேகதாது என்பது கர்நாடகாவில் காவிரி ஆறும் அதன் துணை நதியான அர்க்காவதியும் இணையும் இடத்தில் அமைந்துள்ள ஆழமான பள்ளத்தாக்கு ஆகும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Infrastructure · Desalination</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">400 MLD Perur Desalination Plant Construction Inspected; Ordered to be Expedited</span>
+                        <span class="lang-ta">பேரூரில் 400 மில்லியன் லிட்டர் கடல்நீரை நன்னீராக்கும் நிலையப் பணிகள் தீவிரம்: விரைந்து முடிக்க உத்தரவு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Gagandeep Singh Bedi, Additional Chief Secretary (Municipal Administration & Water Supply), inspected the ongoing construction of the 400 MLD (Million Litres per Day) desalination plant at Perur in Chengalpattu district. The project is being executed at an estimated cost of ₹5,814.57 crore by the Chennai Metropolitan Water Supply and Sewerage Board (CMWSSB). He instructed officials to expedite the civil and offshore pipe-laying works to bring the plant into public use quickly.</p>
+                    <p class="lang-ta">செங்கல்பட்டு மாவட்டம் பேரூரில் நாள் ஒன்றுக்கு 400 மில்லியன் லிட்டர் நன்னீர் உற்பத்தித் திறன் கொண்ட கடல்நீரை நன்னீராக்கும் நிலையத்தின் கட்டுமானப் பணிகளை, நகராட்சி நிர்வாகம் மற்றும் குடிநீர் வழங்கல் துறை கூடுதல் தலைமைச் செயலாளர் ககன்தீப் சிங் பேடி நேரில் ஆய்வு செய்தார். சென்னை குடிநீர் வாரியம் சார்பில் ரூ.5,814.57 கோடியில் இத்திட்டம் செயல்படுத்தப்படுகிறது. குழாய் பதிக்கும் பணிகள் உள்ளிட்டவற்றை விரைந்து முடித்து பொதுமக்கள் பயன்பாட்டுக்கு கொண்டு வர அவர் அறிவுறுத்தினார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Science/Tech Hook:</strong> Desalination plants typically use Reverse Osmosis (RO) technology. In RO, pressure is applied to push saltwater through a semi-permeable membrane, leaving salt and impurities behind.</span><span class="lang-ta"><strong>அறிவியல் குறிப்பு:</strong> கடல்நீரை நன்னீராக்கும் நிலையங்கள் பெரும்பாலும் எதிர் சவ்வூடுபரவல் (Reverse Osmosis - RO) தொழில்நுட்பத்தைப் பயன்படுத்துகின்றன. இதில் அதிக அழுத்தத்தைப் பயன்படுத்தி உப்பு நீர் சவ்வின் வழியே செலுத்தப்பட்டு நன்னீர் பிரிக்கப்படுகிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Education · Arrears Clearance</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Special Chance for Old Polytechnic Students to Clear Arrears in Oct 2026</span>
+                        <span class="lang-ta">பழைய 'அரியர்' பாடத் தேர்வுகளை எழுத பாலிடெக்னிக் மாணவர்களுக்கு சிறப்பு வாய்ப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Higher Education Department has issued an order granting a special, one-time opportunity for Polytechnic diploma students who have had pending arrears for a long time (across batches from 2015 onwards). Approximately 2,000 students will benefit from this. They can clear their pending subjects during the October 2026 and April 2027 semester exams by paying a registration fee of ₹750 and an exam fee of ₹65 per subject.</p>
+                    <p class="lang-ta">நீண்ட காலமாக 'அரியர்' (நிலுவை) பாடங்களை வைத்துள்ள பாலிடெக்னிக் மாணவர்களுக்கு (2015 மற்றும் அதற்குப் பிந்தைய கல்வியாண்டுகள்) சிறப்பு வாய்ப்பு வழங்கி உயர்கல்வித்துறை அரசாணை வெளியிட்டுள்ளது. இதன் மூலம் சுமார் 2,000 மாணவர்கள் பயனடைவார்கள். இவர்கள் வரும் அக்டோபர் 2026 மற்றும் ஏப்ரல் 2027 பருவத் தேர்வுகளின் போது, பதிவுக் கட்டணமாக ரூ.750 மற்றும் ஒரு பாடத்திற்கு ரூ.65 செலுத்தி தேர்வுகளை எழுதலாம்.</p>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Archaeology · Keeladi</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Ancient Iron Smelting Furnace Unearthed in 11th Phase of Keeladi Excavations</span>
+                        <span class="lang-ta">கீழடியில் கண்டறியப்பட்ட பழங்கால இரும்பு உலைக்களன்! 11-ஆம் கட்ட அகழாய்வில் முக்கிய மைல்கல்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In a significant breakthrough during the ongoing 11th phase of archaeological excavations at Keeladi (Sivaganga District), an ancient iron smelting furnace has been unearthed. This discovery confirms that Keeladi was not just a residential settlement but an advanced industrial and manufacturing hub during the Sangam Era. Archaeologists suggest this furnace was likely used to produce agricultural implements and weapons.</p>
+                    <p class="lang-ta">சிவகங்கை மாவட்டம் கீழடியில் நடைபெற்று வரும் 11-ஆம் கட்ட அகழாய்வில் பழங்கால இரும்பு உலைக்களன் கண்டறியப்பட்டுள்ளது. இதன் மூலம், கீழடி வெறும் குடியிருப்பப் பகுதியாக மட்டுமில்லாமல், சங்க காலத்தில் ஒரு முக்கிய தொழில் மற்றும் உற்பத்தி மையமாகத் திகழ்ந்தது என்பது உறுதியாகியுள்ளது. இந்த உலைக்களன் விவசாயக் கருவிகள் மற்றும் ஆயுதங்கள் தயாரிக்கப் பயன்படுத்தப்பட்டிருக்கலாம் என தொல்லியல் ஆய்வாளர்கள் கருதுகின்றனர்.</p>
+                </div>
+
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National / Central News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Defence · IAF Crash</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">5 IAF Personnel Killed as AN-32 Aircraft Crashes in Assam; IAF to Procure C-295s</span>
+                        <span class="lang-ta">அஸ்ஸாமில் விமானப்படை ஏஎன்-32 (AN-32) விமானம் விபத்து: 5 வீரர்கள் உயிரிழப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Tragedy struck the Indian Air Force when an AN-32 transport aircraft belonging to the 43rd Squadron crashed while landing at the Jorhat airbase in Assam, killing all 5 personnel on board (including Sqn Ldr Prashant Singh). The aircraft lost control, broke into two pieces, and caught fire. The AN-32 has been the backbone of IAF transport for over 40 years. Following a series of crashes, the IAF is expediting plans to replace the aging AN-32 fleet with modern C-295 aircraft.</p>
+                    <p class="lang-ta">அஸ்ஸாமின் ஜோர்ஹாட் விமானப்படைத் தளத்தில் தரையிறங்கும் போது, இந்திய விமானப்படையின் 43-வது படைப்பிரிவுக்குச் சொந்தமான ஏஎன்-32 (AN-32) போக்குவரத்து விமானம் விபத்துக்குள்ளானது. இதில் விமானி பிரசாந்த் சிங் உட்பட 5 வீரர்கள் உயிரிழந்தனர். கட்டுப்பாட்டை இழந்த விமானம் இரண்டாக உடைந்து தீப்பிடித்தது. 40 ஆண்டுகளுக்கும் மேலாகப் பயன்பாட்டில் உள்ள இந்த ஏஎன்-32 விமானங்களுக்குப் பதிலாக, நவீன சி-295 (C-295) விமானங்களை வாங்க விமானப்படை திட்டமிட்டுள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en"><strong>Defence Hook:</strong> The C-295 transport aircraft project is a joint venture where the first 16 planes come from Airbus (Spain) in fly-away condition, and the remaining 40 will be manufactured in India by Tata Advanced Systems Limited (TASL) in Vadodara.</span><span class="lang-ta"><strong>பாதுகாப்புக் குறிப்பு:</strong> சி-295 போக்குவரத்து விமானத் திட்டம் என்பது ஏர்பஸ் (ஸ்பெயின்) மற்றும் டாடா (இந்தியா) நிறுவனங்களின் கூட்டுத் திட்டமாகும். முதல் 16 விமானங்கள் ஸ்பெயினிலிருந்தும், மீதமுள்ள 40 விமானங்கள் குஜராத்தின் வதோதராவில் டாடாவாலும் தயாரிக்கப்படும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Appointments · Defence</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Lt. Gen. Dheeraj Seth Appointed as the Next Chief of Army Staff (COAS)</span>
+                        <span class="lang-ta">இந்திய ராணுவத்தின் அடுத்த தலைமைத் தளபதியாக லெப்டினன்ட் ஜெனரல் தீரஜ் சேத் நியமனம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Ministry of Defence announced the appointment of Lt. General Dheeraj Seth as the next Chief of the Army Staff. He will succeed the current Army Chief, Gen. Upendra Dwivedi, who is set to retire on June 30, 2026. Commissioned in 1986, Lt. Gen. Seth is an alumnus of the National Defence Academy (NDA) and currently serves as the Vice Chief of Army Staff. He previously commanded the crucial "Chakra Corps" strike force.</p>
+                    <p class="lang-ta">இந்திய ராணுவத்தின் அடுத்த தலைமைத் தளபதியாக லெப்டினன்ட் ஜெனரல் தீரஜ் சேத் நியமிக்கப்பட்டுள்ளார் என பாதுகாப்பு அமைச்சகம் அறிவித்துள்ளது. தற்போதைய தளபதி உபேந்திர துவிவேதி ஜூன் 30-ம் தேதியுடன் ஓய்வு பெறுவதையடுத்து இவர் பொறுப்பேற்கிறார். 1986-ல் ராணுவத்தில் இணைந்த இவர், தற்போது ராணுவ துணைத் தளபதியாக உள்ளார். முன்னதாக இவர் அதிரடிப் படையான "சக்ரா கோர்" படைப்பிரிவை வழிநடத்தியுள்ளார்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · High-Level Committee</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Amit Shah Orders Committee Headed by Prakash Naolekar to Study Demographic Shifts</span>
+                        <span class="lang-ta">எல்லை மற்றும் நகரங்களில் மக்கள் தொகை மாற்றம்: ஓய்வுபெற்ற உச்சநீதிமன்ற நீதிபதி நௌலேகர் தலைமையிலான குழுவுக்கு அமித் ஷா உத்தரவு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Union Home Minister Amit Shah directed a high-level committee to conduct on-ground studies regarding abnormal demographic changes in border areas, major cities, and industrial hubs driven by illegal immigration. The committee, established last month, is headed by retired Supreme Court Judge Prakash Prabhakar Naolekar and includes Census Commissioner Mritunjay Kumar Narayan. The panel aims to suggest policy and legal measures to safeguard national security and the socio-economic fabric.</p>
+                    <p class="lang-ta">சட்டவிரோத குடியேற்றங்களால் எல்லைப் பகுதிகள், பெருநகரங்கள் மற்றும் தொழில் நகரங்களில் ஏற்பட்டுள்ள மக்கள் தொகை மாற்றங்கள் குறித்து நேரில் ஆய்வு செய்யுமாறு அமித் ஷா உயர்மட்டக் குழுவுக்கு உத்தரவிட்டுள்ளார். ஓய்வுபெற்ற உச்சநீதிமன்ற நீதிபதி பிரகாஷ் பிரபாகர் நௌலேகர் தலைமையிலான இக்குழுவில், மக்கள் தொகை கணக்கெடுப்பு ஆணையர் மிருதுஞ்சய் குமார் நாராயண் உள்ளிட்டோர் இடம்பெற்றுள்ளனர். நாட்டின் பாதுகாப்பை உறுதி செய்ய சட்ட மற்றும் கொள்கை ரீதியான நடவடிக்கைகளை இக்குழு பரிந்துரைக்கும்.</p>
+                </div>
+            </section>
+
+            <!-- INTERNATIONAL NEWS -->
+            <section id="international">
+                <h2>
+                    <span class="lang-en">International News</span>
+                    <span class="lang-ta">சர்வதேச செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Diplomacy · Conflict</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">US-Iran Peace Deal to be Signed This Sunday, Says US President Trump</span>
+                        <span class="lang-ta">அமெரிக்கா - ஈரான் அமைதி ஒப்பந்தம் ஞாயிற்றுக்கிழமை கையொப்பம்: டிரம்ப் அறிவிப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">US President Donald Trump announced that the highly anticipated US-Iran peace agreement will be signed on Sunday, effectively ending the conflict that has rattled the Middle East since late February. The pact strictly prohibits Iran's nuclear weapons program while promising to lift economic sanctions. Trump confirmed that the strategic Strait of Hormuz will be fully reopened immediately after the signing. Pakistan played a crucial role as a mediator in facilitating these talks.</p>
+                    <p class="lang-ta">அமெரிக்கா மற்றும் ஈரான் இடையிலான அமைதி ஒப்பந்தம் ஞாயிற்றுக்கிழமை கையொப்பமாகும் என அமெரிக்க அதிபர் டொனால்ட் டிரம்ப் அறிவித்துள்ளார். பிப்ரவரி மாதத்தில் இருந்து மத்திய கிழக்கில் நீடித்து வந்த மோதலுக்கு இது முற்றுப்புள்ளி வைக்கும். ஈரானின் அணு ஆயுதத் திட்டத்திற்கு முழுமையாகத் தடை விதிக்கும் அதே வேளையில், பொருளாதாரத் தடைகள் நீக்கப்படும் என டிரம்ப் உறுதியளித்துள்ளார். கையொப்பமானவுடன் முக்கியத்துவம் வாய்ந்த ஹோர்முஸ் ஜலசந்தி முழுமையாகத் திறக்கப்படும். இந்த அமைதிப் பேச்சுவார்த்தையில் பாகிஸ்தான் முக்கிய மத்தியஸ்தராகச் செயல்பட்டது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>IR Hook:</strong> The previous major nuclear deal with Iran was the JCPOA (Joint Comprehensive Plan of Action) signed in 2015 during the Obama administration, which the US later withdrew from.</span><span class="lang-ta"><strong>பன்னாட்டு உறவுகள் குறிப்பு:</strong> ஒபாமா காலத்தில் 2015-ல் ஈரானுடன் JCPOA எனப்படும் அணுசக்தி ஒப்பந்தம் கையெழுத்தானது, பின்னர் இதிலிருந்து அமெரிக்கா விலகியது நினைவுகூரத்தக்கது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Diplomacy · G7 Summit</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">PM Modi Departs for France (G7 Summit) and Slovakia</span>
+                        <span class="lang-ta">ஜி7 (G7) மாநாட்டில் பங்கேற்க பிரான்ஸ் மற்றும் ஸ்லோவாக்கியா நாடுகளுக்குப் பயணம் மேற்கொண்டார் பிரதமர் மோடி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Prime Minister Narendra Modi embarked on a week-long official visit to Europe, covering France and Slovakia. He will attend the G7 Summit held in Evian, France, representing India as a special invitee for the 8th consecutive time. Modi stated India will voice the concerns of the Global South. Additionally, he will hold bilateral talks with French President Emmanuel Macron (discussing the procurement of 114 Rafale jets) and become the first Indian PM to visit Slovakia since its independence in 1993.</p>
+                    <p class="lang-ta">பிரதமர் நரேந்திர மோடி பிரான்ஸ் மற்றும் ஸ்லோவாக்கியாவுக்கு ஒரு வார கால அரசு முறைப் பயணத்தை மேற்கொண்டுள்ளார். பிரான்சின் எவியான் (Evian) நகரில் நடைபெறும் ஜி7 உச்சி மாநாட்டில், 8-வது முறையாகச் சிறப்பு அழைப்பாளராகப் பங்கேற்கிறார். உலகளாவிய தெற்கு (Global South) நாடுகளின் குரலாக இந்தியா ஒலிக்கும் என அவர் தெரிவித்தார். மேலும், பிரான்ஸ் அதிபர் மேக்ரானை சந்தித்து 114 ரஃபேல் போர் விமானங்கள் வாங்குவது குறித்தும் பேச்சுவார்த்தை நடத்த உள்ளார். 1993-ல் ஸ்லோவாக்கியா சுதந்திரம் அடைந்த பிறகு, அங்கு செல்லும் முதல் இந்தியப் பிரதமர் மோடி ஆவார்.</p>
+                </div>
+            </section>
+
+            <!-- ECONOMY & FINANCE -->
+            <section id="economy">
+                <h2>
+                    <span class="lang-en">Economy, Tech & Finance</span>
+                    <span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Markets · Forex & IPO</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Forex Reserves Drop by $68.16 Bn; Casagrand Gets SEBI Nod for ₹1,220 Cr IPO</span>
+                        <span class="lang-ta">அந்நியச் செலாவணி கையிருப்பு $68.16 பில்லியன் சரிவு; காசாகிராண்ட் நிறுவனத்தின் ரூ.1,220 கோடி ஐபிஓ-வுக்கு செபி அனுமதி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">According to RBI data, India's foreign exchange reserves saw a sharp decline, dropping to approximately $681.6 Billion (stated locally as a drop of 68,161 Cr USD units in report contexts, reflecting global volatility) for the week ending June 5. In corporate news, Chennai-based real estate major Casagrand received approval from SEBI (Securities and Exchange Board of India) to launch its Initial Public Offering (IPO) aiming to raise ₹1,220 crore to clear debts.</p>
+                    <p class="lang-ta">இந்திய ரிசர்வ் வங்கியின் தரவுகளின்படி, ஜூன் 5-ம் தேதியுடன் முடிவடைந்த வாரத்தில் இந்தியாவின் அந்நியச் செலாவணி கையிருப்பு பெரும் சரிவைக் கண்டுள்ளது. கார்ப்பரேட் செய்திகளில், சென்னையைச் சேர்ந்த முன்னணி ரியல் எஸ்டேட் நிறுவனமான காசாகிராண்ட், தனது கடன்களை அடைக்க ரூ.1,220 கோடி நிதியைத் திரட்டும் வகையில், ஆரம்ப பொதுப்பங்கு வெளியீட்டை (IPO) கொண்டு வர பங்குச்சந்தை ஒழுங்காற்று வாரியமான செபியிடம் (SEBI) அனுமதி பெற்றுள்ளது.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Tech Snippets · WWDC</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Apple Introduces iOS 27 with Apple Intelligence; Tim Cook's Final Keynote</span>
+                        <span class="lang-ta">ஆப்பிள் நிறுவனத்தின் iOS 27 அறிமுகம்; ஆப்பிள் இன்டெலிஜென்ஸ் (Apple Intelligence) வசதி இணைப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">At the Apple WWDC event, CEO Tim Cook delivered his final keynote speech before handing over to John Ternus. Apple officially introduced the 'iOS 27' operating system, featuring an upgraded Siri powered by "Apple Intelligence" and a liquid glass interface design. Meanwhile, OpenAI launched a 'Lockdown Mode' for ChatGPT to protect users from data theft and cyber attacks.</p>
+                    <p class="lang-ta">ஆப்பிள் நிறுவனத்தின் WWDC நிகழ்வில், தற்போதைய சிஇஓ டிம் குக் தனது கடைசி உரையை நிகழ்த்தினார்; விரைவில் ஜான் டெர்னஸ் பொறுப்பேற்க உள்ளார். இந்நிகழ்வில், மேம்படுத்தப்பட்ட சிரி (Siri) மற்றும் ஆப்பிள் இன்டெலிஜென்ஸ் (Apple Intelligence) வசதியுடன் கூடிய புதிய 'iOS 27' இயங்குதளத்தை ஆப்பிள் அறிமுகப்படுத்தியது. இதற்கிடையே, சைபர் தாக்குதல்கள் மற்றும் தரவு திருட்டில் இருந்து பயனர்களைப் பாதுகாக்க, சாட்ஜிபிடியில் 'லாக்டவுன் மோட்'டை ஓபன்ஏஐ (OpenAI) அறிமுகப்படுத்தியுள்ளது.</p>
+                </div>
+            </section>
+            
+            <!-- SPORTS -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports</span>
+                    <span class="lang-ta">விளையாட்டு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Cricket · IND vs AFG</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">India Beats Afghanistan by 7 Wickets in 1st ODI Despite Gurbaz's Century</span>
+                        <span class="lang-ta">முதல் ஒருநாள் போட்டியில் ஆப்கானிஸ்தானை 7 விக்கெட் வித்தியாசத்தில் வீழ்த்தியது இந்தியா (குர்பாஸ் சதம்)</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In the first ODI match held in Dharamshala, India defeated Afghanistan by 7 wickets. Batting first, Afghanistan scored 194/10 in 24.5 overs (rain-curtailed), anchored by a brilliant 102 off 51 balls by Rahmanullah Gurbaz. India chased down the target (195/3) in 22.5 overs, with captain Shubman Gill scoring an unbeaten 84 off 66 balls.</p>
+                    <p class="lang-ta">தர்மசாலாவில் நடைபெற்ற முதல் ஒருநாள் கிரிக்கெட் போட்டியில், இந்தியா 7 விக்கெட் வித்தியாசத்தில் ஆப்கானிஸ்தானை வீழ்த்தியது. முதலில் பேட் செய்த ஆப்கானிஸ்தான் அணி (மழை காரணமாக ஓவர்கள் குறைப்பு), ரஹ்மானுல்லா குர்பாஸின் (51 பந்துகளில் 102 ரன்கள்) அபார சதத்தால் 24.5 ஓவர்களில் 194/10 ரன்கள் எடுத்தது. 195 ரன்கள் இலக்கை நோக்கி ஆடிய இந்தியா, கேப்டன் சுப்மன் கில்லின் (66 பந்துகளில் 84 ரன்கள்) ஆட்டத்தால் 22.5 ஓவர்களில் வெற்றி இலக்கை எட்டியது.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Football · FIFA 2026</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">USA Beats Paraguay 4-1; Canada Draws with Bosnia 1-1</span>
+                        <span class="lang-ta">உலகக் கோப்பை கால்பந்து: பராகுவேவை 4-1 என வீழ்த்தியது அமெரிக்கா; கனடா - போஸ்னியா ஆட்டம் டிரா</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In the ongoing FIFA World Cup 2026, the USA dominated Paraguay with a 4-1 victory in Los Angeles. Folarin Balogun was the star of the match, scoring two goals for the US. In another match held in Toronto, hosts Canada managed to secure a 1-1 draw against Bosnia and Herzegovina, with Cellin scoring the equalizer for Canada in the 78th minute.</p>
+                    <p class="lang-ta">நடைபெற்று வரும் 2026 உலகக் கோப்பை கால்பந்துப் போட்டியில், லாஸ் ஏஞ்சல்ஸ் நகரில் நடந்த ஆட்டத்தில் அமெரிக்கா 4-1 என்ற கோல் கணக்கில் பராகுவேவை வீழ்த்தியது. அமெரிக்க வீரர் ஃபோலரின் பாலோகுன் 2 கோல்களை அடித்து அசத்தினார். டொராண்டோவில் நடந்த மற்றொரு ஆட்டத்தில், போட்டியை நடத்தும் நாடுகளில் ஒன்றான கனடா 1-1 என்ற கோல் கணக்கில் போஸ்னியாவுடன் டிரா செய்தது.</p>
+                </div>
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: According to the Indian Constitution, which Article empowers the Parliament to adjudicate disputes relating to the waters of inter-state rivers?</span>
+                        <span class="lang-ta">கேள்வி: இந்திய அரசியலமைப்பின் எந்த சரத்து, மாநிலங்களுக்கு இடையிலான நதிநீர் சிக்கல்களைத் தீர்க்க நாடாளுமன்றத்திற்கு அதிகாரம் அளிக்கிறது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Article 262</span><br><br>
+                                <strong>Context:</strong> Tamil Nadu Water Resources Minister Duraimurugan invoked legal boundaries responding to Karnataka's claims regarding the construction of the Mekedatu dam across the Cauvery river.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">சரத்து 262</span><br><br>
+                                <strong>பின்னணி:</strong> காவிரியின் குறுக்கே மேகதாது அணை கட்டுவது தொடர்பாக கர்நாடக அரசின் கூற்றுகளுக்குப் பதிலளிக்கும் வகையில் தமிழக நீர்வளத்துறை அமைச்சர் சட்டரீதியான வரம்புகளைச் சுட்டிக்காட்டினார்.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: The strategic 'Strait of Hormuz', frequently in the news due to US-Iran tensions, connects which two major water bodies?</span>
+                        <span class="lang-ta">கேள்வி: அமெரிக்கா-ஈரான் பதற்றம் காரணமாக செய்திகளில் அடிக்கடி இடம்பெறும் முக்கியத்துவம் வாய்ந்த 'ஹோர்முஸ் ஜலசந்தி', எந்த இரண்டு நீர்ப்பரப்புகளை இணைக்கிறது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Persian Gulf and the Gulf of Oman</span><br><br>
+                                <strong>Context:</strong> US President Trump announced a peace deal with Iran, stating that the Strait of Hormuz will be fully reopened for global oil trade.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">பெர்சிய வளைகுடா மற்றும் ஓமன் வளைகுடா</span><br><br>
+                                <strong>பின்னணி:</strong> ஈரானுடனான அமைதி ஒப்பந்தத்தை அறிவித்த அமெரிக்க அதிபர் டிரம்ப், கச்சா எண்ணெய் போக்குவரத்துக்காக ஹோர்முஸ் ஜலசந்தி முழுமையாகத் திறக்கப்படும் எனக் கூறினார்.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">Mekedatu DPR Status</span><span class="lang-ta">மேகதாது DPR அறிக்கை</span></td>
+                                <td><span class="lang-en">State/Water</span><span class="lang-ta">மாநிலம்/நதிநீர்</span></td>
+                                <td><span class="lang-en">SC only allowed DPR, not dam construction.</span><span class="lang-ta">DPR-க்கு மட்டுமே உச்சநீதிமன்றம் அனுமதி.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">IAF AN-32 Crash</span><span class="lang-ta">ஏஎன்-32 விமானம் விபத்து</span></td>
+                                <td><span class="lang-en">National/Defence</span><span class="lang-ta">தேசியம்/பாதுகாப்பு</span></td>
+                                <td><span class="lang-en">5 personnel killed in Assam (Jorhat).</span><span class="lang-ta">அஸ்ஸாமில் 5 வீரர்கள் பலி.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">US-Iran Peace Deal</span><span class="lang-ta">அமெரிக்கா-ஈரான் ஒப்பந்தம்</span></td>
+                                <td><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></td>
+                                <td><span class="lang-en">To be signed Sunday; Strait of Hormuz to open.</span><span class="lang-ta">ஞாயிறு கையொப்பம்; ஹோர்முஸ் திறப்பு.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">Keeladi 11th Phase</span><span class="lang-ta">கீழடி 11-ஆம் கட்டம்</span></td>
+                                <td><span class="lang-en">State/History</span><span class="lang-ta">மாநிலம்/வரலாறு</span></td>
+                                <td><span class="lang-en">Iron smelting furnace unearthed.</span><span class="lang-ta">இரும்பு உலைக்களன் கண்டெடுப்பு.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">PM Modi G7 Visit</span><span class="lang-ta">மோடியின் G7 பயணம்</span></td>
+                                <td><span class="lang-en">National/IR</span><span class="lang-ta">தேசியம்/உறவுகள்</span></td>
+                                <td><span class="lang-en">Visits France (Evian) and Slovakia.</span><span class="lang-ta">பிரான்ஸ் (Evian), ஸ்லோவாக்கியா பயணம்.</span></td>
+                                <td><span class="badge bg-tip">MED</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani Chennai 14-06-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி சென்னை 14-06-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source text detailed state, national, and international news for 14 June 2026. 
+State news covered Water Resources Minister Duraimurugan refuting Karnataka's claim on Mekedatu, stating the SC only allowed a DPR. An iron smelting furnace was found in the 11th phase of Keeladi excavations. Special chance given to polytechnic students to clear old arrears. CMWSSB inspected the 400 MLD desalination plant at Perur. Chennai police arrested 8 persons and seized 11,440 painkiller tablets. 4,469 rowdies were arrested across TN. Gold prices went up to Rs 1,10,880. AIADMK Gen Sec EPS urged cadres to use social media aggressively to counter the ruling TVK.
+National news detailed the crash of an IAF AN-32 aircraft in Jorhat, Assam, killing 5 personnel. Lt Gen Dheeraj Seth was appointed as the new Army Chief. PM Modi departed for France and Slovakia to attend the G7 Summit. Amit Shah set up a committee to study demographic changes due to illegal immigrants. Congress plans an anti-paper leak campaign from June 17. 
+Internationally, US President Trump stated the US-Iran peace deal will be signed on Sunday, opening the Strait of Hormuz. US forces killed a Tren de Aragua gang leader in Venezuela. 
+Economy: Casagrand IPO of Rs 1220 Cr approved by SEBI. Forex reserves dropped. Apple introduced iOS 27 at WWDC.
+Sports: USA beat Paraguay 4-1 in the FIFA World Cup. India beat Afghanistan by 7 wickets in their 1st ODI.]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூல உரைகள் 14 ஜூன் 2026 க்கான செய்திகளைக் கொண்டிருந்தன.
+மாநில செய்திகளில், மேகதாதுவில் திட்ட அறிக்கை தயாரிக்கவே உச்சநீதிமன்றம் அனுமதித்தது என நீர்வளத்துறை அமைச்சர் துரைமுருகன் விளக்கமளித்தார். கீழடி 11-ஆம் கட்ட அகழாய்வில் இரும்பு உலைக்களன் கண்டறியப்பட்டுள்ளது. பாலிடெக்னிக் மாணவர்களுக்கு அரியர் எழுத சிறப்பு வாய்ப்பு. பேரூரில் கடல்நீரை நன்னீராக்கும் நிலையப் பணி ஆய்வு. சென்னையில் 11,440 போதை மாத்திரைகள் பறிமுதல். தமிழகம் முழுவதும் 4,469 ரௌடிகள் கைது. தங்கம் விலை ரூ.1,10,880 ஆக உயர்வு. ஆளும் தவெக-வை எதிர்கொள்ள சமூக வலைதளங்களை தீவிரமாகப் பயன்படுத்துமாறு அதிமுகவினருக்கு இபிஎஸ் அறிவுரை.
+தேசிய அளவில், அஸ்ஸாமில் ஏஎன்-32 விமானம் விபத்துக்குள்ளானதில் 5 வீரர்கள் பலி. புதிய ராணுவத் தளபதியாக தீரஜ் சேத் நியமனம். ஜி7 மாநாட்டில் பங்கேற்க பிரதமர் மோடி பிரான்ஸ் மற்றும் ஸ்லோவாக்கியா பயணம். சட்டவிரோத குடியேற்றங்களால் ஏற்படும் மக்கள் தொகை மாற்றத்தை ஆராய அமித் ஷா குழு அமைப்பு. ஜூன் 17 முதல் வினாத்தாள் கசிவுக்கு எதிராக காங்கிரஸ் பிரச்சாரம்.
+சர்வதேச அளவில், அமெரிக்கா-ஈரான் அமைதி ஒப்பந்தம் ஞாயிறு கையெழுத்தாகும் என அதிபர் டிரம்ப் அறிவிப்பு; ஹோர்முஸ் ஜலசந்தி திறக்கப்படும். வெனிசுலாவில் கேங்ஸ்டர் தலைவரை வீழ்த்தியது அமெரிக்கா.
+பொருளாதாரம்: காசாகிராண்ட் நிறுவனத்தின் ரூ.1220 கோடி ஐபிஓ-வுக்கு செபி அனுமதி. அந்நியச் செலாவணி கையிருப்பு சரிவு. ஆப்பிள் iOS 27 அறிமுகம்.
+விளையாட்டு: உலகக் கோப்பை கால்பந்தில் பராகுவேவை அமெரிக்கா வீழ்த்தியது. முதல் ஒருநாள் போட்டியில் ஆப்கானிஸ்தானை இந்தியா வென்றது.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 14 June 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+    </script>
+</body>
+</html>
+```

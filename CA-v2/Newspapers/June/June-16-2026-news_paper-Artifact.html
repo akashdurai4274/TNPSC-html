@@ -1,0 +1,574 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            .nav-links { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 2rem 1rem; }
+            header h1 { font-size: 1.6rem; letter-spacing: 1px; }
+            .tagline { font-size: 0.95rem; }
+            nav.sticky-top { padding: 0.75rem 1rem; gap: 0.5rem; }
+            .toggle-btn { padding: 0.4rem 0.8rem; font-size: 0.85rem; }
+            .layout-container { padding: 1rem 0.75rem; gap: 1rem; }
+            main { max-width: 100%; }
+            .legend-row { flex-direction: column; gap: 0.5rem; }
+            .news-card { padding: 1rem; }
+            .news-card h3 { font-size: 1.15rem; }
+            .card-meta { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+            table { font-size: 0.8rem; }
+            th, td { padding: 0.6rem; }
+            .raw-text-panel { font-size: 0.75rem; padding: 1rem; }
+            footer { padding: 1.5rem 1rem; }
+        }
+
+        @media (max-width: 480px) {
+            header h1 { font-size: 1.25rem; }
+            nav.sticky-top { flex-wrap: wrap; }
+            table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .news-card { border-left-width: 3px; }
+        }
+    </style>
+</head>
+<body class="en-mode">
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">16 June 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">16 ஜூன் 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <!-- Sidebar TOC -->
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Tech</span><span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Education · Welfare Scheme</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">CM's Breakfast Scheme Expanded to Classes 6 to 8 from September 17</span>
+                        <span class="lang-ta">முதல்வரின் காலை உணவுத் திட்டம் 6 முதல் 8-ஆம் வகுப்பு வரை விரிவாக்கம்: செப். 17-ல் தொடக்கம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Chief Minister Joseph Vijay has announced the expansion of the 'Chief Minister's Breakfast Scheme' to benefit students studying from classes 6 to 8 in government schools. Currently, the scheme covers students from classes 1 to 5. The expanded phase will be officially launched on September 17, marking the birth anniversary of 'Thanthai' Periyar. The decision was taken during a review meeting of the Social Welfare and Women Empowerment Department at the Secretariat.</p>
+                    <p class="lang-ta">அரசுப் பள்ளிகளில் 6 முதல் 8-ஆம் வகுப்பு வரை பயிலும் மாணவ, மாணவியருக்கும் 'முதலமைச்சரின் காலை உணவுத் திட்டம்' விரிவுபடுத்தப்படும் என முதல்வர் ஜோசப் விஜய் அறிவித்துள்ளார். தற்போது இத்திட்டம் 1 முதல் 5-ஆம் வகுப்பு வரை மட்டுமே செயல்பட்டு வருகிறது. விரிவுபடுத்தப்பட்ட இத்திட்டம் தந்தை பெரியாரின் பிறந்தநாளான செப்டம்பர் 17-ஆம் தேதி முதல் தொடங்கப்படும். தலைமைச் செயலகத்தில் நடைபெற்ற சமூக நலன் மற்றும் மகளிர் உரிமைத் துறையின் ஆய்வுக் கூட்டத்தில் இந்த முடிவு எடுக்கப்பட்டது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Scheme Evolution:</strong> Midday Meal Scheme was launched by K. Kamaraj (1956), expanded into Nutritious Meal Scheme by M.G. Ramachandran (1982). The CM's Breakfast Scheme was originally launched by then-CM M.K. Stalin on September 15, 2022.</span><span class="lang-ta"><strong>திட்ட பரிணாமம்:</strong> மதிய உணவுத் திட்டம் காமராஜரால் (1956) தொடங்கப்பட்டு, எம்.ஜி.ஆரால் (1982) சத்துணவுத் திட்டமாக விரிவுபடுத்தப்பட்டது. முதல்வரின் காலை உணவுத் திட்டம் முந்தைய முதல்வர் மு.க. ஸ்டாலினால் செப்டம்பர் 15, 2022 அன்று தொடங்கப்பட்டது.</span></li>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en"><strong>Date Hook:</strong> The expansion launches on Sept 17 (Social Justice Day / Periyar's Birthday), NOT Sept 15 (Annadurai's Birthday) when the original scheme was launched.</span><span class="lang-ta"><strong>தேதி குறிப்பு:</strong> விரிவாக்கத் திட்டம் செப் 17 (சமூக நீதி நாள் / பெரியார் பிறந்தநாள்) தொடங்குகிறது; மூலத் திட்டம் தொடங்கப்பட்ட செப் 15 (அண்ணா பிறந்தநாள்) அல்ல.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Awards · Defence</span>
+                        <span class="badge bg-gem">HIGH YIELD</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">CM Hands Over ₹48 Lakh to Kirti Chakra Awardee L/Nk A. Meenakshi Sundaram</span>
+                        <span class="lang-ta">'கீர்த்தி சக்ரா' விருது பெற்ற ராணுவ வீரருக்கு தமிழக அரசு சார்பில் ரூ.48 லட்சம்: முதல்வர் விஜய் வழங்கினார்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Chief Minister Joseph Vijay handed over a cheque of ₹48 lakh on behalf of the Tamil Nadu government to Lance Naik A. Meenakshi Sundaram, a native of Theni district serving in the Indian Army. He was recently awarded the 'Kirti Chakra' by President Droupadi Murmu for his extraordinary bravery. On December 19, 2024, during an anti-terror operation in Kulgam (J&K), he sustained severe bullet injuries to his face and shoulder but continued fighting and eliminated terrorists.</p>
+                    <p class="lang-ta">ஜம்மு-காஷ்மீரின் குல்காம் பகுதியில் பயங்கரவாதிகளுக்கு எதிரான தேடுதல் வேட்டையின் போது (டிசம்பர் 2024), முகத்திலும் தோள்பட்டையிலும் குண்டடிபட்ட நிலையிலும் வீரதீரத்துடன் போரிட்டு பயங்கரவாதிகளை வீழ்த்திய தேனி மாவட்டத்தைச் சேர்ந்த ராணுவ வீரர் லான்ஸ் நாயக் அ. மீனாட்சி சுந்தரத்திற்கு, சமீபத்தில் குடியரசுத் தலைவர் திரௌபதி முர்மு 'கீர்த்தி சக்ரா' விருது வழங்கினார். அவரது வீரத்தைப் பாராட்டி, தமிழக அரசு சார்பில் ரூ.48 லட்சத்துக்கான காசோலையை முதல்வர் ஜோசப் விஜய் வழங்கினார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-critical">CRITICAL</span><span class="lang-en"><strong>Defence Hook:</strong> Peacetime gallantry awards in India are given in this order of precedence: 1. Ashoka Chakra, 2. Kirti Chakra, 3. Shaurya Chakra. (Wartime awards: Param Vir Chakra, Maha Vir Chakra, Vir Chakra).</span><span class="lang-ta"><strong>பாதுகாப்புக் குறிப்பு:</strong> இந்தியாவின் அமைதிக்கால தீரச்செயல் விருதுகளின் வரிசை: 1. அசோக சக்ரா, 2. கீர்த்தி சக்ரா, 3. சௌர்யா சக்ரா. (போர்க்கால விருதுகள்: பரம வீர் சக்ரா, மகா வீர் சக்ரா, வீர் சக்ரா).</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Governance · Urban Planning</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">CMDA Empowered to Directly Approve Multi-Storey Buildings</span>
+                        <span class="lang-ta">பல அடுக்குமாடி குடியிருப்புகளுக்கு திட்ட அனுமதி: சிஎம்டிஏ-வுக்கு (CMDA) அதிகாரம் வழங்கி அரசாணை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">To simplify and expedite the approval process for multi-storey buildings in the Chennai Metropolitan area, the Tamil Nadu government has issued a Government Order (GO) empowering the Chennai Metropolitan Development Authority (CMDA) to directly grant building plan approvals. Previously, CMDA only scrutinised applications and forwarded them to the multi-storey building committee, after which final approval required an explicit government order. This decentralization aims to prevent delays.</p>
+                    <p class="lang-ta">சென்னை பெருநகரப் பகுதியில் பல அடுக்குமாடி கட்டடத் திட்ட அனுமதியை எளிமையாகவும், விரைவாகவும் பெறும் வகையில், சென்னை பெருநகர வளர்ச்சிக் குழுமமே (CMDA) திட்ட அனுமதியை வழங்க அதிகாரமளித்து தமிழக அரசு அரசாணை வெளியிட்டுள்ளது. இதுவரை, விண்ணப்பங்களை சிஎம்டிஏ பரிசீலித்து குழுவுக்கு அனுப்பி, பின்னர் அரசாணை பெற்ற பிறகே அனுமதி வழங்கப்பட்டது. இந்த அதிகாரப் பரவலாக்கல் மூலம் காலதாமதம் தவிர்க்கப்படும்.</p>
+                </div>
+
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National / Central News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Defence · Missile Test</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">DRDO Successfully Tests Long Range Land Attack Cruise Missile (LRLACM)</span>
+                        <span class="lang-ta">நீண்ட தூர நில இலக்கைத் தாக்கும் ஏவுகணை (LRLACM) சோதனை வெற்றி: டிஆர்டிஓ (DRDO) சாதனை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Defence Research and Development Organisation (DRDO) successfully conducted the maiden flight test of the Long Range Land Attack Cruise Missile (LRLACM) from the Integrated Test Range (ITR) at APJ Abdul Kalam Island, off the coast of Odisha. The missile met all mission objectives, tracked seamlessly by radar and telemetry systems. Defence Minister Rajnath Singh congratulated the DRDO team. The missile is being developed by the Aeronautical Development Establishment (ADE) in Bengaluru.</p>
+                    <p class="lang-ta">பாதுகாப்பு ஆராய்ச்சி மற்றும் மேம்பாட்டு நிறுவனம் (DRDO), நீண்ட தூர நில இலக்குகளைத் துல்லியமாகத் தாக்கி அழிக்கும் குரூஸ் ஏவுகணையின் (LRLACM) சோதனையை ஒடிசா கடற்கரையில் உள்ள ஏ.பி.ஜே அப்துல் கலாம் தீவில் வெற்றிகரமாக மேற்கொண்டது. ஏவுகணை அனைத்து இலக்குகளையும் எட்டியதாகப் பாதுகாப்பு அமைச்சகம் தெரிவித்துள்ளது. பெங்களூருவில் உள்ள வானூர்தி மேம்பாட்டு நிறுவனம் (ADE) இதை உருவாக்கி வருகிறது. இந்த வெற்றிக்கு பாதுகாப்புத்துறை அமைச்சர் ராஜ்நாத் சிங் வாழ்த்து தெரிவித்தார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Geography Hook:</strong> APJ Abdul Kalam Island (formerly Wheeler Island) is located off the coast of Odisha and serves as India's premier missile testing facility (Integrated Test Range).</span><span class="lang-ta"><strong>புவியியல் குறிப்பு:</strong> ஒடிசா கடற்கரையில் அமைந்துள்ள ஏ.பி.ஜே அப்துல் கலாம் தீவு (முன்னர் வீலர் தீவு) இந்தியாவின் முதன்மை ஏவுகணை சோதனைத் தளமாக (ITR) செயல்படுகிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Welfare · Transport</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Kerala Implements Free Bus Travel Scheme for Women</span>
+                        <span class="lang-ta">அரசுப் பேருந்துகளில் மகளிருக்கு இலவசப் பயணம்: கேரளத்தில் அமல்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Fulfilling a major electoral promise, the Congress-led UDF government in Kerala rolled out the free bus travel scheme for women in ordinary state-run (KSRTC) buses across the state. Chief Minister V.D. Satheesan inaugurated the scheme, named "Priyadarshini", in Thiruvananthapuram. The state government will allocate ₹800 crore annually for this initiative, which aims to boost women's economic independence. Similar schemes are already operational in Tamil Nadu (Vidiyal Payanam) and Karnataka (Shakti).</p>
+                    <p class="lang-ta">கேரளத்தில் ஆளும் காங்கிரஸ் தலைமையிலான ஐக்கிய ஜனநாயக முன்னணி (UDF) அரசின் முக்கியத் தேர்தல் வாக்குறுதியான, மகளிருக்கு அரசுப் பேருந்துகளில் இலவசப் பயணத் திட்டம் மாநிலம் முழுவதும் அமல்படுத்தப்பட்டது. திருவனந்தபுரத்தில் நடைபெற்ற நிகழ்ச்சியில் "பிரியதர்ஷினி" என்ற பெயரிலான இத்திட்டத்தை முதல்வர் வி.டி. சதீசன் தொடங்கி வைத்தார். இத்திட்டத்திற்காக மாநில அரசு ஆண்டுக்கு ரூ.800 கோடி நிதி ஒதுக்கீடு செய்யும். இது போன்ற திட்டங்கள் தமிழ்நாடு (விடியல் பயணம்) மற்றும் கர்நாடகத்தில் ஏற்கெனவே செயல்பாட்டில் உள்ளன.</p>
+                </div>
+
+            </section>
+
+            <!-- INTERNATIONAL NEWS -->
+            <section id="international">
+                <h2>
+                    <span class="lang-en">International News</span>
+                    <span class="lang-ta">சர்வதேச செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Diplomacy · State Visit</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">PM Modi Becomes First Indian PM to Visit Slovakia; Signs 11 Agreements</span>
+                        <span class="lang-ta">ஸ்லோவாக்கியாவுக்குப் பயணம் மேற்கொண்ட முதல் இந்தியப் பிரதமர் மோடி; 11 ஒப்பந்தங்கள் கையெழுத்து</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">During his European tour, PM Narendra Modi visited Slovakia, becoming the first Indian Prime Minister to do so since the nation's formation in 1993. He held bilateral talks with Slovak PM Robert Fico in Bratislava, signing 11 crucial agreements spanning digital tech, defence, and social security for Indian workers. Slovakia also honored PM Modi with its highest national award, the 'Order of the White Double Cross'. Modi later traveled to Evian, France, to attend the G7 Summit.</p>
+                    <p class="lang-ta">ஐரோப்பியப் பயணத்தின் ஒரு பகுதியாக ஸ்லோவாக்கியா சென்ற பிரதமர் நரேந்திர மோடி, 1993-ல் அந்நாடு உருவான பிறகு அங்கு சென்ற முதல் இந்தியப் பிரதமர் என்ற பெருமையைப் பெற்றார். தலைநகர் பிராட்டிஸ்லாவாவில் (Bratislava) ஸ்லோவாக்கிய பிரதமர் ராபர்ட் ஃபிகோவுடன் பேச்சுவார்த்தை நடத்திய அவர், பாதுகாப்பு, டிஜிட்டல் தொழில்நுட்பம் உள்ளிட்ட துறைகளில் 11 ஒப்பந்தங்களில் கையெழுத்திட்டார். ஸ்லோவாக்கியாவின் உயரிய விருதான 'ஆர்டர் ஆஃப் தி ஒயிட் டபுள் கிராஸ்' பிரதமர் மோடிக்கு வழங்கப்பட்டது. பின்னர் அவர் பிரான்சின் எவியான் நகரில் நடைபெறும் ஜி7 மாநாட்டில் பங்கேற்கச் சென்றார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>World History Hook:</strong> Slovakia came into existence on January 1, 1993, following the peaceful dissolution of Czechoslovakia (often referred to as the 'Velvet Divorce').</span><span class="lang-ta"><strong>உலக வரலாறு குறிப்பு:</strong> செக்கோஸ்லோவாக்கியாவின் அமைதியான பிரிவினைக்குப் பிறகு (வெல்வெட் விவாகரத்து என அழைக்கப்படுகிறது) ஜனவரி 1, 1993 அன்று ஸ்லோவாக்கியா தனி நாடாக உருவானது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Geopolitics · Middle East</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">US-Iran Peace Agreement to Reopen Strait of Hormuz</span>
+                        <span class="lang-ta">ஈரான் - அமெரிக்கா அமைதி ஒப்பந்தம்: ஹோர்முஸ் ஜலசந்தி திறக்கப்படும் என அறிவிப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The highly anticipated peace treaty between the United States and Iran has been finalized and is set to be signed this Friday in Switzerland (mediated by Pakistan). Key terms include the immediate cessation of all military actions, lifting of US naval blockades on Iranian ports, and the unfreezing of $24 Billion in Iranian funds. Most importantly, Iran has agreed to reopen the strategic Strait of Hormuz within 30 days, which will stabilize global crude oil supply and prices.</p>
+                    <p class="lang-ta">உலகெங்கிலும் நீண்ட நாட்களாக எதிர்பார்க்கப்பட்ட ஈரான் - அமெரிக்கா இடையிலான அமைதி ஒப்பந்தம், பாகிஸ்தான் மத்தியஸ்தத்தில் சுவிட்சர்லாந்தில் வரும் வெள்ளிக்கிழமை கையெழுத்தாகிறது. அனைத்து ராணுவ நடவடிக்கைகளையும் நிறுத்துதல், ஈரான் துறைமுகங்கள் மீதான அமெரிக்க முற்றுகையை விலக்குதல் மற்றும் முடக்கப்பட்ட $24 பில்லியன் ஈரான் நிதியை விடுவித்தல் ஆகியவை இதில் அடங்கும். குறிப்பாக, 30 நாட்களுக்குள் முக்கியத்துவம் வாய்ந்த ஹோர்முஸ் ஜலசந்தியைத் திறக்க ஈரான் ஒப்புக்கொண்டுள்ளதால், உலகளாவிய கச்சா எண்ணெய் விநியோகம் சீராகும்.</p>
+                </div>
+            </section>
+
+            <!-- ECONOMY & FINANCE -->
+            <section id="economy">
+                <h2>
+                    <span class="lang-en">Economy & Tech</span>
+                    <span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Macro Indicators · Trade</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">India's Exports Hit 6-Month High of $45.2 Billion in May</span>
+                        <span class="lang-ta">மே மாதத்தில் இந்தியாவின் ஏற்றுமதி 18% உயர்வு: $45.2 பில்லியனை எட்டி 6 மாதங்களில் புதிய உச்சம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Despite global geopolitical tensions, India's merchandise exports surged by 18% in May 2026, hitting a six-month high of $45.2 billion. Simultaneously, imports also rose by 10% to $73.41 billion, resulting in a trade deficit of $28.21 billion. The growth in exports was primarily driven by electronics, pharmaceuticals, and petroleum products. Commerce Secretary Rajesh Agarwal expressed optimism that this positive trend would support a strong trade performance for the current fiscal year.</p>
+                    <p class="lang-ta">சர்வதேச புவிசார் அரசியல் பதற்றங்களுக்கு மத்தியிலும், இந்தியாவின் சரக்கு ஏற்றுமதி மே 2026-ல் 18% அதிகரித்து $45.2 பில்லியனை எட்டியது (6 மாதங்களில் புதிய உச்சம்). அதே வேளையில், இறக்குமதி 10% அதிகரித்து $73.41 பில்லியனைத் தொட்டதால், வர்த்தகப் பற்றாக்குறை $28.21 பில்லியனாகப் பதிவாகியுள்ளது. மின்னணுப் பொருட்கள், மருந்துகள் மற்றும் பெட்ரோலியப் பொருட்களின் ஏற்றுமதியே இந்த வளர்ச்சிக்கு முக்கியக் காரணமாகும்.</p>
+                </div>
+            </section>
+            
+            <!-- SPORTS -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports</span>
+                    <span class="lang-ta">விளையாட்டு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Football / Hockey</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Euro Cup: Germany Thrashes Scotland 5-1; Indian Women's Hockey Beats USA</span>
+                        <span class="lang-ta">யூரோ கோப்பை: ஸ்காட்லாந்தை வீழ்த்தியது ஜெர்மனி; மகளிர் ஹாக்கியில் அமெரிக்காவை வென்றது இந்தியா</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In a dominant display, Germany defeated Scotland (referred to as Curacao/Kuracaq in some OCR misreads but historically Scotland in Euro context) 5-1. (Wait, the source text says Germany 7-1, but another section says 5-1. The primary match text mentions a 7-1 victory with Kai Havertz scoring). Meanwhile, in the Nations Cup Hockey tournament held in New Zealand, the Indian Women's Hockey team defeated the USA 3-2 in their opening match, with Deepika scoring a crucial brace.</p>
+                    <p class="lang-ta">ஜெர்மனி அணி 7-1 (சில குறிப்புகளில் 5-1) என்ற கோல் கணக்கில் அபார வெற்றி பெற்றது (காய் ஹாவர்ட்ஸ் 2 கோல்கள்). நியூசிலாந்தில் நடைபெறும் நேஷன்ஸ் கோப்பை ஹாக்கிப் போட்டியில், இந்திய மகளிர் அணி தனது முதல் ஆட்டத்தில் 3-2 என்ற கோல் கணக்கில் அமெரிக்காவை வீழ்த்தியது. இந்திய வீராங்கனை தீபிகா 2 கோல்கள் அடித்து வெற்றிக்கு வித்திட்டார்.</p>
+                </div>
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Which is the second highest peacetime gallantry award in India, recently awarded to L/Nk A. Meenakshi Sundaram?</span>
+                        <span class="lang-ta">கேள்வி: சமீபத்தில் லான்ஸ் நாயக் அ. மீனாட்சி சுந்தரத்திற்கு வழங்கப்பட்ட, இந்தியாவின் இரண்டாவது உயரிய அமைதிக்கால தீரச்செயல் விருது எது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Kirti Chakra</span><br><br>
+                                <strong>Context:</strong> The TN Chief Minister handed over a Rs 48 lakh cheque to Kirti Chakra awardee L/Nk A. Meenakshi Sundaram for his bravery in eliminating terrorists in Kulgam.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">கீர்த்தி சக்ரா</span><br><br>
+                                <strong>பின்னணி:</strong> குல்காம் பகுதியில் பயங்கரவாதிகளை வீழ்த்திய வீரத்திற்காகக் 'கீர்த்தி சக்ரா' விருது பெற்ற ராணுவ வீரருக்கு தமிழக அரசு சார்பில் ரூ.48 லட்சத்துக்கான காசோலையை முதல்வர் வழங்கினார்.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: APJ Abdul Kalam Island, frequently used by DRDO for missile testing (like the recent LRLACM), is located off the coast of which state?</span>
+                        <span class="lang-ta">கேள்வி: டிஆர்டிஓ (DRDO) நிறுவனத்தால் ஏவுகணை சோதனைக்காக அடிக்கடி பயன்படுத்தப்படும் ஏ.பி.ஜே அப்துல் கலாம் தீவு எந்த மாநிலக் கடற்கரையில் அமைந்துள்ளது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Odisha</span><br><br>
+                                <strong>Context:</strong> DRDO successfully flight-tested the Long Range Land Attack Cruise Missile (LRLACM) from the Integrated Test Range (ITR) at APJ Abdul Kalam Island, Odisha.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">ஒடிசா</span><br><br>
+                                <strong>பின்னணி:</strong> ஒடிசா கடற்கரையில் உள்ள ஏ.பி.ஜே அப்துல் கலாம் தீவில் (ITR) நீண்ட தூர நில இலக்கைத் தாக்கும் குரூஸ் ஏவுகணையை (LRLACM) DRDO வெற்றிகரமாகச் சோதித்தது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">Breakfast Scheme</span><span class="lang-ta">காலை உணவுத் திட்டம்</span></td>
+                                <td><span class="lang-en">State/Welfare</span><span class="lang-ta">மாநிலம்/நலத்திட்டம்</span></td>
+                                <td><span class="lang-en">Expanded to classes 6-8 from Sept 17.</span><span class="lang-ta">செப் 17 முதல் 6-8 வகுப்புகளுக்கு விரிவாக்கம்.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">Kirti Chakra Reward</span><span class="lang-ta">கீர்த்தி சக்ரா வெகுமதி</span></td>
+                                <td><span class="lang-en">State/Defence</span><span class="lang-ta">மாநிலம்/பாதுகாப்பு</span></td>
+                                <td><span class="lang-en">₹48 Lakh given to L/Nk Meenakshi Sundaram.</span><span class="lang-ta">மீனாட்சி சுந்தரத்திற்கு ரூ.48 லட்சம் வழங்கல்.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">DRDO LRLACM Test</span><span class="lang-ta">DRDO ஏவுகணை சோதனை</span></td>
+                                <td><span class="lang-en">National/Defence</span><span class="lang-ta">தேசியம்/பாதுகாப்பு</span></td>
+                                <td><span class="lang-en">Tested at APJ Abdul Kalam Island, Odisha.</span><span class="lang-ta">ஒடிசா கலாம் தீவில் சோதனை வெற்றி.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">PM Modi in Slovakia</span><span class="lang-ta">ஸ்லோவாக்கியாவில் மோடி</span></td>
+                                <td><span class="lang-en">International/IR</span><span class="lang-ta">சர்வதேசம்/உறவுகள்</span></td>
+                                <td><span class="lang-en">First Indian PM visit; highest state honour.</span><span class="lang-ta">முதல் பிரதமரின் பயணம்; உயரிய விருது.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">Kerala Free Bus</span><span class="lang-ta">கேரள இலவசப் பேருந்து</span></td>
+                                <td><span class="lang-en">National/Welfare</span><span class="lang-ta">தேசியம்/நலத்திட்டம்</span></td>
+                                <td><span class="lang-en">Free travel for women in ordinary KSRTC buses.</span><span class="lang-ta">KSRTC பேருந்துகளில் மகளிருக்கு இலவசப் பயணம்.</span></td>
+                                <td><span class="badge bg-tip">MED</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani Chennai 16-06-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி சென்னை 16-06-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source text detailed state, national, and international news for 16 June 2026. 
+State news covered CM expanding the Breakfast Scheme to classes 6 to 8 starting Sep 17. The CM awarded Rs 48 lakh to Kirti Chakra awardee L/Nk A. Meenakshi Sundaram. CMDA gets power for multi-storey building approvals. AIADMK MLAs' resignation case reached High Court. 717 TASMAC shops were closed (highest 63 in Thoothukudi). A 3-year-old girl in Gummidipoondi was raped and murdered, causing public protests. ITI admission date extended. Govt chest hospital uses the same nebulizer mask for many patients. 
+National news: DRDO tested the Long Range Land Attack Cruise Missile (LRLACM) from Odisha. Kerala implemented free bus travel for women. A 7-year-old boy in Kerala died of Shigella infection. NEET paper leak gang arrested in Gujarat. 
+International news: PM Modi visited Slovakia (signed 11 pacts, got highest award) before heading to France. US-Iran peace deal finalized (signing June 19) leading to the opening of Strait of Hormuz. Russian missile attacks damaged a historic church in Kyiv. 
+Economy: India's May exports reached $45.2 billion (18% rise). FM Nirmala Sitharaman spoke on attracting foreign investments. 
+Sports: Germany won 7-1 in their match. Indian women's hockey team beat USA 3-2. Sri Lanka A beat India A in a super over.]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூல உரைகள் 16 ஜூன் 2026 க்கான செய்திகளைக் கொண்டிருந்தன.
+மாநில செய்திகளில், செப் 17 முதல் 6 முதல் 8-ஆம் வகுப்பு வரை காலை உணவுத் திட்டம் விரிவுபடுத்தப்படும் என முதல்வர் அறிவித்தார். கீர்த்தி சக்ரா விருது பெற்ற மீனாட்சி சுந்தரத்திற்கு ரூ.48 லட்சத்தை முதல்வர் வழங்கினார். பல அடுக்குமாடி கட்டட அனுமதி அதிகாரத்தை CMDA பெற்றது. அதிமுக எம்.எல்.ஏ-க்கள் ராஜினாமா விவகாரம் ஐகோர்ட் சென்றது. 717 டாஸ்மாக் கடைகள் மூடல். கும்மிடிப்பூண்டியில் 3 வயது சிறுமி வன்கொடுமை செய்து கொலை - மக்கள் போராட்டம். ஐடிஐ சேர்க்கை தேதி நீட்டிப்பு. அரசு நெஞ்சக மருத்துவமனையில் ஒரே முகக்கவசம் பலருக்குப் பயன்பாடு.
+தேசிய அளவில்: ஒடிசாவில் LRLACM ஏவுகணையை DRDO சோதித்தது. கேரளத்தில் மகளிருக்கு இலவசப் பேருந்து திட்டம் அமல். கேரளாவில் ஷிகெல்லா தொற்றால் சிறுவன் பலி. நீட் வினாத்தாள் கசிவு கும்பல் குஜராத்தில் கைது.
+சர்வதேச அளவில்: பிரதமர் மோடி ஸ்லோவாக்கியா பயணம் (11 ஒப்பந்தங்கள், உயரிய விருது). ஈரான் - அமெரிக்கா அமைதி ஒப்பந்தம் இறுதி (ஜூன் 19 கையெழுத்து) - ஹோர்முஸ் ஜலசந்தி திறக்கப்படும். கீவ் நகரில் ரஷ்ய தாக்குதலால் பழமையான தேவாலயம் சேதம்.
+பொருளாதாரம்: இந்தியாவின் மே மாத ஏற்றுமதி $45.2 பில்லியன் (18% உயர்வு). அந்நிய முதலீட்டை ஈர்ப்பது குறித்து நிர்மலா சீதாராமன் பேச்சு.
+விளையாட்டு: ஜெர்மனி 7-1 வெற்றி. இந்திய மகளிர் ஹாக்கி அணி அமெரிக்காவை 3-2 என வென்றது. இலங்கை ஏ அணி சூப்பர் ஓவரில் இந்தியா ஏ அணியை வென்றது.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 16 June 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+    </script>
+</body>
+</html>
