@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body class="en-mode">
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">20 June 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">20 ஜூன் 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Tech</span><span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Infrastructure · Policy</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Parandur Airport Project Cancelled; Govt to Shift Location</span>
+                        <span class="lang-ta">பரந்தூரில் விமான நிலையம் அமையாது: அமைச்சர் நிர்மல் குமார் அறிவிப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Fulfilling the poll promise made by the ruling Tamilaga Vettri Kazhagam (TVK) party, Energy Minister Nirmal Kumar announced the cancellation of the proposed Greenfield International Airport at Parandur. The Rs 27,000 crore project, which aimed to acquire 5,000 acres, faced massive opposition from farmers and environmentalists. The CM had initially staged a protest against it. The State Government will now consult the Centre to locate an alternative site for Chennai's second airport without destroying agricultural lands and water bodies.</p>
+                    <p class="lang-ta">ஆளும் தமிழக வெற்றிக் கழகத்தின் (TVK) தேர்தல் வாக்குறுதியை நிறைவேற்றும் விதமாக, பரந்தூரில் விமான நிலையம் அமையாது என மின்துறை அமைச்சர் நிர்மல் குமார் அறிவித்துள்ளார். சுமார் 5,000 ஏக்கர் பரப்பளவில் ரூ.27,000 கோடி செலவில் அமையவிருந்த இந்தத் திட்டம், விவசாயிகள் மற்றும் சுற்றுச்சூழல் ஆர்வலர்களின் கடும் எதிர்ப்பைச் சந்தித்தது. முதல்வர் விஜய் இதற்கு எதிராக ஆரம்பத்திலேயே போராட்டம் நடத்தியிருந்தார். விளைநிலங்கள் மற்றும் நீர்நிலைகளை அழிக்காமல், சென்னையின் 2-வது விமான நிலையத்தை மாற்று இடத்தில் அமைக்க மத்திய அரசுடன் ஆலோசிக்கப்படும் என அமைச்சர் தெரிவித்தார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Geography & Economy Hook:</strong> Greenfield Airports are built from scratch on undeveloped land. The project was originally approved by the MoCA under the Greenfield Airports (GFA) Policy, 2008.</span><span class="lang-ta"><strong>புவியியல் & பொருளாதார குறிப்பு:</strong> பசுமைவெளி (Greenfield) விமான நிலையங்கள் முற்றிலும் புதிய நிலத்தில் ஆரம்பத்தில் இருந்து கட்டமைக்கப்படுபவை. மத்திய அரசின் 2008 பசுமைவெளி விமான நிலையக் கொள்கையின் கீழ் பரந்தூர் திட்டத்திற்கு முன்பு ஒப்புதல் அளிக்கப்பட்டது.</span></li>
+                            <li><span class="badge bg-tip">TIP</span><span class="lang-en">Chennai's current international airport is located at Meenambakkam. Parandur is located in Kancheepuram district.</span><span class="lang-ta">சென்னையின் தற்போதைய சர்வதேச விமான நிலையம் மீனம்பாக்கத்தில் உள்ளது. பரந்தூர் காஞ்சிபுரம் மாவட்டத்தில் அமைந்துள்ளது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · Judiciary</span>
+                        <span class="badge bg-trap">TRAP</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Supreme Court Dismisses 'Horse-Trading' Petition Against CM Joseph Vijay's Trust Vote</span>
+                        <span class="lang-ta">முதல்வர் ஜோசப் விஜய் அரசின் நம்பிக்கையில்லா தீர்மானத்திற்கு எதிரான வழக்கு தள்ளுபடி: உச்சநீதிமன்றம் உத்தரவு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">A bench comprising Chief Justice Surya Kant and Justice V. Ramasubramanian dismissed a petition filed by K.K. Ramesh challenging the Trust Vote won by Chief Minister Joseph Vijay on May 13. The petitioner alleged that the TVK party resorted to "horse-trading" to secure the support of MLAs from other parties to form a coalition government. The Supreme Court dismissed the plea, stating there was absolutely no evidence to support the claims, calling the allegations vague and superficial.</p>
+                    <p class="lang-ta">கடந்த மே 13-ஆம் தேதி முதல்வர் ஜோசப் விஜய் கொண்டு வந்த நம்பிக்கை வாக்கெடுப்பில் முறைகேடு நடந்ததாகவும், எம்.எல்.ஏ.க்களை விலைக்கு வாங்கியதாகவும் (குதிரை பேரம்) கே.கே. ரமேஷ் என்பவர் தாக்கல் செய்த வழக்கை உச்சநீதிமன்றம் தள்ளுபடி செய்தது. தலைமை நீதிபதி சூர்ய காந்த் மற்றும் நீதிபதி வி. ராமசுப்ரமணியன் அடங்கிய அமர்வு, குற்றச்சாட்டுகளுக்கு எந்தவித ஆதாரமும் இல்லை என்றும், அவை மேலோட்டமானவை என்றும் கூறி வழக்கை ரத்து செய்தது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-critical">CRITICAL</span><span class="lang-en"><strong>Polity Hook - Floor Test:</strong> A trust vote (floor test) is a constitutional mechanism under Article 164 to determine whether the Chief Minister commands the support of the majority of the MLAs in the Legislative Assembly.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> நம்பிக்கை வாக்கெடுப்பு (Floor test) என்பது சரத்து 164-இன் கீழ், ஒரு முதல்வர் சட்டப்பேரவையில் பெரும்பான்மை எம்.எல்.ஏ.க்களின் ஆதரவைப் பெற்றுள்ளாரா என்பதைத் தீர்மானிக்கும் வழிமுறையாகும்.</span></li>
+                            <li><span class="lang-en"><strong>Tenth Schedule:</strong> Issues regarding 'Horse Trading' and defection fall under the Anti-Defection Law (10th Schedule, 52nd Amendment, 1985).</span><span class="lang-ta"><strong>10-வது அட்டவணை:</strong> 'குதிரை பேரம்' மற்றும் கட்சித் தாவல் தொடர்பான விவகாரங்கள் கட்சித் தாவல் தடைச் சட்டத்தின் (10-வது அட்டவணை, 52-வது திருத்தம் 1985) கீழ் வருகின்றன.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Education · High Court</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Madras HC Directs TN Govt to Consider Raising Professors' Retirement Age to 65</span>
+                        <span class="lang-ta">பேராசிரியர்கள் ஓய்வுபெறும் வயதை 65 ஆக உயர்த்துவது குறித்துப் பரிசீலிக்கத் தமிழக அரசுக்கு உயர்நீதிமன்றம் உத்தரவு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Madras High Court has directed the Tamil Nadu Government to consider a petition seeking to raise the retirement age of University and College Professors from 60 to 65 years. The petition highlighted that no assistant professors have been recruited in TN higher education for years, leaving numerous vacancies and severely impacting research. The Ministry of Human Resource Development (now Ministry of Education) and UGC had recommended this increase back in 2007, which many states have implemented except Tamil Nadu.</p>
+                    <p class="lang-ta">பல்கலைக்கழகம் மற்றும் கல்லூரி பேராசிரியர்களின் ஓய்வுபெறும் வயதை 60-லிருந்து 65 ஆக உயர்த்தக் கோரிய மனுவை 8 வாரங்களுக்குள் பரிசீலித்து உரிய உத்தரவு பிறப்பிக்கத் தமிழக அரசுக்குச் சென்னை உயர்நீதிமன்றம் உத்தரவிட்டுள்ளது. பல ஆண்டுகளாகத் தமிழகத்தில் உதவிப் பேராசிரியர்கள் நியமிக்கப்படாததால், காலிப்பணியிடங்கள் அதிகரித்து மாணவர்களின் உயர்கல்வி மற்றும் ஆராய்ச்சி கடுமையாகப் பாதிக்கப்பட்டுள்ளதாக மனுவில் கூறப்பட்டுள்ளது. 2007-ல் பல்கலைக்கழக மானியக் குழு (UGC) செய்த இந்தப் பரிந்துரையைப் பல மாநிலங்கள் அமல்படுத்தியுள்ளன; தமிழகத்தில் இது இன்னும் அமல்படுத்தப்படவில்லை.</p>
+                </div>
+
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National / Central News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Welfare · Employment Scheme</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Historic 'Viksit Bharat Gramin Rozgar Yojna' (VBRGY) to Replace MGNREGA from July 1</span>
+                        <span class="lang-ta">ஜூலை 1 முதல் அமலாகிறது 125 நாள் வேலைத் திட்டம்: "வளர்ந்த பாரதம் ஊரக வேலைவாய்ப்பு திட்டம்" (VBRGY)</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">A historic shift in India's social security network is set for July 1, as the newly enacted 'Viksit Bharat Gramin Rozgar Yojna' (VBRGY) officially replaces the MGNREGA scheme. The new scheme increases the guaranteed employment days from 100 to 125 days per household. The funding pattern changes to a 60:40 ratio between the Centre and States (90:10 for North-East/Himalayan states). The Centre has released an interim fund of ₹95,692 crore, out of which Tamil Nadu has been allocated ₹7,957.57 crore. Over 100 nodal officers have been appointed nationwide for strict implementation and digital monitoring.</p>
+                    <p class="lang-ta">மகாத்மா காந்தி தேசிய ஊரக வேலைவாய்ப்பு உறுதித் திட்டத்திற்கு (100 நாள் வேலை) மாற்றாக, 'வளர்ந்த பாரதம் ஊரக வேலைவாய்ப்பு உறுதித் திட்டம்' (VBRGY - 125 நாள் வேலைத் திட்டம்) ஜூலை 1-ஆம் தேதி முதல் அமல்படுத்தப்பட உள்ளது. இதற்கான மசோதா கடந்த டிசம்பரில் நாடாளுமன்றத்தில் நிறைவேற்றப்பட்டது. இத்திட்டத்திற்கான நிதியில் மத்திய அரசு 60 சதவீதத்தையும், மாநில அரசுகள் 40 சதவீதத்தையும் ஏற்கும். இத்திட்டத்திற்காக ரூ.95,692 கோடியை மத்திய அரசு விடுவித்துள்ளது. இதில் தமிழகத்திற்கு ரூ.7,957.57 கோடி ஒதுக்கீடு செய்யப்பட்டுள்ளது. திட்டத்தைக் கண்காணிக்க நாடு முழுவதும் 100-க்கும் மேற்பட்ட பகுதி அதிகாரிகள் நியமிக்கப்பட்டுள்ளனர்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Evolution Hook:</strong> MGNREGA was enacted in 2005 to provide 100 days of guaranteed wage employment. VBRGY replaces it, enhancing the limit to 125 days and restructuring the cost-sharing mechanism.</span><span class="lang-ta"><strong>பரிணாமக் குறிப்பு:</strong> 100 நாட்கள் வேலைவாய்ப்பை உறுதி செய்யும் MGNREGA சட்டம் 2005-ல் கொண்டுவரப்பட்டது. இதை மாற்றி 125 நாட்களாக உயர்த்தி, நிதிப் பகிர்வு முறையை மாற்றி VBRGY திட்டம் அமலாகிறது.</span></li>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en">Do not confuse VBRGY (rural guarantee scheme) with 'Pradhan Mantri Viksit Bharat Rozgar Yojna', which is a separate incentive scheme for creating new formal jobs.</span><span class="lang-ta">ஊரக வேலைவாய்ப்புத் திட்டமான VBRGY-யையும், முறை சார்ந்த புதிய வேலைவாய்ப்புகளை உருவாக்க நிதி ஊக்கத்தொகை வழங்கும் "பிரதமரின் வளர்ந்த பாரத வேலைவாய்ப்புத் திட்டத்தையும்" (PM VBRY) குழப்பிக் கொள்ள வேண்டாம்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Supreme Court · Fundamental Rights</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Right to Walk Freely on Pavements is a Fundamental Right: Supreme Court</span>
+                        <span class="lang-ta">நடைபாதைகளில் சுதந்திரமாக நடந்து செல்வது அடிப்படை உரிமை: உச்சநீதிமன்றம் தீர்ப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Supreme Court has ruled that the freedom to walk safely on clearly demarcated and well-maintained pavements is a Fundamental Right. A bench comprising Justices P.S. Narasimha and A.S. Chandurkar delivered the ruling in a case regarding the death of a 5-year-old boy who was hit by a lorry while walking to school. The court emphasised that local authorities are duty-bound to maintain pavements, adding that the right of pedestrians takes precedence over the movement of motor vehicles.</p>
+                    <p class="lang-ta">தெளிவாக வரையறுக்கப்பட்டு நன்கு பராமரிக்கப்படும் நடைபாதைகளில் பாதுகாப்பாக நடந்து செல்லும் சுதந்திரம் என்பது ஒரு அடிப்படை உரிமை என உச்சநீதிமன்றம் தீர்ப்பளித்துள்ளது. பள்ளிக்கு நடந்து சென்ற 5 வயது சிறுவன் லாரி மோதி உயிரிழந்த விவகாரத்தில், நீதிபதிகள் பி.எஸ். நரசிம்மா, ஏ.எஸ். சந்துர்கர் அடங்கிய அமர்வு இந்தத் தீர்ப்பை வழங்கியது. நடைபாதைகளைப் பராமரிப்பது அதிகாரிகளின் கடமை என்றும், மோட்டார் வாகனங்களின் போக்குவரத்தை விடப் பாதசாரிகள் நடந்து செல்லும் உரிமைக்கே முன்னுரிமை தரப்பட வேண்டும் என்றும் நீதிமன்றம் தெரிவித்துள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-critical">CRITICAL</span><span class="lang-en"><strong>Polity Hook:</strong> This ruling expands the scope of <strong>Article 21</strong> (Protection of Life and Personal Liberty) and <strong>Article 19(1)(d)</strong> (Freedom to move freely throughout the territory of India).</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> இந்தத் தீர்ப்பு <strong>சரத்து 21</strong> (வாழ்வு மற்றும் தனிப்பட்ட சுதந்திரத்திற்கான பாதுகாப்பு) மற்றும் <strong>சரத்து 19(1)(d)</strong> (இந்தியா முழுவதும் சுதந்திரமாக நடமாடும் உரிமை) ஆகியவற்றின் நோக்கத்தை விரிவுபடுத்துகிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Health · Tuberculosis</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">TB Incidence Drops by 23% in 10 Years: Union Health Minister J.P. Nadda</span>
+                        <span class="lang-ta">நாட்டில் 10 ஆண்டுகளில் காசநோய் (TB) பாதிப்பு 23% சரிவு: மத்திய சுகாதாரத்துறை அமைச்சர் ஜெ.பி. நட்டா</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Union Health Minister J.P. Nadda announced that the incidence of Tuberculosis (TB) in India has decreased by approximately 23% over the last 10 years. Chairing a high-level review meeting for the "TB Mukt Bharat" (TB-Free India) campaign, he shared that the incidence rate dropped from 243 per lakh population in 2014 to 187 per lakh in 2024. Similarly, TB-related mortality declined from 34 deaths per lakh in 2014 to 21 per lakh in 2024. He urged MPs and MLAs to monitor elimination efforts in their constituencies.</p>
+                    <p class="lang-ta">நாட்டில் கடந்த 10 ஆண்டுகளில் காசநோய் (TB) பாதிப்பு விகிதம் சுமார் 23 சதவீதம் குறைந்துள்ளதாக மத்திய சுகாதாரத்துறை அமைச்சர் ஜெ.பி. நட்டா தெரிவித்துள்ளார். "காசநோய் இல்லாத பாரதம்" (TB Mukt Bharat) திட்டத்தின் ஆய்வுக் கூட்டத்தில் பேசிய அவர், 2014-ல் ஒரு லட்சம் பேருக்கு 243 பேருக்கு இருந்த பாதிப்பு, 2024-ல் 187 ஆகக் குறைந்துள்ளது என்றார். அதேபோல காசநோயால் ஏற்படும் இறப்பு விகிதமும் ஒரு லட்சத்துக்கு 34-லிருந்து 21 ஆகக் குறைந்துள்ளது. காசநோய் ஒழிப்பு நடவடிக்கைகளை எம்.பி., எம்.எல்.ஏ.க்கள் கண்காணிக்க வேண்டும் என அவர் வலியுறுத்தினார்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Employment · Welfare Scheme</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">PM Modi Disburses ₹2,400 Crore Under Pradhan Mantri Viksit Bharat Rozgar Yojna</span>
+                        <span class="lang-ta">பிரதமரின் வளர்ந்த பாரத வேலைவாய்ப்புத் திட்டம்: ரூ.2,400 கோடி ஊக்கத்தொகையைப் பிரதமர் வழங்கினார்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Prime Minister Narendra Modi disbursed ₹2,400 crore as direct benefit transfers to the bank accounts of eligible beneficiaries under the 'Pradhan Mantri Viksit Bharat Rozgar Yojna' (launched in August 2025). The scheme aims to generate 15 lakh formal jobs by incentivising both employers and employees. The PM stated that 70 lakh new jobs have been created under this scheme so far, bringing millions of youth into the formal social security network for the first time.</p>
+                    <p class="lang-ta">நாட்டில் வேலைவாய்ப்பை உருவாக்கும் நோக்கில் கடந்த ஆண்டு ஆகஸ்டில் தொடங்கப்பட்ட 'பிரதமரின் வளர்ந்த பாரத வேலைவாய்ப்புத் திட்டத்தின்' கீழ், தகுதியான பயனாளிகளின் வங்கிக் கணக்குகளில் ரூ.2,400 கோடியை ஊக்கத்தொகையாகப் பிரதமர் மோடி விடுவித்தார். 15 லட்சம் புதிய வேலைவாய்ப்புகளை உருவாக்கும் நோக்கில் கொண்டுவரப்பட்ட இத்திட்டத்தின் கீழ், இதுவரை 70 லட்சம் பேருக்கு வேலைவாய்ப்பு கிடைத்துள்ளது. இத்திட்டம், வேலை தேடுவோருக்கும், வேலை அளிக்கும் நிறுவனங்களுக்கும் நிதி ஊக்கத்தொகை வழங்குவதன் மூலம் வேலைவாய்ப்பை விரைவுபடுத்துகிறது.</p>
+                </div>
+
+            </section>
+
+            <!-- INTERNATIONAL NEWS -->
+            <section id="international">
+                <h2>
+                    <span class="lang-en">International News</span>
+                    <span class="lang-ta">சர்வதேச செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Terrorism · West Africa</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Al-Qaeda Affiliate 'JNIM' Attacks Niger Airport; 11 Security Personnel Killed</span>
+                        <span class="lang-ta">நைஜர் விமான நிலையத் தாக்குதல்: அல்-காய்தா அமைப்பான 'ஜேஎன்ஐஎம்' (JNIM) பொறுப்பேற்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">A terror attack on the international airport and a military airbase in Niamey, the capital of Niger, resulted in the deaths of 11 security personnel and 2 civilians. The attack was claimed by JNIM (Jama'at Nusrat al-Islam wal-Muslimin), an Al-Qaeda-affiliated terrorist group. Niger forces retaliated and killed 22 terrorists. The region is witnessing intense rivalry between Al-Qaeda and ISIS affiliates for dominance in West Africa (Sahel region). ISIS had similarly attacked the same airport in January.</p>
+                    <p class="lang-ta">மேற்கு ஆப்பிரிக்க நாடான நைஜரின் தலைநகரான நியாமியில் உள்ள சர்வதேச விமான நிலையம் மற்றும் ராணுவ விமான தளம் மீது நடத்தப்பட்ட பயங்கரவாதத் தாக்குதலுக்கு அல்-காய்தாவின் பிரிவான ஜே.என்.ஐ.எம். (JNIM) அமைப்பு பொறுப்பேற்றுள்ளது. இத்தாக்குதலில் பாதுகாப்புப் படையினர் 11 பேர் மற்றும் பொதுமக்கள் 2 பேர் உயிரிழந்தனர். பதில் தாக்குதலில் 22 பயங்கரவாதிகள் சுட்டுக் கொல்லப்பட்டனர். மேற்கு ஆப்பிரிக்க (சஹேல்) பிராந்தியத்தில் ஆதிக்கம் செலுத்த அல்-காய்தா மற்றும் ஐஎஸ்ஐஎஸ் (ISIS) அமைப்புகளுக்கிடையே நிலவும் கடும் போட்டியே இத்தாக்குதலுக்கு முக்கியக் காரணமாகப் பார்க்கப்படுகிறது.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Health · Disease Outbreak</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Rare 'Bundibugyo' Ebola Strain Causes Over 200 Deaths in Congo and Uganda</span>
+                        <span class="lang-ta">காங்கோ, உகாண்டாவில் எபோலா தொற்றால் 200-க்கும் மேற்பட்டோர் பலி: அரிய 'பண்டிபுக்யோ' (Bundibugyo) வைரஸ் பரவல்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The African Centers for Disease Control and Prevention reported over 200 deaths in just one month due to a new Ebola outbreak in the Democratic Republic of Congo and Uganda. Over 90% of the cases are clustered in the eastern province of Ituri in Congo. The outbreak is caused by the rare 'Bundibugyo' strain of the Ebola virus, for which no approved vaccines or specific treatments currently exist. Dense forests, internal conflicts, and lack of funds are severely hampering containment efforts.</p>
+                    <p class="lang-ta">காங்கோ மற்றும் உகாண்டா நாடுகளில் பரவி வரும் எபோலா தொற்று காரணமாக, கடந்த ஒரே மாதத்தில் உயிரிழப்பு 200-ஐக் கடந்துள்ளதாக ஆப்பிரிக்க நோய்க் கட்டுப்பாடு மையம் தெரிவித்துள்ளது. இத்தொற்றில் 90 சதவீதத்திற்கும் அதிகமான பாதிப்புகள் காங்கோவின் கிழக்கு மாகாணமான இடுரியிலேயே பதிவாகியுள்ளன. தற்போது பரவி வரும் இந்த எபோலா பாதிப்பு 'பண்டிபுக்யோ' (Bundibugyo) எனும் அரிய வகையால் ஏற்பட்டுள்ளது. இதற்கு அங்கீகரிக்கப்பட்ட தடுப்பூசிகளோ, முறையான மருந்துகளோ இன்னும் கண்டறியப்படவில்லை. அடர்ந்த காடுகள் மற்றும் உள்நாட்டு மோதல்களால் நோய்த்தடுப்புப் பணிகள் கடுமையாகப் பாதிக்கப்பட்டுள்ளன.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Science Hook:</strong> Ebola is a viral hemorrhagic fever. It is transmitted to people from wild animals (like fruit bats) and spreads in the human population through human-to-human transmission (body fluids).</span><span class="lang-ta"><strong>அறிவியல் குறிப்பு:</strong> எபோலா என்பது ஒரு வைரஸ் ரத்தக்கசிவு காய்ச்சல் ஆகும். இது வௌவால்கள் போன்ற காட்டு விலங்குகளிடமிருந்து மனிதர்களுக்குப் பரவி, பின்னர் மனிதர்களின் உடல் திரவங்கள் மூலம் ஒருவரிடமிருந்து மற்றொருவருக்குப் பரவுகிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Geopolitics · Middle East</span>
+                        <span class="badge bg-trap">TRAP</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">US-Iran Peace Talks Cancelled Amid Israel-Hezbollah Clashes</span>
+                        <span class="lang-ta">தெற்கு லெபனானில் இஸ்ரேல் - ஹிஸ்புல்லா தீவிர மோதல்: அமெரிக்கா - ஈரான் அமைதிப் பேச்சுவார்த்தை ரத்து</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The scheduled next round of peace talks between the USA and Iran in Switzerland has been cancelled following intense overnight clashes between Israel and the Hezbollah militant group in southern Lebanon. Israeli airstrikes killed 21 people in Lebanon, while Hezbollah attacks killed 4 Israeli soldiers. Israel captured the strategic Ali Al-Taher mountain to monitor Nabatieh city. Consequently, Iranian officials cancelled their trip, and US Vice President J.D. Vance postponed his visit, fracturing the fragile 14-point peace pact recently signed electronically.</p>
+                    <p class="lang-ta">தெற்கு லெபனானில் இஸ்ரேல் மற்றும் ஹிஸ்புல்லா அமைப்பினரிடையே தீவிர மோதல் வெடித்ததையடுத்து, சுவிட்சர்லாந்தில் நடைபெறவிருந்த அமெரிக்கா - ஈரான் இடையேயான அடுத்தகட்ட அமைதிப் பேச்சுவார்த்தை ரத்து செய்யப்பட்டுள்ளது. இஸ்ரேலின் வான்வழித் தாக்குதல்களில் லெபனானில் 21 பேர் கொல்லப்பட்டனர்; ஹிஸ்புல்லா தாக்குதலில் 4 இஸ்ரேலிய வீரர்கள் பலியாகினர். இஸ்ரேல், நபதியா நகரைக் கண்காணிக்க அலி அல்-தாஹெர் மலையைக் கைப்பற்றியுள்ளது. இதனால் அமைதி ஒப்பந்தப் பேச்சுவார்த்தையில் பங்கேற்கப் போவதில்லை என ஈரான் அதிகாரிகளும், அமெரிக்கத் துணை அதிபர் ஜே.டி. வான்ஸும் பயணத்தை ரத்து செய்தனர்.</p>
+                </div>
+
+            </section>
+
+            <!-- ECONOMY & FINANCE -->
+            <section id="economy">
+                <h2>
+                    <span class="lang-en">Economy & Tech</span>
+                    <span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Markets · Mega IPO</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Jio Platforms Files DRHP for ₹37,700 Crore ($4 Billion) Mega IPO</span>
+                        <span class="lang-ta">ரூ.37,700 கோடி திரட்ட ஜியோ பிளாட்ஃபார்ம்ஸ் (Jio Platforms) மெகா ஐபிஓ (IPO): செபியிடம் வரைவு அறிக்கை தாக்கல்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Reliance Industries' digital services arm, Jio Platforms, has filed its Draft Red Herring Prospectus (DRHP) with SEBI for an Initial Public Offering (IPO) aiming to raise a colossal ₹37,700 crore ($4 billion). If approved, this will be the largest IPO in India's corporate history. The IPO will offload 27 crore new shares, constituting a 2.9% equity dilution. The funds raised will be used to prepay debts and for general corporate purposes. Reliance Industries currently holds a 66.43% stake, while Meta holds 9.99%.</p>
+                    <p class="lang-ta">ரிலையன்ஸ் குழுமத்தின் எண்ம சேவைப் பிரிவான ஜியோ பிளாட்ஃபார்ம்ஸ், சுமார் 400 கோடி டாலர் (ரூ.37,700 கோடி) நிதி திரட்டும் நோக்கில் தனது பொதுப் பங்கு வெளியீட்டிற்கான (IPO) வரைவு அறிக்கையை (DRHP) செபியிடம் தாக்கல் செய்துள்ளது. இது வெற்றியடைந்தால், நாட்டின் வரலாற்றிலேயே மிகப்பெரிய ஐபிஓ-வாக இது இருக்கும். இதன் மூலம் 27 கோடி புதிய பங்குகள் சந்தைக்கு வரவுள்ளன (இது நிறுவனத்தின் 2.9% பங்கு மூலதனமாகும்). திரட்டப்படும் நிதி கடன்களை அடைக்கப் பயன்படுத்தப்படும். தற்போது ஜியோ பிளாட்ஃபார்ம்ஸில் ரிலையன்ஸ் இண்டஸ்ட்ரீஸ் 66.43% பங்குகளையும், மெட்டா 9.99% பங்குகளையும் கொண்டுள்ளன.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Macro Indicators · Taxation</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Net Direct Tax Collection Up by 14.64% to ₹5.21 Lakh Crore for FY 2026-27</span>
+                        <span class="lang-ta">நடப்பு நிதியாண்டில் நிகர நேரடி வரி வசூல் 14.64% அதிகரித்து ரூ.5.21 லட்சம் கோடியைக் கடந்தது</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Net Direct Tax collections for the current financial year (as of June mid-week) have surged by 14.64% to exceed ₹5.21 lakh crore. A robust 22% increase in corporate tax collections (reaching ₹2.08 lakh crore) and a 15.30% spike in advance tax payments have driven this growth. Personal Income Tax (PIT) and corporate advance tax payments indicate strong economic momentum. The Central Government has set a direct tax collection target of ₹26.97 lakh crore for FY 2026-27, 15% higher than the previous year.</p>
+                    <p class="lang-ta">நடப்பு நிதியாண்டில் நிகர நேரடி வரி வசூல் 14.64 சதவீதம் அதிகரித்து, ரூ.5.21 லட்சம் கோடியைக் கடந்துள்ளது. பெருநிறுவனங்கள் முன்கூட்டியே செலுத்தும் வரி (Advance tax) கணிசமாக உயர்ந்ததே வரி வசூல் வளர்ச்சிக்கு முக்கியக் காரணமாகும். பெருநிறுவனங்களிடம் இருந்து வசூலிக்கப்பட்ட வரி 22 சதவீதம் உயர்ந்து, ரூ.2.08 லட்சம் கோடியாக அதிகரித்துள்ளது. பங்குச்சந்தை பரிவர்த்தனை வரி (STT) 45% அதிகரித்து ரூ.18,856 கோடியை எட்டியுள்ளது. நடப்பு நிதியாண்டில் ரூ.26.97 லட்சம் கோடி நேரடி வரி வசூலிக்க மத்திய அரசு இலக்கு நிர்ணயித்துள்ளது (இது முந்தைய ஆண்டை விட 15% அதிகம்).</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Economy Hook:</strong> Direct Taxes (Income Tax, Corporate Tax, STT) are levied directly on an individual's or entity's income/wealth. They are collected by the CBDT (Central Board of Direct Taxes).</span><span class="lang-ta"><strong>பொருளாதாரக் குறிப்பு:</strong> நேரடி வரிகள் (வருமான வரி, பெருநிறுவன வரி) தனிநபர் அல்லது நிறுவனத்தின் வருமானம்/சொத்து மீது நேரடியாக விதிக்கப்படுபவை. இவற்றை மத்திய நேரடி வரிகள் வாரியம் (CBDT) வசூலிக்கிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+            </section>
+            
+            <!-- SPORTS -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports</span>
+                    <span class="lang-ta">விளையாட்டு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Football · World Cup</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Canada Achieves Historic First World Cup Win; Thrashes Qatar 6-0</span>
+                        <span class="lang-ta">உலகக் கோப்பை கால்பந்து: கத்தாருக்கு எதிராக 6-0 என்ற கோல் கணக்கில் கனடா வரலாற்று வெற்றி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In the FIFA World Cup tournament, co-host Canada registered a historic 6-0 victory against Qatar in Vancouver. This marks Canada's first-ever win in World Cup history. Jonathan David became the star of the match by scoring a brilliant hat-trick, making him only the second player in 60 years to score a World Cup hat-trick on home soil (after England's Geoff Hurst in 1966). Qatar suffered a severe blow with two red cards, reducing them to 9 men during the match.</p>
+                    <p class="lang-ta">வான்கூவரில் நடைபெற்ற உலகக் கோப்பை கால்பந்துப் போட்டியில், போட்டியை நடத்தும் நாடுகளில் ஒன்றான கனடா 6-0 என்ற கோல் கணக்கில் கத்தாரை அபாரமாக வீழ்த்தியது. உலகக் கோப்பை வரலாற்றில் கனடாவுக்கு இது முதல் வெற்றியாகும். கனடா வீரர் ஜோனதன் டேவிட் ஹாட்ரிக் கோல் அடித்து சாதனை படைத்தார். கடந்த 60 ஆண்டுகளில், சொந்த மண்ணில் நடைபெற்ற உலகக் கோப்பைப் போட்டியில் ஹாட்ரிக் கோல் அடித்த 2-வது வீரர் என்ற பெருமையை அவர் பெற்றார் (1966-ல் இங்கிலாந்தின் ஜெஃப் ஹர்ஸ்டுக்குப் பிறகு). கத்தார் அணி இரண்டு 'ரெட் கார்டுகளை' பெற்று 9 வீரர்களுடன் விளையாடும் நிலைக்குத் தள்ளப்பட்டது.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Boxing · World Cup</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Boxing World Cup: Prachi and Minakshi Advance to Semi-Finals</span>
+                        <span class="lang-ta">உலகக் கோப்பை குத்துச்சண்டை: இந்தியாவின் பிராச்சி, மீனாட்சி அரையிறுதிக்கு முன்னேற்றம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">At the Boxing World Cup held in China, Indian boxers Prachi and Minakshi advanced to the semi-finals, assuring medals for the country. Competing in the women's 57kg category, Prachi defeated China's Dev Xi Xia 4-1. Minakshi, competing in the 51kg category, pulled off a stunning 5-0 victory against the reigning World Champion and World No.3, Alua Balkibekova of Kazakhstan. In the men's categories, Deepak (70kg) and Nikhil (55kg) also advanced to the semi-finals.</p>
+                    <p class="lang-ta">சீனாவில் நடைபெறும் உலகக் கோப்பை குத்துச்சண்டைப் போட்டியில், இந்தியாவின் பிராச்சி மற்றும் மீனாட்சி தங்களது எடைப்பிரிவுகளில் அரையிறுதிக்கு முன்னேறி பதக்கத்தை உறுதி செய்துள்ளனர். மகளிர் 57 கிலோ பிரிவில் பிராச்சி 4-1 என்ற கணக்கில் சீனாவின் தேவ் சி சியாவைத் தோற்கடித்தார். 51 கிலோ பிரிவில் மீனாட்சி 5-0 என்ற கணக்கில் நடப்பு உலக சாம்பியனும், உலகின் 3-ஆம் நிலை வீராங்கனையுமான கஜகஸ்தானின் அலுவா பல்கிபெகோவாவை வீழ்த்தி அசத்தினார். ஆடவர் பிரிவில் தீபக் (70 கிலோ) மற்றும் நிகில் (55 கிலோ) அரையிறுதிக்கு முன்னேறினர்.</p>
+                </div>
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: The Supreme Court recently ruled that the right to walk freely on well-maintained pavements is a fundamental right. This protection is an extension of which Article of the Indian Constitution?</span>
+                        <span class="lang-ta">கேள்வி: நன்கு பராமரிக்கப்படும் நடைபாதைகளில் சுதந்திரமாக நடப்பது ஒரு அடிப்படை உரிமை என உச்சநீதிமன்றம் சமீபத்தில் தீர்ப்பளித்தது. இந்த உரிமை இந்திய அரசியலமைப்பின் எந்தச் சரத்தின் நீட்சியாகும்?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Article 21 (and Article 19(1)(d))</span><br><br>
+                                <strong>Context:</strong> The SC ruled that local authorities must maintain pavements, prioritizing pedestrians over motor vehicles, expanding the scope of personal liberty and freedom of movement.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">சரத்து 21 (மற்றும் சரத்து 19(1)(d))</span><br><br>
+                                <strong>பின்னணி:</strong> மோட்டார் வாகனங்களை விடப் பாதசாரிகளுக்கே முன்னுரிமை அளிக்க வேண்டும் என்றும், தனிப்பட்ட சுதந்திரம் மற்றும் நடமாடும் உரிமையின் ஒரு பகுதியாக இது பாதுகாக்கப்படுகிறது என்றும் உச்சநீதிமன்றம் தீர்ப்பளித்தது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Which rural employment guarantee scheme was officially rolled out to replace the MGNREGA scheme from July 1, increasing the workdays to 125?</span>
+                        <span class="lang-ta">கேள்வி: ஜூலை 1 முதல் மகாத்மா காந்தி தேசிய ஊரக வேலைவாய்ப்பு உறுதித் திட்டத்திற்கு (MGNREGA) மாற்றாக, வேலை நாட்களை 125 ஆக உயர்த்தி அதிகாரப்பூர்வமாகத் தொடங்கப்பட்ட திட்டம் எது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Viksit Bharat Gramin Rozgar Yojna (VBRGY)</span><br><br>
+                                <strong>Context:</strong> VBRGY replaces MGNREGA, offering 125 days of work per household with a 60:40 fund sharing ratio between the Centre and States.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">வளர்ந்த பாரதம் ஊரக வேலைவாய்ப்பு திட்டம் (VBRGY)</span><br><br>
+                                <strong>பின்னணி:</strong> 125 நாட்கள் வேலை வழங்கும் இத்திட்டம் MGNREGA-க்கு மாற்றாகக் கொண்டுவரப்பட்டுள்ளது. இதன் நிதிப் பகிர்வு மத்திய மாநில அரசுகளுக்கு இடையே 60:40 என்ற விகிதத்தில் இருக்கும்.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">VBRGY Replaces MGNREGA</span><span class="lang-ta">MGNREGA-க்கு மாற்று VBRGY</span></td>
+                                <td><span class="lang-en">National/Welfare</span><span class="lang-ta">தேசியம்/நலத்திட்டம்</span></td>
+                                <td><span class="lang-en">125 days work limit; 60:40 centre-state funding ratio.</span><span class="lang-ta">125 நாட்கள் வேலை; 60:40 நிதிப் பகிர்வு.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">Pavements Right = Fundamental</span><span class="lang-ta">நடைபாதை உரிமை = அடிப்படை உரிமை</span></td>
+                                <td><span class="lang-en">Judiciary/Polity</span><span class="lang-ta">நீதித்துறை/அரசியல்</span></td>
+                                <td><span class="lang-en">SC expands Art 21; pedestrians priority over vehicles.</span><span class="lang-ta">உச்சநீதிமன்றம் சரத்து 21-ஐ விரிவுபடுத்தியது.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">Parandur Airport Cancelled</span><span class="lang-ta">பரந்தூர் விமான நிலையம் ரத்து</span></td>
+                                <td><span class="lang-en">State/Infra</span><span class="lang-ta">மாநிலம்/உள்கட்டமைப்பு</span></td>
+                                <td><span class="lang-en">State drops ₹27K Cr project honoring TVK promise.</span><span class="lang-ta">தேர்தல் வாக்குறுதிக்காக ரூ.27K கோடி திட்டம் ரத்து.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">Jio Platforms $4B IPO</span><span class="lang-ta">ஜியோ $4B ஐபிஓ</span></td>
+                                <td><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></td>
+                                <td><span class="lang-en">Files DRHP for India's largest ever IPO (₹37,700 Cr).</span><span class="lang-ta">இந்தியாவின் மிகப்பெரிய ஐபிஓ-க்கு வரைவு அறிக்கை.</span></td>
+                                <td><span class="badge bg-tip">MED</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">Canada WC Historic Win</span><span class="lang-ta">கனடா உலகக் கோப்பை வெற்றி</span></td>
+                                <td><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></td>
+                                <td><span class="lang-en">Wins 6-0 vs Qatar; Jonathan David hat-trick.</span><span class="lang-ta">கத்தாருக்கு எதிராக 6-0 வெற்றி; டேவிட் ஹாட்ரிக்.</span></td>
+                                <td><span class="badge bg-tip">MED</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani Chennai 20-06-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி சென்னை 20-06-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source text detailed state, national, and international news for 20 June 2026. 
+State news covered the SC dismissing a horse-trading petition against CM Joseph Vijay's trust vote. Electricity Minister Nirmal Kumar announced the cancellation of the Parandur Airport project. TVK members clashed with DMK in the assembly. Madras HC directed the state to consider raising the retirement age of professors to 65. EPS demanded a full crop loan waiver instead of a Rs 75,000 cap. 
+National news: PM Modi distributed Rs 2,400 crore for the Viksit Bharat Rozgar Yojna (70 lakh jobs). The MGNREGA scheme will be replaced by the 125-day Viksit Bharat Gramin Rozgar Yojna (VBRGY) from July 1. SC ruled walking on pavements is a fundamental right. Delhi HC upheld the Telegram ban. TB incidence in India dropped by 23% over 10 years. 
+International news: Al-Qaeda affiliate JNIM attacked Niger's airport, killing 11. Over 200 died from a rare Ebola strain in Congo. US-Iran peace talks were cancelled due to Israel-Hezbollah clashes. Zimbabwe extended its President's term to 7 years. 
+Economy: Net direct tax collections grew by 14.64% to Rs 5.21 lakh crore. Jio Platforms filed for India's largest IPO worth Rs 37,700 crore. Sensex dropped 607 points. 
+Sports: Canada secured its first-ever World Cup win (6-0 against Qatar) with Jonathan David scoring a hat-trick. Prachi and Minakshi advanced to the semi-finals in the Boxing World Cup.]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூல உரைகள் 20 ஜூன் 2026 க்கான செய்திகளைக் கொண்டிருந்தன.
+மாநில செய்திகளில், முதல்வர் ஜோசப் விஜய்யின் நம்பிக்கை வாக்கெடுப்புக்கு எதிரான குதிரை பேர வழக்கை உச்சநீதிமன்றம் தள்ளுபடி செய்தது. பரந்தூர் விமான நிலையத் திட்டம் ரத்து செய்யப்படுவதாக அமைச்சர் நிர்மல் குமார் அறிவித்தார். சட்டப்பேரவையில் தவெக - திமுக இடையே விவாதம். பேராசிரியர்கள் ஓய்வுபெறும் வயதை 65 ஆக உயர்த்துவது குறித்துப் பரிசீலிக்க அரசுக்கு உயர்நீதிமன்றம் உத்தரவு. பயிர்க்கடனை முழுமையாகத் தள்ளுபடி செய்ய எடப்பாடி பழனிசாமி வலியுறுத்தல்.
+தேசிய அளவில்: வளர்ந்த பாரத வேலைவாய்ப்புத் திட்டத்தின் கீழ் ரூ.2,400 கோடியைப் பிரதமர் விடுவித்தார். ஜூலை 1 முதல் MGNREGA-க்கு மாற்றாக 125 நாட்கள் வேலை வழங்கும் VBRGY திட்டம் அமலாகிறது. நடைபாதை உரிமை அடிப்படை உரிமை என உச்சநீதிமன்றம் தீர்ப்பு. டெலிகிராம் தடையை டெல்லி ஐகோர்ட் உறுதி செய்தது. 10 ஆண்டுகளில் இந்தியாவில் காசநோய் 23% சரிவு.
+சர்வதேச அளவில்: நைஜர் விமான நிலையத்தில் அல்-காய்தா தாக்குதல் (11 பேர் பலி). காங்கோவில் எபோலாவால் 200 பேர் பலி. இஸ்ரேல்-ஹிஸ்புல்லா மோதலால் அமெரிக்கா-ஈரான் அமைதிப் பேச்சுவார்த்தை ரத்து. ஜிம்பாப்வே அதிபரின் பதவிக்காலம் 7 ஆண்டுகளாக நீட்டிப்பு.
+பொருளாதாரம்: நிகர நேரடி வரி வசூல் 14.64% உயர்ந்து ரூ.5.21 லட்சம் கோடியாக அதிகரிப்பு. ரூ.37,700 கோடியில் ஜியோ ஐபிஓ-க்கு வரைவு அறிக்கை. சென்செக்ஸ் 607 புள்ளிகள் சரிவு.
+விளையாட்டு: கத்தாருக்கு எதிராக 6-0 என வென்று கனடா உலகக் கோப்பையில் தனது முதல் வெற்றியைப் பதிவு செய்தது (ஜோனதன் டேவிட் ஹாட்ரிக்). உலகக் கோப்பை குத்துச்சண்டையில் பிராச்சி, மீனாட்சி அரையிறுதிக்கு முன்னேறினர்.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 20 June 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+    </script>
+</body>
+</html>

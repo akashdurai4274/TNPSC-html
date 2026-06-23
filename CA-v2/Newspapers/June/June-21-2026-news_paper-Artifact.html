@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body class="en-mode">
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">21 June 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">21 ஜூன் 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <!-- Sidebar TOC -->
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Tech</span><span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · HR&CE</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Surplus Funds from 46 Temples Won't be Used for Marriage Halls/Malls: TN Govt Passes G.O.</span>
+                        <span class="lang-ta">46 கோயில்களின் உபரி நிதியில் இருந்து திருமண மண்டபங்கள், வணிக வளாகங்கள் கட்டப்படாது: தமிழக அரசு அரசாணை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Complying with a directive from the Madurai Bench of the Madras High Court, the Tamil Nadu Government has issued a Government Order (G.O.) withdrawing its earlier announcement to use the surplus funds of 46 major temples to construct marriage halls and commercial complexes. The initial proposal included prominent temples like Madurai Meenakshi Amman Temple, Chennai Ekambareswarar Temple, and Palani Dhandayuthapani Swamy Temple. The HR&CE department has formally removed this initiative from the assembly announcements.</p>
+                    <p class="lang-ta">சென்னை உயர்நீதிமன்ற மதுரை கிளை பிறப்பித்த உத்தரவின் அடிப்படையில், 46 முக்கிய கோயில்களின் உபரி நிதியைக் கொண்டு திருமண மண்டபங்கள் மற்றும் வணிக வளாகங்கள் கட்டும் திட்டத்தை ரத்து செய்து தமிழக அரசு அரசாணை வெளியிட்டுள்ளது. மதுரை மீனாட்சி அம்மன் கோயில், சென்னை ஏகாம்பரேஸ்வரர் கோயில், பழனி தண்டாயுதபாணி சுவாமி கோயில் உள்ளிட்ட பல முக்கிய கோயில்கள் இதில் அடங்கும். இந்து சமய அறநிலையத்துறை (HR&CE) இத்திட்டத்தைச் சட்டப்பேரவை அறிவிப்பிலிருந்து அதிகாரப்பூர்வமாக நீக்கியுள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Constitutional Hook:</strong> Article 26 of the Indian Constitution grants every religious denomination the right to establish and maintain institutions for religious purposes and manage its own affairs in matters of religion.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> இந்திய அரசியலமைப்பின் 26-வது சரத்து, ஒவ்வொரு மதப் பிரிவினருக்கும் மத நோக்கங்களுக்காக நிறுவனங்களை நிறுவவும், பராமரிக்கவும், மத விவகாரங்களில் தங்கள் சொந்த விவகாரங்களை நிர்வகிக்கவும் உரிமை அளிக்கிறது.</span></li>
+                            <li><span class="badge bg-tip">TIP</span><span class="lang-en">The HR&CE (Hindu Religious and Charitable Endowments) Department manages temple administration in TN. The court ruling protects temple funds from being diverted for non-religious commercial purposes.</span><span class="lang-ta">தமிழகத்தில் கோயில் நிர்வாகத்தை இந்து சமய அறநிலையத்துறை நிர்வகிக்கிறது. கோயில் நிதியை மத நோக்கமற்ற வணிகப் பயன்பாடுகளுக்குத் திருப்புவதைத் தடுக்கும் வகையில் இந்த நீதிமன்றத் தீர்ப்பு அமைந்துள்ளது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Welfare · Education</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Stalling 'Naan Mudhalvan' Will Freeze Youth Development: CM Stalin</span>
+                        <span class="lang-ta">"நான் முதல்வன்" திட்டத்தை முடக்குவது இளைஞர்களின் வளர்ச்சியை முடக்கும்: முதல்வர் மு.க. ஸ்டாலின்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Responding to the current administration's stance on older schemes, former CM and DMK leader M.K. Stalin tweeted that attempting to stall or rename the 'Naan Mudhalvan' scheme would be a massive blow to the state's youth development. Highlighting a success story of Jennifer, a survivor of the 2004 Kumbakonam school fire who is now set to become a Deputy Collector with the scheme's support, Stalin emphasized that the scheme has made thousands of dreams come true and its legacy cannot be erased from the minds of the people.</p>
+                    <p class="lang-ta">பழைய திட்டங்கள் குறித்த தற்போதைய அரசின் நிலைப்பாட்டுக்குப் பதிலளிக்கும் வகையில், "நான் முதல்வன்" திட்டத்தை முடக்குவது அல்லது பெயர் மாற்றுவது தமிழக இளைஞர்களின் வளர்ச்சியைப் பெருமளவு பாதிக்கும் என முன்னாள் முதல்வரும் திமுக தலைவருமான மு.க. ஸ்டாலின் எக்ஸ் தளத்தில் பதிவிட்டுள்ளார். 2004 கும்பகோணம் பள்ளி தீவிபத்தில் சிக்கி உயிர் பிழைத்த ஜெனிபர், இத்திட்டத்தின் உதவியால் தற்போது துணை ஆட்சியராகப் பதவியேற்க உள்ளதைக் குறிப்பிட்ட ஸ்டாலின், இத்திட்டம் ஆயிரக்கணக்கானோரின் கனவுகளை நனவாக்கியுள்ளது என்றும், இதன் சாதனைகளை மக்கள் மனதிலிருந்து நீக்க முடியாது என்றும் வலியுறுத்தினார்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Inter-State Relations</span>
+                        <span class="badge bg-trap">TRAP</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Karnataka Firm on Mekedatu Dam After CWMA Approval: Minister Ramalinga Reddy</span>
+                        <span class="lang-ta">காவிரி நதிநீர் ஒழுங்காற்று ஆணையத்தின் ஒப்புதலுக்குப் பின் மேக்கேதாட்டு அணை கட்டப்படும்: கர்நாடக அமைச்சர் ராமலிங்க ரெட்டி உறுதி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In response to the resolution passed by the Tamil Nadu Legislative Assembly against the Mekedatu Dam project, Karnataka Water Resources Minister Ramalinga Reddy asserted that the state is firm on constructing the dam. He stated that the Detailed Project Report (DPR) is with the Cauvery Water Management Authority (CWMA) and once approved, Karnataka will proceed. Reddy argued the dam would store water during floods for Bengaluru's drinking needs and generate 40 MW of power, claiming it would not affect TN's water share.</p>
+                    <p class="lang-ta">மேக்கேதாட்டு அணைத் திட்டத்துக்கு எதிராகத் தமிழக சட்டப்பேரவையில் நிறைவேற்றப்பட்ட தீர்மானத்திற்குப் பதிலளித்த கர்நாடக நீர்வளத்துறை அமைச்சர் ராமலிங்க ரெட்டி, அணை கட்டுவதில் கர்நாடகா உறுதியாக உள்ளது என்றார். திட்டத்தின் விரிவான அறிக்கை (DPR) காவிரி நதிநீர் ஒழுங்காற்று ஆணையத்திடம் (CWMA) உள்ளதாகவும், ஒப்புதல் கிடைத்தவுடன் பணிகள் தொடங்கும் என்றும் அவர் தெரிவித்தார். வெள்ளக் காலங்களில் நீரைத் தேக்கி பெங்களூரின் குடிநீர் தேவைக்கும், 40 மெகாவாட் மின்சாரம் தயாரிக்கவும் இந்த அணை பயன்படும் என்றும், இதனால் தமிழகத்தின் நீர் பங்கு பாதிக்கப்படாது என்றும் அவர் வாதிட்டார்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Administration</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Major IAS Reshuffle: 10 Officers Including Madurai, Sivaganga Collectors Transferred</span>
+                        <span class="lang-ta">பெரும் ஐஏஎஸ் (IAS) இடமாற்றம்: மதுரை, சிவகங்கை ஆட்சியர்கள் உட்பட 10 பேர் மாற்றம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Tamil Nadu government has transferred 10 IAS officers. P. Akash is the new Sivaganga District Collector, while Nishant Krishna takes over as Madurai Collector. V.P. Jeyaseelan has been appointed as the Director of Tourism. D. Mohan is the new MD of the Metropolitan Transport Corporation (MTC). Several other shifts occurred across municipal administration, HD&CE, and rural development sectors.</p>
+                    <p class="lang-ta">தமிழக அரசு 10 ஐஏஎஸ் (IAS) அதிகாரிகளைப் பணியிட மாற்றம் செய்துள்ளது. சிவகங்கை மாவட்டத்தின் புதிய ஆட்சியராக பி. ஆகாஷ் நியமிக்கப்பட்டுள்ளார்; மதுரை ஆட்சியராக நிஷாந்த் கிருஷ்ணா பொறுப்பேற்கிறார். வி.பி. ஜெயசீலன் சுற்றுலாத்துறை இயக்குநராக நியமிக்கப்பட்டுள்ளார். பெருநகரப் போக்குவரத்துச் கழகத்தின் (MTC) புதிய நிர்வாக இயக்குநராக டி. மோகன் நியமிக்கப்பட்டுள்ளார். நகராட்சி நிர்வாகம், அறநிலையத்துறை மற்றும் ஊரக வளர்ச்சித் துறைகளிலும் பல மாற்றங்கள் செய்யப்பட்டுள்ளன.</p>
+                </div>
+
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National / Central News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Health · Pharmacology</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Central Govt Bans 16 Fixed-Dose Combination (FDC) Drugs</span>
+                        <span class="lang-ta">16 நிலையான அளவு கலவை (FDC) மருந்துகளுக்கு மத்திய அரசு தடை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Union Health Ministry has issued an immediate ban on the production, sale, and distribution of 16 Fixed-Dose Combination (FDC) drugs, stating they lack therapeutic justification and pose potential side effects without significant benefits. An FDC drug contains two or more active pharmaceutical ingredients in a fixed ratio. The banned combinations include certain painkillers, muscle relaxants, and antibiotics (like combinations involving Amoxicillin, Paracetamol, and Diclofenac). The ban was executed under Section 26A of the Drugs and Cosmetics Act, 1940.</p>
+                    <p class="lang-ta">மருத்துவ ரீதியாக எவ்வித நியாயமும் இல்லாததாலும், பக்க விளைவுகளை ஏற்படுத்தக் கூடும் என்பதாலும் 16 நிலையான அளவு கலவை (Fixed-Dose Combination - FDC) மருந்துகளின் உற்பத்தி, விற்பனை மற்றும் விநியோகத்திற்கு மத்திய சுகாதாரத்துறை அமைச்சகம் உடனடியாகத் தடை விதித்துள்ளது. எஃப்டிசி (FDC) என்பது இரண்டு அல்லது அதற்கு மேற்பட்ட வீரியமிக்க மருந்துகளை ஒரு குறிப்பிட்ட விகிதத்தில் உள்ளடக்கிய கலவையாகும். தடை செய்யப்பட்ட மருந்துகளில் சில வலி நிவாரணிகள், தசைத்தளர்வு மருந்துகள் மற்றும் நுண்ணுயிர் எதிர்ப்பிகள் (பாராசிட்டமால், அமோக்சிசிலின், டிக்ளோஃபெனாக் கலவைகள்) அடங்கும். 1940-ஆம் ஆண்டின் மருந்துகள் மற்றும் அழகு சாதனப் பொருட்கள் சட்டத்தின் 26A பிரிவின் கீழ் இத்தடை விதிக்கப்பட்டுள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Act Hook:</strong> The Drugs and Cosmetics Act, 1940 regulates the import, manufacture, and distribution of drugs in India. Section 26A empowers the Central Government to prohibit the manufacture of drugs and cosmetics in the public interest.</span><span class="lang-ta"><strong>சட்டக் குறிப்பு:</strong> மருந்துகள் மற்றும் அழகு சாதனப் பொருட்கள் சட்டம், 1940, இந்தியாவில் மருந்துகளின் இறக்குமதி, உற்பத்தி மற்றும் விநியோகத்தை ஒழுங்குபடுத்துகிறது. பிரிவு 26A, பொது நலன் கருதி மருந்துகள் உற்பத்தியைத் தடை செய்ய மத்திய அரசுக்கு அதிகாரம் அளிக்கிறது.</span></li>
+                            <li><span class="badge bg-tip">TIP</span><span class="lang-en">FDC drugs are often banned to prevent Antimicrobial Resistance (AMR) and unnecessary organ toxicity.</span><span class="lang-ta">நுண்ணுயிர் எதிர்ப்பி எதிர்ப்பு (AMR) மற்றும் தேவையற்ற உறுப்பு நச்சுத்தன்மையைத் தடுப்பதற்காகவே பெரும்பாலும் FDC மருந்துகள் தடை செய்யப்படுகின்றன.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Welfare · PM-KISAN</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">PM Modi Releases 23rd Installment of PM-KISAN Worth ₹18,880 Crore</span>
+                        <span class="lang-ta">பிஎம்-கிசான் (PM-KISAN) திட்டத்தின் 23-வது தவணையாக ரூ.18,880 கோடியைப் பிரதமர் மோடி விடுவித்தார்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">During a two-day visit to West Bengal, Prime Minister Narendra Modi released the 23rd installment of the Pradhan Mantri Kisan Samman Nidhi (PM-KISAN) scheme, transferring a total of ₹18,880 crore to the bank accounts of over 9.44 crore farmers nationwide. The scheme, launched in 2019, provides eligible farmers with an annual financial assistance of ₹6,000 in three equal installments. He also inaugurated several railway and infrastructure projects in the state worth ₹590 crore.</p>
+                    <p class="lang-ta">மேற்கு வங்கத்தில் இரண்டு நாள் சுற்றுப்பயணம் மேற்கொண்டுள்ள பிரதமர் நரேந்திர மோடி, பிரதமரின் உழவர் உதவித்தொகை (PM-KISAN) திட்டத்தின் 23-வது தவணையாக நாடு முழுவதும் உள்ள 9.44 கோடிக்கும் அதிகமான விவசாயிகளின் வங்கிக் கணக்குகளில் மொத்தம் ரூ.18,880 கோடியை விடுவித்தார். 2019-ல் தொடங்கப்பட்ட இத்திட்டத்தின் கீழ், தகுதியான விவசாயிகளுக்கு ஆண்டுக்கு ரூ.6,000 மூன்று சம தவணைகளில் வழங்கப்படுகிறது. அத்துடன், அம்மாநிலத்தில் ரூ.590 கோடி மதிப்பிலான ரயில்வே மற்றும் உள்கட்டமைப்புத் திட்டங்களையும் அவர் தொடங்கி வைத்தார்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Geopolitics · BRICS</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">BRICS NSA Summit Begins in New Delhi; Ajit Doval to Chair</span>
+                        <span class="lang-ta">புதுதில்லியில் இன்று தொடங்குகிறது பிரிக்ஸ் (BRICS) தேசிய பாதுகாப்பு ஆலோசகர்கள் மாநாடு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The BRICS National Security Advisors (NSA) Summit is set to begin in New Delhi on June 22, chaired by India's NSA Ajit Doval. Chinese Foreign Minister Wang Yi and the Deputy Secretary of Iran's Supreme National Security Council will participate among representatives from the 11 member nations. Discussions are expected to focus on the Ukraine war, regional conflicts (Pakistan-Afghanistan), and global security. India holds the chairmanship of the expanded BRICS alliance for the year 2026.</p>
+                    <p class="lang-ta">பிரிக்ஸ் (BRICS) நாடுகளின் தேசிய பாதுகாப்பு ஆலோசகர்கள் (NSA) மாநாடு புதுதில்லியில் ஜூன் 22 அன்று தொடங்குகிறது. இதற்கு இந்தியாவின் தேசிய பாதுகாப்பு ஆலோசகர் அஜீத் தோவல் தலைமை தாங்குகிறார். சீன வெளியுறவுத்துறை அமைச்சர் வாங் யி மற்றும் ஈரானின் தேசிய பாதுகாப்பு கவுன்சில் துணைச் செயலாளர் உள்ளிட்ட 11 உறுப்பு நாடுகளின் பிரதிநிதிகள் இதில் பங்கேற்கின்றனர். உக்ரைன் போர், பிராந்திய மோதல்கள் மற்றும் உலகளாவிய பாதுகாப்பு குறித்து விவாதிக்கப்படும் என எதிர்பார்க்கப்படுகிறது. 2026-ஆம் ஆண்டுக்கான விரிவுபடுத்தப்பட்ட பிரிக்ஸ் கூட்டமைப்பின் தலைமையை இந்தியா வகிக்கிறது.</p>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Railways · Fines</span>
+                        <span class="badge bg-trap">TRAP</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Railways Doubles Penalties for Ticketless Travel & Smoking</span>
+                        <span class="lang-ta">ரயில் நிலையங்களில் டிக்கெட் இன்றி பயணம் செய்தல் & புகைப்பிடித்தலுக்கான அபராதம் இருமடங்காக உயர்வு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Indian Railways has doubled the penalty amounts to deter rules violations. The fine for ticketless travel on suburban electric trains has increased from ₹250 to ₹500, while on express trains it can go up to ₹1,620. Furthermore, the penalty for smoking on railway premises has been drastically hiked from ₹100 to ₹2,000. Men travelling in women's compartments will now be fined ₹2,500 (up from ₹500), and carrying unauthorized weapons will attract a ₹10,000 fine.</p>
+                    <p class="lang-ta">ரயில்வே விதிகளை மீறுவதைத் தடுக்கும் நோக்கில், இந்திய ரயில்வே அபராதத் தொகையை இருமடங்காக உயர்த்தியுள்ளது. மின்சார ரயில்களில் டிக்கெட் இல்லாமல் பயணம் செய்தால் விதிக்கப்படும் அபராதம் ரூ.250-லிருந்து ரூ.500 ஆகவும், விரைவு ரயில்களில் ரூ.1,620 வரையிலும் உயர்த்தப்பட்டுள்ளது. மேலும், ரயில் நிலைய வளாகங்களில் புகைப்பிடித்தலுக்கான அபராதம் ரூ.100-லிருந்து ரூ.2,000 ஆகப் பலமடங்கு உயர்த்தப்பட்டுள்ளது. பெண்கள் பெட்டியில் பயணிக்கும் ஆண்களுக்கு ரூ.2,500 அபராதமும், அங்கீகாரமில்லாத ஆயுதங்களைக் கொண்டு சென்றால் ரூ.10,000 அபராதமும் விதிக்கப்படும்.</p>
+                </div>
+
+            </section>
+
+            <!-- INTERNATIONAL NEWS -->
+            <section id="international">
+                <h2>
+                    <span class="lang-en">International News</span>
+                    <span class="lang-ta">சர்வதேச செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Geopolitics · Middle East</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">US-Iran Peace Talks Stalled; Iran Closes Strait of Hormuz Again</span>
+                        <span class="lang-ta">அமெரிக்கா - ஈரான் அமைதிப் பேச்சுவார்த்தை ரத்து; ஹோர்முஸ் ஜலசந்தியை மீண்டும் மூடியது ஈரான்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The next round of peace talks between the US and Iran, scheduled to be held in Switzerland, has hit a roadblock due to Israel's continuous airstrikes on Hezbollah positions in southern Lebanon. Accusing the US of failing to stop Israel and thereby breaking their recent 14-point electronic peace pact, Iran's military chief announced the immediate re-closure of the strategic Strait of Hormuz. Pakistan and Qatar are currently acting as mediators trying to salvage the fragile peace negotiations.</p>
+                    <p class="lang-ta">சுவிட்சர்லாந்தில் நடைபெறவிருந்த அமெரிக்கா - ஈரான் இடையேயான அடுத்தகட்ட அமைதிப் பேச்சுவார்த்தை, தெற்கு லெபனானில் ஹிஸ்புல்லா அமைப்பினர் மீது இஸ்ரேல் தொடர்ச்சியாக நடத்திய தாக்குதல்களால் தடைபட்டுள்ளது. இஸ்ரேலைத் தடுக்கத் தவறியதன் மூலம், சமீபத்தில் மின்னணு முறையில் கையெழுத்தான 14-அம்ச அமைதி ஒப்பந்தத்தை அமெரிக்கா மீறிவிட்டதாகக் குற்றம் சாட்டிய ஈரான் ராணுவம், முக்கியத்துவம் வாய்ந்த ஹோர்முஸ் ஜலசந்தியை மீண்டும் மூடுவதாக அறிவித்துள்ளது. பாகிஸ்தானும் கத்தாரும் தற்போது இந்த அமைதிப் பேச்சுவார்த்தையைக் காப்பாற்றும் மத்தியஸ்தர்களாகச் செயல்பட்டு வருகின்றன.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Geography Hook:</strong> The Strait of Hormuz connects the Persian Gulf with the Gulf of Oman and the Arabian Sea. It is one of the world's most critical chokepoints for global oil transit.</span><span class="lang-ta"><strong>புவியியல் குறிப்பு:</strong> ஹோர்முஸ் ஜலசந்தி பாரசீக வளைகுடாவை ஓமன் வளைகுடா மற்றும் அரபிக்கடலுடன் இணைக்கிறது. இது உலகளாவிய கச்சா எண்ணெய் போக்குவரத்திற்கான உலகின் மிக முக்கியமான நீர்ச்சந்திகளில் ஒன்றாகும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Global Economy · Privatization</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Historic Shift in Cuba: Parliament Approves Private Enterprise Operations</span>
+                        <span class="lang-ta">கியூபாவில் வரலாற்று மாற்றம்: தனியார் நிறுவனங்களை அனுமதிக்க நாடாளுமன்றம் ஒப்புதல்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In a historic move countering the severe economic crisis and strict US sanctions, Cuba's Parliament has unanimously approved a bill allowing private sector operations, moving away from its strictly state-controlled socialist economy implemented post the 1959 revolution. For the first time, individuals can start businesses and employ over 100 workers. Previously state-owned enterprises will now be transitioned into commercial entities with shares and investments, marking a massive shift towards a market economy.</p>
+                    <p class="lang-ta">கடுமையான பொருளாதார நெருக்கடி மற்றும் அமெரிக்காவின் தடைகளைச் சமாளிக்கும் வகையில், ஒரு வரலாற்று சிறப்புமிக்க நகர்வாக கியூபாவின் நாடாளுமன்றம் தனியார் துறையை அனுமதிக்கும் மசோதாவுக்கு ஒருமனதாக ஒப்புதல் அளித்துள்ளது. 1959 புரட்சிக்குப் பிறகு பின்பற்றப்பட்ட கடுமையான அரசு கட்டுப்பாட்டு சோசலிசப் பொருளாதாரத்திலிருந்து இது விலகுகிறது. முதல் முறையாக, தனிநபர்கள் தொழில்களைத் தொடங்கவும் 100-க்கும் மேற்பட்ட தொழிலாளர்களை வேலைக்கு அமர்த்தவும் அனுமதிக்கப்பட்டுள்ளனர். அரசு நிறுவனங்கள் இனி பங்குகள் மற்றும் முதலீடுகளைக் கொண்ட வணிக நிறுவனங்களாக மாற்றப்படும்; இது சந்தைப் பொருளாதாரத்தை நோக்கிய மாபெரும் மாற்றமாகும்.</p>
+                </div>
+            </section>
+
+            <!-- ECONOMY & FINANCE -->
+            <section id="economy">
+                <h2>
+                    <span class="lang-en">Economy & Tech</span>
+                    <span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Macro Indicators · Forex</span>
+                        <span class="badge bg-trap">TRAP</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">India's Forex Reserves Drop to $671.62 Billion Due to Fall in Gold Reserves</span>
+                        <span class="lang-ta">தங்கத்தின் இருப்பு குறைந்ததால் இந்தியாவின் அந்நியச் செலாவணி இருப்பு 67,162 கோடி டாலராகச் சரிவு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">According to RBI data, India's foreign exchange (Forex) reserves decreased by $9.98 billion to stand at $671.62 billion for the week ending June 12. The primary reason for this decline was a significant drop in gold reserves, which fell by $10.75 billion to $103.82 billion. However, Foreign Currency Assets (FCA), the largest component of forex reserves, slightly increased by $846 million to $544.29 billion. Special Drawing Rights (SDRs) also slightly decreased.</p>
+                    <p class="lang-ta">ரிசர்வ் வங்கியின் (RBI) தரவுகளின்படி, ஜூன் 12-ஆம் தேதியுடன் முடிவடைந்த வாரத்தில் இந்தியாவின் அந்நியச் செலாவணி இருப்பு 998 கோடி டாலர் குறைந்து 67,162 கோடி டாலராக (சுமார் $671 பில்லியன்) சரிந்துள்ளது. தங்கத்தின் இருப்பு 1,075 கோடி டாலர் குறைந்து 10,382 கோடி டாலராகச் சரிந்ததே இதற்கு முக்கியக் காரணமாகும். எனினும், அந்நியச் செலாவணியின் முக்கிய அங்கமான அந்நிய நாணய சொத்துகள் (FCA) 84.6 கோடி டாலர் அதிகரித்து 54,429 கோடி டாலராக உள்ளது. சிறப்பு வரைவு உரிமைகளும் (SDR) சற்று குறைந்துள்ளன.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Economy Hook:</strong> India's Forex Reserves consist of 4 components: 1) Foreign Currency Assets (FCA - largest), 2) Gold Reserves, 3) Special Drawing Rights (SDRs) with the IMF, and 4) Reserve Tranche Position (RTP) in the IMF.</span><span class="lang-ta"><strong>பொருளாதாரக் குறிப்பு:</strong> இந்தியாவின் அந்நியச் செலாவணி இருப்பு 4 கூறுகளைக் கொண்டது: 1) அந்நிய நாணய சொத்துகள் (FCA - மிகப்பெரியது), 2) தங்க இருப்பு, 3) சர்வதேச நாணய நிதியத்தின் (IMF) சிறப்பு வரைவு உரிமைகள் (SDR), மற்றும் 4) IMF-இல் உள்ள இருப்பு நிலை (RTP).</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+            </section>
+            
+            <!-- SPORTS -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports</span>
+                    <span class="lang-ta">விளையாட்டு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Hockey · Nations Cup</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Indian Women's Team Thrash Chile 6-0 to Enter FIH Nations Cup Final</span>
+                        <span class="lang-ta">நேஷன்ஸ் கோப்பை ஹாக்கி: சிலியை 6-0 என வீழ்த்தி இந்திய மகளிர் அணி இறுதிப்போட்டிக்கு முன்னேற்றம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Indian Women's Hockey team advanced to the final of the FIH Nations Cup being held in Auckland, New Zealand, by defeating Chile 6-0 in the semi-finals. Deepika was the standout performer, scoring two goals. Navneet Kaur, Neha, and Rutuja Pisal also contributed to the scoreboard. India dominated the match entirely, building an aggressive lead right from the first quarter.</p>
+                    <p class="lang-ta">நியூசிலாந்தின் ஆக்லாந்தில் நடைபெறும் எஃப்ஐஎச் (FIH) நேஷன்ஸ் கோப்பை ஹாக்கிப் போட்டியின் அரையிறுதியில், இந்திய மகளிர் அணி 6-0 என்ற கோல் கணக்கில் சிலியை வீழ்த்தி இறுதிப்போட்டிக்கு முன்னேறியது. இந்தியாவின் தீபிகா அபாரமாக விளையாடி 2 கோல்களை அடித்தார். நவ்நீத் கவுர், நேகா, ருதுஜா பிசால் ஆகியோரும் கோல் அடித்தனர். முதல் கால்பகுதியிலிருந்தே ஆதிக்கம் செலுத்திய இந்திய அணி அபார வெற்றியைப் பதிவு செய்தது.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Shooting · Junior World Cup</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Samir & Rohit Win Gold at Junior Shooting World Cup; India Tops Table</span>
+                        <span class="lang-ta">ஜூனியர் உலகக் கோப்பை துப்பாக்கிச் சுடுதல்: இந்தியாவின் சமீர், ரோஹித்துக்கு தங்கம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">At the ISSF Junior Shooting World Cup held in Suhl, Germany, Indian shooters Samir and Rohit Kanyan won gold medals. Samir secured gold in the Men's 25m Rapid Fire Pistol event, while Rohit Kanyan clinched gold in the Men's 50m Rifle 3 Positions event. Prachi secured a silver in the Women's 50m Rifle 3 Positions. At the end of day two, India topped the medal tally with 8 medals (4 Gold, 1 Silver, 3 Bronze).</p>
+                    <p class="lang-ta">ஜெர்மனியின் சுல் நகரில் நடைபெறும் ஐஎஸ்எஸ்எஃப் (ISSF) ஜூனியர் உலகக் கோப்பை துப்பாக்கிச் சுடுதல் போட்டியில் இந்தியாவின் சமீர் மற்றும் ரோஹித் கன்யான் தங்கம் வென்றனர். ஆடவர் 25 மீட்டர் ரேபிட் ஃபயர் பிஸ்டல் பிரிவில் சமீரும், ஆடவர் 50 மீட்டர் ரைஃபிள் 3 பொசிசன்ஸ் பிரிவில் ரோஹித்தும் தங்கம் வென்றனர். மகளிர் பிரிவில் பிராச்சி வெள்ளி வென்றார். இரண்டாம் நாள் முடிவில் இந்தியா 4 தங்கம், 1 வெள்ளி, 3 வெண்கலம் என மொத்தம் 8 பதக்கங்களுடன் பட்டியலில் முதலிடத்தில் உள்ளது.</p>
+                </div>
+
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: The Central Government frequently bans specific Fixed-Dose Combination (FDC) drugs under which Section of the Drugs and Cosmetics Act, 1940 to prevent health risks?</span>
+                        <span class="lang-ta">கேள்வி: சுகாதார அபாயங்களைத் தடுக்கும் நோக்கில், மருந்துகள் மற்றும் அழகு சாதனப் பொருட்கள் சட்டம் 1940-இன் எந்தப் பிரிவின் கீழ் மத்திய அரசு நிலையான அளவு கலவை (FDC) மருந்துகளைத் தடை செய்கிறது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Section 26A</span><br><br>
+                                <strong>Context:</strong> The Union Health Ministry recently banned 16 FDC drugs (including painkiller/antibiotic combos) under Section 26A, citing lack of therapeutic justification.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">பிரிவு 26A</span><br><br>
+                                <strong>பின்னணி:</strong> மருத்துவ ரீதியான நியாயம் இல்லை எனக் கூறி, 16 FDC மருந்துகளை (வலி நிவாரணிகள் / ஆன்டிபயாடிக்குகள்) பிரிவு 26A-இன் கீழ் மத்திய அரசு சமீபத்தில் தடை செய்தது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Iran's threat to close the Strait of Hormuz impacts global trade primarily because this strait connects the Persian Gulf with which of the following water bodies?</span>
+                        <span class="lang-ta">கேள்வி: ஹோர்முஸ் ஜலசந்தியை மூடுவதாக ஈரான் விடுத்த அச்சுறுத்தல் உலக வர்த்தகத்தைப் பாதிக்கிறது. ஏனெனில், இந்த ஜலசந்தி பாரசீக வளைகுடாவை கீழ்க்கண்ட எந்த நீர்நிலையுடன் இணைக்கிறது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Gulf of Oman and the Arabian Sea</span><br><br>
+                                <strong>Context:</strong> Stalled US-Iran peace talks led Iran to threaten the closure of the Strait of Hormuz, a crucial chokepoint for global oil transport.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">ஓமன் வளைகுடா மற்றும் அரபிக்கடல்</span><br><br>
+                                <strong>பின்னணி:</strong> அமெரிக்கா-ஈரான் அமைதிப் பேச்சுவார்த்தை தடைபட்டதால், உலகளாவிய எண்ணெய் போக்குவரத்திற்கான முக்கியச் சந்தியான ஹோர்முஸ் ஜலசந்தியை மூடுவதாக ஈரான் எச்சரித்தது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">16 FDC Drugs Banned</span><span class="lang-ta">16 FDC மருந்துகளுக்குத் தடை</span></td>
+                                <td><span class="lang-en">National/Health</span><span class="lang-ta">தேசியம்/சுகாதாரம்</span></td>
+                                <td><span class="lang-en">Banned under Section 26A of Drugs Act.</span><span class="lang-ta">மருந்துகள் சட்டம் 26A பிரிவின் கீழ் தடை.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">Strait of Hormuz</span><span class="lang-ta">ஹோர்முஸ் ஜலசந்தி</span></td>
+                                <td><span class="lang-en">Intl/Geopolitics</span><span class="lang-ta">சர்வதேசம்/அரசியல்</span></td>
+                                <td><span class="lang-en">Iran threatens closure amidst US peace talk failure.</span><span class="lang-ta">அமெரிக்க பேச்சுவார்த்தை ரத்து; ஈரான் அச்சுறுத்தல்.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">Temple Funds G.O.</span><span class="lang-ta">கோயில் நிதி அரசாணை</span></td>
+                                <td><span class="lang-en">State/HR&CE</span><span class="lang-ta">மாநிலம்/அறநிலையம்</span></td>
+                                <td><span class="lang-en">Surplus funds won't be used for marriage halls (HC order).</span><span class="lang-ta">உபரி நிதியில் மண்டபங்கள் கட்டப்படாது.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">Cuba Privatization</span><span class="lang-ta">கியூபா தனியார்மயம்</span></td>
+                                <td><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></td>
+                                <td><span class="lang-en">Shift from socialist state to allow private enterprises.</span><span class="lang-ta">சோசலிசப் பொருளாதாரத்திலிருந்து தனியார்மயத்துக்கு மாற்றம்.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">PM-KISAN 23rd Installment</span><span class="lang-ta">PM-KISAN 23-வது தவணை</span></td>
+                                <td><span class="lang-en">National/Welfare</span><span class="lang-ta">தேசியம்/நலத்திட்டம்</span></td>
+                                <td><span class="lang-en">PM releases ₹18,880 Cr to 9.44 Cr farmers.</span><span class="lang-ta">ரூ.18,880 கோடியை விடுவித்தார் பிரதமர்.</span></td>
+                                <td><span class="badge bg-tip">MED</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani Chennai 21-06-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி சென்னை 21-06-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source text detailed state, national, and international news for 21 June 2026. 
+State news covered CM Stalin emphasizing that freezing the 'Naan Mudhalvan' scheme hurts youth development. The TN Govt issued a G.O. (based on a Madurai HC bench order) stating that surplus funds from 46 temples will not be used to build commercial complexes/marriage halls. The NGT asked the state about the status of the Pen Monument. An SFI protest regarding NEET took place in Guindy. 10 IAS officers, including Sivaganga and Madurai Collectors, were transferred. Prem Anand Sinha was appointed Tambaram Police Commissioner. 
+National news: PM Modi released the 23rd PM-KISAN installment (Rs 18,880 crore) in West Bengal. The Central Govt banned 16 Fixed-Dose Combination (FDC) drugs citing health risks. India will host the BRICS NSA summit on June 22. Indian Railways doubled fines for ticketless travel and raised smoking fines to Rs 2000. 6 lakh organizations registered to do Yoga on International Yoga Day. 
+International news: Iran closed the Strait of Hormuz after peace talks with the US were stalled due to Israel-Hezbollah violence. Cuba's parliament allowed private enterprises to operate, moving away from a strict socialist structure. Trump praised PM Modi as a great leader. 
+Economy: India's forex reserves fell to $671.62 billion due to a drop in gold reserves. The beauty and personal care market in India is predicted to hit $39 billion by 2030. SEBI approved IPOs for 4 companies.
+Sports: The Indian women's hockey team beat Chile 6-0 to reach the Nations Cup final. Shooters Samir and Rohit won gold at the Junior World Cup. India beat Afghanistan 3-0 in the ODI series.]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூல உரைகள் 21 ஜூன் 2026 க்கான செய்திகளைக் கொண்டிருந்தன.
+மாநில செய்திகளில், 'நான் முதல்வன்' திட்டத்தை முடக்குவது இளைஞர்களைப் பாதிக்கும் என முதல்வர் ஸ்டாலின் தெரிவித்தார். உயர்நீதிமன்ற உத்தரவின்படி 46 கோயில்களின் உபரி நிதியில் இருந்து வணிக வளாகங்கள் கட்டப்படாது என அரசாணை வெளியிடப்பட்டது. பேனா நினைவுச் சின்னம் குறித்து பசுமைத் தீர்ப்பாயம் கேள்வி எழுப்பியது. நீட் தேர்வுக்கு எதிராக கிண்டியில் SFI போராட்டம். மதுரை, சிவகங்கை ஆட்சியர்கள் உட்பட 10 ஐஏஎஸ் அதிகாரிகள் மாற்றம். தாம்பரம் காவல் ஆணையராக பிரேம் ஆனந்த் சின்ஹா பொறுப்பேற்பு.
+தேசிய அளவில்: மேற்கு வங்கத்தில் பிஎம்-கிசான் திட்டத்தின் 23-வது தவணையை (ரூ.18,880 கோடி) பிரதமர் மோடி விடுவித்தார். 16 FDC மருந்துகளுக்கு மத்திய அரசு தடை விதித்தது. ஜூன் 22 அன்று பிரிக்ஸ் NSA மாநாட்டை இந்தியா நடத்துகிறது. ரயில்வேயில் டிக்கெட் இல்லாத பயணம் மற்றும் புகைப்பிடித்தலுக்கான அபராதம் பலமடங்கு உயர்வு. சர்வதேச யோகா தினத்தில் 6 லட்சம் அமைப்புகள் முன்பதிவு.
+சர்வதேச அளவில்: அமெரிக்காவுடனான அமைதிப் பேச்சுவார்த்தை தடைபட்டதால் ஹோர்முஸ் ஜலசந்தியை ஈரான் மூடியது. கியூபாவில் தனியார் நிறுவனங்களை அனுமதிக்க நாடாளுமன்றம் ஒப்புதல். பிரதமர் மோடியைச் சிறந்த தலைவர் என ட்ரம்ப் புகழ்ந்தார்.
+பொருளாதாரம்: தங்க இருப்பு குறைந்ததால் இந்தியாவின் அந்நியச் செலாவணி இருப்பு 671 பில்லியன் டாலராகச் சரிந்தது. 2030-க்குள் அழகு சாதனச் சந்தை 39 பில்லியன் டாலரை எட்டும். 4 நிறுவனங்களின் ஐபிஓ-க்கு செபி அனுமதி.
+விளையாட்டு: சிலியை 6-0 என வென்று நேஷன்ஸ் கோப்பை ஹாக்கி இறுதிப்போட்டியில் இந்திய மகளிர் அணி நுழைந்தது. ஜூனியர் உலகக் கோப்பை துப்பாக்கிச் சுடுதலில் சமீர், ரோஹித் தங்கம் வென்றனர். ஆஃப்கானிஸ்தானை 3-0 என ஒருநாள் தொடரில் இந்தியா வென்றது.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 21 June 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+    </script>
+</body>
+</html>
