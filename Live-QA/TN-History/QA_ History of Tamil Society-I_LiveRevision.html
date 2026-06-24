@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QA_History_TamilSociety_LiveRevision</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Andika&family=IBM+Plex+Mono:wght@400;600&family=Orbitron:wght@500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0d0f14;
+            --card-bg: #161a23;
+            --gold: #f5c842;
+            --gold-dim: #cfa328;
+            --text-light: #e2e8f0;
+            --text-dim: #94a3b8;
+            --critical-red: #ef4444;
+            --trap-gold: #f5c842;
+            --tip-green: #22c55e;
+            --pyq-blue: #3b82f6;
+            --gem-purple: #a855f7;
+            --border-color: #2e3748;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Andika', sans-serif;
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+        }
+
+        .orbitron {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .mono {
+            font-family: 'IBM Plex Mono', sans-serif;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #1e2530 0%, #0d0f14 100%);
+            border-bottom: 3px solid var(--gold);
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero h1 {
+            color: var(--gold);
+            font-size: 2.3rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .meta-pills {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .pill {
+            background: rgba(245, 200, 66, 0.1);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                position: static !important;
+                height: auto !important;
+            }
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 20px;
+            height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+
+        .toc-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .toc-card h3 {
+            color: var(--gold);
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        .toc-list {
+            list-style: none;
+        }
+
+        .toc-list li {
+            margin-bottom: 10px;
+        }
+
+        .toc-list a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .toc-list a:hover {
+            color: var(--gold);
+        }
+
+        .controls-row {
+            grid-column: 1 / -1;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: #232a36;
+            border: 1px solid var(--border-color);
+            color: var(--text-light);
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--gold);
+            color: var(--bg-dark);
+            border-color: var(--gold);
+        }
+
+        .legend {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot.critical { background-color: var(--critical-red); }
+        .dot.trap { background-color: var(--trap-gold); }
+        .dot.tip { background-color: var(--tip-green); }
+        .dot.pyq { background-color: var(--pyq-blue); }
+        .dot.gem { background-color: var(--gem-purple); }
+
+        .overview-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .overview-title {
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .qa-group-title {
+            color: var(--gold);
+            margin: 40px 0 20px 0;
+            border-left: 4px solid var(--gold);
+            padding-left: 12px;
+            text-transform: uppercase;
+        }
+
+        .qa-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+
+        .qa-card.pyq-glow { border: 1px solid var(--pyq-blue); box-shadow: 0 0 8px rgba(59, 131, 246, 0.2); }
+        .qa-card.gem-glow { border: 1px solid var(--gem-purple); box-shadow: 0 0 8px rgba(168, 85, 247, 0.2); }
+
+        .qa-header {
+            background: #1e2530;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .qa-badge-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .badge {
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge.easy { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e; }
+        .badge.medium { background: rgba(245, 200, 66, 0.2); color: #fde047; border: 1px solid #f5c842; }
+        .badge.hard { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444; }
+
+        .qa-body {
+            padding: 20px;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .answer-box {
+            background: rgba(34, 197, 94, 0.05);
+            border-left: 4px solid var(--tip-green);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .answer-title {
+            color: var(--tip-green);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .strike { text-decoration: line-through; color: var(--critical-red); font-weight: normal; }
+        .correct-inline { color: var(--tip-green); font-weight: bold; }
+
+        .callout {
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 6px;
+            border: 1px solid transparent;
+        }
+
+        .callout-title {
+            font-weight: 700;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .callout.gem { background: rgba(168, 85, 247, 0.05); border-color: rgba(168, 85, 247, 0.3); }
+        .callout.gem .callout-title { color: var(--gem-purple); }
+
+        .callout.pyq { background: rgba(59, 131, 246, 0.05); border-color: rgba(59, 131, 246, 0.3); }
+        .callout.pyq .callout-title { color: var(--pyq-blue); }
+
+        .callout.trap { background: rgba(245, 200, 66, 0.05); border-color: rgba(245, 200, 66, 0.3); }
+        .callout.trap .callout-title { color: var(--trap-gold); }
+
+        .callout.critical { background: rgba(239, 68, 68, 0.05); border-color: rgba(239, 68, 68, 0.3); }
+        .callout.critical .callout-title { color: var(--critical-red); }
+
+        .section-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-top: 40px;
+        }
+
+        .section-card h2 {
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 0.95rem;
+        }
+
+        .styled-table th {
+            background-color: #1e2530;
+            color: var(--gold);
+            text-align: left;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .styled-table td {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .styled-table tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        footer {
+            background: #12161f;
+            border-top: 2px solid var(--gold);
+            padding: 24px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <h1 class="orbitron">High-Yield Q&A Revision Crack Sheet</h1>
+        <div class="mono" style="color: var(--text-dim);">History of Tamil Society, Socio-Political Movements & Freedom Struggle in TN</div>
+        <div class="meta-pills">
+            <span class="pill">Exam Target: TNPSC Group 1 / 2 / 4 / VAO & SSC</span>
+            <span class="pill">Faculty: SP Velan</span>
+            <span class="pill">Subject Map: History (TNPSC Focus)</span>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <div class="toc-card">
+                <h3 class="orbitron">Navigation</h3>
+                <ul class="toc-list mono">
+                    <li><a href="#overview">1. Session Overview</a></li>
+                    <li><a href="#leaders-philosophies">2. Leaders & Philosophies</a></li>
+                    <li><a href="#justice-non-brahmin">3. Justice Party Era</a></li>
+                    <li><a href="#literature-culture">4. Literature & Culture</a></li>
+                    <li><a href="#palayakkarar-rebellion">5. Palayakkarar Rebellion</a></li>
+                    <li><a href="#summary-card">6. Topic Summary Card</a></li>
+                    <li><a href="#prediction-2026">7. 2026 Predictions</a></li>
+                    <li><a href="#flashcard-table">8. Quick Flashcards</a></li>
+                    <li><a href="#master-cheat-card">9. Master Cheat Card</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main>
+            <div id="overview" class="controls-row">
+                <div class="filter-buttons">
+                    <button class="filter-btn active">All Questions</button>
+                    <button class="filter-btn">PYQs Only</button>
+                    <button class="filter-btn">Gems Only</button>
+                </div>
+                <div class="legend mono">
+                    <div class="legend-item"><span class="dot critical"></span> [CRITICAL]</div>
+                    <div class="legend-item"><span class="dot trap"></span> [TRAP]</div>
+                    <div class="legend-item"><span class="dot tip"></span> [TIP]</div>
+                    <div class="legend-item"><span class="dot pyq"></span> [PYQ]</div>
+                    <div class="legend-item"><span class="dot gem"></span> [GEM]</div>
+                </div>
+            </div>
+
+            <section class="overview-card">
+                <h2 class="overview-title orbitron">📋 Session Overview & Analysis</h2>
+                <p>This session deals comprehensively with TNPSC Unit 8 / Unit 6 criteria covering the Socio-Political History of Tamil Nadu. It forms a high-weightage block responsible for up to 40 questions in Group 1 exams and around 20 questions in Group 2/2A & 4. The session addresses critical focus areas including justice administration, subaltern movements, anti-colonial resistance of Palayakkarars, and Sangam literature values.</p>
+            </section>
+
+            <h2 class="qa-group-title orbitron" id="leaders-philosophies">Sub-Topic 1: Leaders, Administrative Statements & Philosophies</h2>
+
+            <div class="qa-card" id="q1">
+                <div class="qa-header">
+                    <span class="orbitron" style="font-weight: bold; color: var(--gold);">Q1 · [MEDIUM] · [Conceptual]</span>
+                    <div class="qa-badge-row mono">
+                        <span class="badge medium">Medium</span>
+                        <span class="badge">Conceptual</span>
+                    </div>
+                </div>
+                <div class="qa-body">
+                    <div class="question-text">Who stated the administrative philosophy: "One should not accept any post to which one cannot execute full justice" (ஒருவர் முழு நீதியை செய்ய முடியாத எந்த பதவியையும் ஏற்க கூடாது)?</div>
+                    <div class="answer-box">
+                        <div class="answer-title">✅ ANSWER:</div>
+                        <p><span class="strike">B.R. Ambedkar / Mahatma Gandhi / Jawaharlal Nehru</span> → <strong>K. Kamaraj (கர்மவீரர் காமராஜர்)</strong></p>
+                    </div>
+                    <div class="callout trap">
+                        <div class="callout-title">🪤 TNPSC TRAP NOTE: Eliminate via Syllabus Context</div>
+                        <p>Live students immediately guessed <span class="strike">B.R. Ambedkar</span> due to the presence of the word "Justice". However, keep track of your subject framework. Since this topic is entirely focused on Tamil Nadu's Socio-Political history, evaluate state leaders first. Kamaraj made this landmark statement regarding personal and administrative accountability.</p>
+                    </div>
+                    <div class="callout gem">
+                        <div class="callout-title">💎 LIVE GEM: Cross-Reference to Indian Polity Textbook</div>
+                        <p>The teacher highlighted another famous statement by K. Kamaraj found in standard School Polity books: "Laws are only for the people; people are not for the laws" (சட்டம் என்பது மக்களுக்கானது; மக்கள் சட்டவழிகளுக்கானவர்கள் அல்ல). Note this down for statements-based questions.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card pyq-glow" id="q2">
+                <div class="qa-header">
+                    <span class="orbitron" style="font-weight: bold; color: var(--gold);">Q2 · [MEDIUM] · [Factual]</span>
+                    <div class="qa-badge-row mono">
+                        <span class="badge medium">Medium</span>
+                        <span class="badge">Factual</span>
+                    </div>
+                </div>
+                <div class="qa-body">
+                    <div class="question-text">Which District Collector submitted a groundbreaking historic report in 1892 regarding the socio-economic deprivations of scheduled communities, eventually leading to the assignment of Panchami Lands?</div>
+                    <div class="answer-box">
+                        <div class="answer-title">✅ ANSWER:</div>
+                        <p><strong>James Tremenheere (ஜேம்ஸ் ட்ரெமென்ஹீர்)</strong>, the then District Collector of <strong>Chingleput (செங்கல்பட்டு)</strong>.</p>
+                    </div>
+                    <div class="callout pyq">
+                        <div class="callout-title">🏆 PYQ ALERT: TNPSC Group 2 & 4 Core Repeat</div>
+                        <p>This exact historical event forms the historical core background of subaltern lands rights in Tamil Nadu. Tremenheere's report of <span class="orbitron">1892</span> directly initiated the institutional allocation of <strong>Panchami Lands</strong> to Depressed Classes to mitigate institutional landlessness.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="qa-group-title orbitron" id="justice-non-brahmin">Sub-Topic 2: Justice Party Era & Non-Brahmin Consolidation</h2>
+
+            <div class="qa-card" id="q3">
+                <div class="qa-header">
+                    <span class="orbitron" style="font-weight: bold; color: var(--gold);">Q3 · [EASY] · [Factual]</span>
+                    <div class="qa-badge-row mono">
+                        <span class="badge easy">Easy</span>
+                        <span class="badge">Factual</span>
+                    </div>
+                </div>
+                <div class="qa-body">
+                    <div class="question-text">Who was selected as the first legislative council member to directly represent the depressed classes in the Madras Legislative Council?</div>
+                    <div class="answer-box">
+                        <div class="answer-title">✅ ANSWER:</div>
+                        <p><strong>M.C. Rajah (மயிலை சின்னத்தம்பி ராஜா - MC ராஜா)</strong></p>
+                    </div>
+                    <div class="callout gem">
+                        <div class="callout-title">💎 LIVE GEM: Legislative Leadership Distinction</div>
+                        <p>M.C. Rajah was not only the first from depressed classes to enter the Madras Legislative Council, but he also served as the <strong>Deputy Leader</strong> of the house within the framework of council proceedings alongside the Justice Party layout.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" id="q4">
+                <div class="qa-header">
+                    <span class="orbitron" style="font-weight: bold; color: var(--gold);">Q4 · [HARD] · [Trick/Trap]</span>
+                    <div class="qa-badge-row mono">
+                        <span class="badge hard">Hard</span>
+                        <span class="badge">Trick/Trap</span>
+                    </div>
+                </div>
+                <div class="qa-body">
+                    <div class="question-text">Identify the incorrect statement(s) from the given pairs:<br>1) Suryanarayana Sastri is considered the Father of Tamil Linguistic Purism.<br>2) Moovalur Ramamirtham Ammaiyar was the first female legislator in India.</div>
+                    <div class="answer-box">
+                        <div class="answer-title">✅ ANSWER:</div>
+                        <p><strong>Both statements 1 and 2 are INCORRECT (இரண்டுமே தவறானவை)</strong></p>
+                    </div>
+                    <div class="callout critical">
+                        <div class="callout-title">⚠️ CRITICAL REVISION BREAKDOWN: [CORRECTION NOTE]</div>
+                        <p>1. The Father of Tamil Linguistic Purism (தனித்தமிழ் இயக்கத்தின் தந்தை) is <strong>Maraimalai Adigal (மறைமலை அடிகள்)</strong>, who changed his Sanskritized name Vedachalam into pure Tamil. Suryanarayana Sastri (Parithimar Kalaignar) was a pioneer who declared Tamil as a Classical Language.<br>2. The first female legislator in India was <strong>Dr. Muthulakshmi Reddy (டாக்டர் முத்துலட்சுமி ரெட்டி)</strong> in <span class="orbitron">1926</span>, hailing from Pudukkottai region, not Moovalur Ramamirtham Ammaiyar.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" id="q5">
+                <div class="qa-header">
+                    <span class="orbitron" style="font-weight: bold; color: var(--gold);">Q5 · [MEDIUM] · [Conceptual]</span>
+                    <div class="qa-badge-row mono">
+                        <span class="badge medium">Medium</span>
+                        <span class="badge">Conceptual</span>
+                    </div>
+                </div>
+                <div class="qa-body">
+                    <div class="question-text">Whose prime structural objective was to work systematically through a constitutional framework for the upliftment of non-Brahmins across education and employment?</div>
+                    <div class="answer-box">
+                        <div class="answer-title">✅ ANSWER:</div>
+                        <p><strong>The Justice Party (நீதிக்கட்சி - South Indian Liberal Federation)</strong></p>
+                    </div>
+                    <div class="callout trap">
+                        <div class="callout-title">🪤 TNPSC TRAP: Differentiating Ideological Offshoots</div>
+                        <p>Do not confuse the Self-Respect Movement (சுயமரியாதை இயக்கம்) or Dravidar Kazhagam (திராவிடர் கழகம்) with the Justice Party here. The Self-Respect Movement and DK explicitly chose <strong>not to contest elections</strong> or form constitutional governments. Whenever the prompt implies working specifically "through constitutional governance and legislative channels", choose Justice Party.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" id="q6">
+                <div class="qa-header">
+                    <span class="orbitron" style="font-weight: bold; color: var(--gold);">Q6 · [MEDIUM] · [Factual]</span>
+                    <div class="qa-badge-row mono">
+                        <span class="badge medium">Medium</span>
+                        <span class="badge">Factual</span>
+                    </div>
+                </div>
+                <div class="qa-body">
+                    <div class="question-text">In which year was the Madras Non-Brahmin Association (சென்னை பிராமணர் அல்லாதார் சங்கம்) originally initiated?</div>
+                    <div class="answer-box">
+                        <div class="answer-title">✅ ANSWER:</div>
+                        <p><strong>1909</strong></p>
+                    </div>
+                    <div class="callout gem">
+                        <div class="callout-title">💎 GEM: Evolutionary Tree of the Dravidian Movement</div>
+                        <p>The teacher mapped out the structural lineage of the movement for chronological order questions:<br>
+                        <strong>1909:</strong> Madras Non-Brahmin Association (formed by lawyers P. Subramanyam and M. Purushothaman Naidu)<br>
+                        ↓<br>
+                        <strong>1912:</strong> Madras United League (later renamed Madras Dravidian Association)<br>
+                        ↓<br>
+                        <strong>1916:</strong> South Indian Liberal Federation (SILF / Justice Party)<br>
+                        ↓<br>
+                        <strong>1944:</strong> Renamed as Dravidar Kazhagam (DK) at the Salem Conference.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card pyq-glow" id="q7">
+                <div class="qa-header">
+                    <span class="orbitron" style="font-weight: bold; color: var(--gold);">Q7 · [HARD] · [Factual]</span>
+                    <div class="qa-badge-row mono">
+                        <span class="badge hard">Hard</span>
+                        <span class="badge">Factual</span>
+                    </div>
+                </div>
+                <div class="qa-body">
+                    <div class="question-text">Who compiled statistical data for the Royal Commission in 1913, proving that Brahmins (forming only 3% of the population) commanded over 90%+ of public employment positions?</div>
+                    <div class="answer-box">
+                        <div class="answer-title">✅ ANSWER:</div>
+                        <p><strong>Alexander Gordon Cardew (அலெக்சாண்டர் கார்டன் கார்டியூ)</strong></p>
+                    </div>
+                    <div class="callout pyq">
+                        <div class="callout-title">🏆 PYQ ALERT: Statistical Subsets of Reservation History</div>
+                        <p>Cardew's detailed evidence submitted to the Public Services Commission provided the primary evidence that led to the introduction of communal government orders (Communal G.O.s) providing reservations in Madras Presidency.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="qa-group-title orbitron" id="literature-culture">Sub-Topic 3: Tamil Literature, Epics & Cultural Landscapes</h2>
+
+            <div class="qa-card" id="q8">
+                <div class="qa-header">
+                    <span class="orbitron" style="font-weight: bold; color: var(--gold);">Q8 · [MEDIUM] · [Factual]</span>
+                    <div class="qa-badge-row mono">
+                        <span class="badge medium">Medium</span>
+                        <span class="badge">Factual</span>
+                    </div>
+                </div>
+                <div class="qa-body">
+                    <div class="question-text">Match the following epic husbands with their respective spouses based on standard Tamil literary contexts:<br>1) Pandu, 2) Rama, 3) Ravana, 4) Dhritarashtra.</div>
+                    <div class="answer-box">
+                        <div class="answer-title">✅ ANSWER:</div>
+                        <p>• <strong>Pandu (பாண்டு)</strong> — Kunti (குந்தி)<br>
+                           • <strong>Rama (ராமன்)</strong> — Sita (சீதை)<br>
+                           • <strong>Ravana (ராவணன்)</strong> — Mandodari (மண்டோதரி)<br>
+                           • <strong>Dhritarashtra (திருதராஷ்டிரன்)</strong> — Gandhari (காந்தாரி)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" id="q9">
+                <div class="qa-header">
+                    <span class="orbitron" style="font-weight: bold; color: var(--gold);">Q9 · [HARD] · [Conceptual]</span>
+                    <div class="qa-badge-row mono">
+                        <span class="badge hard">Hard</span>
+                        <span class="badge">Conceptual</span>
+                    </div>
+                </div>
+                <div class="qa-body">
+                    <div class="question-text">"Many can sleep, but he sleeps not; he watches the world with high moral standard..." (பலர் துஞ்சவும் தான் துஞ்சான் உலகு காக்கும் உயர் கொள்கை கேட்டான்) - Which text contains these lines?</div>
+                    <div class="answer-box">
+                        <div class="answer-title">✅ ANSWER:</div>
+                        <p><span class="strike">Purananuru (புறநானூறு) / Narrinai (நற்றினை)</span> → <strong>Akananuru (அகநானூறு)</strong></p>
+                    </div>
+                    <div class="callout trap">
+                        <div class="callout-title">🪤 TRAP NOTE: The Worldly Protection Trap</div>
+                        <p>Most students quickly choose Purananuru because the verse talks about statecraft, kingly duty, and protecting the world. However, this specific line belongs to the <strong>Akananuru</strong> collection. Memorize this to avoid losing marks on literary quotes.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="qa-group-title orbitron" id="palayakkarar-rebellion">Sub-Topic 4: Palayakkarar Rebellion & Anti-Colonial Resistance</h2>
+
+            <div class="qa-card pyq-glow" id="q10">
+                <div class="qa-header">
+                    <span class="orbitron" style="font-weight: bold; color: var(--gold);">Q10 · [MEDIUM] · [Factual]</span>
+                    <div class="qa-badge-row mono">
+                        <span class="badge medium">Medium</span>
+                        <span class="badge">Factual</span>
+                    </div>
+                </div>
+                <div class="qa-body">
+                    <div class="question-text">On what exact calendar date did Major Bannerman issue his final ultimatum ordering Veerapandiya Kattabomman to surrender at Palayamkottai?</div>
+                    <div class="answer-box">
+                        <div class="answer-title">✅ ANSWER:</div>
+                        <p><strong>September 1, 1799 (செப்டம்பர் 1, 1799)</strong></p>
+                    </div>
+                    <div class="callout gem">
+                        <div class="callout-title">💎 LIVE GEM: Chronology of the Fall of Panchalankurichi</div>
+                        <p>The teacher detailed the exact timelines often tested in Group 1/2 exams:<br>
+                        • <strong>Sept 1, 1799:</strong> Ultimatum delivered via Ramalinganar.<br>
+                        • <strong>Sept 5, 1799:</strong> British army attacks Panchalankurichi fort.<br>
+                        • <strong>Sept 13, 1799:</strong> Kattabomman's minister Sivasubramanian Pillai executed at Nagalapuram.<br>
+                        • <strong>Oct 16, 1799:</strong> Kattabomman tried before an assembly of Palayakkarars.<br>
+                        • <strong>Oct 17, 1799:</strong> Kattabomman hanged from a tamarind tree at Kayathar.</p>
+                    </div>
+                </div>
+            </div>
+
+            <section class="section-card" id="summary-card">
+                <h2 class="orbitron">📌 10-Point Core Revision Summary</h2>
+                <ul style="padding-left: 20px;">
+                    <li><strong>Kamaraj Philosophy:</strong> Advocated that no individual should hold an administrative seat if they cannot deliver complete, fair justice.</li>
+                    <li><strong>Panchami Land Genesis:</strong> Formulated from Collector James Tremenheere's <span class="orbitron">1892</span> investigative report in Chingleput.</li>
+                    <li><strong>M.C. Rajah Eminence:</strong> Pioneer leader of the depressed classes who also served as Madras Legislative Council's Deputy Leader.</li>
+                    <li><strong>Linguistic Purism:</strong> Spearheaded primarily by Maraimalai Adigal, who systematically eliminated Sanskrit structures from Tamil.</li>
+                    <li><strong>Dravidian Roots:</strong> The movement began with the Madras Non-Brahmin Association in <span class="orbitron">1909</span>, before evolving into the Justice Party.</li>
+                    <li><strong>Cardew Commission Data:</strong> Statistically demonstrated that <span class="orbitron">3%</span> of the population held structural dominance over public services.</li>
+                    <li><strong>Epic Pairings:</strong> Kunti, Sita, Mandodari, and Gandhari are matched as spouses to Pandu, Rama, Ravana, and Dhritarashtra respectively.</li>
+                    <li><strong>Akananuru Quote:</strong> Contains the lines stating how an idealistic leader stays awake protecting society while others sleep.</li>
+                    <li><strong>Anti-Colonial Timelines:</strong> Major Bannerman deployed his ultimatum to Kattabomman on September 1, <span class="orbitron">1799</span>.</li>
+                    <li><strong>Sivasubramanian Execution:</strong> Hanged publicly by British forces at Nagalapuram on September 13, <span class="orbitron">1799</span>.</li>
+                </ul>
+            </section>
+
+            <section class="section-card" id="prediction-2026">
+                <h2 class="orbitron">🔮 2026 High-Yield Predictions</h2>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Probable Question Concept</th>
+                            <th>High-Yield Focal Answer Area</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Founder members of Madras Non-Brahmin Association (<span class="orbitron">1909</span>)</td>
+                            <td><strong>P. Subramanyam and M. Purushothaman Naidu</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Communal G.O implementation year under Justice Presidency</td>
+                            <td><strong>1921 & 1922 (First Communal G.O allocations)</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="section-card" id="flashcard-table">
+                <h2 class="orbitron">⚡ Quick Flashcards (விரைவு திருப்புதல்)</h2>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Question Block Prompt</th>
+                            <th>Rapid Answer Flash</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Who established the Advaitananda Sabha in 1876?</td>
+                            <td><strong>Ayotheethasa Pandithar (அயோத்திதாச பண்டிதர்)</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Which components are described as eyes of living beings by Thiruvalluvar?</td>
+                            <td><strong>Numbers & Letters (எண்ணும் எழுத்தும்)</strong></td>
+                        </tr>
+                        <tr>
+                            <td>The structural origin of River Thamirabarani is associated with which sage?</td>
+                            <td><strong>Sage Agastiyar (அகத்தியர் முனிவர்)</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Who was the Commander-in-Chief responsible for the new military regulations causing the 1806 Vellore Mutiny?</td>
+                            <td><strong>Sir John Cradock (ஜான் கிராடாக்)</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="section-card" id="cheat-sheet">
+                <h2 class="orbitron">🏆 Master Cheat Card (முக்கியத் தரவுகள்)</h2>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Chronological Year</th>
+                            <th>Historical Milestone & Strategic Importance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="orbitron">1876</td>
+                            <td>Advaitananda Sabha established by Ayotheethasa Pandithar for subaltern temple entry.</td>
+                        </tr>
+                        <tr>
+                            <td class="orbitron">1892</td>
+                            <td>Tremenheere Report submitted to British authorities regarding Chingleput land rights.</td>
+                        </tr>
+                        <tr>
+                            <td class="orbitron">1799</td>
+                            <td>Fall of Panchalankurichi Palayam; public hanging of Veerapandiya Kattabomman at Kayathar.</td>
+                        </tr>
+                        <tr>
+                            <td class="orbitron">1806</td>
+                            <td>Vellore Mutiny on July 10, catalyzed by Sir John Cradock's dress and emblem regulations.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p class="orbitron">Source From · SP Velan Academy 2026</p>
+        <p class="mono" style="font-size: 0.75rem; margin-top: 5px;">Transforming Live Session Transcripts into Success Blueprints.</p>
+    </footer>
+
+</body>
+</html>

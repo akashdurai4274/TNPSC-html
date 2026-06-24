@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QA_Polity_Tamil_LiveRevision</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Andika&family=IBM+Plex+Mono:wght@400;600&family=Orbitron:wght@600;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0d0f14;
+            --card-bg: #161a23;
+            --gold: #f5c842;
+            --text-color: #e2e8f0;
+            --red: #ff4a4a;
+            --green: #22c55e;
+            --blue: #3b82f6;
+            --purple: #a855f7;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Andika', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Syne', sans-serif;
+            color: var(--gold);
+        }
+
+        .orbitron {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .mono {
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a1f2c, #0d0f14);
+            border-bottom: 2px solid var(--gold);
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .nav-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 30px;
+        }
+
+        aside {
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #2d3748;
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background: #2d3748;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 14px;
+        }
+
+        .btn:hover, .btn.active {
+            background: var(--gold);
+            color: var(--bg-color);
+            font-weight: bold;
+        }
+
+        .legend-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            background: #1a1f2c;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border: 1px solid #2d3748;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid #2d3748;
+            transition: all 0.3s ease;
+        }
+
+        .card.gem-card { border-left: 5px solid var(--purple); box-shadow: 0 0 15px rgba(168, 85, 247, 0.1); }
+        .card.pyq-card { border-left: 5px solid var(--blue); box-shadow: 0 0 15px rgba(59, 130, 246, 0.1); }
+        .card.trap-card { border-left: 5px solid var(--gold); }
+
+        .badge {
+            font-family: 'IBM Plex Mono', monospace;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        .badge-easy { background: rgba(34, 197, 94, 0.2); color: var(--green); }
+        .badge-medium { background: rgba(245, 200, 66, 0.2); color: var(--gold); }
+        .badge-hard { background: rgba(255, 74, 74, 0.2); color: var(--red); }
+
+        .callout {
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+            font-size: 15px;
+        }
+
+        .callout-critical { background: rgba(255, 74, 74, 0.1); border-left: 4px solid var(--red); color: #ffb3b3; }
+        .callout-trap { background: rgba(245, 200, 66, 0.1); border-left: 4px solid var(--gold); color: #ffe699; }
+        .callout-tip { background: rgba(34, 197, 94, 0.1); border-left: 4px solid var(--green); color: #b3ffb3; }
+        .callout-pyq { background: rgba(59, 130, 246, 0.1); border-left: 4px solid var(--blue); color: #b3d1ff; }
+        .callout-gem { background: rgba(168, 85, 247, 0.1); border-left: 4px solid var(--purple); color: #e1bfff; }
+
+        .wrong-ans { text-decoration: line-through; color: #a0aec0; margin-right: 10px; }
+        .correct-ans { color: var(--green); font-weight: bold; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: #1a1f2c;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #2d3748;
+        }
+
+        th {
+            background: #2d3748;
+            color: var(--gold);
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .toc-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .toc-list li {
+            margin-bottom: 10px;
+        }
+
+        .toc-list a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .toc-list a:hover {
+            color: var(--gold);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            margin-top: 50px;
+            border-top: 1px solid #2d3748;
+            font-size: 14px;
+            color: #718096;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 class="orbitron">HIGH-YIELD REVISION CRACK SHEET</h1>
+    <p>TNPSC குரூப் 1, 2, 4 மற்றும் SSC தேர்வுகளுக்கான சிறப்பு நேரலை பகுப்பாய்வு</p>
+    <div style="margin-top: 20px;">
+        <span class="badge" style="background: var(--gold); color: black;">विषय: தமிழ் & இந்திய ஆட்சியியல்</span>
+        <span class="badge" style="background: var(--blue); color: white;">Target: 2026 Exams</span>
+    </div>
+</header>
+
+<div class="container">
+    <div class="filter-buttons">
+        <button class="btn active">அனைத்தும்</button>
+        <button class="btn">எளிது</button>
+        <button class="btn">மத்திமம்</button>
+        <button class="btn">கடினம்</button>
+        <button class="btn">Live Gems</button>
+        <button class="btn">PYQ Alert</button>
+    </div>
+
+    <div class="legend-row">
+        <div class="legend-item"><div class="dot" style="background: var(--green);"></div> எளிது</div>
+        <div class="legend-item"><div class="dot" style="background: var(--gold);"></div> மத்திமம்</div>
+        <div class="legend-item"><div class="dot" style="background: var(--red);"></div> கடினம்</div>
+        <div class="legend-item"><div class="dot" style="background: var(--purple);"></div> 💎 Live Gem</div>
+        <div class="legend-item"><div class="dot" style="background: var(--blue);"></div> 🏆 PYQ Alert</div>
+    </div>
+
+    <div class="nav-layout">
+        <aside>
+            <h3 class="orbitron" style="font-size: 18px; margin-top: 0;">உள்ளடக்கம்</h3>
+            <ul class="toc-list">
+                <li><a href="#overview">சமூக மேலோட்டம்</a></li>
+                <li><a href="#tamil-sec">பகுதி 1: பொதுத்தமிழ் இலக்கணம்</a></li>
+                <li><a href="#polity-sec">பகுதி 2: இந்திய ஆட்சியியல்</a></li>
+                <li><a href="#summary">சுருக்க அட்டவணை</a></li>
+                <li><a href="#predictions">2026 கணிப்புகள்</a></li>
+            </ul>
+        </aside>
+
+        <main>
+            <section id="overview" class="card">
+                <h2 class="orbitron">வகுப்பு மேலோட்டம் (Session Overview)</h2>
+                <p>இந்த நேரலை வகுப்பில் ஆறாம் வகுப்பு பொதுத்தமிழ் இலக்கணம், முக்கிய இலக்கியக் குறிப்புகள் மற்றும் இந்திய ஆட்சியியலின் மிக முக்கியமான உச்சநீதிமன்ற வழக்குகள் மற்றும் சட்டத்திருத்தங்கள் விரிவாக விவாதிக்கப்பட்டுள்ளன.</p>
+                <ul>
+                    <li><strong>மொத்த கேள்விகள்:</strong> 20 விரிவான விவாதங்கள்</li>
+                    <li><strong>முக்கிய தலைப்புகள்:</strong> திருக்குறள் உரை, உவமைத் தொடர்கள், வலுவற்ற வாக்கியங்கள், அடிப்படை கட்டமைப்பு கோட்பாடு (Basic Structure), முக்கிய அரசியல் சாசன விதிகள்.</li>
+                </ul>
+            </section>
+
+            <section id="tamil-sec">
+                <h2 class="orbitron" style="border-bottom: 2px solid var(--gold); padding-bottom: 10px;">பகுதி 1: பொதுத்தமிழ் இலக்கணம் & இலக்கியம்</h2>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span class="mono" style="color: var(--gold); font-weight: bold;">QUESTION 01</span>
+                        <div>
+                            <span class="badge badge-easy">EASY</span>
+                            <span class="badge" style="background: #2d3748;">Factual</span>
+                        </div>
+                    </div>
+                    <p><strong>கேள்வி:</strong> "கொடையளி செங்கோல் குடியோம்பல் நான்கும் உடையானாம் வேந்தர்க் கொளி" - இத்திருக்குறள் உணர்த்தும் சிறந்த ஆட்சியாளருக்கான நான்கு பண்புகள் யாவை?</p>
+                    <p class="correct-ans">✅ பதில்: கொடை, அருள் (அன்பு செலுத்துதல்), செங்கோல் (நீதி தவறாத ஆட்சி), குடிகளைக் காத்தல்.</p>
+                    
+                    <div class="callout callout-tip">
+                        <strong>[TIP]</strong> தேர்விற்கு திருக்குறளின் சீர்களை மாற்றி அமைத்து சரியான வரிசையைக் கேட்க வாய்ப்புள்ளது. 'கொடை', 'அளி', 'செங்கோல்', 'குடியோம்பல்' என்ற வரிசையை நினைவில் வையுங்கள். [00:01:45]
+                    </div>
+                </div>
+
+                <div class="card gem-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span class="mono" style="color: var(--gold); font-weight: bold;">QUESTION 02</span>
+                        <div>
+                            <span class="badge badge-medium">MEDIUM</span>
+                            <span class="badge" style="background: #2d3748;">Conceptual</span>
+                        </div>
+                    </div>
+                    <p><strong>கேள்வி:</strong> பொருள் கூறுக: "புன்கண்ணீர்"</p>
+                    <p class="correct-ans">✅ பதில்: துன்பம் கண்டு பெருகும் கண்ணீர்</p>
+                    
+                    <div class="callout callout-gem">
+                        <strong>[💎 LIVE GEM]</strong> "அன்பிற்கும் உண்டோ அடைக்கும்தாழ் ஆர்வலர் புன்கணீர் பூசல் தரும்" என்ற குறளிலிருந்து இக்கேள்வி கேட்கப்பட்டுள்ளது. 'புன்' என்றால் துன்பம் அல்லது மெலிதான என்று பொருள் கொள்ளப்படும். இங்கு துன்பம் கண்டு வழியும் கண்ணீரைக் குறிக்கிறது. [00:03:15]
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span class="mono" style="color: var(--gold); font-weight: bold;">QUESTION 03</span>
+                        <div>
+                            <span class="badge badge-medium">MEDIUM</span>
+                            <span class="badge" style="background: #2d3748;">Trap</span>
+                        </div>
+                    </div>
+                    <p><strong>கேள்வி:</strong> "வந்தால் மகிழ்வான்" - இத்தொடரின் காலத்தைக் காண்க.</p>
+                    <p><span class="wrong-ans">இறந்த காலம்</span> <span class="correct-ans">✅ சரியான பதில்: எதிர்காலம்</span></p>
+                    
+                    <div class="callout callout-trap">
+                        <strong>[🪤 TNPSC TRAP]</strong> மாணவர்கள் பலர் 'வந்தால்' என்பதில் உள்ள 'வந்து' என்பதைப் பார்த்துவிட்டு அவசரத்தில் இறந்த காலம் என்று விடையளிப்பார்கள். ஆனால் 'வந்தால்' என்பது நிபந்தனை வினையெச்சம் (Conditional Clause), இது இனிமேல் நடக்கப்போகும் 'எதிர்காலத்தைக்' குறிக்கும். [00:05:22]
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span class="mono" style="color: var(--gold); font-weight: bold;">QUESTION 04</span>
+                        <div>
+                            <span class="badge badge-easy">EASY</span>
+                            <span class="badge" style="background: #2d3748;">Factual</span>
+                        </div>
+                    </div>
+                    <p><strong>கேள்வி:</strong> "பிஞ்சிலேயே பழுத்தது போல" - இந்த உவமைத் தொடர் உணர்த்தும் பொருத்தமான பொருள் யாது?</p>
+                    <p class="correct-ans">✅ பதில்: அறிவு மற்றும் சிறப்புடன் சிறுவயதிலேயே இருத்தல் (முதிர்ச்சி பெறுதல்).</p>
+                </div>
+
+                <div class="card pyq-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span class="mono" style="color: var(--gold); font-weight: bold;">QUESTION 05</span>
+                        <div>
+                            <span class="badge badge-hard">HARD</span>
+                            <span class="badge" style="background: #2d3748;">Factual</span>
+                        </div>
+                    </div>
+                    <p><strong>கேள்வி:</strong> தில்லையாடி வள்ளியம்மை குறித்து காந்தியடிகள் தனது "இந்தியன் ஓபினியன்" (Indian Opinion) இதழில் என்ன கூறியுள்ளார்?</p>
+                    <p class="correct-ans">✅ பதில்: தென்னாப்பிரிக்க வரலாற்றில் தில்லையாடி வள்ளியம்மையின் பெயர் என்றும் நிலைத்து நிற்கும்.</p>
+                    
+                    <div class="callout callout-pyq">
+                        <strong>[🏆 PYQ ALERT]</strong> தில்லையாடி வள்ளியம்மை 16 வயதிலேயே சிறை சென்று தியாகம் செய்தவர். காந்தியடிகளுக்கு முதன்முதலில் சுதந்திர தாகத்தை ஊட்டிய பெருமை இவருக்கு உண்டு என்பது கூடுதல் தகவல். [00:08:40]
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span class="mono" style="color: var(--gold); font-weight: bold;">QUESTION 06</span>
+                        <div>
+                            <span class="badge badge-medium">MEDIUM</span>
+                            <span class="badge" style="background: #2d3748;">Conceptual</span>
+                        </div>
+                    </div>
+                    <p><strong>கேள்வி:</strong> பின்வருவனவற்றுள் வலுவற்ற (பிழையற்ற) வாக்கியத்தைக் கண்டறிக.</p>
+                    <p class="correct-ans">✅ பதில்: மந்தையாக மேய்ந்து கொண்டிருந்த மாடுகளைப் புலி துரத்தியது.</p>
+                    <div class="callout callout-critical">
+                        <strong>[CRITICAL]</strong> 'மந்தை' என்பது பன்மைப் பொருள் கொண்டது என்பதால் 'மாடுகளை' என வர வேண்டும். துரத்தியது 'புலி' (ஒருமை) என்பதால் வினைமுடிவு 'துரத்தியது' என ஒருமையில் முடிய வேண்டும். 'துரத்தின' என வரக்கூடாது. [00:11:15]
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span class="mono" style="color: var(--gold); font-weight: bold;">QUESTION 07</span>
+                        <div>
+                            <span class="badge badge-easy">EASY</span>
+                            <span class="badge" style="background: #2d3748;">Factual</span>
+                        </div>
+                    </div>
+                    <p><strong>கேள்வி:</strong> ஒருமை பன்மை பிழை நீக்கிய சரியான தொடரைக் காண்க.</p>
+                    <p class="correct-ans">✅ பதில்: அன்னம் வந்தது.</p>
+                </div>
+
+                <div class="card gem-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span class="mono" style="color: var(--gold); font-weight: bold;">QUESTION 08</span>
+                        <div>
+                            <span class="badge badge-hard">HARD</span>
+                            <span class="badge" style="background: #2d3748;">Factual</span>
+                        </div>
+                    </div>
+                    <p><strong>கேள்வி:</strong> பொருந்தாததைக் கண்டறிக (நூல் அடிகள்):</p>
+                    <ul>
+                        <li>பெரும்பாணாற்றுப்படை - 500 அடிகள்</li>
+                        <li>முல்லைப்பாட்டு - 103 அடிகள்</li>
+                        <li>பட்டினப்பாலை - 301 அடிகள்</li>
+                        <li>மதுரைக்காஞ்சி - 872 அடிகள்</li>
+                    </ul>
+                    <p class="correct-ans">✅ பதில்: மதுரைக்காஞ்சி - 872 அடிகள் என்பது தவறு (சரியானது: 782 அடிகள்).</p>
+                    <div class="callout callout-gem">
+                        <strong>[💎 LIVE GEM]</strong> எண்களை மாற்றித் தருவது TNPSC-ன் வழக்கமான உத்தி. மதுரைக்காஞ்சி = 782 அடிகள். இதில் 354 அடிகள் மதுரையைப் பற்றி மட்டும் பாடுகின்றன. [00:14:30]
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span class="mono" style="color: var(--gold); font-weight: bold;">QUESTION 09</span>
+                        <div>
+                            <span class="badge badge-easy">EASY</span>
+                            <span class="badge" style="background: #2d3748;">Factual</span>
+                        </div>
+                    </div>
+                    <p><strong>கேள்வி:</strong> இரக்கம், பெற்றம், வியப்பு ஆகிய சொற்களைக் குறிக்கும் ஓரெழுத்து ஒருமொழி எது?</p>
+                    <p class="correct-ans">✅ பதில்: ஆ (ஆ என்றால் பசு, பெற்றம் என்றும் பொருள்படும். வியப்பைக் குறிக்கவும் 'ஆ!' எனப் பயன்படுத்துகிறோம்).</p>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span class="mono" style="color: var(--gold); font-weight: bold;">QUESTION 10</span>
+                        <div>
+                            <span class="badge badge-easy">EASY</span>
+                            <span class="badge" style="background: #2d3748;">Factual</span>
+                        </div>
+                    </div>
+                    <p><strong>கேள்வி:</strong> "கீரியும் பாம்பும் போல" - இவ்வுவமை உணர்த்தும் பொருள் யாது?</p>
+                    <p class="correct-ans">✅ பதில்: பகைமை</p>
+                </div>
+
+                <div class="card pyq-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span class="mono" style="color: var(--gold); font-weight: bold;">QUESTION 11</span>
+                        <div>
+                            <span class="badge badge-medium">MEDIUM</span>
+                            <span class="badge" style="background: #2d3748;">Conceptual</span>
+                        </div>
+                    </div>
+                    <p><strong>கேள்வி:</strong> "வான் உயர்ந்த மலை" - இத்தொடரில் பயின்று வந்துள்ள அணி எது?</p>
+                    <p class="correct-ans">✅ பதில்: உயர்வு நவிற்சி அணி</p>
+                    <div class="callout callout-pyq">
+                        <strong>[🏆 PYQ ALERT]</strong> ஒரு பொருளின் இயல்பை மிகைப்படுத்தி, அழகுடன் கூறுவது உயர்வு நவிற்சி அணி எனப்படும். [00:18:20]
+                    </div>
+                </div>
+            </section>
+
+            <section id="polity-sec">
+                <h2 class="orbitron" style="border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-top: 50px;">பகுதி 2: இந்திய ஆட்சியியல் (Indian Polity)</h2>
+
+                
+
+                <div class="card pyq-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span class="mono" style="color: var(--gold); font-weight: bold;">QUESTION 12</span>
+                        <div>
+                            <span class="badge badge-hard">HARD</span>
+                            <span class="badge" style="background: #2d3748;">Conceptual</span>
+                        </div>
+                    </div>
+                    <p><strong>கேள்வி:</strong> இந்திய உச்சநீதிமன்றம் எந்த வழக்கில் முதன்முறையாக "அரசியலமைப்பின் அடிப்படை கட்டமைப்பு" (Basic Structure Doctrine) என்ற கோட்பாட்டை உருவாக்கியது?</p>
+                    <p class="correct-ans">✅ பதில்: கேசவாநந்த பாரதி வழக்கு (1973)</p>
+                    <div class="callout callout-gem">
+                        <strong>[💎 LIVE GEM]</strong> கேசவாநந்த பாரதி வழக்கு கேரள நிலச் சீர்திருத்தச் சட்டத்திற்கு எதிராகத் தொடரப்பட்டது. சொத்துரிமை பாதிக்கப்பட்டதால் தொடுக்கப்பட்ட இந்த வழக்கில் தான் 13 நீதிபதிகள் கொண்ட ஆகப் பெரிய அரசியல் சாசன அமர்வு தீர்ப்பளித்தது. [00:22:10]
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span class="mono" style="color: var(--gold); font-weight: bold;">QUESTION 13</span>
+                        <div>
+                            <span class="badge badge-medium">MEDIUM</span>
+                            <span class="badge" style="background: #2d3748;">Factual</span>
+                        </div>
+                    </div>
+                    <p><strong>கேள்வி:</strong> எந்த அரசியல் சாசன சட்டத்திருத்தத்தின் மூலம் விதி 19(1)(c)-ல் "கூட்டுறவு சங்கங்கள்" (Cooperative Societies) என்ற சொல் சேர்க்கப்பட்டது?</p>
+                    <p class="correct-ans">✅ பதில்: 97-வது சட்டத்திருத்தம் (2011)</p>
+                </div>
+
+                <div class="card trap-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span class="mono" style="color: var(--gold); font-weight: bold;">QUESTION 14</span>
+                        <div>
+                            <span class="badge badge-hard">HARD</span>
+                            <span class="badge" style="background: #2d3748;">Conceptual</span>
+                        </div>
+                    </div>
+                    <p><strong>கேள்வி:</strong> எந்த வழக்கில் பாராளுமன்றத்தின் அரசியல் சாசன திருத்த அதிகாரத்தை (Power to Amend Fundamental Rights) உச்சநீதிமன்றம் முதன்முதலில் கட்டுப்படுத்தியது/வரையறுத்தது?</p>
+                    <p class="correct-ans">✅ பதில்: கோலக்நாத் வழக்கு (1967) - பஞ்சாப் மாநில அரசுக்கு எதிரானது.</p>
+                    <div class="callout callout-trap">
+                        <strong>[⚡ TNPSC/SSC TRAP]</strong> அடிப்படை கட்டமைப்பை உருவாக்கியது கேசவாநந்த பாரதி, ஆனால் பாராளுமன்றத்தின் அடிப்படை உரிமைகளைத் திருத்தும் அதிகாரத்தை முடக்கியது கோலக்நாத் வழக்கு. இவ்விரண்டிற்கும் உள்ள வேறுபாட்டைத் தெளிவாகப் புரிந்து கொள்ள வேண்டும். [00:26:45]
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span class="mono" style="color: var(--gold); font-weight: bold;">QUESTION 15</span>
+                        <div>
+                            <span class="badge badge-medium">MEDIUM</span>
+                            <span class="badge" style="background: #2d3748;">Factual</span>
+                        </div>
+                    </div>
+                    <p><strong>கேள்வி:</strong> மக்களவை (Lok Sabha) தொகுதிகளின் எண்ணிக்கையை 525-லிருந்து 545 ஆக உயர்த்திய சட்டத்திருத்தம் எது?</p>
+                    <p class="correct-ans">✅ பதில்: 31-வது அரசியல் சாசன சட்டத்திருத்தம் (1973)</p>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span class="mono" style="color: var(--gold); font-weight: bold;">QUESTION 16</span>
+                        <div>
+                            <span class="badge badge-medium">MEDIUM</span>
+                            <span class="badge" style="background: #2d3748;">Conceptual</span>
+                        </div>
+                    </div>
+                    <p><strong>கேள்வி:</strong> இந்திய அரசாங்கத்தின் "திரட்டு நிதி" (Consolidated Fund of India) பற்றி குறிப்பிடும் அரசியல் சாசன விதி எது?</p>
+                    <p class="correct-ans">✅ பதில்: விதி 266(1)</p>
+                    <div class="callout callout-tip">
+                        <strong>[TIP]</strong> அரசாங்கத்தின் அனைத்து வருவாய்களும் வரவுகளும் திரட்டு நிதியில்தான் (Consolidated Fund) சேமிக்கப்படும். நாடாளுமன்ற அனுமதியின்றி இதிலிருந்து பணம் எடுக்க முடியாது. [00:30:15]
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span class="mono" style="color: var(--gold); font-weight: bold;">QUESTION 17</span>
+                        <div>
+                            <span class="badge badge-hard">HARD</span>
+                            <span class="badge" style="background: #2d3748;">Factual</span>
+                        </div>
+                    </div>
+                    <p><strong>கேள்வி:</strong> தனியார் கல்வி நிறுவனங்களிலும் பின்தங்கிய வகுப்பினருக்கு இடஒதுக்கீடு வழங்க வழிவகை செய்த சட்டத்திருத்தம் மற்றும் விதி எது?</p>
+                    <p class="correct-ans">✅ பதில்: 93-வது சட்டத்திருத்தம் (2005) - விதி 15(5) சேர்க்கப்பட்டது.</p>
+                </div>
+
+                <div class="card pyq-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span class="mono" style="color: var(--gold); font-weight: bold;">QUESTION 18</span>
+                        <div>
+                            <span class="badge badge-medium">MEDIUM</span>
+                            <span class="badge" style="background: #2d3748;">Application</span>
+                        </div>
+                    </div>
+                    <p><strong>கேள்வி:</strong> நாடாளுமன்ற இரு அவைகளிலும் நிறைவேற்றப்பட்ட ஒரு மசோதாவிற்கு குடியரசுத் தலைவர் தனது ஒப்புதலை நிறுத்தி வைக்க (Veto Power) அதிகாரம் அளிக்கும் விதி எது?</p>
+                    <p class="correct-ans">✅ பதில்: விதி 111</p>
+                </div>
+
+                <div class="card gem-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span class="mono" style="color: var(--gold); font-weight: bold;">QUESTION 19</span>
+                        <div>
+                            <span class="badge badge-easy">EASY</span>
+                            <span class="badge" style="background: #2d3748;">Factual</span>
+                        </div>
+                    </div>
+                    <p><strong>கேள்வி:</strong> குடியரசுத் தலைவர் உச்சநீதிமன்றத்திடம் சட்ட ஆலோசனைகளைப் பெறும் (Advisory Jurisdiction of Supreme Court) அதிகாரம் வழங்கும் விதி எது?</p>
+                    <p class="correct-ans">✅ பதில்: விதி 143</p>
+                    <div class="callout callout-gem">
+                        <strong>[💎 LIVE GEM]</strong> எளிதான நினைவூட்டல் உத்தி (Mnemonic): "143" என்பதைப் பொதுவாகக் குறிப்பிடுவது போல, குடியரசுத் தலைவர் உச்சநீதிமன்றத்தின் மீது வைத்துள்ள நம்பிக்கையின் பேரில் ஆலோசனை கேட்கிறார் என நினைவில் கொள்ளலாம்! [00:36:12]
+                    </div>
+                </div>
+
+                <div class="card pyq-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span class="mono" style="color: var(--gold); font-weight: bold;">QUESTION 20</span>
+                        <div>
+                            <span class="badge badge-easy">EASY</span>
+                            <span class="badge" style="background: #2d3748;">Factual</span>
+                        </div>
+                    </div>
+                    <p><strong>கேள்வி:</strong> டாக்டர் பி.ஆர். அம்பேத்கர் எந்த விதியை "இந்திய அரசியல் சாசனத்தின் இதயம் மற்றும் ஆன்மா" (Heart and Soul of the Constitution) என்று வர்ணித்தார்?</p>
+                    <p class="correct-ans">✅ பதில்: விதி 32 (அரசியலமைப்புக்குட்பட்டு தீர்வு காணும் உரிமை / Writs)</p>
+                </div>
+            </section>
+
+            <section id="summary" class="card">
+                <h2 class="orbitron">பாடச் சுருக்கம் (10 Bullet Points)</h2>
+                <ol>
+                    <li>சிறந்த ஆட்சியாளருக்கு கொடை, அன்பு, நீதி, குடி காத்தல் ஆகிய நான்கும் முக்கியம்.</li>
+                    <li>'புன்கண்ணீர்' என்பது துன்பம் கண்டு பெருகும் கண்ணீரைக் குறிக்கும்.</li>
+                    <li>'வந்தால் மகிழ்வான்' என்பது எதிர்கால வினையெச்சத் தொடர்.</li>
+                    <li>மதுரைக்காஞ்சி நூல் 782 அடிகளைக் கொண்டது (872 அல்ல).</li>
+                    <li>ஓரெழுத்து ஒருமொழியில் 'ஆ' என்பது பசு மற்றும் பெற்றம், வியப்பைக் குறிக்கும்.</li>
+                    <li>அடிப்படை கட்டமைப்பு கோட்பாடு 1973 கேசவாநந்த பாரதி வழக்கின் மூலம் கொண்டு வரப்பட்டது.</li>
+                    <li>விதி 19(1)(c) கூட்டுறவு சங்கங்களை அமைக்கும் உரிமையை 97-வது திருத்தத்தின் மூலம் வழங்குகிறது.</li>
+                    <li>மக்களவை தொகுதிகள் 525 லிருந்து 545 ஆக 31-வது திருத்தத்தின் படி உயர்த்தப்பட்டது.</li>
+                    <li>விதி 266(1) இந்தியத் திரட்டு நிதியைப் பற்றிக் கூறுகிறது.</li>
+                    <li>குடியரசுத் தலைவரின் ஆலோசனை பெறும் அதிகாரம் விதி 143 ஆகும்.</li>
+                </ol>
+            </section>
+
+            <section id="predictions" class="card" style="border: 2px dashed var(--gold);">
+                <h2 class="orbitron" style="color: var(--gold);">🔮 2026 தேர்வு கணிப்புகள் (Predictions)</h2>
+                <ul>
+                    <li><strong>கணிப்பு 1:</strong> 2026-ல் டிலிமிட்டேஷன் (தொகுதி மறுசீரமைப்பு) விவாதங்கள் உள்ளதால், 31-வது சட்டத்திருத்தம் (மக்களவை இடங்கள் உயர்வு) நிச்சயம் கேட்கப்படலாம்.</li>
+                    <li><strong>கணிப்பு 2:</strong> சமச்சீர் புத்தகத்தில் உள்ள மதுரைக்காஞ்சியின் அடிகள் (782) பொருத்துக வடிவில் வர வாய்ப்பு அதிகம்.</li>
+                    <li><strong>கணிப்பு 3:</strong> விதி 111 (குடியரசுத் தலைவரின் மசோதா ஒப்புதல் நிறுத்தம் - Pocket Veto) தற்போதைய ஆளுநர் மற்றும் குடியரசுத் தலைவர் செய்திகளின் பின்னணியில் மிக முக்கியம்.</li>
+                </ul>
+            </section>
+
+        </main>
+    </div>
+</div>
+
+<footer>
+    <p>© 2026 SPL Academy | High-Yield Revision Crack Sheets | வடிவமைக்கப்பட்டது அரசு அதிகாரிகளுக்காக</p>
+</footer>
+
+</body>
+</html>

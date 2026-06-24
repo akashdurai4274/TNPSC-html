@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>High-Yield Q&A Revision Crack Sheet</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Andika&family=IBM+Plex+Mono:wght@400;600&family=Orbitron:wght@500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0d0f14;
+            --card-bg: #161a23;
+            --gold: #f5c842;
+            --gold-dim: #cfa328;
+            --text-light: #e2e8f0;
+            --text-dim: #94a3b8;
+            --critical-red: #ef4444;
+            --trap-gold: #f5c842;
+            --tip-green: #22c55e;
+            --pyq-blue: #3b82f6;
+            --gem-purple: #a855f7;
+            --border-color: #2e3748;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Andika', sans-serif;
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+        }
+
+        .orbitron {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .mono {
+            font-family: 'IBM Plex Mono', sans-serif;
+        }
+
+        /* Hero Header */
+        .hero {
+            background: linear-gradient(135deg, #1e2530 0%, #0d0f14 100%);
+            border-bottom: 3px solid var(--gold);
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero h1 {
+            color: var(--gold);
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .meta-pills {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .pill {
+            background: rgba(245, 200, 66, 0.1);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Container & Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                position: static !important;
+            }
+        }
+
+        /* Sticky Sidebar & TOC */
+        .sidebar {
+            position: sticky;
+            top: 20px;
+            height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+
+        .toc-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .toc-card h3 {
+            color: var(--gold);
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        .toc-list {
+            list-style: none;
+        }
+
+        .toc-list li {
+            margin-bottom: 10px;
+        }
+
+        .toc-list a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .toc-list a:hover {
+            color: var(--gold);
+        }
+
+        /* Filters & Legends */
+        .controls-row {
+            grid-column: 1 / -1;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: #232a36;
+            border: 1px solid var(--border-color);
+            color: var(--text-light);
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--gold);
+            color: var(--bg-dark);
+            border-color: var(--gold);
+        }
+
+        .legend {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot.critical { background-color: var(--critical-red); }
+        .dot.trap { background-color: var(--trap-gold); }
+        .dot.tip { background-color: var(--tip-green); }
+        .dot.pyq { background-color: var(--pyq-blue); }
+        .dot.gem { background-color: var(--gem-purple); }
+
+        /* Session Overview Card */
+        .overview-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .overview-title {
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        /* Q&A Cards */
+        .qa-group-title {
+            color: var(--gold);
+            margin: 40px 0 20px 0;
+            border-left: 4px solid var(--gold);
+            padding-left: 12px;
+            text-transform: uppercase;
+        }
+
+        .qa-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+
+        .qa-header {
+            background: #1e2530;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+        }
+
+        .qa-badge-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .badge {
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge.easy { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e; }
+        .badge.medium { background: rgba(245, 200, 66, 0.2); color: #fde047; border: 1px solid #f5c842; }
+        .badge.hard { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444; }
+
+        .qa-body {
+            padding: 20px;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .answer-box {
+            background: rgba(34, 197, 94, 0.05);
+            border-left: 4px solid var(--tip-green);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .answer-title {
+            color: var(--tip-green);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        /* Callouts */
+        .callout {
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 6px;
+            border: 1px solid transparent;
+        }
+
+        .callout-title {
+            font-weight: 700;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .callout.gem {
+            background: rgba(168, 85, 247, 0.05);
+            border-color: rgba(168, 85, 247, 0.3);
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.1);
+        }
+        .callout.gem .callout-title { color: var(--gem-purple); }
+
+        .callout.pyq {
+            background: rgba(59, 131, 246, 0.05);
+            border-color: rgba(59, 131, 246, 0.3);
+            box-shadow: 0 0 10px rgba(59, 131, 246, 0.1);
+        }
+        .callout.pyq .callout-title { color: var(--pyq-blue); }
+
+        .callout.trap {
+            background: rgba(245, 200, 66, 0.05);
+            border-color: rgba(245, 200, 66, 0.3);
+        }
+        .callout.trap .callout-title { color: var(--trap-gold); }
+
+        /* Tables & Cards */
+        .section-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-top: 40px;
+        }
+
+        .section-card h2 {
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 0.95rem;
+        }
+
+        .styled-table th {
+            background-color: #1e2530;
+            color: var(--gold);
+            text-align: left;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .styled-table td {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .styled-table tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        /* Footer */
+        footer {
+            background: #12161f;
+            border-top: 2px solid var(--gold);
+            padding: 20px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <h1 class="orbitron">High-Yield Q&A Revision Crack Sheet</h1>
+        <div class="mono" style="color: var(--text-dim);">Modern Indian History & Polity Revision | School Book Content (6th - 12th)</div>
+        <div class="meta-pills">
+            <span class="pill">Target: TNPSC Group 1, 2, 4 & SSC</span>
+            <span class="pill">Faculty: SP Velan</span>
+            <span class="pill">Source: YouTube Live Session</span>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <div class="toc-card">
+                <h3 class="orbitron">உள்ளடக்கம்</h3>
+                <ul class="toc-list mono">
+                    <li><a href="#overview">1. Session Overview</a></li>
+                    <li><a href="#advent">2. Advent of Europeans</a></li>
+                    <li><a href="#british-rule">3. British Rule & Incidents</a></li>
+                    <li><a href="#polity">4. Polity & Constitutional Framework</a></li>
+                    <li><a href="#summary">5. Topic Summary</a></li>
+                    <li><a href="#predictions">6. 2026 Predictions</a></li>
+                    <li><a href="#flashcards">7. Quick Flashcards</a></li>
+                    <li><a href="#cheat-sheet">8. Master Cheat Card</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main>
+            <div id="overview" class="controls-row">
+                <div class="filter-buttons">
+                    <button class="filter-btn active">All Questions</button>
+                    <button class="filter-btn">PYQs Only</button>
+                    <button class="filter-btn">Gems Only</button>
+                </div>
+                <div class="legend mono">
+                    <div class="legend-item"><span class="dot critical"></span> Critical</div>
+                    <div class="legend-item"><span class="dot trap"></span> Trap</div>
+                    <div class="legend-item"><span class="dot tip"></span> Tip</div>
+                    <div class="legend-item"><span class="dot pyq"></span> PYQ</div>
+                    <div class="legend-item"><span class="dot gem"></span> Live Gem</div>
+                </div>
+            </div>
+
+            <section class="overview-card">
+                <h2 class="overview-title orbitron">📊 Session Brief Overview</h2>
+                <p>இந்த நேரலை திருப்புதல் அமர்வு 6 முதல் 12 ஆம் வகுப்பு வரையிலான பள்ளிப் பாடப்புத்தகங்களில் உள்ள முக்கியமான வரலாற்று மற்றும் இந்திய அரசியல்அமைப்புத் தரவுகளை அடிப்படையாகக் கொண்டது. ஐரோப்பியர்களின் வருகை, பிரிட்டிஷ் ஆட்சி முறைகள், வரலாற்று முக்கியத்துவம் வாய்ந்த போர்கள் மற்றும் அரசியல்அமைப்புச் சட்டத்தின் முக்கியப் பின்னணிகள் இந்த அமர்வில் ஆழமாக விவாதிக்கப்பட்டுள்ளன.</p>
+            </section>
+
+            <section id="advent">
+                <h2 class="qa-group-title orbitron">1. Advent of Europeans (ஐரோப்பியர்களின் வருகை)</h2>
+
+                <div class="qa-card" data-difficulty="medium" data-pyq="true">
+                    <div class="qa-header">
+                        <span class="orbitron" style="font-weight: bold; color: var(--gold);">QUESTION 1</span>
+                        <div class="qa-badge-row mono">
+                            <span class="badge medium">Medium</span>
+                            <span class="badge">Factual</span>
+                        </div>
+                    </div>
+                    <div class="qa-body">
+                        <div class="question-text">Match the following European powers with their respective chronological timeline or order of arrival/association in India as per school text context: 1) Dutch, 2) British, 3) Danish, 4) French.</div>
+                        <div class="answer-box">
+                            <div class="answer-title">✅ Correct Matching & Sequence:</div>
+                            <p>The correct chronological alignment for the options provided matching the years given in text maps to <strong>3, 2, 4, 1</strong> matching variant options. The exact order of arrival of European powers to India is: <strong>Portuguese (1498) → Dutch (1602) → British (1600 charter/1608) → Danish (1616) → French (1664)</strong>.</p>
+                        </div>
+                        <div class="callout gem">
+                            <div class="callout-title">💎 LIVE GEM: Match Following Matrix Elimination Technique</div>
+                            <p>பொருத்துக வினாக்களில் உங்களுக்கு ஏதேனும் ஒரு வரிசைக்குரிய சரியான விடை உறுதியாகத் தெரிந்தால், அதைக் கொண்டு விருப்பங்களை (Options) ஒப்பிட்டு மிக எளிதாக விடையளிக்கலாம். முழுப் பட்டியலும் தெரியவில்லை என்றாலும் அச்சப்படத் தேவையில்லை.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-card" data-difficulty="easy" data-pyq="false">
+                    <div class="qa-header">
+                        <span class="orbitron" style="font-weight: bold; color: var(--gold);">QUESTION 2</span>
+                        <div class="qa-badge-row mono">
+                            <span class="badge easy">Easy</span>
+                            <span class="badge">Factual</span>
+                        </div>
+                    </div>
+                    <div class="qa-body">
+                        <div class="question-text">Which route was discovered by Vasco da Gama to reach India?</div>
+                        <div class="answer-box">
+                            <div class="answer-title">✅ Correct Answer:</div>
+                            <p><strong>From Europe to India via the Cape of Good Hope (ஆப்பிரிக்காவின் நன்னம்பிக்கை முனை வழியாக ஐரோப்பாவிலிருந்து இந்தியாவுக்கான கடல்வழி)</strong>. In 1498, Vasco da Gama reached Calicut (modern Kozhikode), Kerala on May 20, 1498.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-card" data-difficulty="medium" data-pyq="true">
+                    <div class="qa-header">
+                        <span class="orbitron" style="font-weight: bold; color: var(--gold);">QUESTION 3</span>
+                        <div class="qa-badge-row mono">
+                            <span class="badge medium">Medium</span>
+                            <span class="badge">Conceptual</span>
+                        </div>
+                    </div>
+                    <div class="qa-body">
+                        <div class="question-text">Which Portuguese Governor followed the "Blue Water Policy" (நீலநீர் கொள்கை) for developing naval power in India?</div>
+                        <div class="answer-box">
+                            <div class="answer-title">✅ Correct Answer:</div>
+                            <p><strong>Francisco de Almeida (பிரான்சிஸ்கோ டி அல்மேடா)</strong>. He was the first Portuguese Governor in India and implemented this policy to consolidate naval supremacy over the Indian Ocean trading routes.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-card" data-difficulty="easy" data-pyq="false">
+                    <div class="qa-header">
+                        <span class="orbitron" style="font-weight: bold; color: var(--gold);">QUESTION 4</span>
+                        <div class="qa-badge-row mono">
+                            <span class="badge easy">Easy</span>
+                            <span class="badge">Factual</span>
+                        </div>
+                    </div>
+                    <div class="qa-body">
+                        <div class="question-text">Which was the first capital of the Portuguese East India Company in India?</div>
+                        <div class="answer-box">
+                            <div class="answer-title">✅ Correct Answer:</div>
+                            <p><strong>Cochin (கொச்சி)</strong>. It was later shifted to Goa under the rule of Nino da Cunha in 1530.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="british-rule">
+                <h2 class="qa-group-title orbitron">2. British Rule, Forts & Historic Incidents</h2>
+
+                <div class="qa-card" data-difficulty="medium" data-pyq="true">
+                    <div class="qa-header">
+                        <span class="orbitron" style="font-weight: bold; color: var(--gold);">QUESTION 5</span>
+                        <div class="qa-badge-row mono">
+                            <span class="badge medium">Medium</span>
+                            <span class="badge">Factual</span>
+                        </div>
+                    </div>
+                    <div class="qa-body">
+                        <div class="question-text">In which year were the Madras Records (சென்னை நாட்குறிப்புப் பதிவுகள்) officially published under British administration?</div>
+                        <div class="answer-box">
+                            <div class="answer-title">✅ Correct Answer:</div>
+                            <p><strong>1917</strong>. These records represent significant historical archives for South Indian colonial administration studies.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-card" data-difficulty="hard" data-pyq="true">
+                    <div class="qa-header">
+                        <span class="orbitron" style="font-weight: bold; color: var(--gold);">QUESTION 6</span>
+                        <div class="qa-badge-row mono">
+                            <span class="badge hard">Hard</span>
+                            <span class="badge">Factual</span>
+                        </div>
+                    </div>
+                    <div class="qa-body">
+                        <div class="question-text">In which year was Fort St. David built/acquired and established prominently by the British at Cuddalore?</div>
+                        <div class="answer-box">
+                            <div class="answer-title">✅ Correct Answer:</div>
+                            <p><strong>1690</strong>. Located in Cuddalore, it became a major stronghold for British operations in the Carnatic region.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-card" data-difficulty="medium" data-pyq="false">
+                    <div class="qa-header">
+                        <span class="orbitron" style="font-weight: bold; color: var(--gold);">QUESTION 7</span>
+                        <div class="qa-badge-row mono">
+                            <span class="badge medium">Medium</span>
+                            <span class="badge">Trap/Trick</span>
+                        </div>
+                    </div>
+                    <div class="qa-body">
+                        <div class="question-text">Find out the incorrect pair regarding historical battle timelines: 1) Battle of Plassey - 1757, 2) Battle of Buxar - 1765.</div>
+                        <div class="answer-box">
+                            <div class="answer-title">✅ Correct Answer:</div>
+                            <p><strong>Statement 2 only is incorrect (இணை 2 மட்டும் தவறு)</strong>. The Battle of Buxar took place in <strong>1764</strong> (not 1765). Statement 1 is absolutely correct (Battle of Plassey - 1757).</p>
+                        </div>
+                        <div class="callout trap">
+                            <div class="callout-title">🪤 TNPSC TRAP: Read carefully between "Correct" and "Incorrect"</div>
+                            <p>தேர்வில் அவசரப்பட்டு "சரியான இணை" எது என்று தேடக் கூடாது. வினாவில் கேட்கப்பட்டுள்ளது "தவறான இணை" (Incorrect Pair). எனவே 1765 என்பது தவறு என்பதால், ஆப்ஷன் '2 மட்டும்' என்பதைத் தேர்ந்தெடுக்க வேண்டும்.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-card" data-difficulty="medium" data-pyq="true">
+                    <div class="qa-header">
+                        <span class="orbitron" style="font-weight: bold; color: var(--gold);">QUESTION 8</span>
+                        <div class="qa-badge-row mono">
+                            <span class="badge medium">Medium</span>
+                            <span class="badge">Factual</span>
+                        </div>
+                    </div>
+                    <div class="qa-body">
+                        <div class="question-text">How many people perished in the tragic incident known as the Black Hole Tragedy (இருட்டறைத் துயரச் சம்பவம்) of Calcutta?</div>
+                        <div class="answer-box">
+                            <div class="answer-title">✅ Correct Answer:</div>
+                            <p><strong>123 individuals died</strong> out of 146 British prisoners who were locked in a small suffocating room by the troops of Nawab Siraj-ud-daulah in June 1756.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-card" data-difficulty="hard" data-pyq="true">
+                    <div class="qa-header">
+                        <span class="orbitron" style="font-weight: bold; color: var(--gold);">QUESTION 9</span>
+                        <div class="qa-badge-row mono">
+                            <span class="badge hard">Hard</span>
+                            <span class="badge">Factual</span>
+                        </div>
+                    </div>
+                    <div class="qa-body">
+                        <div class="question-text">Who was the King of England when Collector Robert Ashe was assassinated by Vanchinathan at Maniyachi Junction?</div>
+                        <div class="answer-box">
+                            <div class="answer-title">✅ Correct Answer:</div>
+                            <p><strong>King George V (ஐந்தாம் ஜார்ஜ் மன்னர்)</strong>. The assassination occurred on June 17, 1911.</p>
+                        </div>
+                        <div class="callout gem">
+                            <div class="callout-title">💎 LIVE GEM: Vanchinathan's Suicide Note Detail</div>
+                            <p>வாஞ்சிநாதன் ஆஷ் துரையைக் கொன்ற பிறகு தன் பாக்கெட்டில் வைத்திருந்த கடிதத்தில், "இந்தக் கொலை ஜார்ஜ் V மன்னர் இந்தியாவிற்கு வருவதற்கு ஒரு முன்னோட்டமே" என்று குறிப்பிட்டிருந்தார். இது குரூப் 1 தட்டச்சு வினாக்களில் கேட்கப்படலாம்.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="polity">
+                <h2 class="qa-group-title orbitron">3. Indian Polity & Constitutional Framework</h2>
+
+                <div class="qa-card" data-difficulty="easy" data-pyq="true">
+                    <div class="qa-header">
+                        <span class="orbitron" style="font-weight: bold; color: var(--gold);">QUESTION 10</span>
+                        <div class="qa-badge-row mono">
+                            <span class="badge easy">Easy</span>
+                            <span class="badge">Factual</span>
+                        </div>
+                    </div>
+                    <div class="qa-body">
+                        <div class="question-text">Where is the National Archives of India (NAI - இந்திய தேசிய ஆவணக்காப்பகம்) located?</div>
+                        <div class="answer-box">
+                            <div class="answer-title">✅ Correct Answer:</div>
+                            <p><strong>New Delhi (புது தில்லி)</strong>. It houses valuable governmental historical records and acts as a primary repository.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-card" data-difficulty="medium" data-pyq="true">
+                    <div class="qa-header">
+                        <span class="orbitron" style="font-weight: bold; color: var(--gold);">QUESTION 11</span>
+                        <div class="qa-badge-row mono">
+                            <span class="badge medium">Medium</span>
+                            <span class="badge">Factual</span>
+                        </div>
+                    </div>
+                    <div class="qa-body">
+                        <div class="question-text">In which year was the first formal paper currency officially issued by the Reserve Bank of India (RBI)?</div>
+                        <div class="answer-box">
+                            <div class="answer-title">✅ Correct Answer:</div>
+                            <p><strong>January 1938</strong>. The first paper note issued was a <strong>5 Rupee note</strong> bearing the portrait of King George VI.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-card" data-difficulty="hard" data-pyq="false">
+                    <div class="qa-header">
+                        <span class="orbitron" style="font-weight: bold; color: var(--gold);">QUESTION 12</span>
+                        <div class="qa-badge-row mono">
+                            <span class="badge hard">Hard</span>
+                            <span class="badge">Factual</span>
+                        </div>
+                    </div>
+                    <div class="qa-body">
+                        <div class="question-text">When was the first modern metallic coin of India officially minted and issued under British direct Crown rule authority?</div>
+                        <div class="answer-box">
+                            <div class="answer-title">✅ Correct Answer:</div>
+                            <p><strong>1862</strong>. Under the authority of the Crown, the newly structured regular currency featuring royal emblems came into circulation.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-card" data-difficulty="medium" data-pyq="true">
+                    <div class="qa-header">
+                        <span class="orbitron" style="font-weight: bold; color: var(--gold);">QUESTION 13</span>
+                        <div class="qa-badge-row mono">
+                            <span class="badge medium">Medium</span>
+                            <span class="badge">Conceptual</span>
+                        </div>
+                    </div>
+                    <div class="qa-body">
+                        <div class="question-text">Choose the correct statements regarding the historic judicial setup: 1) British Parliament passed the Regulating Act in 1774, 2) A Supreme Court was established at Calcutta via Royal Charter framework.</div>
+                        <div class="answer-box">
+                            <div class="answer-title">✅ Correct Answer:</div>
+                            <p><strong>Statement 2 only is correct</strong>. Statement 1 is false because the Regulating Act was passed in <strong>1773</strong>, not 1774. The court itself was established in 1774 based on that 1773 legislative act.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-card" data-difficulty="easy" data-pyq="true">
+                    <div class="qa-header">
+                        <span class="orbitron" style="font-weight: bold; color: var(--gold);">QUESTION 14</span>
+                        <div class="qa-badge-row mono">
+                            <span class="badge easy">Easy</span>
+                            <span class="badge">Factual</span>
+                        </div>
+                    </div>
+                    <div class="qa-body">
+                        <div class="question-text">Who was appointed as the first Chief Justice of the historic Supreme Court established at Calcutta?</div>
+                        <div class="answer-box">
+                            <div class="answer-title">✅ Correct Answer:</div>
+                            <p><strong>Sir Elijah Impey (சர் எலிஜா இம்பே)</strong>. He served alongside three other companion judges appointed via royal charter provisions.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-card" data-difficulty="medium" data-pyq="true">
+                    <div class="qa-header">
+                        <span class="orbitron" style="font-weight: bold; color: var(--gold);">QUESTION 15</span>
+                        <div class="qa-badge-row mono">
+                            <span class="badge medium">Medium</span>
+                            <span class="badge">Conceptual</span>
+                        </div>
+                    </div>
+                    <div class="qa-body">
+                        <div class="question-text">When did the Cabinet Mission (அமைச்சரவை தூதுக்குழு) arrive in India to secure structural frameworks for independence?</div>
+                        <div class="answer-box">
+                            <div class="answer-title">✅ Correct Answer:</div>
+                            <p><strong>March 24, 1946</strong>. The mission comprised three British Cabinet Ministers: Pethick-Lawrence, Sir Stafford Cripps, and A.V. Alexander.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="summary" class="section-card">
+                <h2 class="orbitron">📌 10-Point Core Revision Summary</h2>
+                <ul style="padding-left: 20px; margin-bottom: 20px;">
+                    <li><strong>ஐரோப்பியர் வருகை:</strong> முதலில் போர்த்துகீசியர்கள் (1498), அதன் பின் டச்சுக்காரர்கள், ஆங்கிலேயர்கள், டேனியர்கள் மற்றும் பிரெஞ்சுக்காரர்கள் இந்தியாவுக்கு வந்தனர்.</li>
+                    <li><strong>கடல்வழி கண்டுபிடிப்பு:</strong> 1498 இல் வாஸ்கோடகாமா நன்னம்பிக்கை முனையைச் சுற்றி கோழிக்கோடு வந்தடைந்தார்.</li>
+                    <li><strong>நீலநீர் கொள்கை:</strong> போர்த்துகீசிய கடற்படையை வலுப்படுத்த பிரான்சிஸ்கோ டி அல்மேடாவால் இக்கொள்கை கொண்டு வரப்பட்டது.</li>
+                    <li><strong>முதல் தலைநகரம்:</strong> போர்த்துகீசியர்களின் ஆரம்பகால இந்தியத் தலைநகரம் கொச்சி ஆகும்; பின்னர் இது கோவாவிற்கு மாற்றப்பட்டது.</li>
+                    <li><strong>சென்னை ஆவணங்கள்:</strong> மெட்ராஸ் ரெக்கார்ட்ஸ் எனப்படும் சென்னை நாட்குறிப்புப் பதிவுகள் 1917 இல் வெளியிடப்பட்டன.</li>
+                    <li><strong>கோட்டைகள்:</strong> புனிதா டேவிட் கோட்டை ஆங்கிலேயர்களால் 1690 இல் கடலூரில் கட்டப்பட்டது.</li>
+                    <li><strong>வரலாற்றுப் போர்கள்:</strong> பிளாசி போர் 1757 இலும், பக்ஷர் போர் 1764 இலும் நடைபெற்றன.</li>
+                    <li><strong>இருட்டறைத் துயரம்:</strong> 1756 ஜூன் மாத கல்கத்தா சம்பவத்தில் மூச்சுத்திணறல் காரணமாக 123 ஆங்கிலேயர்கள் பலியாயினர்.</li>
+                    <li><strong>ஆஷ் கொலை வழக்கு:</strong> 1911 ஜூன் 17 இல் மணியாச்சியில் ஆஷ் துரையை வாஞ்சிநாதன் சுட்டுக்கொன்றபோது இங்கிலாந்தின் மன்னராக ஐந்தாம் ஜார்ஜ் இருந்தார்.</li>
+                    <li><strong>ஒழுங்குமுறைச் சட்டம்:</strong> 1773 ஆம் ஆண்டு ஒழுங்குமுறைச் சட்டத்தின்படி 1774 இல் கல்கத்தாவில் உச்சநீதிமன்றம் அமைக்கப்பட்டு, அதன் முதல் தலைமை நீதிபதியாக சர் எலிஜா இம்பே நியமிக்கப்பட்டார்.</li>
+                </ul>
+            </section>
+
+            <section id="predictions" class="section-card">
+                <h2 class="orbitron">🔮 2026 High-Yield Predictions</h2>
+                <div style="background: rgba(245, 200, 66, 0.05); padding: 15px; border-radius: 6px; border: 1px solid var(--gold);">
+                    <p><strong>1. போர்த்துகீசியர்களின் தலைநகர மாற்றம்:</strong> 1530 இல் கொச்சியிலிருந்து கோவாவிற்கு தலைநகரை மாற்றிய போர்த்துகீசிய ஆளுநர் யார்? (விடை: நினோ டி குன்ஹா) - குரூப் 4 இல் எதிர்பார்க்கப்படுகிறது.</p>
+                    <p style="margin-top: 10px;"><strong>2. காகிதப் பணம் வெளியீடு:</strong> ஜனவரி 1938 இல் ஆர்பிஐ வெளியிட்ட முதல் 5 ரூபாய் நோட்டில் யாருடைய புகைப்படம் இருந்தது? (விடை: ஆறாம் ஜார்ஜ் மன்னர்) - எஸ்எஸ்சி வினா.</p>
+                </div>
+            </section>
+
+            <section id="flashcards" class="section-card">
+                <h2 class="orbitron">⚡ Quick Flashcards (விரைவு திருப்புதல்)</h2>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Question (கேள்வி)</th>
+                            <th>Answer (பதில்)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>வாஸ்கோடகாமா இந்தியா வந்த ஆண்டு?</td>
+                            <td><strong>1498, மே 20</strong></td>
+                        </tr>
+                        <tr>
+                            <td>நீலநீர் கொள்கையைக் கொண்டு வந்தவர்?</td>
+                            <td><strong>பிரான்சிஸ்கோ டி அல்மேடா</strong></td>
+                        </tr>
+                        <tr>
+                            <td>புனித டேவிட் கோட்டை அமைந்துள்ள இடம்?</td>
+                            <td><strong>கடலூர் (1690)</strong></td>
+                        </tr>
+                        <tr>
+                            <td>பக்ஷர் போர் நடைபெற்ற ஆண்டு?</td>
+                            <td><strong>1764</strong></td>
+                        </tr>
+                        <tr>
+                            <td>கல்கத்தா உச்சநீதிமன்றத்தின் முதல் தலைமை நீதிபதி?</td>
+                            <td><strong>சர் எலிஜா இம்பே</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="cheat-sheet" class="section-card">
+                <h2 class="orbitron">🏆 Master Cheat Card (முக்கியத் தரவுகள்)</h2>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>ஆண்டு (Year)</th>
+                            <th>நிகழ்வு / முக்கியத்துவம் (Event / Significance)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="orbitron">1498</td>
+                            <td>ஐரோப்பாவிலிருந்து இந்தியாவுக்குப் புதிய கடல்வழி கண்டுபிடிப்பு.</td>
+                        </tr>
+                        <tr>
+                            <td class="orbitron">1757</td>
+                            <td>பிளாசி போர் - இந்தியாவில் ஆங்கிலேயர் ஆட்சி காலூன்றக் காரணம்.</td>
+                        </tr>
+                        <tr>
+                            <td class="orbitron">1773</td>
+                            <td>ஒழுங்குமுறைச் சட்டம் - இந்தியாவின் முதல் எழுதப்பட்ட சட்ட வடிவம்.</td>
+                        </tr>
+                        <tr>
+                            <td class="orbitron">1911</td>
+                            <td>மணியாச்சி சந்திப்பில் கலெக்டர் ஆஷ் படுகொலை.</td>
+                        </tr>
+                        <tr>
+                            <td class="orbitron">1938</td>
+                            <td>ஆர்பிஐ அமைப்பால் முதன்முதலில் காகிதப் பணம் வெளியிடப்பட்டது.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p class="orbitron">Designed by Senior TNPSC/SSC Exam Faculty · SP Velan Academy 2026</p>
+        <p class="mono" style="font-size: 0.75rem; margin-top: 5px;">Transforming Video Transcripts into Success Blueprints.</p>
+    </footer>
+
+</body>
+</html>
