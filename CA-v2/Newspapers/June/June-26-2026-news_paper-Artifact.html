@@ -1,0 +1,612 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body class="en-mode">
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">24 June 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">24 ஜூன் 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Tech</span><span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Welfare · Scheme Launch</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">TN Govt Introduces "Thaimaman Thanga Mothiram" Scheme; 1-Gram Gold for Newborns</span>
+                        <span class="lang-ta">பிறக்கும் குழந்தைகளுக்கு 1 கிராம் தங்க மோதிரம் வழங்கும் "தாய்மாமன் தங்க மோதிரம் திட்டம்"; முதல்வர் செப். 15-ல் தொடக்கி வைக்கிறார்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Tamil Nadu Government has issued a Government Order (G.O.) to implement the "Thaimaman Thanga Mothiram Thittam" (Maternal Uncle Gold Ring Scheme). Under this scheme, every child born in a government hospital will be gifted a 1-gram gold ring. Chief Minister Joseph Vijay will officially launch the scheme on September 15, the birth anniversary of former CM C.N. Annadurai. This initiative fulfills a major poll promise of the ruling TVK party. The government has allocated ₹755.83 crore annually for this scheme, aimed at honouring mothers and encouraging institutional deliveries.</p>
+                    <p class="lang-ta">அரசு மருத்துவமனைகளில் பிறக்கும் குழந்தைகளுக்கு ஒரு கிராம் தங்க மோதிரம் வழங்கும் "தாய்மாமன் தங்க மோதிரம் திட்டத்தை" முதல்வர் ஜோசப் விஜய் செப்டம்பர் 15-ஆம் தேதி (முன்னாள் முதல்வர் அண்ணா பிறந்தநாள்) தொடக்கி வைக்க உள்ளார். இதற்கான அரசாணை பிறப்பிக்கப்பட்டுள்ளது. ஆளும் தமிழக வெற்றிக் கழகத்தின் (TVK) முக்கிய வாக்குறுதியான இத்திட்டத்தின் கீழ், ஜூன் 22 முதல் அரசு மருத்துவமனைகளில் பிறந்த குழந்தைகள் பயன்பெறுவர். தாய்மார்களைக் கௌரவிக்கவும், அரசு மருத்துவமனைகளில் பிரசவத்தை ஊக்குவிக்கவும் கொண்டுவரப்பட்ட இத்திட்டத்திற்கு ஆண்டுக்கு ரூ.755.83 கோடியை அரசு ஒதுக்கியுள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Constitutional Hook:</strong> Article 47 of the DPSP states it is the duty of the State to raise the level of nutrition and the standard of living and to improve public health. Encouraging institutional deliveries lowers IMR (Infant Mortality Rate) and MMR (Maternal Mortality Ratio).</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> சரத்து 47-இன் படி, மக்களின் ஊட்டச்சத்து நிலை மற்றும் வாழ்க்கைத் தரத்தை உயர்த்துவதும், பொது சுகாதாரத்தை மேம்படுத்துவதும் அரசின் கடமையாகும். அரசு மருத்துவமனைகளில் பிரசவத்தை ஊக்குவிப்பது IMR மற்றும் MMR-ஐக் குறைக்கும்.</span></li>
+                            <li><span class="lang-en"><strong>Important Date:</strong> September 15 is celebrated as the birth anniversary of C.N. Annadurai (Perarignar Anna).</span><span class="lang-ta"><strong>முக்கிய நாள்:</strong> செப்டம்பர் 15 - பேரறிஞர் அண்ணாவின் பிறந்தநாள்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · High Court Ruling</span>
+                        <span class="badge bg-trap">TRAP</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Madras HC Strikes Down Section 34-C of Registration Act</span>
+                        <span class="lang-ta">பத்திரப் பதிவுக்கு அசல் ஆவணங்கள் கட்டாயம் என்ற சட்டத் திருத்தம் (பிரிவு 34-சி) ரத்து: உயர்நீதிமன்றம் உத்தரவு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Madurai Bench of the Madras High Court has struck down the newly introduced Section 34-C of the Registration Act, 1908. This amendment, which was implemented by the TN Govt and received Presidential assent on Jan 23, 2026, made the production of original property documents mandatory for registration. The court ruled the amendment arbitrary as sub-registrars were rejecting registrations without proper guidelines. The court ordered that encumbrance certificates should now be issued with survey numbers and door numbers, directing the IG of Registration to take appropriate steps.</p>
+                    <p class="lang-ta">பத்திரப் பதிவுக்கு அசல் ஆவணங்கள் கட்டாயம் என்ற வகையில் கொண்டுவரப்பட்ட பதிவுச் சட்டத்தின் புதிய திருத்தமான பிரிவு 34-சி-யை ரத்து செய்து சென்னை உயர்நீதிமன்ற மதுரை கிளை உத்தரவிட்டுள்ளது. போலிப் பதிவுகளைத் தடுக்கத் தமிழக அரசு கொண்டுவந்த இச்சட்டத் திருத்தம் (குடியரசுத் தலைவர் ஒப்புதல்: ஜன. 23, 2026), தெளிவான வழிகாட்டுதல்கள் இல்லாமல் சார் பதிவாளர்களால் நிராகரிக்கப்பட்டதால், இது தன்னிச்சையானது என நீதிமன்றம் கூறியுள்ளது. இனி, சொத்து குறித்து வில்லங்கச் சான்று கோருபவர்களுக்கு சர்வே எண், கதவு எண் ஆகிய விவரங்களுடன் அதனை வழங்க வேண்டும் என நீதிமன்றம் உத்தரவிட்டுள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-critical">CRITICAL</span><span class="lang-en"><strong>Polity Hook:</strong> "Transfer of Property" and "Registration of deeds and documents" fall under the <strong>Concurrent List</strong> (List III) of the 7th Schedule. Hence, state amendments to the central Registration Act, 1908 require the President's assent (Article 254(2)).</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> "சொத்து மாற்றம்" மற்றும் "ஆவணப் பதிவு" ஆகியவை 7-வது அட்டவணையின் <strong>பொதுப் பட்டியலில்</strong> (Concurrent List) உள்ளன. எனவே, மத்திய பதிவுச் சட்டம் 1908-இல் மாநிலம் செய்யும் திருத்தங்களுக்குக் குடியரசுத் தலைவரின் ஒப்புதல் தேவை (சரத்து 254(2)).</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Judiciary · Prisoner Rights</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Prisoners Can Be Granted Parole Even if Appeal is Pending: Madras HC Full Bench</span>
+                        <span class="lang-ta">மேல்முறையீட்டு வழக்கு நிலுவையில் இருக்கும்போதும் கைதிகளுக்கு பரோல் வழங்கலாம்: சென்னை உயர்நீதிமன்ற முழு அமர்வு உத்தரவு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">A 5-judge full bench of the Madras High Court (including Chief Justice S.V. Gangapurwala) ruled that prisoners can be granted parole even if their criminal appeals are pending before the High Court or Supreme Court. The ruling came to resolve a conflicting judgment by a two-judge bench. The court appointed senior counsel Abudu Kumar Rajaratnam as amicus curiae, concluding that parole cannot be indefinitely denied merely because an appeal is pending.</p>
+                    <p class="lang-ta">குற்ற வழக்குகளில் தண்டனை விதிக்கப்பட்டு, மேல்முறையீட்டு வழக்குகள் உயர்நீதிமன்றம் அல்லது உச்சநீதிமன்றத்தில் நிலுவையில் இருந்தாலும், சம்பந்தப்பட்ட கைதிகளுக்கு பரோல் (Parole) வழங்கலாம் எனத் தலைமை நீதிபதி எஸ்.வி. கங்காபுர்வாலா அடங்கிய சென்னை உயர்நீதிமன்ற 5 நீதிபதிகள் கொண்ட முழு அமர்வு தீர்ப்பளித்துள்ளது. இரு நீதிபதிகள் அமர்வு மாறுபட்ட தீர்ப்பளித்ததால் இந்த விவகாரம் முழு அமர்வுக்கு வந்தது. இதற்காக மூத்த வழக்குரைஞர் அபுடு குமார் ராஜரத்தினம் நீதிமன்றத்துக்கு உதவும் நண்பராக (amicus curiae) நியமிக்கப்பட்டார்.</p>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Exams · TNPSC</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">TNPSC Group-1 Preliminary Exam Scheduled for September 6</span>
+                        <span class="lang-ta">டிஎன்பிஎஸ்சி குரூப்-1 முதல்நிலைத் தேர்வு செப்டம்பர் 6-ஆம் தேதி நடைபெறும் என அறிவிப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Tamil Nadu Public Service Commission (TNPSC) announced that the Group-1 Preliminary Examination will be held on September 6, 2026. Candidates can apply online from June 30 to July 29. There are currently 26 vacancies, including posts like Deputy Collector, Assistant Commissioner, District Registrar, and Deputy Registrar of Co-operative Societies.</p>
+                    <p class="lang-ta">தமிழ்நாடு அரசுப் பணியாளர் தேர்வாணையம் (TNPSC) நடத்தும் குரூப்-1 முதல்நிலைத் தேர்வு வரும் செப்டம்பர் 6-ஆம் தேதி நடைபெறும் என அறிவிக்கப்பட்டுள்ளது. இதற்காகத் தேர்வர்கள் ஜூன் 30 முதல் ஜூலை 29 வரை இணையவழியில் விண்ணப்பிக்கலாம். துணை ஆட்சியர், உதவி ஆணையர், மாவட்டப் பதிவாளர், கூட்டுறவுச் சங்கங்களின் துணைப் பதிவாளர் என மொத்தம் 26 காலிப்பணியிடங்கள் தற்போது உள்ளன.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Infrastructure · Energy</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">TN Plans 25,000 MW Green Energy Park Over 5 Years</span>
+                        <span class="lang-ta">தமிழகத்தில் 25,000 மெகாவாட் பசுமை ஆற்றல் பூங்கா: திட்ட அறிக்கை சமர்ப்பிப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Aiming to make Tamil Nadu a leading renewable energy hub, the State Green Energy Corporation has submitted a detailed project report to set up a massive 25,000 MW integrated green energy park. The project will be implemented over 5 years (5,000 MW per year) on barren lands in Tirunelveli, Ramanathapuram, Thoothukudi, and Karur districts. It will utilize 1 to 1.25 lakh acres of land and will integrate wind, solar, and hybrid pumped storage systems.</p>
+                    <p class="lang-ta">நாட்டின் முன்னணிப் புதுப்பிக்கத்தக்க ஆற்றல் மையமாகத் தமிழகத்தை மாற்றும் நோக்கில், 25,000 மெகாவாட் திறன் கொண்ட ஒருங்கிணைந்த பசுமை ஆற்றல் பூங்கா அமைப்பதற்கான திட்ட அறிக்கையைத் தமிழக அரசிடம் மாநிலப் பசுமை எரிசக்தி கழகம் சமர்ப்பித்துள்ளது. திருநெல்வேலி, ராமநாதபுரம், தூத்துக்குடி, கரூர் மாவட்டங்களில் உள்ள தரிசு நிலங்களில் (சுமார் 1 முதல் 1.25 லட்சம் ஏக்கர்) இத்திட்டம் 5 கட்டங்களாக (ஆண்டுக்கு 5,000 மெகாவாட்) செயல்படுத்தப்படும். இதில் காற்றாலை, சூரிய மின்சாரம், நீரேற்று மின் சேமிப்பு ஆகியவை ஒருங்கிணைக்கப்படும்.</p>
+                </div>
+
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National / Central News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Awards · Padma</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">President Murmu Confers Padma Awards to 131 Persons; 10 From TN Honoured</span>
+                        <span class="lang-ta">131 பேருக்கு பத்ம விருதுகளை வழங்கினார் குடியரசுத் தலைவர் திரௌபதி முர்மு; தமிழகத்தைச் சேர்ந்த 10 பேருக்கு கௌரவம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">President Droupadi Murmu conferred the Padma Awards to 131 eminent personalities (5 Padma Vibhushan, 13 Padma Bhushan, 113 Padma Shri) at the Rashtrapati Bhavan. Among the recipients were 10 from Tamil Nadu, including former SC Judge K.T. Thomas and tennis legend Vijay Amritraj (Padma Bhushan). Padma Shri was awarded to IIT Madras Director V. Kamakoti, defence researcher R.V.S. Mani, veterinary scientist Punniamurthy Natesan, K. Ramasamy, among others. Sports personalities like Rohan Bopanna and Savita Punia also received the Padma Shri.</p>
+                    <p class="lang-ta">குடியரசுத் தலைவர் மாளிகையில் நடைபெற்ற விழாவில், 131 பேருக்கு (5 பத்ம விபூஷண், 13 பத்ம பூஷண், 113 பத்மஸ்ரீ) குடியரசுத் தலைவர் திரௌபதி முர்மு பத்ம விருதுகளை வழங்கி கௌரவித்தார். இதில் தமிழகத்தைச் சேர்ந்த 10 பேருக்கு விருதுகள் வழங்கப்பட்டன. முன்னாள் உச்சநீதிமன்ற நீதிபதி கே.டி. தாமஸ், டென்னிஸ் வீரர் விஜய் அமிர்தராஜ் ஆகியோருக்குப் பத்ம பூஷண் விருது வழங்கப்பட்டது. சென்னை ஐஐடி இயக்குநர் வி. காமகோடி, பாதுகாப்புத்துறை ஆய்வாளர் ஆர்.வி.எஸ். மணி, கால்நடை மருத்துவ விஞ்ஞானி புண்ணியமூர்த்தி நடேசன், வேளாண் விஞ்ஞானி கே. ராமசாமி உள்ளிட்டோருக்குப் பத்மஸ்ரீ விருது வழங்கப்பட்டது. விளையாட்டுத் துறை சார்பில் ரோஹன் போபண்ணா, சவிதா புனியா ஆகியோரும் பத்மஸ்ரீ பெற்றனர்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Constitutional Hook:</strong> Article 18(1) abolishes titles but allows military and academic distinctions. The Supreme Court (Balaji Raghavan case, 1996) ruled that Padma Awards do not amount to 'titles' within the meaning of Article 18.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> சரத்து 18(1) பட்டங்களை ஒழிக்கிறது, ஆனால் ராணுவ மற்றும் கல்வி சார்ந்த பட்டங்களை அனுமதிக்கிறது. பத்ம விருதுகள் சரத்து 18-இன் கீழ் 'பட்டங்கள்' (Titles) அல்ல என உச்சநீதிமன்றம் (பாலாஜி ராகவன் வழக்கு, 1996) தீர்ப்பளித்துள்ளது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Law & Order · FCRA</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Centre Hikes FCRA Penalties for NGOs Misusing Foreign Funds</span>
+                        <span class="lang-ta">வெளிநாட்டு நிதியைத் தவறாகப் பயன்படுத்தும் தொண்டு நிறுவனங்களுக்கான (NGO) அபராதத் தொகையை உயர்த்தியது மத்திய அரசு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Union Ministry of Home Affairs has amended the Foreign Contribution (Regulation) Act (FCRA), 2010 rules, significantly hiking penalties for Non-Governmental Organisations (NGOs) that divert foreign funds for unapproved purposes. Now, diverting funds will attract a penalty of ₹1 lakh or 5% of the misspent amount, whichever is higher. If funds are used for unapproved "activities", the penalty will be ₹1 lakh or 30% of the invested amount. NGOs must clearly declare the purpose (education, culture, religion, economy) of the funds received.</p>
+                    <p class="lang-ta">தொண்டு நிறுவனங்கள் (NGO) தாங்கள் பெறும் வெளிநாட்டு நிதியை அங்கீகரிக்கப்படாத வேறு விவகாரங்களுக்குப் பயன்படுத்தினால் விதிக்கப்படும் அபராதத் தொகையை மத்திய உள்துறை அமைச்சகம் உயர்த்தியுள்ளது (FCRA 2010 திருத்தம்). அங்கீகரிக்கப்பட்ட வரம்பை மீறிச் செலவிடப்பட்டால், ரூ.1 லட்சம் அல்லது செலவிடப்பட்ட தொகையில் 5 சதவீதம் (இதில் எது அதிகமோ அது) அபராதமாக விதிக்கப்படும். அங்கீகரிக்கப்படாத 'நடவடிக்கைகளுக்கு' நிதியைப் பயன்படுத்தினால் ரூ.1 லட்சம் அல்லது முதலீட்டுத் தொகையில் 30 சதவீதம் அபராதம் விதிக்கப்படும். தொண்டு நிறுவனங்கள் நிதியைப் பெறும் காரணத்தை (கல்வி, கலாச்சாரம், மதம்) தெளிவாகத் தெரிவிக்க வேண்டும்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="lang-en"><strong>Polity Hook:</strong> The FCRA (Foreign Contribution Regulation Act) is monitored and implemented by the Ministry of Home Affairs, NOT the Ministry of Finance.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> FCRA (வெளிநாட்டு பங்களிப்பு ஒழுங்குமுறைச் சட்டம்) மத்திய உள்துறை அமைச்சகத்தால் நிர்வகிக்கப்படுகிறது; நிதி அமைச்சகத்தால் அல்ல.</span></li>
+                        </ul>
+                    </details>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Geopolitics · Bilateral Trade</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">India-US Trade Talks Begin Following Trump's Temporary Tariff Levy</span>
+                        <span class="lang-ta">இந்தியா - அமெரிக்கா இடையே இருதரப்பு இடைக்கால வர்த்தக ஒப்பந்தப் பேச்சுவார்த்தை தொடங்கியது</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">High-level talks between India and the US regarding a bilateral interim trade agreement have begun in New Delhi, involving Union Commerce Minister Piyush Goyal and US Trade Representative (USTR) Jamison Greer. The discussions follow US President Donald Trump's imposition of a temporary 10% tariff on imports from countries including India, responding to a US Supreme Court ruling against reciprocal tariffs. The USTR had previously recommended a 12.5% tariff against 54 countries based on Section 301 of the US Trade Act, 1974.</p>
+                    <p class="lang-ta">இந்தியா - அமெரிக்கா இடையே இருதரப்பு இடைக்கால வர்த்தக ஒப்பந்தத்தை இறுதி செய்வதற்கான உயர்மட்டப் பேச்சுவார்த்தை புதுதில்லியில் தொடங்கியது. இதில் மத்திய வர்த்தகத்துறை அமைச்சர் பியூஷ் கோயல், அமெரிக்க வர்த்தகப் பிரதிநிதி (USTR) ஜேமிசன் க்ரீயர் ஆகியோர் பங்கேற்றனர். பரஸ்பர வரி விதிப்பு செல்லாது என்ற நீதிமன்றத் தீர்ப்பைத் தொடர்ந்து, இந்தியா உள்ளிட்ட நாடுகளின் இறக்குமதிப் பொருள்கள் மீது அமெரிக்க அதிபர் ட்ரம்ப் தற்காலிகமாக 10% வரியை விதித்ததையடுத்து இந்தப் பேச்சுவார்த்தை முக்கியத்துவம் பெறுகிறது. அமெரிக்க வர்த்தகச் சட்டம் 1974, பிரிவு 301-இன் கீழ் 54 நாடுகள் மீது 12.5% வரி விதிக்க USTR முன்பு பரிந்துரைத்திருந்தது.</p>
+                </div>
+
+            </section>
+
+            <!-- INTERNATIONAL NEWS -->
+            <section id="international">
+                <h2>
+                    <span class="lang-en">International News</span>
+                    <span class="lang-ta">சர்வதேச செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Geopolitics · Oil Transit</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">11 Indian Ships Safely Cross Strait of Hormuz Post US-Iran Peace Deal</span>
+                        <span class="lang-ta">அமெரிக்கா - ஈரான் அமைதி ஒப்பந்தம்: ஹோர்முஸ் ஜலசந்தியைப் பாதுகாப்பாகக் கடந்தன 11 இந்தியக் கப்பல்கள்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Following the recent peace agreement signed between the USA (President Trump) and Iran (President Masoud Pezeshkian), the strategic Strait of Hormuz has been reopened. The Ministry of External Affairs announced that 11 cargo ships bound for India have safely crossed the strait after 110 days of disruption. Three of these ships are carrying 2.85 lakh tonnes of crude oil. Consequently, the MoS for Petroleum, Suresh Gopi, indicated that domestic fuel and LPG prices (which were recently hiked due to supply shortages) are expected to decrease soon.</p>
+                    <p class="lang-ta">அமெரிக்க அதிபர் ட்ரம்ப் மற்றும் ஈரான் அதிபர் மசூத் பெஜெஷ்கியான் இடையே சமீபத்தில் கையெழுத்தான அமைதி ஒப்பந்தத்தையடுத்து, ஹோர்முஸ் ஜலசந்தியை ஈரான் திறந்தது. இதனால் 110 நாள்களுக்குப் பிறகு 11 சரக்குக் கப்பல்கள் இந்தியாவை நோக்கிப் பாதுகாப்பாக வந்துள்ளதாக வெளியுறவுத்துறை அமைச்சகம் தெரிவித்துள்ளது. இவற்றில் மூன்று கப்பல்கள் 2.85 லட்சம் டன் கச்சா எண்ணெய்யை எடுத்து வருகின்றன. இதனால், விநியோகத் தட்டுப்பாட்டால் சமீபத்தில் உயர்த்தப்பட்ட பெட்ரோல், டீசல் மற்றும் சமையல் எரிவாயு சிலிண்டர் விலைகள் விரைவில் குறையும் என மத்திய பெட்ரோலியத்துறை இணையமைச்சர் சுரேஷ் கோபி தெரிவித்தார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Geography Hook:</strong> The Strait of Hormuz connects the Persian Gulf with the Gulf of Oman and the Arabian Sea. It is the world's most important oil chokepoint.</span><span class="lang-ta"><strong>புவியியல் குறிப்பு:</strong> ஹோர்முஸ் ஜலசந்தி பாரசீக வளைகுடாவை ஓமன் வளைகுடா மற்றும் அரபிக்கடலுடன் இணைக்கிறது. இது உலகளாவிய கச்சா எண்ணெய் போக்குவரத்திற்கான மிக முக்கியமான நீர்ச்சந்தியாகும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Disaster · Indian Diaspora</span>
+                        <span class="badge bg-trap">TRAP</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">12 Indians Killed in Qatar Gas Plant Blast; 3 From Tirunelveli</span>
+                        <span class="lang-ta">கத்தார் எரிவாயு ஆலை வெடிவிபத்து: 12 இந்தியர்கள் உட்பட 13 பேர் பலி; நெல்லையைச் சேர்ந்த 3 இளைஞர்கள் உயிரிழப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">A tragic explosion at a gas production plant in Ras Laffan, Qatar, resulted in the deaths of 13 people, including 12 Indians and 1 Pakistani. The blast occurred when the plant was being restarted after a shutdown caused by the Iran-US war. Among the deceased Indians, 3 youths—Sujith Kumar, Suvin, and Babith—were from the Radhapuram block in Tirunelveli district, Tamil Nadu. The TN CM announced a solatium of ₹10 lakh each for the families of the deceased Tamils and established helplines for assistance.</p>
+                    <p class="lang-ta">கத்தாரில் உள்ள ராஸ் லஃபான் தொழிற்பேட்டையில் உள்ள எரிவாயு உற்பத்தி ஆலையில் ஏற்பட்ட வெடிவிபத்தில் 12 இந்தியர்கள் மற்றும் ஒரு பாகிஸ்தானியர் என மொத்தம் 13 பேர் உயிரிழந்தனர். ஈரான்-அமெரிக்கப் போரால் மூடப்பட்டிருந்த ஆலையை மீண்டும் இயக்கும்போது இந்த விபத்து நேரிட்டுள்ளது. உயிரிழந்த இந்தியர்களில் சுஜித் குமார், சுவின், பபித் ஆகிய 3 இளைஞர்கள் தமிழகத்தின் திருநெல்வேலி மாவட்டம் ராதாபுரம் வட்டத்தைச் சேர்ந்தவர்கள். உயிரிழந்த தமிழர்களின் குடும்பங்களுக்குத் தலா ரூ.10 லட்சம் நிவாரணம் வழங்கப்படும் என முதல்வர் அறிவித்துள்ளார்; அயலகத் தமிழர் நலத்துறையின் உதவி எண்களும் அறிவிக்கப்பட்டுள்ளன.</p>
+                </div>
+            </section>
+
+            <!-- ECONOMY & FINANCE -->
+            <section id="economy">
+                <h2>
+                    <span class="lang-en">Economy & Tech</span>
+                    <span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Telecom · Corporate</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Telecom Sector Revenue Rises to ₹1.05 Lakh Crore in Q1; Jio Tops</span>
+                        <span class="lang-ta">ஜனவரி - மார்ச் காலாண்டில் தொலைத்தொடர்பு நிறுவனங்களின் வருவாய் ரூ.1.05 லட்சம் கோடியாக உயர்வு; ஜியோ முதலிடம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">According to TRAI (Telecom Regulatory Authority of India), the gross revenue of the Indian telecom sector grew by 6.9% to reach ₹1.05 lakh crore in the January-March quarter of 2026. The Adjusted Gross Revenue (AGR) increased by 9.45% to ₹86,716 crore. Reliance Jio secured the top spot with a revenue of ₹32,467 crore, followed by Bharti Airtel and Vodafone Idea. The sector generated ₹6,936 crore for the government via license fees.</p>
+                    <p class="lang-ta">இந்தியத் தொலைத்தொடர்பு ஒழுங்குமுறை ஆணையத்தின் (TRAI) அறிக்கையின்படி, கடந்த ஜனவரி-மார்ச் காலாண்டில் இந்தியத் தொலைத்தொடர்புத் துறையின் மொத்த வருவாய் 6.9 சதவீதம் உயர்ந்து ரூ.1.05 லட்சம் கோடியாக அதிகரித்துள்ளது. சரிசெய்யப்பட்ட மொத்த வருவாய் (AGR) 9.45% உயர்ந்து ரூ.86,716 கோடியாக உள்ளது. ரிலையன்ஸ் ஜியோ ரூ.32,467 கோடியுடன் முதலிடத்திலும், பார்தி ஏர்டெல், வோடஃபோன் ஐடியா ஆகியவை அடுத்தடுத்த இடங்களிலும் உள்ளன. தொலைத்தொடர்புத் துறை மூலம் அரசுக்கு உரிமக் கட்டணமாக ரூ.6,936 கோடி கிடைத்துள்ளது.</p>
+                </div>
+
+            </section>
+            
+            <!-- SPORTS -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports</span>
+                    <span class="lang-ta">விளையாட்டு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Football · World Cup Record</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Messi Breaks Miroslav Klose's World Cup Goal Record</span>
+                        <span class="lang-ta">உலகக் கோப்பையில் அதிக கோல்கள் அடித்த குளோசாவின் சாதனையை முறியடித்தார் மெஸ்ஸி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In the FIFA World Cup match held in Dallas, defending champions Argentina defeated Austria 2-0, securing their spot in the knockout stage. Argentine superstar Lionel Messi scored both goals. With this, Messi has scored 18 goals in 28 World Cup matches, setting a new all-time record. He surpassed Germany's Miroslav Klose, who previously held the record with 16 goals in 24 matches. Messi has scored 5 goals in the current tournament alone.</p>
+                    <p class="lang-ta">டல்லாஸில் நடைபெற்ற உலகக் கோப்பை கால்பந்துப் போட்டியில், நடப்பு சாம்பியன் அர்ஜென்டினா 2-0 என்ற கோல் கணக்கில் ஆஸ்திரியாவை வீழ்த்தி 'நாக் அவுட்' சுற்றுக்கு முன்னேறியது. அர்ஜென்டினாவின் நட்சத்திர வீரர் லியோனல் மெஸ்ஸி இரண்டு கோல்களையும் அடித்தார். இதன் மூலம், உலகக் கோப்பைப் போட்டிகளில் 28 ஆட்டங்களில் 18 கோல்கள் அடித்து, அதிக கோல்கள் அடித்த வீரர் என்ற புதிய வரலாற்றுச் சாதனையை அவர் படைத்தார். இதற்கு முன் ஜெர்மனியின் மிரோஸ்லாவ் குளோசா 24 ஆட்டங்களில் 16 கோல்கள் அடித்ததே சாதனையாக இருந்தது. நடப்புத் தொடரில் மெஸ்ஸி 5 கோல்கள் அடித்துள்ளார்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Football · World Cup</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Mbappe Plays 100th International Match; France, Norway Enter Knockouts</span>
+                        <span class="lang-ta">எம்பாப்பேவுக்கு 100-வது சர்வதேசப் போட்டி; நாக் அவுட் சுற்றுக்கு முன்னேறின பிரான்ஸ், நார்வே</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">France defeated Iraq 3-0 in their World Cup clash, propelled by two goals from Kylian Mbappe. This match marked Mbappe's 100th international appearance for France. He now ranks second in World Cup history with 16 goals. In another thrilling match, Norway secured their first knockout spot since 1998 by defeating Senegal 3-2. Algeria also secured a crucial 2-1 victory over Jordan.</p>
+                    <p class="lang-ta">உலகக் கோப்பைப் போட்டியில் பிரான்ஸ் 3-0 என்ற கோல் கணக்கில் ஈராக்கை வீழ்த்தியது. பிரான்ஸின் நட்சத்திர வீரர் கிலியன் எம்பாப்பே 2 கோல்கள் அடித்தார். இந்த ஆட்டம் பிரான்ஸ் அணிக்காக எம்பாப்பே விளையாடிய 100-வது சர்வதேச ஆட்டமாகும். அவர் தற்போது உலகக் கோப்பை வரலாற்றில் 16 கோல்களுடன் 2-வது இடத்தில் உள்ளார். மற்றொரு சுவாரஸ்யமான ஆட்டத்தில் நார்வே 3-2 என செனகலை வீழ்த்தி, 1998-க்குப் பிறகு முதல் முறையாக நாக் அவுட் சுற்றுக்கு முன்னேறியது. அல்ஜீரியா 2-1 என ஜோர்டானை வென்றது.</p>
+                </div>
+
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Which Constitutional Article imposes a duty on the State to raise the level of nutrition and the standard of living of its people and to improve public health?</span>
+                        <span class="lang-ta">கேள்வி: மக்களின் ஊட்டச்சத்து நிலை மற்றும் வாழ்க்கைத் தரத்தை உயர்த்துவதும், பொது சுகாதாரத்தை மேம்படுத்துவதும் அரசின் கடமை என வலியுறுத்தும் அரசியலமைப்புச் சரத்து எது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Article 47</span><br><br>
+                                <strong>Context:</strong> TN Govt's new "Thaimaman Thanga Mothiram" scheme (giving a 1g gold ring for institutional deliveries) aims to encourage safe hospital births, directly reflecting the DPSP mandate in Article 47.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">சரத்து 47</span><br><br>
+                                <strong>பின்னணி:</strong> அரசு மருத்துவமனைகளில் பிரசவத்தை ஊக்குவிக்கத் தமிழக அரசு அறிமுகப்படுத்தியுள்ள "தாய்மாமன் தங்க மோதிரம்" திட்டம் (1 கிராம் தங்கம்), சரத்து 47-இன் நோக்கத்தைப் பிரதிபலிக்கிறது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Who holds the all-time record for scoring the highest number of goals in the history of the FIFA Men's World Cup tournament?</span>
+                        <span class="lang-ta">கேள்வி: ஆடவர் உலகக் கோப்பை கால்பந்து வரலாற்றில் அதிக கோல்கள் அடித்த வீரர் என்ற ஒட்டுமொத்த சாதனையைப் படைத்தவர் யார்?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Lionel Messi (Argentina)</span><br><br>
+                                <strong>Context:</strong> Lionel Messi scored his 18th World Cup goal against Austria, breaking the previous record of 16 goals held by Germany's Miroslav Klose.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">லியோனல் மெஸ்ஸி (அர்ஜென்டினா)</span><br><br>
+                                <strong>பின்னணி:</strong> ஜெர்மனியின் மிரோஸ்லாவ் குளோசாவின் (16 கோல்கள்) சாதனையை முறியடித்து, ஆஸ்திரியாவுக்கு எதிரான ஆட்டத்தில் லியோனல் மெஸ்ஸி தனது 18-வது உலகக் கோப்பை கோலை அடித்தார்.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">TN Gold Ring Scheme</span><span class="lang-ta">தங்க மோதிரம் திட்டம்</span></td>
+                                <td><span class="lang-en">State/Welfare</span><span class="lang-ta">மாநிலம்/நலத்திட்டம்</span></td>
+                                <td><span class="lang-en">1g gold for govt hospital births from Sep 15.</span><span class="lang-ta">அரசு பிரசவங்களுக்கு 1 கி தங்கம் (செப் 15 முதல்).</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">Section 34-C Struck Down</span><span class="lang-ta">பிரிவு 34-சி ரத்து</span></td>
+                                <td><span class="lang-en">State/Judiciary</span><span class="lang-ta">மாநிலம்/நீதித்துறை</span></td>
+                                <td><span class="lang-en">Original documents not mandatory for registration.</span><span class="lang-ta">பத்திரப் பதிவுக்கு அசல் ஆவணங்கள் கட்டாயமில்லை.</span></td>
+                                <td><span class="badge bg-trap">TRAP</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">Messi Breaks Record</span><span class="lang-ta">மெஸ்ஸி உலக சாதனை</span></td>
+                                <td><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></td>
+                                <td><span class="lang-en">18 World Cup goals, surpassing Klose (16).</span><span class="lang-ta">18 உலகக் கோப்பை கோல்கள், குளோசாவை முந்தினார்.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">Hormuz Strait Opens</span><span class="lang-ta">ஹோர்முஸ் ஜலசந்தி திறப்பு</span></td>
+                                <td><span class="lang-en">Intl/Geopolitics</span><span class="lang-ta">சர்வதேசம்/அரசியல்</span></td>
+                                <td><span class="lang-en">11 Indian ships cross safely post US-Iran deal.</span><span class="lang-ta">அமெரிக்கா-ஈரான் ஒப்பந்தத்தால் 11 இந்திய கப்பல்கள் பயணம்.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">Padma Awards Conferred</span><span class="lang-ta">பத்ம விருதுகள் வழங்கல்</span></td>
+                                <td><span class="lang-en">National/Awards</span><span class="lang-ta">தேசியம்/விருதுகள்</span></td>
+                                <td><span class="lang-en">131 total; 10 from TN (incl V Kamakoti, Vijay Amritraj).</span><span class="lang-ta">131 பேர் (தமிழகத்தைச் சேர்ந்த 10 பேர்).</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani Chennai 24-06-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி சென்னை 24-06-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source text detailed state, national, and international news for 24 June 2026. 
+State news covered the TNPSC Group 1 exam announcement for Sep 6 (26 vacancies). The TN Govt introduced the "Thaimaman Thanga Mothiram" scheme to gift 1g gold rings for newborns in govt hospitals from Sep 15. Madras HC struck down the Registration Act's Section 34-C which mandated original documents. The CM declared in the assembly that his government is 100% clean, leading to a DMK walkout. ED raided 18 places regarding the 2017 polytechnic lecturer recruitment scam. 3 Tamils died in a Qatar gas plant explosion. 
+National news: President Droupadi Murmu conferred Padma awards to 131 people, including 10 from TN. The Centre hiked FCRA penalties for NGOs diverting foreign funds. A fire at a Lucknow coaching centre killed 15. The CUET-UG results were released. Telegram app was restored in India. Minorities Minister George Kurian resigned. 
+International news: Iran's President visited Pakistan. The Strait of Hormuz was opened after the US-Iran peace pact, allowing 11 Indian ships to pass safely. The right-wing candidate won Colombia's presidential election. Heatwaves in Europe killed 18 in France. 
+Economy: Indian telecom sector revenue reached Rs 1.05 lakh crore in Q1. The stock market dropped (Sensex -893 pts, Nifty -278 pts). 
+Sports: Messi broke the World Cup goal record (18 goals). France's Mbappe played his 100th international match. Norway reached the knockout stage after 28 years.]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூல உரைகள் 24 ஜூன் 2026 க்கான செய்திகளைக் கொண்டிருந்தன.
+மாநில செய்திகளில், செப்டம்பர் 6-ஆம் தேதி குரூப் 1 தேர்வு (26 இடங்கள்) நடைபெறும் என அறிவிக்கப்பட்டது. அரசு மருத்துவமனைகளில் பிறக்கும் குழந்தைகளுக்கு 1 கிராம் தங்க மோதிரம் வழங்கும் தாய்மாமன் திட்டத்தை அரசு அறிவித்தது. பத்திரப் பதிவுக்கு அசல் ஆவணம் கட்டாயம் என்ற பதிவுச் சட்டம் 34-சி ரத்து செய்யப்பட்டது. சட்டப்பேரவையில் முதல்வர் ஜோசப் விஜய் தனது அரசு 100% தூய்மையானது எனப் பேசியதால் திமுக வெளிநடப்பு செய்தது. பாலிடெக்னிக் விரிவுரையாளர் தேர்வு முறைகேட்டில் அமலாக்கத்துறை சோதனை. கத்தார் எரிவாயு ஆலை வெடிவிபத்தில் நெல்லையைச் சேர்ந்த 3 பேர் பலி.
+தேசிய அளவில்: 131 பேருக்கு (தமிழகத்தைச் சேர்ந்த 10 பேர்) பத்ம விருதுகளைக் குடியரசுத் தலைவர் வழங்கினார். வெளிநாட்டு நிதியைத் தவறாகப் பயன்படுத்தும் தொண்டு நிறுவனங்களுக்கான FCRA அபராதம் உயர்வு. லக்னோ தீ விபத்தில் 15 பேர் பலி. கியூட்-யுஜி (CUET-UG) முடிவுகள் வெளியீடு. டெலிகிராம் தடை நீக்கம். மத்திய இணை அமைச்சர் ஜார்ஜ் குரியன் ராஜிநாமா.
+சர்வதேச அளவில்: பாகிஸ்தானுக்கு ஈரான் அதிபர் பயணம். அமெரிக்கா-ஈரான் ஒப்பந்தத்தால் ஹோர்முஸ் ஜலசந்தி திறப்பு; 11 இந்தியக் கப்பல்கள் பயணம். கொலம்பியாவில் வலதுசாரி வேட்பாளர் வெற்றி. ஐரோப்பாவில் கடும் வெப்பம் (பிரான்ஸில் 18 பேர் பலி).
+பொருளாதாரம்: காலாண்டில் தொலைத்தொடர்பு நிறுவனங்களின் வருவாய் ரூ.1.05 லட்சம் கோடியாக உயர்வு. பங்குச்சந்தை சரிவு (சென்செக்ஸ் 893 புள்ளிகள் சரிவு).
+விளையாட்டு: உலகக் கோப்பையில் மெஸ்ஸி 18 கோல்கள் அடித்து வரலாற்றுச் சாதனை. எம்பாப்பே 100-வது சர்வதேசப் போட்டியில் விளையாடினார். செனகலை வீழ்த்தி 28 ஆண்டுகளுக்குப் பிறகு நார்வே நாக் அவுட் சுற்றுக்கு முன்னேறியது.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 24 June 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body class="en-mode">
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">27 June 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">27 ஜூன் 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <!-- Sidebar TOC -->
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Tech</span><span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Health · Welfare Scheme</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Govt Employee Health Insurance Hiked to ₹7.5 Lakh</span>
+                        <span class="lang-ta">அரசு ஊழியர்கள், ஓய்வூதியர்களுக்கான மருத்துவக் காப்பீடு ரூ.7.5 லட்சமாக உயர்வு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Tamil Nadu Government has issued a Government Order increasing the medical insurance coverage for government employees and pensioners from ₹5 lakh to ₹7.5 lakh. For certain specified critical illnesses, the coverage has been increased from ₹10 lakh to ₹12 lakh. Partnering with United India Insurance, the renewed scheme will come into effect from July 1, 2026, and will be valid until June 30, 2031, benefiting over 15 lakh employees and 11 lakh pensioners across 1,535 private hospitals.</p>
+                    <p class="lang-ta">அரசு ஊழியர்கள் மற்றும் ஓய்வூதியதாரர்களுக்கான மருத்துவக் காப்பீட்டுத் தொகையை ரூ.5 லட்சத்தில் இருந்து ரூ.7.5 லட்சமாக உயர்த்தித் தமிழக அரசு அரசாணை வெளியிட்டுள்ளது. குறிப்பிட்ட சில நோய்களுக்கு இத்தொகை ரூ.10 லட்சத்திலிருந்து ரூ.12 லட்சமாக அதிகரிக்கப்பட்டுள்ளது. யுனைடெட் இந்தியா இன்சூரன்ஸ் நிறுவனத்துடனான இப்புதிய திட்டம் ஜூலை 1, 2026 முதல் அமலுக்கு வந்து, ஜூன் 30, 2031 வரை செயல்பாட்டில் இருக்கும். இதன் மூலம் 15 லட்சம் அரசு ஊழியர்கள், 11 லட்சம் ஓய்வூதியதாரர்கள் 1,535 தனியார் மருத்துவமனைகளில் பயனடைவர்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Polity Hook:</strong> Public Health and Hospitals fall under the <strong>State List</strong> (List II) of the 7th Schedule of the Indian Constitution. The New Health Insurance Scheme (NHIS) for TN Govt Employees is a flagship welfare measure.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> பொதுச் சுகாதாரம் மற்றும் மருத்துவமனைகள் இந்திய அரசியலமைப்பின் 7-வது அட்டவணையில் <strong>மாநிலப் பட்டியலில்</strong> (List II) வருகின்றன. புதிய மருத்துவக் காப்பீட்டுத் திட்டம் (NHIS) தமிழக அரசின் முக்கிய நலத்திட்டமாகும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Social Welfare · Drug Eradication</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">CM Leads Drug Eradication Run; Awards Medals to 15 Police Officers</span>
+                        <span class="lang-ta">முதல்வர் தலைமையில் போதை ஒழிப்பு விழிப்புணர்வு ஓட்டம்; 15 போலீஸாருக்குப் பதக்கம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Marking the International Day Against Drug Abuse and Illicit Trafficking, CM Joseph Vijay flagged off and participated in the "Start Run; Stop Drugs" awareness marathon at Marina Beach, Chennai. Over 15,000 people, including ministers and prominent sports personalities, took part. Simultaneously, the state government announced the Chief Minister's Police Medal to 15 police officers for their outstanding performance in drug eradication and curbing illicit trafficking.</p>
+                    <p class="lang-ta">சர்வதேச போதைப்பொருள் ஒழிப்பு தினத்தை முன்னிட்டு சென்னை மெரினாவில் "போதைப்பொருள் ஒழிப்பு விழிப்புணர்வு ஓட்டத்தை" (Start Run; Stop Drugs) முதல்வர் ஜோசப் விஜய் தொடங்கி வைத்து, பொதுமக்களுடன் இணைந்து ஓடினார். இதில் அமைச்சர்கள், முன்னணி விளையாட்டு வீரர்கள் உட்பட 15,000 பேர் பங்கேற்றனர். இதற்கிடையே, போதைப்பொருள் ஒழிப்பு மற்றும் கடத்தலைத் தடுப்பதில் சிறந்து விளங்கும் 15 காவல் துறை அதிகாரிகளுக்கு முதலமைச்சர் பதக்கம் வழங்கப்படும் என அரசு அறிவித்துள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-tip">TIP</span><span class="lang-en"><strong>Important Date:</strong> June 26 is observed globally as the International Day Against Drug Abuse and Illicit Trafficking.</span><span class="lang-ta"><strong>முக்கிய நாள்:</strong> ஜூன் 26 ஆம் தேதி சர்வதேச போதைப்பொருள் ஒழிப்பு மற்றும் சட்டவிரோத கடத்தல் தடுப்பு தினமாக அனுசரிக்கப்படுகிறது.</span></li>
+                            <li><span class="lang-en"><strong>DPSP Hook:</strong> Article 47 mandates the State to endeavor to bring about prohibition of the consumption of intoxicating drinks and drugs which are injurious to health.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> சரத்து 47-இன் படி, உடல்நலத்திற்குக் கேடு விளைவிக்கும் போதைப் பொருட்கள் மற்றும் பானங்களின் நுகர்வைத் தடை செய்ய அரசு முயல வேண்டும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Judiciary · Surrogacy</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Resolve Surrogacy Parent Rights Petitions in 4 Weeks: Madras HC</span>
+                        <span class="lang-ta">வாடகைத் தாய் வழக்குகளில் 4 வாரங்களுக்குள் தீர்வு காண வேண்டும்: உயர்நீதிமன்றம் உத்தரவு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Madras High Court has directed Judicial Magistrate courts to process and decide on petitions seeking parentage rights in surrogacy cases within 4 weeks. A Namakkal-based couple's petition was previously dismissed because the woman crossed 50 years of age and the surrogate's husband wasn't investigated. Overruling this, Justice Shamim Ahmed clarified that minor technicalities shouldn't deny parenting rights under the Surrogacy (Regulation) Act, as long as the surrogate mother's consent is completely voluntary and non-commercial.</p>
+                    <p class="lang-ta">வாடகைத் தாய் மூலம் பெற்றுக்கொள்ளும் குழந்தைக்குப் பெற்றோர் உரிமை கோரி தாக்கல் செய்யப்படும் மனுக்களை 4 வாரங்களில் பரிசீலித்து முடிவெடுக்க வேண்டும் என நீதித்துறை நடுவர் மன்றங்களுக்குச் சென்னை உயர்நீதிமன்றம் உத்தரவிட்டது. நாமக்கல்லைச் சேர்ந்த தம்பதியின் மனுவை, பெண்ணுக்கு 50 வயதாகிவிட்டது என்றும், வாடகைத் தாயின் கணவரிடம் விசாரிக்கவில்லை என்றும் கூறி கீழமை நீதிமன்றம் தள்ளுபடி செய்திருந்தது. இதை ரத்து செய்த நீதிபதி ஷமீம் அகமது, வாடகைத் தாய் சட்டம் வணிக நோக்கமற்ற தன்னிச்சையான ஒப்புதலை மட்டுமே வலியுறுத்துவதாகவும், சிறு குறைகளைக் காட்டி குழந்தை பெறும் உரிமையை மறுக்கக் கூடாது எனவும் தெளிவுபடுத்தினார்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Judiciary · Mineral Wealth</span>
+                        <span class="badge bg-trap">TRAP</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">HC Refuses to Quash Cases Against PRP Granite; Directs Speedy Trial</span>
+                        <span class="lang-ta">பி.ஆர்.பி. கிரானைட் நிறுவனத்துக்கு எதிரான வழக்குகளை ரத்து செய்ய உயர்நீதிமன்றம் மறுப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Madurai Bench of the Madras High Court refused to quash the criminal and money laundering cases filed against PRP Granite and its owners. The firm is accused of illegal granite mining in Madurai, causing a massive revenue loss of over ₹7,000 crore and mineral loss of ₹13,000 crore. Noting that the cases have been pending for over 14 years, the court directed the Chief Secretary to form a special team of prosecutors to expedite the trial and finish it without further delay.</p>
+                    <p class="lang-ta">பி.ஆர்.பி. கிரானைட் நிறுவனம் மற்றும் அதன் உரிமையாளர்கள் மீது பதிவு செய்யப்பட்ட கனிமவள மற்றும் பணமோசடி வழக்குகளை ரத்து செய்யச் சென்னை உயர்நீதிமன்ற மதுரை கிளை மறுத்துவிட்டது. மதுரையில் சட்டவிரோதமாகக் கிரானைட் வெட்டியதன் மூலம் அரசுக்கு ரூ.7,000 கோடி வருவாய் இழப்பும், ரூ.13,000 கோடி கனிமவள இழப்பும் ஏற்படுத்தியதாக இந்நிறுவனத்தின் மீது குற்றம் சாட்டப்பட்டுள்ளது. வழக்குகள் 14 ஆண்டுகளுக்கும் மேலாக நிலுவையில் உள்ளதைக் சுட்டிக்காட்டிய நீதிமன்றம், விரைந்து விசாரித்து முடிக்க ஏதுவாகச் சிறப்பு அரசு வழக்குரைஞர்கள் குழுவை அமைக்கத் தலைமைச் செயலருக்கு உத்தரவிட்டது.</p>
+                </div>
+
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National / Central News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Diplomacy · Disaster Relief</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Operation Amistad: India Sends Relief Materials to Earthquake-Hit Venezuela</span>
+                        <span class="lang-ta">ஆபரேஷன் அமிஸ்டாட்: நிலநடுக்கத்தால் பாதிக்கப்பட்ட வெனிசுலாவுக்கு இந்தியாவின் உதவி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Following two powerful earthquakes in Venezuela that claimed over 920 lives and injured thousands, India has launched "Operation Amistad" to provide humanitarian aid. The Indian Air Force dispatched C-17 aircraft carrying 35 tons of relief materials, including medicines, medical equipment, and ambulances, along with a 41-member specialized rescue team. Meanwhile, the USA has also temporarily lifted its economic sanctions on Venezuela to facilitate disaster relief efforts.</p>
+                    <p class="lang-ta">வெனிசுலாவில் அடுத்தடுத்து ஏற்பட்ட இரண்டு சக்திவாய்ந்த நிலநடுக்கங்களால் 920-க்கும் மேற்பட்டோர் உயிரிழந்தனர்; ஆயிரக்கணக்கானோர் காயமடைந்தனர். இதையடுத்து, மனிதாபிமான அடிப்படையில் 'ஆபரேஷன் அமிஸ்டாட்' (Operation Amistad) என்ற பெயரில் இந்தியா மீட்பு நடவடிக்கையைத் தொடங்கியுள்ளது. இந்திய விமானப்படையின் சி-17 விமானங்கள் மூலம் 35 டன் நிவாரணப் பொருள்கள், மருந்துகள், ஆம்புலன்ஸ்கள் மற்றும் 41 பேர் கொண்ட சிறப்புக் குழுவினர் அனுப்பி வைக்கப்பட்டுள்ளனர். பேரிடர் மீட்புப் பணிகளுக்காக வெனிசுலா மீதான பொருளாதாரத் தடையை அமெரிக்காவும் தற்காலிகமாக விலக்கியுள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Geography Hook:</strong> Venezuela is located on the northern coast of South America. Its capital is Caracas. It holds some of the world's largest proven oil reserves.</span><span class="lang-ta"><strong>புவியியல் குறிப்பு:</strong> வெனிசுலா தென் அமெரிக்காவின் வடக்குக் கடற்கரையில் அமைந்துள்ளது. இதன் தலைநகரம் கராகஸ். உலகின் மிகப்பெரிய கச்சா எண்ணெய் வளங்களைக் கொண்ட நாடுகளில் இதுவும் ஒன்று.</span></li>
+                            <li><span class="badge bg-tip">TIP</span><span class="lang-en">"Amistad" means friendship in Spanish (Venezuela's official language). Note this alongside Operation Dost (Turkey-Syria), Operation Ganga, Operation Ajay, etc.</span><span class="lang-ta">"அமிஸ்டாட்" (Amistad) என்றால் ஸ்பானிஷ் மொழியில் நட்பு என்று பொருள். (ஆபரேஷன் தோஸ்த், ஆபரேஷன் கங்கா போன்று இதனையும் நினைவில் கொள்க).</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Defence · Martyrs</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Names of 6 "Operation Sindhu" Martyrs Inscribed on National War Memorial</span>
+                        <span class="lang-ta">"ஆபரேஷன் சிந்து" நடவடிக்கையில் வீரமரணமடைந்த 6 வீரர்களின் பெயர்கள் தேசியப் போர் நினைவிடத்தில் பொறிப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The names of 6 Indian armed forces personnel (5 Army, 1 IAF) who were martyred during "Operation Sindhu" have been inscribed on the National War Memorial walls in New Delhi. Operation Sindhu was a surgical military strike executed by India on May 6-7, 2025, inside Pakistan-Occupied Kashmir (PoK) to destroy terror launchpads. The operation was a retaliation to the April 2025 Lashkar-e-Taiba terror attack in J&K's Pahalgam that killed 26 civilians. This is the first time the martyrs' names for this specific operation have been publicly acknowledged.</p>
+                    <p class="lang-ta">பாகிஸ்தான் ஆக்கிரமிப்பு காஷ்மீரில் (PoK) பயங்கரவாத முகாம்களை அழிக்கும் நோக்கில் மேற்கொள்ளப்பட்ட "ஆபரேஷன் சிந்து" நடவடிக்கையில் வீரமரணமடைந்த 6 இந்திய வீரர்களின் (ராணுவம் 5, விமானப்படை 1) பெயர்கள், புதுதில்லியில் உள்ள தேசியப் போர் நினைவிடத்தில் பொறிக்கப்பட்டுள்ளன. ஏப்ரல் 2025-இல் ஜம்மு காஷ்மீரின் பகல்காமில் லஷ்கர் பயங்கரவாதிகள் நடத்திய தாக்குதலில் 26 பொதுமக்கள் கொல்லப்பட்டதற்குப் பதிலடியாக, மே 6-7, 2025 அன்று இந்த ராணுவ நடவடிக்கை மேற்கொள்ளப்பட்டது. இந்த நடவடிக்கையில் உயிரிழந்த வீரர்களின் பெயர்கள் ஓராண்டுக்குப் பின் தற்போதுதான் முதல்முறையாக அதிகாரப்பூர்வமாக அறிவிக்கப்பட்டுள்ளன.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Law & Order · NDPS Act</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Centre to Amend and Strengthen NDPS Act: Amit Shah at NCORD Meeting</span>
+                        <span class="lang-ta">போதைப்பொருள் தடுப்புச் சட்டத்தை (NDPS) வலுப்படுத்தத் திட்டம்: அமித் ஷா தகவல்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Addressing the 10th high-level meeting of the Narco Coordination Centre (NCORD) in New Delhi, Union Home Minister Amit Shah stated that the Centre plans to amend the NDPS (Narcotic Drugs and Psychotropic Substances) Act to close loopholes used by drug syndicates. He launched a 3-year vision document (2026-2029) centered around a "Detect, Prevent, Destroy" approach. He noted a massive increase in drug seizures: ₹1.84 lakh crore worth of drugs were seized between 2014-2026, compared to just ₹40,000 crore between 2004-2014.</p>
+                    <p class="lang-ta">புதுதில்லியில் நடைபெற்ற 10-வது போதைப்பொருள் தடுப்பு ஒருங்கிணைப்பு மைய (NCORD) கூட்டத்தில் பேசிய உள்துறை அமைச்சர் அமித் ஷா, போதைப்பொருள் கடத்தல் கும்பல் தப்பிக்கப் பயன்படுத்தும் ஓட்டைகளை அடைக்கும் வகையில் NDPS சட்டத்தில் திருத்தங்கள் கொண்டுவரப்படும் என்றார். கடத்தல்காரர்களுக்கு எதிராக "கண்டறிதல், தடுத்தல், அழித்தல்" என்ற மும்முனை அணுகுமுறையை உள்ளடக்கிய அடுத்த 3 ஆண்டுகளுக்கான (2026-2029) தொலைநோக்குத் திட்ட ஆவணத்தையும் அவர் வெளியிட்டார். 2014-2026 காலகட்டத்தில் ரூ.1.84 லட்சம் கோடி மதிப்பிலான போதைப்பொருட்கள் பறிமுதல் செய்யப்பட்டுள்ளதாக அவர் தெரிவித்தார் (2004-14 காலகட்டத்தில் இது ரூ.40,000 கோடியாக இருந்தது).</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Policy · Ease of Doing Business</span>
+                        <span class="badge bg-trap">TRAP</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Jan Vishwas Act: Imprisonment Replaced by Penalties for Minor Drug/Food Violations</span>
+                        <span class="lang-ta">மக்கள் நம்பிக்கை சட்டம்: உணவு, மருந்துகள் விதிமீறல்களுக்கான சிறைத் தண்டனை ரத்து</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In a move to boost ease of doing business under the 'Jan Vishwas Act', the Central Government has decriminalized several minor and technical violations under the Drugs and Cosmetics Act (1940) and the Food Safety and Standards Act (2006). Imprisonment terms for minor labelling flaws or faulty reporting have been replaced with administrative financial penalties. However, strict imprisonment continues for major offences that threaten public health, such as manufacturing adulterated cosmetics or fake drugs.</p>
+                    <p class="lang-ta">'மக்கள் நம்பிக்கை சட்டம்' (Jan Vishwas Act) அடிப்படையில், வணிகத்தை எளிதாக்கும் நோக்கில் மருந்துகள் மற்றும் அழகு சாதனப் பொருட்கள் சட்டம் (1940), உணவுப் பாதுகாப்புச் சட்டம் (2006) ஆகியவற்றின் கீழான பல சிறிய விதிமீறல்களுக்கான சிறைத் தண்டனையை மத்திய அரசு ரத்து செய்துள்ளது. லேபிள் குறைகள் அல்லது அறிக்கையளிப்பதில் உள்ள சிறு தவறுகளுக்கு இனி அபராதம் மட்டுமே விதிக்கப்படும். இருப்பினும், பொதுமக்களின் உடல்நலத்தைப் பாதிக்கும் கலப்பட அழகு சாதனப் பொருட்கள் அல்லது போலி மருந்துகள் தயாரிப்பு போன்ற பெரிய குற்றங்களுக்குக் கடுமையான சிறைத் தண்டனை தொடரும் எனத் தெரிவிக்கப்பட்டுள்ளது.</p>
+                </div>
+
+            </section>
+
+            <!-- INTERNATIONAL NEWS -->
+            <section id="international">
+                <h2>
+                    <span class="lang-en">International News</span>
+                    <span class="lang-ta">சர்வதேச செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Society · Legislation</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Sweden Bans Marriages Among Close Relatives/Cousins</span>
+                        <span class="lang-ta">ஸ்வீடனில் நெருங்கிய ரத்த உறவினர்களுக்கு இடையிலான திருமணங்களுக்குத் தடை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Sweden’s Parliament has unanimously passed a bill banning marriages between close blood relatives, particularly between first cousins, taking effect from July 1, 2026. The legislation aims to prevent genetic birth defects (which reportedly double in such unions) and combat honor-based oppression. After the law takes effect, Sweden will not recognize such marriages contracted abroad for the purpose of granting visas or citizenship.</p>
+                    <p class="lang-ta">நெருங்கிய ரத்த உறவினர்களுக்கு இடையிலான (அத்தை, மாமா பிள்ளைகள்) திருமணங்களைச் ஸ்வீடன் நாடாளுமன்றம் ஒருமனதாகத் தடை செய்துள்ளது. ஜூலை 1, 2026 முதல் அமலுக்கு வரும் இச்சட்டம், மரபணுக் குறைபாடுகள் (இத்தகைய திருமணங்களில் இருமடங்காக உள்ளதாகக் கூறப்படுகிறது) மற்றும் கௌரவப் பிரச்சினைகளைத் தடுக்கும் நோக்கில் கொண்டுவரப்பட்டுள்ளது. சட்டம் அமலுக்கு வந்தபின், விசா அல்லது குடியுரிமை வழங்குவதற்காக வெளிநாடுகளில் நடைபெற்ற இத்தகைய திருமணங்களை ஸ்வீடன் அரசு அங்கீகரிக்காது.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Geopolitics · Middle East</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Iran Reasserts Complete Control Over Strait of Hormuz</span>
+                        <span class="lang-ta">ஹோர்முஸ் ஜலசந்தியை நிர்வகிப்பதில் முழு உரிமை தமக்கே உண்டு: ஈரான் திட்டவட்டம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Despite the temporary peace agreement with the US, Iran has firmly reasserted its right to control and potentially levy transit fees on ships passing through the strategic Strait of Hormuz, consulting with Oman on the matter. The US and Gulf Cooperation Council (GCC) strongly objected, demanding free navigation without tolls. Concurrently, Iran's Revolutionary Guard (IRGC) intercepted three foreign ships attempting to use unauthorized routes in the strait.</p>
+                    <p class="lang-ta">அமெரிக்காவுடனான தற்காலிக அமைதி ஒப்பந்தம் ஒருபுறம் இருந்தாலும், முக்கியத்துவம் வாய்ந்த ஹோர்முஸ் ஜலசந்தியில் கப்பல் போக்குவரத்தைக் கட்டுப்படுத்தவும், சுங்கக் கட்டணம் வசூலிக்கவும் தமக்கு முழு உரிமை உள்ளதாக ஈரான் திட்டவட்டமாக அறிவித்துள்ளது; இதுகுறித்து ஓமனுடனும் ஆலோசனை நடத்தி வருகிறது. கட்டணமில்லா சுதந்திரமான போக்குவரத்து உறுதி செய்யப்பட வேண்டும் என அமெரிக்காவும் வளைகுடா நாடுகளின் கூட்டமைப்பும் (GCC) இதற்கு எதிர்ப்புத் தெரிவித்துள்ளன. இதற்கிடையே, அங்கீகாரமற்ற பாதைகளில் பயணிக்க முயன்ற 3 வெளிநாட்டுக் கப்பல்களை ஈரானின் புரட்சிகரப் பாதுகாப்புப் படை (IRGC) தடுத்து திருப்பி அனுப்பியது.</p>
+                </div>
+            </section>
+
+            <!-- ECONOMY & FINANCE -->
+            <section id="economy">
+                <h2>
+                    <span class="lang-en">Economy & Science</span>
+                    <span class="lang-ta">பொருளாதாரம் & அறிவியல்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Science & Tech · Nuclear Energy</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">World's First: IGCAR Kalpakkam Produces Hydrogen Using Nuclear Heat</span>
+                        <span class="lang-ta">உலகிலேயே முதல்முறை: கல்பாக்கம் அணு ஆராய்ச்சி மையத்தில் அணுசக்தி மூலம் ஹைட்ரஜன் உற்பத்தி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Indira Gandhi Centre for Atomic Research (IGCAR) in Kalpakkam, Tamil Nadu, has successfully established the world's first hydrogen production facility utilizing nuclear decay heat. The system uses a Copper-Chlorine thermochemical cycle powered by the Fast Breeder Test Reactor (FBTR). This pioneering zero-carbon technology demonstrates the potential for large-scale, sustainable hydrogen generation, marking a major milestone for India's clean energy goals.</p>
+                    <p class="lang-ta">தமிழ்நாடு, கல்பாக்கத்தில் உள்ள இந்திராகாந்தி அணு ஆராய்ச்சி மையம் (IGCAR), உலகிலேயே முதல்முறையாக அணு உலை வெப்பத்தைப் பயன்படுத்தி ஹைட்ரஜனை உற்பத்தி செய்யும் நிலையத்தை வெற்றிகரமாகத் தொடங்கியுள்ளது. அதிவேக சோதனை உலை (FBTR) மூலம் கிடைக்கும் வெப்பத்தைப் பயன்படுத்தி, தாமிரம்-குளோரின் வெப்ப வேதியியல் சுழற்சி அடிப்படையில் ஹைட்ரஜன் உற்பத்தி செய்யப்படுகிறது. கரியமில வாயு வெளியேற்றமில்லாத இந்த முன்னோடித் தொழில்நுட்பம், இந்தியாவின் தூய்மையான எரிசக்தி இலக்குகளில் ஒரு மாபெரும் மைல்கல்லாகும்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Science Hook:</strong> Traditional hydrogen production relies heavily on fossil fuels (Grey Hydrogen). Using nuclear energy (Pink/Purple Hydrogen) offers a massive, continuous, zero-emission alternative for the future hydrogen economy.</span><span class="lang-ta"><strong>அறிவியல் குறிப்பு:</strong> பாரம்பரிய ஹைட்ரஜன் உற்பத்தி பெரும்பாலும் புதைபடிவ எரிபொருட்களைச் (Grey Hydrogen) சார்ந்துள்ளது. அணுசக்தியைப் பயன்படுத்துவது (Pink/Purple Hydrogen) எதிர்கால ஹைட்ரஜன் பொருளாதாரத்திற்கு தொடர்ச்சியான, உமிழ்வு இல்லாத மாற்று வழியாகும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Divestment · IRFC</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Govt Raises ₹2,084 Crore by Selling 2% Stake in IRFC</span>
+                        <span class="lang-ta">ஐஆர்எஃப்சி (IRFC) நிறுவனத்தின் 2% பங்குகளை விற்றதன் மூலம் அரசுக்கு ரூ.2,084 கோடி வருவாய்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Central Government raised ₹2,084 crore by selling an additional 2% stake in the Indian Railway Finance Corporation (IRFC) via an Offer for Sale (OFS) with a 'Green Shoe' option. A total of 22.88 crore shares were sold at a floor price of ₹91. So far this fiscal, the government has generated ₹16,480 crore through divestment in 5 PSUs, with Coal India contributing the highest (₹5,542 crore).</p>
+                    <p class="lang-ta">இந்திய ரயில்வே நிதிக் கழகத்தின் (IRFC) 2 சதவீதப் பங்குகளை 'கிரீன் ஷூ' (Green Shoe) வாய்ப்பைப் பயன்படுத்தி விற்பனை செய்ததன் மூலம் மத்திய அரசு ரூ.2,084 கோடியைத் திரட்டியுள்ளது. ஒரு பங்கின் குறைந்தபட்ச விலை ரூ.91 என நிர்ணயிக்கப்பட்டு 22.88 கோடி பங்குகள் விற்கப்பட்டன. நடப்பு நிதியாண்டில் இதுவரை கோல் இந்தியா (அதிகபட்சமாக ரூ.5,542 கோடி) உள்ளிட்ட 5 பொதுத்துறை நிறுவனங்களின் பங்குகளை விற்றதன் மூலம் மத்திய அரசுக்கு மொத்தம் ரூ.16,480 கோடி வருவாய் கிடைத்துள்ளது.</p>
+                </div>
+
+            </section>
+            
+            <!-- SPORTS -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports</span>
+                    <span class="lang-ta">விளையாட்டு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Football · FIFA World Cup 2026</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">FIFA World Cup: Ecuador Stuns Germany 2-1; Enters Knockouts</span>
+                        <span class="lang-ta">உலகக் கோப்பை கால்பந்து: ஜெர்மனியை 2-1 என வீழ்த்தி ஈக்வடார் நாக் அவுட் சுற்றுக்கு முன்னேற்றம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In a massive upset at the FIFA World Cup, Ecuador defeated four-time champions Germany 2-1 to qualify for the knockout stage (Round of 32). This is the first time in 20 years (since 2006) that Ecuador has reached the knockouts. Germany took an early lead, but Ecuador's Nelson Angulo and Gonzalo Plata scored to secure the historic win. Following this victory, Ecuador's President Daniel Noboa declared a national holiday.</p>
+                    <p class="lang-ta">உலகக் கோப்பை கால்பந்துப் போட்டியில் 4 முறை சாம்பியனான ஜெர்மனியை 2-1 என்ற கோல் கணக்கில் வீழ்த்தி ஈக்வடார் அணி நாக் அவுட் (ரவுண்ட் ஆப் 32) சுற்றுக்கு முன்னேறியது. 20 ஆண்டுகளுக்குப் பிறகு (2006) ஈக்வடார் இந்தச் சுற்றுக்கு வந்துள்ளது. ஜெர்மனி ஆரம்பத்திலேயே முன்னிலை பெற்றாலும், ஈக்வடாரின் நெல்சன் அங்குலோ மற்றும் கொன்சாலோ பிளாட்டா கோல் அடித்து வரலாற்று வெற்றியைப் பதிவு செய்தனர். இந்த வெற்றியைக் கொண்டாடும் வகையில் ஈக்வடார் அதிபர் டேனியல் நோபா அந்நாட்டில் தேசிய விடுமுறை அறிவித்துள்ளார்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Cricket · T20I</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Ireland Registers Historic 34-Run Victory Against India in T20I</span>
+                        <span class="lang-ta">டி20 கிரிக்கெட்: இந்தியாவுக்கு எதிராக 34 ரன்கள் வித்தியாசத்தில் அயர்லாந்து வரலாற்று வெற்றி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In a shocking outcome in Belfast, Ireland defeated India by 34 runs in their first T20I match. Batting first, Ireland posted 182/9 in 20 overs, with captain Lorcan Tucker scoring 50. In response, India was bowled out for 148 in 18.5 overs (Abhishek Sharma 49). This marks Ireland's first-ever victory against India across all formats in international cricket, having lost 11 times previously.</p>
+                    <p class="lang-ta">பெல்பாஸ்டில் நடைபெற்ற முதல் டி20 ஆட்டத்தில் அயர்லாந்து அணி 34 ரன்கள் வித்தியாசத்தில் இந்தியாவை வீழ்த்தியது. முதலில் பேட் செய்த அயர்லாந்து 20 ஓவர்களில் 182/9 ரன்கள் எடுத்தது (கேப்டன் லோர்கன் டக்கர் 50). பின்னர் ஆடிய இந்தியா 18.5 ஓவர்களில் 148 ரன்களுக்கு அனைத்து விக்கெட்டுகளையும் இழந்தது (அபிஷேக் சர்மா 49). சர்வதேச கிரிக்கெட்டில் அனைத்து வடிவங்களிலும் சேர்த்து இந்தியாவுக்கு எதிராக அயர்லாந்து பெறும் முதல் வெற்றி இதுவாகும் (இதற்கு முன் 11 முறை தோல்வியடைந்துள்ளது).</p>
+                </div>
+
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Which Indian research center recently demonstrated the world's first hydrogen production utilizing nuclear decay heat via the Copper-Chlorine thermochemical cycle?</span>
+                        <span class="lang-ta">கேள்வி: தாமிரம்-குளோரின் வெப்ப வேதியியல் சுழற்சி மூலம் அணு உலை வெப்பத்தைப் பயன்படுத்தி உலகிலேயே முதல்முறையாக ஹைட்ரஜன் உற்பத்தியை வெற்றிகரமாகத் தொடங்கியுள்ள இந்திய ஆராய்ச்சி மையம் எது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Indira Gandhi Centre for Atomic Research (IGCAR), Kalpakkam</span><br><br>
+                                <strong>Context:</strong> IGCAR used its Fast Breeder Test Reactor (FBTR) to power this zero-carbon technology, a major step for the clean energy economy.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">இந்திராகாந்தி அணு ஆராய்ச்சி மையம் (IGCAR), கல்பாக்கம்</span><br><br>
+                                <strong>பின்னணி:</strong> எதிர்காலத் தூய்மையான எரிசக்திக்காக, தனது அதிவேக சோதனை உலை (FBTR) மூலம் இந்த கார்பன்-அற்ற தொழில்நுட்பத்தை IGCAR நிரூபித்துள்ளது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: 'Operation Amistad' was recently launched by the Indian Government to provide humanitarian and disaster relief to which earthquake-hit country?</span>
+                        <span class="lang-ta">கேள்வி: நிலநடுக்கத்தால் பாதிக்கப்பட்ட எந்த நாட்டுக்கு மனிதாபிமான மற்றும் பேரிடர் நிவாரண உதவிகளை வழங்க இந்திய அரசு சமீபத்தில் 'ஆபரேஷன் அமிஸ்டாட்' (Operation Amistad) நடவடிக்கையைத் தொடங்கியது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Venezuela</span><br><br>
+                                <strong>Context:</strong> India sent 35 tons of relief materials and a 41-member rescue team to Venezuela after earthquakes killed over 920 people.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">வெனிசுலா</span><br><br>
+                                <strong>பின்னணி:</strong> 920-க்கும் மேற்பட்டோரைப் பலிகொண்ட நிலநடுக்கங்களுக்குப் பிறகு, வெனிசுலாவுக்கு 35 டன் நிவாரணப் பொருட்கள் மற்றும் 41 பேர் கொண்ட மீட்புக் குழுவை இந்தியா அனுப்பியது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">IGCAR Hydrogen Tech</span><span class="lang-ta">IGCAR ஹைட்ரஜன் தொழில்நுட்பம்</span></td>
+                                <td><span class="lang-en">Science/Tech</span><span class="lang-ta">அறிவியல்/தொழில்நுட்பம்</span></td>
+                                <td><span class="lang-en">World's 1st nuclear-powered hydrogen generation.</span><span class="lang-ta">அணுசக்தி மூலம் ஹைட்ரஜன் (உலகில் முதல்முறை).</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">Operation Amistad</span><span class="lang-ta">ஆபரேஷன் அமிஸ்டாட்</span></td>
+                                <td><span class="lang-en">Intl/Disaster</span><span class="lang-ta">சர்வதேசம்/பேரிடர்</span></td>
+                                <td><span class="lang-en">India sends earthquake relief to Venezuela.</span><span class="lang-ta">வெனிசுலா நிலநடுக்கத்திற்கு இந்தியாவின் உதவி.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">TN Govt Health Insurance</span><span class="lang-ta">TN மருத்துவக் காப்பீடு</span></td>
+                                <td><span class="lang-en">State/Welfare</span><span class="lang-ta">மாநிலம்/நலத்திட்டம்</span></td>
+                                <td><span class="lang-en">Hiked to ₹7.5L - ₹12L for employees/pensioners.</span><span class="lang-ta">ரூ.7.5 லட்சம் முதல் 12 லட்சம் வரை உயர்வு.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">Sweden Marriages Ban</span><span class="lang-ta">ஸ்வீடன் திருமணத் தடை</span></td>
+                                <td><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></td>
+                                <td><span class="lang-en">Bans cousin/close relative marriages from 2026.</span><span class="lang-ta">நெருங்கிய ரத்த உறவினர்கள் திருமணத்துக்குத் தடை.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">Ecuador Beats Germany</span><span class="lang-ta">ஜெர்மனியை வீழ்த்திய ஈக்வடார்</span></td>
+                                <td><span class="lang-en">Sports/WC 2026</span><span class="lang-ta">விளையாட்டு/WC 2026</span></td>
+                                <td><span class="lang-en">Historic 2-1 win to reach round of 32.</span><span class="lang-ta">2-1 என வென்று நாக் அவுட் சுற்றுக்கு முன்னேற்றம்.</span></td>
+                                <td><span class="badge bg-tip">MED</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani Chennai 27-06-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி சென்னை 27-06-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source text detailed state, national, and international news for 27 June 2026. 
+State news covered CM Vijay leading a 15,000-strong marathon against drugs at Marina Beach and awarding medals to 15 police officers. The TN Govt hiked health insurance for govt staff and pensioners to Rs 7.5L. The Madurai HC refused to quash money laundering cases against PRP Granites. A Judicial Magistrate was ordered to clear surrogacy parent rights petitions within 4 weeks. Chennai Metro work caused traffic diversions in Adyar. Mettur Dam water inflow dipped to 193 cusecs. Egg prices in Namakkal hit a record Rs 6.50.
+National news: The names of 6 Operation Sindhu (2025 PoK strike) martyrs were inscribed at the National War Memorial. Operation Amistad saw India sending 35 tons of relief to quake-hit Venezuela via IAF. Amit Shah launched a 3-year vision document to strengthen the NDPS Act. CBSE exempted current 7th-9th graders from the 3-language policy. The Jan Vishwas Act replaced jail terms with fines for minor drug and food safety violations. Japan PM is scheduled to visit India.
+International news: Sweden passed a law to ban marriages between first cousins/close relatives starting July 2026. Iran reasserted control over the Strait of Hormuz despite US warnings. Venezuela's earthquake death toll exceeded 920. China expressed support for Bangladesh's sovereignty during PM Tarique Rahman's visit.
+Economy: IGCAR Kalpakkam achieved a world-first by producing hydrogen via a nuclear heat thermochemical cycle. The Govt raised Rs 2084 Cr via IRFC OFS. Tractor sales reached 2.28 lakh units by June. Vedanta paid Rs 62,722 Cr to the exchequer.
+Sports: Ecuador stunned Germany 2-1 in the FIFA World Cup to reach the knockouts. Ireland achieved its first-ever victory across all formats against India in a T20I match (won by 34 runs).]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூல உரைகள் 27 ஜூன் 2026 க்கான செய்திகளைக் கொண்டிருந்தன.
+மாநில செய்திகளில், மெரினாவில் 15,000 பேர் பங்கேற்ற போதை ஒழிப்பு மாரத்தானை முதல்வர் விஜய் வழிநடத்தினார்; 15 போலீசாருக்குப் பதக்கம் வழங்கினார். அரசு ஊழியர்களுக்கான மருத்துவக் காப்பீட்டை ரூ.7.5 லட்சமாக உயர்த்தி அரசாணை. PRP கிரானைட் மீதான வழக்குகளை ரத்து செய்ய உயர்நீதிமன்றம் மறுப்பு. வாடகைத் தாய் விவகாரத்தில் 4 வாரங்களில் முடிவெடுக்க மாஜிஸ்திரேட்டுகளுக்கு உத்தரவு. அடையாறில் மெட்ரோ பணிகளால் போக்குவரத்து மாற்றம். மேட்டூர் அணை நீர்வரத்து 193 கனஅடியாகச் சரிவு. நாமக்கல்லில் முட்டை விலை ரூ.6.50 ஆக உச்சம்.
+தேசிய அளவில்: ஆபரேஷன் சிந்து (2025 PoK தாக்குதல்) தியாகிகள் 6 பேரின் பெயர்கள் தேசியப் போர் நினைவிடத்தில் பொறிப்பு. ஆபரேஷன் அமிஸ்டாட் மூலம் வெனிசுலாவுக்கு 35 டன் நிவாரணப் பொருட்களை இந்தியா அனுப்பியது. NDPS சட்டத்தை வலுப்படுத்த 3 ஆண்டு தொலைநோக்குத் திட்டத்தை அமித் ஷா வெளியிட்டார். 7-9 ஆம் வகுப்பு மாணவர்களுக்கு 3 மொழி கொள்கையிலிருந்து CBSE விலக்கு. மக்கள் நம்பிக்கை சட்டத்தின் கீழ் சிறு உணவு/மருந்து விதிமீறல்களுக்குச் சிறைத்தண்டனை ரத்து. ஜப்பான் பிரதமர் இந்தியா வருகை.
+சர்வதேச அளவில்: நெருங்கிய உறவினர்கள் திருமணத்துக்கு ஸ்வீடன் தடை. ஹோர்முஸ் ஜலசந்தியில் ஈரானின் கட்டுப்பாடு தொடரும் என அறிவிப்பு. வெனிசுலா நிலநடுக்கத்தில் பலி 920-ஐத் தாண்டியது. வங்கதேசப் பிரதமர் தாரிக் ரஹ்மான் சீனப் பயணம்; 13 ஒப்பந்தங்கள் கையெழுத்து.
+பொருளாதாரம்: கல்பாக்கம் IGCAR அணுசக்தி மூலம் ஹைட்ரஜன் உற்பத்தியை வெற்றிகரமாகத் தொடங்கியது (உலகில் முதல்முறை). IRFC பங்குகள் விற்பனை மூலம் அரசுக்கு ரூ.2084 கோடி வருவாய். ஜூன் வரை 2.28 லட்சம் டிராக்டர்கள் விற்பனை. வேதாந்தா நிறுவனம் அரசுக்கு ரூ.62,722 கோடி வரி/பங்களிப்பு.
+விளையாட்டு: உலகக் கோப்பையில் ஜெர்மனியை 2-1 என அதிர்ச்சித் தோல்வியடையச் செய்து ஈக்வடார் நாக்-அவுட் சுற்றுக்கு முன்னேற்றம். டி20 போட்டியில் இந்தியாவை 34 ரன்கள் வித்தியாசத்தில் வீழ்த்தி அயர்லாந்து வரலாற்று வெற்றி.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 27 June 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+    </script>
+</body>
+</html>
