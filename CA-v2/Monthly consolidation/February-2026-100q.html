@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TNPSC Monthly Current Affairs Drill</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Andika:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Orbitron:wght@500&family=Syne:wght@400;600;700;800&display=swap');
+
+:root {
+  --bg:           #0d0f14;
+  --surface:      #13161e;
+  --surface2:     #1a1e2a;
+  --border:       #242836;
+  --gold:         #f5c842;
+  --gold-dim:     #c9a230;
+  --gold-glow:    rgba(245,200,66,0.08);
+  --text:         #e8e6df;
+  --muted:        #8a8a9a;
+  --accent-blue:  #5b8dee;
+  --accent-green: #4caf7d;
+  --accent-red:   #e05c5c;
+  --accent-purple:#9b72cf;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Andika', sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 80px; /* space for progress tracker */
+}
+
+h1, h2, h3, h4, .syne { font-family: 'Syne', sans-serif; }
+.mono { font-family: 'IBM Plex Mono', monospace; }
+
+/* 1. STICKY TOPBAR */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+}
+
+.topbar-left { display: flex; align-items: center; gap: 16px; }
+
+.tnpsc-badge {
+  background: var(--gold-glow);
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.topbar-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.topbar-date {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  color: var(--gold-dim);
+}
+
+/* 2. HERO SECTION */
+.hero {
+  padding: 64px 24px 32px;
+  position: relative;
+  overflow: hidden;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, var(--gold-glow) 0%, rgba(13,15,20,0) 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: 48px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 24px;
+  line-height: 1.2;
+}
+
+.tag-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--surface2);
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+
+.tag.gold-tag { color: var(--gold); border-color: rgba(245,200,66,0.3); }
+
+.nav-pills {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+}
+
+.nav-pill {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
+  background: transparent;
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-pill:hover, .nav-pill.active {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: var(--gold-glow);
+}
+
+/* 3. STATS BAR */
+.stats-bar {
+  max-width: 1100px;
+  margin: 0 auto 32px;
+  padding: 0 24px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.stat-pill {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 12px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 600; color: var(--gold); }
+.stat-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* 4. QUESTION GRID */
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.q-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--gold);
+  border-radius: 4px;
+  padding: 24px;
+  position: relative;
+}
+
+.card-header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.q-badge {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  color: var(--gold);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.tags-flex {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cat-pill {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cat-pill.Polity { color: var(--accent-purple); border-color: rgba(155, 114, 207, 0.3); }
+.cat-pill.Economy { color: var(--accent-blue); border-color: rgba(91, 141, 238, 0.3); }
+.cat-pill.Environment { color: var(--accent-green); border-color: rgba(76, 175, 125, 0.3); }
+.cat-pill.International { color: #3ec9a7; border-color: rgba(62, 201, 167, 0.3); }
+.cat-pill.Science { color: #f59e42; border-color: rgba(245, 158, 66, 0.3); }
+.cat-pill.TNAffairs { color: var(--gold); border-color: rgba(245, 200, 66, 0.3); }
+
+.diff-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.diff-dot.easy { background: var(--accent-green); box-shadow: 0 0 6px var(--accent-green); }
+.diff-dot.medium { background: var(--gold); box-shadow: 0 0 6px var(--gold); }
+.diff-dot.hard { background: var(--accent-red); box-shadow: 0 0 6px var(--accent-red); }
+
+/* MCQ STRUCTURE */
+.mcq-q {
+  font-family: 'Andika', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 12px;
+}
+
+.stmt-intro {
+  font-family: 'Andika', sans-serif;
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 12px;
+  font-style: italic;
+}
+
+ul.stmt-list { list-style: none; padding: 0; margin-bottom: 20px; }
+ul.stmt-list li {
+  font-family: 'Andika', sans-serif;
+  font-size: 14px;
+  margin-bottom: 8px;
+  display: flex;
+  gap: 12px;
+}
+ul.stmt-list li::before {
+  content: attr(data-n) '.';
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--gold);
+}
+
+ul.mcq-options { list-style: none; padding: 0; }
+ul.mcq-options li {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: var(--surface2);
+}
+
+ul.mcq-options li:hover { border-color: var(--gold); }
+ul.mcq-options li.selected { border-left: 3px solid var(--gold); background: var(--gold-glow); }
+ul.mcq-options li.correct { border-left: 3px solid var(--accent-green) !important; background: rgba(76, 175, 125, 0.1) !important; }
+ul.mcq-options li.incorrect { border-left: 3px solid var(--accent-red) !important; background: rgba(224, 92, 92, 0.1) !important; }
+
+.opt-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.opt-text { font-family: 'Andika', sans-serif; font-size: 14px; color: var(--text); }
+
+/* ACCORDION (JS Injected) */
+.reveal-btn {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: transparent;
+  border: 1.5px solid var(--gold);
+  border-radius: 20px;
+  padding: 6px 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: background 0.2s, border-color 0.2s;
+}
+.reveal-btn:hover { background: rgba(245,200,66,0.08); }
+.reveal-btn svg { transition: transform 0.3s ease; }
+
+.q-body {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, opacity 0.25s ease;
+  background: var(--surface2);
+  border-left: 3px solid var(--gold);
+  border-radius: 4px;
+  margin-top: 16px;
+}
+.q-body.open { padding: 14px 16px; }
+
+.mcq-answer {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--accent-green);
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.stmt-verdicts {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  margin-bottom: 12px;
+  line-height: 1.8;
+}
+.stmt-verdicts .correct { color: var(--accent-green); }
+.stmt-verdicts .incorrect { color: var(--accent-red); }
+
+.mcq-explain {
+  font-family: 'Andika', sans-serif;
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.8;
+}
+.mcq-explain p { margin-bottom: 10px; }
+.mcq-explain strong { color: #fff; }
+
+.examiner-tip {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  border-left: 2px solid var(--gold);
+  padding: 8px 12px;
+  background: var(--gold-glow);
+  color: var(--gold);
+  margin-top: 12px;
+}
+
+/* PROGRESS TRACKER */
+.progress-tracker {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--gold);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  z-index: 1000;
+}
+
+.pt-text {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+.pt-bar-track {
+  flex: 1;
+  height: 6px;
+  background: var(--bg);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.pt-bar-fill {
+  height: 100%;
+  background: var(--gold);
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+/* FOOTER */
+footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 64px;
+}
+
+.footer-text { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); }
+.footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--border); }
+
+@media (max-width: 680px) {
+  .hero h1 { font-size: 32px; }
+  .topbar-title { display: none; }
+  footer { flex-direction: column; gap: 12px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="topbar-left">
+    <div class="tnpsc-badge">TNPSC Group 1</div>
+    <div class="topbar-title">Monthly Current Affairs · 100 Questions Drill</div>
+  </div>
+  <div class="topbar-date">FEBRUARY 2026</div>
+</header>
+
+<section class="hero">
+  <h1>February 2026 Current Affairs Drill</h1>
+  <div class="tag-row">
+    <span class="tag gold-tag">50 Questions Extracted</span>
+    <span class="tag">Source: Shanju Current Affairs</span>
+    <span class="tag">Target: TNPSC/RRB/SSC</span>
+  </div>
+  <div class="nav-pills">
+    <button class="nav-pill active" data-filter="All">All</button>
+    <button class="nav-pill" data-filter="Polity">Polity</button>
+    <button class="nav-pill" data-filter="Economy">Economy</button>
+    <button class="nav-pill" data-filter="Science">Science</button>
+    <button class="nav-pill" data-filter="Environment">Environment</button>
+    <button class="nav-pill" data-filter="International">International</button>
+    <button class="nav-pill" data-filter="TNAffairs">TN Affairs</button>
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div class="stat-pill">
+    <span class="stat-val">50</span>
+    <span class="stat-label">Total Extracted</span>
+  </div>
+  <div class="stat-pill">
+    <span class="stat-val">12</span>
+    <span class="stat-label">Statement-Type</span>
+  </div>
+  <div class="stat-pill">
+    <span class="stat-val">38</span>
+    <span class="stat-label">Direct MCQ</span>
+  </div>
+  <div class="stat-pill">
+    <span class="stat-val">09</span>
+    <span class="stat-label">TN-Specific</span>
+  </div>
+</div>
+
+<main id="mcq-container">
+
+  <!-- Q1 -->
+  <div class="mcq-block q-card" data-category="Economy">
+    <div class="card-header-flex">
+      <div class="q-badge">Q.001</div>
+      <div class="tags-flex"><span class="diff-dot easy"></span><span class="cat-pill Economy">Economy</span></div>
+    </div>
+    <div class="mcq-q">Where is the National Ship Building and Heavy Industries Park established?</div>
+    <ul class="mcq-options">
+      <li data-opt="A"><span class="opt-label">A</span><span class="opt-text">Thoothukudi</span></li>
+      <li data-opt="B"><span class="opt-label">B</span><span class="opt-text">Mumbai</span></li>
+      <li data-opt="C"><span class="opt-label">C</span><span class="opt-text">Visakhapatnam</span></li>
+      <li data-opt="D"><span class="opt-label">D</span><span class="opt-text">Chennai</span></li>
+    </ul>
+    <div class="q-body">
+      <span class="mcq-answer" data-ans="A">✔ CORRECT ANSWER: A — Thoothukudi</span>
+      <div class="mcq-explain">
+        <p><strong>Why it's right:</strong> The National Ship Building and Heavy Industries Park is a major infrastructure initiative to boost maritime economics, historically centered around existing maritime hubs like Thoothukudi.</p>
+        <p><strong>Why others are wrong:</strong> While Mumbai and Visakhapatnam have major dockyards, this specific new park initiative was highlighted elsewhere.</p>
+        <div class="examiner-tip">Examiner's Tip: Always link maritime industrial parks to the Sagarmala Project objectives.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="mcq-block q-card" data-category="Environment">
+    <div class="card-header-flex">
+      <div class="q-badge">Q.002</div>
+      <div class="tags-flex"><span class="diff-dot medium"></span><span class="cat-pill Environment">Environment</span></div>
+    </div>
+    <div class="mcq-q">Which state recently emerged as India's top renewable energy state?</div>
+    <ul class="mcq-options">
+      <li data-opt="A"><span class="opt-label">A</span><span class="opt-text">Gujarat</span></li>
+      <li data-opt="B"><span class="opt-label">B</span><span class="opt-text">Rajasthan</span></li>
+      <li data-opt="C"><span class="opt-label">C</span><span class="opt-text">Tamil Nadu</span></li>
+      <li data-opt="D"><span class="opt-label">D</span><span class="opt-text">Karnataka</span></li>
+    </ul>
+    <div class="q-body">
+      <span class="mcq-answer" data-ans="C">✔ CORRECT ANSWER: C — Tamil Nadu</span>
+      <div class="mcq-explain">
+        <p><strong>Why it's right:</strong> Tamil Nadu has consistently expanded its solar capacity allowing it to surpass other states in total installed renewable capacity.</p>
+        <div class="examiner-tip">Examiner's Tip: Gujarat tops in wind-solar hybrid, but Rajasthan holds the highest overall capacity.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="stmt-mcq q-card" data-category="International">
+    <div class="card-header-flex">
+      <div class="q-badge">Q.003</div>
+      <div class="tags-flex"><span class="diff-dot hard"></span><span clas	s="cat-pill International">International</span></div>
+    </div>
+    <div class="mcq-q">Consider the following global digital policies:</div>
+    <div class="stmt-intro">Which of the following statements is/are correct regarding social media bans?</div>
+    <ul class="stmt-list">
+      <li data-n="1">The state of Florida (USA) recently moved to ban social media for children under 16 years.</li>
+      <li data-n="2">This move aims to mitigate severe mental health crises among teenagers.</li>
+    </ul>
+    <ul class="mcq-options">
+      <li data-opt="A"><span class="opt-label">A</span><span class="opt-text">1 only</span></li>
+      <li data-opt="B"><span class="opt-label">B</span><span class="opt-text">2 only</span></li>
+      <li data-opt="C"><span class="opt-label">C</span><span class="opt-text">Both 1 and 2</span></li>
+      <li data-opt="D"><span class="opt-label">D</span><span class="opt-text">Neither 1 nor 2</span></li>
+    </ul>
+    <div class="q-body">
+      <span class="mcq-answer" data-ans="C">✔ CORRECT ANSWER: C — Both 1 and 2</span>
+      <div class="stmt-verdicts">
+        Statement 1: <span class="correct">✓ Correct</span><br>
+        Statement 2: <span class="correct">✓ Correct</span>
+      </div>
+      <div class="mcq-explain">
+        <p><strong>Why it's right:</strong> Highlighted in the Feb 2026 current affairs, jurisdictions like Florida have passed stringent bills blocking social media access for minors under 16, citing psychological harms.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="mcq-block q-card" data-category="International">
+    <div class="card-header-flex">
+      <div class="q-badge">Q.004</div>
+      <div class="tags-flex"><span class="diff-dot easy"></span><span class="cat-pill International">International</span></div>
+    </div>
+    <div class="mcq-q">Where was the 'World Government Summit 2026' organized?</div>
+    <ul class="mcq-options">
+      <li data-opt="A"><span class="opt-label">A</span><span class="opt-text">New York</span></li>
+      <li data-opt="B"><span class="opt-label">B</span><span class="opt-text">Geneva</span></li>
+      <li data-opt="C"><span class="opt-label">C</span><span class="opt-text">Dubai</span></li>
+      <li data-opt="D"><span class="opt-label">D</span><span class="opt-text">New Delhi</span></li>
+    </ul>
+    <div class="q-body">
+      <span class="mcq-answer" data-ans="C">✔ CORRECT ANSWER: C — Dubai</span>
+      <div class="mcq-explain">
+        <p><strong>Why it's right:</strong> Dubai annually hosts the World Government Summit to explore futuristic governance, AI integration, and sustainable policies.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="mcq-block q-card" data-category="TNAffairs">
+    <div class="card-header-flex">
+      <div class="q-badge">Q.005</div>
+      <div class="tags-flex"><span class="diff-dot medium"></span><span class="cat-pill TNAffairs">TN Affairs</span></div>
+    </div>
+    <div class="mcq-q">Where was Tamil Nadu's first 'Glow Garden' inaugurated?</div>
+    <ul class="mcq-options">
+      <li data-opt="A"><span class="opt-label">A</span><span class="opt-text">Mahaballipuram</span></li>
+      <li data-opt="B"><span class="opt-label">B</span><span class="opt-text">Ooty</span></li>
+      <li data-opt="C"><span class="opt-label">C</span><span class="opt-text">Kodaikanal</span></li>
+      <li data-opt="D"><span class="opt-label">D</span><span class="opt-text">Madurai</span></li>
+    </ul>
+    <div class="q-body">
+      <span class="mcq-answer" data-ans="A">✔ CORRECT ANSWER: A — Mahaballipuram</span>
+      <div class="mcq-explain">
+        <p><strong>Why it's right:</strong> As a modern urban beautification and tourism initiative, Tamil Nadu's first LED-based Glow Garden was established in the state capital.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="mcq-block q-card" data-category="Environment">
+    <div class="card-header-flex">
+      <div class="q-badge">Q.006</div>
+      <div class="tags-flex"><span class="diff-dot medium"></span><span class="cat-pill Environment">Environment</span></div>
+    </div>
+    <div class="mcq-q">Which state became the second Indian state to formally publish a 'Bird Atlas'?</div>
+    <ul class="mcq-options">
+      <li data-opt="A"><span class="opt-label">A</span><span class="opt-text">Goa</span></li>
+      <li data-opt="B"><span class="opt-label">B</span><span class="opt-text">Tamil Nadu</span></li>
+      <li data-opt="C"><span class="opt-label">C</span><span class="opt-text">Maharashtra</span></li>
+      <li data-opt="D"><span class="opt-label">D</span><span class="opt-text">Uttarakhand</span></li>
+    </ul>
+    <div class="q-body">
+      <span class="mcq-answer" data-ans="A">✔ CORRECT ANSWER: A — Goa</span>
+      <div class="mcq-explain">
+        <p><strong>Why it's right:</strong> Following Goa (which published the first Bird Atlas in India), Tamil Nadu has now become the second state to map its avian biodiversity systematically.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="mcq-block q-card" data-category="Polity">
+    <div class="card-header-flex">
+      <div class="q-badge">Q.007</div>
+      <div class="tags-flex"><span class="diff-dot hard"></span><span class="cat-pill Polity">Polity</span></div>
+    </div>
+    <div class="mcq-q">Which Article of the Indian Constitution primarily deals with the removal of the Speaker of the Lok Sabha?</div>
+    <ul class="mcq-options">
+      <li data-opt="A"><span class="opt-label">A</span><span class="opt-text">Article 94(a)</span></li>
+      <li data-opt="B"><span class="opt-label">B</span><span class="opt-text">Article 94(b)</span></li>
+      <li data-opt="C"><span class="opt-label">C</span><span class="opt-text">Article 94(c)</span></li>
+      <li data-opt="D"><span class="opt-label">D</span><span class="opt-text">Article 94(d)</span></li>
+    </ul>
+    <div class="q-body">
+      <span class="mcq-answer" data-ans="C">✔ CORRECT ANSWER: C — Article 94(C)</span>
+      <div class="mcq-explain">
+        <p><strong>Why it's right:</strong> Article 94 explicitly lays down the conditions for vacation, resignation, and removal from the offices of the Speaker and Deputy Speaker. adn 94(C) Both officials can be removed from their positions by a resolution passed in the Lok Sabha by an "effective majority" (a majority of all then-members of the House). This requires a 14-day advance notice.</p>
+        <div class="examiner-tip">Examiner's Tip: Remember that removal requires a resolution passed by a majority of all the then members of the House (effective majority), with a 14-day advance notice.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="mcq-block q-card" data-category="Infrastructure">
+    <div class="card-header-flex">
+      <div class="q-badge">Q.008</div>
+      <div class="tags-flex"><span class="diff-dot easy"></span><span class="cat-pill Economy">Economy</span></div>
+    </div>
+    <div class="mcq-q">Where was India's first 'Musical Road' inaugurated?</div>
+    <ul class="mcq-options">
+      <li data-opt="A"><span class="opt-label">A</span><span class="opt-text">Bengaluru</span></li>
+      <li data-opt="B"><span class="opt-label">B</span><span class="opt-text">Mumbai</span></li>
+      <li data-opt="C"><span class="opt-label">C</span><span class="opt-text">Chennai</span></li>
+      <li data-opt="D"><span class="opt-label">D</span><span class="opt-text">Ahmedabad</span></li>
+    </ul>
+    <div class="q-body">
+      <span class="mcq-answer" data-ans="B">✔ CORRECT ANSWER: B — Mumbai</span>
+      <div class="mcq-explain">
+        <p><strong>Why it's right:</strong> As explicitly mentioned in the lecture notes, India's first musical road—which plays a tune when vehicles drive over it at a specific speed—was inaugurated in Mumbai to curb overspeeding.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="mcq-block q-card" data-category="International">
+    <div class="card-header-flex">
+      <div class="q-badge">Q.009</div>
+      <div class="tags-flex"><span class="diff-dot medium"></span><span class="cat-pill International">International</span></div>
+    </div>
+    <div class="mcq-q">Which country was severely affected by 'Cyclone Gazani' (or Gombe/Gamane related storm traces)?</div>
+    <ul class="mcq-options">
+      <li data-opt="A"><span class="opt-label">A</span><span class="opt-text">Madagascar</span></li>
+      <li data-opt="B"><span class="opt-label">B</span><span class="opt-text">Philippines</span></li>
+      <li data-opt="C"><span class="opt-label">C</span><span class="opt-text">Japan</span></li>
+      <li data-opt="D"><span class="opt-label">D</span><span class="opt-text">Oman</span></li>
+    </ul>
+    <div class="q-body">
+      <span class="mcq-answer" data-ans="A">✔ CORRECT ANSWER: A — Madagascar</span>
+      <div class="mcq-explain">
+        <p><strong>Why it's right:</strong> Madagascar in the Indian Ocean frequently faces severe tropical cyclones during this season, causing massive structural damage.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="stmt-mcq q-card" data-category="Economy">
+    <div class="card-header-flex">
+      <div class="q-badge">Q.010</div>
+      <div class="tags-flex"><span class="diff-dot medium"></span><span class="cat-pill Economy">Economy</span></div>
+    </div>
+    <div class="mcq-q">Regarding industrial employment in India:</div>
+    <div class="stmt-intro">Which state consistently tops in generating employment in the manufacturing sector?</div>
+    <ul class="stmt-list">
+      <li data-n="1">Tamil Nadu holds the highest number of factories and employment in manufacturing.</li>
+      <li data-n="2">Gujarat ranks first in overall manufacturing output by value.</li>
+    </ul>
+    <ul class="mcq-options">
+      <li data-opt="A"><span class="opt-label">A</span><span class="opt-text">1 only</span></li>
+      <li data-opt="B"><span class="opt-label">B</span><span class="opt-text">2 only</span></li>
+      <li data-opt="C"><span class="opt-label">C</span><span class="opt-text">Both 1 and 2</span></li>
+      <li data-opt="D"><span class="opt-label">D</span><span class="opt-text">Neither 1 nor 2</span></li>
+    </ul>
+    <div class="q-body">
+      <span class="mcq-answer" data-ans="C">✔ CORRECT ANSWER: C — Both 1 and 2</span>
+      <div class="stmt-verdicts">
+        Statement 1: <span class="correct">✓ Correct</span><br>
+        Statement 2: <span class="correct">✓ Correct</span>
+      </div>
+      <div class="mcq-explain">
+        <p><strong>Why it's right:</strong> As per RBI and ASI data, Tamil Nadu excels in sheer volume of factories and labor employment, while Gujarat leads in gross value added (capital-intensive output).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="mcq-block q-card" data-category="Polity">
+    <div class="card-header-flex">
+      <div class="q-badge">Q.011</div>
+      <div class="tags-flex"><span class="diff-dot easy"></span><span class="cat-pill Polity">Polity</span></div>
+    </div>
+    <div class="mcq-q">Which is the first state in India to formally draft and approve a comprehensive Urban Policy?</div>
+    <ul class="mcq-options">
+      <li data-opt="A"><span class="opt-label">A</span><span class="opt-text">Kerala</span></li>
+      <li data-opt="B"><span class="opt-label">B</span><span class="opt-text">Tamil Nadu</span></li>
+      <li data-opt="C"><span class="opt-label">C</span><span class="opt-text">Maharashtra</span></li>
+      <li data-opt="D"><span class="opt-label">D</span><span class="opt-text">Gujarat</span></li>
+    </ul>
+    <div class="q-body">
+      <span class="mcq-answer" data-ans="A">✔ CORRECT ANSWER: A — Kerala</span>
+      <div class="mcq-explain">
+        <p><strong>Why it's right:</strong> Kerala leads the nation in decentralized planning and recently formulated a comprehensive state-level Urban Policy to manage rapid urbanization.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="mcq-block q-card" data-category="Environment">
+    <div class="card-header-flex">
+      <div class="q-badge">Q.012</div>
+      <div class="tags-flex"><span class="diff-dot hard"></span><span class="cat-pill Environment">Environment</span></div>
+    </div>
+    <div class="mcq-q">Which coastal state recently declared 'Tidal Flooding' as a State-Specific Disaster to allocate rapid relief funds?</div>
+    <ul class="mcq-options">
+      <li data-opt="A"><span class="opt-label">A</span><span class="opt-text">Odisha</span></li>
+      <li data-opt="B"><span class="opt-label">B</span><span class="opt-text">West Bengal</span></li>
+      <li data-opt="C"><span class="opt-label">C</span><span class="opt-text">Kerala</span></li>
+      <li data-opt="D"><span class="opt-label">D</span><span class="opt-text">Tamil Nadu</span></li>
+    </ul>
+    <div class="q-body">
+      <span class="mcq-answer" data-ans="C">✔ CORRECT ANSWER: C — Kerala</span>
+      <div class="mcq-explain">
+        <p><strong>Why it's right:</strong> Coastal areas of Kerala have experienced intense sea incursions and tidal flooding due to climate change, prompting the state to classify it as a specific disaster under the SDRF rules.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="mcq-block q-card" data-category="TNAffairs">
+    <div class="card-header-flex">
+      <div class="q-badge">Q.013</div>
+      <div class="tags-flex"><span class="diff-dot medium"></span><span class="cat-pill TNAffairs">TN Affairs</span></div>
+    </div>
+    <div class="mcq-q">What is the name of India's first indigenous training ship launched recently at Chennai?</div>
+    <ul class="mcq-options">
+      <li data-opt="A"><span class="opt-label">A</span><span class="opt-text">INS Vikrant</span></li>
+      <li data-opt="B"><span class="opt-label">B</span><span class="opt-text">INS Vajra</span></li>
+      <li data-opt="C"><span class="opt-label">C</span><span class="opt-text">INS Krishna</span></li>
+      <li data-opt="D"><span class="opt-label">D</span><span class="opt-text">INS Vagir</span></li>
+    </ul>
+    <div class="q-body">
+      <span class="mcq-answer" data-ans="C">✔ CORRECT ANSWER: C — INS Krishna</span>
+      <div class="mcq-explain">
+        <p><strong>Why it's right:</strong>INS Krishna is the first of three indigenously built Cadet Training Ships (CTS) for the Indian Navy, launched at the L&T Shipyard in Kattupalli, Chennai. Serving as a "floating classroom," it provides hands-on sea training in navigation and seamanship for officer cadets.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="stmt-mcq q-card" data-category="International">
+    <div class="card-header-flex">
+      <div class="q-badge">Q.014</div>
+      <div class="tags-flex"><span class="diff-dot easy"></span><span class="cat-pill International">International</span></div>
+    </div>
+    <div class="mcq-q">Consider the following global observances in February:</div>
+    <div class="stmt-intro">Which of the pairings are correctly matched?</div>
+    <ul class="stmt-list">
+      <li data-n="1">World Day of Social Justice — February 20</li>
+      <li data-n="2">International Mother Language Day — February 21</li>
+      <li data-n="3">National Science Day — February 28</li>
+    </ul>
+    <ul class="mcq-options">
+      <li data-opt="A"><span class="opt-label">A</span><span class="opt-text">1 and 2 only</span></li>
+      <li data-opt="B"><span class="opt-label">B</span><span class="opt-text">2 and 3 only</span></li>
+      <li data-opt="C"><span class="opt-label">C</span><span class="opt-text">1 and 3 only</span></li>
+      <li data-opt="D"><span class="opt-label">D</span><span class="opt-text">1, 2, and 3</span></li>
+    </ul>
+    <div class="q-body">
+      <span class="mcq-answer" data-ans="D">✔ CORRECT ANSWER: D — 1, 2, and 3</span>
+      <div class="stmt-verdicts">
+        Statement 1: <span class="correct">✓ Correct</span><br>
+        Statement 2: <span class="correct">✓ Correct</span><br>
+        Statement 3: <span class="correct">✓ Correct</span>
+      </div>
+      <div class="mcq-explain">
+        <p><strong>Why it's right:</strong> All three are major observances highlighted in the February current affairs. National Science Day commemorates the discovery of the Raman Effect.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="mcq-block q-card" data-category="International">
+    <div class="card-header-flex">
+      <div class="q-badge">Q.015</div>
+      <div class="tags-flex"><span class="diff-dot medium"></span><span class="cat-pill International">International</span></div>
+    </div>
+    <div class="mcq-q">Which nation's team topped the medal tally at the Winter Youth Olympic Games / Winter Games recently held?</div>
+    <ul class="mcq-options">
+      <li data-opt="A"><span class="opt-label">A</span><span class="opt-text">Norway</span></li>
+      <li data-opt="B"><span class="opt-label">B</span><span class="opt-text">USA</span></li>
+      <li data-opt="C"><span class="opt-label">C</span><span class="opt-text">Germany</span></li>
+      <li data-opt="D"><span class="opt-label">D</span><span class="opt-text">Italy</span></li>
+    </ul>
+    <div class="q-body">
+      <span class="mcq-answer" data-ans="A">✔ CORRECT ANSWER: A — Norway</span>
+      <div class="mcq-explain">
+        <p><strong>Why it's right:</strong> Norway is historically dominant in Winter Olympic events and continued its streak at the top of the medal standings.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="mcq-block q-card" data-category="Polity">
+    <div class="card-header-flex">
+      <div class="q-badge">Q.016</div>
+      <div class="tags-flex"><span class="diff-dot easy"></span><span class="cat-pill Polity">Polity</span></div>
+    </div>
+    <div class="mcq-q">In which year was the Bonded Labor System (Abolition) Act passed by the Indian Parliament?</div>
+    <ul class="mcq-options">
+      <li data-opt="A"><span class="opt-label">A</span><span class="opt-text">1971</span></li>
+      <li data-opt="B"><span class="opt-label">B</span><span class="opt-text">1976</span></li>
+      <li data-opt="C"><span class="opt-label">C</span><span class="opt-text">1986</span></li>
+      <li data-opt="D"><span class="opt-label">D</span><span class="opt-text">1992</span></li>
+    </ul>
+    <div class="q-body">
+      <span class="mcq-answer" data-ans="B">✔ CORRECT ANSWER: B — 1976</span>
+      <div class="mcq-explain">
+        <p><strong>Why it's right:</strong> The Bonded Labour System (Abolition) Act was enacted in 1976 to prevent economic and physical exploitation of the weaker sections of the people.</p>
+        <div class="examiner-tip">Examiner's Tip: This Act gives effect to Article 23 of the Constitution which prohibits traffic in human beings and forced labor.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="mcq-block q-card" data-category="Polity">
+    <div class="card-header-flex">
+      <div class="q-badge">Q.017</div>
+      <div class="tags-flex"><span class="diff-dot easy"></span><span class="cat-pill Polity">Polity</span></div>
+    </div>
+    <div class="mcq-q">The Legislative Assembly of a southern Indian state recently passed a resolution to officially change the name of the state. What is the proposed new name?</div>
+    <ul class="mcq-options">
+      <li data-opt="A"><span class="opt-label">A</span><span class="opt-text">Keralam</span></li>
+      <li data-opt="B"><span class="opt-label">B</span><span class="opt-text">Mysuru</span></li>
+      <li data-opt="C"><span class="opt-label">C</span><span class="opt-text">Thamizhagam</span></li>
+      <li data-opt="D"><span class="opt-label">D</span><span class="opt-text">Telangana Rashtra</span></li>
+    </ul>
+    <div class="q-body">
+      <span class="mcq-answer" data-ans="A">✔ CORRECT ANSWER: A — Keralam</span>
+      <div class="mcq-explain">
+        <p><strong>Why it's right:</strong> The Kerala Assembly unanimously passed a resolution urging the Center to rename the state as 'Keralam' in the Constitution.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="mcq-block q-card" data-category="International">
+    <div class="card-header-flex">
+      <div class="q-badge">Q.018</div>
+      <div class="tags-flex"><span class="diff-dot medium"></span><span class="cat-pill International">International</span></div>
+    </div>
+    <div class="mcq-q">The joint military exercise "Dharma Guardian" is conducted between India and which country?</div>
+    <ul class="mcq-options">
+      <li data-opt="A"><span class="opt-label">A</span><span class="opt-text">USA</span></li>
+      <li data-opt="B"><span class="opt-label">B</span><span class="opt-text">France</span></li>
+      <li data-opt="C"><span class="opt-label">C</span><span class="opt-text">Japan</span></li>
+      <li data-opt="D"><span class="opt-label">D</span><span class="opt-text">Australia</span></li>
+    </ul>
+    <div class="q-body">
+      <span class="mcq-answer" data-ans="C">✔ CORRECT ANSWER: C — Japan</span>
+      <div class="mcq-explain">
+        <p><strong>Why it's right:</strong> Dharma Guardian is an annual joint military exercise conducted between the Indian Army and the Japan Ground Self-Defense Force.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="stmt-mcq q-card" data-category="Science">
+    <div class="card-header-flex">
+      <div class="q-badge">Q.019</div>
+      <div class="tags-flex"><span class="diff-dot hard"></span><span class="cat-pill Science">Science</span></div>
+    </div>
+    <div class="mcq-q">Consider the following regarding India's AI integration:</div>
+    <div class="stmt-intro">Which of the following summits was hosted recently to discuss the ecosystem?</div>
+    <ul class="stmt-list">
+      <li data-n="1">The India AI Impact Summit was organized to establish ethical AI frameworks.</li>
+      <li data-n="2">It focuses purely on defense-grade artificial intelligence.</li>
+    </ul>
+    <ul class="mcq-options">
+      <li data-opt="A"><span class="opt-label">A</span><span class="opt-text">1 only</span></li>
+      <li data-opt="B"><span class="opt-label">B</span><span class="opt-text">2 only</span></li>
+      <li data-opt="C"><span class="opt-label">C</span><span class="opt-text">Both 1 and 2</span></li>
+      <li data-opt="D"><span class="opt-label">D</span><span class="opt-text">Neither 1 nor 2</span></li>
+    </ul>
+    <div class="q-body">
+      <span class="mcq-answer" data-ans="A">✔ CORRECT ANSWER: A — 1 only</span>
+      <div class="stmt-verdicts">
+        Statement 1: <span class="correct">✓ Correct</span><br>
+        Statement 2: <span class="incorrect">✗ Incorrect</span>
+      </div>
+      <div class="mcq-explain">
+        <p><strong>Why it's right:</strong> The AI Impact Summit covers broad civil, healthcare, and governance applications, not just defense.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="mcq-block q-card" data-category="International">
+    <div class="card-header-flex">
+      <div class="q-badge">Q.020</div>
+      <div class="tags-flex"><span class="diff-dot medium"></span><span class="cat-pill International">International</span></div>
+    </div>
+    <div class="mcq-q">Who was recently named the "Global Champion for Road Safety" by the United Nations?</div>
+    <ul class="mcq-options">
+      <li data-opt="A"><span class="opt-label">A</span><span class="opt-text">Virat Kholi</span></li>
+      <li data-opt="B"><span class="opt-label">B</span><span class="opt-text">Rohit Sharma</span></li>
+      <li data-opt="C"><span class="opt-label">C</span><span class="opt-text">Sachin Tendulkar</span></li>
+      <li data-opt="D"><span class="opt-label">D</span><span class="opt-text">Dhoni</span></li>
+    </ul>
+    <div class="q-body">
+      <span class="mcq-answer" data-ans="C">✔ CORRECT ANSWER: C — Sachin Tendulkar</span>
+      <div class="mcq-explain">
+        <p><strong>Why it's right:</strong> He joined a select group of international figures and Olympic champions to advocate for the UN's global road safety initiatives.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q21 -->
+  <div class="mcq-block q-card" data-category="Science">
+    <div class="card-header-flex">
+      <div class="q-badge">Q.021</div>
+      <div class="tags-flex"><span class="diff-dot easy"></span><span class="cat-pill Science">Science</span></div>
+    </div>
+    <div class="mcq-q">The 'World Ocean Science Congress 2026' focuses heavily on which phenomenon?</div>
+    <ul class="mcq-options">
+      <li data-opt="A"><span class="opt-label">A</span><span class="opt-text">Deep Sea Mining</span></li>
+      <li data-opt="B"><span class="opt-label">B</span><span class="opt-text">Blue Economy and Climate Mitigation</span></li>
+      <li data-opt="C"><span class="opt-label">C</span><span class="opt-text">Naval Warfare</span></li>
+      <li data-opt="D"><span class="opt-label">D</span><span class="opt-text">Piracy Eradication</span></li>
+    </ul>
+    <div class="q-body">
+      <span class="mcq-answer" data-ans="B">✔ CORRECT ANSWER: B — Blue Economy and Climate Mitigation</span>
+      <div class="mcq-explain">
+        <p><strong>Why it's right:</strong> Ocean Science Congresses primarily focus on sustainable utilization of ocean resources (Blue Economy) and measuring climate change impacts.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q22 -->
+  <div class="mcq-block q-card" data-category="Economy">
+    <div class="card-header-flex">
+      <div class="q-badge">Q.022</div>
+      <div class="tags-flex"><span class="diff-dot hard"></span><span class="cat-pill Economy">Economy</span></div>
+    </div>
+    <div class="mcq-q">Which is the first district in India to achieve 100% insurance coverage under government schemes?</div>
+    <ul class="mcq-options">
+      <li data-opt="A"><span class="opt-label">A</span><span class="opt-text">Alwar</span></li>
+      <li data-opt="B"><span class="opt-label">B</span><span class="opt-text">Balod</span></li>
+      <li data-opt="C"><span class="opt-label">C</span><span class="opt-text">Diu</span></li>
+      <li data-opt="D"><span class="opt-label">D</span><span class="opt-text">Keyi Panyor</span></li>
+    </ul>
+    <div class="q-body">
+      <span class="mcq-answer" data-ans="A">✔ CORRECT ANSWER: A — Alwar in Rajasthan</span>
+      <div class="mcq-explain">
+        <p><strong>Why it's right:</strong>The first district in India to achieve 100% insurance coverage under the government-aligned "Insurance for All by 2047" roadmap.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q23 -->
+  <div class="mcq-block q-card" data-category="Science">
+    <div class="card-header-flex">
+      <div class="q-badge">Q.023</div>
+      <div class="tags-flex"><span class="diff-dot medium"></span><span class="cat-pill Science">Science</span></div>
+    </div>
+    <div class="mcq-q">Which is the first port in India to deploy an anti-drone system for enhanced security?</div>
+    <ul class="mcq-options">
+      <li data-opt="A"><span class="opt-label">A</span><span class="opt-text">Jawaharlal Nehru Port Trust (JNPT)</span></li>
+      <li data-opt="B"><span class="opt-label">B</span><span class="opt-text">V.O. Chidambaranar (VOC) Port-Thoothukudi</span></li>
+      <li data-opt="C"><span class="opt-label">C</span><span class="opt-text">Chennai Port</span></li>
+      <li data-opt="D"><span class="opt-label">D</span><span class="opt-text">Paradip Port</span></li>
+    </ul>
+    <div class="q-body">
+      <span class="mcq-answer" data-ans="B">✔ CORRECT ANSWER: B — V.O. Chidambaranar (VOC) Port-Thoothukudi</span>
+      <div class="mcq-explain">
+        <p><strong>Why it's right:</strong><ul><li><strong>Technologies:</strong> Integrates radar and Radio Frequency (RF) technologies for 360-degree coverage.</li>
+		<li><strong>Range:</strong> Capable of real-time detection, tracking, and neutralizing unauthorized drones up to 5 km away.</li>
+<li><strong>Components:</strong> Includes a drone detector, detection radar, and man-pack jammers.</li><li><strong>Implementation:</strong> Deployed in partnership with the state-owned Central Electronics Limited (CEL)</li><ul></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q24 -->
+  <div class="stmt-mcq q-card" data-category="TNAffairs">
+    <div class="card-header-flex">
+      <div class="q-badge">Q.024</div>
+      <div class="tags-flex"><span class="diff-dot medium"></span><span class="cat-pill TNAffairs">TN Affairs</span></div>
+    </div>
+    <div class="mcq-q">Consider the following recent archaeological discoveries:</div>
+    <div class="stmt-intro">Where was a notable 2000-year-old inscription recently discovered?</div>
+    <ul class="stmt-list">
+      <li data-n="1">Recent excavations in Tamil Nadu consistently yield ancient Tamil-Brahmi inscriptions.</li>
+      <li data-n="2">Keezhadi is known for an inscription dating back precisely 2000 years relating to trade.</li>
+    </ul>
+    <ul class="mcq-options">
+      <li data-opt="A"><span class="opt-label">A</span><span class="opt-text">1 only</span></li>
+      <li data-opt="B"><span class="opt-label">B</span><span class="opt-text">2 only</span></li>
+      <li data-opt="C"><span class="opt-label">C</span><span class="opt-text">Both 1 and 2</span></li>
+      <li data-opt="D"><span class="opt-label">D</span><span class="opt-text">Neither 1 nor 2</span></li>
+    </ul>
+    <div class="q-body">
+      <span class="mcq-answer" data-ans="A">✔ CORRECT ANSWER: A — 1 only</span>
+      <div class="stmt-verdicts">
+        Statement 1: <span class="correct">✓ Correct</span><br>
+        Statement 2: <span class="incorrect">✗ Incorrect</span>
+      </div>
+      <div class="mcq-explain">
+        <p><strong>Why it's right:</strong> The Vaigai river civilization excavations (like Keezhadi) yield massive evidence of urban settlement. However, the specific "2000-year-old inscription" noted in February news refers to general findings across multiple TN sites, reaffirming Sangam era trade.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q25 -->
+  <div class="mcq-block q-card" data-category="Economy">
+    <div class="card-header-flex">
+      <div class="q-badge">Q.025</div>
+      <div class="tags-flex"><span class="diff-dot medium"></span><span class="cat-pill Economy">Economy</span></div>
+    </div>
+    <div class="mcq-q">Which district was selected as the pilot district under the 'World's Largest Grain Storage Plan' in the cooperative sector?</div>
+    <ul class="mcq-options">
+      <li data-opt="A"><span class="opt-label">A</span><span class="opt-text">Salem</span></li>
+      <li data-opt="B"><span class="opt-label">B</span><span class="opt-text">Alwar</span></li>
+      <li data-opt="C"><span class="opt-label">C</span><span class="opt-text">Balod</span></li>
+      <li data-opt="D"><span class="opt-label">D</span><span class="opt-text">Balaghat</span></li>
+    </ul>
+    <div class="q-body">
+      <span class="mcq-answer" data-ans="D">✔ CORRECT ANSWER: D — Balaghat district in Madhya Pradesh</span>
+      <div class="mcq-explain">
+        <p><strong>Why it's right:</strong> As part of the pilot project, a modern 500-metric-ton capacity godown was constructed at the Primary Agricultural Credit Society (PACS) in Parswada. To ensure steady revenue for the cooperative society, the godown was hired by the Madhya Pradesh Warehousing and Logistics Corporation (MPWLC)</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q26 -->
+  <div class="mcq-block q-card" data-category="International">
+    <div class="card-header-flex">
+      <div class="q-badge">Q.026</div>
+      <div class="tags-flex"><span class="diff-dot easy"></span><span class="cat-pill International">International</span></div>
+    </div>
+    <div class="mcq-q">Who won the FIDE 'Freestyle Chess Title' recently featured in sports news?</div>
+    <ul class="mcq-options">
+      <li data-opt="A"><span class="opt-label">A</span><span class="opt-text">Magnus Carlsen</span></li>
+      <li data-opt="B"><span class="opt-label">B</span><span class="opt-text">Ding Liren</span></li>
+      <li data-opt="C"><span class="opt-label">C</span><span class="opt-text">R Praggnanandhaa</span></li>
+      <li data-opt="D"><span class="opt-label">D</span><span class="opt-text">Hikaru Nakamura</span></li>
+    </ul>
+    <div class="q-body">
+      <span class="mcq-answer" data-ans="A">✔ CORRECT ANSWER: A — Magnus Carlsen</span>
+      <div class="mcq-explain">
+        <p><strong>Why it's right:</strong> Magnus Carlsen won the inaugural Freestyle Chess G.O.A.T. Challenge (also known as Fischer Random Chess), defeating Fabiano Caruana.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q27 -->
+  <div class="mcq-block q-card" data-category="International">
+    <div class="card-header-flex">
+      <div class="q-badge">Q.027</div>
+      <div class="tags-flex"><span class="diff-dot medium"></span><span class="cat-pill International">International</span></div>
+    </div>
+    <div class="mcq-q">Who is the author of the book "Four Stars of Destiny"?</div>
+    <ul class="mcq-options">
+      <li data-opt="A"><span class="opt-label">A</span><span class="opt-text">Gen. M.M. Naravane</span></li>
+      <li data-opt="B"><span class="opt-label">B</span><span class="opt-text">Gen. Bipin Rawat</span></li>
+      <li data-opt="C"><span class="opt-label">C</span><span class="opt-text">Shivshankar Menon</span></li>
+      <li data-opt="D"><span class="opt-label">D</span><span class="opt-text">S. Jaishankar</span></li>
+    </ul>
+    <div class="q-body">
+      <span class="mcq-answer" data-ans="A">✔ CORRECT ANSWER: A — Gen. M.M. Naravane</span>
+      <div class="mcq-explain">
+        <p><strong>Why it's right:</strong> "Four Stars of Destiny" is the highly anticipated autobiography of former Chief of Army Staff, General M.M. Naravane, detailing key events like the Galwan clash.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q28 -->
+  <div class="mcq-block q-card" data-category="Polity">
+    <div class="card-header-flex">
+      <div class="q-badge">Q.028</div>
+      <div class="tags-flex"><span class="diff-dot medium"></span><span class="cat-pill Polity">Polity</span></div>
+    </div>
+    <div class="mcq-q">Which state recently passed a resolution to set up a 'Nativity Card' system?</div>
+    <ul class="mcq-options">
+      <li data-opt="A"><span class="opt-label">A</span><span class="opt-text">Assam</span></li>
+      <li data-opt="B"><span class="opt-label">B</span><span class="opt-text">Manipur</span></li>
+      <li data-opt="C"><span class="opt-label">C</span><span class="opt-text">Keralam</span></li>
+      <li data-opt="D"><span class="opt-label">D</span><span class="opt-text">Nagaland</span></li>
+    </ul>
+    <div class="q-body">
+      <span class="mcq-answer" data-ans="C">✔ CORRECT ANSWER: C — Keralam</span>
+      <div class="mcq-explain">
+        <p><strong>Why it's right:</strong> The Kerala Legislative Assembly passed the Kerala Nativity Card Bill. The legislation seeks to replace temporary paper certificates with a permanent, photo-embedded identity document officially certifying an individual as a native Keralite to simplify access to government services and educational quotas.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q29 -->
+  <div class="mcq-block q-card" data-category="Environment">
+    <div class="card-header-flex">
+      <div class="q-badge">Q.029</div>
+      <div class="tags-flex"><span class="diff-dot easy"></span><span class="cat-pill Environment">Environment</span></div>
+    </div>
+    <div class="mcq-q">Where will India's first Sea Turtle Conservation Center be established?</div>
+    <ul class="mcq-options">
+      <li data-opt="A"><span class="opt-label">A</span><span class="opt-text">Gahirmatha, Odisha</span></li>
+      <li data-opt="B"><span class="opt-label">B</span><span class="opt-text">Guindy, Chennai</span></li>
+      <li data-opt="C"><span class="opt-label">C</span><span class="opt-text">Kozhikode, Kerala</span></li>
+      <li data-opt="D"><span class="opt-label">D</span><span class="opt-text">Mumbai, Maharashtra</span></li>
+    </ul>
+    <div class="q-body">
+      <span class="mcq-answer" data-ans="B">✔ CORRECT ANSWER: B — Guidny Chennai</span>
+      <div class="mcq-explain">
+        <p><strong>Why it's right:</strong> The Centre of Excellence will be built under the World Bank-aided TN-SHORE project Cost: ₹14.50 crore.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q30 -->
+  <div class="stmt-mcq q-card" data-category="Science">
+    <div class="card-header-flex">
+      <div class="q-badge">Q.030</div>
+      <div class="tags-flex"><span class="diff-dot medium"></span><span class="cat-pill Science">Science</span></div>
+    </div>
+    <div class="mcq-q">Consider the following regarding India's first National Counter-Terror Policy:</div>
+    <div class="stmt-intro">Which statement correctly outlines its objective?</div>
+    <ul class="stmt-list">
+      <li data-n="1">It shifts the focus purely to cyber terrorism and defunds border security.</li>
+      <li data-n="2">It integrates multi-agency intelligence grids including the NIA and IB.</li>
+    </ul>
+    <ul class="mcq-options">
+      <li data-opt="A"><span class="opt-label">A</span><span class="opt-text">1 only</span></li>
+      <li data-opt="B"><span class="opt-label">B</span><span class="opt-text">2 only</span></li>
+      <li data-opt="C"><span class="opt-label">C</span><span class="opt-text">Both 1 and 2</span></li>
+      <li data-opt="D"><span class="opt-label">D</span><span class="opt-text">Neither 1 nor 2</span></li>
+    </ul>
+    <div class="q-body">
+      <span class="mcq-answer" data-ans="B">✔ CORRECT ANSWER: B — 2 only</span>
+      <div class="stmt-verdicts">
+        Statement 1: <span class="incorrect">✗ Incorrect</span><br>
+        Statement 2: <span class="correct">✓ Correct</span>
+      </div>
+      <div class="mcq-explain">
+        <p><strong>Why it's right:</strong> The counter-terror policy emphasizes integration via NATGRID and joint task forces. It certainly does not defund border security.</p>
+        <div class="examiner-tip">Examiner's Tip: Internal security questions often feature absolute statements ("purely", "defunds") which are almost always incorrect in UPSC/TNPSC exams.</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<div class="progress-tracker">
+  <div class="pt-text">Answered: <span id="ans-count">0</span> / 30</div>
+  <div class="pt-bar-track">
+    <div class="pt-bar-fill" id="pt-fill"></div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const allBlocks = document.querySelectorAll('.stmt-mcq, .mcq-block');
+  const totalQuestions = allBlocks.length;
+  let answeredQuestions = 0;
+  
+  const countDisplay = document.getElementById('ans-count');
+  const fillBar = document.getElementById('pt-fill');
+  
+  // Update overall stats dynamically
+  document.querySelector('.stat-pill:nth-child(1) .stat-val').textContent = totalQuestions;
+
+  // Initialize blocks
+  allBlocks.forEach((block, index) => {
+    const qBody = block.querySelector('.q-body');
+    if (!qBody) return;
+
+    // 1. Inject Accordion Button
+    const toggleBtn = document.createElement('button');
+    toggleBtn.className = 'reveal-btn';
+    toggleBtn.innerHTML = `<svg class="chevron" viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg> <span>REVEAL ANSWER</span>`;
+    block.insertBefore(toggleBtn, qBody);
+
+    // Toggle logic
+    toggleBtn.addEventListener('click', () => {
+      const isOpen = qBody.style.maxHeight && qBody.style.maxHeight !== "0px";
+      if (isOpen) {
+        qBody.style.maxHeight = "0px";
+        qBody.style.opacity = "0";
+        qBody.classList.remove('open');
+        toggleBtn.querySelector('span').textContent = "REVEAL ANSWER";
+        toggleBtn.querySelector('svg').style.transform = "rotate(0deg)";
+      } else {
+        qBody.classList.add('open');
+        qBody.style.maxHeight = qBody.scrollHeight + 40 + "px"; // buffer
+        qBody.style.opacity = "1";
+        toggleBtn.querySelector('span').textContent = "HIDE ANSWER";
+        toggleBtn.querySelector('svg').style.transform = "rotate(180deg)";
+      }
+    });
+
+    // 2. Options Logic
+    const options = block.querySelectorAll('ul.mcq-options li');
+    const correctAns = qBody.querySelector('.mcq-answer').getAttribute('data-ans');
+    
+    options.forEach(opt => {
+      opt.addEventListener('click', () => {
+        if (block.hasAttribute('data-answered')) return; // locked
+        block.setAttribute('data-answered', 'true');
+        
+        // UI Updates
+        opt.classList.add('selected');
+        options.forEach(o => o.style.pointerEvents = 'none'); // lock all
+        
+        const selectedVal = opt.getAttribute('data-opt');
+        if (selectedVal === correctAns) {
+          opt.classList.add('correct');
+        } else {
+          opt.classList.add('incorrect');
+          // highlight correct one
+          const correctNode = block.querySelector(`ul.mcq-options li[data-opt="${correctAns}"]`);
+          if(correctNode) correctNode.classList.add('correct');
+        }
+
+        // Auto-open
+        qBody.classList.add('open');
+        qBody.style.maxHeight = qBody.scrollHeight + 40 + "px";
+        qBody.style.opacity = "1";
+        toggleBtn.querySelector('span').textContent = "HIDE ANSWER";
+        toggleBtn.querySelector('svg').style.transform = "rotate(180deg)";
+
+        // Progress Tracking
+        answeredQuestions++;
+        countDisplay.textContent = answeredQuestions;
+        fillBar.style.width = (answeredQuestions / totalQuestions) * 100 + "%";
+      });
+    });
+  });
+
+  // 3. Filter Logic
+  const pills = document.querySelectorAll('.nav-pill');
+  pills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      // Manage active class
+      pills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+
+      const filterType = pill.getAttribute('data-filter');
+      
+      allBlocks.forEach(block => {
+        if (filterType === 'All') {
+          block.style.display = 'block';
+        } else {
+          const category = block.getAttribute('data-category');
+          if (category === filterType) {
+            block.style.display = 'block';
+          } else {
+            block.style.display = 'none';
+          }
+        }
+      });
+    });
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,631 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body class="en-mode">
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">29 June 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">29 ஜூன் 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+            <a href="#obituary"><span class="lang-en">Obituaries</span><span class="lang-ta">காலமானவர்கள்</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <!-- Sidebar TOC -->
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Tech</span><span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a></li>
+                <li><a href="#obituary"><span class="lang-en">Obituaries</span><span class="lang-ta">காலமானவர்கள்</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Health · Welfare Scheme</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">TN Achieves 98.03% in Pulse Polio Immunization Drive</span>
+                        <span class="lang-ta">போலியோ சொட்டு மருந்து முகாம்: தமிழகத்தில் 98.03% இலக்கு சாதனை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Chief Minister Joseph Vijay inaugurated the Pulse Polio immunization camp at Palavakkam, Chennai. Across Tamil Nadu, polio drops were administered to 51.86 lakh children (out of the targeted 52.91 lakh children under age 5), achieving a 98.03% success rate. Over 43,051 centers were set up, utilizing the services of more than 2 lakh health workers and volunteers. India has remained polio-free since 2014, and the annual drive ensures no resurgence.</p>
+                    <p class="lang-ta">சென்னை பாலவாக்கத்தில் முதல்வர் ஜோசப் விஜய் போலியோ சொட்டு மருந்து முகாமைத் தொடங்கி வைத்தார். தமிழகம் முழுவதும் 5 வயதிற்குட்பட்ட 52.91 லட்சம் குழந்தைகளுக்கு சொட்டு மருந்து வழங்க இலக்கு நிர்ணயிக்கப்பட்டதில், 51.86 லட்சம் (98.03%) குழந்தைகளுக்கு வெற்றிகரமாக வழங்கப்பட்டுள்ளது. 43,051 மையங்கள் அமைக்கப்பட்டு 2 லட்சத்திற்கும் மேற்பட்ட பணியாளர்கள் ஈடுபடுத்தப்பட்டனர். 2014 முதல் இந்தியா போலியோ இல்லாத நாடாக உள்ளது குறிப்பிடத்தக்கது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Health Hook:</strong> India was officially declared Polio-free by WHO in 2014 (last case reported in 2011 in West Bengal). The 'Pulse Polio' program was launched in India in 1995.</span><span class="lang-ta"><strong>சுகாதார குறிப்பு:</strong> 2014 இல் WHO இந்தியாவை போலியோ இல்லாத நாடாக அறிவித்தது (கடைசி பாதிப்பு 2011 இல் மேற்கு வங்கத்தில் பதிவானது). 'பல்ஸ் போலியோ' திட்டம் இந்தியாவில் 1995 இல் தொடங்கப்பட்டது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Inter-State Water Dispute</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Farmers Urge Speedy Formation of South Pennar River Dispute Tribunal</span>
+                        <span class="lang-ta">தென்பெண்ணையாறு நதிநீர் விவகாரம்: விரைந்து நடுவர் மன்றம் அமைக்க விவசாயிகள் எதிர்பார்ப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Following Karnataka's construction of a dam across the Markandeya river (a tributary of the South Pennar/Thenpennai river), TN farmers are urging the Central Government to expedite the formation of an Interstate Water Dispute Tribunal. The South Pennar river originates in Nandi Hills, Karnataka, and flows through TN districts like Krishnagiri, Dharmapuri, and Cuddalore. Though the Supreme Court mandated the formation of the tribunal earlier this year, the Union Jal Shakti Ministry has delayed it.</p>
+                    <p class="lang-ta">தென்பெண்ணையாற்றின் துணை நதியான மார்க்கண்டேய நதியின் குறுக்கே கர்நாடகம் அணை கட்டியுள்ளதையடுத்து, மாநிலங்களுக்கு இடையிலான நதிநீர் நடுவர் மன்றத்தை விரைந்து அமைக்கத் தமிழக விவசாயிகள் மத்திய அரசை வலியுறுத்தியுள்ளனர். கர்நாடகாவின் நந்தி மலையில் உற்பத்தியாகும் தென்பெண்ணையாறு, கிருஷ்ணகிரி, தருமபுரி, கடலூர் உள்ளிட்ட தமிழக மாவட்டங்கள் வழியே பாய்கிறது. நடுவர் மன்றம் அமைக்க உச்சநீதிமன்றம் உத்தரவிட்டும், மத்திய ஜல் சக்தி அமைச்சகம் இதில் தாமதம் காட்டி வருகிறது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-trap">TRAP</span><span class="lang-en"><strong>Geography Hook:</strong> The Markandeya river is a tributary of the South Pennar (Thenpennai), not the Cauvery. Markandeya joins Thenpennai near Krishnagiri.</span><span class="lang-ta"><strong>புவியியல் குறிப்பு:</strong> மார்க்கண்டேய நதி தென்பெண்ணையாற்றின் துணை நதியாகும், காவிரியின் துணை நதி அல்ல. இது கிருஷ்ணகிரி அருகே தென்பெண்ணையுடன் கலக்கிறது.</span></li>
+                            <li><span class="badge bg-tip">TIP</span><span class="lang-en"><strong>Polity Hook:</strong> Article 262 of the Constitution empowers Parliament to adjudicate inter-state river water disputes. Inter-State Water Disputes Act was passed in 1956.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> சரத்து 262 மாநிலங்களுக்கு இடையிலான நதிநீர் சிக்கல்களைத் தீர்க்க நாடாளுமன்றத்திற்கு அதிகாரம் அளிக்கிறது. இதற்கான சட்டம் 1956 இல் இயற்றப்பட்டது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Environment · Urban Greening</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Chennai Corporation to Plant 7.5 Lakh Saplings to Combat Urban Heat</span>
+                        <span class="lang-ta">சென்னையில் வெப்பத்தைத் தணிக்க 7.5 லட்சம் மரக்கன்றுகளை நட மாநகராட்சி திட்டம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">With Chennai experiencing extreme heatwaves exceeding 100°F and losing thousands of trees to Metro rail and road expansion projects, the Greater Chennai Corporation (GCC) has initiated a massive greening project. Under this, 7.5 lakh saplings of 15 native species (like Pungam, Vembu, Naval, Magizham) will be planted within two years. To sustain this, the GCC has established nurseries in all 15 zones, aiming to produce 50,000 saplings per zone.</p>
+                    <p class="lang-ta">சென்னையில் 100 டிகிரி ஃபாரன்ஹீட்டைத் தாண்டி வெப்பம் நிலவுவதாலும், மெட்ரோ ரயில் மற்றும் சாலை விரிவாக்கப் பணிகளுக்காகப் பல்லாயிரக்கணக்கான மரங்கள் வெட்டப்பட்டதாலும், சென்னை மாநகராட்சி மாபெரும் பசுமையாக்கும் திட்டத்தைத் தொடங்கியுள்ளது. இதன்படி, அடுத்த 2 ஆண்டுகளுக்குள் புங்கை, வேம்பு, நாவல், மகிழம் உள்ளிட்ட 15 வகையான 7.5 லட்சம் உள்நாட்டு மரக்கன்றுகள் நடப்படவுள்ளன. இதற்காக 15 மண்டலங்களிலும் தலா 50,000 கன்றுகளை உற்பத்தி செய்யும் நர்சரிகள் அமைக்கப்பட்டுள்ளன.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Environment · Industrial Disaster</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Periyapalayam Ammonia Leak: Death Toll Rises to 16 at Seafood Export Firm</span>
+                        <span class="lang-ta">பெரியபாளையம் அமோனியா வாயு கசிவு விபத்து: கடல் உணவு ஏற்றுமதி நிறுவனத்தில் பலி 16 ஆக உயர்வு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The death toll from the toxic ammonia gas leak at a seafood export company near Periyapalayam (Tiruvallur district) has tragically risen to 16. Over 83 workers, mostly migrant tribals from Assam, Odisha, and Jharkhand, were affected when a pipeline blasted due to excess heat and pressure. Despite prior complaints from workers and defect notices from industrial safety officials in December, the management allegedly ignored the warnings. Environmental activists draw grim parallels to past industrial disasters.</p>
+                    <p class="lang-ta">திருவள்ளூர் மாவட்டம் பெரியபாளையம் அருகே கடல் உணவு ஏற்றுமதி நிறுவனத்தில் ஏற்பட்ட நச்சு அமோனியா வாயு கசிவு விபத்தில் உயிரிழந்தோர் எண்ணிக்கை 16 ஆக உயர்ந்துள்ளது. அதிக வெப்பம் மற்றும் அழுத்தத்தால் குழாய் வெடித்ததில், அஸ்ஸாம், ஒடிஸா, ஜார்க்கண்ட் மாநிலங்களைச் சேர்ந்த பழங்குடியினத் தொழிலாளர்கள் 83 பேர் பாதிக்கப்பட்டனர். கடந்த டிசம்பரில் பாதுகாப்பு அதிகாரிகள் குறைபாடுகளைச் சுட்டிக்காட்டியும் நிர்வாகம் அலட்சியமாக இருந்ததே விபத்துக்குக் காரணம் எனத் தெரியவந்துள்ளது.</p>
+                </div>
+
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National / Central News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Diplomacy · Bilateral Visit</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">PM Modi Gets Seychelles' Highest Civilian Award; Gifts Fast Patrol Vessel</span>
+                        <span class="lang-ta">செஷல்ஸ் நாட்டின் உயரிய விருது பிரதமர் மோடிக்கு வழங்கி கௌரவம்; இந்திய தயாரிப்பு ரோந்து கப்பல் பரிசு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">During his state visit for Seychelles' 50th National Day, PM Narendra Modi became the first Indian PM to address the Seychelles Parliament. He emphasized "Climate Justice" for island nations suffering from climate change impacts. To honor his efforts in environmental protection and international initiatives like the International Solar Alliance (ISA), Seychelles conferred upon him its highest civilian award (Companion of the Order of the Republic). India also gifted a Made-in-India Fast Patrol Vessel, 6 ambulances, and 500 MT of rice.</p>
+                    <p class="lang-ta">செஷல்ஸின் 50-வது தேசிய தின விழாவில் பங்கேற்ற பிரதமர் மோடி, அந்நாட்டு நாடாளுமன்றத்தில் உரையாற்றிய முதல் இந்தியப் பிரதமர் என்ற பெருமையைப் பெற்றார். பருவநிலை மாற்றத்தால் பாதிக்கப்படும் தீவு நாடுகளுக்கான "காலநிலை நீதியை" அவர் வலியுறுத்தினார். சர்வதேச சூரியசக்தி கூட்டமைப்பு (ISA) உள்ளிட்ட சுற்றுச்சூழல் பாதுகாப்பு முயற்சிகளுக்காகச் செஷல்ஸ் நாட்டின் உயரிய சிவிலியன் விருது அவருக்கு வழங்கப்பட்டது. மேலும், இந்தியத் தயாரிப்பான அதிவிரைவு ரோந்து கப்பல், 6 ஆம்புலன்ஸ்கள் மற்றும் 500 மெட்ரிக் டன் அரிசியை இந்தியா பரிசாக அளித்தது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>IR Hook:</strong> This is the 34th international honor conferred upon PM Modi. India and Seychelles share a strategic maritime partnership in the Indian Ocean Region under the "SAGAR" (Security and Growth for All in the Region) framework.</span><span class="lang-ta"><strong>உறவுகள் குறிப்பு:</strong> பிரதமர் மோடி பெறும் 34-வது சர்வதேச கௌரவம் இதுவாகும். "சாகர்" (SAGAR) கொள்கையின் கீழ் இந்தியப் பெருங்கடல் பிராந்தியத்தில் இந்தியாவும் செஷல்ஸும் கடல்சார் பாதுகாப்பைப் பகிர்ந்து கொள்கின்றன.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Policy · Welfare Schemes</span>
+                        <span class="badge bg-trap">TRAP</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Centre Replaces MGNREGA with 'Vikasit Bharat Gramin Shram Yojana' (125 Days)</span>
+                        <span class="lang-ta">100 நாள் வேலைத் திட்டத்துக்குப் பதிலாக 125 நாள் 'விகசித் பாரத் ஊரக வேலைவாய்ப்பு திட்டம்'</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Central Government is set to implement the 'Vikasit Bharat Gramin Shram Yojana' (VBSY) starting July 1, guaranteeing 125 days of employment, thereby replacing the existing Mahatma Gandhi National Rural Employment Guarantee Act (MGNREGA). Under the new funding formula, the Centre will bear 60% of the cost, increasing the States' burden to 40% (up from the previous structure). Opposition parties like Congress and the Telangana government have heavily criticized this, stating it will severely strain state finances.</p>
+                    <p class="lang-ta">மகாத்மா காந்தி தேசிய ஊரக வேலைவாய்ப்பு உறுதித் திட்டத்துக்குப் (100 நாள் வேலை) பதிலாக, ஜூலை 1 முதல் 125 நாள்கள் வேலை வழங்கும் 'விகசித் பாரத் கிராமிய வேலைவாய்ப்புத் திட்டத்தை' (VBSY) மத்திய அரசு அமல்படுத்த உள்ளது. புதிய நிதிப் பகிர்வு முறையில், மத்திய அரசு 60 சதவீதத்தையும், மாநில அரசுகள் 40 சதவீதத்தையும் ஏற்கும் என அறிவிக்கப்பட்டுள்ளது. இதனால் மாநிலங்களுக்குப் கடும் நிதி நெருக்கடி ஏற்படும் என காங்கிரஸ் உள்ளிட்ட எதிர்க்கட்சிகளும், தெலங்கானா அரசும் கடும் எதிர்ப்புத் தெரிவித்துள்ளன.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-critical">CRITICAL</span><span class="lang-en"><strong>Funding Change:</strong> Earlier, under MGNREGA, the Centre bore 100% of the wage cost for unskilled manual labor. The shift to a 60:40 ratio is a major structural change in rural fiscal policy.</span><span class="lang-ta"><strong>நிதிப் பகிர்வு மாற்றம்:</strong> முன்னதாக 100 நாள் வேலைத் திட்டத்தில் திறனற்ற தொழிலாளர்களுக்கான 100% கூலியை மத்திய அரசு ஏற்றது. தற்போது இது 60:40 என்ற விகிதமாக மாறுவது கிராமப்புற நிதிக் கொள்கையில் பெரும் மாற்றமாகும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Law & Order · SCAM</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Ayodhya Ram Mandir Donation Scam: 8 Arrested; SIT Probe Underway</span>
+                        <span class="lang-ta">அயோத்தி ராமர் கோயில் நன்கொடை மோசடி விவகாரம்: 8 பேர் கைது, தீவிர விசாரணை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Uttar Pradesh Police conducted synchronized raids and arrested 8 individuals involved in the alleged ₹7.5 crore donation misappropriation scam at the Ayodhya Ram Mandir. The fraud reportedly occurred during the Prayagraj Kumbh Mela in early 2026. A Special Investigation Team (SIT) has seized over ₹79 lakh so far. Following moral responsibility for the lapse, the General Secretary and a trustee of the Ram Janmabhoomi Teerth Kshetra Trust had previously resigned.</p>
+                    <p class="lang-ta">அயோத்தி ராமர் கோயிலுக்கு வந்த சுமார் ரூ.7.5 கோடி நன்கொடை மோசடி வழக்கில் 8 பேரை உத்தரப் பிரதேசக் காவல்துறை கைது செய்துள்ளது. 2026-ஆம் ஆண்டு தொடக்கத்தில் நடந்த பிரயாக்ராஜ் கும்பமேளாவின் போது இந்த மோசடி நடைபெற்றதாகக் கூறப்படுகிறது. இதற்கென அமைக்கப்பட்ட சிறப்புப் புலனாய்வுக் குழு (SIT) இதுவரை ரூ.79 லட்சத்தைப் பறிமுதல் செய்துள்ளது. இந்த முறைகேட்டுக்கு தார்மீகப் பொறுப்பேற்று ஸ்ரீராம ஜென்மபூமி தீர்த்த ஷேத்திர அறக்கட்டளையின் பொதுச்செயலாளர் மற்றும் அறங்காவலர் ஒருவர் ஏற்கெனவே ராஜிநாமா செய்துள்ளது குறிப்பிடத்தக்கது.</p>
+                </div>
+
+            </section>
+
+            <!-- INTERNATIONAL NEWS -->
+            <section id="international">
+                <h2>
+                    <span class="lang-en">International News</span>
+                    <span class="lang-ta">சர்வதேச செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Geopolitics · Middle East</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">US-Iran Conflict Escalates: US Bombs 10 Bases; Iran Attacks Bahrain & Kuwait</span>
+                        <span class="lang-ta">அமெரிக்கா-ஈரான் மோதல் தீவிரம்: ஈரானின் 10 தளங்கள் மீது அமெரிக்கா குண்டுவீச்சு; குவைத்தில் ஈரான் தாக்குதல்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Middle East has been plunged back into a war-like state. Retaliating against an Iranian drone strike on a Panama-flagged oil tanker near the Strait of Hormuz, US warplanes bombed 10 Iranian military bases. In swift response, Iran's Revolutionary Guard Corps (IRGC) fired missiles and drones at US military installations in Bahrain (Base of the US 5th Fleet) and Kuwait. US President Trump warned that if Iran continues, "Iran will cease to exist," while Iran threatened to scrap the temporary peace treaty entirely.</p>
+                    <p class="lang-ta">மத்திய கிழக்கு ஆசியாவில் மீண்டும் போர்ச் சூழல் உருவாகியுள்ளது. ஹோர்முஸ் ஜலசந்தி அருகே பனாமா கொடியிட்ட கச்சா எண்ணெய் கப்பல் மீது ஈரான் ட்ரோன் தாக்குதல் நடத்தியதற்குப் பதிலடியாக, ஈரானின் 10 ராணுவத் தளங்கள் மீது அமெரிக்கப் போர் விமானங்கள் குண்டுவீசின. இதற்குப் பதிலடியாக பஹ்ரைன் (அமெரிக்காவின் 5-வது கடற்படைத் தளம்) மற்றும் குவைத்தில் உள்ள அமெரிக்க ராணுவ நிலைகள் மீது ஈரானின் புரட்சிகரப் பாதுகாப்புப் படை (IRGC) ஏவுகணைத் தாக்குதல் நடத்தியது. ஈரான் தொடர்ந்து தாக்கினால் அந்நாடு உலக வரைபடத்தில் இருக்காது என அமெரிக்க அதிபர் டிரம்ப் எச்சரித்துள்ளார்.</p>
+                </div>
+            </section>
+
+            <!-- ECONOMY & FINANCE -->
+            <section id="economy">
+                <h2>
+                    <span class="lang-en">Economy & Tech</span>
+                    <span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Economy · Taxation</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">GST Nears 10 Years: Centre to Integrate AI to Boost Tax Compliance</span>
+                        <span class="lang-ta">ஜிஎஸ்டி அமலாகி 10 ஆண்டுகள் நிறைவு: செயற்கை நுண்ணறிவு தொழில்நுட்பத்தைப் பயன்படுத்த முடிவு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">As the Goods and Services Tax (GST) enters its 10th year of implementation on July 1, 2026, the Central Government is taking steps to enhance its efficiency using Artificial Intelligence (AI). From an initial average monthly collection of ₹89,700 crore in 2017-18, the GST revenue has soared to ₹1.85 lakh crore recently. To simplify compliance for MSMEs and prevent tax evasion, the government will integrate GST, Income Tax, and Customs data using AI models to detect anomalies and speed up refund processing.</p>
+                    <p class="lang-ta">நாடு முழுவதும் சரக்கு மற்றும் சேவை வரி (ஜிஎஸ்டி) அமல்படுத்தப்பட்டு வரும் ஜூலை 1 உடன் 10 ஆண்டுகள் நிறைவடைகின்றன. 2017-18 இல் ரூ.89,700 கோடியாக இருந்த மாதாந்திர ஜிஎஸ்டி வருவாய், தற்போது ரூ.1.85 லட்சம் கோடியாக உயர்ந்துள்ளது. வரி ஏய்ப்பைத் தடுக்கவும், சிறு குறு நிறுவனங்களுக்கு உதவவும், செயற்கை நுண்ணறிவு (AI) தொழில்நுட்பம் மூலம் ஜிஎஸ்டி, வருமான வரி, சுங்கத்துறை தரவுகளை ஒருங்கிணைத்து வரி அமைப்பை மேம்படுத்த மத்திய அரசு முடிவு செய்துள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Economy Hook:</strong> GST was implemented on July 1, 2017, through the 101st Constitutional Amendment Act. It replaced multiple cascading indirect taxes. Current slabs are broadly 5% and 18%.</span><span class="lang-ta"><strong>பொருளாதாரக் குறிப்பு:</strong> ஜிஎஸ்டி 101-வது அரசியலமைப்பு திருத்தச் சட்டத்தின் மூலம் ஜூலை 1, 2017 அன்று அமல்படுத்தப்பட்டது. இது பல மறைமுக வரிகளை மாற்றியது. தற்போதைய பிரதான வரி விகிதங்கள் 5% மற்றும் 18% ஆக சீரமைக்கப்பட்டுள்ளன.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Bilateral Tech Cooperation</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">India-US Launch Dialogue on AI & Critical Minerals Supply Chain</span>
+                        <span class="lang-ta">செயற்கை நுண்ணறிவு, கனிம வளங்கள்: இந்தியா - அமெரிக்கா இடையே கூட்டு நடவடிக்கை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">A high-level dialogue titled "Building the Foundation for Integrated AI Growth: From Minerals to Chips" was held in Washington DC between India and the US, facilitated by the USISP Forum. India highlighted its rapidly expanding semiconductor and electronics manufacturing ecosystem. Both nations stressed the critical role of private sector participation in securing a reliable global supply chain for critical minerals, quantum computing, and AI technologies to reduce reliance on single-source countries (like China).</p>
+                    <p class="lang-ta">செயற்கை நுண்ணறிவு (AI), செமிகண்டக்டர் மற்றும் அரிய கனிம வளங்கள் துறையில் இந்திய-அமெரிக்க ஒத்துழைப்பை வலுப்படுத்துவது குறித்த ஆலோசனைக் கூட்டம் வாஷிங்டனில் நடைபெற்றது. "கனிமங்கள் முதல் சிப்கள் வரை" என்ற தலைப்பிலான இக்கூட்டத்தில், இந்தியாவின் செமிகண்டக்டர் மற்றும் மின்னணு உற்பத்தித் துறையின் மாபெரும் வளர்ச்சியை இந்திய அதிகாரிகள் சுட்டிக்காட்டினர். குவாண்டம் தொழில்நுட்பம் மற்றும் செயற்கை நுண்ணறிவில் உலகளாவிய நம்பகமான விநியோகச் சங்கிலியை உருவாக்கத் தனியார் துறையின் பங்களிப்பு அவசியம் என இரு நாடுகளும் வலியுறுத்தின.</p>
+                </div>
+
+            </section>
+            
+            <!-- SPORTS -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports</span>
+                    <span class="lang-ta">விளையாட்டு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Football · FIFA World Cup 2026</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">FIFA World Cup: Messi Sets Record; Argentina, England Advance to Knockouts</span>
+                        <span class="lang-ta">உலகக் கோப்பை கால்பந்து: மெஸ்ஸி புதிய சாதனை; நாக் அவுட் சுற்றில் அர்ஜென்டினா, இங்கிலாந்து</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In the FIFA World Cup group stages, Argentina defeated Jordan 3-1. Captain Lionel Messi scored a goal, setting a new historical record by becoming the first player to score in 7 consecutive World Cup matches. He also extended his tally as the highest goal-scorer in World Cup history to 19 goals. In other matches, England beat Panama 2-0 (Harry Kane became England's highest WC scorer with 11 goals), and DR Congo entered the knockouts after 52 years by beating Uzbekistan 3-1. Croatia defeated Ghana 2-1.</p>
+                    <p class="lang-ta">உலகக் கோப்பை கால்பந்து குரூப் சுற்று ஆட்டத்தில் அர்ஜென்டினா 3-1 என்ற கோல் கணக்கில் ஜோர்டானை வீழ்த்தியது. இதில் கோல் அடித்த கேப்டன் லியோனல் மெஸ்ஸி, உலகக் கோப்பை வரலாற்றில் தொடர்ந்து 7 போட்டிகளில் கோல் அடித்த முதல் வீரர் என்ற புதிய சாதனையைப் படைத்தார் (மொத்தம் 19 கோல்கள்). மற்ற ஆட்டங்களில் இங்கிலாந்து 2-0 என பனாமாவையும் (ஹாரி கேன் 11 கோல்களுடன் இங்கிலாந்தின் அதிக கோல் அடித்தவரானார்), குரோஷியா 2-1 என கானாவையும் வீழ்த்தின. 52 ஆண்டுகளுக்குப் பிறகு காங்கோ அணி நாக்-அவுட் சுற்றுக்கு முன்னேறியது.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Cricket · T20 World Cup</span>
+                        <span class="badge bg-trap">TRAP</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Women's T20 World Cup: Australia Knocks India Out; Men Lose to Ireland</span>
+                        <span class="lang-ta">டி20 உலகக் கோப்பையிலிருந்து இந்திய மகளிர் அணி வெளியேற்றம்; அயர்லாந்திடம் ஆடவர் அணி தோல்வி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In a double blow to Indian cricket, the Indian Women's team was knocked out of the ICC Women's T20 World Cup after losing to Australia by 6 wickets. India posted 170/4, which Australia chased down scoring 172/4. Meanwhile, the Indian Men's team suffered an embarrassing 1-run defeat against Ireland in the 2nd T20I in Belfast, losing the series 2-0. Ireland posted 154/8, and India managed only 153/9, suffering their first-ever series whitewash by Ireland.</p>
+                    <p class="lang-ta">ஐசிசி மகளிர் டி20 உலகக் கோப்பையில் ஆஸ்திரேலியாவிடம் 6 விக்கெட் வித்தியாசத்தில் தோல்வியடைந்த இந்திய அணி, அரையிறுதி வாய்ப்பை இழந்து தொடரிலிருந்து வெளியேறியது. இந்தியா 170 ரன்கள் எடுக்க, ஆஸ்திரேலியா 172 ரன்கள் எடுத்து வென்றது. இதற்கிடையே, பெல்பாஸ்டில் நடந்த 2-வது டி20 ஆட்டத்தில் அயர்லாந்திடம் 1 ரன் வித்தியாசத்தில் தோற்ற இந்திய ஆடவர் அணி, தொடரை 2-0 என முழுமையாக இழந்தது. சர்வதேச கிரிக்கெட்டில் இந்தியாவுக்கு எதிராக அயர்லாந்து பெறும் முதல் தொடர் வெற்றி இதுவாகும்.</p>
+                </div>
+
+            </section>
+
+            <!-- OBITUARIES -->
+            <section id="obituary">
+                <h2>
+                    <span class="lang-en">Obituaries</span>
+                    <span class="lang-ta">காலமானவர்கள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Obituary · Environment Activist</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Veteran Doctor & Bhavani River Activist Sathya Sundari (92) Passes Away</span>
+                        <span class="lang-ta">பவானி ஆறு பாதுகாப்புப் போராளி மருத்துவர் சத்திய சுந்தரி (92) காலமானார்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Dr. Sathya Sundari (92), a renowned physician, social worker, and environmental activist from Gobi/Bhavani (Erode district), passed away. She was the president of the Bhavani River Water Federation and famously led massive public protests between 1992 and 1995 against private factories polluting the Bhavani river. She also spearheaded desilting efforts to raise groundwater levels in Nambiyur. CM M.K. Stalin expressed profound grief, calling her a "green warrior."</p>
+                    <p class="lang-ta">ஈரோடு மாவட்டம் கோபி அருகே உள்ள கொளப்பலூரைச் சேர்ந்த மருத்துவரும், சமூக சேவகியுமான சத்திய சுந்தரி (92) உடல்நலக்குறைவால் காலமானார். பவானி நதி நீர் கூட்டமைப்பின் தலைவராக இருந்த இவர், 1992-1995 காலகட்டத்தில் பவானி ஆற்றில் தனியார் ஆலை கழிவுகள் கலப்பதைக் கண்டித்து மாபெரும் மக்கள் போராட்டத்தை நடத்தியவர். நம்பியூரில் நிலத்தடி நீரை உயர்த்தக் குளங்களைத் தூர்வாரியவர். "பசுமைப் போராளி" எனப் புகழ்ந்து முதல்வர் மு.க.ஸ்டாலின் இவருக்கு இரங்கல் தெரிவித்துள்ளார்.</p>
+                </div>
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: The 'Vikasit Bharat Gramin Shram Yojana' (VBSY), recently proposed by the Central Government, is intended to replace which of the following existing flagship schemes?</span>
+                        <span class="lang-ta">கேள்வி: மத்திய அரசால் சமீபத்தில் முன்மொழியப்பட்டுள்ள 'விகசித் பாரத் கிராமிய வேலைவாய்ப்புத் திட்டம்' (VBSY), கீழ்க்கண்ட எந்த நடைமுறைத் திட்டத்துக்குப் பதிலாகக் கொண்டுவரப்பட உள்ளது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Mahatma Gandhi National Rural Employment Guarantee Act (MGNREGA)</span><br><br>
+                                <strong>Context:</strong> VBSY guarantees 125 days of work (up from 100). However, the funding ratio is changing to 60:40 (Centre:State), which states are opposing due to the financial burden.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">மகாத்மா காந்தி தேசிய ஊரக வேலைவாய்ப்பு உறுதித் திட்டம் (MGNREGA)</span><br><br>
+                                <strong>பின்னணி:</strong> இப்புதிய திட்டம் 125 நாட்கள் வேலையை உறுதியளிக்கிறது. இருப்பினும், நிதிப் பகிர்வு 60:40 (மத்திய:மாநில) என மாற்றுவதால் மாநிலங்களுக்கு நிதிச்சுமை ஏற்படும் என எதிர்க்கப்படுகிறது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: The Markandeya river, across which Karnataka has built a controversial dam leading to inter-state disputes, is a tributary of which major river flowing into Tamil Nadu?</span>
+                        <span class="lang-ta">கேள்வி: கர்நாடகம் அணைகட்டியதால் மாநிலங்களுக்கு இடையிலான நதிநீர் சிக்கலுக்கு உள்ளாகியுள்ள மார்க்கண்டேய நதி, தமிழகத்தில் பாயும் எந்தப் பெரிய நதியின் துணை நதியாகும்?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">South Pennar (Thenpennai) River</span><br><br>
+                                <strong>Context:</strong> The Markandeya river joins the Thenpennai near Krishnagiri. TN farmers are demanding the immediate formation of a tribunal under the Inter-State River Water Disputes Act.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">தென்பெண்ணையாறு (South Pennar)</span><br><br>
+                                <strong>பின்னணி:</strong> மார்க்கண்டேய நதி கிருஷ்ணகிரி அருகே தென்பெண்ணையுடன் கலக்கிறது. மாநிலங்களுக்கு இடையிலான நதிநீர்ச் சிக்கல் சட்டத்தின் கீழ் உடனே நடுவர் மன்றம் அமைக்கத் தமிழக விவசாயிகள் கோருகின்றனர்.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">Thenpennai Tribunal Delay</span><span class="lang-ta">தென்பெண்ணை நடுவர் மன்றம்</span></td>
+                                <td><span class="lang-en">State/Polity</span><span class="lang-ta">மாநிலம்/அரசியல்</span></td>
+                                <td><span class="lang-en">Dispute over Karnataka's dam on Markandeya river.</span><span class="lang-ta">மார்க்கண்டேய நதி அணையால் தமிழக-கர்நாடக பிரச்சினை.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">Vikasit Bharat Gramin Shram Yojana</span><span class="lang-ta">விகசித் பாரத் ஊரக வேலைவாய்ப்பு</span></td>
+                                <td><span class="lang-en">National/Scheme</span><span class="lang-ta">தேசியம்/திட்டம்</span></td>
+                                <td><span class="lang-en">Replaces MGNREGA; 125 days work; 60:40 fund ratio.</span><span class="lang-ta">MGNREGA-வுக்குப் பதில் 125 நாள் வேலை; 60:40 நிதிப் பகிர்வு.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">PM Modi in Seychelles</span><span class="lang-ta">செஷல்ஸில் பிரதமர் மோடி</span></td>
+                                <td><span class="lang-en">Intl/Diplomacy</span><span class="lang-ta">சர்வதேசம்/உறவுகள்</span></td>
+                                <td><span class="lang-en">Received highest honor; gifted patrol vessel.</span><span class="lang-ta">செஷல்ஸின் உயரிய விருது பிரதமருக்கு வழங்கப்பட்டது.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">US-Iran Escalation</span><span class="lang-ta">அமெரிக்கா-ஈரான் மோதல்</span></td>
+                                <td><span class="lang-en">Geopolitics</span><span class="lang-ta">சர்வதேசம்</span></td>
+                                <td><span class="lang-en">US bombs Iran; Iran strikes US bases in Kuwait/Bahrain.</span><span class="lang-ta">ஈரான் மீது அமெரிக்கா தாக்குதல்; பதிலடி கொடுத்த ஈரான்.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">Messi's World Cup Record</span><span class="lang-ta">மெஸ்ஸியின் உலகக் கோப்பை சாதனை</span></td>
+                                <td><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></td>
+                                <td><span class="lang-en">First player to score in 7 consecutive WC matches.</span><span class="lang-ta">தொடர்ந்து 7 WC போட்டிகளில் கோல் அடித்து சாதனை.</span></td>
+                                <td><span class="badge bg-tip">MED</span></td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td><span class="lang-en">Periyapalayam Ammonia Leak</span><span class="lang-ta">பெரியபாளையம் வாயு கசிவு விபத்து</span></td>
+                                <td><span class="lang-en">State/Disaster</span><span class="lang-ta">மாநிலம்/பேரிடர்</span></td>
+                                <td><span class="lang-en">16 dead in seafood factory; highlights safety neglect.</span><span class="lang-ta">கடல் உணவு ஆலையில் அமோனியா கசிந்து 16 பேர் பலி.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani Chennai 29-06-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி சென்னை 29-06-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source text detailed state, national, and international news for 29 June 2026. 
+State news covered CM Vijay launching the Pulse Polio camp (98% success rate, 51.86 lakh kids immunized). 150 MDMK functionaries joined DMK. TN farmers demanded a tribunal for the Thenpennai river dispute caused by Karnataka's dam on Markandeya river. Toxic ammonia leak at a Periyapalayam seafood factory killed 16 workers. Chennai Corp launched a 7.5 lakh sapling plantation drive to fight heat. Director K. Bhagyaraj was cremated with state honors. Environmentalist Dr. Sathya Sundari passed away at 92.
+National news: PM Modi visited Seychelles, addressed its parliament, gifted a vessel, and received the highest civilian award. The Central Govt's new 125-day employment scheme 'Vikasit Bharat Gramin Shram Yojana' (replacing MGNREGA) faced backlash over shifting 40% of the financial burden to states. 8 people were arrested for a Ram Mandir donation scam. The PM in Mann Ki Baat thanked people for buying less gold. Sonam Wangchuk began fasting against NEET irregularities.
+International news: US-Iran conflict escalated as US warplanes bombed Iranian bases, while Iran hit US bases in Bahrain and Kuwait. Venezuela earthquake toll crossed 1430. India-US held a dialogue on AI and critical minerals.
+Economy: Govt to use AI to improve GST tax compliance as the tax nears its 10th anniversary.
+Sports: Argentina's Lionel Messi scored in his 7th consecutive World Cup match, setting a new record. England and DR Congo reached the knockouts. In cricket, Ireland beat India by 1 run to sweep the T20 series 2-0. Australia knocked the Indian women's team out of the T20 World Cup.]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூல உரைகள் 29 ஜூன் 2026 க்கான செய்திகளைக் கொண்டிருந்தன.
+மாநில செய்திகளில், போலியோ முகாமை முதல்வர் விஜய் தொடங்கினார் (98% இலக்கு எட்டப்பட்டது). 150 மதிமுக நிர்வாகிகள் திமுக-வில் இணைந்தனர். மார்க்கண்டேய நதி அணையால் ஏற்பட்ட தென்பெண்ணை விவகாரத்திற்கு நடுவர் மன்றம் அமைக்க விவசாயிகள் கோரிக்கை. பெரியபாளையம் கடல் உணவு ஆலையில் அமோனியா கசிவால் 16 பேர் பலி. வெப்பத்தைத் தணிக்க சென்னை மாநகராட்சி 7.5 லட்சம் மரக்கன்றுகளை நடவு செய்கிறது. இயக்குநர் கே.பாக்யராஜ் உடல் அரசு மரியாதையுடன் தகனம். பவானி நதி பாதுகாப்பு செயற்பாட்டாளர் மருத்துவர் சத்திய சுந்தரி காலமானார்.
+தேசிய அளவில்: பிரதமர் மோடி செஷல்ஸ் நாடாளுமன்றத்தில் உரையாற்றினார், ரோந்து கப்பல் பரிசளித்தார்; அந்நாட்டின் உயரிய விருது பெற்றார். 100 நாள் வேலைத் திட்டத்துக்குப் பதிலாக 125 நாள் 'விகசித் பாரத் ஊரக வேலைவாய்ப்பு திட்டத்தை' மத்திய அரசு அறிமுகப்படுத்தியது (மாநிலங்களின் நிதிப் பங்கு 40% ஆக உயர்வு). ராமர் கோயில் நன்கொடை மோசடியில் 8 பேர் கைது. 'மன் கி பாத்'தில் தங்கம் வாங்குவதைக் குறைத்த மக்களுக்குப் பிரதமர் நன்றி. 'நீட்' குளறுபடிகளுக்கு எதிராக சோனம் வாங்சுக் உண்ணாவிரதம்.
+சர்வதேச அளவில்: ஈரான் மீது அமெரிக்கா தாக்குதல்; பதிலடிக்கு அமெரிக்கத் தளங்களை ஈரான் தாக்கியதால் போர் பதற்றம். வெனிசுலா நிலநடுக்க பலி 1430-ஐத் தாண்டியது. AI மற்றும் கனிம வளங்கள் விநியோகம் தொடர்பாக இந்தியா-அமெரிக்கா ஆலோசனை.
+பொருளாதாரம்: 10 ஆண்டுகளை நெருங்கும் ஜிஎஸ்டி-யில் வரி ஏய்ப்பைத் தடுக்க செயற்கை நுண்ணறிவைப் பயன்படுத்த அரசு முடிவு.
+விளையாட்டு: அர்ஜென்டினாவின் மெஸ்ஸி தொடர்ந்து 7 உலகக் கோப்பை போட்டிகளில் கோல் அடித்து உலக சாதனை படைத்தார். கிரிக்கெட்டில் இந்தியாவை 1 ரன் வித்தியாசத்தில் வீழ்த்தி அயர்லாந்து தொடரைக் கைப்பற்றியது. டி20 உலகக் கோப்பையிலிருந்து இந்திய மகளிர் அணியை ஆஸ்திரேலியா வெளியேற்றியது.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 29 June 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,646 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body class="en-mode">
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">28 June 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">28 ஜூன் 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+            <a href="#obituary"><span class="lang-en">Obituaries</span><span class="lang-ta">காலமானவர்கள்</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <!-- Sidebar TOC -->
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Tech</span><span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a></li>
+                <li><a href="#obituary"><span class="lang-en">Obituaries</span><span class="lang-ta">காலமானவர்கள்</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · High Court</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Madras HC Quashes TN Govt Order Granting BC Reservation to Muslim Converts</span>
+                        <span class="lang-ta">மதம் மாறிய முஸ்லிம்களுக்கு இடஒதுக்கீடு சலுகை வழங்கும் தமிழக அரசின் அரசாணை ரத்து: உயர்நீதிமன்றம் உத்தரவு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Madurai Bench of the Madras High Court quashed a recent Tamil Nadu Government Order (2024) that sought to issue "Backward Class (BC) Muslim" certificates to individuals belonging to BC, MBC, DNC, or SC communities who converted to Islam, allowing them to claim reservation benefits. Justices G.R. Swaminathan and P.B. Balaji ruled that Islam is an egalitarian, casteless religion. Citing a 1951 Supreme Court precedent, they stated that a person converting to Islam loses their original caste identity completely and cannot carry forward their caste-based reservation benefits into Islam. Minister C.T.R. Nirmal Kumar stated the Govt will appeal.</p>
+                    <p class="lang-ta">இந்து மதத்தில் உள்ள பிற்படுத்தப்பட்ட, மிகவும் பிற்படுத்தப்பட்ட மற்றும் பட்டியலின வகுப்பைச் சேர்ந்தவர்கள் இஸ்லாம் மதத்துக்கு மாறும்போது, அவர்களுக்குத் தொடர்ந்து இடஒதுக்கீடு சலுகை கிடைக்கும் வகையில் 'பிற்படுத்தப்பட்ட முஸ்லிம்' எனச் சான்றிதழ் வழங்கத் தமிழக அரசு வெளியிட்ட அரசாணையை (2024) சென்னை உயர்நீதிமன்ற மதுரை கிளை ரத்து செய்துள்ளது. இஸ்லாம் என்பது சாதியற்ற, சமத்துவமான சமூகம் என்றும், இந்து மதத்தில் இருந்து மாறுபவர் தனது சாதி அடையாளத்தை முற்றிலும் இழக்கிறார் என்றும் 1951-ஆம் ஆண்டின் உச்சநீதிமன்றத் தீர்ப்பைச் சுட்டிக்காட்டி நீதிபதிகள் தீர்ப்பளித்தனர். இதற்கு எதிராகத் தமிழக அரசு மேல்முறையீடு செய்யும் என அமைச்சர் சி.டி.ஆர். நிர்மல் குமார் தெரிவித்தார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Polity Hook:</strong> Articles 15(4) and 16(4) deal with the State's power to make special provisions for the advancement of any socially and educationally backward classes. The core debate centers on whether 'caste' continues after conversion to a casteless religion.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> சரத்துகள் 15(4) மற்றும் 16(4) சமூக மற்றும் கல்வியில் பின்தங்கிய வகுப்பினருக்கு சிறப்புச் சலுகைகள் வழங்க அரசுக்கு அதிகாரம் அளிக்கின்றன. மதம் மாறிய பிறகும் சாதி அடையாளம் தொடருமா என்பதே இந்த வழக்கின் மையக் கருத்தாகும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Political Alliances</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">MDMK Exits DMK Alliance; Decides to Support TVK in Upcoming Elections</span>
+                        <span class="lang-ta">திமுக கூட்டணியிலிருந்து மதிமுக விலகல்; இடைத்தேர்தலில் தவெக-வுக்கு ஆதரவளிக்க முடிவு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">MDMK (Marumalarchi Dravida Munnetra Kazhagam) General Secretary Vaiko announced that the party has officially exited the ruling DMK alliance. The decision was formalized via a resolution at the party's 32nd General Council meeting. Vaiko cited the DMK's refusal to allocate an independent symbol for MDMK candidates as a key grievance. Consequently, MDMK has decided to support actor Vijay's TVK (Thamizhaga Vettri Kazhagam) in the upcoming by-elections and local body polls, praising TVK's corruption-free stance and its adherence to the two-language policy championed by Arignar Anna.</p>
+                    <p class="lang-ta">ஆளும் திமுக கூட்டணியில் இருந்து மதிமுக விலகுவதாக அக்கட்சியின் பொதுச்செயலாளர் வைகோ அறிவித்துள்ளார். கட்சியின் 32-வது பொதுக்குழு கூட்டத்தில் இது தொடர்பான தீர்மானம் நிறைவேற்றப்பட்டது. திமுக கூட்டணியில் மதிமுக-வுக்கு தனிச் சின்னம் ஒதுக்கப்படாததே முக்கியக் காரணம் என வைகோ சுட்டிக்காட்டினார். மேலும், வரவிருக்கும் இடைத்தேர்தல்கள் மற்றும் உள்ளாட்சித் தேர்தல்களில் நடிகர் விஜய்யின் தமிழக வெற்றிக் கழகத்துக்கு (தவெக) ஆதரவளிக்க மதிமுக முடிவு செய்துள்ளது. அண்ணாவின் இருமொழிக் கொள்கையைப் பின்பற்றுவதாலும், ஊழலற்ற ஆட்சியைத் தருவதாகக் கூறுவதாலும் தவெக-வை ஆதரிப்பதாக அவர் தெரிவித்தார்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Health · Welfare Scheme</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">TN Govt Launches Pulse Polio Camp for 52.91 Lakh Children</span>
+                        <span class="lang-ta">52.91 லட்சம் குழந்தைகளுக்கு போலியோ சொட்டு மருந்து வழங்கும் முகாம் தொடக்கம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Chief Minister Joseph Vijay launched the Pulse Polio immunization camp for children under 5 years of age at Palavakkam, Chennai. The state aims to administer polio drops to 52.91 lakh children across 43,051 centers utilizing 2 lakh personnel. Though India is polio-free, the annual drive continues to prevent any resurgence.</p>
+                    <p class="lang-ta">சென்னையை அடுத்த பாலவாக்கத்தில் 5 வயதிற்குட்பட்ட குழந்தைகளுக்கான போலியோ சொட்டு மருந்து முகாமை முதல்வர் ஜோசப் விஜய் தொடங்கி வைத்தார். மாநிலம் முழுவதும் உள்ள 43,051 மையங்கள் மூலமாக 52.91 லட்சம் குழந்தைகளுக்கு சொட்டு மருந்து வழங்க இலக்கு நிர்ணயிக்கப்பட்டுள்ளது. இதற்காக 2 லட்சத்திற்கும் மேற்பட்ட பணியாளர்கள் ஈடுபடுத்தப்பட்டுள்ளனர். இந்தியா போலியோ இல்லாத நாடாக அறிவிக்கப்பட்டாலும், முன்னெச்சரிக்கையாக ஆண்டுதோறும் இந்த முகாம் நடத்தப்படுகிறது.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Appointments · Politics</span>
+                        <span class="badge bg-trap">TRAP</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Manickam Tagore Appointed as TN Congress Committee President</span>
+                        <span class="lang-ta">தமிழ்நாடு காங்கிரஸ் கமிட்டி தலைவராக மாணிக்கம் தாகூர் நியமனம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Virudhunagar MP Manickam Tagore has been appointed as the new President of the Tamil Nadu Congress Committee (TNCC) by AICC President Mallikarjun Kharge. He replaces K. Selvaperunthagai. Manickam Tagore has previously served as the AICC observer for Andhra Pradesh and Andaman and Nicobar Islands.</p>
+                    <p class="lang-ta">தமிழ்நாடு காங்கிரஸ் கமிட்டி (TNCC) புதிய தலைவராக விருதுநகர் எம்.பி. மாணிக்கம் தாகூரை அகில இந்திய காங்கிரஸ் தலைவர் மல்லிகார்ஜுன கார்கே நியமித்துள்ளார். இதுவரை அப்பதவியில் இருந்த கே. செல்வப்பெருந்தகை விடுவிக்கப்பட்டுள்ளார். மாணிக்கம் தாகூர் ஆந்திரப் பிரதேசம் மற்றும் அந்தமான் நிகோபார் தீவுகளுக்கான ஏஐசிசி (AICC) பார்வையாளராகவும் பணியாற்றியுள்ளார்.</p>
+                </div>
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National / Central News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Diplomacy · Bilateral Visit</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">PM Modi Visits Seychelles for 50th National Day; Gifts Fast Patrol Vessel</span>
+                        <span class="lang-ta">செஷல்ஸ் நாட்டுக்கு 3 நாள் பயணமாகச் சென்றார் பிரதமர் மோடி; இந்திய தயாரிப்பு ரோந்து கப்பல் பரிசு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Prime Minister Narendra Modi arrived in Victoria, the capital of Seychelles, for a three-day state visit. Received by President Wavel Ramkalawan, PM Modi will be the Chief Guest at the 50th National Day celebrations of the island nation. Highlighting the "SAGAR" (Security and Growth for All in the Region) vision, India gifted a domestically manufactured Fast Patrol Vessel to the Seychelles Coast Guard, reinforcing maritime security cooperation. PM Modi also visited the Aldabra giant tortoise park and will visit the historic Navasakthi Vinayagar Temple.</p>
+                    <p class="lang-ta">இந்தியப் பெருங்கடல் பிராந்தியத்தில் அமைந்துள்ள அண்டை நாடான செஷல்ஸுக்கு 3 நாள் அரசு முறைப் பயணமாகப் பிரதமர் நரேந்திர மோடி சென்றடைந்தார். அந்நாட்டின் 50-வது தேசிய தின விழாவில் தலைமை விருந்தினராகப் பங்கேற்கும் அவருக்கு, அதிபர் வேவல் ராம்கலவன் சிறப்பான வரவேற்பு அளித்தார். 'சாகர்' (SAGAR) கொள்கையின் அடிப்படையில் கடல்சார் பாதுகாப்பை மேம்படுத்தும் நோக்கில், இந்திய தயாரிப்பான அதிவிரைவு ரோந்து கப்பல் ஒன்றைச் செஷல்ஸ் கடலோரக் காவல்படைக்குப் பிரதமர் மோடி பரிசாக வழங்கினார். மேலும் அவர் அல்டாப்ரா ராட்சத ஆமைகள் பூங்கா மற்றும் நவ சக்தி விநாயகர் கோயிலுக்கும் செல்லவுள்ளார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Geography & IR Hook:</strong> Seychelles is an archipelago in the Indian Ocean. Its capital is Victoria. The 'SAGAR' doctrine underscores India's strategic vision for the Indian Ocean Region (IOR).</span><span class="lang-ta"><strong>புவியியல் குறிப்பு:</strong> செஷல்ஸ் இந்தியப் பெருங்கடலில் உள்ள ஒரு தீவு நாடாகும். இதன் தலைநகரம் விக்டோரியா. 'சாகர்' (SAGAR) கொள்கை இந்தியப் பெருங்கடல் பிராந்தியத்திற்கான இந்தியாவின் பாதுகாப்பு மற்றும் வளர்ச்சியைக் குறிக்கிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Economy · Transport Policy</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Amit Shah Launches 'Bharat Taxi' in Gujarat to Counter Private Monopolies</span>
+                        <span class="lang-ta">தனியார் நிறுவனங்களுக்குப் போட்டியாக குஜராத்தில் 'பாரத் டாக்ஸி' திட்டத்தைத் தொடங்கி வைத்தார் அமித் ஷா</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Union Home and Cooperation Minister Amit Shah launched 'Bharat Taxi' in Gandhinagar, Gujarat. Supported by cooperative societies, this initiative aims to combat the monopoly of private taxi aggregators that charge exorbitant fares. 'Bharat Taxi' will initially operate in 14 cities in Gujarat and will expand to 500 cities nationwide within two years. Unlike private platforms, drivers in this scheme will function as co-owners by purchasing shares worth ₹100, receiving benefits like low-interest loans and family insurance.</p>
+                    <p class="lang-ta">தனியார் கால் டாக்ஸி நிறுவனங்களின் ஆதிக்கத்தைத் தடுத்து, நியாயமான கட்டணத்தில் சேவையை வழங்குவதற்காகக் கூட்டுறவு அமைப்புகள் மூலம் இயங்கும் 'பாரத் டாக்ஸி' சேவையை குஜராத்தின் காந்திநகரில் மத்திய உள்துறை மற்றும் கூட்டுறவுத்துறை அமைச்சர் அமித் ஷா தொடங்கி வைத்தார். இத்திட்டம் குஜராத்தின் 14 நகரங்களில் தொடங்கப்பட்டு, 2 ஆண்டுகளில் நாடு முழுவதும் 500 நகரங்களுக்கு விரிவுபடுத்தப்படும். இதில் ஓட்டுநர்கள் வெறும் தொழிலாளர்களாக இல்லாமல், ரூ.100 செலுத்திப் பங்குதாரர்களாக மாறுவர். அவர்களுக்குக் குறைந்த வட்டியில் கடன், குடும்பக் காப்பீடு போன்ற சலுகைகள் வழங்கப்படும்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Health · Digital India</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Health Ministry to Launch 'e-Sushrut Clinic' Software for Small Hospitals</span>
+                        <span class="lang-ta">சிறிய மருத்துவ மையங்களுக்கான 'இ-சுஸ்ருத் கிளினிக்' (e-Sushrut Clinic) மென்பொருளை அறிமுகப்படுத்துகிறது மத்திய அரசு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">To digitize smaller medical clinics, the Union Health Ministry (Minister J.P. Nadda) is set to launch 'e-Sushrut Clinic', a low-cost Hospital Management Information System (HMIS) software. Developed by C-DAC (Centre for Development of Advanced Computing), the cloud-based platform will automate patient registration, billing, voice-to-text prescriptions, and data reporting. This initiative, priced at ₹499/month (subsidized to ₹299/month via the National Health Authority), will integrate these clinics into the digital healthcare grid.</p>
+                    <p class="lang-ta">சிறிய மருத்துவ மையங்களுக்கான (Clinics) குறைந்த விலையிலான 'இ-சுஸ்ருத் கிளினிக்' (e-Sushrut Clinic) மருத்துவமனை மேலாண்மை மென்பொருளை மத்திய சுகாதாரத்துறை அமைச்சர் ஜே.பி. நட்டா அறிமுகப்படுத்த உள்ளார். 'சி-டாக்' (C-DAC) நிறுவனத்தால் உருவாக்கப்பட்ட இந்த மென்பொருள், நோயாளிகள் பதிவு, ரசீது தயாரிப்பு, குரலை உரையாக மாற்றும் தொழில்நுட்பம் (voice-to-text) போன்ற அம்சங்களைக் கொண்டுள்ளது. தேசிய மருத்துவ ஆணையத்தின் (NHA) மானியத்துடன் மாதத்துக்கு ரூ.299 கட்டணத்தில் இந்த மென்பொருள் சேவையை மருத்துவர்கள் பயன்படுத்தலாம்.</p>
+                </div>
+
+            </section>
+
+            <!-- INTERNATIONAL NEWS -->
+            <section id="international">
+                <h2>
+                    <span class="lang-en">International News</span>
+                    <span class="lang-ta">சர்வதேச செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Geopolitics · US Sanctions</span>
+                        <span class="badge bg-trap">TRAP</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">US Imposes Sanctions on Indian Firm 'SPL' for Fueling Sudan Civil War</span>
+                        <span class="lang-ta">சூடானில் உள்நாட்டுப் போரைத் தூண்டுவதாக இந்திய நிறுவனம் மீது அமெரிக்கா தடை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The United States has imposed strict economic sanctions on an Indian company, SPL (SPL Energy Limited), and its CEO Alok Choudhary. The US State Department accused the firm of supplying weapons, explosives, and foreign fighters to warring factions in Sudan, thereby prolonging the devastating civil war. Sanctions were also placed on entities from Egypt, Sudan, and Colombia for similar involvement.</p>
+                    <p class="lang-ta">ஆப்பிரிக்க நாடான சூடானில் நடைபெற்று வரும் உள்நாட்டுப் போரைத் தூண்டிவிடும் வகையில் ஆயுதங்கள் மற்றும் வெடிபொருட்களை விநியோகித்ததாகக் கூறி, இந்தியாவைச் சேர்ந்த எஸ்பிஎல் (SPL) நிறுவனம் மற்றும் அதன் சிஇஓ அலோக் சௌதரி மீது அமெரிக்கா பொருளாதாரத் தடை விதித்துள்ளது. இதுதவிர, எகிப்து, சூடான் மற்றும் கொலம்பியாவைச் சேர்ந்த அமைப்புகள் மற்றும் நபர்கள் மீதும் இதே குற்றச்சாட்டின் அடிப்படையில் அமெரிக்கா தடை விதித்துள்ளது.</p>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Geopolitics · Middle East</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Israel-Lebanon Temporary Peace Pact Signed; Hezbollah Rejects It</span>
+                        <span class="lang-ta">இஸ்ரேல் - லெபனான் இடையே அமெரிக்காவில் அமைதி ஒப்பந்தம் கையெழுத்து; நிராகரித்தது ஹிஸ்புல்லா அமைப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">An initial temporary peace agreement aimed at ending the conflict between Israel and Lebanon was signed in Washington D.C., mediated by the United States. Under the pact, the US will provide Lebanon with $130 million in humanitarian and military aid to re-establish control in the southern regions. However, the Iran-backed Hezbollah militant group completely rejected the agreement, stating it equals surrender and refused to hand over their weapons, leading to continued drone strikes by Israel.</p>
+                    <p class="lang-ta">இஸ்ரேல் மற்றும் லெபனான் இடையேயான மோதலை முடிவுக்குக் கொண்டுவரும் நோக்கில், அமெரிக்காவின் மத்தியஸ்தத்தில் முதல்கட்ட அமைதி ஒப்பந்தம் வாஷிங்டனில் கையெழுத்தானது. இதன்படி, லெபனானில் மனிதாபிமான உதவி மற்றும் ராணுவக் கட்டமைப்பை மேம்படுத்த அமெரிக்கா 13 கோடி டாலர் நிதியுதவி வழங்கும். ஆனால், இந்த ஒப்பந்தத்தை ஈரான் ஆதரவு பெற்ற ஹிஸ்புல்லா அமைப்பு முற்றிலும் நிராகரித்துள்ளது. இது சரணடைவதற்குச் சமம் என்றும், ஆயுதங்களை ஒப்படைக்கப் போவதில்லை என்றும் அவ்வமைப்பு அறிவித்ததால், இஸ்ரேலிய தாக்குதல்கள் தொடர்கின்றன.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Defence · Naval Diplomacy</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Indian Navy's INS Sudarshini Reaches US for 250th Independence Day</span>
+                        <span class="lang-ta">அமெரிக்காவின் 250-வது சுதந்திர தின கொண்டாட்டம்: பங்கேற்கிறது இந்திய கடற்படைக் கப்பல் 'ஐஎன்எஸ் சுதர்சினி'</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Indian Navy's sail training ship, INS Sudarshini, has reached the port of Baltimore, Maryland, to participate in the United States' 250th Independence Day celebrations scheduled for July 4. The domestically built ship has been on a global voyage named 'Lokayan 26', traversing over 22,000 nautical miles across the Middle East, Europe, and Africa, promoting the vision of "Vasudhaiva Kutumbakam" (The World is One Family).</p>
+                    <p class="lang-ta">வரும் ஜூலை 4-ஆம் தேதி கொண்டாடப்பட உள்ள அமெரிக்காவின் 250-வது சுதந்திர தின விழாவில் பங்கேற்பதற்காக, இந்தியக் கடற்படையின் பாய்மரப் பயிற்சி கப்பலான 'ஐஎன்எஸ் சுதர்சினி' (INS Sudarshini) மேரிலாந்தில் உள்ள பால்டிமோர் துறைமுகத்தைச் சென்றடைந்தது. உள்நாட்டில் வடிவமைக்கப்பட்ட இக்கப்பல், 'லோக்யான் 26' (Lokayan 26) என்ற பெயரில் "யாதும் ஊரே யாவரும் கேளிர்" (வசுதைவ குடும்பகம்) என்ற நோக்கத்துடன், 22,000 கடல் மைல்களுக்கு மேல் பயணித்து ஆப்பிரிக்கா, ஐரோப்பா நாடுகளைக் கடந்து அமெரிக்காவை அடைந்துள்ளது.</p>
+                </div>
+
+            </section>
+
+            <!-- ECONOMY & FINANCE -->
+            <section id="economy">
+                <h2>
+                    <span class="lang-en">Economy & Tech</span>
+                    <span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Macro Indicators · RBI</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">India's Forex Reserves Jump by $9.63 Billion to Reach $672.58 Billion</span>
+                        <span class="lang-ta">இந்தியாவின் அந்நியச் செலாவணி கையிருப்பு 672.58 பில்லியன் டாலராக உயர்வு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">According to the latest data from the Reserve Bank of India (RBI), India's foreign exchange (Forex) reserves saw a massive jump of $9.63 billion, reaching $672.58 billion for the week ending June 19, 2026. This increase was primarily driven by a surge in gold reserves, which increased by $4.11 billion to reach $107.93 billion. Foreign Currency Assets (FCA) slightly decreased by $3.07 billion to $541.21 billion.</p>
+                    <p class="lang-ta">இந்திய ரிசர்வ் வங்கியின் (RBI) சமீபத்திய தரவுகளின்படி, கடந்த ஜூன் 19-ஆம் தேதியுடன் முடிவடைந்த வாரத்தில் இந்தியாவின் அந்நியச் செலாவணி கையிருப்பு 9.63 பில்லியன் டாலர் (சுமார் ரூ.80,000 கோடி) அதிகரித்து 672.58 பில்லியன் டாலராக உயர்ந்துள்ளது. இதற்குக் காரணம் தங்கம் கையிருப்பு 4.11 பில்லியன் டாலர் அதிகரித்து 107.93 பில்லியன் டாலராக உயர்ந்ததே ஆகும். அதேநேரம், அந்நிய நாணய சொத்துகள் (FCA) சற்று குறைந்து 541.21 பில்லியன் டாலராக உள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Economy Hook:</strong> Forex reserves consist of 1. Foreign Currency Assets (FCA), 2. Gold, 3. Special Drawing Rights (SDRs with IMF), and 4. Reserve Tranche Position in the IMF. FCA is the largest component.</span><span class="lang-ta"><strong>பொருளாதாரக் குறிப்பு:</strong> அந்நியச் செலாவணி கையிருப்பு என்பது 1. அந்நிய நாணய சொத்துகள் (FCA), 2. தங்கம், 3. சிறப்பு வரைவு உரிமைகள் (SDR), 4. IMF-இல் உள்ள இருப்பு நிலை (RTP) ஆகியவற்றை உள்ளடக்கியது. இதில் FCA தான் பெரும் பங்கு வகிக்கிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Telecom · TRAI</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Telecom Subscribers in India Reach 134.3 Crore; Jio and Airtel Dominate</span>
+                        <span class="lang-ta">இந்தியாவில் தொலைத்தொடர்பு வாடிக்கையாளர்கள் எண்ணிக்கை 134.3 கோடியாக உயர்வு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The total number of telecom subscribers in India reached a new high of 134.31 crore by the end of May, reflecting a monthly growth of 0.42%, as per the Telecom Regulatory Authority of India (TRAI). Of the 55.6 lakh new subscribers added in May, Bharti Airtel and Reliance Jio collectively accounted for 94%. Airtel added 29.8 lakh customers, while Jio added 22.55 lakh. Jio remains the market leader in the broadband sector with 52.96 crore subscribers.</p>
+                    <p class="lang-ta">இந்தியத் தொலைத்தொடர்பு ஒழுங்குமுறை ஆணையத்தின் (TRAI) அறிக்கையின்படி, நாட்டின் ஒட்டுமொத்த தொலைத்தொடர்பு வாடிக்கையாளர்களின் எண்ணிக்கை மே மாதத்தில் 134.31 கோடியாக அதிகரித்துள்ளது. மே மாதத்தில் புதிதாக இணைந்த 55.6 லட்சம் வாடிக்கையாளர்களில் 94% பேர் ஏர்டெல் மற்றும் ஜியோ வலையமைப்பைத் தேர்ந்தெடுத்துள்ளனர். ஏர்டெல் 29.8 லட்சம் பேரையும், ஜியோ 22.55 லட்சம் பேரையும் இணைத்துள்ளன. பிராட்பேண்ட் சேவையில் 52.96 கோடி வாடிக்கையாளர்களுடன் ஜியோ தொடர்ந்து முதலிடத்தில் உள்ளது.</p>
+                </div>
+
+            </section>
+            
+            <!-- SPORTS -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports</span>
+                    <span class="lang-ta">விளையாட்டு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Football · FIFA World Cup 2026</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">FIFA World Cup: France Beats Norway 4-1; Cape Verde Creates History</span>
+                        <span class="lang-ta">உலகக் கோப்பை கால்பந்து: நார்வேயை 4-1 என வீழ்த்தியது பிரான்ஸ்; கேப் வெர்டே நாக்-அவுட் சுற்றுக்கு முன்னேற்றம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In the FIFA World Cup Group I match, former champions France thrashed Norway 4-1, with Ousmane Dembele scoring a brilliant hat-trick. In another major outcome, the small African island nation of Cape Verde drew 0-0 with Saudi Arabia, officially advancing to the knockout stages for the first time in history. Meanwhile, Spain defeated two-time champions Uruguay 1-0, eliminating Uruguay from the tournament in the group stage itself.</p>
+                    <p class="lang-ta">உலகக் கோப்பை கால்பந்துப் போட்டியில் குரூப்-ஐ பிரிவில் முன்னாள் சாம்பியன் பிரான்ஸ் 4-1 என்ற கோல் கணக்கில் நார்வேயை வீழ்த்தியது. பிரான்ஸ் வீரர் உஸ்மான் டெம்பேலே 'ஹாட்ரிக்' கோல் அடித்து அசத்தினார். மற்றொரு போட்டியில், ஆப்பிரிக்க கண்டத்தின் சிறிய தீவு நாடான கேப் வெர்டே 0-0 என சவூதி அரேபியாவுடன் டிரா செய்து, வரலாற்றுச் சாதனையாக முதல்முறையாக நாக்-அவுட் சுற்றுக்கு முன்னேறியது. ஸ்பெயின் 1-0 என்ற கணக்கில் இருமுறை சாம்பியனான உருகுவேயை வீழ்த்தியது. இதனால் உருகுவே தொடரை விட்டு வெளியேறியது.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Hockey · FIH Pro League</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">FIH Pro League: India Crushes Pakistan 7-1 in London</span>
+                        <span class="lang-ta">எஃப்ஐஎச் ப்ரோ ஹாக்கி தொடர்: பாகிஸ்தானை 7-1 என வீழ்த்தி இந்தியா அபார வெற்றி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In the FIH Pro League Hockey tournament held in London, the Indian men's hockey team registered a dominating 7-1 victory over arch-rivals Pakistan. Despite Pakistan taking an early lead via a penalty corner, India bounced back powerfully in the second quarter. Goals from Sukhjeet Singh, Harmanpreet Singh, Hardik Singh, Jugraj Singh, Abhishek, Rajkumar Pal, and Dilpreet Singh sealed the comprehensive win for India.</p>
+                    <p class="lang-ta">லண்டனில் நடைபெற்ற எஃப்ஐஎச் (FIH) ப்ரோ ஹாக்கி லீக் தொடரில், இந்திய ஆடவர் ஹாக்கி அணி 7-1 என்ற கோல் கணக்கில் தனது பரம எதிரியான பாகிஸ்தானை வீழ்த்தி அபார வெற்றி பெற்றது. போட்டியின் தொடக்கத்தில் பாகிஸ்தான் கோல் அடித்து முன்னிலை பெற்றாலும், இரண்டாவது கால்பகுதியில் இருந்து இந்தியா ஆதிக்கம் செலுத்தியது. இந்தியாவின் சார்பில் சுக்ஜீத் சிங், ஹர்மன்பிரீத் சிங், ஹர்திக் சிங், ஜுக்ராஜ் சிங், அபிஷேக், ராஜ்குமார் பால், தில்ப்ரீத் சிங் ஆகியோர் தலா ஒரு கோல் அடித்தனர்.</p>
+                </div>
+
+            </section>
+
+            <!-- OBITUARIES -->
+            <section id="obituary">
+                <h2>
+                    <span class="lang-en">Obituaries</span>
+                    <span class="lang-ta">காலமானவர்கள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Obituary · Cinema</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Veteran Director "Screenplay King" K. Bhagyaraj Passes Away at 73</span>
+                        <span class="lang-ta">‘திரைக்கதை மன்னன்’ இயக்குநர் கே.பாக்யராஜ் (73) காலமானார்: அரசு மரியாதையுடன் இறுதிச்சடங்கு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Legendary Tamil film director, actor, and screenwriter K. Bhagyaraj (73) passed away in Chennai due to a heart attack. Often hailed as the "Screenplay King" of Tamil cinema, he debuted as a director with "Suvarilladha Chiththirangal" and delivered monumental hits like "Mundhanai Mudichu" and "Andha 7 Naatkal". He started his career as an assistant to director Bharathiraja. CM Joseph Vijay, Leader of Opposition Udhayanidhi Stalin, and other leaders paid their respects. His final rites will be conducted with full State honours.</p>
+                    <p class="lang-ta">பிரபல திரைப்பட இயக்குநரும், நடிகரும், 'திரைக்கதை மன்னன்' எனப் போற்றப்பட்டவருமான கே.பாக்யராஜ் (73) மாரடைப்பால் சென்னையில் காலமானார். இயக்குநர் பாரதிராஜாவிடம் உதவி இயக்குநராகப் பணியாற்றிய இவர், "சுவரில்லாத சித்திரங்கள்" மூலம் இயக்குநராக அறிமுகமாகி, "முந்தானை முடிச்சு", "அந்த 7 நாட்கள்" போன்ற பிளாக்பஸ்டர் படங்களைக் கொடுத்தார். இவருடைய உடலுக்கு முதல்வர் ஜோசப் விஜய், எதிர்க்கட்சித் தலைவர் உதயநிதி ஸ்டாலின் உள்ளிட்டோர் அஞ்சலி செலுத்தினர். இவருடைய இறுதிச்சடங்கு முழு அரசு மரியாதையுடன் நடைபெறும் என முதல்வர் அறிவித்துள்ளார்.</p>
+                </div>
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: The 'e-Sushrut Clinic' application, a Hospital Management Information System (HMIS) designed by the Central Government for small medical clinics, was developed by which of the following organizations?</span>
+                        <span class="lang-ta">கேள்வி: சிறிய மருத்துவ மையங்களுக்காக மத்திய அரசால் அறிமுகப்படுத்தப்பட்டுள்ள 'இ-சுஸ்ருத் கிளினிக்' (e-Sushrut Clinic) மருத்துவமனை மேலாண்மை மென்பொருளை உருவாக்கிய அமைப்பு எது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">C-DAC (Centre for Development of Advanced Computing)</span><br><br>
+                                <strong>Context:</strong> To digitize small clinics, the Ministry of Health launched this app. C-DAC developed it, and the National Health Authority provides a monthly subsidy to make it affordable for doctors.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">சி-டாக் (C-DAC)</span><br><br>
+                                <strong>பின்னணி:</strong> சிறிய கிளினிக்குகளை டிஜிட்டல் மயமாக்க சுகாதார அமைச்சகம் இதை அறிமுகப்படுத்தியது. சி-டாக் இதனை உருவாக்கியுள்ளது, மருத்துவர்கள் குறைந்த செலவில் பயன்படுத்த NHA இதற்கு மானியம் வழங்குகிறது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Which of the following components constitutes the largest proportion of India's Foreign Exchange (Forex) Reserves?</span>
+                        <span class="lang-ta">கேள்வி: இந்தியாவின் அந்நியச் செலாவணி கையிருப்பில் அதிக சதவீதத்தைக் கொண்டுள்ள கூறு கீழ்க்கண்டவற்றில் எது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Foreign Currency Assets (FCA)</span><br><br>
+                                <strong>Context:</strong> India's Forex reserves hit $672.58 billion. While Gold reserves drove the recent jump, Foreign Currency Assets (FCA) remain the largest chunk at $541.21 billion.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">அந்நிய நாணய சொத்துகள் (FCA)</span><br><br>
+                                <strong>பின்னணி:</strong> இந்தியாவின் அந்நியச் செலாவணி கையிருப்பு 672.58 பில்லியன் டாலரை எட்டியது. சமீபத்திய உயர்வுக்குத் தங்கம் காரணம் என்றாலும், FCA தான் 541.21 பில்லியன் டாலர்களுடன் பெரும் பகுதியைக் கொண்டுள்ளது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">TN BC Muslim Quota Order Quashed</span><span class="lang-ta">இஸ்லாமியர்களுக்கான இடஒதுக்கீடு ரத்து</span></td>
+                                <td><span class="lang-en">State/Polity</span><span class="lang-ta">மாநிலம்/அரசியல்</span></td>
+                                <td><span class="lang-en">HC: Converts to Islam cannot claim original caste BC quota.</span><span class="lang-ta">மதம் மாறியவர்கள் பழைய சாதி சலுகை கோர முடியாது - ஐகோர்ட்.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">PM Modi in Seychelles</span><span class="lang-ta">செஷல்ஸில் பிரதமர் மோடி</span></td>
+                                <td><span class="lang-en">National/IR</span><span class="lang-ta">தேசியம்/உறவுகள்</span></td>
+                                <td><span class="lang-en">Attends 50th National Day, gifts Fast Patrol Vessel.</span><span class="lang-ta">50வது தேசிய தின விழா; ரோந்து கப்பல் பரிசு.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">e-Sushrut Clinic Launched</span><span class="lang-ta">இ-சுஸ்ருத் கிளினிக்</span></td>
+                                <td><span class="lang-en">National/Health</span><span class="lang-ta">தேசியம்/சுகாதாரம்</span></td>
+                                <td><span class="lang-en">Low-cost HMIS app by C-DAC for small clinics.</span><span class="lang-ta">சிறிய மருத்துவ மையங்களுக்கான சி-டாக் மென்பொருள்.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">Bharat Taxi App</span><span class="lang-ta">பாரத் டாக்ஸி</span></td>
+                                <td><span class="lang-en">National/Economy</span><span class="lang-ta">தேசியம்/பொருளாதாரம்</span></td>
+                                <td><span class="lang-en">Cooperative taxi service launched by Amit Shah in Gujarat.</span><span class="lang-ta">கூட்டுறவு அடிப்படையில் புதிய டாக்ஸி சேவை குஜராத்தில் தொடக்கம்.</span></td>
+                                <td><span class="badge bg-tip">MED</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">Forex Reserves High</span><span class="lang-ta">அந்நியச் செலாவணி உயர்வு</span></td>
+                                <td><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></td>
+                                <td><span class="lang-en">Rises by $9.6B to reach $672.58 Billion (due to Gold).</span><span class="lang-ta">தங்கம் இருப்பால் 672.58 பில்லியன் டாலராக அந்நியச் செலாவணி உயர்வு.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td><span class="lang-en">Director K. Bhagyaraj Passes Away</span><span class="lang-ta">இயக்குநர் கே.பாக்யராஜ் மரணம்</span></td>
+                                <td><span class="lang-en">Obituary</span><span class="lang-ta">காலமானவர்கள்</span></td>
+                                <td><span class="lang-en">Screenplay King passed away at 73; full state honors.</span><span class="lang-ta">திரைக்கதை மன்னன் மறைவு; அரசு மரியாதையுடன் இறுதிச்சடங்கு.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani Chennai 28-06-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி சென்னை 28-06-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source text detailed state, national, and international news for 28 June 2026. 
+State news covered MDMK exiting the DMK alliance to support TVK. Manickam Tagore was appointed the TN Congress Committee President. Veteran Director K. Bhagyaraj passed away at 73. The Madurai HC cancelled the TN Govt order providing BC Muslim reservation to Hindu converts to Islam. CM Vijay launched the Pulse Polio camp for 52.91 lakh children. Ennore Ammonia leak death toll rose to 16. Tirupati waiting time touched 24 hours. 
+National news: PM Modi arrived in Seychelles for its 50th National Day and gifted a Fast Patrol Vessel. Amit Shah launched the 'Bharat Taxi' cooperative app in Gujarat. The Health Ministry is set to launch 'e-Sushrut Clinic', developed by C-DAC. Two top officials of the Ram Mandir Trust resigned over a donation counting scam. Maharashtra TET was postponed due to a paper leak. 
+International news: The US sanctioned Indian firm SPL for supplying arms to Sudan. A temporary Israel-Lebanon peace deal was signed in the US but rejected by Hezbollah. Indian Navy ship INS Sudarshini arrived in the US for its 250th Independence Day. A 6.1 magnitude earthquake hit Afghanistan. Two typhoons hit Japan. 
+Economy: India's Forex reserves reached $672.58 billion. Telecom subscribers in India hit 134.3 crore (Airtel & Jio leading). 
+Sports: France beat Norway 4-1 (Dembele hat-trick). Cape Verde advanced to the World Cup knockouts. India hockey team crushed Pakistan 7-1 in the FIH Pro League.]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூல உரைகள் 28 ஜூன் 2026 க்கான செய்திகளைக் கொண்டிருந்தன.
+மாநில செய்திகளில், திமுக கூட்டணியில் இருந்து மதிமுக விலகி தவெக-வை ஆதரிக்க முடிவு செய்தது. தமிழ்நாடு காங்கிரஸ் தலைவராக மாணிக்கம் தாகூர் நியமனம். திரைப்பட இயக்குநர் கே.பாக்யராஜ் (73) காலமானார். இந்து மதத்திலிருந்து மதம் மாறிய முஸ்லிம்களுக்கான இடஒதுக்கீடு அரசாணையை உயர்நீதிமன்றம் ரத்து செய்தது. 52.91 லட்சம் குழந்தைகளுக்கான போலியோ முகாமை முதல்வர் விஜய் தொடங்கி வைத்தார். எண்ணூர் விபத்து பலி 16-ஆக உயர்வு. திருப்பதி தரிசனத்துக்கு 24 மணிநேரம் காத்திருப்பு.
+தேசிய அளவில்: செஷல்ஸின் 50வது தேசிய தினத்திற்காகச் சென்ற பிரதமர் மோடி ரோந்து கப்பலைப் பரிசளித்தார். குஜராத்தில் 'பாரத் டாக்ஸி' என்ற கூட்டுறவு டாக்ஸி சேவையை அமித் ஷா தொடங்கி வைத்தார். 'சி-டாக்' உருவாக்கிய 'இ-சுஸ்ருத் கிளினிக்' மென்பொருள் அறிமுகம். ராமர் கோயில் நன்கொடை மோசடி: அறக்கட்டளை நிர்வாகிகள் 2 பேர் ராஜிநாமா. வினாத்தாள் கசிவால் மகாராஷ்டிர TET தேர்வு ஒத்திவைப்பு.
+சர்வதேச அளவில்: சூடானுக்கு ஆயுதம் வழங்கியதாக இந்திய நிறுவனம் மீது அமெரிக்கா தடை. இஸ்ரேல்-லெபனான் அமைதி ஒப்பந்தம் அமெரிக்காவில் கையெழுத்து (ஹிஸ்புல்லா நிராகரிப்பு). அமெரிக்காவின் 250வது சுதந்திர தினத்திற்கு 'ஐஎன்எஸ் சுதர்சினி' கப்பல் சென்றது. ஆப்கானிஸ்தானில் நிலநடுக்கம். ஜப்பானில் 2 புயல்கள்.
+பொருளாதாரம்: இந்தியாவின் அந்நியச் செலாவணி 672.58 பில்லியன் டாலராக உயர்வு. தொலைத்தொடர்பு வாடிக்கையாளர்கள் எண்ணிக்கை 134.3 கோடியாக அதிகரிப்பு.
+விளையாட்டு: பிரான்ஸ் 4-1 என நார்வேயை வீழ்த்தியது (டெம்பேலே ஹாட்ரிக்). உலகக் கோப்பையில் கேப் வெர்டே நாக்-அவுட் சுற்றுக்கு முன்னேற்றம். ஹாக்கியில் பாகிஸ்தானை 7-1 என வீழ்த்தியது இந்தியா.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 28 June 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+    </script>
+</body>
+</html>
