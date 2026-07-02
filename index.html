@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -2535,13 +2535,242 @@
 
     /* ─────────────── FILTER / SEARCH ─────────────── */
     function filterCards() {
-      const q = document.getElementById('searchInput').value.toLowerCase();
-      document.querySelectorAll('.card').forEach(c => {
-        const tags = (c.dataset.tags || '').toLowerCase();
-        const title = (c.querySelector('.card-title')?.textContent || '').toLowerCase();
-        const desc = (c.querySelector('.card-desc')?.textContent || '').toLowerCase();
-        c.style.display = (!q || tags.includes(q) || title.includes(q) || desc.includes(q)) ? '' : 'none';
+      const q = document.getElementById('searchInput').value.trim();
+      const exam = EXAMS[currentExam];
+      const subject = exam.subjects.find(s => s.id === currentSubjectId);
+      const section = subject.sections[currentSectionId];
+      
+      const sectionHeader = document.querySelector('.section-header');
+      const filterRow = document.querySelector('.filter-row');
+      const progressCard = document.querySelector('.progress-card');
+      const cardsGrid = document.getElementById('cardsGrid');
+
+      if (!q) {
+        // Restore original view
+        if (sectionHeader) {
+          sectionHeader.style.display = '';
+          sectionHeader.innerHTML = `
+            <div>
+              <div class="section-label">${section.sectionLabel}</div>
+              <div class="section-title">${section.sectionTitle}</div>
+            </div>
+            <div class="section-count">${section.count}</div>
+          `;
+        }
+        if (filterRow) filterRow.style.display = '';
+        if (progressCard) progressCard.style.display = '';
+        if (cardsGrid) {
+          let html = '';
+          section.cards.forEach(card => {
+            html += renderCard(card);
+          });
+          cardsGrid.innerHTML = html;
+        }
+        return;
+      }
+
+      // We have a search query!
+      if (filterRow) filterRow.style.display = 'none';
+      if (progressCard) progressCard.style.display = 'none';
+
+      const qLower = q.toLowerCase();
+      const matches = [];
+
+      // Collect ALL cards across the entire project
+      const allCards = [];
+
+      // 1. Regular cards from EXAMS
+      for (const exId in EXAMS) {
+        const ex = EXAMS[exId];
+        (ex.subjects || []).forEach(sub => {
+          for (const secId in (sub.sections || {})) {
+            const sec = sub.sections[secId];
+            if (Array.isArray(sec.cards)) {
+              sec.cards.forEach(c => {
+                if (c.href && c.href !== '#' && c.href !== 'CA-v2/index.html') {
+                  if (!allCards.some(existing => existing.href === c.href)) {
+                    allCards.push({
+                      ...c,
+                      sourceTab: ex.label,
+                      sourceSubject: sub.label
+                    });
+                  }
+                }
+              });
+            }
+          }
+        });
+      }
+
+      // Helper to format CA entry
+      const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      function makeCACard(entry) {
+        const TOPIC_STYLE = {
+          science: { icon: '🔬', accent: '#22d3ee' },
+          environment: { icon: '🌿', accent: '#4ecb7a' },
+          tn: { icon: '🏛️', accent: '#f97316' },
+          international: { icon: '🌍', accent: '#0891b2' },
+          polity: { icon: '⚖️', accent: '#a78bfa' },
+          economy: { icon: '📈', accent: '#f5c842' },
+        };
+        const style = TOPIC_STYLE[entry.topic] || { icon: '📰', accent: '#6b7280' };
+        const [yr, mo, dy] = entry.date.split('-').map(Number);
+        const mon = MONTHS[mo - 1] || '';
+        const shortTitle = entry.title.replace(/^[A-Za-z]+ \d+, \d+ [—\-] /, '');
+        const tagStr = ['current affairs', ...entry.tags.map(t => t.toLowerCase()), 'ready'].join(' ');
+        return {
+          href: `CA-v2/${entry.file}`,
+          accent: style.accent,
+          icon: style.icon,
+          tags: tagStr,
+          sub: `Current Affairs · ${mon} ${dy}, ${yr}`,
+          title: shortTitle,
+          desc: entry.desc,
+          badges: [
+            { cls: 'badge-new', text: 'New' },
+            { cls: 'badge-ready', text: 'Ready' }
+          ],
+          meta: [
+            { v: String(entry.mcqs), l: 'MCQs' },
+            { v: `${mon} ${dy}`, l: String(yr) }
+          ],
+          locked: false,
+          sourceTab: 'Current Affairs',
+          sourceSubject: 'Daily Analysis'
+        };
+      }
+
+      // Helper to format Newspaper entry
+      function makeNPCard(np) {
+        const [yr, mo, dy] = np.date.split('-').map(Number);
+        const mon = MONTHS[mo - 1] || '';
+        return {
+          href: `CA-v2/${np.file}`,
+          accent: '#ef4444',
+          icon: '🗞️',
+          tags: ['newspaper', ...np.topics.map(t => t.toLowerCase())].join(' '),
+          sub: `Newspaper · ${mon} ${dy}, ${yr}`,
+          title: np.title,
+          desc: np.desc,
+          badges: [
+            { cls: 'badge-new', text: 'Newspaper' },
+            { cls: 'badge-ready', text: 'Ready' }
+          ],
+          meta: [
+            { v: `${mon} ${dy}`, l: String(yr) }
+          ],
+          locked: false,
+          sourceTab: 'Newspapers',
+          sourceSubject: 'Daily Headlines'
+        };
+      }
+
+      // 2. CA cards
+      if (window.ALL_CA_DATA) {
+        window.ALL_CA_DATA.forEach(e => {
+          const c = makeCACard(e);
+          if (!allCards.some(existing => existing.href === c.href)) {
+            allCards.push(c);
+          }
+        });
+      }
+
+      // 3. Newspaper cards
+      if (window.ALL_NP_DATA) {
+        window.ALL_NP_DATA.forEach(np => {
+          const c = makeNPCard(np);
+          if (!allCards.some(existing => existing.href === c.href)) {
+            allCards.push(c);
+          }
+        });
+      }
+
+      // Filter allCards by query
+      allCards.forEach(card => {
+        const title = (card.title || '').toLowerCase();
+        const desc = (card.desc || '').toLowerCase();
+        const tags = (card.tags || '').toLowerCase();
+        const sub = (card.sub || '').toLowerCase();
+        
+        let match = false;
+        let matchedByBody = false;
+        let bodySnippet = '';
+
+        if (title.includes(qLower) || desc.includes(qLower) || tags.includes(qLower) || sub.includes(qLower)) {
+          match = true;
+        } else {
+          // Check indexed file contents
+          const fileText = window.FILE_CONTENTS[card.href] || window.FILE_CONTENTS[`CA-v2/${card.href}`];
+          if (fileText) {
+            const idx = fileText.toLowerCase().indexOf(qLower);
+            if (idx !== -1) {
+              match = true;
+              matchedByBody = true;
+              // Extract snippet
+              const start = Math.max(0, idx - 40);
+              const end = Math.min(fileText.length, idx + q.length + 40);
+              bodySnippet = '...' + fileText.substring(start, end).replace(/\s+/g, ' ').trim() + '...';
+            }
+          }
+        }
+
+        if (match) {
+          // Create a copy of the card to avoid modifying original reference
+          const cardCopy = JSON.parse(JSON.stringify(card));
+          
+          // Add source label to sub
+          cardCopy.sub = `${cardCopy.sourceTab} > ${cardCopy.sourceSubject} · ${cardCopy.sub}`;
+
+          // Highlight function
+          function highlightText(text, term) {
+            if (!text) return '';
+            const regex = new RegExp('(' + escapeRegExp(term) + ')', 'gi');
+            return text.replace(regex, '<mark style="background-color:rgba(245,200,66,0.3);color:#fff;border-radius:2px;padding:0 2px;">$1</mark>');
+          }
+
+          function escapeRegExp(string) {
+            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          }
+
+          cardCopy.title = highlightText(cardCopy.title, q);
+          if (matchedByBody && bodySnippet) {
+            cardCopy.desc = `<span style="color:var(--muted);font-style:italic;font-size:12px;display:block;margin-bottom:4px;">Body Match:</span>` + highlightText(bodySnippet, q);
+          } else {
+            cardCopy.desc = highlightText(cardCopy.desc, q);
+          }
+
+          matches.push(cardCopy);
+        }
       });
+
+      // Update Section Header for search stats
+      if (sectionHeader) {
+        sectionHeader.style.display = '';
+        sectionHeader.innerHTML = `
+          <div>
+            <div class="section-label">Search Results</div>
+            <div class="section-title">Matches for "${q}"</div>
+          </div>
+          <div class="section-count">${matches.length} files</div>
+        `;
+      }
+
+      // Render matches
+      if (cardsGrid) {
+        if (matches.length > 0) {
+          let html = '';
+          matches.forEach(card => {
+            html += renderCard(card);
+          });
+          cardsGrid.innerHTML = html;
+        } else {
+          cardsGrid.innerHTML = `
+            <div style="grid-column: 1/-1; padding: 40px 0; text-align: center; color: var(--muted); font-family: 'IBM Plex Mono', monospace; font-size: 13px;">
+              No matches found for "${q}". Try checking spelling or search in another language.
+            </div>
+          `;
+        }
+      }
     }
 
     function filterBy(type, btn) {
@@ -2711,6 +2940,59 @@
       }
     }
 
+    /* ─────────────── BACKGROUND INDEXING ─────────────── */
+    window.FILE_CONTENTS = {};
+    async function indexFileContentsInBackground() {
+      const uniqueHrefs = [];
+      for (const exam of Object.values(EXAMS)) {
+        for (const subject of (exam.subjects || [])) {
+          for (const sec of Object.values(subject.sections || {})) {
+            if (Array.isArray(sec.cards)) {
+              sec.cards.forEach(c => {
+                if (c.href && c.href.endsWith('.html') && c.href !== 'CA-v2/index.html') {
+                  if (!uniqueHrefs.includes(c.href)) {
+                    uniqueHrefs.push(c.href);
+                  }
+                }
+              });
+            }
+          }
+        }
+      }
+      if (window.ALL_CA_DATA) {
+        window.ALL_CA_DATA.forEach(e => {
+          const href = `CA-v2/${e.file}`;
+          if (href.endsWith('.html') && !uniqueHrefs.includes(href)) {
+            uniqueHrefs.push(href);
+          }
+        });
+      }
+      if (window.ALL_NP_DATA) {
+        window.ALL_NP_DATA.forEach(np => {
+          const href = `CA-v2/${np.file}`;
+          if (href.endsWith('.html') && !uniqueHrefs.includes(href)) {
+            uniqueHrefs.push(href);
+          }
+        });
+      }
+
+      for (const href of uniqueHrefs) {
+        await new Promise(r => setTimeout(r, 50));
+        try {
+          const res = await fetch(href);
+          if (res.ok) {
+            const html = await res.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            doc.querySelectorAll('script, style').forEach(el => el.remove());
+            window.FILE_CONTENTS[href] = doc.body.textContent || '';
+          }
+        } catch (e) {
+          console.warn('Failed to index file in background:', href, e);
+        }
+      }
+    }
+
     /* ─────────────── INIT ─────────────── */
     async function init() {
       // Show loading indicator while fetching data
@@ -2726,29 +3008,32 @@
          </div>`;
 
       try {
-        const cached = sessionStorage.getItem('arivoam_exams');
-        const cacheDate = sessionStorage.getItem('arivoam_exams_date');
-        const today = new Date().toDateString();
-        if (cached && cacheDate === today) {
-          EXAMS = JSON.parse(cached);
-        } else {
-          const res = await fetch('data/exams.json', { cache: 'no-store' });
-          if (!res.ok) throw new Error('HTTP ' + res.status);
-          EXAMS = await res.json();
-          sessionStorage.setItem('arivoam_exams', JSON.stringify(EXAMS));
-          sessionStorage.setItem('arivoam_exams_date', today);
-        }
+        // ALWAYS load data fresh from data/exams.json (no-cache, no sessionStorage)
+        const res = await fetch('data/exams.json', { cache: 'no-store' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        EXAMS = await res.json();
 
         try {
           const caRes = await fetch('CA-v2/ca.json', { cache: 'no-store' });
           if (caRes.ok) {
             const caData = await caRes.json();
             injectCACards(caData);
+            window.ALL_CA_DATA = caData;
+          }
+        } catch (_) { }
+
+        try {
+          const npRes = await fetch('CA-v2/newspapers.json', { cache: 'no-store' });
+          if (npRes.ok) {
+            window.ALL_NP_DATA = await npRes.json();
           }
         } catch (_) { }
 
         const lastTab = (function () { try { return localStorage.getItem('arivoam_last_tab') || 'ssc'; } catch (e) { return 'ssc'; } })();
         switchExam(lastTab, null, null, null);
+
+        // Start indexing file contents in the background
+        indexFileContentsInBackground();
       } catch (err) {
         document.getElementById('subjectNav').innerHTML = '';
         document.getElementById('contentArea').innerHTML =
