@@ -2535,10 +2535,13 @@
 
     /* ─────────────── FILTER / SEARCH ─────────────── */
     function filterCards() {
-      const q = document.getElementById('searchInput').value.trim();
+      const searchInput = document.getElementById('searchInput');
+      if (!searchInput) return;
+      const q = searchInput.value.trim();
+      
       const exam = EXAMS[currentExam];
-      const subject = exam.subjects.find(s => s.id === currentSubjectId);
-      const section = subject.sections[currentSectionId];
+      const subject = (exam && exam.subjects) ? exam.subjects.find(s => s.id === currentSubjectId) : null;
+      const section = (subject && subject.sections) ? subject.sections[currentSectionId] : null;
       
       const sectionHeader = document.querySelector('.section-header');
       const filterRow = document.querySelector('.filter-row');
@@ -2547,19 +2550,19 @@
 
       if (!q) {
         // Restore original view
-        if (sectionHeader) {
+        if (sectionHeader && section) {
           sectionHeader.style.display = '';
           sectionHeader.innerHTML = `
             <div>
-              <div class="section-label">${section.sectionLabel}</div>
-              <div class="section-title">${section.sectionTitle}</div>
+              <div class="section-label">${section.sectionLabel || ''}</div>
+              <div class="section-title">${section.sectionTitle || ''}</div>
             </div>
-            <div class="section-count">${section.count}</div>
+            <div class="section-count">${section.count || ''}</div>
           `;
         }
         if (filterRow) filterRow.style.display = '';
         if (progressCard) progressCard.style.display = '';
-        if (cardsGrid) {
+        if (cardsGrid && section && Array.isArray(section.cards)) {
           let html = '';
           section.cards.forEach(card => {
             html += renderCard(card);
@@ -2582,29 +2585,34 @@
       // 1. Regular cards from EXAMS
       for (const exId in EXAMS) {
         const ex = EXAMS[exId];
-        (ex.subjects || []).forEach(sub => {
-          for (const secId in (sub.sections || {})) {
-            const sec = sub.sections[secId];
-            if (Array.isArray(sec.cards)) {
-              sec.cards.forEach(c => {
-                if (c.href && c.href !== '#' && c.href !== 'CA-v2/index.html') {
-                  if (!allCards.some(existing => existing.href === c.href)) {
-                    allCards.push({
-                      ...c,
-                      sourceTab: ex.label,
-                      sourceSubject: sub.label
-                    });
-                  }
+        if (ex && Array.isArray(ex.subjects)) {
+          ex.subjects.forEach(sub => {
+            if (sub && sub.sections) {
+              for (const secId in sub.sections) {
+                const sec = sub.sections[secId];
+                if (sec && Array.isArray(sec.cards)) {
+                  sec.cards.forEach(c => {
+                    if (c && c.href && c.href !== '#' && c.href !== 'CA-v2/index.html') {
+                      if (!allCards.some(existing => existing.href === c.href)) {
+                        allCards.push({
+                          ...c,
+                          sourceTab: ex.label || 'Notes',
+                          sourceSubject: sub.label || ''
+                        });
+                      }
+                    }
+                  });
                 }
-              });
+              }
             }
-          }
-        });
+          });
+        }
       }
 
       // Helper to format CA entry
       const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
       function makeCACard(entry) {
+        if (!entry) return {};
         const TOPIC_STYLE = {
           science: { icon: '🔬', accent: '#22d3ee' },
           environment: { icon: '🌿', accent: '#4ecb7a' },
@@ -2614,10 +2622,16 @@
           economy: { icon: '📈', accent: '#f5c842' },
         };
         const style = TOPIC_STYLE[entry.topic] || { icon: '📰', accent: '#6b7280' };
-        const [yr, mo, dy] = entry.date.split('-').map(Number);
+        const dateStr = entry.date || '';
+        const parts = dateStr.split('-');
+        const yr = parts[0] || '';
+        const mo = Number(parts[1]) || 1;
+        const dy = parts[2] || '';
         const mon = MONTHS[mo - 1] || '';
-        const shortTitle = entry.title.replace(/^[A-Za-z]+ \d+, \d+ [—\-] /, '');
-        const tagStr = ['current affairs', ...entry.tags.map(t => t.toLowerCase()), 'ready'].join(' ');
+        const titleStr = entry.title || '';
+        const shortTitle = titleStr.replace(/^[A-Za-z]+ \d+, \d+ [—\-] /, '');
+        const tagsArr = Array.isArray(entry.tags) ? entry.tags : [];
+        const tagStr = ['current affairs', ...tagsArr.map(t => String(t).toLowerCase()), 'ready'].join(' ');
         return {
           href: `CA-v2/${entry.file}`,
           accent: style.accent,
@@ -2625,13 +2639,13 @@
           tags: tagStr,
           sub: `Current Affairs · ${mon} ${dy}, ${yr}`,
           title: shortTitle,
-          desc: entry.desc,
+          desc: entry.desc || '',
           badges: [
             { cls: 'badge-new', text: 'New' },
             { cls: 'badge-ready', text: 'Ready' }
           ],
           meta: [
-            { v: String(entry.mcqs), l: 'MCQs' },
+            { v: String(entry.mcqs || 0), l: 'MCQs' },
             { v: `${mon} ${dy}`, l: String(yr) }
           ],
           locked: false,
@@ -2642,16 +2656,22 @@
 
       // Helper to format Newspaper entry
       function makeNPCard(np) {
-        const [yr, mo, dy] = np.date.split('-').map(Number);
+        if (!np) return {};
+        const dateStr = np.date || '';
+        const parts = dateStr.split('-');
+        const yr = parts[0] || '';
+        const mo = Number(parts[1]) || 1;
+        const dy = parts[2] || '';
         const mon = MONTHS[mo - 1] || '';
+        const topicsArr = Array.isArray(np.topics) ? np.topics : [];
         return {
           href: `CA-v2/${np.file}`,
           accent: '#ef4444',
           icon: '🗞️',
-          tags: ['newspaper', ...np.topics.map(t => t.toLowerCase())].join(' '),
+          tags: ['newspaper', ...topicsArr.map(t => String(t).toLowerCase())].join(' '),
           sub: `Newspaper · ${mon} ${dy}, ${yr}`,
-          title: np.title,
-          desc: np.desc,
+          title: np.title || '',
+          desc: np.desc || '',
           badges: [
             { cls: 'badge-new', text: 'Newspaper' },
             { cls: 'badge-ready', text: 'Ready' }
@@ -2666,20 +2686,20 @@
       }
 
       // 2. CA cards
-      if (window.ALL_CA_DATA) {
+      if (Array.isArray(window.ALL_CA_DATA)) {
         window.ALL_CA_DATA.forEach(e => {
           const c = makeCACard(e);
-          if (!allCards.some(existing => existing.href === c.href)) {
+          if (c.href && !allCards.some(existing => existing.href === c.href)) {
             allCards.push(c);
           }
         });
       }
 
       // 3. Newspaper cards
-      if (window.ALL_NP_DATA) {
+      if (Array.isArray(window.ALL_NP_DATA)) {
         window.ALL_NP_DATA.forEach(np => {
           const c = makeNPCard(np);
-          if (!allCards.some(existing => existing.href === c.href)) {
+          if (c.href && !allCards.some(existing => existing.href === c.href)) {
             allCards.push(c);
           }
         });
@@ -2995,54 +3015,99 @@
 
     /* ─────────────── INIT ─────────────── */
     async function init() {
-      // Show loading indicator while fetching data
-      document.getElementById('subjectNav').innerHTML =
-        `<div class="nav-header" style="color:var(--muted)">Loading…</div>`;
-      document.getElementById('contentArea').innerHTML =
-        `<div style="display:flex;align-items:center;gap:12px;padding:40px 0;color:var(--muted);
-                     font-family:'IBM Plex Mono',monospace;font-size:13px;">
-           <div style="width:10px;height:10px;border-radius:50%;background:var(--gold);
-                       box-shadow:0 0 8px var(--gold);animation:pulse 2s ease-in-out infinite;
-                       flex-shrink:0;"></div>
-           Loading study data…
-         </div>`;
+      const cachedExams = sessionStorage.getItem('arivoam_exams');
+      const cachedCA = sessionStorage.getItem('arivoam_ca');
+      const cachedNP = sessionStorage.getItem('arivoam_np');
 
-      try {
-        // ALWAYS load data fresh from data/exams.json (no-cache, no sessionStorage)
-        const res = await fetch('data/exams.json', { cache: 'no-store' });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        EXAMS = await res.json();
-
+      let hasCached = false;
+      if (cachedExams) {
         try {
-          const caRes = await fetch('CA-v2/ca.json', { cache: 'no-store' });
-          if (caRes.ok) {
-            const caData = await caRes.json();
-            injectCACards(caData);
-            window.ALL_CA_DATA = caData;
-          }
-        } catch (_) { }
+          EXAMS = JSON.parse(cachedExams);
+          if (cachedCA) window.ALL_CA_DATA = JSON.parse(cachedCA);
+          if (cachedNP) window.ALL_NP_DATA = JSON.parse(cachedNP);
+          
+          if (window.ALL_CA_DATA) injectCACards(window.ALL_CA_DATA);
 
-        try {
-          const npRes = await fetch('CA-v2/newspapers.json', { cache: 'no-store' });
-          if (npRes.ok) {
-            window.ALL_NP_DATA = await npRes.json();
-          }
-        } catch (_) { }
+          hasCached = true;
+        } catch (e) {
+          hasCached = false;
+        }
+      }
 
+      if (hasCached) {
+        // Render immediately from cache (0ms delay!)
         const lastTab = (function () { try { return localStorage.getItem('arivoam_last_tab') || 'ssc'; } catch (e) { return 'ssc'; } })();
         switchExam(lastTab, null, null, null);
-
-        // Start indexing file contents in the background
+        // Start background indexing of cached files
         indexFileContentsInBackground();
-      } catch (err) {
-        document.getElementById('subjectNav').innerHTML = '';
+      } else {
+        // Show loading indicator only if we don't have cache
+        document.getElementById('subjectNav').innerHTML =
+          `<div class="nav-header" style="color:var(--muted)">Loading…</div>`;
         document.getElementById('contentArea').innerHTML =
-          `<div style="padding:40px 0;color:var(--red);font-family:'IBM Plex Mono',monospace;font-size:13px;">
-             ⚠ Failed to load data: ${err.message}<br>
-             <span style="color:var(--muted);font-size:11px;margin-top:8px;display:block;">
-               Make sure <strong>data/exams.json</strong> is accessible from the server root.
-             </span>
+          `<div style="display:flex;align-items:center;gap:12px;padding:40px 0;color:var(--muted);
+                       font-family:'IBM Plex Mono',monospace;font-size:13px;">
+             <div style="width:10px;height:10px;border-radius:50%;background:var(--gold);
+                         box-shadow:0 0 8px var(--gold);animation:pulse 2s ease-in-out infinite;
+                         flex-shrink:0;"></div>
+             Loading study data…
            </div>`;
+      }
+
+      // Revalidate in the background (completely silent, no spinner!)
+      try {
+        const res = await fetch('data/exams.json', { cache: 'no-store' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const freshExams = await res.json();
+
+        let freshCA = [];
+        try {
+          const caRes = await fetch('CA-v2/ca.json', { cache: 'no-store' });
+          if (caRes.ok) freshCA = await caRes.json();
+        } catch (_) { }
+
+        let freshNP = [];
+        try {
+          const npRes = await fetch('CA-v2/newspapers.json', { cache: 'no-store' });
+          if (npRes.ok) freshNP = await npRes.json();
+        } catch (_) { }
+
+        // Check if anything changed
+        const examsChanged = JSON.stringify(freshExams) !== cachedExams;
+        const caChanged = JSON.stringify(freshCA) !== cachedCA;
+        const npChanged = JSON.stringify(freshNP) !== cachedNP;
+
+        if (examsChanged || caChanged || npChanged || !hasCached) {
+          EXAMS = freshExams;
+          window.ALL_CA_DATA = freshCA;
+          window.ALL_NP_DATA = freshNP;
+
+          injectCACards(freshCA);
+
+          // Save to sessionStorage
+          sessionStorage.setItem('arivoam_exams', JSON.stringify(freshExams));
+          sessionStorage.setItem('arivoam_ca', JSON.stringify(freshCA));
+          sessionStorage.setItem('arivoam_np', JSON.stringify(freshNP));
+
+          // Re-render current view with the fresh data
+          const lastTab = (function () { try { return localStorage.getItem('arivoam_last_tab') || 'ssc'; } catch (e) { return 'ssc'; } })();
+          switchExam(lastTab, null, null, null);
+
+          // Re-index in background
+          indexFileContentsInBackground();
+        }
+      } catch (err) {
+        console.warn('Revalidation failed:', err);
+        if (!hasCached) {
+          document.getElementById('subjectNav').innerHTML = '';
+          document.getElementById('contentArea').innerHTML =
+            `<div style="padding:40px 0;color:var(--red);font-family:'IBM Plex Mono',monospace;font-size:13px;">
+               ⚠ Failed to load data: ${err.message}<br>
+               <span style="color:var(--muted);font-size:11px;margin-top:8px;display:block;">
+                 Make sure <strong>data/exams.json</strong> is accessible from the server root.
+               </span>
+             </div>`;
+        }
       }
     }
 

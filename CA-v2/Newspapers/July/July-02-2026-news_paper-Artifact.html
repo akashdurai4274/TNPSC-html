@@ -1,0 +1,710 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none !important; }
+        }
+
+        @media (max-width: 768px) {
+            .layout-container {
+                flex-direction: column;
+                padding: 1rem 0.5rem;
+                gap: 1rem;
+            }
+            main {
+                max-width: 100%;
+            }
+            header {
+                padding: 1.5rem 1rem;
+            }
+            header h1 {
+                font-size: 1.8rem;
+            }
+            .sticky-top {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.8rem;
+                padding: 0.8rem 1rem;
+            }
+            .nav-links {
+                display: flex !important;
+                width: 100%;
+                justify-content: flex-start;
+                overflow-x: auto;
+                white-space: nowrap;
+                padding-bottom: 5px;
+                gap: 1.2rem;
+                -webkit-overflow-scrolling: touch;
+            }
+            .nav-links::-webkit-scrollbar {
+                display: none;
+            }
+            .nav-links a {
+                font-size: 0.85rem;
+                flex-shrink: 0;
+            }
+            .toggle-btn {
+                width: 100%;
+                text-align: center;
+            }
+            .news-card {
+                padding: 1.2rem;
+                border-radius: 8px;
+            }
+            .news-card h3 {
+                font-size: 1.2rem;
+            }
+            table {
+                font-size: 0.8rem;
+            }
+            th, td {
+                padding: 0.6rem;
+            }
+        }
+    </style>
+</head>
+<body class="en-mode">
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">02 June 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">02 ஜூன் 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <!-- Sidebar TOC -->
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Tech</span><span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Police / Child Welfare</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Operation Nanhe Farishte: 630 Missing Children Rescued at Chennai Stations</span>
+                        <span class="lang-ta">ஆபரேஷன் நன்ஹே ஃபரிஸ்தே: சென்னை ரயில் நிலையங்களில் 630 குழந்தைகள் மீட்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Under the 'Operation Nanhe Farishte' initiative, the Railway Protection Force (RPF) successfully rescued 630 missing and runaway children (including 117 girls) across the Chennai Railway Division in the last financial year. Passengers are urged to use the toll-free helpline number 139 or the "Rail Madad" app for reporting any suspicious child movements or emergencies at railway stations.</p>
+                    <p class="lang-ta">ரயில்வே பாதுகாப்புப் படையின் (RPF) 'ஆபரேஷன் நன்ஹே ஃபரிஸ்தே' திட்டத்தின் கீழ், கடந்த நிதியாண்டில் சென்னை ரயில்வே கோட்டத்திற்குட்பட்ட நிலையங்களில் வீட்டை விட்டு ஓடிவந்த மற்றும் காணாமல் போன 630 குழந்தைகள் (117 சிறுமிகள் உட்பட) மீட்கப்பட்டுள்ளனர். ரயில் நிலையங்களில் உதவி மற்றும் புகார்களுக்கு 139 என்ற கட்டணமில்லா எண்ணையோ அல்லது "ரயில் மதத்" (Rail Madad) செயலிகளையோ பயன்படுத்தலாம் எனத் தெரிவிக்கப்பட்டுள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Governance Hook:</strong> Railway initiatives are frequent exam questions. 'Operation Nanhe Farishte' is a dedicated drive by RPF to rescue children in need of care and protection at railway stations. Similarly, 'Operation AAHT' targets human trafficking.</span><span class="lang-ta"><strong>ஆளுமை குறிப்பு:</strong> 'ஆபரேஷன் நன்ஹே ஃபரிஸ்தே' என்பது ரயில் நிலையங்களில் ஆதரவற்ற குழந்தைகளை மீட்கும் RPF-இன் திட்டமாகும். இதேபோல மனித கடத்தலைத் தடுக்க 'ஆபரேஷன் ஆஹட்' (AAHT) செயல்படுகிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Medical Education · Reservation</span>
+                        <span class="badge bg-trap">TRAP</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Govt Doctors Demand 50% Quota in Super Specialty Medical Courses</span>
+                        <span class="lang-ta">உயர் சிறப்பு மருத்துவப் படிப்புகளில் அரசு மருத்துவர்களுக்கு 50% ஒதுக்கீடு: மருத்துவர் சங்கம் வலியுறுத்தல்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Tamil Nadu Government Doctors Association has written to the Health Minister urging legal action to protect the 50% reservation quota for in-service government doctors in super specialty courses (DM, MCh). Post-NEET SS, counseling is held for over 600 seats in TN, out of which 50% are reserved for serving doctors. Doctors argue that unallocated seats after two rounds of counseling should not revert to the All-India Quota to ensure rural hospitals get super-specialist care.</p>
+                    <p class="lang-ta">முதுநிலை மருத்துவப் படிப்புகளுக்குப் (DM, MCh) பிறகு நடக்கும் உயர் சிறப்பு மருத்துவப் படிப்புகளில், அரசு மருத்துவர்களுக்கு ஒதுக்கப்படும் 50 சதவீத இடங்கள் அகில இந்திய ஒதுக்கீட்டுக்குச் செல்வதைத் தடுக்க உரிய சட்ட நடவடிக்கை எடுக்கக் கோரி அரசு மருத்துவர் சங்கம் வலியுறுத்தியுள்ளது. நீட் எஸ்.எஸ். (NEET SS) தேர்வு மூலம் நடக்கும் கலந்தாய்வில், நிரம்பாத இடங்களை மாநில அரசுக்கே வழங்க வேண்டும்; அப்போதுதான் ஏழை நோயாளிகளுக்கு உயர் சிறப்புச் சிகிச்சை தடையின்றி கிடைக்கும் என கோரப்பட்டுள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-gem">GEM</span><span class="lang-en"><strong>Bond Condition:</strong> Doctors securing seats under the 50% in-service quota must sign a bond to serve the State Government until retirement, fortifying the state's public health infrastructure.</span><span class="lang-ta"><strong>ஒப்பந்த நிபந்தனை:</strong> 50% ஒதுக்கீட்டின் கீழ் இடம் பெறும் மருத்துவர்கள், ஓய்வுபெறும் வரை அரசுப் பணியில் தொடருவோம் என ஒப்பந்தம் (Bond) மேற்கொள்கின்றனர். இது மாநிலத்தின் பொது சுகாதாரக் கட்டமைப்பை வலுப்படுத்துகிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Environment · Encroachment</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Nilgiris: HC Grants 8 Weeks to TN Govt in 3,500 Acres Encroachment Case</span>
+                        <span class="lang-ta">நீலகிரியில் 3,500 ஏக்கர் நிலம் ஆக்கிரமிப்பு வழக்கு: அரசு பதிலளிக்க உயர் நீதிமன்றம் அவகாசம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Madras High Court has granted an additional 8 weeks to the Tamil Nadu Government to respond to a petition seeking the retrieval of 3,500 acres of forest and local public land allegedly encroached by a Kerala-based private estate company in Naduvattam village, Nilgiris district. The petition was filed by TVK leader Velmurugan.</p>
+                    <p class="lang-ta">நீலகிரி மாவட்டம் நடுவட்டம் கிராமத்தில் கேரளத்தைச் சேர்ந்த தனியார் தோட்ட நிறுவனம் ஆக்கிரமித்துள்ள 3,500 ஏக்கர் வனத்துறை மற்றும் உள்ளூர் மக்களுக்குச் சொந்தமான நிலங்களை மீட்கக் கோரிய வழக்கில், தமிழக அரசு பதிலளிக்க மேலும் 8 வார கால அவகாசம் வழங்கி சென்னை உயர் நீதிமன்றம் உத்தரவிட்டுள்ளது. தமிழக வாழ்வுரிமைக் கட்சித் தலைவர் வேல்முருகன் இந்த வழக்கை தாக்கல் செய்துள்ளார்.</p>
+                </div>
+
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National / Central News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Appointments · Judiciary</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">5 New Supreme Court Judges Appointed; TN's V. Mohana Becomes 12th Woman Judge</span>
+                        <span class="lang-ta">உச்ச நீதிமன்றத்திற்கு 5 புதிய நீதிபதிகள் நியமனம்; தமிழகத்தின் வி.மோகனா 12-ஆவது பெண் நீதிபதியானார்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Central Government has notified the appointment of 5 new judges to the Supreme Court, taking the total strength to 37 (against a recently expanded sanctioned strength of 38). The new appointees include Chief Justices of various High Courts: C.S. Shekhar (Bombay), Sheel Nagu (Punjab-Haryana), Sanjeev Sachdeva (Madhya Pradesh), and Arun Bhansali (J&K). Crucially, Senior Advocate V. Mohana from Coimbatore (TN) was directly elevated from the Bar. She is the 12th woman judge in the Supreme Court's history and the 2nd woman to be elevated directly from the Bar (after Indu Malhotra).</p>
+                    <p class="lang-ta">உச்ச நீதிமன்றத்திற்கு 5 புதிய நீதிபதிகளை நியமித்து மத்திய அரசு அறிவிக்கை வெளியிட்டுள்ளது. இதன்மூலம் உச்ச நீதிமன்ற நீதிபதிகளின் எண்ணிக்கை 37 ஆக உயர்ந்துள்ளது (சமீபத்தில் மொத்த பணியிடங்கள் 34-லிருந்து 38 ஆக உயர்த்தப்பட்டது). பம்பாய், பஞ்சாப்-ஹரியாணா, மத்தியப் பிரதேசம் மற்றும் ஜம்மு-காஷ்மீர் உயர்நீதிமன்ற தலைமை நீதிபதிகளுடன், தமிழகத்தின் கோவையைச் சேர்ந்த மூத்த வழக்குரைஞர் வி.மோகனா நேரடியாக உச்ச நீதிமன்ற நீதிபதியாக நியமிக்கப்பட்டுள்ளார். இவர் உச்ச நீதிமன்ற வரலாற்றில் 12-வது பெண் நீதிபதியாவார். வழக்குரைஞராக இருந்து நேரடியாக நியமிக்கப்படும் 2-வது பெண் (இந்து மல்ஹோத்ராவுக்குப் பிறகு) இவரே.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Polity Hook:</strong> Article 124 deals with the establishment and constitution of the Supreme Court. The Parliament regulates the number of SC judges. Recently, the strength was increased to 38 (including the CJI).</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> சரத்து 124 உச்ச நீதிமன்றத்தின் அமைப்பு மற்றும் உருவாக்கம் குறித்துக் கூறுகிறது. நாடாளுமன்றமே நீதிபதிகளின் எண்ணிக்கையைத் தீர்மானிக்கிறது. சமீபத்தில் இது 38 ஆக (தலைமை நீதிபதி உட்பட) உயர்த்தப்பட்டது.</span></li>
+                            <li><span class="badge bg-gem">GEM</span><span class="lang-en"><strong>Direct Elevation:</strong> Article 124(3)(b) allows a person who has been an advocate of a High Court for at least 10 years to be appointed directly as an SC Judge. Justice Mohana's appointment brings the number of sitting women SC judges to 2 (along with Justice B.V. Nagarathna).</span><span class="lang-ta"><strong>நேரடி நியமனம்:</strong> சரத்து 124(3)(b)-இன்படி 10 ஆண்டுகள் உயர் நீதிமன்றத்தில் வழக்குரைஞராக இருப்பவரை நேரடியாக உச்ச நீதிமன்ற நீதிபதியாக நியமிக்கலாம். நீதிபதி மோகனாவின் நியமனம் மூலம், தற்போது பணியிலுள்ள பெண் நீதிபதிகளின் எண்ணிக்கை 2 ஆக உயர்ந்துள்ளது (நீதிபதி பி.வி.நாகரத்னாவுடன்).</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Education · Competitive Exams</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">JEE Main 2026 Results: Shubham Kumar from Bihar Secures All-India Rank 1</span>
+                        <span class="lang-ta">ஜேஇஇ (JEE) முதன்மைத் தேர்வு முடிவுகள்: பிகார் மாணவர் சுபம் குமார் முதலிடம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The results for the JEE Main examination for admissions into NITs, IIITs, and eligibility for JEE Advanced have been declared. Shubham Kumar from Gaya, Bihar, secured the All-India Rank 1, scoring 330 out of 360 marks. Out of over 11 lakh candidates who appeared across the country, the top 2.50 lakh have qualified for the JEE Advanced exam. The Chennai IIT zone saw 14,294 students qualifying, the highest among all zones.</p>
+                    <p class="lang-ta">என்ஐடி (NIT), ஐஐஐடி (IIIT) உள்ளிட்ட மத்திய அரசின் உயர்கல்வி நிறுவனங்களில் சேருவதற்கான ஜேஇஇ (JEE) முதன்மைத் தேர்வு முடிவுகள் வெளியாகின. இதில் பிகார் மாநிலம் கயாவைச் சேர்ந்த சுபம் குமார் 360-க்கு 330 மதிப்பெண்கள் பெற்று அகில இந்திய அளவில் முதலிடம் பிடித்துள்ளார். நாடு முழுவதும் 11 லட்சத்திற்கும் மேற்பட்டோர் தேர்வு எழுதியதில், முதல் 2.50 லட்சம் பேர் ஜேஇஇ அட்வான்ஸ்டு (JEE Advanced) தேர்வு எழுதத் தகுதி பெற்றுள்ளனர். இதில் சென்னை ஐஐடி மண்டலத்திலிருந்து அதிகபட்சமாக 14,294 பேர் தகுதி பெற்றுள்ளனர்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">State/Polity · Cabinet Expansion</span>
+                        <span class="badge bg-trap">TRAP</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">West Bengal: 35 New Ministers Inducted into Suvendu Adhikari's BJP Cabinet</span>
+                        <span class="lang-ta">மேற்கு வங்கம்: சுவேந்து அதிகாரி அமைச்சரவையில் மேலும் 35 அமைச்சர்கள் பதவியேற்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In a major political shift following the recent assembly elections where the BJP ousted the 15-year TMC rule, West Bengal's new BJP government expanded its cabinet. Governor R.N. Ravi administered the oath to 35 new MLAs, including 13 Cabinet Ministers, raising the total strength to 41 under Chief Minister Suvendu Adhikari. Notably, Kalita Majhi, who previously worked as a domestic help and defeated a TMC candidate, was sworn in as a Minister.</p>
+                    <p class="lang-ta">சமீபத்திய சட்டப்பேரவைத் தேர்தலில் 15 ஆண்டு கால திரிணமூல் காங்கிரஸ் ஆட்சியை அகற்றி பாஜக வெற்றி பெற்றதையடுத்து, மேற்கு வங்க அமைச்சரவை விரிவாக்கம் செய்யப்பட்டது. ஆளுநர் ஆர்.என். ரவி 13 கேபினட் அமைச்சர்கள் உட்பட 35 புதிய எம்எல்ஏ-க்களுக்குப் பதவிப் பிரமாணம் செய்து வைத்தார். முதல்வர் சுவேந்து அதிகாரி தலைமையிலான அமைச்சரவையின் பலம் 41 ஆக உயர்ந்துள்ளது. வீட்டுப் பணிப்பெண்ணாக இருந்து திரிணமூல் வேட்பாளரை வீழ்த்திய கலிதா மாஜி அமைச்சராகப் பதவியேற்றுள்ளது குறிப்பிடத்தக்கது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-critical">CRITICAL</span><span class="lang-en"><strong>Constitutional Hook:</strong> Article 164(1A) limits the total number of Ministers (including CM) to 15% of the total strength of the Legislative Assembly. West Bengal has 294 seats, so the maximum ministers can be 44.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> சரத்து 164(1A) அமைச்சர்களின் மொத்த எண்ணிக்கையை (முதல்வர் உட்பட) சட்டப்பேரவை உறுப்பினர்களின் எண்ணிக்கையில் 15% ஆகக் கட்டுப்படுத்துகிறது. மேற்கு வங்கத்தில் 294 தொகுதிகள் உள்ளதால், அதிகபட்சம் 44 அமைச்சர்கள் இருக்கலாம்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+            </section>
+
+            <!-- INTERNATIONAL NEWS -->
+            <section id="international">
+                <h2>
+                    <span class="lang-en">International News</span>
+                    <span class="lang-ta">சர்வதேச செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Diplomacy · Bilateral Visit</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">PM Modi Meets Myanmar President Min Aung Hlaing: Assures Border Security</span>
+                        <span class="lang-ta">மியான்மர் அதிபருடன் பிரதமர் மோடி சந்திப்பு: இந்தியாவுக்கு எதிரான செயல்பாடுகளை அனுமதிக்க மாட்டோம் என உறுதி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Myanmar's President Min Aung Hlaing arrived in India on a 5-day state visit, two months after taking office following parliamentary elections. In his meeting with PM Narendra Modi in New Delhi, discussions centered heavily on trade, economics, and border security. PM Modi asserted India's support for Myanmar's sovereignty while emphasizing that Indian soil will not be used for anti-Myanmar activities, to which President Hlaing reciprocated the commitment regarding Myanmar's soil.</p>
+                    <p class="lang-ta">மியான்மர் நாடாளுமன்றத் தேர்தலுக்குப் பிறகு அதிபராகப் பதவியேற்ற மின் ஆங் ஹ்லைங் (Min Aung Hlaing), 5 நாள் அரசு முறைப் பயணமாக இந்தியா வந்துள்ளார். புது தில்லியில் பிரதமர் நரேந்திர மோடியைச் சந்தித்த அவர், வர்த்தகம், பொருளாதாரம், எல்லைப் பாதுகாப்பு குறித்து ஆலோசித்தார். மியான்மரின் இறையாண்மைக்கு இந்தியாவின் ஆதரவை உறுதி செய்த பிரதமர் மோடி, மியான்மர் மண்ணில் இந்திய பாதுகாப்பு நலன்களுக்கு எதிரான செயல்பாடுகளை அனுமதிக்க மாட்டோம் என அதிபர் அளித்த உறுதியை வரவேற்றார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Geography & IR Hook:</strong> India shares a 1,643 km porous border with Myanmar. Four North-Eastern states border Myanmar: Arunachal Pradesh, Nagaland, Manipur, and Mizoram. Security here is vital for India's "Act East" policy.</span><span class="lang-ta"><strong>புவியியல் குறிப்பு:</strong> இந்தியா மியான்மருடன் 1,643 கி.மீ. எல்லையைப் பகிர்ந்து கொள்கிறது. அருணாசலப் பிரதேசம், நாகாலாந்து, மணிப்பூர், மிசோரம் ஆகிய 4 வடகிழக்கு மாநிலங்கள் மியான்மர் எல்லையில் அமைந்துள்ளன. "ஆக்ட் ஈஸ்ட்" கொள்கைக்கு இது முக்கியமானது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Bilateral Trade · CEPA</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">India-Oman Free Trade Agreement (CEPA) Officially Comes into Effect</span>
+                        <span class="lang-ta">இந்தியா - ஓமன் தடையற்ற வர்த்தக ஒப்பந்தம் அமலுக்கு வந்தது</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Comprehensive Economic Partnership Agreement (CEPA) / Free Trade Agreement between India and Oman came into effect on Monday. Union Commerce and Industry Minister Piyush Goyal flagged off shipments of agricultural goods, gems, and jewelry from Chennai, Mumbai, and Kolkata to Oman enjoying duty concessions. Oman has offered duty concessions on 77.79% of its total tariff lines, while Indian consumers will benefit from cheaper imports like dates.</p>
+                    <p class="lang-ta">இந்தியா - ஓமன் நாடுகளுக்கிடையேயான தடையற்ற வர்த்தக ஒப்பந்தம் (CEPA) அதிகாரப்பூர்வமாக அமலுக்கு வந்தது. சென்னை, மும்பை, கொல்கத்தாவிலிருந்து வரிச் சலுகையுடன் வேளாண் பொருள்கள், ரத்தினங்கள் மற்றும் ஆபரணங்கள் கப்பல் மூலம் ஓமனுக்கு அனுப்பி வைக்கப்பட்டன. ஓமனில் இருந்து இறக்குமதி செய்யப்படும் பேரீச்சம்பழம் உள்ளிட்டவை இந்திய நுகர்வோருக்கு மலிவாகக் கிடைக்கும். ஓமன் தனது மொத்த வரி இனங்களில் 77.79 சதவீதத்திற்கு சுங்க வரிச் சலுகைகளை வழங்கியுள்ளது.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Geopolitics · Middle East</span>
+                        <span class="badge bg-trap">TRAP</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Iran Threatens to Scrap US Ceasefire over Israeli Attacks in Lebanon</span>
+                        <span class="lang-ta">லெபனான் விவகாரம்: அமெரிக்காவுடனான தற்காலிகப் போர் நிறுத்தத்தை ரத்து செய்வோம் என ஈரான் எச்சரிக்கை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Iran has severely warned the United States that it will scrap the temporary ceasefire agreement reached in late April if Israel continues its aggressive strikes inside Lebanon. Following Israel's capture of the strategically vital Beaufort Castle in Lebanon, Iran suspended indirect backdoor talks with the US in Oman. The temporary truce was intended to reopen the Strait of Hormuz and ease global shipping.</p>
+                    <p class="lang-ta">லெபனானில் இஸ்ரேல் தொடர்ந்து தாக்குதல் நடத்தினால், அமெரிக்காவுடன் எட்டப்பட்ட தற்காலிகப் போர் நிறுத்த ஒப்பந்தம் ரத்து செய்யப்படும் என்று ஈரான் எச்சரித்துள்ளது. லெபனானில் பாதுகாப்பு ரீதியாக முக்கியத்துவம் வாய்ந்த பியூஃபோர்ட் கோட்டையை (Beaufort Castle) இஸ்ரேல் கைப்பற்றியதையடுத்து, ஓமனில் அமெரிக்காவுடன் நடந்து வந்த மறைமுகப் பேச்சுவார்த்தையை ஈரான் நிறுத்தியுள்ளது. உலகளாவிய கப்பல் போக்குவரத்தை எளிதாக்க ஹோர்முஸ் ஜலசந்தியை மீண்டும் திறக்கும் நோக்கில் இந்தத் தற்காலிக ஒப்பந்தம் செய்யப்பட்டது.</p>
+                </div>
+
+            </section>
+
+            <!-- ECONOMY & FINANCE -->
+            <section id="economy">
+                <h2>
+                    <span class="lang-en">Economy & Tech</span>
+                    <span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Macro Indicators · MoSPI</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Index of Industrial Production (IIP) Plunges to 4.9% in April; Base Year Changed</span>
+                        <span class="lang-ta">தொழிற்துறை உற்பத்தி (IIP) 4.9% ஆகச் சரிவு: அடிப்படை ஆண்டு 2022-23 ஆக மாற்றம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">India's Index of Industrial Production (IIP) growth slowed to 4.9% in April 2026, down from 5.7% the previous year, primarily due to sluggishness in the energy sector caused by Middle East tensions. Crucially, the Ministry of Statistics and Programme Implementation (MoSPI) has revised the IIP base year from 2011-12 to 2022-23. The new index includes 120 new items (like CCTV cameras, credit cards, medical stents) and removes 64 obsolete items.</p>
+                    <p class="lang-ta">மத்திய கிழக்கு ஆசிய போர்ச் சூழலால் எரிசக்தித் துறையில் ஏற்பட்ட மந்தநிலை காரணமாக, நாட்டின் தொழில் துறை உற்பத்தி குறியீடு (IIP) ஏப்ரல் மாதத்தில் 4.9 சதவீதமாகச் சரிந்துள்ளது. மிக முக்கியமாக, தற்போதைய பொருளாதாரச் சூழலுக்கு ஏற்ப IIP-இன் அடிப்படை ஆண்டை 2011-12 இலிருந்து 2022-23 ஆக மத்திய புள்ளியியல் அமைச்சகம் (MoSPI) மாற்றியமைத்துள்ளது. புதிய பட்டியலில் சிசிடிவி கேமராக்கள், மருத்துவ ஸ்டென்ட்டுகள் உள்ளிட்ட 120 புதிய பொருட்கள் சேர்க்கப்பட்டு, பயன்பாடு குறைந்த 64 பொருட்கள் நீக்கப்பட்டுள்ளன.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Economy Hook:</strong> Base year changes are highly likely MCQ topics. The new base year for IIP is 2022-23. IIP measures the short-term changes in the volume of production of a basket of industrial products.</span><span class="lang-ta"><strong>பொருளாதாரக் குறிப்பு:</strong> அடிப்படை ஆண்டு மாற்றங்கள் தேர்வில் அடிக்கடி கேட்கப்படும். IIP க்கான புதிய அடிப்படை ஆண்டு 2022-23. IIP என்பது தொழில்துறைப் பொருட்களின் உற்பத்தியில் ஏற்படும் குறுகிய கால மாற்றங்களை அளவிடுகிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Taxation · Revenue</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">May 2026 GST Collection Touches ₹1.94 Lakh Crore, a 3.2% Increase</span>
+                        <span class="lang-ta">மே மாத ஜிஎஸ்டி வசூல் ரூ.1.94 லட்சம் கோடி: 3.2 சதவீதம் அதிகரிப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Gross Goods and Services Tax (GST) revenue collection for May 2026 stood at ₹1.94 lakh crore, registering a 3.2% year-on-year growth compared to ₹1.88 lakh crore in May 2025. This includes CGST of ₹37,397 crore and SGST of ₹45,143 crore. Total GST collection for the first two months (April-May) of the financial year 2026-27 has reached ₹4.37 lakh crore.</p>
+                    <p class="lang-ta">கடந்த மே மாத சரக்கு மற்றும் சேவை வரி (ஜிஎஸ்டி) ரூ.1.94 லட்சம் கோடி வசூலாகியுள்ளது. இது கடந்த ஆண்டு மே மாதத்தை விட (ரூ.1.88 லட்சம் கோடி) 3.2 சதவீதம் அதிகமாகும். இதில் மத்திய ஜிஎஸ்டியாக ரூ.37,397 கோடியும், மாநில ஜிஎஸ்டியாக ரூ.45,143 கோடியும் வசூலாகியுள்ளது. 2026-27 நிதியாண்டின் முதல் இரு மாதங்களில் (ஏப்ரல்-மே) மொத்தம் ரூ.4.37 லட்சம் கோடி ஜிஎஸ்டி வசூலாகியுள்ளது.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Digital Payments · UPI</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">UPI Transactions Hit New Peak in May: ₹29.90 Lakh Crore Processed</span>
+                        <span class="lang-ta">யுபிஐ (UPI) பரிவர்த்தனைகள் புதிய உச்சம்: மே மாதத்தில் ரூ.29.90 லட்சம் கோடி சாதனை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">India's digital payment platform, Unified Payments Interface (UPI), scaled a new peak in May 2026, processing 2,320 crore transactions worth ₹29.90 lakh crore. According to the National Payments Corporation of India (NPCI), this surge is attributed to summer travel and IPL cricket match ticketing. Year-on-year, transaction volume grew by 24% and value by 19%.</p>
+                    <p class="lang-ta">இந்தியாவின் டிஜிட்டல் பணப் பரிவர்த்தனை தளமான யுபிஐ (UPI), கடந்த மே மாதத்தில் மதிப்பு மற்றும் எண்ணிக்கை அடிப்படையில் புதிய உச்சத்தை எட்டியுள்ளது. இந்திய தேசிய கொடுப்பனவு கழகத்தின் (NPCI) தரவுகளின்படி, மே மாதத்தில் மட்டும் ரூ.29.90 லட்சம் கோடி மதிப்பிலான 2,320 கோடி பரிவர்த்தனைகள் மேற்கொள்ளப்பட்டுள்ளன. கோடைகால பயணம் மற்றும் ஐபிஎல் போட்டிகளால் இந்த உயர்வு ஏற்பட்டுள்ளது.</p>
+                </div>
+            </section>
+            
+            <!-- SPORTS -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports</span>
+                    <span class="lang-ta">விளையாட்டு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Cricket · IPL 2026</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">IPL 2026: Royal Challengers Bengaluru (RCB) Wins Title; Virat Kohli Shines</span>
+                        <span class="lang-ta">ஐபிஎல் 2026: குஜராத்தை வீழ்த்தி ராயல் சேலஞ்சர்ஸ் பெங்களூரு (RCB) சாம்பியன்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Royal Challengers Bengaluru (RCB) successfully defended their title to win the 19th season of the IPL by defeating Gujarat Titans by 5 wickets in the finals. RCB chased down the target effortlessly with Virat Kohli remaining unbeaten and winning the Player of the Match. Kohli was the tournament's highest run-scorer (776 runs - Orange Cap), while Kagiso Rabada (GT) took the Purple Cap (29 wickets). 15-year-old Vaibhav Suryavanshi (RR) swept 5 major awards, including Emerging Player and Most Valuable Player.</p>
+                    <p class="lang-ta">ஐபிஎல் கிரிக்கெட் போட்டியின் 19-வது சீசன் இறுதி ஆட்டத்தில் குஜராத் டைட்டன்ஸ் அணியை 5 விக்கெட் வித்தியாசத்தில் வீழ்த்தி ராயல் சேலஞ்சர்ஸ் பெங்களூரு (ஆர்சிபி) சாம்பியன் பட்டத்தைத் தக்கவைத்துக் கொண்டது. இறுதிவரை ஆட்டமிழக்காமல் இருந்த விராட் கோலி ஆட்டநாயகன் விருது பெற்றார். அதிக ரன் குவித்த கோலி ஆரஞ்சு தொப்பியையும் (776 ரன்கள்), அதிக விக்கெட் வீழ்த்திய ககிசோ ரபாடா (குஜராத்) ஊதா தொப்பியையும் (29 விக்கெட்டுகள்) வென்றனர். 15 வயதான வைபவ் சூர்யவன்ஷி (ராஜஸ்தான்), வளரும் வீரர் மற்றும் மதிப்புமிக்க வீரர் உள்ளிட்ட 5 விருதுகளை வென்று சாதனை படைத்தார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-tip">TIP</span><span class="lang-en"><strong>Award Roundup:</strong>
+Orange Cap: Virat Kohli (RCB)
+Purple Cap: Kagiso Rabada (GT)
+Most Valuable Player: Vaibhav Suryavanshi (RR)
+Fairplay Award is typically asked; RCB won the cup.</span><span class="lang-ta"><strong>விருதுகள் சுருக்கம்:</strong>
+ஆரஞ்சு தொப்பி: விராட் கோலி (RCB)
+ஊதா தொப்பி: ககிசோ ரபாடா (GT)
+மதிப்புமிக்க வீரர்: வைபவ் சூர்யவன்ஷி (RR)</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Hockey · U-18 Asian Cup</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">U-18 Asian Hockey: India Defeats Korea 4-1</span>
+                        <span class="lang-ta">18 வயதுக்குட்பட்டோருக்கான ஆசிய கோப்பை ஹாக்கி: தென் கொரியாவை வீழ்த்தியது இந்தியா</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In the ongoing Men's U-18 Asian Cup Hockey tournament in Kakamigahara, Japan, the Indian team delivered a spectacular performance by defeating South Korea 4-1 in their Group B match. Captain Ketan Kushwaha scored twice, cementing India's dominant position. With this victory, India has secured 6 points alongside Japan and Korea in the group.</p>
+                    <p class="lang-ta">ஜப்பானின் ககாமிகஹாராவில் நடைபெறும் 18 வயதுக்குட்பட்டோருக்கான ஆசிய கோப்பை ஆடவர் ஹாக்கி போட்டியில் (குரூப் பி), இந்திய அணி 4-1 என்ற கோல் கணக்கில் தென் கொரியாவை வீழ்த்தி அபார வெற்றி பெற்றது. கேப்டன் கேதன் குஷ்வாஹா இரு கோல்களை அடித்து அசத்தினார். இந்த வெற்றியின் மூலம் ஜப்பான், கொரியாவுடன் இந்தியாவும் 6 புள்ளிகளைப் பெற்றுள்ளது.</p>
+                </div>
+
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: According to a recent announcement by the Ministry of Statistics and Programme Implementation (MoSPI), the base year for calculating the Index of Industrial Production (IIP) has been revised to:</span>
+                        <span class="lang-ta">கேள்வி: மத்திய புள்ளியியல் மற்றும் திட்ட அமலாக்க அமைச்சகத்தின் (MoSPI) சமீபத்திய அறிவிப்பின்படி, தொழில்துறை உற்பத்தி குறியீட்டைக் (IIP) கணக்கிடுவதற்கான அடிப்படை ஆண்டு எதாக மாற்றப்பட்டுள்ளது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">2022-23</span><br><br>
+                                <strong>Context:</strong> The base year was revised from 2011-12 to 2022-23 to better reflect modern consumption patterns, adding 120 new items like CCTV cameras and credit cards.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">2022-23</span><br><br>
+                                <strong>பின்னணி:</strong> நவீன நுகர்வு முறைகளைப் பிரதிபலிக்கும் வகையில், சிசிடிவி கேமராக்கள் போன்ற 120 புதிய பொருட்களைச் சேர்த்து, அடிப்படை ஆண்டு 2011-12 இலிருந்து 2022-23 ஆக மாற்றப்பட்டது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Under which Article of the Indian Constitution can a distinguished jurist or an advocate with 10 years of High Court practice be directly elevated as a Judge of the Supreme Court?</span>
+                        <span class="lang-ta">கேள்வி: இந்திய அரசியலமைப்பின் எந்தச் சரத்தின் கீழ், தலைசிறந்த சட்ட வல்லுநர் அல்லது உயர் நீதிமன்றத்தில் 10 ஆண்டுகள் பணியாற்றிய வழக்குரைஞர் நேரடியாக உச்ச நீதிமன்ற நீதிபதியாக நியமிக்கப்படலாம்?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Article 124(3)</span><br><br>
+                                <strong>Context:</strong> Senior Advocate V. Mohana from Tamil Nadu was directly elevated to the Supreme Court from the Bar, becoming only the second woman to achieve this feat.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">சரத்து 124(3)</span><br><br>
+                                <strong>பின்னணி:</strong> தமிழகத்தைச் சேர்ந்த மூத்த வழக்குரைஞர் வி.மோகனா நேரடியாக உச்ச நீதிமன்ற நீதிபதியாக நியமிக்கப்பட்டுள்ளார்; இந்தச் சிறப்பைப் பெறும் இரண்டாவது பெண் இவர்.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">New SC Judges</span><span class="lang-ta">புதிய உச்சநீதிமன்ற நீதிபதிகள்</span></td>
+                                <td><span class="lang-en">National/Appointments</span><span class="lang-ta">தேசியம்/நியமனங்கள்</span></td>
+                                <td><span class="lang-en">TN's V. Mohana directly elevated from Bar to SC.</span><span class="lang-ta">தமிழக வழக்குரைஞர் வி.மோகனா நேரடியாக உச்சநீதிமன்ற நீதிபதியானார்.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">IIP Base Year Change</span><span class="lang-ta">IIP அடிப்படை ஆண்டு மாற்றம்</span></td>
+                                <td><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></td>
+                                <td><span class="lang-en">MoSPI changed IIP base year from 2011-12 to 2022-23.</span><span class="lang-ta">IIP அடிப்படை ஆண்டு 2011-12 இலிருந்து 2022-23 ஆக மாற்றம்.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">India-Oman CEPA</span><span class="lang-ta">இந்தியா-ஓமன் தடையற்ற வர்த்தகம்</span></td>
+                                <td><span class="lang-en">Economy/IR</span><span class="lang-ta">பொருளாதாரம்/உறவுகள்</span></td>
+                                <td><span class="lang-en">Free Trade Agreement officially comes into force.</span><span class="lang-ta">இரு நாடுகளுக்கிடையேயான தடையற்ற வர்த்தக ஒப்பந்தம் அமல்.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">Operation Nanhe Farishte</span><span class="lang-ta">ஆபரேஷன் நன்ஹே ஃபரிஸ்தே</span></td>
+                                <td><span class="lang-en">State/Social</span><span class="lang-ta">மாநிலம்/சமூகம்</span></td>
+                                <td><span class="lang-en">RPF rescued 630 missing kids in Chennai stations.</span><span class="lang-ta">சென்னை ரயில் நிலையங்களில் 630 காணாமல் போன குழந்தைகள் மீட்பு.</span></td>
+                                <td><span class="badge bg-tip">MED</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">IPL 2026 Finals</span><span class="lang-ta">ஐபிஎல் 2026 இறுதிப்போட்டி</span></td>
+                                <td><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></td>
+                                <td><span class="lang-en">RCB wins cup. V. Suryavanshi wins Emerging Player.</span><span class="lang-ta">ஆர்சிபி சாம்பியன். சூர்யவன்ஷிக்கு வளரும் வீரர் விருது.</span></td>
+                                <td><span class="badge bg-tip">MED</span></td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td><span class="lang-en">WB Cabinet Expansion</span><span class="lang-ta">மேற்கு வங்க அமைச்சரவை</span></td>
+                                <td><span class="lang-en">National/Polity</span><span class="lang-ta">தேசியம்/அரசியல்</span></td>
+                                <td><span class="lang-en">35 new ministers in Suvendu Adhikari's BJP Govt.</span><span class="lang-ta">சுவேந்து அதிகாரி (பாஜக) அரசில் 35 புதிய அமைச்சர்கள் நியமனம்.</span></td>
+                                <td><span class="badge bg-trap">MED</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani Chennai 02-06-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி சென்னை 02-06-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source text detailed state, national, and international news for 02 June 2026. 
+State news: HC gave 8 weeks for TN govt to reply on the 3500-acre Nilgiris encroachment. RPF rescued 630 children under Op Nanhe Farishte in Chennai. CM Vijay held a thanksgiving roadshow in Trichy. K. Annamalai might start a new party. Heavy vehicles parking in Manali face ₹5000 fine. Valli Thirumana Mandapam case (Vadapalani) saw HC ordering HR&CE to respond. TNEB allowed hiring extra staff for monsoon outages. Govt doctors demanded 50% reservation in super specialty courses. Savukku Shankar attempt-to-murder case chargesheet stayed.
+National news: 5 new SC judges appointed including V. Mohana from TN. SC strength reaches 37. West Bengal expanded its cabinet with 35 new ministers under CM Suvendu Adhikari (BJP). JEE Main results announced; Shubham Kumar (Bihar) ranked 1. GST collections hit ₹1.94 lakh crore in May.
+International news: PM Modi met Myanmar President Min Aung Hlaing and assured border security. India-Oman CEPA trade pact came into effect. Iran warned it would scrap the US ceasefire if Israel kept attacking Lebanon. Malaysia banned social media for kids under 16. 
+Economy: IIP dropped to 4.9% and base year changed to 2022-23. UPI transactions hit a new peak of ₹29.90 lakh crore. ₹35,000 cr ECLGS loans allocated to MSMEs.
+Sports: RCB won IPL 2026 beating Gujarat Titans. Virat Kohli won Orange Cap. Vaibhav Suryavanshi won 5 awards. India beat Korea 4-1 in U-18 Asian Hockey. In State Junior Swimming, 5 new records were set.]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூல உரைகள் 02 ஜூன் 2026 க்கான செய்திகளைக் கொண்டிருந்தன.
+மாநில செய்திகளில்: நீலகிரி 3500 ஏக்கர் ஆக்கிரமிப்பு வழக்கில் அரசுக்கு 8 வார கால அவகாசம். ஆபரேஷன் நன்ஹே ஃபரிஸ்தே மூலம் 630 குழந்தைகள் மீட்பு. திருச்சியில் முதல்வர் விஜய் நன்றி அறிவிப்புப் பேரணி. கே.அண்ணாமலை புதிய கட்சி தொடங்க வாய்ப்பு. மணலியில் கனரக வாகனங்கள் நிறுத்தினால் ₹5000 அபராதம். வடபழனி கோவில் மண்டப வழக்கில் அறநிலையத்துறைக்கு ஐகோர்ட் உத்தரவு. மழைக் கால மின்தடையைச் சமாளிக்க கூடுதல் பணியாளர்கள். உயர் சிறப்பு மருத்துவத்தில் 50% ஒதுக்கீடு கோரி மருத்துவர்கள் வலியுறுத்தல்.
+தேசிய அளவில்: வி.மோகனா உள்ளிட்ட 5 புதிய உச்ச நீதிமன்ற நீதிபதிகள் நியமனம். மேற்கு வங்கத்தில் சுவேந்து அதிகாரி (பாஜக) அரசில் 35 புதிய அமைச்சர்கள். ஜேஇஇ முதன்மைத் தேர்வில் சுபம் குமார் முதலிடம். மே மாத ஜிஎஸ்டி வசூல் ரூ.1.94 லட்சம் கோடியைத் தொட்டது.
+சர்வதேச அளவில்: மியான்மர் அதிபருடன் பிரதமர் மோடி சந்திப்பு. இந்தியா-ஓமன் தடையற்ற வர்த்தக ஒப்பந்தம் அமல். லெபனானில் இஸ்ரேல் தாக்குதல் நடத்தினால் போர் நிறுத்தத்தை ரத்து செய்ய ஈரான் எச்சரிக்கை. மலேசியாவில் 16 வயதுக்குட்பட்டவர்களுக்கு சமூக வலைதளங்கள் தடை.
+பொருளாதாரம்: IIP 4.9% ஆகக் குறைந்தது, அடிப்படை ஆண்டு 2022-23 ஆக மாற்றம். யுபிஐ பரிவர்த்தனை ரூ.29.90 லட்சம் கோடியாக புதிய உச்சம். எம்எஸ்எம்இ-களுக்கு ₹35,000 கோடி கடன் ஒதுக்கீடு.
+விளையாட்டு: குஜராத்தை வீழ்த்தி ஆர்சிபி ஐபிஎல் கோப்பையை வென்றது; கோலிக்கு ஆரஞ்சு தொப்பி. வைபவ் சூர்யவன்ஷி 5 விருதுகளை வென்றார். ஆசிய ஹாக்கியில் தென்கொரியாவை 4-1 என இந்தியா வீழ்த்தியது.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 02 June 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+    </script>
+</body>
+</html>

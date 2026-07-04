@@ -1,0 +1,714 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none !important; }
+        }
+
+        @media (max-width: 768px) {
+            .layout-container {
+                flex-direction: column;
+                padding: 1rem 0.5rem;
+                gap: 1rem;
+            }
+            main {
+                max-width: 100%;
+            }
+            header {
+                padding: 1.5rem 1rem;
+            }
+            header h1 {
+                font-size: 1.8rem;
+            }
+            .sticky-top {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.8rem;
+                padding: 0.8rem 1rem;
+            }
+            .nav-links {
+                display: flex !important;
+                width: 100%;
+                justify-content: flex-start;
+                overflow-x: auto;
+                white-space: nowrap;
+                padding-bottom: 5px;
+                gap: 1.2rem;
+                -webkit-overflow-scrolling: touch;
+            }
+            .nav-links::-webkit-scrollbar {
+                display: none;
+            }
+            .nav-links a {
+                font-size: 0.85rem;
+                flex-shrink: 0;
+            }
+            .toggle-btn {
+                width: 100%;
+                text-align: center;
+            }
+            .news-card {
+                padding: 1.2rem;
+                border-radius: 8px;
+            }
+            .news-card h3 {
+                font-size: 1.2rem;
+            }
+            table {
+                font-size: 0.8rem;
+            }
+            th, td {
+                padding: 0.6rem;
+            }
+        }
+    </style>
+</head>
+<body class="en-mode">
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">01 July 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">01 ஜூலை 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+            <a href="#obituary"><span class="lang-en">Obituary</span><span class="lang-ta">காலமானவர்கள்</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <!-- Sidebar TOC -->
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Tech</span><span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a></li>
+                <li><a href="#obituary"><span class="lang-en">Obituaries</span><span class="lang-ta">காலமானவர்கள்</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Welfare · Employment</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">New 125-Day 'VBSY' Rural Employment Scheme Implemented in Tamil Nadu</span>
+                        <span class="lang-ta">தமிழகத்தில் புதிய 125-நாள் 'விகசித் பாரத் ஊரக வேலைவாய்ப்பு திட்டம்' (VBSY) அமல்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The newly enacted 'Vikasit Bharat Gramin Shram Yojana' (VBSY), which replaces the historic MGNREGA scheme, has officially come into effect in Tamil Nadu from July 1, 2026. This scheme guarantees 125 days of work per family per financial year (up from 100 days). Under the revised 60:40 funding pattern, the Union Government has allocated ₹7,957.57 crores for Tamil Nadu, requiring the State Government to contribute its 40% share of ₹5,305.04 crores. The TN government has opened a new RBI account specifically for this scheme.</p>
+                    <p class="lang-ta">மகாத்மா காந்தி தேசிய ஊரக வேலைவாய்ப்பு உறுதித் திட்டத்துக்குப் (100 நாள் வேலை) பதிலாகக் கொண்டுவரப்பட்ட 'விகசித் பாரத் கிராமிய வேலைவாய்ப்புத் திட்டம்' (VBSY) ஜூலை 1 முதல் தமிழகத்தில் அமலுக்கு வந்தது. இத்திட்டம் குடும்பத்திற்கு 125 நாட்கள் வேலை வழங்குகிறது. புதிய 60:40 நிதிப் பகிர்வு முறையில், மத்திய அரசு தமிழகத்திற்கு ரூ.7,957.57 கோடி ஒதுக்கியுள்ளது. மாநில அரசின் 40% பங்காக ரூ.5,305.04 கோடியை ஒதுக்க வேண்டும். இத்திட்டத்திற்காக ரிசர்வ் வங்கியில் புதிய கணக்கைத் தமிழக அரசு தொடங்கியுள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Economy Hook:</strong> Notice the funding ratio change from 100% (Central) for unskilled wage labor under MGNREGA to 60:40 under VBSY. This substantially increases the financial burden on state governments.</span><span class="lang-ta"><strong>பொருளாதாரக் குறிப்பு:</strong> MGNREGA-வில் திறனற்ற தொழிலாளர்களுக்கான ஊதியத்தை 100% மத்திய அரசே வழங்கிய நிலையில், VBSY திட்டத்தில் இது 60:40 ஆக மாறியுள்ளது. இது மாநில அரசுகளின் நிதிச் சுமையை அதிகரிக்கிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Culture · Women's History</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Kadayam School Renamed After Mahakavi Bharathiyar's Wife Chellammal</span>
+                        <span class="lang-ta">கடையம் பள்ளிக்கு பாரதியாரின் மனைவி 'செல்லம்மாள்' பெயர் சூட்டப்பட்டது</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Honouring the legacy of Mahakavi Subramania Bharathiyar's wife, Chellammal, the School Education Department has ordered the renaming of the 'Kadayam Chathiram Bharathi Girls High School' in Tenkasi district to 'Kadayam Chathiram Chellammal Bharathi Girls High School'. This follows demands from the public, teachers, and students acknowledging her pivotal role in supporting the legendary poet.</p>
+                    <p class="lang-ta">மகாகவி பாரதியாரின் மனைவி செல்லம்மாளின் தியாகத்தைப் போற்றும் வகையில், தென்காசி மாவட்டம் கடையத்தில் உள்ள சத்திரம் பாரதி மகளிர் உயர்நிலைப் பள்ளிக்கு 'கடையம் சத்திரம் செல்லம்மாள் பாரதி மகளிர் உயர்நிலைப் பள்ளி' எனப் பெயர் மாற்றம் செய்யப் பள்ளிக்கல்வித்துறை உத்தரவிட்டுள்ளது. பாரதியாரின் புகழுக்கு உறுதுணையாக இருந்த அவர் மனைவியைப் பெருமைப்படுத்த பொதுமக்களும் ஆசிரியர்களும் விடுத்த கோரிக்கையை ஏற்று இந்த நடவடிக்கை எடுக்கப்பட்டுள்ளது.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Environment · Renewable Energy</span>
+                        <span class="badge bg-trap">TRAP</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Wind & Solar Generators Mandated to Share Real-Time Data with State Grid</span>
+                        <span class="lang-ta">காற்றாலை மற்றும் சூரிய ஒளி மின் உற்பத்தியாளர்கள் நிகழ்நேர தரவுகளைப் பகிர்வது கட்டாயம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Tamil Nadu Energy Minister C.T.R. Nirmal Kumar announced that wind and solar power generators must compulsorily share their real-time production data with the State Load Despatch Centre. Non-compliance within 15 days will result in a 10% deduction in their power generation calculations. If they fail to comply after 30 days, their generation will be fully excluded from the grid. Currently, over 50% of TN's energy needs are met by green energy.</p>
+                    <p class="lang-ta">காற்றாலை மற்றும் சூரிய ஒளி மின் உற்பத்தி நிலையங்கள், தாங்கள் உற்பத்தி செய்யும் மின்சாரத்தின் நிகழ்நேர (Real-time) தகவல்களை மாநில மின் பளு பகிர்மான மையத்துடன் கட்டாயம் பகிர வேண்டும் என எரிசக்தித்துறை அமைச்சர் சி.டி.ஆர். நிர்மல் குமார் தெரிவித்தார். 15 நாட்களுக்குள் தரவுகளைப் பகிராவிட்டால் உற்பத்தி கணக்கீட்டில் இருந்து 10% கழிக்கப்படும். 30 நாட்களுக்குப் பிறகும் பகிராவிட்டால் மின் அனுப்புகையிலிருந்து முற்றிலும் விலக்கப்படுவார்கள்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">State Appointments</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">G. Venkataraman Appointed as DGP of TN Fire and Rescue Services</span>
+                        <span class="lang-ta">தீயணைப்புத்துறை புதிய டிஜிபி-யாக ஜி. வெங்கடராமன் நியமனம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Senior IPS officer G. Venkataraman has been appointed as the new Director General of Police (DGP) for the Tamil Nadu Fire and Rescue Services. He succeeds Seema Agarwal, who retired recently. The order was issued by Home Secretary K. Manivasan.</p>
+                    <p class="lang-ta">தமிழ்நாடு தீயணைப்புத்துறை டிஜிபி-யாக இருந்த சீமா அகர்வால் ஓய்வு பெற்றதையடுத்து, சிவில் சப்ளை டிஜிபி-யாக இருந்த ஜி. வெங்கடராமன் தீயணைப்புத்துறை டிஜிபி-யாக நியமிக்கப்பட்டுள்ளார். இதற்கான உத்தரவை உள்துறை கூடுதல் தலைமைச் செயலாளர் கே. மணிவாசன் பிறப்பித்தார்.</p>
+                </div>
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National / Central News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Internal Security · NCB Report</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Drug Trafficking via Drones & Myanmar Border Surges: NCB 2026 Report</span>
+                        <span class="lang-ta">ட்ரோன்கள் மற்றும் மியான்மர் எல்லை வழியே போதைப்பொருள் கடத்தல் அதிகரிப்பு: என்சிபி (NCB) அறிக்கை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Union Home Minister Amit Shah released the Narcotics Control Bureau's (NCB) 2026 report, highlighting alarming trends in drug trafficking. The report indicates a 56% increase in illegal poppy cultivation in Myanmar (covering 45,200 hectares) since the 2021 military coup. This has led to heavy smuggling through the porous 1,643 km Indo-Myanmar border (especially via Manipur and Mizoram). Furthermore, drone-based drug smuggling via the Punjab-Pakistan border has skyrocketed from just 3 incidents in 2021 to 305 incidents in 2025.</p>
+                    <p class="lang-ta">மத்திய உள்துறை அமைச்சர் அமித் ஷா வெளியிட்ட போதைப்பொருள் தடுப்பு முகமையின் (NCB) 2026 அறிக்கையில் அதிர்ச்சியூட்டும் தகவல்கள் இடம்பெற்றுள்ளன. மியான்மரில் 2021 ராணுவ ஆட்சிக்குப் பிறகு போதைப்பொருள் பயிரிடப்படும் பரப்பு 56% அதிகரித்துள்ளது. இதனால், 1,643 கி.மீ. நீளமுள்ள இந்தியா-மியான்மர் எல்லை (முக்கியமாக மணிப்பூர், மிசோரம்) வழியே கடத்தல் அதிகரித்துள்ளது. மேலும், பஞ்சாப்-பாகிஸ்தான் எல்லையில் ட்ரோன் மூலம் போதைப்பொருள் கடத்தப்படுவது 2021-இல் 3 ஆக இருந்தது, 2025-இல் 305 ஆகப் பெருமளவு உயர்ந்துள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-gem">GEM</span><span class="lang-en"><strong>Free Movement Regime (FMR):</strong> The report mentions the 16 km FMR allowing tribal communities to cross the border without visas as a vulnerability exploited by smugglers. The Govt of India has recently decided to scrap this FMR.</span><span class="lang-ta"><strong>கட்டற்ற நடமாட்ட ஒப்பந்தம் (FMR):</strong> விசா இன்றி 16 கி.மீ. வரை பழங்குடியினர் சென்று வர அனுமதிக்கும் ஒப்பந்தத்தை கடத்தல்காரர்கள் பயன்படுத்துவதாக அறிக்கை சுட்டிக்காட்டுகிறது. இந்த FMR-ஐ ரத்து செய்ய மத்திய அரசு சமீபத்தில் முடிவு செய்துள்ளது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Defence · Appointments</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Lt. Gen. Dhiraj Seth Takes Charge as the 31st Chief of Army Staff</span>
+                        <span class="lang-ta">இந்திய ராணுவத்தின் 31-வது தலைமைத் தளபதியாக தீரஜ் சேத் பொறுப்பேற்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Lieutenant General Dhiraj Seth officially took charge as the 31st Chief of Army Staff (COAS) of the Indian Army, succeeding Gen. Upendra Dwivedi. With over 40 years of service, Dhiraj Seth previously commanded the South Western and Southern Commands. Known for his strategic acumen and focus on force modernization, he assumes leadership at a time when the Army is rapidly shifting towards self-reliance (Atmanirbhar Bharat) and future-ready combat integration.</p>
+                    <p class="lang-ta">இந்திய ராணுவத்தின் 31-வது தலைமைத் தளபதியாக லெப்டினன்ட் ஜெனரல் தீரஜ் சேத் பொறுப்பேற்றுக் கொண்டார். முந்தைய தளபதி உபேந்திர திவேதி ஓய்வு பெற்றதையடுத்து இவர் பதவியேற்றார். 40 ஆண்டுகளுக்கும் மேலான அனுபவம் கொண்ட இவர், இதற்கு முன் ராணுவத்தின் தென்மேற்கு மற்றும் தெற்கு மண்டலங்களுக்குத் தலைமை தாங்கியுள்ளார். ராணுவம் தற்சார்பு மற்றும் நவீனத் தொழில்நுட்பங்களை நோக்கி நகரும் முக்கிய காலகட்டத்தில் இவர் தலைமைப் பொறுப்பை ஏற்றுள்ளார்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Economy · Macro</span>
+                        <span class="badge bg-trap">TRAP</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Centre's Fiscal Deficit Hits 9.6% of Budget Estimate in May 2026</span>
+                        <span class="lang-ta">மே மாத நிலவரப்படி மத்திய அரசின் நிதிப் பற்றாக்குறை பட்ஜெட் இலக்கில் 9.6% ஆகப் பதிவு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">According to the Comptroller and Auditor General (CAG) data, the Central Government's fiscal deficit stood at ₹1.62 Lakh Crore by the end of May 2026, which is 9.6% of the full-year Budget Estimate (BE). In comparison, it was just 0.8% during the same period last year. The widening gap is attributed to a 20% drop in excise duty collections (due to recent petrol/diesel tax cuts) and increased expenditure on subsidies and interest payments.</p>
+                    <p class="lang-ta">மத்திய தலைமை கணக்காயர் (CAG) தரவுகளின்படி, நடப்பு நிதியாண்டின் (2026-27) மே மாத இறுதி நிலவரப்படி மத்திய அரசின் நிதிப் பற்றாக்குறை ரூ.1.62 லட்சம் கோடியாகப் பதிவாகியுள்ளது. இது பட்ஜெட் இலக்கில் 9.6 சதவீதமாகும். கடந்த நிதியாண்டின் இதே காலத்தில் இது 0.8% ஆக மட்டுமே இருந்தது. பெட்ரோல், டீசல் மீதான கலால் வரி குறைப்பால் வரி வசூல் 20% வீழ்ச்சியடைந்ததும், மானியங்கள் மற்றும் வட்டி செலுத்துதல் அதிகரித்ததே இதற்குக் காரணமாகும்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Agriculture · Climate</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Delayed Monsoon Shrinks Kharif Sowing Area by 23%; Paddy Down</span>
+                        <span class="lang-ta">பருவமழை தாமதம்: காரீப் பருவ விதைப்பு 23% குறைவு; நெல் சாகுபடி சரிவு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Due to the delayed onset of the South-West Monsoon, the total sown area of Kharif crops across India has shrunk by 23% compared to last year. Sowing took place on only 182.72 lakh hectares by late June, compared to 236.46 lakh hectares previously. Paddy (rice) sowing dropped by 25.17%, while pulses and oilseeds saw massive drops of 30.47% and 53.33%, respectively. Sugarcane, however, saw a slight increase.</p>
+                    <p class="lang-ta">தென்மேற்குப் பருவமழை தாமதமானதால் நாடு முழுவதும் காரீப் (Kharif) பருவ விதைப்பு கடந்த ஆண்டை விட 23 சதவீதம் குறைந்துள்ளது. ஜூன் இறுதிவரை 182.72 லட்சம் ஹெக்டேர் பரப்பளவில் மட்டுமே விதைப்பு நடைபெற்றுள்ளது. இதில் முக்கியப் பயிரான நெல் சாகுபடி 25.17% குறைந்துள்ளது. பருப்பு வகைகள் 30% மற்றும் எண்ணெய் வித்துகள் 53% குறைந்துள்ளன. ஆனால், கரும்பு சாகுபடி பரப்பு சற்று அதிகரித்துள்ளது.</p>
+                </div>
+
+            </section>
+
+            <!-- INTERNATIONAL NEWS -->
+            <section id="international">
+                <h2>
+                    <span class="lang-en">International News</span>
+                    <span class="lang-ta">சர்வதேச செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Global Health · Epidemic</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Ebola Outbreak in DR Congo: UN Warns of Severe Economic Impact</span>
+                        <span class="lang-ta">காங்கோவில் தீவிரமடையும் எபோலா வைரஸ்: ஆப்பிரிக்காவின் பொருளாதாரம் பாதிக்கும் என ஐ.நா எச்சரிக்கை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The United Nations has issued a grave warning regarding the rapidly spreading 'Bundibugyo' Ebola strain in the Democratic Republic of Congo (DRC). With 1,307 infections and 377 deaths reported, the lack of an approved vaccine for this specific strain is causing panic. The UN warned that failure to contain the outbreak could result in a massive $3.6 billion economic loss and millions of job losses across the African continent.</p>
+                    <p class="lang-ta">காங்கோ குடியரசில் வேகமாகப் பரவி வரும் 'புண்டிபுகியோ' (Bundibugyo) வகை எபோலா வைரஸால் இதுவரை 1,307 பேர் பாதிக்கப்பட்டு 377 பேர் உயிரிழந்துள்ளனர். இந்த குறிப்பிட்ட வகைக்கு இதுவரை தடுப்பூசி அங்கீகரிக்கப்படாததால் பலி எண்ணிக்கை அதிகரித்து வருகிறது. இதனை உடனடியாகக் கட்டுப்படுத்தாவிட்டால், ஒட்டுமொத்த ஆப்பிரிக்க கண்டத்திற்கும் 360 கோடி டாலர் பொருளாதார இழப்பு ஏற்படும் என ஐ.நா எச்சரித்துள்ளது.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Geopolitics · USA</span>
+                        <span class="badge bg-trap">TRAP</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">US Supreme Court Reaffirms Birthright Citizenship; Overturns Trump's Order</span>
+                        <span class="lang-ta">அமெரிக்காவில் பிறக்கும் அனைவருக்கும் குடியுரிமை: டிரம்ப் ஆணையை ரத்து செய்தது உச்சநீதிமன்றம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In a landmark 6:3 decision, the US Supreme Court overturned President Donald Trump's executive order that sought to deny birthright citizenship to children of undocumented immigrants. Chief Justice John Roberts ruled that the executive order violated the 14th Amendment of the US Constitution, which guarantees citizenship to anyone born on American soil. This is the second major blow to the Trump administration by the Supreme Court recently.</p>
+                    <p class="lang-ta">அமெரிக்காவில் சட்டவிரோதமாகக் குடியேறியவர்களின் குழந்தைகளுக்குக் குடியுரிமை வழங்குவதைத் தடுக்கும் அதிபர் டொனால்ட் டிரம்பின் நிர்வாக ஆணையை அமெரிக்க உச்சநீதிமன்றம் 6:3 என்ற வாக்குகள் அடிப்படையில் ரத்து செய்தது. அமெரிக்காவில் பிறக்கும் அனைவருக்கும் குடியுரிமை வழங்கும் அரசியலமைப்புச் சட்டத்தின் 14-வது திருத்தத்திற்கு அதிபரின் ஆணை எதிரானது எனத் தலைமை நீதிபதி ஜான் ராபர்ட்ஸ் தீர்ப்பளித்தார்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Polity Hook:</strong> Compare this with India. In India, birthright citizenship (jus soli) was restricted via the Citizenship Amendment Act 1986 and 2003. Now, a child born in India is a citizen only if at least one parent is a citizen and the other is not an illegal migrant.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> இந்தியாவுடன் ஒப்பிடுக. இந்தியாவில் பிறப்பால் குடியுரிமை பெறும் முறை (Jus soli) 1986 மற்றும் 2003 திருத்தங்கள் மூலம் கட்டுப்படுத்தப்பட்டது. தற்போது, பெற்றோரில் ஒருவர் இந்தியராகவும், மற்றொருவர் சட்டவிரோத குடியேறியாக இல்லாமலும் இருந்தால் மட்டுமே இந்தியாவில் பிறக்கும் குழந்தைக்குக் குடியுரிமை கிடைக்கும்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+            </section>
+
+            <!-- ECONOMY & FINANCE -->
+            <section id="economy">
+                <h2>
+                    <span class="lang-en">Economy & Tech</span>
+                    <span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Macro Indicators · RBI</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">India's External Debt Surges to $762.8 Billion (₹72.08 Lakh Crore)</span>
+                        <span class="lang-ta">இந்தியாவின் வெளிநாட்டுக் கடன் 762.8 பில்லியன் டாலராக உயர்வு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Data from the Reserve Bank of India (RBI) reveals that India's external debt rose to $762.8 billion (₹72.08 lakh crore) by the end of March 2026. This increase was primarily driven by the appreciation of the US Dollar, which eroded the value of the Indian Rupee and other currencies. The external debt-to-GDP ratio also increased from 19.8% to 20.8%. US Dollar-denominated debt accounts for 55.5% of the total external debt.</p>
+                    <p class="lang-ta">ரிசர்வ் வங்கியின் (RBI) தரவுகளின்படி, 2026 மார்ச் இறுதி நிலவரப்படி இந்தியாவின் வெளிநாட்டுக் கடன் 762.8 பில்லியன் டாலராக (சுமார் ரூ.72.08 லட்சம் கோடி) உயர்ந்துள்ளது. அமெரிக்க டாலரின் மதிப்பு உயர்ந்ததால் இந்திய ரூபாய் மற்றும் பிற நாணயங்களின் மதிப்பு வீழ்ச்சியடைந்ததே இதற்கு முக்கியக் காரணமாகும். மொத்த உள்நாட்டு உற்பத்தியில் (GDP) வெளிநாட்டுக் கடன் விகிதமும் 19.8% லிருந்து 20.8% ஆக அதிகரித்துள்ளது. மொத்த கடனில் டாலர் அடிப்படையிலான கடன் 55.5% ஆக உள்ளது.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Banking · Appointments</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Former CEC Rajiv Kumar Appointed as Part-Time Chairman of HDFC Bank</span>
+                        <span class="lang-ta">எச்டிஎஃப்சி (HDFC) வங்கியின் பகுதிநேரத் தலைவராக முன்னாள் தலைமைத் தேர்தல் ஆணையர் ராஜீவ் குமார் நியமனம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Former Chief Election Commissioner (CEC) of India, Rajiv Kumar, has been appointed as the new part-time Chairman of HDFC Bank, India's largest private sector bank. He replaces Atanu Chakraborty, who resigned in March. Rajiv Kumar is credited with successfully conducting the massive 2024 Lok Sabha elections and introducing key reforms in public sector banks during his tenure as Finance Secretary (2017-2020).</p>
+                    <p class="lang-ta">இந்தியாவின் மிகப் பெரிய தனியார் வங்கியான எச்டிஎஃப்சி (HDFC) வங்கியின் புதிய பகுதிநேரத் தலைவராக முன்னாள் தலைமைத் தேர்தல் ஆணையர் ராஜீவ் குமார் நியமிக்கப்பட்டுள்ளார். மார்ச் மாதம் பதவி விலகிய அதானு சக்கரவர்த்திக்குப் பதிலாக இவர் பொறுப்பேற்கிறார். 2024 மக்களவைத் தேர்தலை வெற்றிகரமாக நடத்திய பெருமையும், நிதித்துறை செயலாளராக (2017-2020) இருந்தபோது பொதுத்துறை வங்கிகளில் சீர்திருத்தங்களைக் கொண்டுவந்த பெருமையும் இவருக்கு உண்டு.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Space · ISRO Propulsion</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">ISRO Successfully Tests 175-Ton Semi-Cryogenic Engine at Mahendragiri</span>
+                        <span class="lang-ta">மகேந்திரகிரியில் 175 டன் உந்துவிசை கொண்ட செமி-கிரையோஜெனிக் இன்ஜின் சோதனை வெற்றி: இஸ்ரோ சாதனை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Scientists at ISRO's Propulsion Complex in Mahendragiri (Tirunelveli district) achieved a major milestone by successfully hot-testing a 175-ton thrust capacity semi-cryogenic engine. This engine, powered by eco-friendly liquid oxygen and refined kerosene (ISROSene), is designed to replace the core L110 stage in the LVM3 rocket, thereby significantly increasing its payload capacity.</p>
+                    <p class="lang-ta">நெல்லை மாவட்டம் காவல்கிணறு மகேந்திரகிரி இஸ்ரோ விண்வெளி ஆராய்ச்சி மையத்தில் 175 டன் உந்துவிசை திறன் கொண்ட செமி-கிரையோஜெனிக் இன்ஜின் சோதனை வெற்றிகரமாக நடைபெற்றது. எல்.வி.எம்.3 (LVM3) ராக்கெட்டில் பயன்படுத்தப்படும் எல்110 நிலைக்கு மாற்றாக, சுற்றுச்சூழலுக்கு உகந்த திரவ ஆக்ஸிஜன் மற்றும் சுத்திகரிக்கப்பட்ட மண்ணெண்ணெய் (ISROSene) கொண்டு இயங்கும் இந்த இன்ஜின் உருவாக்கப்பட்டு வருகிறது. இதன்மூலம் ராக்கெட்டின் சுமந்து செல்லும் திறன் கணிசமாக அதிகரிக்கும்.</p>
+                </div>
+            </section>
+            
+            <!-- SPORTS -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports</span>
+                    <span class="lang-ta">விளையாட்டு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Football · FIFA World Cup 2026</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">FIFA World Cup: Germany and Netherlands Knocked Out in Penalty Shootouts</span>
+                        <span class="lang-ta">உலகக் கோப்பை கால்பந்து: நாக்-அவுட் சுற்றில் ஜெர்மனி, நெதர்லாந்து அதிர்ச்சித் தோல்வி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">In major upsets at the FIFA World Cup Round of 16, four-time champions Germany were eliminated by Paraguay 4-3 in a penalty shootout (1-1 draw in regular time). In another thrilling match, Morocco knocked out the Netherlands 3-2 via penalties (1-1 draw). Meanwhile, Brazil secured their spot in the quarter-finals by defeating Japan 2-1, with Gabriel Martinelli scoring the winning goal in the 95th minute.</p>
+                    <p class="lang-ta">உலகக் கோப்பை கால்பந்து போட்டியின் நாக்-அவுட் சுற்றில் (Round of 16), 4 முறை சாம்பியனான ஜெர்மனியை பராகுவே அணி பெனால்டி ஷூட்-அவுட் முறையில் 4-3 என வீழ்த்தி அதிர்ச்சியளித்தது. மற்றொரு போட்டியில் மொராக்கோ அணி பெனால்டி முறையில் 3-2 என நெதர்லாந்தை வீழ்த்தியது. அதேநேரம், ஜப்பானுக்கு எதிரான ஆட்டத்தில் 2-1 என்ற கோல் கணக்கில் பிரேசில் வென்று காலிறுதிக்கு முன்னேறியது; 95-வது நிமிடத்தில் கேப்ரியல் மார்டினெல்லி வெற்றிக் கோலை அடித்தார்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Athletics · National Championship</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Tamil Nadu Wins Overall Championship in 65th National Athletics</span>
+                        <span class="lang-ta">65-வது தேசிய தடகள சாம்பியன்ஷிப்: தமிழ்நாடு ஒட்டுமொத்த சாம்பியன் பட்டத்தை வென்றது</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Tamil Nadu clinched the Overall Championship title at the 65th National Inter-State Senior Athletics Championships held at the Kalinga Stadium in Bhubaneswar, Odisha. Dominating the track and field events, TN athletes secured 20 medals (9 Gold, 9 Silver, 2 Bronze). Star athlete Praveen Chithravel won Gold in the Men's Triple Jump with a leap of 16.92 meters. UP secured the second spot, followed by Haryana.</p>
+                    <p class="lang-ta">ஒடிஸா மாநிலம் புவனேஸ்வரில் உள்ள கலிங்கா மைதானத்தில் நடைபெற்ற 65-வது தேசிய தடகள சாம்பியன்ஷிப் போட்டியில் தமிழ்நாடு அணி ஒட்டுமொத்த சாம்பியன் பட்டத்தை வென்றது. தமிழக அணி 9 தங்கம், 9 வெள்ளி, 2 வெண்கலம் என மொத்தம் 20 பதக்கங்களைக் கைப்பற்றியது. நட்சத்திர வீரர் பிரவீண் சித்திரவேல் ஆடவர் மும்முறை தாண்டுதலில் 16.92 மீட்டர் குதித்து தங்கம் வென்றார். உத்தரப் பிரதேசம் 2-வது இடத்தையும், ஹரியாணா 3-வது இடத்தையும் பிடித்தன.</p>
+                </div>
+
+            </section>
+
+            <!-- OBITUARIES -->
+            <section id="obituary">
+                <h2>
+                    <span class="lang-en">Obituaries</span>
+                    <span class="lang-ta">காலமானவர்கள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Literature · Sahitya Akademi</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Noted Tamil Poet and 'Vaanambadi' Pioneer Puviyarasu (94) Passes Away</span>
+                        <span class="lang-ta">வானம்பாடி கவிதை இயக்கத்தின் நிறுவனர் கவிஞர் புவியரசு (94) காலமானார்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Eminent Tamil poet and two-time Sahitya Akademi winner Puviyarasu (94) passed away in Coimbatore. Born as S. Jagannathan, he was a trailblazer of the 'Vaanambadi' poetry movement in the 1970s, bringing revolutionary modern poetry to the masses. He won the Sahitya Akademi award for translation in 2007 (for Kazi Nazrul Islam's poems) and for his original poetry collection 'Kaiyoppam' in 2009.</p>
+                    <p class="lang-ta">'வானம்பாடி' கவிதை இயக்கத்தின் நிறுவனர்களில் ஒருவரும், இருமுறை சாகித்ய அகாதெமி விருது பெற்றவருமான கவிஞர் புவியரசு (94) உடல்நலக்குறைவால் கோவையில் காலமானார். சு.ஜெகந்நாதன் என்ற இயற்பெயர் கொண்ட இவர், 1970-களில் புதுக்கவிதையை மக்கள் மத்தியில் கொண்டு சேர்த்த வானம்பாடி இயக்கத்தின் முக்கிய ஆளுமையாகத் திகழ்ந்தார். 2007-இல் வங்கக்கவிஞர் காசி நஸ்ருல் இஸ்லாமின் கவிதைகளை மொழிபெயர்த்ததற்காகவும், 2009-இல் 'கையொப்பம்' கவிதைத் தொகுப்பிற்காகவும் சாகித்ய அகாதெமி விருதுகளைப் பெற்றுள்ளார்.</p>
+                </div>
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Who among the following was a pioneer of the 'Vaanambadi' poetry movement and won the Sahitya Akademi Award for his poetry collection 'Kaiyoppam' in 2009?</span>
+                        <span class="lang-ta">கேள்வி: 'வானம்பாடி' கவிதை இயக்கத்தின் முன்னோடிகளில் ஒருவராகவும், 'கையொப்பம்' கவிதைத் தொகுப்பிற்காக 2009-ஆம் ஆண்டு சாகித்ய அகாதெமி விருது பெற்றவராகவும் விளங்கியவர் யார்?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Poet Puviyarasu (S. Jagannathan)</span><br><br>
+                                <strong>Context:</strong> He recently passed away at age 94. The Vaanambadi movement (1970s) was crucial in shaping modern Tamil revolutionary poetry.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">கவிஞர் புவியரசு (சு.ஜெகந்நாதன்)</span><br><br>
+                                <strong>பின்னணி:</strong> இவர் தனது 94-வது வயதில் சமீபத்தில் காலமானார். 1970-களில் நவீனத் தமிழ் புதுக்கவிதையை வளர்த்தெடுத்ததில் வானம்பாடி இயக்கத்தின் பங்கு முக்கியமானது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: According to the recent NCB Report released in 2026, illegal poppy cultivation and subsequent drug trafficking into India has massively increased across which international border due to political instability?</span>
+                        <span class="lang-ta">கேள்வி: 2026-இல் வெளியிடப்பட்ட என்சிபி (NCB) அறிக்கையின்படி, அரசியல் ஸ்திரமின்மை காரணமாகச் சட்டவிரோத போதைப்பொருள் சாகுபடி அதிகரித்து, எந்தச் சர்வதேச எல்லை வழியாக இந்தியாவிற்குள் கடத்தல் பெருமளவு அதிகரித்துள்ளது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Indo-Myanmar Border</span><br><br>
+                                <strong>Context:</strong> Post the 2021 military coup in Myanmar, poppy cultivation grew by 56%. The 16-km Free Movement Regime (FMR) across the 1,643 km border was exploited by traffickers, prompting the Centre to initiate fencing and scrap the FMR.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">இந்தியா-மியான்மர் எல்லை</span><br><br>
+                                <strong>பின்னணி:</strong> மியான்மரில் 2021 ராணுவ ஆட்சிக்குப் பிறகு போதைப்பொருள் பயிரிடல் 56% அதிகரித்துள்ளது. விசா இன்றி 16 கி.மீ வரை பயணிக்கும் தடையற்ற நடமாட்ட ஒப்பந்தத்தை (FMR) கடத்தல்காரர்கள் தவறாகப் பயன்படுத்தியதால், அதனை ரத்து செய்ய மத்திய அரசு முடிவெடுத்துள்ளது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">VBSY Implemented in TN</span><span class="lang-ta">தமிழகத்தில் VBSY திட்டம் அமல்</span></td>
+                                <td><span class="lang-en">State/Scheme</span><span class="lang-ta">மாநிலம்/திட்டம்</span></td>
+                                <td><span class="lang-en">Replaces MGNREGA; 125 days work; 60:40 fund ratio.</span><span class="lang-ta">MGNREGA-க்கு பதில் 125 நாள் வேலை; 60:40 நிதிப் பகிர்வு.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">NCB Drug Report 2026</span><span class="lang-ta">என்சிபி போதைப்பொருள் அறிக்கை</span></td>
+                                <td><span class="lang-en">National/Security</span><span class="lang-ta">தேசியம்/பாதுகாப்பு</span></td>
+                                <td><span class="lang-en">Smuggling from Myanmar up 56%; Drone use in Punjab rises.</span><span class="lang-ta">மியான்மர் கடத்தல் 56% உயர்வு; பஞ்சாபில் ட்ரோன் கடத்தல் அதிகரிப்பு.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">Poet Puviyarasu Passes Away</span><span class="lang-ta">கவிஞர் புவியரசு காலமானார்</span></td>
+                                <td><span class="lang-en">Obituary/Lit</span><span class="lang-ta">இலக்கியம்/மறைவு</span></td>
+                                <td><span class="lang-en">Vaanambadi pioneer; 2-time Sahitya Akademi winner.</span><span class="lang-ta">வானம்பாடி முன்னோடி; 2 முறை சாகித்ய அகாதெமி வென்றவர்.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">New Army Chief</span><span class="lang-ta">புதிய ராணுவ தளபதி</span></td>
+                                <td><span class="lang-en">Appointments</span><span class="lang-ta">நியமனங்கள்</span></td>
+                                <td><span class="lang-en">Lt. Gen. Dhiraj Seth is the 31st Chief of Army Staff.</span><span class="lang-ta">தீரஜ் சேத் 31-வது ராணுவத் தலைமைத் தளபதியாகப் பொறுப்பேற்பு.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">External Debt Surges</span><span class="lang-ta">வெளிநாட்டுக் கடன் உயர்வு</span></td>
+                                <td><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></td>
+                                <td><span class="lang-en">Touches $762.8 billion (20.8% of GDP) due to USD rise.</span><span class="lang-ta">டாலர் உயர்வால் கடன் 762.8 பில்லியன் டாலராக அதிகரிப்பு (GDP-யில் 20.8%).</span></td>
+                                <td><span class="badge bg-trap">MED</span></td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td><span class="lang-en">US Birthright Citizenship</span><span class="lang-ta">அமெரிக்கக் குடியுரிமைத் தீர்ப்பு</span></td>
+                                <td><span class="lang-en">Intl/Polity</span><span class="lang-ta">சர்வதேசம்/சட்டம்</span></td>
+                                <td><span class="lang-en">Supreme Court overturns Trump's order; upholds 14th Amendment.</span><span class="lang-ta">டிரம்பின் ஆணையை ரத்து செய்து, 14-வது திருத்தத்தை உச்சநீதிமன்றம் உறுதி செய்தது.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani Chennai 01-07-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி சென்னை 01-07-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source text detailed state, national, and international news for 01 July 2026. 
+State news: The new 125-day 'Vikasit Bharat Gramin Shram Yojana' (VBSY) was rolled out in TN to replace MGNREGA. Wind and solar generators must share real-time data or face a 10% cut. G. Venkataraman was appointed TN Fire Services DGP. DVAC summoned Ex-Minister EV Velu in a ₹3.23 Cr highway scam. Kadayam school was renamed after Bharathiyar's wife Chellammal. CM gave awards to Collectors and SPs. DMK set up a restructuring committee. Teacher transfer counseling began. Vaanambadi movement pioneer Poet Puviyarasu passed away at 94. 
+National news: PM Modi held a meeting with Secretaries on Vision 2047. NCB released its 2026 report showing drug trafficking from Myanmar surged 56%, and drone smuggling in Punjab jumped to 305 cases. Congress issued a privilege notice against Rajnath Singh over the Pahalgam 'Operation Sindhur' casualties. Dhiraj Seth took over as the 31st Army Chief. Kharif sowing dropped 23% due to delayed monsoons. The Centre told the SC that 20% ethanol blending is still in the trial phase. 
+International news: US Supreme Court overturned Trump's order denying birthright citizenship. Ebola outbreak in DR Congo threatened Africa's economy. Monaco bomb blast targeted a Ukrainian businessman. Japanese PM Shinzo Takayashi is set to visit India. Anti-immigrant protests rocked South Africa. 
+Economy: India's external debt touched $762.8 billion. Fiscal deficit reached 9.6% of the BE in May. Rajiv Kumar was named part-time HDFC Chairman. ISRO tested a 175-ton semi-cryogenic engine at Mahendragiri. 
+Sports: TN won the Overall Championship in the 65th National Athletics. In the FIFA World Cup, Germany and the Netherlands were knocked out by Paraguay and Morocco on penalties, while Brazil beat Japan. Australia reached the Women's T20 WC final.]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூல உரைகள் 01 ஜூலை 2026 க்கான செய்திகளைக் கொண்டிருந்தன.
+மாநில செய்திகளில்: MGNREGA-க்கு பதிலாக 125-நாள் VBSY ஊரக வேலைவாய்ப்புத் திட்டம் அமலுக்கு வந்தது. காற்றாலை, சோலார் நிறுவனங்கள் நிகழ்நேர தரவுகளைப் பகிராவிட்டால் 10% உற்பத்தி கழிக்கப்படும் என எச்சரிக்கை. தீயணைப்புத்துறை டிஜிபி-யாக ஜி.வெங்கடராமன் நியமனம். ரூ.3.23 கோடி முறைகேடு வழக்கில் எ.வ.வேலுவுக்கு லஞ்ச ஒழிப்புத்துறை சம்மன். கடையம் பள்ளிக்கு பாரதியாரின் மனைவி செல்லம்மாள் பெயர் சூட்டப்பட்டது. மாவட்ட ஆட்சியர்கள், எஸ்.பி-க்களுக்கு முதல்வர் விருது வழங்கினார். திமுக மறுசீரமைப்புக் குழு அமைப்பு. கவிஞர் புவியரசு (94) மறைவு.
+தேசிய அளவில்: 2047 தொலைநோக்குத் திட்டம் குறித்து செயலாளர்களுடன் பிரதமர் ஆலோசனை. என்சிபி (NCB) அறிக்கை: மியான்மர் வழியே போதைப்பொருள் கடத்தல் 56% உயர்வு; ட்ரோன் பயன்பாடு அதிகரிப்பு. 'ஆபரேஷன் சிந்துர்' பலி தொடர்பாக ராஜ்நாத் சிங் மீது உரிமை மீறல் நோட்டீஸ். 31-வது ராணுவத் தளபதியாக தீரஜ் சேத் பொறுப்பேற்பு. பருவமழை தாமதத்தால் காரீப் விதைப்பு 23% சரிவு. 20% எத்தனால் கலப்பு இன்னமும் சோதனை அளவிலேயே உள்ளது என உச்சநீதிமன்றத்தில் மத்திய அரசு தகவல்.
+சர்வதேச அளவில்: பிறப்பால் குடியுரிமை ரத்து செய்யும் டிரம்ப் ஆணையை அமெரிக்க உச்சநீதிமன்றம் ரத்து செய்தது. காங்கோவில் எபோலா தீவிரமடைவதால் ஆப்பிரிக்கப் பொருளாதாரம் பாதிக்கும் என ஐ.நா எச்சரிக்கை. ஜப்பான் பிரதமர் இந்திய வருகை. தென்னாப்பிரிக்காவில் குடியேறிகளுக்கு எதிராகப் போராட்டம்.
+பொருளாதாரம்: இந்தியாவின் வெளிநாட்டுக் கடன் 762.8 பில்லியன் டாலராக உயர்வு. நிதிப் பற்றாக்குறை 9.6% ஆகப் பதிவு. HDFC வங்கி பகுதிநேரத் தலைவராக ராஜீவ் குமார் நியமனம். மகேந்திரகிரியில் 175 டன் செமி-கிரையோஜெனிக் இன்ஜின் சோதனை வெற்றி.
+விளையாட்டு: தேசிய தடகளத்தில் தமிழ்நாடு ஒட்டுமொத்த சாம்பியன். உலகக் கோப்பை கால்பந்தில் ஜெர்மனி, நெதர்லாந்து அதிர்ச்சித் தோல்வி.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 01 July 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+    </script>
+</body>
+</html>
