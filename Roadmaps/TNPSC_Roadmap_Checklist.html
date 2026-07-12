@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Unified TNPSC Group 1 Cracksheet</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Andika&family=IBM+Plex+Mono:wght@400;600&family=Orbitron:wght@500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0d0f14;
+            --surface-color: #161a23;
+            --gold-accent: #f5c842;
+            --white: #ffffff;
+            --muted-gray: #a0aec0;
+            --critical-red: #ef4444;
+            --tip-green: #10b981;
+            --pyq-blue: #3b82f6;
+            --gem-purple: #8b5cf6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--white);
+            font-family: 'Andika', sans-serif;
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+        }
+
+        /* Hero Header */
+        .hero {
+            background: linear-gradient(135deg, #11141d 0%, #1a1f2c 100%);
+            border-bottom: 3px solid var(--gold-accent);
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            color: var(--gold-accent);
+            font-size: 2.5rem;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .hero-subtitle {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--muted-gray);
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Progress Tracker */
+        .progress-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #222836;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #2d3548;
+        }
+
+        .progress-stats {
+            display: flex;
+            justify-content: space-between;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+            color: var(--gold-accent);
+        }
+
+        .progress-bar-bg {
+            background: #0d0f14;
+            width: 100%;
+            height: 16px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #3a445d;
+        }
+
+        .progress-bar-fill {
+            background: linear-gradient(90deg, var(--gold-accent), #ffee7a);
+            width: 0%;
+            height: 100%;
+            transition: width 0.4s ease-in-out;
+        }
+
+        /* Legend Row */
+        .legend-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            padding: 15px;
+            background: #12151c;
+            border-bottom: 1px solid #222836;
+        }
+
+        /* Responsive Navigation */
+        .nav-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: #11141d;
+            border-bottom: 1px solid var(--gold-accent);
+        }
+
+        .top-nav {
+            display: flex;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 10px;
+            gap: 10px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .top-nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            padding: 8px 14px;
+            background: #1c212d;
+            border: 1px solid #2d3548;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .top-nav a:hover, .top-nav a.active {
+            background: var(--gold-accent);
+            color: #0d0f14;
+            font-weight: 700;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: var(--gold-accent);
+            color: #0d0f14;
+            border: none;
+            padding: 12px 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        /* Main Layout */
+        .main-content {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Badges & Callouts */
+        .badge {
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 600;
+            font-size: 0.75rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-right: 4px;
+            color: #0d0f14;
+        }
+
+        .badge-critical { background-color: var(--critical-red); color: white; }
+        .badge-trap { background-color: var(--gold-accent); }
+        .badge-tip { background-color: var(--tip-green); }
+        .badge-pyq { background-color: var(--pyq-blue); color: white; }
+        .badge-gem { background-color: var(--gem-purple); color: white; }
+
+        .callout-block {
+            margin: 12px 0;
+            padding: 12px 16px;
+            border-left: 4px solid;
+            border-radius: 0 6px 6px 0;
+            background: #1d2330;
+            font-size: 0.9rem;
+        }
+        .callout-critical { border-left-color: var(--critical-red); }
+        .callout-trap { border-left-color: var(--gold-accent); }
+        .callout-tip { border-left-color: var(--tip-green); }
+        .callout-pyq { border-left-color: var(--pyq-blue); }
+        .callout-gem { border-left-color: var(--gem-purple); }
+
+        /* Sectional Cards */
+        .unit-card {
+            background-color: var(--surface-color);
+            border: 1px solid #252b3a;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .unit-header {
+            background: #1c212d;
+            padding: 18px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #252b3a;
+            user-select: none;
+        }
+
+        .unit-header h2 {
+            font-size: 1.25rem;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .unit-header h2 span {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--gold-accent);
+            font-size: 1.1rem;
+        }
+
+        .toggle-icon {
+            font-size: 1.5rem;
+            color: var(--muted-gray);
+            transition: transform 0.2s;
+        }
+
+        .unit-card.collapsed .unit-content {
+            display: none;
+        }
+
+        .unit-card.collapsed .toggle-icon {
+            transform: rotate(-90deg);
+        }
+
+        .unit-content {
+            padding: 20px;
+        }
+
+        /* Tables */
+        .table-wrapper {
+            overflow-x: auto;
+            width: 100%;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            border: 1px solid #252b3a;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background-color: #121620;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--gold-accent);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            padding: 12px 16px;
+            border-bottom: 2px solid #252b3a;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #1e2433;
+            vertical-align: top;
+        }
+
+        tr:hover {
+            background-color: #1a202c;
+        }
+
+        .col-topic { width: 20%; font-weight: 700; color: #e2e8f0; }
+        .col-source { width: 25%; font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; color: #cbd5e0; }
+        .col-core { width: 50%; }
+        .col-status { width: 5%; text-align: center; }
+
+        /* Custom Checkbox */
+        .checkbox-container {
+            display: inline-block;
+            position: relative;
+            cursor: pointer;
+            font-size: 22px;
+            user-select: none;
+            width: 24px;
+            height: 24px;
+        }
+
+        .checkbox-container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 24px;
+            width: 24px;
+            background-color: #0d0f14;
+            border: 2px solid #3a445d;
+            border-radius: 4px;
+        }
+
+        .checkbox-container:hover input ~ .checkmark {
+            border-color: var(--gold-accent);
+        }
+
+        .checkbox-container input:checked ~ .checkmark {
+            background-color: var(--gold-accent);
+            border-color: var(--gold-accent);
+        }
+
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        .checkbox-container input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        .checkbox-container .checkmark:after {
+            left: 8px;
+            top: 4px;
+            width: 5px;
+            height: 10px;
+            border: solid #0d0f14;
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+        }
+
+        /* Custom Specialized Rule Block styling */
+        .rule-block {
+            background: linear-gradient(180deg, #181d29 0%, #131722 100%);
+            border: 1px dashed var(--gold-accent);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .rule-block h4 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--gold-accent);
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 768px) {
+            .top-nav {
+                display: none;
+                flex-direction: column;
+                white-space: normal;
+                padding: 10px 20px;
+            }
+            .top-nav.open {
+                display: flex;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            th, td {
+                padding: 10px;
+                font-size: 0.85rem;
+            }
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+        }
+    
+        /* Premium Mobile Responsiveness Tweaks */
+        @media (max-width: 768px) {
+            .drill-options {
+                grid-template-columns: 1fr !important;
+            }
+            .footer-strip {
+                position: static !important;
+                width: auto !important;
+            }
+            body {
+                padding-bottom: 0 !important;
+            }
+            /* Stacking container layouts if any */
+            .grid-2, .grid-3, .drill-row {
+                grid-template-columns: 1fr !important;
+            }
+            /* Reduce padding and headers */
+            .hero-header {
+                padding: 20px 15px !important;
+            }
+            .hero-title {
+                font-size: 1.6rem !important;
+            }
+        }
+</style>
+</head>
+<body>
+
+    <header class="hero">
+        <h1>The Unified TNPSC Group 1 Cracksheet</h1>
+        <div class="hero-subtitle">Prelims Blueprint &amp; Mains Descriptive Integration Engine</div>
+        
+        <div class="progress-container">
+            <div class="progress-stats">
+                <span>Syllabus Target Mastery</span>
+                <span id="progress-text">0/0 Rows (0%)</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div id="progress-fill" class="progress-bar-fill"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="legend-row">
+        <span class="badge badge-critical">[CRITICAL] High-Weightage Chapters</span>
+        <span class="badge badge-trap">[TRAP] Deceptive &amp; Conceptual Pitfalls</span>
+        <span class="badge badge-tip">[TIP] Mnemonics &amp; Descriptive Frameworks</span>
+        <span class="badge badge-pyq">[PYQ] Evolving Exam Trend Indicators</span>
+        <span class="badge badge-gem">[GEM] Expert Interdisciplinary Connections</span>
+    </div>
+
+    <nav class="nav-container">
+        <button class="menu-toggle" onclick="toggleMobileNav()">☰ Toggle Syllabus Navigation</button>
+        <div class="top-nav" id="navigation-bar">
+            <a href="#unit1">Unit I: Science</a>
+            <a href="#unit2">Unit II: Current Events</a>
+            <a href="#unit3">Unit III: Geography</a>
+            <a href="#unit4">Unit IV: History &amp; Culture</a>
+            <a href="#unit5">Unit V: Indian Polity</a>
+            <a href="#unit6">Unit VI: Economy</a>
+            <a href="#unit7">Unit VII: INM</a>
+            <a href="#unit8">Unit VIII: TN Culture</a>
+            <a href="#unit9">Unit IX: TN Admin</a>
+            <a href="#unit10">Unit X: Aptitude</a>
+            <a href="#mains">Mains Descriptive</a>
+        </div>
+    </nav>
+
+    <main class="main-content" id="tracker-container">
+
+        <section id="unit1" class="unit-card">
+            <div class="unit-header" onclick="toggleCard(this)">
+                <h2><span>UNIT I</span> General Science</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="unit-content">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="col-topic">Topic</th>
+                                <th class="col-source">Source &amp; Weightage</th>
+                                <th class="col-core">Core Concepts &amp; Mains Linkage</th>
+                                <th class="col-status">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="col-topic">Core Physics Laws</td>
+                                <td class="col-source">Std 9 &amp; 10 Science<br>Weightage: High</td>
+                                <td class="col-core">
+                                    Newton's Laws, Gravitation, and Mechanics.
+                                    <div class="callout-block callout-critical">
+                                        <span class="badge badge-critical">[CRITICAL]</span> Master application-based questions on total internal reflection, Doppler effect, and properties of ultrasonic waves.
+                                    </div>
+                                    <div class="callout-block callout-tip">
+                                        <span class="badge badge-tip">[TIP]</span> For Mains Paper III (Science &amp; Tech), link basic physics concepts explicitly to ISRO launcher technologies (e.g., Cryogenic propulsion mechanics).
+                                    </div>
+                                </td>
+                                <td class="col-status">
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" id="u1_r1" onchange="updateProgress()">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-topic">Daily Life Chemistry</td>
+                                <td class="col-source">Std 10 Chemistry<br>Weightage: Medium</td>
+                                <td class="col-core">
+                                    Acids, Bases, Salts, Fertilizers, Carbon compounds, and Polymers.
+                                    <div class="callout-block callout-trap">
+                                        <span class="badge badge-trap">[TRAP]</span> Do not confuse the pH values of human blood (7.4) with gastric juice (1.5-3.5) during matching type questions.
+                                    </div>
+                                </td>
+                                <td class="col-status">
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" id="u1_r2" onchange="updateProgress()">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-topic">Human Nutrition &amp; Health</td>
+                                <td class="col-source">Std 9, 11 &amp; 12 Biology<br>Weightage: High</td>
+                                <td class="col-core">
+                                    Balanced diet, vitamins, deficiency diseases, endocrine systems, and communicable/non-communicable health tracking.
+                                    <div class="callout-block callout-pyq">
+                                        <span class="badge badge-pyq">[PYQ]</span> Shifting away from basic morphology to public health issues. Focus heavily on zoonotic diseases, lifestyle epidemics (diabetes), and national health schemes.
+                                    </div>
+                                </td>
+                                <td class="col-status">
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" id="u1_r3" onchange="updateProgress()">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-topic">Environmental Ecology</td>
+                                <td class="col-source">Std 12 Bio-Botany<br>Weightage: Extreme</td>
+                                <td class="col-core">
+                                    Ecosystem dynamics, Biodiversity hotspots, Climate mitigation, and Carbon sinks.
+                                    <div class="callout-block callout-gem">
+                                        <span class="badge badge-gem">[GEM]</span> Integrate TN State Wetland Mission developments with global Ramsar site conventions when composing environment conservation responses.
+                                    </div>
+                                </td>
+                                <td class="col-status">
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" id="u1_r4" onchange="updateProgress()">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="unit2" class="unit-card">
+            <div class="unit-header" onclick="toggleCard(this)">
+                <h2><span>UNIT II</span> Current Events</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="unit-content">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="col-topic">Topic</th>
+                                <th class="col-source">Socio-Economic Bulletins<br>Weightage: High</th>
+                                <th class="col-core">Core Concepts &amp; Mains Linkage</th>
+                                <th class="col-status">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="col-topic">State &amp; National Awards</td>
+                                <td class="col-source">Daily Newspapers / Portals</td>
+                                <td class="col-core">
+                                    Highest civil honours, Literature breakthroughs, Science &amp; Technology recognitions.
+                                    <div class="callout-block callout-tip">
+                                        <span class="badge badge-tip">[TIP]</span> Tabulate awards alongside recipient-driven structural impacts for immediate recollection in state profile assessments.
+                                    </div>
+                                </td>
+                                <td class="col-status">
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" id="u2_r1" onchange="updateProgress()">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-topic">Bilateral &amp; State Policies</td>
+                                <td class="col-source">G.O. Registry &amp; PIB</td>
+                                <td class="col-core">
+                                    Newly enacted international treaties and state welfare declarations.
+                                    <div class="callout-block callout-critical">
+                                        <span class="badge badge-critical">[CRITICAL]</span> Track specific MOUs executed under Tamil Nadu's Global Investors Meets to substantiate industrial decentralization essays.
+                                    </div>
+                                </td>
+                                <td class="col-status">
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" id="u2_r2" onchange="updateProgress()">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="unit3" class="unit-card">
+            <div class="unit-header" onclick="toggleCard(this)">
+                <h2><span>UNIT III</span> Geography of India</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="unit-content">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="col-topic">Topic</th>
+                                <th class="col-source">Source &amp; Weightage</th>
+                                <th class="col-core">Core Concepts &amp; Mains Linkage</th>
+                                <th class="col-status">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="col-topic">Monsoon Dynamics</td>
+                                <td class="col-source">Std 10 Geo Ch 2<br>Weightage: Critical</td>
+                                <td class="col-core">
+                                    Mechanism of Southwest and Northeast Monsoons, El Nino, and Jet Streams.
+                                    <div class="callout-block callout-trap">
+                                        <span class="badge badge-trap">[TRAP]</span> Remember that Tamil Nadu receives its bulk rainfall from the **Northeast Monsoon** due to rain-shadow positioning during the SW monsoon phase.
+                                    </div>
+                                </td>
+                                <td class="col-status">
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" id="u3_r1" onchange="updateProgress()">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-topic">Soil Profiles &amp; Networks</td>
+                                <td class="col-source">Std 10 &amp; 12 Geography<br>Weightage: High</td>
+                                <td class="col-core">
+                                    Alluvial, Black, Red, and Laterite soil spatial distributions across India and Tamil Nadu. Water network linking configurations.
+                                    <div class="callout-block callout-pyq">
+                                        <span class="badge badge-pyq">[PYQ]</span> Focus on specific river disputes (Cauvery, Mullaperiyar) from a geo-hydrological perspective rather than political frameworks.
+                                    </div>
+                                </td>
+                                <td class="col-status">
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" id="u3_r2" onchange="updateProgress()">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="unit4" class="unit-card">
+            <div class="unit-header" onclick="toggleCard(this)">
+                <h2><span>UNIT IV</span> History and Culture of India</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="unit-content">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="col-topic">Topic</th>
+                                <th class="col-source">Source &amp; Weightage</th>
+                                <th class="col-core">Core Concepts &amp; Mains Linkage</th>
+                                <th class="col-status">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="col-topic">Indus Valley Civilisation</td>
+                                <td class="col-source">Std 6, 9 &amp; 11 History<br>Weightage: Constant</td>
+                                <td class="col-core">
+                                    Urban planning, drainage infrastructure, script status, and socio-economic life.
+                                    <div class="callout-block callout-gem">
+                                        <span class="badge badge-gem">[GEM]</span> Draw direct structural and material comparisons between Indus Valley symbols and contemporary Keezhadi graffiti marks.
+                                    </div>
+                                </td>
+                                <td class="col-status">
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" id="u4_r1" onchange="updateProgress()">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-topic">Guptas &amp; Delhi Sultans</td>
+                                <td class="col-source">Std 11 History<br>Weightage: Medium</td>
+                                <td class="col-core">
+                                    Administration, land revenue models, and monumental developments.
+                                    <div class="callout-block callout-trap">
+                                        <span class="badge badge-trap">[TRAP]</span> Watch out for specific revenue terminology differentiations between the Chola administration (Kadamai, Kudimai) and Delhi Sultanate equivalents (Iqta, Kharaj).
+                                    </div>
+                                </td>
+                                <td class="col-status">
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" id="u4_r2" onchange="updateProgress()">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="unit5" class="unit-card">
+            <div class="unit-header" onclick="toggleCard(this)">
+                <h2><span>UNIT V</span> Indian Polity</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="unit-content">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="col-topic">Topic</th>
+                                <th class="col-source">Source &amp; Weightage</th>
+                                <th class="col-core">Core Concepts &amp; Mains Linkage</th>
+                                <th class="col-status">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="col-topic">FR, DPSP &amp; Preamble</td>
+                                <td class="col-source">Std 12 Political Science<br>Weightage: Very High</td>
+                                <td class="col-core">
+                                    Constitutional structure, basic structure doctrine, enforceability of rights vs guidelines.
+                                    <div class="callout-block callout-critical">
+                                        <span class="badge badge-critical">[CRITICAL]</span> Memorize core amendments (42nd, 44th, 86th, 103rd) alongside matching milestone Supreme Court cases.
+                                    </div>
+                                </td>
+                                <td class="col-status">
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" id="u5_r1" onchange="updateProgress()">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-topic">Anti-Corruption Frameworks</td>
+                                <td class="col-source">Polity Manuals / Acts<br>Weightage: High</td>
+                                <td class="col-core">
+                                    Lokpal, Lokayukta institutional structures, Right to Information statutory mechanisms.
+                                    <div class="callout-block callout-tip">
+                                        <span class="badge badge-tip">[TIP]</span> For descriptive responses, layout institutional drawbacks and constructive structural measures sequentially to finish answers robustly.
+                                    </div>
+                                </td>
+                                <td class="col-status">
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" id="u5_r2" onchange="updateProgress()">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="rule-block">
+                    <h4>Emergency Provisions Structural Distinctions (Articles 352 / 356 / 360)</h4>
+                    <p>
+                        <span class="badge badge-trap">[TRAP]</span> **National Emergency (352)** requires a special majority for approval within 1 month and features automatic suspension of Article 19 (only under external threat parameters). Conversely, **President's Rule (356)** requires a simple majority within 2 months, without altering standard fundamental right frameworks. **Financial Emergency (360)** has no specified inner expiration once approved by simple majority unless explicitly revoked.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <div id="part2-injection-point"></div>
+
+    </main>
+
+    <script>
+        // Toggle Expand/Collapse Cards
+        function toggleCard(headerElement) {
+            const card = headerElement.parentElement;
+            card.classList.toggle('collapsed');
+        }
+
+        // Toggle Responsive Mobile Nav Drawer
+        function toggleMobileNav() {
+            const nav = document.getElementById('navigation-bar');
+            nav.classList.toggle('open');
+        }
+
+        // Progress Engine Logic
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const total = checkboxes.length;
+            let checkedCount = 0;
+
+            checkboxes.forEach(box => {
+                if(box.checked) {
+                    checkedCount++;
+                }
+                // Save state to localStorage
+                localStorage.setItem(box.id, box.checked ? 'true' : 'false');
+            });
+
+            const percent = total > 0 ? Math.round((checkedCount / total) * 100) : 0;
+            
+            // Re-render UI Elements
+            document.getElementById('progress-text').innerText = `${checkedCount}/${total} Rows (${percent}%)`;
+            document.getElementById('progress-fill').style.width = `${percent}%`;
+        }
+
+        // Load Persisted States on Boot
+        window.addEventListener('DOMContentLoaded', () => {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(box => {
+                const saved = localStorage.getItem(box.id);
+                if(saved === 'true') {
+                    box.checked = true;
+                }
+            });
+            updateProgress();
+        });
+    </script>
+</body>
+</html>

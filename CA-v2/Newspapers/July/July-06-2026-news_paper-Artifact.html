@@ -1,0 +1,684 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Current Affairs Artifact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0d0f14;
+            --bg-card: #13161e;
+            --accent-gold: #f5c842;
+            --text-body: #e8e3d5;
+            --text-muted: #8a8575;
+            --badge-critical: #e05c5c;
+            --badge-trap: #f5c842;
+            --badge-tip: #4caf7d;
+            --badge-pyq: #5b9bd5;
+            --badge-gem: #a78bfa;
+            
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Lora', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: var(--font-body); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: var(--accent-gold); margin-bottom: 1rem; }
+        
+        /* Language Toggle Logic */
+        .lang-ta { display: none; }
+        body.ta-mode .lang-en { display: none; }
+        body.ta-mode .lang-ta { display: block; }
+        span.lang-ta { display: none; }
+        body.ta-mode span.lang-ta { display: inline; }
+        body.ta-mode span.lang-en { display: none; }
+        
+        /* Layout */
+        header { text-align: center; padding: 3rem 1rem; border-bottom: 2px solid var(--accent-gold); position: relative; }
+        header h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { color: var(--text-muted); font-style: italic; font-size: 1.1rem; }
+        
+        nav.sticky-top { 
+            position: sticky; top: 0; background: rgba(13, 15, 20, 0.95); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            border-bottom: 1px solid var(--text-muted); backdrop-filter: blur(10px);
+        }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-body); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .toggle-btn { 
+            background: var(--accent-gold); color: var(--bg-page); border: none; 
+            padding: 0.5rem 1rem; font-family: var(--font-mono); font-weight: 600; 
+            border-radius: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); }
+
+        .layout-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+        
+        aside { flex: 1; min-width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; }
+        aside ul { list-style: none; border-left: 2px solid var(--text-muted); padding-left: 1rem; }
+        aside li { margin-bottom: 1rem; }
+        aside a { color: var(--text-muted); text-decoration: none; font-family: var(--font-head); font-size: 1.1rem; }
+        aside a:hover, aside a.active { color: var(--accent-gold); }
+        aside a::before { content: '• '; color: var(--accent-gold); opacity: 0; transition: opacity 0.3s; }
+        aside a:hover::before, aside a.active::before { opacity: 1; }
+        
+        main { flex: 3; max-width: 900px; }
+        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        
+        /* Legend */
+        .legend-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; background: var(--bg-card); padding: 1rem; border-radius: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; }
+        .legend-color { width: 15px; height: 15px; border-radius: 50%; }
+        
+        /* Badges */
+        .badge { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: #fff; display: inline-block; margin-right: 0.5rem; text-transform: uppercase; }
+        .bg-critical { background-color: var(--badge-critical); }
+        .bg-trap { background-color: var(--badge-trap); color: #000; }
+        .bg-tip { background-color: var(--badge-tip); }
+        .bg-pyq { background-color: var(--badge-pyq); }
+        .bg-gem { background-color: var(--badge-gem); }
+        
+        /* Cards */
+        .news-card { 
+            background: var(--bg-card); border-left: 4px solid var(--accent-gold); 
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s;
+        }
+        .news-card:hover { transform: translateX(5px); }
+        .card-meta { margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .category-pill { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .news-card h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+        hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+        .news-card p { margin-bottom: 1rem; }
+        
+        details { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        summary { font-family: var(--font-mono); color: var(--accent-gold); cursor: pointer; font-weight: 600; outline: none; margin-bottom: 0.5rem; }
+        details ul { list-style: none; margin-left: 0; padding-left: 0; }
+        details li { margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative; }
+        details li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-gold); }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.9rem; }
+        th { background: var(--accent-gold); color: var(--bg-page); padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        
+        /* PYQ Section */
+        .pyq-card { border-left-color: var(--badge-pyq); }
+        .answer-reveal { background: rgba(76, 175, 125, 0.1); border-left: 3px solid var(--badge-tip); padding: 1rem; margin-top: 1rem; }
+        .correct-opt { color: var(--badge-tip); font-weight: bold; }
+        
+        /* Raw Text Panel */
+        .raw-text-panel { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.8; }
+        
+        footer { text-align: center; padding: 3rem; background: var(--bg-card); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        @media (max-width: 1024px) {
+            aside { display: none !important; }
+        }
+
+        @media (max-width: 768px) {
+            .layout-container {
+                flex-direction: column;
+                padding: 1rem 0.5rem;
+                gap: 1rem;
+            }
+            main {
+                max-width: 100%;
+            }
+            header {
+                padding: 1.5rem 1rem;
+            }
+            header h1 {
+                font-size: 1.8rem;
+            }
+            .sticky-top {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.8rem;
+                padding: 0.8rem 1rem;
+            }
+            .nav-links {
+                display: flex !important;
+                width: 100%;
+                justify-content: flex-start;
+                overflow-x: auto;
+                white-space: nowrap;
+                padding-bottom: 5px;
+                gap: 1.2rem;
+                -webkit-overflow-scrolling: touch;
+            }
+            .nav-links::-webkit-scrollbar {
+                display: none;
+            }
+            .nav-links a {
+                font-size: 0.85rem;
+                flex-shrink: 0;
+            }
+            .toggle-btn {
+                width: 100%;
+                text-align: center;
+            }
+            .news-card {
+                padding: 1.2rem;
+                border-radius: 8px;
+            }
+            .news-card h3 {
+                font-size: 1.2rem;
+            }
+            table {
+                font-size: 0.8rem;
+            }
+            th, td {
+                padding: 0.6rem;
+            }
+        }
+    </style>
+</head>
+<body class="en-mode">
+
+    <header id="top">
+        <h1>
+            <span class="lang-en">Dinamani | Chennai Edition</span>
+            <span class="lang-ta">தினமணி | சென்னை பதிப்பு</span>
+        </h1>
+        <p class="tagline">
+            <span class="lang-en">06 July 2026 • TNPSC Current Affairs Artifact</span>
+            <span class="lang-ta">06 ஜூலை 2026 • டிஎன்பிஎஸ்சி நடப்பு நிகழ்வுகள் தொகுதி</span>
+        </p>
+        <div style="margin-top: 1rem;">
+            <span class="badge bg-gem">
+                <span class="lang-en">Every line is an exam question waiting to happen</span>
+                <span class="lang-ta">ஒவ்வொரு வரியும் ஒரு தேர்வு வினாவாக மாறக்காத்திருக்கிறது</span>
+            </span>
+        </div>
+    </header>
+
+    <nav class="sticky-top">
+        <div style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: bold;">
+            <span class="lang-en">TNPSC CURATOR</span>
+            <span class="lang-ta">டிஎன்பிஎஸ்சி வழிகாட்டி</span>
+        </div>
+        <div class="nav-links">
+            <a href="#state"><span class="lang-en">State</span><span class="lang-ta">மாநிலம்</span></a>
+            <a href="#national"><span class="lang-en">National</span><span class="lang-ta">தேசியம்</span></a>
+            <a href="#international"><span class="lang-en">International</span><span class="lang-ta">சர்வதேசம்</span></a>
+            <a href="#economy"><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></a>
+            <a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a>
+        </div>
+        <button class="toggle-btn" id="lang-btn" onclick="toggleLang()">தமிழில் படிக்க</button>
+    </nav>
+
+    <div class="layout-container">
+        
+        <!-- Sidebar TOC -->
+        <aside id="toc">
+            <h3 style="font-size: 1.2rem;">
+                <span class="lang-en">Index</span>
+                <span class="lang-ta">பொருளடக்கம்</span>
+            </h3>
+            <ul>
+                <li><a href="#state"><span class="lang-en">State News</span><span class="lang-ta">மாநில செய்திகள்</span></a></li>
+                <li><a href="#national"><span class="lang-en">National News</span><span class="lang-ta">தேசிய செய்திகள்</span></a></li>
+                <li><a href="#international"><span class="lang-en">International News</span><span class="lang-ta">சர்வதேச செய்திகள்</span></a></li>
+                <li><a href="#economy"><span class="lang-en">Economy & Tech</span><span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span></a></li>
+                <li><a href="#sports"><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></a></li>
+                <li><a href="#pyq"><span class="lang-en">PYQ & Mock Questions</span><span class="lang-ta">முந்தைய ஆண்டு வினாக்கள்</span></a></li>
+                <li><a href="#revision"><span class="lang-en">Quick Revision Table</span><span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span></a></li>
+                <li><a href="#fulltext"><span class="lang-en">Full Page Translation Panel</span><span class="lang-ta">முழுப் பக்க மொழிபெயர்ப்பு</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-critical)"></div> <span class="lang-en">CRITICAL: Must-know facts, Art. nos</span><span class="lang-ta">CRITICAL: கட்டாயம் அறிய வேண்டிய உண்மைகள், சரத்துகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-trap)"></div> <span class="lang-en">TRAP: Confusing terms, likely wrong options</span><span class="lang-ta">TRAP: குழப்பமான சொற்கள், தவறான தேர்வுகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-tip)"></div> <span class="lang-en">TIP: Memory hooks</span><span class="lang-ta">TIP: நினைவுக்குறிப்புகள்</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-pyq)"></div> <span class="lang-en">PYQ: Previous Year Question context</span><span class="lang-ta">PYQ: முந்தைய ஆண்டு வினாக்கள் தொடர்பு</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--badge-gem)"></div> <span class="lang-en">GEM: Hidden exam angle</span><span class="lang-ta">GEM: மறைக்கப்பட்ட தேர்வு கோணம்</span></div>
+            </div>
+
+            <!-- STATE NEWS -->
+            <section id="state">
+                <h2>
+                    <span class="lang-en">State News</span>
+                    <span class="lang-ta">மாநில செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Health · Welfare Scheme</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">'Idhayam Kappom' Scheme Saves 40,000 Lives in Tamil Nadu</span>
+                        <span class="lang-ta">தமிழகத்தில் 'இதயம் காப்போம்' திட்டம் மூலம் 40,000 உயிர்கள் காக்கப்பட்டன</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Tamil Nadu government's 'Idhayam Kappom' (Protect the Heart) scheme, launched in 2023, has become a milestone in public health. Under this initiative, all 9,400+ Primary Health Centres (PHCs) and sub-centres across the state are equipped with life-saving "loading dose" medicines (Aspirin, Clopidogrel, Atorvastatin) free of cost. Patients experiencing heart attacks receive immediate ECGs and this critical loading dose before being rushed to higher-care facilities via 108 ambulances. By late 2025, over 40,000 heart attack fatalities have been prevented through this scheme.</p>
+                    <p class="lang-ta">2023-ஆம் ஆண்டு தமிழக அரசால் தொடங்கப்பட்ட 'இதயம் காப்போம்' திட்டம் பொது சுகாதாரத்தில் ஒரு மைல்கல்லாகத் திகழ்கிறது. இத்திட்டத்தின் கீழ் மாநிலத்திலுள்ள 9,400-க்கும் மேற்பட்ட ஆரம்ப மற்றும் துணை சுகாதார நிலையங்களில் உயிர் காக்கும் "லோடிங் டோஸ்" (Loading dose) மாத்திரைகளான ஆஸ்பிரின், க்ளோபிடோக்ரல், அட்டோர்வாஸ்டாடின் (Aspirin, Clopidogrel, Atorvastatin) இலவசமாக வைக்கப்பட்டுள்ளன. மாரடைப்பால் வருபவர்களுக்கு உடனடியாக இசிஜி எடுக்கப்பட்டு, இந்த மாத்திரைகள் வழங்கப்பட்ட பின் 108 ஆம்புலன்ஸ் மூலம் தீவிர சிகிச்சைக்கு அனுப்பப்படுகிறார்கள். இத்திட்டத்தின் மூலம் 40,000-க்கும் மேற்பட்டோர் மாரடைப்பு மரணங்களில் இருந்து உயிர் பிழைத்துள்ளனர்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>TN Admin Hook:</strong> Questions on TN health schemes are frequent in Group 1 & 2. Remember the three medicines given in the 'loading dose': Aspirin, Clopidogrel, and Atorvastatin. The objective is to stabilize the patient during the "Golden Hour".</span><span class="lang-ta"><strong>ஆளுமை குறிப்பு:</strong> தமிழக சுகாதாரத் திட்டங்கள் குறித்த கேள்விகள் குரூப் 1 & 2-இல் அடிக்கடி கேட்கப்படும். 'லோடிங் டோஸ்'-இல் வழங்கப்படும் மூன்று மாத்திரைகளை நினைவில் கொள்க: ஆஸ்பிரின், க்ளோபிடோக்ரல், அட்டோர்வாஸ்டாடின். "பொன்னான நேரத்தில்" (Golden Hour) நோயாளியைக் காப்பாற்றுவதே இதன் நோக்கம்.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Education · Tech Initiative</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">IIT-Madras and IIT-Kanpur Launch 4-Year B.Tech in Cyber Security</span>
+                        <span class="lang-ta">ஐஐடி மெட்ராஸ் & கான்பூர் இணைந்து 4 ஆண்டு 'சைபர் பாதுகாப்பு' பி.டெக் படிப்பு அறிமுகம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">For the first time in the country, IIT-Madras and IIT-Kanpur have jointly launched a 4-year practical B.Tech program in 'Cyber Security'. The course, starting in the 2026-2027 academic year, aims to address the critical shortage of 15 lakh cyber security experts in India. The curriculum includes a 2-year on-field internship. Graduates will be equipped to handle cyber defense, Security Operations Centers (SOC), malware analysis, and critical infrastructure protection.</p>
+                    <p class="lang-ta">நாட்டிலேயே முதல்முறையாக, ஐஐடி-மெட்ராஸ் (IIT-M) மற்றும் ஐஐடி-கான்பூர் (IIT-K) இணைந்து 4 ஆண்டு செய்முறை சார்ந்த 'இணையப் பாதுகாப்பு' (B.Tech Cyber Security) படிப்பை அறிமுகப்படுத்தியுள்ளன. 2026-2027 கல்வியாண்டு முதல் அமலுக்கு வரும் இத்திட்டம், இந்தியாவில் 15 லட்சம் இணையப் பாதுகாப்பு நிபுணர்களின் பற்றாக்குறையைப் போக்குவதை நோக்கமாகக் கொண்டுள்ளது. இதில் 2 ஆண்டுகள் களப்பணிப் பயிற்சியும் அடங்கும். இத்திட்டம் மாணவர்களைச் சைபர் தடுப்பு மற்றும் முக்கிய உள்கட்டமைப்பு பாதுகாப்பிற்குத் தயார்படுத்தும்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Disaster Management / Police</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Operation Nanhe Farishte: 630 Missing Children Rescued in Chennai</span>
+                        <span class="lang-ta">ஆபரேஷன் நன்ஹே ஃபரிஸ்தே: சென்னை ரயில் நிலையங்களில் 630 குழந்தைகள் மீட்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Under the 'Operation Nanhe Farishte' initiative, the Railway Protection Force (RPF) rescued 630 missing and runaway children across the Chennai Railway Division. Passengers are urged to use the toll-free helpline number 139 or the "Rail Madad" app for reporting any suspicious child movements.</p>
+                    <p class="lang-ta">ரயில்வே பாதுகாப்புப் படையின் (RPF) 'ஆபரேஷன் நன்ஹே ஃபரிஸ்தே' திட்டத்தின் கீழ், சென்னை ரயில்வே கோட்டத்திற்குட்பட்ட நிலையங்களில் வீட்டை விட்டு ஓடிவந்த மற்றும் காணாமல் போன 630 குழந்தைகள் மீட்கப்பட்டுள்ளனர். ரயில் நிலையங்களில் உதவி மற்றும் புகார்களுக்கு 139 என்ற கட்டணமில்லா எண்ணையோ அல்லது "ரயில் மதத்" (Rail Madad) செயலிகளையோ பயன்படுத்தலாம்.</p>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Environment · TN Gov Action</span>
+                        <span class="badge bg-trap">TRAP</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Chennai Corp Collects ₹14.30 Lakh Fine for Banned Plastics Usage</span>
+                        <span class="lang-ta">தடை செய்யப்பட்ட நெகிழிப் பயன்பாடு: சென்னை மாநகராட்சி ரூ.14.30 லட்சம் அபராதம் வசூல்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Intensifying the ban on single-use plastics (28 types of plastic items are banned in TN), the Greater Chennai Corporation (GCC) conducted extensive field inspections across 11,127 commercial establishments in June. Officials seized 638 kg of banned plastics and imposed total fines amounting to ₹14.30 lakh, with the highest penalty (₹2.18 lakh) collected from the Perungudi zone.</p>
+                    <p class="lang-ta">ஒருமுறை பயன்படுத்தித் தூக்கியெறியப்படும் நெகிழிப் பொருள்களுக்கு (28 வகையான பிளாஸ்டிக்) விதிக்கப்பட்ட தடையைத் தீவிரப்படுத்தும் வகையில், பெருநகர சென்னை மாநகராட்சி ஜூன் மாதத்தில் 11,127 வணிக நிறுவனங்களில் ஆய்வுகளை மேற்கொண்டது. இதில் 638 கிலோ தடை செய்யப்பட்ட நெகிழிப் பொருள்கள் பறிமுதல் செய்யப்பட்டன. மேலும், மொத்தம் ரூ.14.30 லட்சம் அபராதம் வசூலிக்கப்பட்டது; அதிகபட்சமாகப் பெருங்குடி மண்டலத்தில் (ரூ.2.18 லட்சம்) அபராதம் விதிக்கப்பட்டது.</p>
+                </div>
+
+            </section>
+
+            <!-- NATIONAL NEWS -->
+            <section id="national">
+                <h2>
+                    <span class="lang-en">National / Central News</span>
+                    <span class="lang-ta">தேசிய செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · Constitutional Amendment</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Congress Opposes Imminent 130th Constitutional Amendment Bill</span>
+                        <span class="lang-ta">130-ஆவது அரசியலமைப்பு திருத்த மசோதாவைக் கடுமையாக எதிர்ப்போம்: காங்கிரஸ் அறிவிப்பு</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Congress party has vowed to strongly oppose the Centre's plan to re-introduce the 130th Constitutional Amendment Bill during the upcoming Monsoon Session of Parliament. The proposed bill mandates the automatic removal/disqualification of the Prime Minister, Chief Ministers, and Union/State Ministers if they are arrested in serious criminal cases and jailed for 30 days. The opposition argues this circumvents the judicial process, presuming guilt before a conviction, and will be used as a political tool to topple non-BJP governments.</p>
+                    <p class="lang-ta">வரவிருக்கும் நாடாளுமன்ற மழைக்காலக் கூட்டத்தொடரில் 130-ஆவது அரசியலமைப்பு திருத்த மசோதாவைக் கொண்டுவரும் மத்திய அரசின் திட்டத்தைக் கடுமையாக எதிர்ப்போம் என காங்கிரஸ் அறிவித்துள்ளது. தீவிர குற்ற வழக்குகளில் கைது செய்யப்பட்டு 30 நாள்கள் சிறையில் அடைக்கப்படும் பிரதமர், முதல்வர்கள் மற்றும் அமைச்சர்களைப் பதவி நீக்கம் செய்ய இந்த மசோதா வழிவகுக்கிறது. குற்றவாளி என நீதிமன்றம் தீர்ப்பளிக்கும் முன்பே பதவி நீக்கம் செய்வது ஜனநாயக விரோதமானது என்றும், எதிர்க்கட்சி அரசுகளைக் கவிழ்க்கும் அரசியல் பழிவாங்கும் நடவடிக்கை என்றும் காங்கிரஸ் குற்றம்சாட்டியுள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Polity Hook:</strong> Currently, under Section 8(3) of the Representation of the People Act, 1951, a legislator is disqualified only upon *conviction* and being sentenced to imprisonment for 2 years or more. This new bill attempts to trigger disqualification merely upon *arrest and 30-day detention*, which is a massive shift in constitutional law.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> தற்போதைய மக்கள் பிரதிநிதித்துவ சட்டம் 1951, பிரிவு 8(3)-இன்படி, ஒரு பிரதிநிதி குற்றவாளி எனத் *தீர்ப்பளிக்கப்பட்டு* 2 ஆண்டுகள் அல்லது அதற்கு மேல் சிறைத்தண்டனை பெற்றால் மட்டுமே தகுதி நீக்கம் செய்யப்படுவார். புதிய மசோதா, *கைது செய்யப்பட்டு 30 நாள்கள் சிறையில் இருந்தாலே* தகுதி நீக்கம் செய்ய முனைகிறது. இது ஒரு மாபெரும் மாற்றமாகும்.</span></li>
+                            <li><span class="badge bg-gem">GEM</span><span class="lang-en">The Centre also plans to re-introduce the 131st Amendment Bill (Delimitation/Women's Reservation adjustment) which previously failed to pass due to lack of a special majority.</span><span class="lang-ta">முன்னர் சிறப்புப் பெரும்பான்மை இல்லாததால் தோல்வியடைந்த 131-ஆவது திருத்த மசோதாவையும் (தொகுதி மறுசீரமைப்பு/மகளிர் இடஒதுக்கீடு) மீண்டும் கொண்டுவர மத்திய அரசு திட்டமிட்டுள்ளது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Polity · State Assembly</span>
+                        <span class="badge bg-trap">TRAP</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Assam to Introduce Hindi as 4th Official Language in Assembly</span>
+                        <span class="lang-ta">அஸ்ஸாம் சட்டப்பேரவையில் நான்காவது அலுவல் மொழியாக 'இந்தி' அறிமுகம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Assam Legislative Assembly Speaker Ranjit Kumar Dass announced that Hindi will be introduced as the 4th official language of the state assembly from the upcoming Budget Session. Currently, Assamese, English, and Bodo are the official languages used for assembly proceedings. The move aims to respect Hindi as a national link language. Furthermore, the assembly's broadcast channel 'Ala TV' will be renamed to 'Assam Vidhan Sabha TV'.</p>
+                    <p class="lang-ta">வரவிருக்கும் பட்ஜெட் கூட்டத்தொடர் முதல் அஸ்ஸாம் சட்டப்பேரவையின் 4-ஆவது அலுவல் மொழியாக 'இந்தி' அறிமுகப்படுத்தப்படும் எனப் பேரவைத் தலைவர் ரஞ்சித் குமார் தாஸ் அறிவித்தார். தற்போது அஸ்ஸாமி, ஆங்கிலம், போடோ ஆகிய மொழிகள் பேரவை அலுவல் மொழிகளாக உள்ளன. தேசிய மொழியான இந்திக்கு மதிப்பளிக்கும் வகையில் இந்த முடிவு எடுக்கப்பட்டுள்ளது. மேலும், பேரவை நிகழ்வுகளை ஒளிபரப்பும் 'ஆலா டிவி'-யின் பெயர் 'அஸ்ஸாம் விதான் சபா டிவி' என மாற்றப்படும்.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-critical">CRITICAL</span><span class="lang-en"><strong>Constitutional Hook:</strong> Article 210 deals with the Official Language or languages of a State. A state legislature may by law adopt any one or more of the languages in use in the State or Hindi as the official language. Bodo is an Eighth Schedule language spoken widely in Assam.</span><span class="lang-ta"><strong>அரசியலமைப்பு குறிப்பு:</strong> சரத்து 210 மாநிலத்தின் அலுவல் மொழிகள் பற்றிக் கூறுகிறது. மாநிலச் சட்டப்பேரவை அங்குப் பயன்பாட்டில் உள்ள ஒன்றோ அல்லது அதற்கு மேற்பட்ட மொழிகளையோ அல்லது இந்தியையோ அலுவல் மொழியாகச் சட்டத்தின் மூலம் அங்கீகரிக்கலாம். 'போடோ' (Bodo) 8-ஆவது அட்டவணையில் உள்ள அஸ்ஸாம் மாநில மொழி.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Tech / Media Regulation</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Govt Issues Notice to Meta for Ads Promoting Child Sexual Abuse</span>
+                        <span class="lang-ta">சிறார் பாலியல் வன்கொடுமையை ஊக்குவிக்கும் விளம்பரம்: மெட்டா நிறுவனத்துக்கு மத்திய அரசு நோட்டீஸ்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Ministry of Electronics and Information Technology (MeitY) has issued a strict notice to 'Meta' (parent company of Instagram and Facebook) regarding algorithms that reportedly promote and recommend child sexual abuse material (CSAM) to users. The government has demanded the immediate removal of all such content and asked for a detailed compliance report within 7 days. Similarly, the government issued a notice to Telegram regarding the widespread sharing of pirated films and OTT content.</p>
+                    <p class="lang-ta">இன்ஸ்டாகிராமில் வெளியாகும் சிறார் பாலியல் வன்கொடுமையை ஊக்குவிக்கும் விளம்பரங்கள் குறித்து விளக்கம் கேட்டு, அதன் தாய் நிறுவனமான மெட்டா (Meta)-வுக்கு மத்திய தகவல் தொழில்நுட்பத்துறை (MeitY) நோட்டீஸ் அனுப்பியுள்ளது. அத்தகைய உள்ளடக்கங்களை உடனடியாக நீக்க வேண்டும் எனவும், 7 நாள்களுக்குள் விரிவான அறிக்கையைச் சமர்ப்பிக்க வேண்டும் எனவும் உத்தரவிடப்பட்டுள்ளது. இதேபோல, திருட்டுப் படங்கள் மற்றும் ஓடிடி உள்ளடக்கங்கள் பரவலாகப் பகிரப்படுவதைத் தடுக்க 'டெலிகிராம்' நிறுவனத்துக்கும் மத்திய அரசு நோட்டீஸ் பிறப்பித்துள்ளது.</p>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">History · Anniversaries</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">PM Modi Tributes Syama Prasad Mookerjee on 125th Birth Anniversary</span>
+                        <span class="lang-ta">சியாம பிரசாத் முகர்ஜியின் 125-ஆவது பிறந்த நாள்: பிரதமர் மோடி புகழாரம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Prime Minister Narendra Modi paid rich tributes to Dr. Syama Prasad Mookerjee, the founder of the Bharatiya Jana Sangh (the predecessor to the BJP), on his 125th birth anniversary (July 6). PM Modi highlighted his role in keeping West Bengal an integral part of India during partition, his supreme sacrifice fighting against Article 370 in Jammu & Kashmir (he died in Srinagar jail in 1953), and his foundational contributions as Independent India's first Minister for Industry and Supply.</p>
+                    <p class="lang-ta">பாரதிய ஜனசங்கத்தின் (பாஜகவின் முன்னோடி) நிறுவனரான டாக்டர் சியாம பிரசாத் முகர்ஜியின் 125-ஆவது பிறந்தநாளை (ஜூலை 6) முன்னிட்டுப் பிரதமர் நரேந்திர மோடி அவருக்குப் புகழாரம் சூட்டினார். பிரிவினையின்போது மேற்கு வங்கத்தை இந்தியாவின் ஒருங்கிணைந்த பகுதியாகத் தக்கவைத்ததில் அவரது பங்கு, ஜம்மு-காஷ்மீரில் 370-ஆவது சட்டப்பிரிவுக்கு எதிராகப் போராடிச் செய்த தியாகம் (1953-இல் ஸ்ரீநகர் சிறையில் உயிரிழந்தார்), சுதந்திர இந்தியாவின் முதல் தொழில் மற்றும் விநியோக அமைச்சராக அவர் ஆற்றிய அடிப்படைப் பங்களிப்பு ஆகியவற்றை பிரதமர் நினைவுகூர்ந்தார்.</p>
+                </div>
+
+            </section>
+
+            <!-- INTERNATIONAL NEWS -->
+            <section id="international">
+                <h2>
+                    <span class="lang-en">International News</span>
+                    <span class="lang-ta">சர்வதேச செய்திகள்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Diplomacy · Middle East</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">EAM S. Jaishankar Meets Qatar PM; Discusses Middle East Tensions</span>
+                        <span class="lang-ta">கத்தார் பிரதமருடன் மத்திய அமைச்சர் ஜெய்சங்கர் சந்திப்பு; இருதரப்பு உறவு குறித்து ஆலோசனை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">External Affairs Minister S. Jaishankar met Qatar's Prime Minister Mohammed bin Abdulrahman Al Thani in Doha to discuss strengthening bilateral ties and the ongoing Middle East conflict. With the US-Iran ceasefire signed and shipping in the Persian Gulf normalizing, Jaishankar thanked Qatar for ensuring the safety of the Indian diaspora during the crisis. Jaishankar is on a 6-day tour of Gulf nations including Qatar, Bahrain, Kuwait, and Oman.</p>
+                    <p class="lang-ta">கத்தார் சென்ற வெளியுறவுத்துறை அமைச்சர் எஸ். ஜெய்சங்கர், அந்நாட்டுப் பிரதமர் முகமது பின் அப்துல்ரஹ்மான் அல்-தானியை (Mohammed bin Abdulrahman Al Thani) தோஹாவில் சந்தித்து, இருதரப்பு உறவை வலுப்படுத்துவது குறித்து ஆலோசனை மேற்கொண்டார். அமெரிக்கா - ஈரான் இடையே போர் நிறுத்த ஒப்பந்தம் கையொப்பமாகி, பாரசீக வளைகுடாவில் கப்பல் போக்குவரத்து சீரடைந்துள்ள சூழலில், போர் நெருக்கடியின்போது இந்தியர்களின் பாதுகாப்பை உறுதி செய்த கத்தாருக்கு ஜெய்சங்கர் நன்றி தெரிவித்தார். அவர் வளைகுடா நாடுகளான கத்தார், பஹ்ரைன், குவைத், ஓமன் ஆகிய நாடுகளுக்கு 6 நாள் பயணம் மேற்கொண்டுள்ளார்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Geopolitics · USA/China</span>
+                        <span class="badge bg-gem">GEM</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">China Releases Imprisoned US Pastor Following Trump-Xi Talks</span>
+                        <span class="lang-ta">டிரம்ப் வேண்டுகோளை ஏற்றது சீனா: அமெரிக்க பாதிரியார் விடுதலை</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">China has released Ezra Jin, an American pastor associated with the Zion Church, who was arrested last October for operating secret online prayer meetings against government controls. The release comes shortly after US President Donald Trump personally requested Chinese President Xi Jinping to free the pastor and Hong Kong activist Jimmy Lai during his state visit to Beijing. However, Jimmy Lai remains incarcerated.</p>
+                    <p class="lang-ta">அரசு கட்டுப்பாடுகளை மீறி ரகசியமாக இணையவழிப் பிரார்த்தனைக் கூட்டங்களை நடத்தியதற்காகக் கடந்த ஆண்டு அக்டோபர் மாதம் சீனாவால் கைது செய்யப்பட்ட அமெரிக்கப் பாதிரியார் எஸ்ரா ஜின் (Ezra Jin)-ஐ சீனா விடுதலை செய்துள்ளது. சமீபத்தில் பெய்ஜிங் சென்ற அமெரிக்க அதிபர் டொனால்ட் டிரம்ப், சீன அதிபர் ஷி ஜின்பிங்கைச் சந்தித்துப் பாதிரியாரையும் ஹாங்காங் ஆர்வலர் ஜிம்மி லாயையும் விடுதலை செய்யுமாறு தனிப்பட்ட முறையில் விடுத்த கோரிக்கையை அடுத்தே இவர் விடுவிக்கப்பட்டுள்ளார். எனினும், ஜிம்மி லாய் இன்னும் விடுவிக்கப்படவில்லை.</p>
+                </div>
+
+            </section>
+
+            <!-- ECONOMY & FINANCE -->
+            <section id="economy">
+                <h2>
+                    <span class="lang-en">Economy & Tech</span>
+                    <span class="lang-ta">பொருளாதாரம் & தொழில்நுட்பம்</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Energy / Trade</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Centre Fully Lifts Emergency Curbs on LNG Supply</span>
+                        <span class="lang-ta">திரவ இயற்கை எரிவாயு (LNG) விநியோகம்: கட்டுப்பாடுகள் முழுமையாக நீக்கம்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">With the cessation of the West Asia war and the normalization of maritime traffic in the Strait of Hormuz, the Central Government (Ministry of Petroleum and Natural Gas) has completely withdrawn the emergency Liquid Natural Gas (LNG) supply restrictions imposed in March 2026. The emergency order had dictated a strict "Priority Customer List" ensuring 100% supply to domestic PNG and transport CNG, while capping industrial and fertilizer plant supplies at 70-80%. Industries will now return to normal unrestricted procurement.</p>
+                    <p class="lang-ta">மேற்காசியப் போர் நிறுத்தப்பட்டு, ஹோர்முஸ் ஜலசந்திப் பகுதியில் சரக்குக் கப்பல் போக்குவரத்து சீராகியுள்ளதைத் தொடர்ந்து, திரவ இயற்கை எரிவாயு (LNG) விநியோகத்திற்கு விதிக்கப்பட்டிருந்த அவசரகாலக் கட்டுப்பாடுகளை மத்திய பெட்ரோலியம் மற்றும் இயற்கை எரிவாயு அமைச்சகம் முழுமையாகத் திரும்பப் பெற்றுள்ளது. கடந்த மார்ச் மாதம் பிறப்பிக்கப்பட்ட உத்தரவின்படி, வீடுகள் மற்றும் வாகனங்களுக்கு 100% எரிவாயு விநியோகிக்கவும், உரம் மற்றும் தொழில்துறை ஆலைகளுக்கு 70-80% மட்டுமே வழங்கவும் "முன்னுரிமை வாடிக்கையாளர் பட்டியல்" நடைமுறையில் இருந்தது. தற்போது அது முழுமையாக நீக்கப்பட்டுள்ளது.</p>
+                    <details>
+                        <summary><span class="lang-en">▸ TNPSC Enrichment</span><span class="lang-ta">▸ டிஎன்பிஎஸ்சி குறிப்புகள்</span></summary>
+                        <ul>
+                            <li><span class="badge bg-pyq">PYQ</span><span class="lang-en"><strong>Geography/Economy Hook:</strong> The Strait of Hormuz is a crucial global maritime choke point linking the Persian Gulf and the Gulf of Oman. A vast majority of India's crude oil and LNG imports from the Middle East pass through it.</span><span class="lang-ta"><strong>புவியியல் குறிப்பு:</strong> ஹோர்முஸ் ஜலசந்தி (Strait of Hormuz) பாரசீக வளைகுடாவையும் ஓமன் வளைகுடாவையும் இணைக்கும் மிக முக்கிய கடல்வழிப் பாதையாகும். இந்தியாவின் கச்சா எண்ணெய் மற்றும் LNG இறக்குமதியில் பெரும் பகுதி இதன் வழியாகவே வருகிறது.</span></li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Defence · Navy</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">INS Sandhayak Joins Southern Naval Command at Kochi</span>
+                        <span class="lang-ta">தெற்கு கடற்படைப் பிரிவுடன் இணைந்தது 'ஐஎன்எஸ் சந்தாயக்' (INS Sandhayak)</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The indigenously built Survey Vessel Large (SVL) ship, 'INS Sandhayak', has officially joined the Southern Naval Command in Kochi. Built at GRSE Kolkata and dedicated to the nation by PM Modi in June, INS Sandhayak is India's largest and most advanced survey vessel, intended for deep-water marine surveys, oceanographic research, and disaster relief operations. It is the second SVL to join the Southern Command after 'INS Ikshak'.</p>
+                    <p class="lang-ta">இந்தியாவிலேயே வடிவமைக்கப்பட்டு கட்டப்பட்ட பெரிய அளவிலான ஆய்வுக் கப்பலான (Survey Vessel Large) 'ஐஎன்எஸ் சந்தாயக்' (INS Sandhayak), கேரளாவின் கொச்சியில் உள்ள தெற்கு கடற்படைப் பிரிவில் இணைந்தது. கொல்கத்தாவில் உள்ள GRSE தளத்தில் கட்டப்பட்ட இக்கப்பல், ஆழ்கடல் ஆய்வுகள் மற்றும் பேரிடர் நிவாரணப் பணிகளுக்காகப் பயன்படுத்தப்படும். தெற்கு கடற்படையில் இணையும் 2-ஆவது SVL கப்பல் இதுவாகும் (ஐஎன்எஸ் இக்‌ஷக்-குக்குப் பிறகு).</p>
+                </div>
+
+            </section>
+            
+            <!-- SPORTS -->
+            <section id="sports">
+                <h2>
+                    <span class="lang-en">Sports</span>
+                    <span class="lang-ta">விளையாட்டு</span>
+                </h2>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Cricket · T20 World Cup</span>
+                        <span class="badge bg-critical">CRITICAL</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Australia Wins 7th Women's T20 World Cup Title</span>
+                        <span class="lang-ta">மகளிர் டி20 உலகக் கோப்பை: 7-ஆவது முறையாக ஆஸ்திரேலியா சாம்பியன்</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">The Australian women's cricket team secured their 7th ICC Women's T20 World Cup title by defeating England by 7 wickets in the final held at Lord's, London. Chasing England's 150/4, Australia comfortably reached 153/3 in 17.1 overs. Beth Mooney top-scored with 64 runs. Australia previously won the title in 2010, 2012, 2014, 2018, 2020, and 2023.</p>
+                    <p class="lang-ta">லண்டன் லார்ட்ஸ் மைதானத்தில் நடைபெற்ற ஐசிசியின் 10-ஆவது மகளிர் டி20 உலகக் கோப்பை இறுதிப் போட்டியில், இங்கிலாந்தை 7 விக்கெட் வித்தியாசத்தில் வீழ்த்தி ஆஸ்திரேலிய அணி 7-ஆவது முறையாக சாம்பியன் பட்டத்தை வென்றது. முதலில் ஆடிய இங்கிலாந்து 150/4 ரன்கள் எடுக்க, ஆஸ்திரேலியா 17.1 ஓவர்களில் 153/3 ரன்கள் எடுத்து எளிதாக வென்றது. அதிகபட்சமாக பெத் மூனி 64 ரன்கள் எடுத்தார்.</p>
+                </div>
+
+                <div class="news-card">
+                    <div class="card-meta">
+                        <span class="category-pill">Formula 1 · British GP</span>
+                        <span class="badge bg-tip">AWARENESS</span>
+                    </div>
+                    <h3>
+                        <span class="lang-en">Charles Leclerc Wins F1 British Grand Prix</span>
+                        <span class="lang-ta">பிரிட்டிஷ் கிராண்ட் ப்ரீ: ஃபெராரியின் சார்லஸ் லெக்லெர்க் வெற்றி</span>
+                    </h3>
+                    <hr>
+                    <p class="lang-en">Ferrari's driver Charles Leclerc (from Monaco) emerged victorious at the British Grand Prix, which marked the 9th race of the current Formula 1 season. This victory marks a significant milestone, being Ferrari's 250th win in Formula 1 history and Leclerc's first win in the last two years.</p>
+                    <p class="lang-ta">நடப்பு ஃபார்முலா 1 கார் பந்தய சீசனின் 9-வது சுற்றான பிரிட்டிஷ் கிராண்ட் ப்ரீ (British Grand Prix) போட்டியில், ஃபெராரி (Ferrari) அணிக்காகப் பந்தயத்தில் ஓட்டும் மொனாக்கோ வீரரான சார்லஸ் லெக்லெர்க் (Charles Leclerc) வெற்றி பெற்றார். கடந்த இரண்டு ஆண்டுகளில் லெக்லெர்க் பெற்ற முதல் வெற்றி இதுவாகும். மேலும், எஃப்1 வரலாற்றில் ஃபெராரி அணியின் 250-ஆவது வெற்றியாகவும் இது அமைந்தது.</p>
+                </div>
+
+            </section>
+
+            <!-- PYQ Section -->
+            <section id="pyq">
+                <h2>
+                    <span class="lang-en">PYQ & Mock Questions</span>
+                    <span class="lang-ta">முந்தைய ஆண்டு வினாக்கள் & மாதிரி வினாக்கள்</span>
+                </h2>
+                
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Under the 'Idhayam Kappom' scheme by the Government of Tamil Nadu, which of the following actions is prioritized to prevent heart attack fatalities?</span>
+                        <span class="lang-ta">கேள்வி: தமிழக அரசின் 'இதயம் காப்போம்' திட்டத்தின் கீழ், மாரடைப்பு மரணங்களைத் தடுக்க கீழ்க்கண்ட எதற்கு முன்னுரிமை அளிக்கப்படுகிறது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Providing a 'loading dose' of life-saving medicines (Aspirin, Clopidogrel, Atorvastatin) free of cost at PHCs.</span><br><br>
+                                <strong>Context:</strong> This simple yet critical intervention at 9,400+ primary health centres stabilizes patients during the "Golden Hour", saving over 40,000 lives so far.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">ஆரம்ப சுகாதார நிலையங்களிலேயே உயிர் காக்கும் 'லோடிங் டோஸ்' மாத்திரைகளை (ஆஸ்பிரின், க்ளோபிடோக்ரல், அட்டோர்வாஸ்டாடின்) இலவசமாக வழங்குதல்.</span><br><br>
+                                <strong>பின்னணி:</strong> பொன்னான நேரத்தில் (Golden Hour) ஆரம்ப சுகாதார நிலையங்களில் வழங்கப்படும் இந்த மாத்திரைகள் நோயாளியின் நிலையைச் சீராக்குகிறது; இதன்மூலம் இதுவரை 40,000-க்கும் மேற்பட்ட உயிர்கள் காக்கப்பட்டுள்ளன.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="news-card pyq-card">
+                    <h3 style="font-size: 1.1rem; color: var(--text-body);">
+                        <span class="lang-en">Q: Which North-Eastern state recently decided to introduce Hindi as the 4th official language of its Legislative Assembly?</span>
+                        <span class="lang-ta">கேள்வி: சமீபத்தில் தனது மாநிலச் சட்டப்பேரவையின் 4-ஆவது அலுவல் மொழியாக 'இந்தி'யை அறிமுகப்படுத்திய வடகிழக்கு மாநிலம் எது?</span>
+                    </h3>
+                    <details>
+                        <summary><span class="lang-en">View Answer & Explanation</span><span class="lang-ta">விடை மற்றும் விளக்கம் காண்க</span></summary>
+                        <div class="answer-reveal">
+                            <span class="lang-en">
+                                <strong>Correct Answer:</strong> <span class="correct-opt">Assam</span><br><br>
+                                <strong>Context:</strong> Hindi will join Assamese, English, and Bodo in the Assam Vidhan Sabha. This relates to Article 210 of the Indian Constitution governing official languages in state legislatures.
+                            </span>
+                            <span class="lang-ta">
+                                <strong>சரியான விடை:</strong> <span class="correct-opt">அஸ்ஸாம்</span><br><br>
+                                <strong>பின்னணி:</strong> அஸ்ஸாமி, ஆங்கிலம், போடோ ஆகியவற்றுடன் இனி இந்தியும் பேரவை அலுவல் மொழியாகும். மாநிலச் சட்டப்பேரவைகளின் அலுவல் மொழி குறித்து அரசியலமைப்பின் சரத்து 210 கூறுகிறது.
+                            </span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Quick Revision Table -->
+            <section id="revision">
+                <h2>
+                    <span class="lang-en">Quick Revision Table</span>
+                    <span class="lang-ta">விரைவு திருப்புதல் அட்டவணை</span>
+                </h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><span class="lang-en">Headline</span><span class="lang-ta">தலைப்பு</span></th>
+                                <th><span class="lang-en">Category</span><span class="lang-ta">பிரிவு</span></th>
+                                <th><span class="lang-en">Key Fact</span><span class="lang-ta">முக்கிய குறிப்பு</span></th>
+                                <th><span class="lang-en">Importance</span><span class="lang-ta">முக்கியத்துவம்</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="lang-en">Idhayam Kappom</span><span class="lang-ta">இதயம் காப்போம்</span></td>
+                                <td><span class="lang-en">State/Health</span><span class="lang-ta">மாநிலம்/சுகாதாரம்</span></td>
+                                <td><span class="lang-en">Loading dose in PHCs saved 40k lives.</span><span class="lang-ta">ஆரம்ப சுகாதார நிலையங்களில் 'லோடிங் டோஸ்' 40,000 உயிர்களைக் காத்தது.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="lang-en">130th CA Bill</span><span class="lang-ta">130-ஆவது திருத்த மசோதா</span></td>
+                                <td><span class="lang-en">National/Polity</span><span class="lang-ta">தேசியம்/அரசியல்</span></td>
+                                <td><span class="lang-en">Seeks to disqualify MPs/MLAs upon arrest & 30 days jail.</span><span class="lang-ta">கைது செய்யப்பட்டு 30 நாள்கள் சிறையிலிருந்தாலே எம்எல்ஏ/எம்பிக்களை பதவி நீக்கம் செய்யும் மசோதா.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="lang-en">Assam Assembly Hindi</span><span class="lang-ta">அஸ்ஸாம் பேரவையில் இந்தி</span></td>
+                                <td><span class="lang-en">National/Polity</span><span class="lang-ta">தேசியம்/சட்டம்</span></td>
+                                <td><span class="lang-en">Assam adds Hindi as 4th official language in Assembly.</span><span class="lang-ta">அஸ்ஸாம் பேரவையின் 4-ஆவது அலுவல் மொழியாக இந்தி சேர்ப்பு.</span></td>
+                                <td><span class="badge bg-trap">MED</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="lang-en">LNG Supply Curbs Lifted</span><span class="lang-ta">LNG கட்டுப்பாடுகள் நீக்கம்</span></td>
+                                <td><span class="lang-en">Economy</span><span class="lang-ta">பொருளாதாரம்</span></td>
+                                <td><span class="lang-en">Govt removes priority list as Strait of Hormuz clears.</span><span class="lang-ta">ஹோர்முஸ் ஜலசந்திப் போக்குவரத்து சீரானதால் இயற்கை எரிவாயு விநியோகக் கட்டுப்பாடு நீக்கம்.</span></td>
+                                <td><span class="badge bg-critical">HIGH</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="lang-en">Women's T20 WC</span><span class="lang-ta">மகளிர் டி20 உலகக் கோப்பை</span></td>
+                                <td><span class="lang-en">Sports</span><span class="lang-ta">விளையாட்டு</span></td>
+                                <td><span class="lang-en">Australia beats England for their 7th Title.</span><span class="lang-ta">இங்கிலாந்தை வீழ்த்தி ஆஸ்திரேலியா 7-ஆவது முறையாக சாம்பியன்.</span></td>
+                                <td><span class="badge bg-tip">MED</span></td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td><span class="lang-en">B.Tech Cyber Security</span><span class="lang-ta">பி.டெக் இணையப் பாதுகாப்பு</span></td>
+                                <td><span class="lang-en">State/Tech</span><span class="lang-ta">மாநிலம்/கல்வி</span></td>
+                                <td><span class="lang-en">IIT Madras & Kanpur launch joint 4-year degree.</span><span class="lang-ta">ஐஐடி மெட்ராஸ் & கான்பூர் இணைந்து புதிய 4-ஆண்டு படிப்பை அறிமுகம்.</span></td>
+                                <td><span class="badge bg-gem">GEM</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Full Page Translation Panel -->
+            <section id="fulltext">
+                <h2>
+                    <span class="lang-en">📄 Entire Newspaper — Full Text (Synthesized Extracts)</span>
+                    <span class="lang-ta">📄 முழு நாளிதழ் — முழு உரை தொகுப்பு</span>
+                </h2>
+                <details>
+                    <summary>
+                        <span class="lang-en">View Raw Text Extracts (Dinamani Chennai 06-07-2026)</span>
+                        <span class="lang-ta">மூல உரைகளை காண்க (தினமணி சென்னை 06-07-2026)</span>
+                    </summary>
+                    <div class="raw-text-panel">
+                        <span class="lang-en">
+[Source Note: The provided source text detailed state, national, and international news for 06 July 2026. 
+State news: TN's Idhayam Kappom scheme saved 40,000 lives from cardiac arrests by providing loading doses at PHCs. RPF rescued 630 missing kids in Chennai. IIT-M and IIT-K launched a 4-year B.Tech in Cyber security. Greater Chennai Corp collected ₹14.30 lakh in fines for banned plastics and ₹12.25 lakh for construction violations. 47,554 farmers wait for Tatkal electricity connections. Mekedatu dam issue discussed in editorial. 
+National news: MeitY issued notice to Meta for child abuse ads on Instagram. Congress resolved to oppose the upcoming 130th Constitutional Amendment Bill targeting immediate disqualification of arrested MPs/MLAs. Assam announced Hindi as the 4th official language of its Assembly. PM Modi paid tribute to Syama Prasad Mookerjee on his 125th birth anniversary. Emergency curbs on LNG supply were entirely lifted by the Petroleum Ministry. J.P. Nadda confidently predicted a BJP win in the 2027 UP elections. 
+International news: 15 Indian ships safely crossed the Strait of Hormuz. EAM S. Jaishankar met the Qatar PM to discuss Middle East peace. China released a US pastor following Trump's request. North Korea successfully tested a new naval missile system. Trump gave a fiery speech on US Independence Day. Massive crowds attended the funeral of former Iranian Supreme Leader Ali Khamenei in Tehran. 
+Sports: Australia won their 7th Women's T20 World Cup by beating England. Charles Leclerc won the F1 British Grand Prix for Ferrari. In a football match, France beat Paraguay 1-0 and Morocco beat Canada 3-0. India 'A' beat Sri Lanka 'A' by 10 wickets in a Test match.]
+                        </span>
+                        <span class="lang-ta">
+[குறிப்பு: வழங்கப்பட்ட மூல உரைகள் 06 ஜூலை 2026 க்கான செய்திகளைக் கொண்டிருந்தன.
+மாநில செய்திகளில்: தமிழக அரசின் 'இதயம் காப்போம்' திட்டம் மூலம் 40,000 உயிர்கள் காப்பாற்றப்பட்டுள்ளன. சென்னை ரயில் நிலையங்களில் 630 குழந்தைகள் RPF-ஆல் மீட்பு. ஐஐடி-மெட்ராஸ் மற்றும் கான்பூர் இணைந்து 4 ஆண்டு சைபர் பாதுகாப்பு பி.டெக் படிப்பை அறிமுகம் செய்தன. சென்னை மாநகராட்சி நெகிழிப் பயன்பாட்டுக்காக ₹14.30 லட்சமும், கட்டுமான விதிமீறல்களுக்காக ₹12.25 லட்சமும் அபராதம் வசூலித்தது. தட்கல் மின் இணைப்புக்காக 47,554 விவசாயிகள் காத்திருப்பு. 
+தேசிய அளவில்: சிறார் பாலியல் வன்கொடுமையை ஊக்குவிக்கும் விளம்பரங்களுக்காக மெட்டாவுக்கு மத்திய அரசு நோட்டீஸ். கைது செய்யப்படும் எம்எல்ஏ/எம்பிக்களை 30 நாள்களில் பதவி நீக்கம் செய்யும் 130-ஆவது திருத்த மசோதாவைக் காங்கிரஸ் எதிர்க்கும் என அறிவிப்பு. அஸ்ஸாம் பேரவையின் 4-ஆவது அலுவல் மொழியாக இந்தி சேர்ப்பு. சியாம பிரசாத் முகர்ஜியின் 125-ஆவது பிறந்தநாளுக்குப் பிரதமர் மோடி அஞ்சலி. திரவ இயற்கை எரிவாயு (LNG) விநியோகக் கட்டுப்பாடுகளை முழுமையாக நீக்கியது மத்திய அரசு. 
+சர்வதேச அளவில்: ஹோர்முஸ் ஜலசந்தியைப் பாதுகாப்பாகக் கடந்த 15 இந்திய சரக்குக் கப்பல்கள். கத்தார் பிரதமருடன் எஸ். ஜெய்சங்கர் சந்திப்பு. டிரம்ப் கோரிக்கையை ஏற்று அமெரிக்கப் பாதிரியாரைச் சீனா விடுதலை செய்தது. வடகொரியா புதிய ஏவுகணை சோதனையை வெற்றிகரமாக நடத்தியது. அமெரிக்க சுதந்திர தினத்தில் டிரம்ப் பேச்சு.
+விளையாட்டு: மகளிர் டி20 உலகக் கோப்பையில் ஆஸ்திரேலியா 7-ஆவது முறையாகச் சாம்பியன். ஃபார்முலா 1 பிரிட்டிஷ் கிராண்ட் ப்ரீயில் ஃபெராரியின் சார்லஸ் லெக்லெர்க் வெற்றி. இந்தியா ஏ அணி இலங்கையை 10 விக்கெட் வித்தியாசத்தில் வீழ்த்தியது.]
+                        </span>
+                    </div>
+                </details>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Prepared for TNPSC Aspirants | Dinamani Chennai Edition | 06 July 2026 | Current Affairs Artifact</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">All rights to respective publishers. Concept by Artifact Spec.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+        function toggleLang() {
+            if (currentLang === 'en') {
+                document.body.classList.remove('en-mode');
+                document.body.classList.add('ta-mode');
+                document.getElementById('lang-btn').innerText = 'Read in English';
+                currentLang = 'ta';
+            } else {
+                document.body.classList.remove('ta-mode');
+                document.body.classList.add('en-mode');
+                document.getElementById('lang-btn').innerText = 'தமிழில் படிக்க';
+                currentLang = 'en';
+            }
+        }
+    </script>
+</body>
+</html>
