@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNPSC Group 1 Content: 19th Century Social Reform Movements</title>
+    <link href="https://fonts.googleapis.com/css2?family=Andika&family=IBM+Plex+Mono:wght@400;700&family=Orbitron:wght@500;700&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0d0f14;
+            --accent-gold: #f5c842;
+            --surface-card: #161920;
+            --text-pri: #e2e8f0;
+            --text-sec: #94a3b8;
+            --c-critical: #ef4444;
+            --c-trap: #f5c842;
+            --c-tip: #22c55e;
+            --c-pyq: #3b82f6;
+            --c-gem: #a855f7;
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-pri);
+            font-family: 'Andika', sans-serif;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        h1, h2, h3 { font-family: 'Syne', sans-serif; }
+        .mono { font-family: 'IBM Plex Mono', monospace; }
+        .data-font { font-family: 'Orbitron', sans-serif; }
+
+        /* Hero Header */
+        header.hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(180deg, #161920 0%, #0d0f14 100%);
+            border-bottom: 2px solid var(--accent-gold);
+        }
+        header.hero h1 { color: var(--accent-gold); font-size: 2.5rem; margin-bottom: 0.5rem; text-transform: uppercase; }
+        header.hero p { color: var(--text-sec); font-size: 1.1rem; }
+        .badge {
+            display: inline-block;
+            background: rgba(245, 200, 66, 0.1);
+            color: var(--accent-gold);
+            padding: 4px 12px;
+            border-radius: 4px;
+            border: 1px solid var(--accent-gold);
+            margin: 0.5rem;
+            font-weight: 700;
+        }
+
+        /* Sticky TOC */
+        nav.toc {
+            position: sticky;
+            top: 0;
+            background: var(--surface-card);
+            padding: 1rem 2rem;
+            z-index: 100;
+            display: flex;
+            gap: 1.5rem;
+            overflow-x: auto;
+            border-bottom: 1px solid #2d3748;
+            justify-content: center;
+        }
+        nav.toc a {
+            color: var(--text-sec);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+            white-space: nowrap;
+        }
+        nav.toc a:hover { color: var(--accent-gold); }
+
+        /* Legend System */
+        .legend-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            padding: 2rem;
+            background: var(--bg-dark);
+        }
+        .legend-item {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            border: 1px solid;
+        }
+        .l-critical { color: var(--c-critical); border-color: var(--c-critical); }
+        .l-trap { color: var(--c-trap); border-color: var(--c-trap); }
+        .l-tip { color: var(--c-tip); border-color: var(--c-tip); }
+        .l-pyq { color: var(--c-pyq); border-color: var(--c-pyq); }
+        .l-gem { color: var(--c-gem); border-color: var(--c-gem); }
+
+        /* Main Container */
+        main { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+        section { margin-bottom: 4rem; scroll-margin-top: 5rem; }
+        section h2 { color: var(--accent-gold); border-bottom: 1px solid #2d3748; padding-bottom: 0.5rem; margin-bottom: 1.5rem; font-size: 1.8rem; }
+
+        /* Callout Badges */
+        .callout {
+            background: var(--surface-card);
+            border-left: 5px solid;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        .c-critical { border-color: var(--c-critical); }
+        .c-trap { border-color: var(--c-trap); }
+        .c-tip { border-color: var(--c-tip); }
+        .c-pyq { border-color: var(--c-pyq); }
+        .c-gem { 
+            border-color: var(--c-gem); 
+            background: rgba(168, 85, 247, 0.05); 
+        }
+        .callout strong { display: block; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .c-critical strong { color: var(--c-critical); }
+        .c-trap strong { color: var(--c-trap); }
+        .c-tip strong { color: var(--c-tip); }
+        .c-pyq strong { color: var(--c-pyq); }
+        .c-gem strong { color: var(--c-gem); font-size: 1.1rem; }
+
+        /* Data Structures */
+        .table-container { overflow-x: auto; margin: 1.5rem 0; border-radius: 8px; border: 1px solid #2d3748; }
+        table { width: 100%; border-collapse: collapse; text-align: left; background: var(--surface-card); }
+        th, td { padding: 1rem; border-bottom: 1px solid #2d3748; }
+        th { color: var(--accent-gold); font-size: 0.95rem; text-transform: uppercase; background: #1a1e26; }
+        tr:last-child td { border-bottom: none; }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        .td-highlight { color: var(--accent-gold); font-weight: bold; }
+
+        /* Interactive Question Cards */
+        .q-card { margin-bottom: 1rem; }
+        details {
+            background: var(--surface-card);
+            border: 1px solid #2d3748;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        details[open] { border-color: var(--accent-gold); box-shadow: 0 0 15px rgba(245, 200, 66, 0.1); }
+        summary {
+            padding: 1.25rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-pri);
+        }
+        summary::-webkit-details-marker { display: none; }
+        summary::after {
+            content: '+';
+            color: var(--accent-gold);
+            font-size: 1.5rem;
+            font-family: 'Orbitron', sans-serif;
+            transition: transform 0.3s;
+        }
+        details[open] summary::after { transform: rotate(45deg); }
+        .answer-block {
+            padding: 0 1.25rem 1.25rem 1.25rem;
+            border-top: 1px solid #2d3748;
+            margin-top: 0.5rem;
+            padding-top: 1rem;
+            color: var(--text-sec);
+        }
+        
+        cite { color: var(--text-sec); font-size: 0.8rem; font-style: normal; opacity: 0.7; vertical-align: super; }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <div class="badge mono">TNPSC GROUP 1 / MAINS & PRELIMS</div>
+        <div class="badge mono">UNIT 5</div>
+        <h1>19th Century Social & Religious Reforms</h1>
+        <p class="mono">High-Yield Content Architecture | Target: 10th Standard Samacheer Data</p>
+    </header>
+
+    <div class="legend-row mono">
+        <span class="legend-item l-critical">[CRITICAL] Structural Events</span>
+        <span class="legend-item l-trap">[TRAP] Confusing Nuances</span>
+        <span class="legend-item l-tip">[TIP] Memory Mnemonics</span>
+        <span class="legend-item l-pyq">[PYQ] Previous Year Tested</span>
+        <span class="legend-item l-gem">💎 [GEM] High-Value Insights</span>
+    </div>
+
+    <nav class="toc mono">
+        <a href="#bengal">1. BENGAL REFORMS</a>
+        <a href="#maharashtra">2. MAHARASHTRA & PAN-INDIA</a>
+        <a href="#tamilnadu">3. TAMIL NADU TITANS</a>
+        <a href="#islamic-sikh">4. ISLAMIC, PARSI & SIKH</a>
+        <a href="#active-recall">5. ACTIVE RECALL (Q&A)</a>
+    </nav>
+
+    <main>
+        <!-- BENGAL REFORMS -->
+        <section id="bengal">
+            <h2>1. Early Reform Movements in Bengal</h2>
+            
+            <div class="table-container">
+                <table class="data-font">
+                    <thead>
+                        <tr>
+                            <th>Reformer</th>
+                            <th>Organisation / Movement</th>
+                            <th>Key Milestones & Dates</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="td-highlight">Raja Rammohan Roy</td>
+                            <td>Brahmo Samaj <span class="mono">(Aug 20, 1828)</span></td>
+                            <td>Anti-sati campaign led to its abolition by Lord William Bentinck in 1829.<cite></cite></td>
+                        </tr>
+                        <tr>
+                            <td class="td-highlight">Maharishi Debendranath Tagore</td>
+                            <td>Adi Brahmo Samaj</td>
+                            <td>Took over after Roy's death in 1833; laid down 4 core articles of faith.<cite></cite></td>
+                        </tr>
+                        <tr>
+                            <td class="td-highlight">Keshab Chandra Sen</td>
+                            <td>Brahmo Samaj of India</td>
+                            <td>Joined 1857, split from Tagore in 1866.<cite></cite></td>
+                        </tr>
+                        <tr>
+                            <td class="td-highlight">Ishwar Chandra Vidyasagar</td>
+                            <td>Widows' Remarriage Reform</td>
+                            <td>Pioneered the Widows’ Remarriage Reform Act of 1856 and first Age of Consent law in 1860.<cite></cite></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="callout c-critical">
+                <strong class="mono">[CRITICAL] The Brahmo Samaj Splits</strong>
+                A major split occurred in 1866, leading Keshab Chandra Sen to found the Brahmo Samaj of India, while Debendranath Tagore's group became the Adi Brahmo Samaj.<cite></cite> 
+            </div>
+
+            <div class="callout c-trap">
+                <strong class="mono">[TRAP] The Sadharan Samaj Genesis</strong>
+                Do not confuse the Brahmo Samaj of India with the Sadharan Samaj. The Sadharan Samaj was started specifically by opponents of child marriage after Keshab Chandra Sen married off his own fourteen-year-old daughter to an Indian prince, violating his own society's rules.<cite></cite>
+            </div>
+
+            <div class="callout c-pyq">
+                <strong class="mono">[PYQ] Age of Consent Evolution</strong>
+                Vidyasagar's efforts ensured the first age of consent was included in the 1860 Indian Penal Code, fixing the marriage age at 10 years.<cite></cite> It was later raised to 12 in 1891 and 13 in 1925.<cite></cite>
+            </div>
+        </section>
+
+        <!-- MAHARASHTRA & PAN-INDIA -->
+        <section id="maharashtra">
+            <h2>2. Maharashtra, Hindu Revivalism & Anti-Caste Movements</h2>
+            
+            <div class="callout c-gem">
+                <strong class="mono">💎 [GEM] Reformist vs. Revivalist Categorization</strong>
+                For Mains mapping: Reformist movements include Brahmo Samaj, Prarthana Samaj, and Aligarh Movement.<cite></cite> Revivalist movements include Arya Samaj, Ramakrishna Mission, and Deoband Movement.<cite></cite>
+            </div>
+
+            <div class="table-container">
+                <table class="data-font">
+                    <thead>
+                        <tr>
+                            <th>Movement</th>
+                            <th>Founder / Leader</th>
+                            <th>Key Actions / Publications</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="td-highlight">Prarthana Samaj (1867, Bombay)</td>
+                            <td>Dr. Atma Ram Pandurang</td>
+                            <td>Joined by M.G. Ranade (founded Widow Marriage Association 1861, Poona Sarvajanik Sabha 1870, Deccan Ed Soc 1884).<cite></cite></td>
+                        </tr>
+                        <tr>
+                            <td class="td-highlight">Arya Samaj (1875, Punjab)</td>
+                            <td>Swami Dayanand Saraswati</td>
+                            <td>Wrote <i>Satyarthaprakash</i>; slogan "Go back to Vedas"; launched <i>Suddhi</i> counter-conversion movement.<cite></cite></td>
+                        </tr>
+                        <tr>
+                            <td class="td-highlight">Ramakrishna Mission (1897)</td>
+                            <td>Swami Vivekananda</td>
+                            <td>Based on Ramakrishna Paramahamsa's teaching "Jiva is Siva" (all living beings are God); active in disaster relief.<cite></cite></td>
+                        </tr>
+                        <tr>
+                            <td class="td-highlight">Theosophical Society (1875, USA)</td>
+                            <td>Blavatsky & Olcott</td>
+                            <td>Shifted to Adyar (Chennai) in 1886; Annie Besant launched <i>New India</i> and <i>Commonweal</i>.<cite></cite></td>
+                        </tr>
+                        <tr>
+                            <td class="td-highlight">Satyashodak Samaj</td>
+                            <td>Jyotiba Phule</td>
+                            <td>Maharashtra anti-caste leader; opened first untouchable school in Poona (1852); authored <i>Gulamgiri (Slavery)</i>.<cite></cite></td>
+                        </tr>
+                        <tr>
+                            <td class="td-highlight">SNDP Yogam</td>
+                            <td>Narayana Guru</td>
+                            <td>Kerala anti-caste movement; established an inclusive temple at Aruvipuram.<cite></cite></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="callout c-tip">
+                <strong class="mono">[TIP] Quick Recall for Kerala Leaders</strong>
+                Narayana Guru = Aruvipuram Temple & SNDP.<cite></cite> 
+                Ayyankali (inspired by Narayana Guru) = Venganoor, founded Sadhu Jana Paripalana Sangam (1907) for basic rights and school access.<cite></cite>
+            </div>
+        </section>
+
+        <!-- TAMIL NADU TITANS -->
+        <section id="tamilnadu">
+            <h2>3. Social Reformers of Tamil Nadu</h2>
+            <p style="color: var(--c-critical); font-family: 'IBM Plex Mono', monospace; margin-bottom: 1rem; font-weight: bold;">[HIGH YIELD AREA FOR TNPSC UNIT 8 & 9]</p>
+
+            <div class="callout c-critical">
+                <strong class="mono">A. Ramalinga Swamigal (Vallalar) (1823–1874)</strong>
+                Born in Marudhur near Chidambaram.<cite></cite>
+                <ul>
+                    <li><strong>1865:</strong> Established the <i>Samarasa Vedha Sanmarga Sangam</i> (later renamed Samarasa Suddha Sanmarga Satya Sanga).<cite></cite></li>
+                    <li><strong>1867:</strong> Opened a free feeding house at Vadalur for all castes during the terrible 1866 famine.<cite></cite></li>
+                    <li><strong>Core Concept:</strong> <i>Jeevakarunya</i> (compassion for all living beings, including plants).<cite></cite></li>
+                    <li><strong>Literature:</strong> His voluminous songs were compiled as <i>Thiruvarutpa</i> (Songs of Grace).<cite></cite></li>
+                </ul>
+            </div>
+
+            <div class="callout c-pyq">
+                <strong class="mono">B. Pandithar Iyothee Thassar (1845–1914)</strong>
+                Radical Tamil scholar, Siddha medicine practitioner, and pioneer of the Dalit-Buddhist movement.<cite></cite>
+                <ul>
+                    <li><strong>1882:</strong> Established the <i>Dravida Kazhagam</i> with John Rathinam.<cite></cite></li>
+                    <li><strong>1885:</strong> Launched the magazine <i>Dravida Pandian</i>.<cite></cite></li>
+                    <li><strong>1891:</strong> Founded the <i>Dravida Mahajana Sabha</i> (first conference held in Nilgiris).<cite></cite></li>
+                    <li><strong>1898:</strong> Influenced by H.S. Olcott, converted to Buddhism in Sri Lanka and founded the Sakya Buddhist Society in Madras.<cite></cite></li>
+                    <li><strong>1907:</strong> Started the crucial weekly journal <i>Oru Paisa Tamilan</i>, publishing it until his death in 1914.<cite></cite></li>
+                    <li><strong>Other Org:</strong> Founded the <i>Advaidananda Sabha</i> to demand temple entry for "untouchables".<cite></cite></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ISLAMIC, PARSI & SIKH -->
+        <section id="islamic-sikh">
+            <h2>4. Islamic, Parsi, and Sikh Movements</h2>
+            
+            <div class="table-container">
+                <table class="data-font">
+                    <thead>
+                        <tr>
+                            <th>Community</th>
+                            <th>Key Movement/Leader</th>
+                            <th>Characteristics & Data Points</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="td-highlight">Islamic</td>
+                            <td>Aligarh Movement</td>
+                            <td>Led by Sir Sayyid Ahmed Khan (reformist). Founded Aligarh Mohammedan Anglo-Oriental college in 1875 (became Univ in 1920). Advocated western science.<cite></cite></td>
+                        </tr>
+                        <tr>
+                            <td class="td-highlight">Islamic</td>
+                            <td>Deoband Movement</td>
+                            <td>Revivalist orthodox movement led by Ulema (Qasim Wanotavi & Rashid Gangotri) in 1866; opposed English education.<cite></cite></td>
+                        </tr>
+                        <tr>
+                            <td class="td-highlight">Parsi</td>
+                            <td>Rahnumai Mazdayasnan Sabha</td>
+                            <td>Founded by Furdunji Naoroji in 1851 in Mumbai. Main voice was the journal <i>Rast Goftar (The Truth Teller)</i>.<cite></cite></td>
+                        </tr>
+                        <tr>
+                            <td class="td-highlight">Sikh</td>
+                            <td>Nirankari Movement</td>
+                            <td>Founded by Baba Dayal Das. Stressed formless (Nirankar) worship; rejected idols.<cite></cite></td>
+                        </tr>
+                        <tr>
+                            <td class="td-highlight">Sikh</td>
+                            <td>Namdhari Movement</td>
+                            <td>Founded by Baba Ram Singh. Followers carried a lathi instead of a kirpan. Prohibited dowry and child marriage.<cite></cite></td>
+                        </tr>
+                        <tr>
+                            <td class="td-highlight">Sikh</td>
+                            <td>Singh Sabha</td>
+                            <td>Established to restore Sikh purity against Christian & Arya Samaj influence; forerunner of the Akali Movement.<cite></cite></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ACTIVE RECALL -->
+        <section id="active-recall">
+            <h2>5. Active Recall (Book-Back Q&A Data)</h2>
+            
+            <div class="q-card">
+                <details>
+                    <summary>In which year was Sati officially abolished?</summary>
+                    <div class="answer-block">
+                        <strong>1829.</strong><cite></cite> Led by the campaign of Raja Rammohan Roy and enacted by Governor-General William Bentinck.<cite></cite>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="q-card">
+                <details>
+                    <summary>Who was the founder of the Poona Sarvajanik Sabha and Widow Marriage Association?</summary>
+                    <div class="answer-block">
+                        <strong>Mahadev Govind Ranade (M.G. Ranade).</strong><cite></cite> He founded the Widow Marriage Association in 1861 and Poona Sarvajanik Sabha in 1870.<cite></cite>
+                    </div>
+                </details>
+            </div>
+
+            <div class="q-card">
+                <details>
+                    <summary>Identify the authors of 'Satyarthaprakash' and 'Gulamgiri'.</summary>
+                    <div class="answer-block">
+                        <strong>Satyarthaprakash:</strong> Swami Dayanand Saraswati (Arya Samaj).<cite></cite><br>
+                        <strong>Gulamgiri:</strong> Jyotiba Phule (Satyashodak Samaj).<cite></cite>
+                    </div>
+                </details>
+            </div>
+
+            <div class="q-card">
+                <details>
+                    <summary>Match the literary works/journals: <i>Oru Paisa Tamilan</i>, <i>Thiruvarutpa</i>, <i>Rast Goftar</i>.</summary>
+                    <div class="answer-block">
+                        <strong>Oru Paisa Tamilan:</strong> A weekly journal started by Pandithar Iyothee Thassar in 1907.<cite></cite><br>
+                        <strong>Thiruvarutpa:</strong> "Songs of Grace", authored by Ramalinga Swamigal.<cite></cite><br>
+                        <strong>Rast Goftar:</strong> "The Truth Teller", the main voice of the Parsi reform movement.<cite></cite>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="q-card">
+                <details>
+                    <summary>Who established the Sadhu Jana Paripalana Sangam and in what year?</summary>
+                    <div class="answer-block">
+                        <strong>Ayyankali</strong> established it in <strong>1907</strong>.<cite></cite>
+                    </div>
+                </details>
+            </div>
+
+        </section>
+    </main>
+    
+    <script>
+        // Smoothly close other detail elements when one is opened for better UI experience
+        const details = document.querySelectorAll('details');
+        details.forEach(targetDetail => {
+            targetDetail.addEventListener('click', () => {
+                details.forEach(detail => {
+                    if (detail !== targetDetail) {
+                        detail.removeAttribute('open');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
