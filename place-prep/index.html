@@ -326,12 +326,19 @@ label{font-size:.78rem;color:var(--muted);display:block;margin-bottom:5px;font-f
 /* ---- Topic tracker rows ---- */
 .topic-row{
   display:flex;align-items:center;gap:14px;padding:13px 6px;border-bottom:1px solid var(--divider);
+  flex-wrap:wrap;
 }
 .topic-row:last-child{border-bottom:none;}
 .topic-name{width:230px;flex-shrink:0;font-size:.88rem;font-weight:500;}
 .topic-count{font-family:var(--mono);font-size:.78rem;color:var(--muted);width:60px;flex-shrink:0;text-align:right;}
-.topic-bar{flex:1;}
+.topic-bar{flex:1;min-width:120px;}
 .stepper{display:flex;align-items:center;gap:6px;}
+@media(max-width:560px){
+  .topic-name{width:100%;}
+  .topic-bar{order:1;flex:1 1 auto;}
+  .topic-count{order:2;width:auto;}
+  .stepper{order:3;margin-left:auto;}
+}
 .step-btn{
   width:26px;height:26px;border-radius:6px;border:1px solid var(--divider-strong);background:var(--bg-panel-2);
   color:var(--ink);cursor:pointer;font-size:.9rem;line-height:1;
@@ -437,22 +444,37 @@ label{font-size:.78rem;color:var(--muted);display:block;margin-bottom:5px;font-f
   width:70px;height:70px;border-radius:50%;background:var(--bg-panel);display:flex;align-items:center;justify-content:center;
 }
 
+.topbar-title-wrap{display:flex;align-items:center;gap:12px;}
+#sidebar-backdrop{
+  display:none;position:fixed;inset:0;background:rgba(6,8,22,.6);z-index:35;
+}
+#sidebar-backdrop.show{display:block;}
+
 @media(max-width:900px){
-  #sidebar{position:fixed;left:0;top:0;bottom:0;z-index:40;transform:translateX(-100%);transition:transform .2s;}
-  #sidebar.open{transform:translateX(0);}
+  #sidebar{position:fixed;left:0;top:0;bottom:0;z-index:40;transform:translateX(-100%);transition:transform .2s;box-shadow:none;width:260px;}
+  #sidebar.open{transform:translateX(0);box-shadow:16px 0 40px rgba(4,6,20,.5);}
   #menu-toggle{display:inline-flex;}
   #view{padding:22px 16px 50px;}
   #topbar{padding:14px 16px;}
+  #topbar-title{font-size:1.05rem;}
+}
+@media(max-width:420px){
+  .choice-grid{grid-template-columns:1fr;}
+  #onboard-modal{padding:24px 20px 22px;}
+  .topbar-stats{gap:6px;}
+  .stat-chip{padding:6px 9px;font-size:.7rem;}
 }
 #menu-toggle{
   display:none;background:var(--bg-panel-2);border:1px solid var(--divider-strong);color:var(--ink);
   border-radius:var(--radius-sm);padding:8px 10px;cursor:pointer;align-items:center;justify-content:center;
+  flex-shrink:0;
 }
 </style>
 </head>
 <body>
 
 <div id="app">
+  <div id="sidebar-backdrop"></div>
   <aside id="sidebar" aria-label="Module navigation">
     <div class="brand">
       <div class="brand-mark">PLACEMENT<br><span>PREP HUB</span></div>
@@ -467,8 +489,10 @@ label{font-size:.78rem;color:var(--muted);display:block;margin-bottom:5px;font-f
   <div id="main">
     <div id="topbar">
       <div>
-        <button id="menu-toggle" aria-label="Toggle navigation">☰</button>
-        <h1 id="topbar-title">Dashboard</h1>
+        <div class="topbar-title-wrap">
+          <button id="menu-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidebar">☰</button>
+          <h1 id="topbar-title">Dashboard</h1>
+        </div>
         <div class="sub" id="topbar-sub">Welcome back. Let's keep the streak alive.</div>
       </div>
       <div class="topbar-stats">
@@ -1486,9 +1510,33 @@ async function boot(){
   render();
   initOnboarding();
 
-  document.getElementById("menu-toggle").addEventListener("click", ()=>{
-    document.getElementById("sidebar").classList.toggle("open");
+  const sidebarEl = document.getElementById("sidebar");
+  const backdropEl = document.getElementById("sidebar-backdrop");
+  const menuToggleEl = document.getElementById("menu-toggle");
+
+  function openMenu(){
+    sidebarEl.classList.add("open");
+    backdropEl.classList.add("show");
+    menuToggleEl.setAttribute("aria-expanded","true");
+  }
+  function closeMenu(){
+    sidebarEl.classList.remove("open");
+    backdropEl.classList.remove("show");
+    menuToggleEl.setAttribute("aria-expanded","false");
+  }
+  menuToggleEl.addEventListener("click", ()=>{
+    sidebarEl.classList.contains("open") ? closeMenu() : openMenu();
   });
+  backdropEl.addEventListener("click", closeMenu);
+  document.addEventListener("keydown", (e)=>{
+    if(e.key === "Escape" && sidebarEl.classList.contains("open")) closeMenu();
+  });
+  window.addEventListener("resize", ()=>{
+    if(window.innerWidth > 900) closeMenu();
+  });
+  // close the mobile menu whenever a gate/nav link is used
+  document.getElementById("gate-board").addEventListener("click", closeMenu);
+
   document.getElementById("reset-btn").addEventListener("click", ()=>{
     if(confirm("Reset all progress (streak, XP, DSA tracker, quiz scores, resume, notes, forum posts)? Content files are untouched.")){
       localStorage.removeItem(STORE_KEY);
