@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Placement Prep Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================= TOKENS ============================= */
+:root{
+  --bg:#0E1230;
+  --bg-panel:#171C3F;
+  --bg-panel-2:#1E2450;
+  --bg-panel-3:#252C5C;
+  --ink:#F2F0E6;
+  --ink-dim:#C7C9E0;
+  --muted:#8A8FB8;
+  --gold:#E8A33D;
+  --gold-dim:#8A6A32;
+  --teal:#4FD1AE;
+  --coral:#FF6B5B;
+  --divider:rgba(242,240,230,0.14);
+  --divider-strong:rgba(242,240,230,0.24);
+  --display:'Space Grotesk',sans-serif;
+  --body:'Inter',sans-serif;
+  --mono:'JetBrains Mono',monospace;
+  --radius:14px;
+  --radius-sm:8px;
+  --shadow:0 12px 32px rgba(4,6,20,0.45);
+}
+*,*::before,*::after{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1200px 700px at 100% -10%, rgba(232,163,61,0.08), transparent 60%),
+    radial-gradient(1000px 600px at -10% 110%, rgba(79,209,174,0.06), transparent 55%),
+    var(--bg);
+  color:var(--ink);
+  font-family:var(--body);
+  min-height:100vh;
+  line-height:1.5;
+}
+h1,h2,h3,h4{font-family:var(--display);margin:0 0 .4em;letter-spacing:.01em;}
+p{margin:0 0 .8em;}
+a{color:inherit;}
+button{font-family:var(--body);}
+::selection{background:var(--gold);color:#1a1200;}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:4px;}
+.mono{font-family:var(--mono);}
+.hidden{display:none !important;}
+.eyebrow{
+  font-family:var(--mono);
+  font-size:.72rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.scroll-thin::-webkit-scrollbar{width:8px;height:8px;}
+.scroll-thin::-webkit-scrollbar-thumb{background:var(--bg-panel-3);border-radius:8px;}
+.scroll-thin::-webkit-scrollbar-track{background:transparent;}
+
+/* ============================= LAYOUT ============================= */
+#app{display:flex;min-height:100vh;}
+
+/* ---- Sidebar: airport split-flap gate board ---- */
+#sidebar{
+  width:236px;
+  flex-shrink:0;
+  background:var(--bg-panel);
+  border-right:1px solid var(--divider);
+  display:flex;
+  flex-direction:column;
+  position:sticky;
+  top:0;
+  height:100vh;
+}
+.brand{
+  padding:22px 20px 18px;
+  border-bottom:1px solid var(--divider);
+}
+.brand-mark{
+  font-family:var(--display);
+  font-weight:700;
+  font-size:1.05rem;
+  line-height:1.15;
+  letter-spacing:.01em;
+}
+.brand-mark span{color:var(--gold);}
+.brand-sub{
+  margin-top:6px;
+  font-family:var(--mono);
+  font-size:.68rem;
+  color:var(--muted);
+  letter-spacing:.08em;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.brand-sub .dot{width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 6px var(--teal);}
+
+nav#gate-board{padding:14px 10px;flex:1;overflow-y:auto;}
+.gate-row{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:11px 12px;
+  background:transparent;
+  border:1px solid transparent;
+  border-radius:var(--radius-sm);
+  color:var(--ink-dim);
+  cursor:pointer;
+  text-align:left;
+  margin-bottom:4px;
+  transition:background .15s ease, border-color .15s ease, color .15s ease;
+}
+.gate-row:hover{background:var(--bg-panel-2);color:var(--ink);}
+.gate-row.active{
+  background:var(--bg-panel-2);
+  border-color:var(--divider-strong);
+  color:var(--ink);
+}
+.gate-tag{
+  font-family:var(--mono);
+  font-size:.72rem;
+  font-weight:600;
+  color:var(--gold);
+  width:26px;
+  flex-shrink:0;
+}
+.gate-row.active .gate-tag{color:var(--gold);text-shadow:0 0 8px rgba(232,163,61,.5);}
+.gate-label{font-size:.86rem;font-weight:500;}
+.gate-flap-hint{
+  margin-left:auto;
+  font-family:var(--mono);
+  font-size:.65rem;
+  color:var(--muted);
+  opacity:0;
+  transition:opacity .15s;
+}
+.gate-row:hover .gate-flap-hint,.gate-row.active .gate-flap-hint{opacity:1;}
+
+.sidebar-foot{padding:14px 16px 18px;border-top:1px solid var(--divider);}
+.reset-link{
+  background:none;border:1px solid var(--divider);
+  color:var(--muted);
+  font-family:var(--mono);
+  font-size:.68rem;
+  letter-spacing:.05em;
+  padding:8px 10px;
+  border-radius:var(--radius-sm);
+  cursor:pointer;
+  width:100%;
+  transition:border-color .15s,color .15s;
+}
+.reset-link:hover{border-color:var(--coral);color:var(--coral);}
+
+/* ---- Main column ---- */
+#main{flex:1;min-width:0;display:flex;flex-direction:column;}
+#topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:18px 32px;
+  border-bottom:1px solid var(--divider);
+  gap:16px;
+  flex-wrap:wrap;
+}
+#topbar h1{font-size:1.15rem;font-weight:600;}
+#topbar .sub{color:var(--muted);font-size:.85rem;margin-top:2px;}
+.topbar-stats{display:flex;gap:10px;flex-wrap:wrap;}
+.stat-chip{
+  display:flex;align-items:center;gap:7px;
+  background:var(--bg-panel);
+  border:1px solid var(--divider);
+  padding:7px 12px;
+  border-radius:999px;
+  font-family:var(--mono);
+  font-size:.76rem;
+}
+.stat-chip .flame{color:var(--gold);}
+.stat-chip .xp{color:var(--teal);}
+
+#view{padding:28px 32px 60px;flex:1;}
+.view-section{max-width:1180px;margin:0 auto;}
+
+/* ---- data notice ---- */
+#data-notice{
+  display:none;
+  max-width:1180px;margin:0 auto 18px;
+  background:rgba(255,107,91,0.1);
+  border:1px solid rgba(255,107,91,0.4);
+  color:#FFD9D2;
+  padding:12px 16px;
+  border-radius:var(--radius-sm);
+  font-size:.85rem;
+  font-family:var(--mono);
+}
+
+/* ============================= COMPONENTS ============================= */
+.card{
+  background:var(--bg-panel);
+  border:1px solid var(--divider);
+  border-radius:var(--radius);
+  padding:20px;
+}
+.grid{display:grid;gap:18px;}
+.grid-2{grid-template-columns:1fr 1fr;}
+.grid-3{grid-template-columns:repeat(3,1fr);}
+.grid-4{grid-template-columns:repeat(4,1fr);}
+@media(max-width:1000px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr 1fr;}}
+@media(max-width:680px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr;}}
+
+.btn{
+  font-family:var(--body);
+  font-weight:600;
+  font-size:.85rem;
+  padding:10px 16px;
+  border-radius:var(--radius-sm);
+  border:1px solid transparent;
+  cursor:pointer;
+  transition:transform .1s ease, filter .15s ease, background .15s ease;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.btn:active{transform:translateY(1px);}
+.btn-gold{background:var(--gold);color:#1a1200;}
+.btn-gold:hover{filter:brightness(1.08);}
+.btn-teal{background:var(--teal);color:#04241c;}
+.btn-teal:hover{filter:brightness(1.08);}
+.btn-ghost{background:transparent;border-color:var(--divider-strong);color:var(--ink);}
+.btn-ghost:hover{background:var(--bg-panel-2);}
+.btn-coral{background:var(--coral);color:#2a0803;}
+.btn:disabled{opacity:.45;cursor:not-allowed;}
+
+.progress-track{
+  height:9px;background:var(--bg-panel-2);border-radius:999px;overflow:hidden;
+  border:1px solid var(--divider);
+}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--teal));border-radius:999px;transition:width .4s ease;}
+
+.pill{
+  font-family:var(--mono);font-size:.7rem;padding:3px 9px;border-radius:999px;
+  border:1px solid var(--divider-strong);color:var(--ink-dim);
+}
+.pill-teal{border-color:var(--teal);color:var(--teal);}
+.pill-gold{border-color:var(--gold);color:var(--gold);}
+.pill-coral{border-color:var(--coral);color:var(--coral);}
+
+input[type=text],input[type=number],textarea,select{
+  width:100%;
+  background:var(--bg-panel-2);
+  border:1px solid var(--divider-strong);
+  color:var(--ink);
+  padding:10px 12px;
+  border-radius:var(--radius-sm);
+  font-family:var(--body);
+  font-size:.88rem;
+}
+textarea{resize:vertical;min-height:80px;}
+label{font-size:.78rem;color:var(--muted);display:block;margin-bottom:5px;font-family:var(--mono);letter-spacing:.03em;}
+.field{margin-bottom:14px;}
+
+/* ---- Boarding pass hero ---- */
+.boarding-pass{
+  position:relative;
+  background:linear-gradient(135deg,var(--bg-panel-2),var(--bg-panel));
+  border:1px solid var(--divider-strong);
+  border-radius:18px;
+  display:grid;
+  grid-template-columns:1fr 220px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+@media(max-width:760px){.boarding-pass{grid-template-columns:1fr;}}
+.bp-main{padding:26px 28px;}
+.bp-route{
+  display:flex;align-items:center;gap:16px;margin:14px 0 20px;
+}
+.bp-port{font-family:var(--display);font-size:1.9rem;font-weight:700;}
+.bp-port small{display:block;font-family:var(--mono);font-size:.62rem;color:var(--muted);font-weight:400;letter-spacing:.08em;margin-top:2px;}
+.bp-plane{color:var(--gold);font-size:1.2rem;flex:1;text-align:center;position:relative;}
+.bp-plane::before,.bp-plane::after{content:'';position:absolute;top:50%;height:1px;width:38%;background:repeating-linear-gradient(90deg,var(--divider-strong) 0 6px, transparent 6px 10px);}
+.bp-plane::before{left:0;}
+.bp-plane::after{right:0;}
+.bp-task{
+  font-size:1.05rem;font-weight:600;margin-bottom:6px;
+}
+.bp-meta{display:flex;gap:22px;flex-wrap:wrap;margin-top:16px;}
+.bp-meta-item .k{font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
+.bp-meta-item .v{font-family:var(--mono);font-size:.92rem;color:var(--ink);margin-top:2px;}
+.bp-stub{
+  background:repeating-linear-gradient(180deg, transparent 0 8px, rgba(255,255,255,.02) 8px 16px), var(--bg-panel-3);
+  border-left:1px dashed var(--divider-strong);
+  padding:22px 20px;
+  display:flex;flex-direction:column;justify-content:space-between;
+  position:relative;
+}
+.bp-stub::before,.bp-stub::after{
+  content:'';position:absolute;width:20px;height:20px;background:var(--bg);border-radius:50%;left:-10px;
+}
+.bp-stub::before{top:-10px;}
+.bp-stub::after{bottom:-10px;}
+.bp-seat{font-family:var(--display);font-size:1.6rem;font-weight:700;color:var(--gold);}
+.bp-flames{display:flex;gap:4px;margin-top:6px;}
+.flame-lamp{width:10px;height:10px;border-radius:50%;background:var(--bg-panel);border:1px solid var(--divider-strong);}
+.flame-lamp.lit{background:var(--gold);box-shadow:0 0 8px var(--gold);border-color:var(--gold);}
+.bp-barcode{height:34px;background:repeating-linear-gradient(90deg, var(--ink) 0 2px, transparent 2px 5px, var(--ink) 5px 6px, transparent 6px 9px);opacity:.55;margin-top:10px;}
+
+/* ---- Task list ---- */
+.task-item{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:12px 4px;border-bottom:1px solid var(--divider);
+}
+.task-item:last-child{border-bottom:none;}
+.task-check{
+  width:20px;height:20px;border-radius:5px;border:1px solid var(--divider-strong);
+  flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  background:var(--bg-panel-2);margin-top:2px;
+}
+.task-check.done{background:var(--teal);border-color:var(--teal);}
+.task-check.done::after{content:'✓';font-size:.7rem;color:#04241c;font-weight:700;}
+.task-text{font-size:.9rem;}
+.task-text.done{color:var(--muted);text-decoration:line-through;}
+
+/* ---- Topic tracker rows ---- */
+.topic-row{
+  display:flex;align-items:center;gap:14px;padding:13px 6px;border-bottom:1px solid var(--divider);
+}
+.topic-row:last-child{border-bottom:none;}
+.topic-name{width:230px;flex-shrink:0;font-size:.88rem;font-weight:500;}
+.topic-count{font-family:var(--mono);font-size:.78rem;color:var(--muted);width:60px;flex-shrink:0;text-align:right;}
+.topic-bar{flex:1;}
+.stepper{display:flex;align-items:center;gap:6px;}
+.step-btn{
+  width:26px;height:26px;border-radius:6px;border:1px solid var(--divider-strong);background:var(--bg-panel-2);
+  color:var(--ink);cursor:pointer;font-size:.9rem;line-height:1;
+}
+.step-btn:hover{background:var(--bg-panel-3);}
+
+/* ---- Flashcards ---- */
+.flip-card{
+  perspective:1000px;height:180px;cursor:pointer;
+}
+.flip-inner{
+  position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d;
+}
+.flip-card.flipped .flip-inner{transform:rotateY(180deg);}
+.flip-face{
+  position:absolute;inset:0;backface-visibility:hidden;
+  border-radius:var(--radius);border:1px solid var(--divider-strong);
+  padding:18px;display:flex;align-items:center;justify-content:center;text-align:center;
+  font-size:.9rem;
+}
+.flip-front{background:var(--bg-panel-2);}
+.flip-back{background:var(--bg-panel-3);transform:rotateY(180deg);color:var(--teal);}
+
+/* ---- HR question cards ---- */
+.hr-card{border:1px solid var(--divider);border-radius:var(--radius);margin-bottom:10px;overflow:hidden;}
+.hr-q-btn{
+  width:100%;text-align:left;background:var(--bg-panel);border:none;color:var(--ink);
+  padding:14px 16px;font-size:.9rem;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;gap:10px;
+  font-family:var(--body);
+}
+.hr-body{max-height:0;overflow:hidden;transition:max-height .25s ease;background:var(--bg-panel-2);}
+.hr-body-inner{padding:0 16px 16px;}
+.hr-card.open .hr-body{max-height:600px;}
+.hr-answer{margin-top:10px;padding:12px;border-radius:var(--radius-sm);font-size:.84rem;}
+.hr-answer.good{background:rgba(79,209,174,.08);border:1px solid rgba(79,209,174,.35);}
+.hr-answer.bad{background:rgba(255,107,91,.08);border:1px solid rgba(255,107,91,.35);}
+.hr-answer .lbl{font-family:var(--mono);font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:5px;}
+.hr-answer.good .lbl{color:var(--teal);}
+.hr-answer.bad .lbl{color:var(--coral);}
+
+/* ---- Quiz ---- */
+.quiz-option{
+  display:block;width:100%;text-align:left;
+  background:var(--bg-panel-2);border:1px solid var(--divider-strong);color:var(--ink);
+  padding:12px 14px;border-radius:var(--radius-sm);margin-bottom:8px;cursor:pointer;font-size:.87rem;
+  font-family:var(--body);
+}
+.quiz-option:hover{border-color:var(--gold);}
+.quiz-option.correct{border-color:var(--teal);background:rgba(79,209,174,.12);}
+.quiz-option.wrong{border-color:var(--coral);background:rgba(255,107,91,.12);}
+.quiz-option:disabled{cursor:default;}
+#quiz-timer{font-family:var(--mono);font-size:1.4rem;color:var(--gold);}
+
+/* ---- Company list ---- */
+.company-card{border:1px solid var(--divider);border-radius:var(--radius);padding:16px 18px;margin-bottom:12px;}
+.company-card h3{font-size:1rem;display:flex;align-items:center;gap:10px;}
+.company-card .weight{color:var(--muted);font-size:.82rem;margin-bottom:10px;}
+.company-card ul{margin:0;padding-left:18px;font-size:.85rem;color:var(--ink-dim);}
+.company-card li{margin-bottom:5px;}
+
+/* ---- Forum ---- */
+.forum-entry{border:1px solid var(--divider);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:10px;}
+.forum-entry .meta{font-family:var(--mono);font-size:.68rem;color:var(--muted);margin-bottom:6px;}
+
+/* ---- Modal (onboarding) ---- */
+#overlay{
+  position:fixed;inset:0;background:rgba(6,8,22,.72);backdrop-filter:blur(3px);
+  display:flex;align-items:center;justify-content:center;z-index:50;padding:20px;
+}
+#onboard-modal{
+  width:100%;max-width:520px;background:var(--bg-panel);border:1px solid var(--divider-strong);
+  border-radius:18px;padding:30px 30px 26px;box-shadow:var(--shadow);
+}
+.ob-step{display:none;}
+.ob-step.active{display:block;}
+.ob-progress{display:flex;gap:6px;margin-bottom:20px;}
+.ob-progress span{height:4px;flex:1;background:var(--bg-panel-3);border-radius:2px;}
+.ob-progress span.done{background:var(--gold);}
+.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;}
+.choice-btn{
+  background:var(--bg-panel-2);border:1px solid var(--divider-strong);color:var(--ink);
+  padding:16px 12px;border-radius:var(--radius-sm);cursor:pointer;text-align:center;font-size:.86rem;font-weight:600;
+}
+.choice-btn:hover{border-color:var(--gold);}
+.choice-btn.selected{border-color:var(--gold);background:rgba(232,163,61,.12);color:var(--gold);}
+.ob-actions{display:flex;justify-content:space-between;margin-top:22px;}
+
+.empty-state{
+  text-align:center;padding:40px 20px;color:var(--muted);border:1px dashed var(--divider-strong);border-radius:var(--radius);
+}
+.empty-state .big{font-family:var(--display);color:var(--ink-dim);font-size:1.05rem;margin-bottom:6px;}
+
+.section-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;flex-wrap:wrap;gap:8px;}
+.section-head h2{font-size:1.15rem;}
+
+.completeness-ring{
+  width:90px;height:90px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  font-family:var(--display);font-size:1.3rem;font-weight:700;
+  background:conic-gradient(var(--teal) calc(var(--pct,0)*1%), var(--bg-panel-3) 0);
+}
+.completeness-ring .inner{
+  width:70px;height:70px;border-radius:50%;background:var(--bg-panel);display:flex;align-items:center;justify-content:center;
+}
+
+@media(max-width:900px){
+  #sidebar{position:fixed;left:0;top:0;bottom:0;z-index:40;transform:translateX(-100%);transition:transform .2s;}
+  #sidebar.open{transform:translateX(0);}
+  #menu-toggle{display:inline-flex;}
+  #view{padding:22px 16px 50px;}
+  #topbar{padding:14px 16px;}
+}
+#menu-toggle{
+  display:none;background:var(--bg-panel-2);border:1px solid var(--divider-strong);color:var(--ink);
+  border-radius:var(--radius-sm);padding:8px 10px;cursor:pointer;align-items:center;justify-content:center;
+}
+</style>
+</head>
+<body>
+
+<div id="app">
+  <aside id="sidebar" aria-label="Module navigation">
+    <div class="brand">
+      <div class="brand-mark">PLACEMENT<br><span>PREP HUB</span></div>
+      <div class="brand-sub"><span class="dot"></span> DEP: CAMPUS · ARR: OFFER LETTER</div>
+    </div>
+    <nav id="gate-board"></nav>
+    <div class="sidebar-foot">
+      <button class="reset-link" id="reset-btn" type="button">↺ RESET PROGRESS</button>
+    </div>
+  </aside>
+
+  <div id="main">
+    <div id="topbar">
+      <div>
+        <button id="menu-toggle" aria-label="Toggle navigation">☰</button>
+        <h1 id="topbar-title">Dashboard</h1>
+        <div class="sub" id="topbar-sub">Welcome back. Let's keep the streak alive.</div>
+      </div>
+      <div class="topbar-stats">
+        <div class="stat-chip"><span class="flame">🔥</span> <span id="chip-streak">0</span> day streak</div>
+        <div class="stat-chip"><span class="xp">◆</span> <span id="chip-xp">0</span> XP</div>
+        <div class="stat-chip" id="chip-badge">🎖 Cadet</div>
+      </div>
+    </div>
+
+    <div id="data-notice">⚠ Couldn't load live content files from <code>data/</code>. Showing a small built-in sample instead — serve this folder over HTTP (e.g. <code>python3 -m http.server</code>) and reload to get the full question banks.</div>
+
+    <main id="view"></main>
+  </div>
+</div>
+
+<div id="overlay" class="hidden">
+  <div id="onboard-modal" role="dialog" aria-modal="true" aria-labelledby="ob-title">
+    <div class="ob-progress"><span id="ob-p1"></span><span id="ob-p2"></span><span id="ob-p3"></span></div>
+    <h2 id="ob-title">Welcome aboard 👋</h2>
+
+    <div class="ob-step active" data-step="1">
+      <p class="eyebrow">STEP 1 OF 3</p>
+      <p>Which track are you preparing for?</p>
+      <div class="choice-grid" id="ob-target">
+        <button class="choice-btn" data-val="Product-based">Product-based<br><span style="font-weight:400;color:var(--muted);font-size:.75rem;">Amazon, Google, Microsoft…</span></button>
+        <button class="choice-btn" data-val="Service-based">Service-based<br><span style="font-weight:400;color:var(--muted);font-size:.75rem;">TCS, Infosys, Wipro…</span></button>
+      </div>
+    </div>
+
+    <div class="ob-step" data-step="2">
+      <p class="eyebrow">STEP 2 OF 3</p>
+      <p>How many months remain until placements?</p>
+      <div class="choice-grid" id="ob-timeline">
+        <button class="choice-btn" data-val="3">~3 months<br><span style="font-weight:400;color:var(--muted);font-size:.75rem;">Sprint mode</span></button>
+        <button class="choice-btn" data-val="6">~6 months<br><span style="font-weight:400;color:var(--muted);font-size:.75rem;">Steady build-up</span></button>
+      </div>
+    </div>
+
+    <div class="ob-step" data-step="3">
+      <p class="eyebrow">STEP 3 OF 3</p>
+      <p>Preferred coding language?</p>
+      <div class="choice-grid" id="ob-lang">
+        <button class="choice-btn" data-val="Java">Java</button>
+        <button class="choice-btn" data-val="C++">C++</button>
+        <button class="choice-btn" data-val="Python">Python</button>
+      </div>
+    </div>
+
+    <div class="ob-actions">
+      <button class="btn btn-ghost hidden" id="ob-back" type="button">Back</button>
+      <button class="btn btn-gold" id="ob-next" type="button" disabled style="margin-left:auto;">Continue →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ======================================================================
+   FALLBACK DATA — used only if fetch() of data/*.json fails (e.g. when
+   opened directly via file:// instead of a local server).
+====================================================================== */
+const FALLBACK = {
+  dsaTopics: [
+    { name:"Arrays & Strings", total:16 },
+    { name:"Hashing", total:8 },
+    { name:"Trees", total:14 },
+    { name:"Graphs", total:16 },
+    { name:"Dynamic Programming", total:20 }
+  ],
+  flashcards: {
+    "DBMS":[{q:"What is normalization?",a:"Organizing tables to reduce redundancy via normal forms."}],
+    "OS":[{q:"What is a deadlock?",a:"Processes waiting forever on resources held by each other."}]
+  },
+  hrQuestions: [
+    { q:"Tell me about yourself.", good:"Keep it relevant: background, key project, what you're looking for.", bad:"Reciting your bio-data from birth." }
+  ],
+  projectIdeas: {
+    "Full Stack":["Split-expense tracker for roommates with settle-up suggestions."],
+    "AI-ML":["Resume-to-job-description match scorer."],
+    "Android":["Offline-first hostel complaint tracker."]
+  },
+  companies: [
+    { name:"TCS", weightage:"Aptitude-heavy, light coding round.", questions:["Explain your project.","Reverse a linked list."] }
+  ],
+  aptitudeBank: {
+    "Quant":[{q:"A train 150m long crosses a pole in 15s. Speed in km/hr?",options:["30","36","45","50"],correct:1}],
+    "Logical":[{q:"2, 6, 18, 54, ... next?",options:["108","148","162","216"],correct:2}],
+    "Verbal":[{q:"Opposite of DILIGENT?",options:["Hardworking","Lazy","Careful","Punctual"],correct:1}]
+  }
+};
+
+/* ======================================================================
+   STATE — persisted in localStorage. Only user-generated data lives here;
+   static content (topics/flashcards/etc.) is never written back to it.
+====================================================================== */
+const STORE_KEY = "pph_state_v1";
+
+function defaultState(){
+  return {
+    onboarded:false,
+    target:null, timeline:null, language:null,
+    streak:0, lastActiveDate:null, xp:0,
+    tasksDoneToday:[], tasksDate:null,
+    dsaProgress:{},         // { topicName: solvedCount }
+    flashSeen:0,
+    quizScores:[],          // [{category, score, total, date}]
+    resume:{ skills:"", projects:"", github:"", linkedin:"" },
+    notes:{},               // { freeform code-note text }
+    forum:[]                // [{company, round, focus, story, date}]
+  };
+}
+
+let state = loadState();
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    if(!raw) return defaultState();
+    return Object.assign(defaultState(), JSON.parse(raw));
+  }catch(e){ return defaultState(); }
+}
+function saveState(){
+  localStorage.setItem(STORE_KEY, JSON.stringify(state));
+}
+
+/* Streak / daily bookkeeping ------------------------------------------ */
+function todayStr(){ return new Date().toISOString().slice(0,10); }
+function touchDaily(){
+  const t = todayStr();
+  if(state.tasksDate !== t){
+    // new day: check if yesterday was the last active day to keep streak
+    const y = new Date(); y.setDate(y.getDate()-1);
+    const yStr = y.toISOString().slice(0,10);
+    if(state.lastActiveDate === yStr){
+      state.streak += 1;
+    } else if(state.lastActiveDate !== t){
+      state.streak = state.lastActiveDate ? 1 : (state.streak||1);
+    }
+    state.tasksDate = t;
+    state.tasksDone = state.tasksDone||[];
+    state.tasksDoneToday = [];
+    state.lastActiveDate = t;
+    saveState();
+  }
+}
+function addXP(n){ state.xp += n; saveState(); renderTopbar(); }
+
+/* ======================================================================
+   CONTENT LOADING
+====================================================================== */
+let CONTENT = null;
+let usingFallback = false;
+
+async function loadContent(){
+  const files = {
+    dsaTopics:"data/dsa-topics.json",
+    flashcards:"data/flashcards.json",
+    hrQuestions:"data/hr-questions.json",
+    projectIdeas:"data/project-ideas.json",
+    companies:"data/companies.json",
+    aptitudeBank:"data/aptitude-bank.json"
+  };
+  const keys = Object.keys(files);
+  try{
+    const results = await Promise.all(keys.map(k=>fetch(files[k]).then(r=>{
+      if(!r.ok) throw new Error("bad status "+r.status);
+      return r.json();
+    })));
+    const out = {};
+    keys.forEach((k,i)=> out[k]=results[i]);
+    CONTENT = out;
+  }catch(err){
+    console.warn("Falling back to built-in sample content:", err);
+    CONTENT = FALLBACK;
+    usingFallback = true;
+    document.getElementById("data-notice").style.display = "block";
+  }
+}
+
+/* ======================================================================
+   ROUTER
+====================================================================== */
+const ROUTES = [
+  { hash:"dashboard", tag:"A", label:"Dashboard", title:"Dashboard" },
+  { hash:"technical", tag:"B", label:"Technical", title:"Module B · Technical Mastery" },
+  { hash:"aptitude", tag:"C", label:"Aptitude", title:"Module C · Aptitude & Reasoning" },
+  { hash:"projects", tag:"D", label:"Projects", title:"Module D · Project Portfolio" },
+  { hash:"interview", tag:"E", label:"Interview", title:"Module E · Interview & Soft Skills" },
+  { hash:"companies", tag:"F", label:"Companies", title:"Module F · Company Intelligence" }
+];
+
+function buildSidebar(){
+  const nav = document.getElementById("gate-board");
+  nav.innerHTML = ROUTES.map(r=>`
+    <button class="gate-row" data-hash="${r.hash}" role="link">
+      <span class="gate-tag">${r.tag}</span>
+      <span class="gate-label">${r.label}</span>
+      <span class="gate-flap-hint">→</span>
+    </button>`).join("");
+  nav.querySelectorAll(".gate-row").forEach(btn=>{
+    btn.addEventListener("click", ()=>{ location.hash = btn.dataset.hash; document.getElementById("sidebar").classList.remove("open"); });
+  });
+}
+
+function currentRoute(){
+  const h = (location.hash||"#dashboard").replace("#","");
+  return ROUTES.find(r=>r.hash===h) || ROUTES[0];
+}
+
+function renderTopbar(){
+  const r = currentRoute();
+  document.getElementById("topbar-title").textContent = r.label==="Dashboard" ? "Dashboard" : r.title;
+  document.getElementById("topbar-sub").textContent = subtitleFor(r.hash);
+  document.querySelectorAll(".gate-row").forEach(btn=>{
+    btn.classList.toggle("active", btn.dataset.hash===r.hash);
+  });
+  document.getElementById("chip-streak").textContent = state.streak;
+  document.getElementById("chip-xp").textContent = state.xp;
+  document.getElementById("chip-badge").textContent = badgeFor(state.xp);
+}
+function subtitleFor(hash){
+  switch(hash){
+    case "dashboard": return "Welcome back. Let's keep the streak alive.";
+    case "technical": return "DSA roadmap, CS fundamentals, and scratch notes.";
+    case "aptitude": return "Timed practice across Quant, Logical, and Verbal.";
+    case "projects": return "Pick an idea, then draft it into a resume-ready story.";
+    case "interview": return "Resume checklist, HR bank, and mock interview practice.";
+    case "companies": return "Round weightage and real past questions, by company.";
+    default: return "";
+  }
+}
+function badgeFor(xp){
+  if(xp>=1200) return "🏆 Recruiter's Pick";
+  if(xp>=700) return "🥇 Interview Ready";
+  if(xp>=350) return "🥈 On Track";
+  if(xp>=100) return "🥉 Warming Up";
+  return "🎖 Cadet";
+}
+
+function render(){
+  touchDaily();
+  const r = currentRoute();
+  renderTopbar();
+  const view = document.getElementById("view");
+  switch(r.hash){
+    case "dashboard": view.innerHTML = renderDashboard(); afterRenderDashboard(); break;
+    case "technical": view.innerHTML = renderTechnical(); afterRenderTechnical(); break;
+    case "aptitude": view.innerHTML = renderAptitude(); afterRenderAptitude(); break;
+    case "projects": view.innerHTML = renderProjects(); afterRenderProjects(); break;
+    case "interview": view.innerHTML = renderInterview(); afterRenderInterview(); break;
+    case "companies": view.innerHTML = renderCompanies(); afterRenderCompanies(); break;
+  }
+}
+window.addEventListener("hashchange", render);
+
+/* ======================================================================
+   HELPERS
+====================================================================== */
+function esc(s){ return String(s).replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+function dsaTotalSolved(){
+  return CONTENT.dsaTopics.reduce((sum,t)=> sum + Math.min(state.dsaProgress[t.name]||0, t.total), 0);
+}
+function dsaTotalCount(){
+  return CONTENT.dsaTopics.reduce((sum,t)=> sum + t.total, 0);
+}
+function roadmapCompletionPct(){
+  const dsaPct = dsaTotalCount() ? dsaTotalSolved()/dsaTotalCount() : 0;
+  const flashPct = Math.min(state.flashSeen/40, 1);
+  const quizPct = Math.min(state.quizScores.length/6, 1);
+  const resumeFields = Object.values(state.resume).filter(v=>v && v.trim()).length;
+  const resumePct = resumeFields/4;
+  const overall = (dsaPct*0.45 + flashPct*0.2 + quizPct*0.2 + resumePct*0.15);
+  return Math.round(overall*100);
+}
+
+/* ======================================================================
+   TODAY'S TASKS — deterministic-ish daily pick based on date, so it
+   doesn't reshuffle on every render, only once per day.
+====================================================================== */
+function getTodayTasks(){
+  const seedDay = todayStr();
+  // simple string hash for a stable pseudo-random seed per day
+  let h = 0; for(let i=0;i<seedDay.length;i++){ h = (h*31 + seedDay.charCodeAt(i))>>>0; }
+  const topics = CONTENT.dsaTopics;
+  const t1 = topics.length ? topics[h % topics.length].name : "DSA practice";
+  const subjects = Object.keys(CONTENT.flashcards);
+  const subj = subjects.length ? subjects[(h>>3) % subjects.length] : "fundamentals";
+  const aptCats = Object.keys(CONTENT.aptitudeBank);
+  const aptCat = aptCats.length ? aptCats[(h>>5) % aptCats.length] : "Quant";
+  return [
+    { id:"dsa", text:`Solve 2 problems from "${t1}"` },
+    { id:"flash", text:`Revise ${subj} flashcards — rapid mode` },
+    { id:"apt", text:`Attempt a 5-question ${aptCat} timed quiz` },
+    { id:"hr", text:`Expand and read 2 HR questions in the bank` }
+  ];
+}
+function isTaskDone(id){ return (state.tasksDoneToday||[]).includes(id); }
+function toggleTask(id){
+  state.tasksDoneToday = state.tasksDoneToday||[];
+  const i = state.tasksDoneToday.indexOf(id);
+  if(i>-1){ state.tasksDoneToday.splice(i,1); }
+  else{ state.tasksDoneToday.push(id); addXPQuiet(15); }
+  saveState();
+}
+function addXPQuiet(n){ state.xp += n; }
+
+/* ======================================================================
+   DASHBOARD
+====================================================================== */
+function renderDashboard(){
+  const tasks = getTodayTasks();
+  const doneCount = tasks.filter(t=>isTaskDone(t.id)).length;
+  const pct = roadmapCompletionPct();
+  const litLamps = Math.min(state.streak, 7);
+
+  return `
+  <div class="view-section">
+    <div class="boarding-pass">
+      <div class="bp-main">
+        <p class="eyebrow">TODAY'S MISSION · ${new Date().toLocaleDateString(undefined,{weekday:'long', month:'short', day:'numeric'})}</p>
+        <div class="bp-route">
+          <div class="bp-port">SELF<small>CURRENT STAGE</small></div>
+          <div class="bp-plane">✈</div>
+          <div class="bp-port">${state.target==='Product-based' ? 'PROD' : state.target==='Service-based' ? 'SVC' : 'OFFER'}<small>TARGET</small></div>
+        </div>
+        <div class="bp-task">${esc(tasks[0].text)}</div>
+        <div class="progress-track" style="margin-top:6px;"><div class="progress-fill" style="width:${pct}%"></div></div>
+        <div class="bp-meta">
+          <div class="bp-meta-item"><div class="k">Track</div><div class="v">${esc(state.target||'—')}</div></div>
+          <div class="bp-meta-item"><div class="k">Timeline</div><div class="v">${state.timeline?state.timeline+' mo':'—'}</div></div>
+          <div class="bp-meta-item"><div class="k">Language</div><div class="v">${esc(state.language||'—')}</div></div>
+          <div class="bp-meta-item"><div class="k">Roadmap</div><div class="v">${pct}% complete</div></div>
+        </div>
+      </div>
+      <div class="bp-stub">
+        <div>
+          <div class="eyebrow">SEAT</div>
+          <div class="bp-seat">${badgeFor(state.xp).split(' ')[0]}</div>
+          <div style="font-size:.72rem;color:var(--muted);margin-top:2px;">${badgeFor(state.xp).split(' ').slice(1).join(' ')}</div>
+        </div>
+        <div>
+          <div class="eyebrow">BOARDING · STREAK</div>
+          <div class="bp-flames">${Array.from({length:7}).map((_,i)=>`<span class="flame-lamp ${i<litLamps?'lit':''}"></span>`).join('')}</div>
+          <div style="font-family:var(--mono);font-size:.78rem;margin-top:6px;">${state.streak} day${state.streak===1?'':'s'} 🔥</div>
+        </div>
+        <div class="bp-barcode"></div>
+      </div>
+    </div>
+
+    <div class="grid grid-3" style="margin-top:20px;">
+      <div class="card" style="grid-column:span 2;">
+        <div class="section-head"><h2>Tasks for Today</h2><span class="pill pill-gold">${doneCount}/${tasks.length} done</span></div>
+        <div id="task-list">
+          ${tasks.map(t=>`
+            <div class="task-item">
+              <button class="task-check ${isTaskDone(t.id)?'done':''}" data-task="${t.id}" aria-label="Mark task done"></button>
+              <div class="task-text ${isTaskDone(t.id)?'done':''}">${esc(t.text)}</div>
+            </div>`).join('')}
+        </div>
+      </div>
+      <div class="card">
+        <div class="section-head"><h2>Overall Roadmap</h2></div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <div class="completeness-ring" style="--pct:${pct};"><div class="inner">${pct}%</div></div>
+          <div style="font-size:.82rem;color:var(--muted);">DSA, flashcards, aptitude attempts, and resume completeness combined.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-top:18px;">
+      <div class="card">
+        <div class="section-head"><h2>Upcoming Checkpoint</h2></div>
+        <p style="font-size:.88rem;color:var(--ink-dim);">Next self-set milestone: finish the <strong>${CONTENT.dsaTopics[0]?CONTENT.dsaTopics[0].name:'DSA'}</strong> topic and attempt your first timed aptitude quiz this week.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="#technical" class="btn btn-gold">Go to Technical →</a>
+          <a href="#aptitude" class="btn btn-ghost">Go to Aptitude →</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="section-head"><h2>Recent Quiz Scores</h2></div>
+        ${state.quizScores.length ? state.quizScores.slice(-4).reverse().map(s=>`
+          <div style="display:flex;justify-content:space-between;font-size:.85rem;padding:7px 0;border-bottom:1px solid var(--divider);">
+            <span>${esc(s.category)}</span><span class="mono">${s.score}/${s.total}</span>
+          </div>`).join('') : `<div class="empty-state" style="padding:20px;"><div class="big">No attempts yet</div>Take your first quiz from the Aptitude module.</div>`}
+      </div>
+    </div>
+  </div>`;
+}
+function afterRenderDashboard(){
+  document.querySelectorAll(".task-check").forEach(btn=>{
+    btn.addEventListener("click", ()=>{ toggleTask(btn.dataset.task); render(); });
+  });
+}
+
+/* ======================================================================
+   TECHNICAL — DSA tracker + flashcards + notes
+====================================================================== */
+let flashState = { subject:null, index:0, shuffled:false, deck:[] };
+
+function renderTechnical(){
+  const topics = CONTENT.dsaTopics;
+  const solved = dsaTotalSolved(), total = dsaTotalCount();
+  const subjects = Object.keys(CONTENT.flashcards);
+  if(!flashState.subject && subjects.length) flashState.subject = subjects[0];
+
+  return `
+  <div class="view-section">
+    <div class="card">
+      <div class="section-head">
+        <h2>DSA Roadmap &amp; Tracker</h2>
+        <span class="pill pill-teal">${solved} / ${total} toward Top ${total}</span>
+      </div>
+      <div class="progress-track" style="margin-bottom:14px;"><div class="progress-fill" style="width:${total?Math.round(solved/total*100):0}%"></div></div>
+      <div id="topic-list">
+        ${topics.map(t=>{
+          const done = Math.min(state.dsaProgress[t.name]||0, t.total);
+          const pct = t.total ? Math.round(done/t.total*100) : 0;
+          return `
+          <div class="topic-row">
+            <div class="topic-name">${esc(t.name)}</div>
+            <div class="topic-bar"><div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div></div>
+            <div class="topic-count">${done}/${t.total}</div>
+            <div class="stepper">
+              <button class="step-btn" data-topic="${esc(t.name)}" data-dir="-1" aria-label="Decrease">−</button>
+              <button class="step-btn" data-topic="${esc(t.name)}" data-dir="1" aria-label="Increase">+</button>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-top:18px;align-items:start;">
+      <div class="card">
+        <div class="section-head">
+          <h2>CS Fundamentals Flashcards</h2>
+          <button class="btn btn-ghost" id="shuffle-btn" type="button">🔀 Rapid revision</button>
+        </div>
+        <div class="field">
+          <select id="subject-select">
+            ${subjects.map(s=>`<option value="${esc(s)}" ${s===flashState.subject?'selected':''}>${esc(s)}</option>`).join('')}
+          </select>
+        </div>
+        <div id="flash-holder"></div>
+        <div style="display:flex;justify-content:space-between;margin-top:12px;">
+          <button class="btn btn-ghost" id="flash-prev" type="button">← Prev</button>
+          <span class="mono" id="flash-pos" style="align-self:center;color:var(--muted);font-size:.78rem;"></span>
+          <button class="btn btn-ghost" id="flash-next" type="button">Next →</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-head"><h2>Scratch Notes</h2></div>
+        <p style="font-size:.82rem;color:var(--muted);">Jot quick notes per problem — saved locally, only visible to you.</p>
+        <div class="field">
+          <label for="note-topic">Topic / problem</label>
+          <input type="text" id="note-topic" placeholder="e.g. Two Sum, Sliding Window trick...">
+        </div>
+        <div class="field">
+          <label for="note-text">Notes</label>
+          <textarea id="note-text" placeholder="Approach, complexity, gotchas..."></textarea>
+        </div>
+        <button class="btn btn-gold" id="save-note" type="button">Save note</button>
+        <div id="notes-list" style="margin-top:16px;"></div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function buildDeck(){
+  const cards = (CONTENT.flashcards[flashState.subject]||[]).slice();
+  if(flashState.shuffled){
+    for(let i=cards.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [cards[i],cards[j]]=[cards[j],cards[i]];
+    }
+  }
+  flashState.deck = cards;
+  flashState.index = 0;
+}
+
+function renderFlashHolder(){
+  const holder = document.getElementById("flash-holder");
+  if(!holder) return;
+  const deck = flashState.deck;
+  if(!deck.length){ holder.innerHTML = `<div class="empty-state">No flashcards for this subject yet.</div>`; return; }
+  const c = deck[flashState.index];
+  holder.innerHTML = `
+    <div class="flip-card" id="flip-card">
+      <div class="flip-inner">
+        <div class="flip-face flip-front"><div><span class="eyebrow">Q</span><p style="margin-top:6px;">${esc(c.q)}</p></div></div>
+        <div class="flip-face flip-back"><div><span class="eyebrow" style="color:var(--teal);">A</span><p style="margin-top:6px;">${esc(c.a)}</p></div></div>
+      </div>
+    </div>`;
+  document.getElementById("flash-pos").textContent = `${flashState.index+1} / ${deck.length}`;
+  document.getElementById("flip-card").addEventListener("click", function(){
+    this.classList.toggle("flipped");
+    if(this.classList.contains("flipped")){ state.flashSeen += 1; saveState(); }
+  });
+}
+
+function afterRenderTechnical(){
+  document.querySelectorAll(".step-btn").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const name = btn.dataset.topic, dir = parseInt(btn.dataset.dir,10);
+      const topic = CONTENT.dsaTopics.find(t=>t.name===name);
+      const cur = state.dsaProgress[name]||0;
+      let next = cur + dir;
+      next = Math.max(0, Math.min(next, topic.total));
+      if(next !== cur){ addXPQuiet(dir>0?10:-10); }
+      state.dsaProgress[name] = next;
+      saveState();
+      render();
+    });
+  });
+  document.getElementById("subject-select").addEventListener("change", (e)=>{
+    flashState.subject = e.target.value; flashState.shuffled=false; buildDeck(); renderFlashHolder();
+  });
+  document.getElementById("shuffle-btn").addEventListener("click", ()=>{
+    flashState.shuffled = true; buildDeck(); renderFlashHolder();
+  });
+  document.getElementById("flash-prev").addEventListener("click", ()=>{
+    if(!flashState.deck.length) return;
+    flashState.index = (flashState.index-1+flashState.deck.length)%flashState.deck.length; renderFlashHolder();
+  });
+  document.getElementById("flash-next").addEventListener("click", ()=>{
+    if(!flashState.deck.length) return;
+    flashState.index = (flashState.index+1)%flashState.deck.length; renderFlashHolder();
+  });
+  buildDeck(); renderFlashHolder();
+
+  document.getElementById("save-note").addEventListener("click", ()=>{
+    const topicEl = document.getElementById("note-topic");
+    const textEl = document.getElementById("note-text");
+    const key = topicEl.value.trim() || "Untitled";
+    if(!textEl.value.trim()) return;
+    state.notes[key] = { text:textEl.value.trim(), date:todayStr() };
+    saveState();
+    topicEl.value=""; textEl.value="";
+    renderNotesList();
+  });
+  renderNotesList();
+}
+function renderNotesList(){
+  const el = document.getElementById("notes-list");
+  if(!el) return;
+  const keys = Object.keys(state.notes);
+  if(!keys.length){ el.innerHTML = `<div class="empty-state" style="padding:16px;">No notes yet.</div>`; return; }
+  el.innerHTML = keys.slice().reverse().map(k=>`
+    <div style="border-bottom:1px solid var(--divider);padding:8px 0;">
+      <div style="font-size:.82rem;font-weight:600;">${esc(k)}</div>
+      <div style="font-size:.8rem;color:var(--ink-dim);white-space:pre-wrap;">${esc(state.notes[k].text)}</div>
+    </div>`).join('');
+}
+
+/* ======================================================================
+   APTITUDE — timed quiz + company pattern selector
+====================================================================== */
+let quizState = { category:null, questions:[], index:0, score:0, timer:null, seconds:0, active:false, companyFilter:null };
+
+function renderAptitude(){
+  const cats = Object.keys(CONTENT.aptitudeBank);
+  const companies = CONTENT.companies.map(c=>c.name);
+  if(!quizState.category) quizState.category = cats[0];
+
+  return `
+  <div class="view-section">
+    <div class="grid grid-2" style="align-items:start;">
+      <div class="card">
+        <div class="section-head"><h2>Timed Practice Quiz</h2></div>
+        <div class="field">
+          <label for="quiz-cat">Category</label>
+          <select id="quiz-cat">
+            ${cats.map(c=>`<option value="${esc(c)}" ${c===quizState.category?'selected':''}>${esc(c)}</option>`).join('')}
+          </select>
+        </div>
+        <div id="quiz-area"></div>
+      </div>
+
+      <div class="card">
+        <div class="section-head"><h2>Company Pattern Selector</h2></div>
+        <div class="field">
+          <label for="company-pattern">Choose a company to see weightage</label>
+          <select id="company-pattern">
+            <option value="">— select —</option>
+            ${companies.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('')}
+          </select>
+        </div>
+        <div id="company-pattern-out" style="font-size:.85rem;color:var(--ink-dim);"></div>
+
+        <div class="section-head" style="margin-top:22px;"><h2>Score History</h2></div>
+        <div id="score-history">
+          ${state.quizScores.length ? state.quizScores.slice().reverse().map(s=>`
+            <div style="display:flex;justify-content:space-between;font-size:.84rem;padding:7px 0;border-bottom:1px solid var(--divider);">
+              <span>${esc(s.category)} <span class="mono" style="color:var(--muted);">· ${s.date}</span></span>
+              <span class="mono">${s.score}/${s.total}</span>
+            </div>`).join('') : `<div class="empty-state" style="padding:18px;">No attempts yet.</div>`}
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function startQuiz(){
+  const bank = CONTENT.aptitudeBank[quizState.category]||[];
+  const qs = bank.slice();
+  for(let i=qs.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [qs[i],qs[j]]=[qs[j],qs[i]]; }
+  quizState.questions = qs.slice(0,5);
+  quizState.index = 0; quizState.score = 0; quizState.active = true; quizState.seconds = 0;
+  clearInterval(quizState.timer);
+  quizState.timer = setInterval(()=>{ quizState.seconds++; const el=document.getElementById("quiz-timer"); if(el) el.textContent = fmtTime(quizState.seconds); }, 1000);
+  renderQuizArea();
+}
+function fmtTime(s){ const m=Math.floor(s/60), r=s%60; return `${m}:${String(r).padStart(2,'0')}`; }
+
+function renderQuizArea(){
+  const area = document.getElementById("quiz-area");
+  if(!area) return;
+  if(!quizState.active){
+    area.innerHTML = `
+      <p style="font-size:.85rem;color:var(--muted);">5 questions, timed. Pick a category above and start when ready.</p>
+      <button class="btn btn-gold" id="start-quiz-btn" type="button">▶ Start ${esc(quizState.category)} quiz</button>`;
+    document.getElementById("start-quiz-btn").addEventListener("click", startQuiz);
+    return;
+  }
+  if(quizState.index >= quizState.questions.length){
+    clearInterval(quizState.timer);
+    quizState.active = false;
+    const score = quizState.score, total = quizState.questions.length;
+    state.quizScores.push({ category:quizState.category, score, total, date:todayStr() });
+    addXP(score*20);
+    saveState();
+    area.innerHTML = `
+      <div class="empty-state">
+        <div class="big">Score: ${score} / ${total}</div>
+        Time taken: ${fmtTime(quizState.seconds)}
+        <div style="margin-top:14px;"><button class="btn btn-gold" id="retry-quiz-btn" type="button">Try another set</button></div>
+      </div>`;
+    document.getElementById("retry-quiz-btn").addEventListener("click", ()=>{ quizState.active=false; renderQuizArea(); });
+    return;
+  }
+  const q = quizState.questions[quizState.index];
+  area.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <span class="pill pill-gold">Q${quizState.index+1} / ${quizState.questions.length}</span>
+      <span id="quiz-timer">${fmtTime(quizState.seconds)}</span>
+    </div>
+    <p style="font-weight:600;font-size:.92rem;">${esc(q.q)}</p>
+    <div id="quiz-options">
+      ${q.options.map((opt,i)=>`<button class="quiz-option" data-i="${i}">${esc(opt)}</button>`).join('')}
+    </div>`;
+  document.querySelectorAll(".quiz-option").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const i = parseInt(btn.dataset.i,10);
+      document.querySelectorAll(".quiz-option").forEach(b=>b.disabled=true);
+      if(i===q.correct){ btn.classList.add("correct"); quizState.score++; }
+      else{
+        btn.classList.add("wrong");
+        const correctBtn = document.querySelector(`.quiz-option[data-i="${q.correct}"]`);
+        if(correctBtn) correctBtn.classList.add("correct");
+      }
+      setTimeout(()=>{ quizState.index++; renderQuizArea(); }, 900);
+    });
+  });
+}
+
+function afterRenderAptitude(){
+  document.getElementById("quiz-cat").addEventListener("change", (e)=>{
+    quizState.category = e.target.value; quizState.active=false; clearInterval(quizState.timer); renderQuizArea();
+  });
+  quizState.active = false;
+  renderQuizArea();
+
+  document.getElementById("company-pattern").addEventListener("change", (e)=>{
+    const name = e.target.value;
+    const out = document.getElementById("company-pattern-out");
+    if(!name){ out.innerHTML=""; return; }
+    const c = CONTENT.companies.find(x=>x.name===name);
+    out.innerHTML = c ? `<p style="margin-top:10px;">${esc(c.weightage)}</p>` : "";
+  });
+}
+
+/* ======================================================================
+   PROJECTS — idea generator + resume-ready description builder
+====================================================================== */
+function renderProjects(){
+  const cats = Object.keys(CONTENT.projectIdeas);
+  return `
+  <div class="view-section">
+    <div class="grid grid-2" style="align-items:start;">
+      <div class="card">
+        <div class="section-head"><h2>Project Idea Generator</h2></div>
+        <div class="field">
+          <label for="idea-cat">Category</label>
+          <select id="idea-cat">
+            <option value="">Any</option>
+            ${cats.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('')}
+          </select>
+        </div>
+        <button class="btn btn-gold" id="gen-idea-btn" type="button">🎲 Suggest an idea</button>
+        <div id="idea-out" style="margin-top:16px;font-size:.88rem;"></div>
+      </div>
+
+      <div class="card">
+        <div class="section-head"><h2>Resume-Ready Project Draft</h2></div>
+        <div class="field"><label for="pj-title">Project title</label><input type="text" id="pj-title" placeholder="e.g. Split-Expense Tracker for Roommates"></div>
+        <div class="field"><label for="pj-stack">Tech stack</label><input type="text" id="pj-stack" placeholder="e.g. React, Node.js, MongoDB"></div>
+        <div class="field"><label for="pj-problem">Problem</label><textarea id="pj-problem" placeholder="What problem does it solve?"></textarea></div>
+        <div class="field"><label for="pj-solution">Solution</label><textarea id="pj-solution" placeholder="How does it solve it?"></textarea></div>
+        <div class="field"><label for="pj-challenge">Challenges faced</label><textarea id="pj-challenge" placeholder="What was hard, and how did you overcome it?"></textarea></div>
+        <button class="btn btn-teal" id="save-pj-btn" type="button">Save draft</button>
+        <div id="pj-preview" style="margin-top:16px;"></div>
+      </div>
+    </div>
+  </div>`;
+}
+function afterRenderProjects(){
+  document.getElementById("gen-idea-btn").addEventListener("click", ()=>{
+    const cat = document.getElementById("idea-cat").value;
+    let pool = [];
+    if(cat){ pool = CONTENT.projectIdeas[cat]||[]; }
+    else{ Object.values(CONTENT.projectIdeas).forEach(arr=>pool.push(...arr)); }
+    const out = document.getElementById("idea-out");
+    if(!pool.length){ out.innerHTML = `<div class="empty-state">No ideas in this category.</div>`; return; }
+    out.innerHTML = `<div class="card" style="background:var(--bg-panel-2);">${esc(pick(pool))}</div>`;
+  });
+
+  const draftKey = "pph_project_draft";
+  const saved = JSON.parse(localStorage.getItem(draftKey)||"null");
+  if(saved){
+    document.getElementById("pj-title").value = saved.title||"";
+    document.getElementById("pj-stack").value = saved.stack||"";
+    document.getElementById("pj-problem").value = saved.problem||"";
+    document.getElementById("pj-solution").value = saved.solution||"";
+    document.getElementById("pj-challenge").value = saved.challenge||"";
+    renderPjPreview(saved);
+  }
+  document.getElementById("save-pj-btn").addEventListener("click", ()=>{
+    const draft = {
+      title: document.getElementById("pj-title").value.trim(),
+      stack: document.getElementById("pj-stack").value.trim(),
+      problem: document.getElementById("pj-problem").value.trim(),
+      solution: document.getElementById("pj-solution").value.trim(),
+      challenge: document.getElementById("pj-challenge").value.trim()
+    };
+    localStorage.setItem(draftKey, JSON.stringify(draft));
+    addXP(10);
+    renderPjPreview(draft);
+  });
+}
+function renderPjPreview(d){
+  const el = document.getElementById("pj-preview");
+  if(!d.title && !d.problem) { el.innerHTML=""; return; }
+  el.innerHTML = `
+    <div class="card" style="background:var(--bg-panel-2);">
+      <h3 style="font-size:.95rem;">${esc(d.title||"Untitled project")}</h3>
+      ${d.stack?`<p class="mono" style="font-size:.76rem;color:var(--teal);">${esc(d.stack)}</p>`:''}
+      ${d.problem?`<p style="font-size:.84rem;"><strong>Problem:</strong> ${esc(d.problem)}</p>`:''}
+      ${d.solution?`<p style="font-size:.84rem;"><strong>Solution:</strong> ${esc(d.solution)}</p>`:''}
+      ${d.challenge?`<p style="font-size:.84rem;"><strong>Challenges:</strong> ${esc(d.challenge)}</p>`:''}
+    </div>`;
+}
+
+/* ======================================================================
+   INTERVIEW — resume checklist, HR bank, mock interview simulator
+====================================================================== */
+function renderInterview(){
+  const r = state.resume;
+  const fieldsFilled = ["skills","projects","github","linkedin"].filter(k=>r[k] && r[k].trim()).length;
+  const pct = Math.round(fieldsFilled/4*100);
+
+  return `
+  <div class="view-section">
+    <div class="grid grid-2" style="align-items:start;">
+      <div class="card">
+        <div class="section-head">
+          <h2>ATS Resume Checklist</h2>
+          <div class="completeness-ring" style="--pct:${pct};width:60px;height:60px;font-size:.9rem;"><div class="inner" style="width:46px;height:46px;">${pct}%</div></div>
+        </div>
+        <div class="field"><label for="rs-skills">Skills (comma separated)</label><input type="text" id="rs-skills" value="${esc(r.skills)}" placeholder="Java, DSA, SQL, Git..."></div>
+        <div class="field"><label for="rs-projects">Projects (one per line)</label><textarea id="rs-projects" placeholder="Project name — one-line impact">${esc(r.projects)}</textarea></div>
+        <div class="field"><label for="rs-github">GitHub URL</label><input type="text" id="rs-github" value="${esc(r.github)}" placeholder="github.com/yourname"></div>
+        <div class="field"><label for="rs-linkedin">LinkedIn URL</label><input type="text" id="rs-linkedin" value="${esc(r.linkedin)}" placeholder="linkedin.com/in/yourname"></div>
+        <button class="btn btn-teal" id="save-resume-btn" type="button">Save resume details</button>
+      </div>
+
+      <div class="card">
+        <div class="section-head"><h2>Mock Interview Simulator</h2></div>
+        <p style="font-size:.83rem;color:var(--muted);">Pulls a random technical or HR question. Type your answer under a timer, purely for practice.</p>
+        <div id="mock-area"></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:18px;">
+      <div class="section-head"><h2>HR Question Bank</h2></div>
+      <div id="hr-list"></div>
+    </div>
+  </div>`;
+}
+
+let mockState = { question:null, kind:null, seconds:90, timer:null, running:false };
+
+function afterRenderInterview(){
+  document.getElementById("save-resume-btn").addEventListener("click", ()=>{
+    state.resume = {
+      skills: document.getElementById("rs-skills").value.trim(),
+      projects: document.getElementById("rs-projects").value.trim(),
+      github: document.getElementById("rs-github").value.trim(),
+      linkedin: document.getElementById("rs-linkedin").value.trim()
+    };
+    saveState(); addXP(10);
+    render();
+  });
+
+  // HR bank
+  const hrList = document.getElementById("hr-list");
+  hrList.innerHTML = CONTENT.hrQuestions.map((q,i)=>`
+    <div class="hr-card" data-i="${i}">
+      <button class="hr-q-btn" type="button">${esc(q.q)} <span>▾</span></button>
+      <div class="hr-body"><div class="hr-body-inner">
+        <div class="hr-answer good"><span class="lbl">Strong approach</span>${esc(q.good)}</div>
+        <div class="hr-answer bad"><span class="lbl">Weak example</span>${esc(q.bad)}</div>
+      </div></div>
+    </div>`).join('');
+  hrList.querySelectorAll(".hr-q-btn").forEach(btn=>{
+    btn.addEventListener("click", ()=>{ btn.closest(".hr-card").classList.toggle("open"); });
+  });
+
+  // Mock interview simulator
+  renderMockArea();
+}
+
+function renderMockArea(){
+  const area = document.getElementById("mock-area");
+  if(!area) return;
+  if(!mockState.running){
+    area.innerHTML = `<button class="btn btn-gold" id="mock-start" type="button">🎤 Get a random question</button><div id="mock-answer-wrap"></div>`;
+    document.getElementById("mock-start").addEventListener("click", startMock);
+    return;
+  }
+  area.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <span class="pill ${mockState.kind==='HR'?'pill-teal':'pill-gold'}">${mockState.kind} QUESTION</span>
+      <span id="mock-timer" class="mono" style="color:var(--gold);">${fmtTime(mockState.seconds)}</span>
+    </div>
+    <p style="font-weight:600;font-size:.92rem;">${esc(mockState.question)}</p>
+    <textarea id="mock-answer" placeholder="Type your answer here..." style="min-height:120px;"></textarea>
+    <div style="display:flex;gap:10px;margin-top:10px;">
+      <button class="btn btn-teal" id="mock-finish" type="button">Finish &amp; save</button>
+      <button class="btn btn-ghost" id="mock-next" type="button">Next question →</button>
+    </div>`;
+  document.getElementById("mock-finish").addEventListener("click", finishMock);
+  document.getElementById("mock-next").addEventListener("click", startMock);
+}
+function startMock(){
+  clearInterval(mockState.timer);
+  const useHR = Math.random() < 0.6 && CONTENT.hrQuestions.length;
+  if(useHR){
+    mockState.kind = "HR";
+    mockState.question = pick(CONTENT.hrQuestions).q;
+  } else if(CONTENT.companies.length){
+    const c = pick(CONTENT.companies);
+    mockState.kind = "TECHNICAL";
+    mockState.question = pick(c.questions) + ` (as asked at ${c.name})`;
+  } else {
+    mockState.kind = "HR";
+    mockState.question = pick(CONTENT.hrQuestions).q;
+  }
+  mockState.seconds = 90;
+  mockState.running = true;
+  renderMockArea();
+  mockState.timer = setInterval(()=>{
+    mockState.seconds--;
+    const el = document.getElementById("mock-timer");
+    if(el) el.textContent = fmtTime(Math.max(mockState.seconds,0));
+    if(mockState.seconds<=0){ clearInterval(mockState.timer); }
+  }, 1000);
+}
+function finishMock(){
+  clearInterval(mockState.timer);
+  mockState.running = false;
+  addXP(20);
+  renderMockArea();
+}
+
+/* ======================================================================
+   COMPANIES — searchable list + experience-sharing board
+====================================================================== */
+function renderCompanies(){
+  return `
+  <div class="view-section">
+    <div class="card">
+      <div class="section-head"><h2>Company Intelligence</h2></div>
+      <div class="field"><input type="text" id="company-search" placeholder="Search by company name or question keyword..."></div>
+      <div id="company-list"></div>
+    </div>
+
+    <div class="card" style="margin-top:18px;">
+      <div class="section-head"><h2>Experience-Sharing Board</h2></div>
+      <p style="font-size:.82rem;color:var(--muted);">Add a short interview experience for your batchmates — saved locally on this device.</p>
+      <div class="grid grid-4">
+        <div class="field"><label for="fx-company">Company</label><input type="text" id="fx-company"></div>
+        <div class="field"><label for="fx-round">Round</label><input type="text" id="fx-round" placeholder="e.g. Round 2 - Technical"></div>
+        <div class="field"><label for="fx-focus">Focus area</label><input type="text" id="fx-focus" placeholder="e.g. DBMS + DSA"></div>
+        <div class="field" style="display:flex;align-items:flex-end;"><button class="btn btn-gold" id="fx-submit" type="button" style="width:100%;">Post</button></div>
+      </div>
+      <div class="field"><label for="fx-story">Story</label><textarea id="fx-story" placeholder="What happened, what was asked, any tips..."></textarea></div>
+      <div id="forum-list"></div>
+    </div>
+  </div>`;
+}
+function afterRenderCompanies(){
+  function draw(filter){
+    const q = (filter||"").toLowerCase();
+    const list = document.getElementById("company-list");
+    const matches = CONTENT.companies.filter(c=>
+      !q || c.name.toLowerCase().includes(q) || c.questions.some(x=>x.toLowerCase().includes(q))
+    );
+    list.innerHTML = matches.length ? matches.map(c=>`
+      <div class="company-card">
+        <h3>${esc(c.name)}</h3>
+        <div class="weight">${esc(c.weightage)}</div>
+        <ul>${c.questions.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
+      </div>`).join('') : `<div class="empty-state">No companies match "${esc(filter)}".</div>`;
+  }
+  draw("");
+  document.getElementById("company-search").addEventListener("input", (e)=>draw(e.target.value));
+
+  function drawForum(){
+    const el = document.getElementById("forum-list");
+    if(!state.forum.length){ el.innerHTML = `<div class="empty-state" style="margin-top:14px;">No experiences shared yet — be the first.</div>`; return; }
+    el.innerHTML = state.forum.slice().reverse().map(f=>`
+      <div class="forum-entry">
+        <div class="meta">${esc(f.company)} · ${esc(f.round)} · ${esc(f.date)}</div>
+        <div style="font-size:.82rem;color:var(--gold);margin-bottom:4px;">${esc(f.focus)}</div>
+        <div style="font-size:.85rem;">${esc(f.story)}</div>
+      </div>`).join('');
+  }
+  drawForum();
+  document.getElementById("fx-submit").addEventListener("click", ()=>{
+    const company = document.getElementById("fx-company").value.trim();
+    const round = document.getElementById("fx-round").value.trim();
+    const focus = document.getElementById("fx-focus").value.trim();
+    const story = document.getElementById("fx-story").value.trim();
+    if(!company || !story) return;
+    state.forum.push({ company, round, focus, story, date:todayStr() });
+    saveState(); addXP(15);
+    ["fx-company","fx-round","fx-focus","fx-story"].forEach(id=>document.getElementById(id).value="");
+    drawForum();
+  });
+}
+
+/* ======================================================================
+   ONBOARDING
+====================================================================== */
+let obState = { step:1, target:null, timeline:null, language:null };
+
+function initOnboarding(){
+  if(state.onboarded) return;
+  document.getElementById("overlay").classList.remove("hidden");
+  wireOnboarding();
+  updateOnboardUI();
+}
+function wireOnboarding(){
+  document.querySelectorAll("#ob-target .choice-btn").forEach(b=>{
+    b.addEventListener("click", ()=>{ obState.target=b.dataset.val; updateOnboardUI();
+      document.querySelectorAll("#ob-target .choice-btn").forEach(x=>x.classList.toggle("selected",x===b)); });
+  });
+  document.querySelectorAll("#ob-timeline .choice-btn").forEach(b=>{
+    b.addEventListener("click", ()=>{ obState.timeline=b.dataset.val; updateOnboardUI();
+      document.querySelectorAll("#ob-timeline .choice-btn").forEach(x=>x.classList.toggle("selected",x===b)); });
+  });
+  document.querySelectorAll("#ob-lang .choice-btn").forEach(b=>{
+    b.addEventListener("click", ()=>{ obState.language=b.dataset.val; updateOnboardUI();
+      document.querySelectorAll("#ob-lang .choice-btn").forEach(x=>x.classList.toggle("selected",x===b)); });
+  });
+  document.getElementById("ob-next").addEventListener("click", ()=>{
+    if(obState.step<3){ obState.step++; updateOnboardUI(); }
+    else{ completeOnboarding(); }
+  });
+  document.getElementById("ob-back").addEventListener("click", ()=>{
+    if(obState.step>1){ obState.step--; updateOnboardUI(); }
+  });
+}
+function updateOnboardUI(){
+  document.querySelectorAll(".ob-step").forEach(s=> s.classList.toggle("active", parseInt(s.dataset.step,10)===obState.step));
+  ["ob-p1","ob-p2","ob-p3"].forEach((id,i)=> document.getElementById(id).classList.toggle("done", i < obState.step));
+  document.getElementById("ob-back").classList.toggle("hidden", obState.step===1);
+  const nextBtn = document.getElementById("ob-next");
+  const ok = obState.step===1 ? !!obState.target : obState.step===2 ? !!obState.timeline : !!obState.language;
+  nextBtn.disabled = !ok;
+  nextBtn.textContent = obState.step===3 ? "Build my roadmap →" : "Continue →";
+}
+function completeOnboarding(){
+  state.onboarded = true;
+  state.target = obState.target;
+  state.timeline = obState.timeline;
+  state.language = obState.language;
+  state.lastActiveDate = todayStr();
+  state.tasksDate = todayStr();
+  state.streak = 1;
+  saveState();
+  document.getElementById("overlay").classList.add("hidden");
+  render();
+}
+
+/* ======================================================================
+   BOOT
+====================================================================== */
+async function boot(){
+  buildSidebar();
+  await loadContent();
+  if(!location.hash) location.hash = "#dashboard";
+  render();
+  initOnboarding();
+
+  document.getElementById("menu-toggle").addEventListener("click", ()=>{
+    document.getElementById("sidebar").classList.toggle("open");
+  });
+  document.getElementById("reset-btn").addEventListener("click", ()=>{
+    if(confirm("Reset all progress (streak, XP, DSA tracker, quiz scores, resume, notes, forum posts)? Content files are untouched.")){
+      localStorage.removeItem(STORE_KEY);
+      localStorage.removeItem("pph_project_draft");
+      state = defaultState();
+      render();
+      initOnboarding();
+    }
+  });
+}
+boot();
+
+})();
+</script>
+</body>
+</html>

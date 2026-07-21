@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Percentage — A to Z Cracksheet | SSC &amp; TNPSC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Andika:wght@400;700&family=Orbitron:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0d0f14;
+    --bg-raised:#12151d;
+    --bg-card:#161a24;
+    --line:#262b38;
+    --gold:#f5c842;
+    --gold-dim:#8a742a;
+    --text:#e9e8e3;
+    --text-dim:#9aa0b4;
+    --text-faint:#5b6178;
+    --red:#ff5c6c;
+    --red-bg:rgba(255,92,108,.08);
+    --green:#4fd68c;
+    --green-bg:rgba(79,214,140,.08);
+    --blue:#5ba8ff;
+    --blue-bg:rgba(91,168,255,.08);
+    --purple:#b98cff;
+    --purple-bg:rgba(185,140,255,.09);
+    --gold-bg:rgba(245,200,66,.09);
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -5%, rgba(245,200,66,.06), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 10%, rgba(91,168,255,.04), transparent 55%),
+      var(--bg);
+    color:var(--text);
+    font-family:'Andika', sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.font-syne{font-family:'Syne',sans-serif;}
+  .font-orb{font-family:'Orbitron',sans-serif;}
+  .font-mono{font-family:'IBM Plex Mono',monospace;}
+  a{color:inherit;}
+
+  ::selection{background:var(--gold);color:#0d0f14;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:76px 24px 54px;
+    text-align:center;
+    border-bottom:1px solid var(--line);
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:42px 42px;
+    opacity:.18;
+    mask-image:radial-gradient(ellipse 700px 350px at 50% 0%, black, transparent 70%);
+  }
+  .hero-inner{position:relative;z-index:1;max-width:900px;margin:0 auto;}
+  .hero-eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:18px;
+    display:flex;align-items:center;justify-content:center;gap:10px;
+  }
+  .hero-eyebrow::before,.hero-eyebrow::after{content:"";width:28px;height:1px;background:var(--gold-dim);}
+  .hero h1{
+    font-size:clamp(34px,6vw,58px);
+    font-weight:800;
+    margin:0 0 14px;
+    letter-spacing:-.02em;
+    background:linear-gradient(180deg,#fff, #cfd3de 70%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero h1 span{
+    background:linear-gradient(90deg,var(--gold),#ffe08a);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p.sub{
+    font-size:17px;
+    color:var(--text-dim);
+    max-width:560px;
+    margin:0 auto 26px;
+  }
+  .tag-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+  .tag{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    padding:7px 14px;
+    border:1px solid var(--line);
+    border-radius:100px;
+    color:var(--text-dim);
+    background:var(--bg-raised);
+  }
+  .tag.gold{border-color:var(--gold-dim);color:var(--gold);}
+
+  /* ---------- LEGEND ---------- */
+  .legend{
+    max-width:1180px;margin:0 auto;
+    padding:22px 24px;
+    display:flex;flex-wrap:wrap;gap:10px;
+    justify-content:center;
+    border-bottom:1px solid var(--line);
+  }
+  .legend-item{
+    display:flex;align-items:center;gap:8px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    padding:8px 12px;
+    border-radius:9px;
+    border:1px solid var(--line);
+    background:var(--bg-raised);
+    color:var(--text-dim);
+  }
+  .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+  .dot.red{background:var(--red);} .dot.gold{background:var(--gold);}
+  .dot.green{background:var(--green);} .dot.blue{background:var(--blue);}
+  .dot.purple{background:var(--purple);}
+
+  /* ---------- LAYOUT ---------- */
+  .layout{
+    max-width:1280px;margin:0 auto;
+    display:grid;
+    grid-template-columns:260px 1fr;
+    gap:0;
+    align-items:start;
+  }
+  .toc{
+    position:sticky;top:0;
+    height:100vh;
+    overflow-y:auto;
+    padding:28px 16px 60px 24px;
+    border-right:1px solid var(--line);
+    scrollbar-width:thin;
+    scrollbar-color:var(--line) transparent;
+  }
+  .toc::-webkit-scrollbar{width:5px;}
+  .toc::-webkit-scrollbar-thumb{background:var(--line);border-radius:10px;}
+  .toc-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;letter-spacing:.15em;text-transform:uppercase;
+    color:var(--text-faint);margin:0 0 12px 10px;
+  }
+  .toc a{
+    display:block;
+    font-size:13.5px;
+    color:var(--text-dim);
+    text-decoration:none;
+    padding:8px 10px;
+    border-radius:8px;
+    border-left:2px solid transparent;
+    transition:.15s;
+    font-family:'IBM Plex Mono',monospace;
+  }
+  .toc a:hover{color:var(--text);background:var(--bg-raised);}
+  .toc a.active{color:var(--gold);border-left-color:var(--gold);background:var(--gold-bg);}
+  .toc .toc-strategy{margin-top:8px;border-top:1px solid var(--line);padding-top:14px;}
+
+  main{padding:44px 40px 100px;min-width:0;}
+
+  /* ---------- SECTION HEADERS ---------- */
+  .section-head{margin:0 0 26px;}
+  .section-num{
+    font-family:'Orbitron',sans-serif;
+    font-size:13px;font-weight:700;
+    color:var(--gold);letter-spacing:.1em;
+    margin-bottom:6px;display:block;
+  }
+  .section-head h2{font-size:clamp(24px,3vw,32px);margin:0 0 8px;font-weight:700;}
+  .section-head .desc{color:var(--text-dim);font-size:14.5px;max-width:640px;}
+
+  /* ---------- FRACTION TABLE ---------- */
+  .frac-table-wrap{
+    margin:0 0 70px;
+    background:var(--bg-card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+  }
+  table.frac{width:100%;border-collapse:collapse;font-size:14px;}
+  table.frac th{
+    font-family:'IBM Plex Mono',monospace;
+    text-transform:uppercase;font-size:11px;letter-spacing:.08em;
+    color:var(--text-faint);
+    background:var(--bg-raised);
+    padding:12px 10px;text-align:left;
+    border-bottom:1px solid var(--line);
+  }
+  table.frac td{
+    padding:10px;
+    border-bottom:1px solid var(--line);
+    font-family:'IBM Plex Mono',monospace;
+  }
+  table.frac td.frac-val{color:var(--text-dim);}
+  table.frac td.pct-val{color:var(--gold);font-weight:600;font-family:'Orbitron',sans-serif;}
+  table.frac tr:last-child td{border-bottom:none;}
+  table.frac tr:hover td{background:rgba(255,255,255,.015);}
+
+  /* ---------- PATTERN CARD ---------- */
+  .pattern{
+    margin-bottom:60px;
+    scroll-margin-top:24px;
+  }
+  .pattern-head{
+    display:flex;gap:16px;align-items:flex-start;
+    margin-bottom:18px;
+  }
+  .pattern-index{
+    font-family:'Orbitron',sans-serif;
+    font-size:28px;font-weight:800;
+    color:var(--gold);
+    min-width:52px;
+    line-height:1;
+    opacity:.85;
+  }
+  .pattern-title h3{
+    font-family:'Syne',sans-serif;
+    font-size:22px;font-weight:700;margin:0 0 8px;
+  }
+
+  .card{
+    background:var(--bg-card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:24px 26px;
+    margin-bottom:16px;
+  }
+
+  .block-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--text-faint);
+    margin-bottom:8px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .block-label .n{color:var(--gold);}
+
+  .method-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+    margin-bottom:16px;
+  }
+  .method-box{
+    background:var(--bg-raised);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:16px 18px;
+  }
+  .method-box p{margin:0;font-size:14px;color:var(--text-dim);}
+  .method-box .block-label{color:var(--text-faint);}
+
+  .direct-box{
+    background:linear-gradient(135deg, var(--gold-bg), rgba(245,200,66,.03));
+    border:1px solid var(--gold-dim);
+    border-radius:10px;
+    padding:18px 20px;
+    margin-bottom:18px;
+  }
+  .direct-box .block-label{color:var(--gold);}
+  .direct-box p{margin:0 0 10px;font-size:14.5px;color:var(--text);}
+  .formula{
+    font-family:'Orbitron',sans-serif;
+    font-size:18px;font-weight:700;
+    color:var(--gold);
+    background:rgba(0,0,0,.28);
+    border-radius:8px;
+    padding:12px 16px;
+    display:inline-block;
+    letter-spacing:.02em;
+    border:1px solid rgba(245,200,66,.25);
+  }
+
+  .steps-list{
+    counter-reset:step;
+    list-style:none;padding:0;margin:0 0 4px;
+  }
+  .steps-list li{
+    counter-increment:step;
+    position:relative;
+    padding:8px 0 8px 34px;
+    font-size:14px;color:var(--text-dim);
+    border-bottom:1px dashed var(--line);
+  }
+  .steps-list li:last-child{border-bottom:none;}
+  .steps-list li::before{
+    content:counter(step);
+    position:absolute;left:0;top:8px;
+    width:22px;height:22px;border-radius:6px;
+    background:var(--bg-raised);border:1px solid var(--line);
+    color:var(--gold);
+    font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+    display:flex;align-items:center;justify-content:center;
+  }
+
+  /* ---------- CALLOUTS ---------- */
+  .callout{
+    border-radius:10px;
+    padding:14px 16px;
+    margin:14px 0;
+    border:1px solid;
+    font-size:14px;
+  }
+  .callout .c-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;font-weight:700;letter-spacing:.1em;
+    display:flex;align-items:center;gap:7px;
+    margin-bottom:6px;
+  }
+  .callout p{margin:0;color:var(--text);}
+  .callout.critical{background:var(--red-bg);border-color:rgba(255,92,108,.35);}
+  .callout.critical .c-label{color:var(--red);}
+  .callout.trap{background:var(--gold-bg);border-color:rgba(245,200,66,.35);}
+  .callout.trap .c-label{color:var(--gold);}
+  .callout.tip{background:var(--green-bg);border-color:rgba(79,214,140,.35);}
+  .callout.tip .c-label{color:var(--green);}
+  .callout.pyq{background:var(--blue-bg);border-color:rgba(91,168,255,.35);}
+  .callout.pyq .c-label{color:var(--blue);}
+  .callout.gem{background:var(--purple-bg);border-color:rgba(185,140,255,.4);}
+  .callout.gem .c-label{color:var(--purple);}
+  .callout.gem{position:relative;}
+
+  /* ---------- QUESTION CARDS ---------- */
+  .qcards{margin-top:10px;}
+  .qcard{
+    background:var(--bg-raised);
+    border:1px solid var(--line);
+    border-radius:10px;
+    margin-bottom:10px;
+    overflow:hidden;
+  }
+  .qcard-head{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:14px;
+    padding:14px 18px;
+    cursor:pointer;
+    user-select:none;
+  }
+  .qcard-head:hover{background:rgba(255,255,255,.02);}
+  .qcard-q{
+    font-size:14px;color:var(--text);
+    font-family:'Andika',sans-serif;
+  }
+  .qcard-q b{color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:12px;margin-right:8px;}
+  .qcard-chevron{
+    flex-shrink:0;
+    width:22px;height:22px;
+    border-radius:6px;
+    border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--text-dim);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:14px;
+    transition:transform .25s ease, background .2s;
+  }
+  .qcard.open .qcard-chevron{transform:rotate(45deg);color:var(--gold);border-color:var(--gold-dim);}
+  .qcard-body{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .35s ease;
+    border-top:1px solid transparent;
+  }
+  .qcard.open .qcard-body{border-top:1px solid var(--line);}
+  .qcard-body-inner{padding:16px 18px 18px;}
+  .sol-block{margin-bottom:10px;}
+  .sol-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--text-faint);margin-bottom:5px;
+  }
+  .sol-text{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13.5px;color:var(--text-dim);
+    background:rgba(0,0,0,.22);
+    padding:10px 12px;border-radius:8px;
+    line-height:1.6;
+    border-left:2px solid var(--gold-dim);
+  }
+  .sol-text.trad{border-left-color:var(--blue);}
+  .answer-pill{
+    display:inline-block;margin-top:8px;
+    font-family:'Orbitron',sans-serif;font-weight:700;font-size:13px;
+    color:#0d0f14;background:var(--gold);
+    padding:5px 12px;border-radius:100px;
+  }
+
+  /* ---------- STRATEGY SECTION ---------- */
+  .strategy-item{margin-bottom:26px;}
+  .strategy-item h4{
+    font-family:'Syne',sans-serif;font-size:17px;margin:0 0 8px;
+    color:var(--gold);
+  }
+  .strategy-item p, .strategy-item li{font-size:14.5px;color:var(--text-dim);}
+  .strategy-item ul{margin:6px 0 0;padding-left:20px;}
+  .strategy-item ul li{margin-bottom:6px;}
+  .priority-box{
+    background:linear-gradient(135deg, rgba(245,200,66,.1), rgba(245,200,66,.02));
+    border:1px solid var(--gold-dim);
+    border-radius:var(--radius);
+    padding:22px 24px;
+    margin-top:32px;
+  }
+  .priority-box h4{margin-top:0;}
+  .priority-nums{
+    display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 4px;
+  }
+  .priority-nums span{
+    font-family:'Orbitron',sans-serif;font-weight:800;font-size:18px;
+    color:#0d0f14;background:var(--gold);
+    width:36px;height:36px;border-radius:9px;
+    display:flex;align-items:center;justify-content:center;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    border-top:1px solid var(--line);
+    padding:34px 40px;
+    text-align:center;
+    color:var(--text-faint);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+  }
+  footer .footer-gold{color:var(--gold);}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:900px){
+    .layout{grid-template-columns:1fr;}
+    .toc{
+      position:sticky;top:0;height:auto;
+      display:flex;overflow-x:auto;gap:4px;
+      padding:14px 16px;
+      border-right:none;border-bottom:1px solid var(--line);
+      background:rgba(13,15,20,.95);
+      backdrop-filter:blur(6px);
+      z-index:20;
+    }
+    .toc-label{display:none;}
+    .toc a{white-space:nowrap;padding:8px 12px;border-left:none;border-bottom:2px solid transparent;}
+    .toc a.active{border-left:none;border-bottom-color:var(--gold);}
+    .toc .toc-strategy{margin-top:0;border-top:none;padding-top:0;}
+    main{padding:32px 18px 80px;}
+    .method-grid{grid-template-columns:1fr;}
+    .hero{padding:56px 18px 40px;}
+    footer{padding:28px 18px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Aptitude Cracksheet · Arivom</div>
+    <h1>Percentage — <span>A to Z</span> Cracksheet</h1>
+    <p class="sub">Every PYQ pattern from SSC &amp; TNPSC, decoded into three approaches — traditional, traditional shortcut, and one universal direct trick per pattern — with live exam-hall gems.</p>
+    <div class="tag-row">
+      <span class="tag gold">SSC · CGL / CHSL / MTS / CPO</span>
+      <span class="tag gold">TNPSC · Group 1 / 2 / 2A / 4</span>
+      <span class="tag">18 Patterns</span>
+      <span class="tag">90 Solved Examples</span>
+    </div>
+  </div>
+</header>
+
+<div class="legend" id="legend">
+  <div class="legend-item"><span class="dot red"></span>[CRITICAL] — never do this</div>
+  <div class="legend-item"><span class="dot gold"></span>[TRAP] — common exam wording trick</div>
+  <div class="legend-item"><span class="dot green"></span>[TIP] — speed booster</div>
+  <div class="legend-item"><span class="dot blue"></span>[PYQ] — where &amp; how often it's asked</div>
+  <div class="legend-item"><span class="dot purple"></span>💎 [GEM] — live discussion insight</div>
+</div>
+
+<div class="layout">
+  <nav class="toc" id="toc">
+    <div class="toc-label">On this page</div>
+    <a href="#fractable">Fraction ↔ % Table</a>
+    <div id="toc-patterns"></div>
+    <div class="toc-strategy">
+      <a href="#strategy">Cracksheet Strategy</a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="frac-table-wrap" id="fractable">
+      <div style="padding:22px 26px 4px;">
+        <span class="section-num font-orb">REF · 00</span>
+        <h2 class="section-head" style="margin-bottom:2px;font-size:22px;">Fraction ↔ Percentage Quick Reference</h2>
+        <p class="desc" style="margin-bottom:16px;">Memorize this before anything else — it's the backbone of every shortcut below.</p>
+      </div>
+      <table class="frac">
+        <thead><tr><th>Fraction</th><th>%</th><th>Fraction</th><th>%</th><th>Fraction</th><th>%</th></tr></thead>
+        <tbody id="fracbody"></tbody>
+      </table>
+    </section>
+
+    <div id="patterns-container"></div>
+
+    <section id="strategy" class="pattern">
+      <div class="pattern-head">
+        <div class="pattern-index font-orb">★</div>
+        <div class="pattern-title">
+          <span class="section-num font-orb" style="display:block;margin-bottom:6px;">CRACKSHEET STRATEGY</span>
+          <h3>Thoughts for an Even More Effective Cracksheet</h3>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="strategy-item">
+          <h4>Situational patterns worth a mention</h4>
+          <ul>
+            <li>Data Interpretation sets often hide plain percentage calculation inside a bar/pie chart — same Pattern 2/5 logic applies once you extract the number.</li>
+            <li>Percentage-based rank problems occasionally appear in TNPSC Group 4 — low frequency, treat as bonus.</li>
+            <li>Percentage logic transfers directly into Time &amp; Work and Speed-Distance efficiency questions — the multiplying-factor trick (Pattern 2) works identically there.</li>
+          </ul>
+        </div>
+        <div class="strategy-item">
+          <h4>Recommended memorization order</h4>
+          <p>Fraction table → Pattern 2 → Pattern 3 → Pattern 5 → Pattern 10 → Pattern 4 → Pattern 8 → Pattern 7 → Pattern 11 → Pattern 14 → Pattern 6 → remaining patterns last.</p>
+        </div>
+        <div class="strategy-item">
+          <h4>The six traps that cause 80% of mistakes</h4>
+          <ul>
+            <li>Picking the wrong base in "A is what % more/less than B" (Pattern 5).</li>
+            <li>Subtracting % directly instead of dividing by the correct factor in reverse-% problems (Pattern 3).</li>
+            <li>Confusing "percentage points" with "percent" (Pattern 15).</li>
+            <li>Missing the "BY" vs "TO" distinction in wording (Pattern 17).</li>
+            <li>Forgetting to recompute valid votes before applying election % logic (Pattern 8).</li>
+            <li>Applying sequential expenditure % to the original amount instead of the remaining amount (Pattern 7).</li>
+          </ul>
+        </div>
+        <div class="strategy-item">
+          <h4>3-day weekly revision cycle</h4>
+          <ul>
+            <li><b>Day 1 — Concept:</b> read all 18 "Identify + Direct Shortcut" boxes only. No solving.</li>
+            <li><b>Day 2 — Practice:</b> solve all 90 examples with the shortcut method, target under 45 sec/question.</li>
+            <li><b>Day 3 — Mixed Test:</b> 20–25 random unlabeled PYQs, timed — this trains pattern recognition, not just calculation.</li>
+          </ul>
+        </div>
+        <div class="strategy-item">
+          <h4>1-page formula sheet extraction</h4>
+          <p>Pull only the formula line from each pattern's Direct Shortcut box onto one page, alongside the fraction table. Glance at this 10 minutes before the exam — not the full cracksheet.</p>
+        </div>
+
+        <div class="priority-box">
+          <h4>The 70–80% rule</h4>
+          <p>Roughly 70–80% of actual Percentage PYQs fall into just six patterns. If prep time is short, drill these to near-automatic speed first:</p>
+          <div class="priority-nums">
+            <span>2</span><span>3</span><span>4</span><span>5</span><span>8</span><span>10</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer>
+  <div class="footer-gold">ARIVOM · APTITUDE CRACKSHEETS</div>
+  <div style="margin-top:6px;">Percentage · SSC &amp; TNPSC · 18 patterns, 90 worked examples · Built for pattern recognition, not memorization.</div>
+</footer>
+
+<script>
+const fractions = [
+  ["1/2","50%","1/8","12.5%","1/16","6.25%"],
+  ["1/3","33.33%","1/9","11.11%","1/20","5%"],
+  ["2/3","66.67%","1/10","10%","1/25","4%"],
+  ["1/4","25%","1/11","9.09%","1/40","2.5%"],
+  ["3/4","75%","1/12","8.33%","1/50","2%"],
+  ["1/5","20%","1/13","7.69%","1/100","1%"],
+  ["1/6","16.67%","1/14","7.14%","1/200","0.5%"],
+  ["1/7","14.28%","1/15","6.67%","1/250","0.4%"],
+];
+
+const patterns = [
+{
+  title:"Basic Fraction–Decimal–Percentage Conversion",
+  pyq:"SSC MTS / CHSL — frequent, usually opening questions · TNPSC Group 4 — frequent",
+  identify:"Question directly asks \"what is X% of Y\" or \"express X as a % of Y\" with no other twist layered on top.",
+  trad:"X% of Y = (X/100) × Y. Solve by direct multiplication of the decimal.",
+  tradShort:"Break X into a known table-fraction (e.g. 25% = 1/4) and divide instead of multiplying decimals.",
+  formula:"X% of Y = Y ÷ (100/X)  — use the table-fraction denominator directly",
+  directNote:"Memorize the fraction table above. For any standard %, convert to its fraction mentally, divide the base number by the denominator, multiply by the numerator only if it isn't 1.",
+  steps:["Convert the % to its nearest table-fraction.","Divide the base number by that fraction's denominator.","Multiply by the numerator if it isn't 1.","Cross-check with a rough estimate (33% ≈ ⅓)."],
+  callouts:[{type:"tip",text:"If the % doesn't sit cleanly on the table, split it — 37.5% = 25% + 12.5% (¼ + ⅛) — and add the two pieces."}],
+  gem:"When a question gives an ugly % like 87.5%, don't compute it directly — compute 100% − 12.5% instead. Subtracting the complement fraction is almost always faster than dividing by 8 and multiplying by 7.",
+  examples:[
+    {q:"Find 25% of 480.", short:"480 ÷ 4 (since 25% = ¼)", ans:"120"},
+    {q:"Find 12.5% of 640.", short:"640 ÷ 8 (since 12.5% = ⅛)", ans:"80"},
+    {q:"Find 16.67% of 720.", short:"720 ÷ 6 (since 16.67% = ⅙)", ans:"120"},
+    {q:"Find 37.5% of 960.", short:"37.5% = ¼ + ⅛ → (960÷4) + (960÷8) = 240 + 120", ans:"360"},
+    {q:"Find 62.5% of 800.", short:"62.5% = 5/8 → 800 ÷ 8 × 5 = 100 × 5", trad:"800 × 62.5/100 = 800 × 5/8 = 500", ans:"500"},
+  ]
+},
+{
+  title:"Percentage Increase/Decrease (Single Change)",
+  pyq:"SSC CGL / CHSL — very frequent · TNPSC Group 2 / 2A — very frequent",
+  identify:"\"A number is increased/decreased by X%, find the new value\" — a single, one-step change.",
+  trad:"New value = Original × (100 ± X)/100.",
+  tradShort:"New value = Original + (X% of Original), computing the % piece via the fraction table then adding/subtracting.",
+  formula:"Increase: New = Original × (1 + X/100)  |  Decrease: New = Original × (1 − X/100)",
+  directNote:"Keep ready multiplying factors memorized: 10%→1.1/0.9, 20%→1.2/0.8, 25%→1.25/0.75, 50%→1.5/0.5. One multiplication, done.",
+  steps:["Identify increase or decrease.","Build the multiplying factor (1 ± X/100).","Multiply the original value by that factor.","Round off only at the last step, never mid-calculation."],
+  callouts:[{type:"trap",text:"\"Increased by 50%\" is NOT the same as \"increased to 50%.\" Read the preposition every single time — see Pattern 17."}],
+  gem:"Build a personal factor table for every 5% from 5–100% before the exam. Recognizing 1.35 instantly as \"+35%\" without doing 100+35 in your head saves real seconds across a 100-question paper.",
+  examples:[
+    {q:"250 increased by 20%.", short:"250 × 1.2", ans:"300"},
+    {q:"480 decreased by 25%.", short:"480 × 0.75", ans:"360"},
+    {q:"640 increased by 12.5%.", short:"640 × 1.125", ans:"720"},
+    {q:"900 decreased by 33.33%.", short:"900 × 2/3", ans:"600"},
+    {q:"560 increased by 15%.", short:"560 × 1.15", trad:"560 + (15/100 × 560) = 560 + 84", ans:"644"},
+  ]
+},
+{
+  title:"Reverse Percentage (Find Original Value)",
+  pyq:"SSC CGL Tier 1/2 — frequent, classic trap topic · TNPSC Group 1 — frequent",
+  identify:"\"After increasing/decreasing by X%, the value became Y — find the original.\"",
+  trad:"Original = New value ÷ [(100 ± X)/100].",
+  tradShort:"Original = New value × 100 / (100 ± X).",
+  formula:"Original = New × 100 / (100 ± X)  — never subtract X% from New directly",
+  directNote:"Memorize common reverse factors: increased by 25% → divide by 1.25 (i.e. ×4/5); decreased by 20% → divide by 0.8 (i.e. ×5/4).",
+  steps:["Note whether it was an increase or a decrease.","Build the denominator (100 + X) or (100 − X).","Original = Given value × 100 ÷ that denominator.","Sanity check: original should be smaller than Y for an increase, larger for a decrease."],
+  callouts:[{type:"critical",text:"Never compute \"Y − X% of Y\" to reverse an increase. That subtracts X% of the WRONG base and is the single most common error in this pattern."}],
+  gem:"If the numbers feel messy, flip it into a ratio instead: \"increased by 20%\" means New:Original = 120:100 = 6:5. So Original = New × 5/6. Ratio thinking avoids the division-by-decimal fumble under time pressure.",
+  examples:[
+    {q:"After a 20% increase, price = 600. Find the original.", short:"600 × 100/120", ans:"500"},
+    {q:"After a 25% decrease, salary = 3000. Find the original.", short:"3000 × 100/75", ans:"4000"},
+    {q:"After a 10% increase, marks = 88. Find the original.", short:"88 × 100/110", ans:"80"},
+    {q:"After a 37.5% decrease, cost = 500. Find the original.", short:"500 × 100/62.5", ans:"800"},
+    {q:"After a 15% increase, population = 4600. Find the original.", short:"4600 × 100/115", trad:"4600 = P × 1.15 → P = 4600/1.15", ans:"4000"},
+  ]
+},
+{
+  title:"Successive Percentage Change (Two or More Changes)",
+  pyq:"SSC CGL / CPO — very frequent, 2–3 questions typical · TNPSC Group 1/2 — very frequent",
+  identify:"\"Increased by X%, then decreased by Y%\" or any sequence of chained % changes.",
+  trad:"Apply factors sequentially: Final = Original × (1 ± X/100) × (1 ± Y/100).",
+  tradShort:"Net% = X + Y + (XY/100), using a negative sign for any decrease.",
+  formula:"Net% = X + Y + XY/100   (X, Y signed: + increase, − decrease)",
+  directNote:"Works for ANY combination of increases/decreases. For 3+ changes, treat the result as the new X and combine again with the next change.",
+  steps:["Assign signs to each % (increase = +, decrease = −).","Apply Net% = X + Y + XY/100.","If a 3rd change exists, combine the result with it the same way.","Read the final sign: + means net increase, − means net decrease."],
+  callouts:[{type:"trap",text:"Two equal and opposite % changes (e.g. +25% then −25%) do NOT cancel out. The XY/100 term always survives — this is a favorite trap."}],
+  gem:"During live doubt sessions, students who plug numbers (assume Original = 100) instead of memorizing the formula make fewer sign errors. If you blank on the formula under pressure, just take 100 as the base and walk through both changes step by step — it's only 10 extra seconds.",
+  examples:[
+    {q:"+20%, then −10%.", short:"20 − 10 + (20×−10)/100 = 10 − 2", ans:"+8%"},
+    {q:"+10%, then +10%.", short:"10 + 10 + (10×10)/100 = 20 + 1", ans:"+21%"},
+    {q:"−20%, then −20%.", short:"−20 − 20 + (−20×−20)/100 = −40 + 4", ans:"−36%"},
+    {q:"+25%, then −25%.", short:"25 − 25 + (25×−25)/100 = 0 − 6.25", ans:"−6.25%"},
+    {q:"500 → +10% → then −20%. Find net % change.", short:"10 − 20 + (10×−20)/100 = −10 − 2", trad:"500 → 550 (+10%) → 440 (−20%). Net change = −60/500 × 100", ans:"−12%"},
+  ]
+},
+{
+  title:"Percentage Comparison (A is what % more/less than B)",
+  pyq:"SSC CHSL / MTS — very frequent · TNPSC Group 4 — very frequent",
+  identify:"\"A's salary is X, B's is Y — A is what % more/less than B?\" The base is always whatever comes right after the word \"than.\"",
+  trad:"% more/less = [(A − B) / B] × 100.",
+  tradShort:"Express the difference as a fraction of B directly, using the fraction table.",
+  formula:"% difference = (Difference / Base-after-\"than\") × 100",
+  directNote:"The base is always the quantity mentioned after \"than.\" Never divide by the other number — that's the #1 exam trap in the entire Percentage topic.",
+  steps:["Identify which quantity is the base (the one after \"than\").","Find the difference = larger − smaller, keeping the sign.","Divide by the base, then ×100.","If asked in reverse (\"B is what % of A\"), swap the base."],
+  callouts:[{type:"critical",text:"\"A is what % more than B\" divides by B. \"B is what % less than A\" divides by A. These give DIFFERENT numbers even for the same pair — read which noun sits right before \"than.\""}],
+  gem:"Quick mental check that catches base-errors instantly: if A > B, the \"more than\" answer will always be a BIGGER percentage than the \"less than\" answer for the same pair. If your two answers come out equal, you've made the base-selection mistake.",
+  examples:[
+    {q:"A=120, B=100. A is what % more than B?", short:"(20/100) × 100", ans:"20%"},
+    {q:"A=100, B=120. A is what % less than B?", short:"(20/120) × 100", ans:"16.67%"},
+    {q:"A's income is 25% more than B's. B's income is what % less than A's?", short:"Take A=125, B=100 → diff=25, base=125 → (25/125)×100", ans:"20% less"},
+    {q:"A=250, B=200. A is more than B by what %?", short:"(50/200) × 100", ans:"25%"},
+    {q:"Length of A is 40, B is 50. A is what % less than B?", short:"(10/50) × 100", trad:"(40−50)/50 × 100 = −20 → read as 20% less", ans:"20% less"},
+  ]
+},
+{
+  title:"Population Growth / Depreciation (Multi-Year)",
+  pyq:"SSC CGL / CPO — frequent · TNPSC Group 2A — frequent",
+  identify:"\"Population / machine value grows or depreciates by X% every year for N years.\"",
+  trad:"Final value = P × (1 ± X/100)^N — computed stepwise, year by year.",
+  tradShort:"For 2 years use the successive-% formula (Pattern 4); for 3+ years, apply the compounding factor directly.",
+  formula:"Final = P (1 ± R/100)^N   |   for N=2: Net% = 2R + R²/100",
+  directNote:"For alternating growth/depreciation across years, apply the Pattern 4 successive-% formula pairwise, one year-pair at a time.",
+  steps:["Identify P, R, N, and direction (growth or depreciation).","If N=2, use the shortcut 2R + R²/100.","If N≥3, compute (1 ± R/100)^N stepwise.","Multiply P by the final combined factor."],
+  callouts:[{type:"tip",text:"If R is a round number like 10%, keep the running factor as a clean multiple (1.1, 1.21, 1.331...) — SSC almost always uses R values that produce tidy running products."}],
+  gem:"For depreciation questions with 3 identical yearly drops, students often forget the base shrinks each year. A live-class trick: write the value chain top to bottom (P → P₁ → P₂ → P₃) as you multiply, so you never accidentally apply the % to the ORIGINAL P a second time.",
+  examples:[
+    {q:"Population 10,000 grows 10%/year for 2 years. Find final population.", short:"Net% = 20 + 1 = 21% → 10,000 × 1.21", ans:"12,100"},
+    {q:"Machine worth 8000 depreciates 10%/year for 2 years.", short:"Net% = −20 + 1 = −19% → 8000 × 0.81", ans:"6480"},
+    {q:"Population 5000 grows 5%/year for 2 years.", short:"Net% = 10 + 0.25 = 10.25% → 5000 × 1.1025", ans:"5512.5"},
+    {q:"Value 1000 grows 20% then depreciates 20%.", short:"Net% = 20 − 20 − 4 = −4% → 1000 × 0.96", ans:"960"},
+    {q:"2000 grows 10%/year for 3 years.", short:"2000 × 1.1 × 1.1 × 1.1", trad:"2000 × 1.331", ans:"2662"},
+  ]
+},
+{
+  title:"Income – Expenditure – Savings Percentage Problems",
+  pyq:"SSC CGL / CHSL — very frequent · TNPSC Group 2/4 — very frequent",
+  identify:"\"A spends X% of income on rent, Y% of the REMAINDER on food...\" — sequential spending, or savings framed as a %.",
+  trad:"Take Income = 100 (or the LCM base). Subtract successive % spends stepwise, using the actual remaining amount each time.",
+  tradShort:"Convert all %s to fractions and multiply the \"remaining fraction\" successively.",
+  formula:"Savings% = 100 − (sum of % spent, applied to correct base each step)",
+  directNote:"Assume Total Income = 100. Read carefully whether each % is \"of income\" or \"of remainder\" — that single word decides whether you subtract from 100 directly or multiply the shrinking remainder.",
+  steps:["Assume Income = 100.","Check each %: is it \"of income\" or \"of remaining\"?","Apply accordingly — direct subtraction OR successive remaining-fraction multiplication.","Savings% = 100 − total spent%; scale to real income if a rupee value is asked."],
+  callouts:[{type:"critical",text:"Applying a 'remaining' percentage to the ORIGINAL income instead of what's actually left is the single biggest error in this pattern."}],
+  gem:"When three or more sequential spends are given, don't recompute from scratch each time — just keep multiplying the running remaining-factor: 100 → ×0.9 → ×0.9 → ×0.9 → 72.9. One chain of multiplications beats three separate subtraction steps and rarely goes wrong.",
+  examples:[
+    {q:"Spends 20% on rent, then 30% of the remainder on food. Find savings %.", short:"Remaining after rent = 80; food = 30% of 80 = 24; total spent = 44", ans:"56%"},
+    {q:"Spends 25% on rent, 20% on food (both \"of income\"). Find savings %.", short:"Savings = 100 − 45", ans:"55%"},
+    {q:"Income ₹20,000; spends 60% on expenses. Find savings.", short:"40% of 20,000", ans:"₹8000"},
+    {q:"Spends 10% rent, then 10% of remainder on food, then 10% of remainder on misc. Find savings %.", short:"100 → 90 → 81 → 72.9", ans:"72.9%"},
+    {q:"Income 100; rent = 30 (of income); food = 25% of remainder. Find savings.", short:"Remaining after rent = 70; food = 25% of 70 = 17.5; remaining = 52.5", trad:"100 − 30 − 17.5 = 52.5", ans:"52.5%"},
+  ]
+},
+{
+  title:"Election / Voting Percentage Problems",
+  pyq:"SSC CGL / CHSL — frequent, near-guaranteed 1 question · TNPSC Group 1/2 — frequent",
+  identify:"Keywords: total voters, valid votes, invalid votes, won by X% of total/valid votes.",
+  trad:"Valid votes = Total × (100 − invalid%)/100. Winner's votes = Valid × win%. Margin = Winner − Loser, computed in actual numbers.",
+  tradShort:"For a 2-candidate election: Margin% (of valid votes) = Winner% − Loser% = 2×Winner% − 100.",
+  formula:"Margin% (of valid votes) = 2 × Winner% − 100   [2-candidate races only]",
+  directNote:"Always compute valid votes FIRST if invalid votes are mentioned: Valid = Total × (100 − invalid%)/100. Then apply the margin formula directly to valid votes.",
+  steps:["Find valid votes (subtract invalid% from total if given).","For 2 candidates, use Margin% = 2×Winner% − 100.","Margin value = Margin% of valid votes.","For \"how many votes did the winner get\": Winner votes = Valid × Winner%/100."],
+  callouts:[{type:"trap",text:"\"Won by X% of total votes\" and \"won by X% of valid votes\" are different bases — the question's exact phrase decides which total you use for the margin calculation."}],
+  gem:"For 3-candidate elections the 2×Winner%−100 shortcut breaks down — don't force-fit it. Fall back to computing each candidate's actual vote count from their %, then subtract directly. Recognizing when NOT to use a shortcut is itself a skill worth practicing.",
+  examples:[
+    {q:"Total voters 10,000, 10% invalid, winner got 60% of valid votes. Find winner's votes.", short:"Valid = 9000; Winner = 9000 × 0.6", ans:"5400"},
+    {q:"2-candidate poll: winner got 55% of valid votes, total valid = 8000. Find the margin.", short:"Margin% = 2×55 − 100 = 10% → 10% of 8000", ans:"800 votes"},
+    {q:"Total votes 5000, no invalid votes, winner won by a 20% margin. Find winner's %.", short:"Winner% = (100 + 20)/2", ans:"60%"},
+    {q:"Total voters 12,000, 5% invalid, loser got 45% of valid votes. Find loser's votes.", short:"Valid = 11,400; Loser = 11,400 × 0.45", ans:"5130"},
+    {q:"Valid votes = 6000, Winner = 3300, Loser = 2700. Verify the margin formula.", short:"Winner% = 55% → Margin% = 2×55−100 = 10% → 10% of 6000 = 600", trad:"Margin = 3300 − 2700 = 600; 600/6000 × 100 = 10%", ans:"600 votes ✓"},
+  ]
+},
+{
+  title:"Percentage in Profit & Loss Crossover",
+  pyq:"SSC CGL Tier 2 — occasional, high weightage when it appears · TNPSC Group 1 — occasional",
+  identify:"Question mixes CP/SP directly with %, or combines a discount% with a profit/loss% in the same problem.",
+  trad:"SP = CP × (100 + Profit%)/100, or CP × (100 − Loss%)/100 — solved algebraically as needed.",
+  tradShort:"Use the multiplying-factor method (Pattern 2) for any CP ↔ SP conversion.",
+  formula:"CP → SP: use Pattern 2 (increase/decrease factor)  |  SP → CP: use Pattern 3 (reverse %)",
+  directNote:"Profit/Loss IS percentage increase/decrease — nothing new to learn. To find CP from SP, always use the REVERSE percentage logic (Pattern 3), never subtract the % directly from SP.",
+  steps:["Decide direction: CP→SP (Pattern 2 logic) or SP→CP (Pattern 3 logic).","Apply the matching multiplying or dividing factor.","If a marked price + discount is also involved, apply the discount factor first, then the profit factor.","Chain multiple % changes with the Pattern 4 formula if three or more stages are involved."],
+  callouts:[{type:"tip",text:"Recognizing that Profit/Loss % problems are just Pattern 2/3 in disguise instantly unlocks a huge chunk of the Profit & Loss chapter too — this pattern is a two-for-one."}],
+  gem:"Teachers flag this often: students memorize separate CP/SP formulas for Profit & Loss AND separate formulas for Percentage, never realizing they're identical. Drop the P&L-specific formulas entirely and just run everything through Pattern 2/3 — one less thing to memorize, zero loss of accuracy.",
+  examples:[
+    {q:"CP = 500, profit 20%. Find SP.", short:"500 × 1.2", ans:"600"},
+    {q:"SP = 690, loss 8%. Find CP.", short:"690 × 100/92", ans:"750"},
+    {q:"MP = 1000, discount 10%, still an 8% profit over CP. Find CP.", short:"SP = 900; CP = 900 × 100/108", ans:"833.33"},
+    {q:"CP = 400, marked 25% above CP, then a 10% discount given. Find SP.", short:"MP = 500; SP = 500 × 0.9", ans:"450"},
+    {q:"SP = 1200 at 20% profit. Find CP.", short:"1200 × 100/120", trad:"CP = 1200/1.2", ans:"1000"},
+  ]
+},
+{
+  title:"Pass–Fail Marks / Exam Percentage Problems",
+  pyq:"SSC CHSL / MTS — very frequent, easy scoring pattern · TNPSC Group 4 — very frequent",
+  identify:"Keywords: pass marks, failed by X marks, needed Y% to pass, got X% and failed by Y marks.",
+  trad:"Let Max marks = M. Pass marks = Pass% × M/100. Form an equation linking obtained marks, pass marks, and the margin — solve for M.",
+  tradShort:"The difference between two given %-scores directly maps to the mark difference between those two scenarios.",
+  formula:"(% difference between two scenarios) × M / 100 = (mark difference between them)",
+  directNote:"This single equation solves the vast majority of pass-fail problems instantly — plug in the known %diff and mark-diff to find M, or the reverse.",
+  steps:["List both scenarios' % score and their outcome (pass/fail with margin).","Find the % difference between the two scenarios.","Set (%diff/100) × M = mark difference; solve for M.","Once M is known, compute whatever is actually asked (pass marks, obtained marks, etc.)."],
+  callouts:[{type:"tip",text:"This is one of the fastest patterns in the whole topic once the core equation clicks — prioritize it early."}],
+  gem:"When three scenarios are given instead of two, pick the pair with the CLEANEST % difference (e.g. exactly 10% rather than 7%) to solve for M first — it's always faster, and the third scenario becomes a free verification check.",
+  examples:[
+    {q:"A gets 30% and fails by 10 marks; gets 40% and passes by 15 marks. Find max marks.", short:"%diff = 10, mark diff = 25 → M = 25 × 100/10", ans:"250"},
+    {q:"Pass % = 33%. A scored 25% and failed by 30 marks. Find max marks.", short:"%diff = 8 → 8% of M = 30 → M = 30 × 100/8", ans:"375"},
+    {q:"Student needs 40% to pass. Max marks = 500. Find pass marks.", short:"40% × 500", ans:"200"},
+    {q:"A scored 150 marks and failed by 30. Find passing marks.", short:"150 + 30", ans:"180"},
+    {q:"20% score → fails by 12; 30% score → passes by 8. Find pass marks.", short:"%diff = 10 = 20 marks → M = 200", trad:"Pass marks = 20% of 200 + 12 = 40 + 12", ans:"52"},
+  ]
+},
+{
+  title:"Price Change vs Consumption Change (Expenditure Constant)",
+  pyq:"SSC CGL / CPO — frequent · TNPSC Group 2 — frequent",
+  identify:"\"Price of X increases by A% — by what % should consumption reduce so expenditure stays the same?\" (or the reverse).",
+  trad:"Expenditure = Price × Consumption = constant. New Price × New Consumption = Old Price × Old Consumption — solve algebraically.",
+  tradShort:"% reduction in consumption = [A / (100 + A)] × 100 when price increases by A%.",
+  formula:"Price ↑A%: reduce consumption by A/(100+A) × 100   |   Price ↓A%: raise consumption by A/(100−A) × 100",
+  directNote:"A direct plug-in formula — no algebra required. Just identify direction (price up or down) and drop A into the right denominator.",
+  steps:["Identify whether price increased or decreased; note A%.","Choose the matching formula — ÷(100+A) for an increase, ÷(100−A) for a decrease.","Plug in A and compute.","The answer is always the % change needed in the OTHER variable."],
+  callouts:[{type:"trap",text:"Students often use (100−A) for a price INCREASE by mistake — the denominator flips based on direction, always double check before dividing."}],
+  gem:"Notice the pattern: the answer % is always SMALLER than A when reducing consumption for a price hike, and LARGER than A when increasing consumption for a price drop. If your computed answer breaks this rule, you've picked the wrong formula — a 2-second sanity check.",
+  examples:[
+    {q:"Price up 25%. Find the % reduction in consumption.", short:"25/125 × 100", ans:"20%"},
+    {q:"Price up 20%. Find the % reduction in consumption.", short:"20/120 × 100", ans:"16.67%"},
+    {q:"Price down 20%. Find the % increase in consumption.", short:"20/80 × 100", ans:"25%"},
+    {q:"Price up 10%. Find the % reduction in consumption.", short:"10/110 × 100", ans:"9.09%"},
+    {q:"Price 100 → 125 (up 25%). Verify the required consumption cut.", short:"25/125 × 100 = 20%", trad:"C → C × 100/125 = 0.8C, i.e. cut by 20%", ans:"20% ✓"},
+  ]
+},
+{
+  title:"Percentage Error / Approximation Problems",
+  pyq:"SSC CGL Tier 2 — occasional · TNPSC Group 1 — occasional",
+  identify:"\"While measuring, an error of X% occurred — find the % error in the calculated area/result.\"",
+  trad:"Compute the actual vs erroneous values directly, then find % error via [(Error/True) × 100].",
+  tradShort:"For an area (two dimensions), reuse the successive-% formula (Pattern 4) with the two dimension errors as X and Y.",
+  formula:"Net% error = X + Y + XY/100   (product of two measured quantities)  |  Square/area: 2×side-error% + (side-error%)²/100",
+  directNote:"Any result that's a PRODUCT of measured quantities behaves exactly like Pattern 4's successive % change — reuse that formula directly, with each measurement error as one of the two %s.",
+  steps:["Identify how many measured quantities multiply to give the result.","Assign each a signed % error (excess = +, deficient = −).","Apply the successive-% formula pairwise.","The result is the % error in the final computed value."],
+  callouts:[{type:"tip",text:"For a squared quantity (like the area of a square from one side-measurement error), just double the pattern-4 formula input: both X and Y equal the same side-error%."}],
+  gem:"Students often forget the XY/100 correction term entirely for error problems and just add the two errors — this SILENTLY under- or over-estimates the answer. Always check: are both errors excess (both +), or one excess and one deficient? The sign of XY/100 flips the correction direction.",
+  examples:[
+    {q:"Side measured 10% in excess. Find % error in area.", short:"10 + 10 + (10×10)/100", ans:"21% excess"},
+    {q:"Length measured 5% excess, breadth 5% deficient. Find % error in area.", short:"5 − 5 + (5×−5)/100", ans:"−0.25% (deficient)"},
+    {q:"Side measured 20% in excess. Find % error in area.", short:"20 + 20 + (20×20)/100", ans:"44% excess"},
+    {q:"Radius measured 10% in excess. Find % error in area of the circle.", short:"Same as square case: 10+10+1", ans:"21% excess"},
+    {q:"True side = 10, measured = 11 (10% excess). Verify area error.", short:"21% via the formula", trad:"True area = 100, measured area = 121; error = 21/100 × 100", ans:"21% ✓"},
+  ]
+},
+{
+  title:"Committee / Employee / Student Ratio-Percentage Mixed",
+  pyq:"SSC CHSL — frequent, often combined with ratio · TNPSC Group 2A/4 — frequent",
+  identify:"\"X% of a group are men, remaining are women. Y% of men and Z% of women are graduates...\" — multiple sub-category %s stacked together.",
+  trad:"Assume total = 100 (or LCM of all % denominators). Break into categories, apply sub-percentages to each category separately, then sum.",
+  tradShort:"Weighted average logic: total% of a sub-attribute = Σ(category% × sub-attribute%)/100.",
+  formula:"Set Total = 100 → category size = its own %  → apply sub-% directly to that number → sum across categories",
+  directNote:"Because Total = 100, each category's % IS its actual size — no conversion needed. Apply sub-percentages straight to that number and add.",
+  steps:["Set Total population = 100.","Find each category's size (= its %).","Apply the sub-% to each category size.","Sum the results — the total is already out of 100, so it's the final %."],
+  callouts:[{type:"tip",text:"Choosing Total = 100 (rather than a real headcount) is what makes this pattern fast — always default to 100 unless the question forces a specific real number."}],
+  gem:"When a question gives THREE or more sub-categories (e.g. men/women/others), lay it out as a mini table on your rough sheet — category size in one column, sub-% in the next, product in the third. It looks slower but actually prevents the addition errors that cost marks under time pressure.",
+  examples:[
+    {q:"60% are men, 40% women. 50% of men and 25% of women are graduates. Find total % graduates.", short:"Men grad = 30, Women grad = 10 → sum", ans:"40%"},
+    {q:"70% employees are permanent, 30% temporary. 80% of permanent and 50% of temporary got a bonus. Find total % with bonus.", short:"56 + 15", ans:"71%"},
+    {q:"55% of a class are boys. 40% of boys and 60% of girls play sports. Find % playing sports.", short:"22 + 27", ans:"49%"},
+    {q:"45% of workers are skilled. 90% of skilled and 60% of unskilled meet target. Find total % meeting target.", short:"40.5 + 33", ans:"73.5%"},
+    {q:"Total = 200 students; boys = 120 (60%), girls = 80 (40%). 50% of boys and 75% of girls pass. Find overall pass %.", short:"60 + 60 = 120 out of 200", trad:"120/200 × 100", ans:"60%"},
+  ]
+},
+{
+  title:"Tax + Discount Combined Percentage Problems",
+  pyq:"SSC CGL / CHSL — frequent · TNPSC Group 2 — frequent",
+  identify:"MRP given, a discount% applied, then a tax% (like GST) applied on the discounted price — asks for the final price, or the reverse.",
+  trad:"Final Price = MP × (100 − discount%)/100 × (100 + tax%)/100, computed stepwise.",
+  tradShort:"Combine both %s using the successive-% formula (Pattern 4) — discount as negative, tax as positive.",
+  formula:"Net% = −D + T − DT/100   →   Final Price = MP × (100 + Net%)/100",
+  directNote:"Avoids two separate multiplication steps. For the reverse direction (find MP given the final price), just divide instead of multiply.",
+  steps:["Note discount% (D, negative) and tax% (T, positive).","Net% = −D + T − DT/100.","Final Price = MP × (100 + Net%)/100.","For reverse: MP = Final × 100/(100 + Net%)."],
+  callouts:[{type:"trap",text:"Tax is charged AFTER discount, on the reduced price — never compute tax on the original MP. Read the sequence in the question carefully."}],
+  gem:"When discount% and tax% are close in value, the net effect often lands surprisingly close to 0% — that's not a coincidence, it's the −DT/100 correction eating into the sum. A quick sniff-test: if D ≈ T, expect the final price to be very close to the original MP.",
+  examples:[
+    {q:"MP = 1000, discount 10%, tax 12%. Find final price.", short:"Net% = −10 + 12 − 1.2 = 0.8% → 1000 × 1.008", ans:"1008"},
+    {q:"MP = 2000, discount 20%, tax 5%. Find final price.", short:"Net% = −20 + 5 − 1 = −16% → 2000 × 0.84", ans:"1680"},
+    {q:"MP = 500, discount 15%, tax 18%. Find final price.", short:"Net% = −15 + 18 − 2.7 = 0.3% → 500 × 1.003", ans:"501.5"},
+    {q:"Final price = 1050 after a 5% discount and 10% tax on MP. Find MP.", short:"Net% = −5 + 10 − 0.5 = 4.5 → MP = 1050 × 100/104.5", ans:"1004.78"},
+    {q:"MP = 1200, discount 10%, then tax 12%. Verify final price.", short:"Net% = −10 + 12 − 1.2 = 0.8 → 1200 × 1.008", trad:"After 10% discount = 1080; after 12% tax = 1080 × 1.12", ans:"1209.6 ✓"},
+  ]
+},
+{
+  title:"Percentage Point vs Percentage Difference (Conceptual Trap)",
+  pyq:"SSC CGL Tier 2 — occasional but high trap-value · TNPSC Group 1 — occasional",
+  identify:"Question gives two percentages directly (interest rates, market share %) and asks for the change — watch for \"percentage point\" vs \"percent\" wording.",
+  trad:"Percentage POINT difference = simple subtraction of the two % values. Percentage (relative) difference = (difference / original%) × 100.",
+  tradShort:"No calculation shortcut needed — this is a pure reading-comprehension trap, not a compute-heavy pattern.",
+  formula:"\"...percentage POINTS\" → direct subtraction  |  \"...percent (relative)\" → apply Pattern 2's multiplying factor to the % value itself",
+  directNote:"Always check the EXACT wording before touching a calculator. \"Points\" means absolute subtraction; \"percent\" means relative multiplication — confusing the two gives a completely different number.",
+  steps:["Underline the exact phrase: \"percentage points\" or \"percent.\"","If points → direct add/subtract.","If percent → treat the % value like Pattern 2 (multiply by the factor).","Never let the two blur together — this is the #1 conceptual trap in the whole topic."],
+  callouts:[{type:"critical",text:"\"Rose by 3 percentage points\" and \"rose by 3 percent\" from the same starting %age give different final numbers. This single-word difference is a favorite SSC Tier-2 trap."}],
+  gem:"A teacher's rule of thumb shared in live sessions: if the sentence would still make sense with \"points\" replaced by \"units,\" it's an absolute change. If replacing it with \"times more\" makes sense, it's relative. This quick substitution test resolves the ambiguity faster than re-reading the question twice.",
+  examples:[
+    {q:"Interest rate rises from 5% to 8%. Find the rise in percentage points.", short:"8 − 5 (direct subtraction)", ans:"3 percentage points"},
+    {q:"Interest rate rises from 5% to 8%. Find the rise in percent (relative).", short:"(3/5) × 100", ans:"60%"},
+    {q:"Market share was 20%, increased by 5 percentage points. Find new share.", short:"20 + 5", ans:"25%"},
+    {q:"Market share was 20%, increased by 5 percent (relative). Find new share.", short:"20 × 1.05", ans:"21%"},
+    {q:"Pass rate went from 40% to 50%. Find both the points-increase and the relative % increase.", short:"Points = 10", trad:"Relative % = (10/40) × 100 = 25%", ans:"10 points / 25% relative"},
+  ]
+},
+{
+  title:"Two-Variable Simultaneous Percentage Equations",
+  pyq:"SSC CGL Tier 2 — occasional, higher difficulty · TNPSC Group 1 — occasional",
+  identify:"Two unknowns tied together by a % relation (e.g. \"A's salary is 20% more than B's, together they earn X — find both\").",
+  trad:"Express one variable in terms of the other via the % relation, substitute into the sum/difference equation, solve algebraically.",
+  tradShort:"Convert the % relation into a ratio directly (20% more → ratio 6:5), then apply ratio-proportion to the total.",
+  formula:"\"A is X% more than B\" → A:B = (100 + X) : 100, simplified",
+  directNote:"Apply the simplified ratio directly to whatever sum/difference is given, using the unitary method — no algebra needed at all.",
+  steps:["Convert the % relation to a ratio: (100 ± X):100, simplify.","Apply the ratio to the total using the unitary method (divide by sum of parts, multiply by each part).","If a difference is given instead of a sum, divide by the difference of the ratio parts.","Cross-verify: check the found values satisfy the original % statement."],
+  callouts:[{type:"tip",text:"This ratio-conversion trick is transferable to almost any \"X% more/less, given total\" word problem outside Percentage too — Ages, Mixtures, even some DI questions."}],
+  gem:"In live problem-solving, the fastest students don't even write the algebra — they say the ratio out loud first (\"25% more means 5:4\") before touching the total. Training yourself to convert % relations to ratios verbally, in one breath, is what separates a 90-second solve from a 30-second one.",
+  examples:[
+    {q:"A is 25% more than B. Together = 900. Find both.", short:"Ratio = 5:4 → A = 500, B = 400", ans:"A=500, B=400"},
+    {q:"A is 20% less than B. Together = 900. Find both.", short:"Ratio = 4:5 → A = 400, B = 500", ans:"A=400, B=500"},
+    {q:"A is 50% more than B, difference = 100. Find both.", short:"Ratio = 3:2, diff = 1 part = 100 → A = 300, B = 200", ans:"A=300, B=200"},
+    {q:"A's income is 40% more than B's. Sum = 840. Find both.", short:"Ratio = 7:5 → A = 490, B = 350", ans:"A=490, B=350"},
+    {q:"A = 1.2B; A + B = 880. Find both.", short:"Ratio 6:5 → 11 parts = 880 → 1 part = 80 → A=480, B=400", trad:"1.2B + B = 880 → 2.2B = 880 → B = 400, A = 480", ans:"A=480, B=400 ✓"},
+  ]
+},
+{
+  title:"Fraction-Based Tricky Wording",
+  pyq:"SSC MTS / CHSL — frequent, designed to confuse via wording · TNPSC Group 4 — frequent",
+  identify:"Phrases like \"reduced BY 1/5th,\" \"increased TO 3 times,\" \"reduced TO 1/4th\" — the preposition changes everything.",
+  trad:"\"Reduced BY 1/5\" means new = old − (1/5)old = (4/5)old. \"Reduced TO 1/5\" means new = (1/5)old directly.",
+  tradShort:"Convert the fraction to % using the fraction table, then apply Pattern 2/3 logic.",
+  formula:"\"BY\" → apply as increase/decrease (Pattern 2/3)   |   \"TO\" → new value = that fraction/multiple of old, directly, no % math",
+  directNote:"This wording check alone resolves 100% of the confusion in this pattern — no calculation is even needed until the preposition is identified.",
+  steps:["Spot the keyword: \"BY\" or \"TO.\"","If \"BY\" → treat as %increase/decrease using Pattern 2/3 logic.","If \"TO\" → treat as a direct multiplication/fraction of the original.","Compute accordingly — don't skip the wording check."],
+  callouts:[{type:"trap",text:"\"Increased TO 3 times\" means the new value IS 3× the original (200% increase). \"Increased BY 3 times\" means new = original + 3×original = 4× the original. These are wildly different — always re-read this specific wording twice."}],
+  gem:"A gem shared during a live doubt session: read the sentence aloud replacing \"BY\" with \"minus/plus\" and \"TO\" with \"equals.\" \"Reduced BY ⅕\" → \"minus ⅕ of itself.\" \"Reduced TO ⅕\" → \"equals ⅕ of itself.\" Saying it this way out loud makes the trap almost impossible to fall into.",
+  examples:[
+    {q:"A number reduced BY 1/5th of itself. Original = 500. Find the new value.", short:"500 × 4/5", ans:"400"},
+    {q:"A number reduced TO 1/5th of itself. Original = 500. Find the new value.", short:"500 × 1/5", ans:"100"},
+    {q:"Salary increased TO 3 times. Original = 8000. Find the new salary.", short:"8000 × 3", ans:"24,000"},
+    {q:"Salary increased BY 3 times (i.e. by 300%) of itself. Original = 8000. Find the new salary.", short:"8000 × 4", ans:"32,000"},
+    {q:"Population reduced BY 1/4th. Original = 800. Find the new value; also state what it'd be if \"reduced TO 1/4th\" instead.", short:"BY: 800 − 200 = 600", trad:"TO: 800 × 1/4 = 200 (for comparison)", ans:"600 (BY) vs 200 (TO)"},
+  ]
+},
+{
+  title:"Mixture-Style Percentage Overlap (Basic Alligation with %)",
+  pyq:"SSC CGL / CPO — occasional, overlaps with Mixtures topic · TNPSC Group 2 — occasional",
+  identify:"\"X% concentration mixed with Y% concentration to get Z% concentration — find the ratio.\"",
+  trad:"Set up a weighted average equation: (Qty1×X + Qty2×Y)/(Qty1+Qty2) = Z. Solve algebraically for the ratio.",
+  tradShort:"Direct weighted-average algebra, isolating the ratio term.",
+  formula:"Ratio of quantities = (Y − Z) : (Z − X)   where X < Z < Y",
+  directNote:"The classic alligation cross-rule. Arrange X (weaker%) and Y (stronger%) with target Z in the middle, subtract cross-wise, and read off the ratio — no equation-solving needed at all.",
+  steps:["Arrange X (lower %) and Y (higher %) with target Z in the middle.","Compute (Y − Z) and (Z − X).","Ratio of quantities (X's qty : Y's qty) = (Y−Z) : (Z−X).","Simplify the ratio; apply to actual quantities if the question asks for real amounts."],
+  callouts:[{type:"tip",text:"The ratio always comes out as (far-side difference) : (near-side difference), NOT the other way round — a common sign-flip error."}],
+  gem:"Alligation is really just the mirror image of the Pattern 5 base-selection trap in reverse: the ratio side closer to your target gets the SMALLER share, and the side farther gets the larger difference as ITS ratio number. Once this clicks, you'll stop needing to re-derive the cross-rule from scratch every time.",
+  examples:[
+    {q:"Mix 20% and 40% solutions to get a 30% solution. Find the ratio.", short:"(40−30):(30−20) = 10:10", ans:"1:1"},
+    {q:"Mix 10% and 50% solutions to get a 20% solution. Find the ratio.", short:"(50−20):(20−10) = 30:10", ans:"3:1"},
+    {q:"Mix milk (100%) with water (0%) to get a 25% milk solution. Find the milk:water ratio.", short:"(100−25):(25−0) = 75:25", ans:"3:1"},
+    {q:"Mix 15% and 45% alcohol solutions to get a 25% solution. Find the ratio.", short:"(45−25):(25−15) = 20:10", ans:"2:1"},
+    {q:"Mix 20% and 50% solutions (ratio k:1) to get 35%. Verify k.", short:"(50−35):(35−20) = 15:15 = 1:1", trad:"(20k+50)/(k+1) = 35 → 20k+50 = 35k+35 → k = 1", ans:"1:1 ✓"},
+  ]
+},
+];
+// legend for each callout type
+const CALLOUT_META = {
+  critical:{label:"CRITICAL", icon:"⚠"},
+  trap:{label:"TRAP", icon:"◆"},
+  tip:{label:"TIP", icon:"✓"},
+  pyq:{label:"PYQ", icon:"◈"},
+  gem:{label:"LIVE GEM", icon:"💎"},
+};
+
+function calloutHTML(type, text){
+  const meta = CALLOUT_META[type];
+  return `<div class="callout ${type}">
+    <div class="c-label">${meta.icon} [${meta.label}]</div>
+    <p>${text}</p>
+  </div>`;
+}
+
+function renderFracTable(){
+  const body = document.getElementById('fracbody');
+  body.innerHTML = fractions.map(row => `
+    <tr>
+      <td class="frac-val">${row[0]}</td><td class="pct-val">${row[1]}</td>
+      <td class="frac-val">${row[2]}</td><td class="pct-val">${row[3]}</td>
+      <td class="frac-val">${row[4]}</td><td class="pct-val">${row[5]}</td>
+    </tr>`).join('');
+}
+
+function renderQCard(ex, idx, patIdx){
+  const id = `p${patIdx}-q${idx}`;
+  let solHTML = `<div class="sol-block">
+      <div class="sol-label">Direct Shortcut</div>
+      <div class="sol-text">${ex.short}</div>
+    </div>`;
+  if(ex.trad){
+    solHTML += `<div class="sol-block">
+      <div class="sol-label">Traditional Method</div>
+      <div class="sol-text trad">${ex.trad}</div>
+    </div>`;
+  }
+  return `
+  <div class="qcard" id="${id}">
+    <div class="qcard-head" onclick="toggleCard('${id}')">
+      <div class="qcard-q"><b>Q${idx+1}.</b>${ex.q}</div>
+      <div class="qcard-chevron">+</div>
+    </div>
+    <div class="qcard-body">
+      <div class="qcard-body-inner">
+        ${solHTML}
+        <span class="answer-pill">Ans: ${ex.ans}</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderPattern(p, i){
+  const num = i+1;
+  const id = `pattern-${num}`;
+  const calloutsHTML = (p.callouts||[]).map(c => calloutHTML(c.type, c.text)).join('');
+  const gemHTML = calloutHTML('gem', p.gem);
+  const pyqHTML = calloutHTML('pyq', p.pyq);
+  const stepsHTML = p.steps.map(s => `<li>${s}</li>`).join('');
+  const examplesHTML = p.examples.map((ex,idx) => renderQCard(ex, idx, num)).join('');
+
+  return `
+  <section class="pattern" id="${id}">
+    <div class="pattern-head">
+      <div class="pattern-index font-orb">${String(num).padStart(2,'0')}</div>
+      <div class="pattern-title">
+        <span class="section-num font-orb" style="display:block;margin-bottom:6px;">PATTERN ${num}</span>
+        <h3>${p.title}</h3>
+      </div>
+    </div>
+
+    ${pyqHTML}
+
+    <div class="card">
+      <div class="block-label"><span class="n">◇</span> Identify</div>
+      <p style="margin:0 0 18px;font-size:14.5px;color:var(--text-dim);">${p.identify}</p>
+
+      <div class="method-grid">
+        <div class="method-box">
+          <div class="block-label">Traditional Method</div>
+          <p>${p.trad}</p>
+        </div>
+        <div class="method-box">
+          <div class="block-label">Traditional Shortcut</div>
+          <p>${p.tradShort}</p>
+        </div>
+      </div>
+
+      <div class="direct-box">
+        <div class="block-label">⚡ Direct Shortcut — Universal</div>
+        <p>${p.directNote}</p>
+        <div class="formula">${p.formula}</div>
+      </div>
+
+      ${calloutsHTML}
+
+      <div class="block-label" style="margin-top:18px;">Step-by-Step Approach</div>
+      <ul class="steps-list">${stepsHTML}</ul>
+
+      ${gemHTML}
+    </div>
+
+    <div class="block-label" style="margin:22px 0 4px;">5 Solved Examples <span style="color:var(--text-faint);font-weight:400;">(tap to expand)</span></div>
+    <div class="qcards">${examplesHTML}</div>
+  </section>`;
+}
+
+function toggleCard(id){
+  const card = document.getElementById(id);
+  const body = card.querySelector('.qcard-body');
+  const isOpen = card.classList.contains('open');
+  if(isOpen){
+    body.style.maxHeight = null;
+    card.classList.remove('open');
+  } else {
+    card.classList.add('open');
+    body.style.maxHeight = body.scrollHeight + 'px';
+  }
+}
+
+// ---- render everything ----
+renderFracTable();
+
+const container = document.getElementById('patterns-container');
+container.innerHTML = patterns.map((p,i) => renderPattern(p,i)).join('');
+
+const tocContainer = document.getElementById('toc-patterns');
+tocContainer.innerHTML = patterns.map((p,i) => {
+  const num = i+1;
+  return `<a href="#pattern-${num}" data-target="pattern-${num}">${String(num).padStart(2,'0')} · ${p.title.split('(')[0].trim().split(' ').slice(0,3).join(' ')}</a>`;
+}).join('');
+
+// TOC scroll-spy
+const tocLinks = document.querySelectorAll('.toc a');
+const sections = [document.getElementById('fractable'), ...patterns.map((_,i)=>document.getElementById(`pattern-${i+1}`)), document.getElementById('strategy')];
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      const id = entry.target.id;
+      tocLinks.forEach(l => l.classList.remove('active'));
+      const match = document.querySelector(`.toc a[href="#${id}"]`);
+      if(match) match.classList.add('active');
+    }
+  });
+}, {rootMargin: '-15% 0px -70% 0px', threshold: 0});
+sections.forEach(s => { if(s) observer.observe(s); });
+</script>
+</body>
+</html>

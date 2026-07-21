@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>25+ LPA Master CSE CrackSheet</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap');
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #090d16;
+      color: #f1f5f9;
+    }
+    .code-font {
+      font-family: 'Fira Code', monospace;
+    }
+    .glass-card {
+      background: rgba(17, 24, 39, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+    }
+    .glass-card:hover {
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+    .gradient-glow {
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 9999px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+    .problem-row:hover {
+      background: rgba(30, 41, 59, 0.5);
+    }
+    /* Checkbox state styling */
+    .solved-checkbox:checked + label span.title-text {
+      text-decoration: line-through;
+      color: #64748b;
+    }
+    .solved-checkbox:checked {
+      accent-color: #10b981;
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-16 custom-scrollbar">
+
+  <!-- Header Section -->
+  <header class="border-b border-slate-800 bg-slate-950/80 sticky top-0 z-50 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <div class="p-2.5 gradient-glow rounded-xl shadow-lg shadow-indigo-500/20">
+          <i class="fa-solid fa-fire text-xl text-white"></i>
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <h1 class="font-black text-lg sm:text-2xl tracking-tight text-white">25+ LPA Tier-1 CrackSheet</h1>
+            <span class="px-2 py-0.5 text-[10px] font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30 rounded-full uppercase">SDE-1 Ready</span>
+          </div>
+          <p class="text-xs text-slate-400 font-medium">Curated High-Yield DSA, System Design, & Core CS Interview Drill</p>
+        </div>
+      </div>
+      
+      <!-- Progress Pill -->
+      <div class="hidden md:flex items-center space-x-4 bg-slate-900 px-4 py-2 rounded-xl border border-slate-800">
+        <div class="text-right">
+          <div class="text-xs text-slate-400">Sheet Progress</div>
+          <div class="text-sm font-bold text-emerald-400"><span id="solved-count">0</span> / <span id="total-count">0</span> Solved</div>
+        </div>
+        <div class="w-24 bg-slate-800 h-2.5 rounded-full overflow-hidden border border-slate-700">
+          <div id="progress-bar" class="bg-emerald-500 h-full w-0 transition-all duration-300"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+
+    <!-- Top Stats & Target Tier -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+      <div class="glass-card rounded-2xl p-4 border-l-4 border-indigo-500 flex items-center space-x-4">
+        <div class="p-3 bg-indigo-500/10 text-indigo-400 rounded-xl"><i class="fa-solid fa-code text-xl"></i></div>
+        <div>
+          <div class="text-xs text-slate-400 font-medium">Top High-Yield Patterns</div>
+          <div class="text-lg font-bold text-white">12 Core Patterns</div>
+        </div>
+      </div>
+      <div class="glass-card rounded-2xl p-4 border-l-4 border-purple-500 flex items-center space-x-4">
+        <div class="p-3 bg-purple-500/10 text-purple-400 rounded-xl"><i class="fa-solid fa-diagram-project text-xl"></i></div>
+        <div>
+          <div class="text-xs text-slate-400 font-medium">System Design Focus</div>
+          <div class="text-lg font-bold text-white">LLD & HLD Questions</div>
+        </div>
+      </div>
+      <div class="glass-card rounded-2xl p-4 border-l-4 border-pink-500 flex items-center space-x-4">
+        <div class="p-3 bg-pink-500/10 text-pink-400 rounded-xl"><i class="fa-solid fa-microchip text-xl"></i></div>
+        <div>
+          <div class="text-xs text-slate-400 font-medium">Core CS Subjects</div>
+          <div class="text-lg font-bold text-white">OS, DBMS, Networks</div>
+        </div>
+      </div>
+      <div class="glass-card rounded-2xl p-4 border-l-4 border-emerald-500 flex items-center space-x-4">
+        <div class="p-3 bg-emerald-500/10 text-emerald-400 rounded-xl"><i class="fa-solid fa-sack-dollar text-xl"></i></div>
+        <div>
+          <div class="text-xs text-slate-400 font-medium">Target Compensation</div>
+          <div class="text-lg font-bold text-emerald-400">₹20 - 35 LPA</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter & Search Bar -->
+    <div class="glass-card rounded-2xl p-4 mb-8 flex flex-col md:flex-row gap-4 items-center justify-between">
+      
+      <!-- Module Tabs -->
+      <div class="flex overflow-x-auto space-x-2 w-full md:w-auto no-scrollbar">
+        <button onclick="filterModule('all')" class="module-tab active px-4 py-2 rounded-xl text-xs font-bold transition-all bg-indigo-600 text-white shadow-lg">
+          All Modules
+        </button>
+        <button onclick="filterModule('dsa')" class="module-tab px-4 py-2 rounded-xl text-xs font-bold transition-all bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700">
+          DSA Patterns
+        </button>
+        <button onclick="filterModule('lld')" class="module-tab px-4 py-2 rounded-xl text-xs font-bold transition-all bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700">
+          System Design (LLD/HLD)
+        </button>
+        <button onclick="filterModule('core')" class="module-tab px-4 py-2 rounded-xl text-xs font-bold transition-all bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700">
+          OS / DBMS / Networks
+        </button>
+      </div>
+
+      <!-- Controls -->
+      <div class="flex items-center space-x-3 w-full md:w-auto">
+        <div class="relative w-full sm:w-64">
+          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-500 text-xs"></i>
+          <input type="text" id="search-input" onkeyup="renderSheet()" placeholder="Search problem or tag..." class="w-full bg-slate-900 border border-slate-800 rounded-xl pl-9 pr-4 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500">
+        </div>
+        <select id="diff-filter" onchange="renderSheet()" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-indigo-500">
+          <option value="all">All Difficulties</option>
+          <option value="Easy">Easy</option>
+          <option value="Medium">Medium</option>
+          <option value="Hard">Hard</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- Sheet Content Area -->
+    <div id="sheet-container" class="space-y-6">
+      <!-- Injected Dynamically -->
+    </div>
+
+  </main>
+
+  <!-- Problem & Solution Modal -->
+  <div id="solution-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
+    <div class="glass-card rounded-2xl w-full max-w-4xl max-h-[90vh] flex flex-col overflow-hidden shadow-2xl border border-slate-700">
+      
+      <!-- Modal Header -->
+      <div class="px-6 py-4 border-b border-slate-800 flex justify-between items-center bg-slate-900/50">
+        <div>
+          <div class="flex items-center space-x-3">
+            <span id="modal-diff" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold"></span>
+            <span id="modal-company" class="text-xs text-slate-400 font-medium"></span>
+          </div>
+          <h3 id="modal-title" class="text-lg font-bold text-white mt-1"></h3>
+        </div>
+        <button onclick="closeModal()" class="w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-6 overflow-y-auto space-y-6 custom-scrollbar text-sm text-slate-300">
+        
+        <!-- Interview Notes & Nuance -->
+        <div>
+          <h4 class="text-xs font-bold text-indigo-400 uppercase tracking-wider mb-2"><i class="fa-solid fa-lightbulb mr-2"></i>Interview Context & Intuition</h4>
+          <p id="modal-intuition" class="bg-slate-900/70 p-4 rounded-xl border border-slate-800 text-slate-300 leading-relaxed"></p>
+        </div>
+
+        <!-- Complexity Analysis -->
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-slate-900/70 p-3 rounded-xl border border-slate-800">
+            <span class="text-xs text-slate-500 font-bold block">Time Complexity</span>
+            <span id="modal-tc" class="code-font text-emerald-400 text-sm font-bold"></span>
+          </div>
+          <div class="bg-slate-900/70 p-3 rounded-xl border border-slate-800">
+            <span class="text-xs text-slate-500 font-bold block">Space Complexity</span>
+            <span id="modal-sc" class="code-font text-purple-400 text-sm font-bold"></span>
+          </div>
+        </div>
+
+        <!-- Solution Code / Structured Answer -->
+        <div>
+          <div class="flex justify-between items-center mb-2">
+            <h4 class="text-xs font-bold text-indigo-400 uppercase tracking-wider"><i class="fa-solid fa-code mr-2"></i>Optimal Code / Answer Breakdown</h4>
+            <span id="modal-lang" class="text-[10px] code-font text-slate-400 bg-slate-800 px-2 py-0.5 rounded">C++ / Java / Python</span>
+          </div>
+          <pre id="modal-code" class="code-font text-xs bg-slate-950 p-4 rounded-xl border border-slate-800 overflow-x-auto text-indigo-200 leading-relaxed"></pre>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-6 py-3 border-t border-slate-800 bg-slate-900/50 flex justify-end">
+        <button onclick="closeModal()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition-all">
+          Got It
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Master Dataset for 25+ LPA Interviews
+    const sheetData = [
+      {
+        module: "dsa",
+        topic: "Two Pointers & Sliding Window",
+        description: "Must-know for array and string searching problems in tier-1 initial rounds.",
+        problems: [
+          {
+            id: "dsa-1",
+            title: "Trapping Rain Water",
+            diff: "Hard",
+            company: "Google, Amazon, Microsoft",
+            leetcode: "https://leetcode.com/problems/trapping-rain-water/",
+            tc: "O(N)",
+            sc: "O(1)",
+            intuition: "Instead of computing left_max and right_max arrays (O(N) space), maintain two pointers (left & right) with left_max and right_max variables. Always move the pointer with the smaller max height.",
+            code: `int trap(vector<int>& height) {
+    int l = 0, r = height.size() - 1;
+    int leftMax = 0, rightMax = 0, res = 0;
+    while (l < r) {
+        if (height[l] <= height[r]) {
+            if (height[l] >= leftMax) leftMax = height[l];
+            else res += leftMax - height[l];
+            l++;
+        } else {
+            if (height[r] >= rightMax) rightMax = height[r];
+            else res += rightMax - height[r];
+            r--;
+        }
+    }
+    return res;
+}`
+          },
+          {
+            id: "dsa-2",
+            title: "Longest Substring Without Repeating Characters",
+            diff: "Medium",
+            company: "Amazon, Meta, Flipkart",
+            leetcode: "https://leetcode.com/problems/longest-substring-without-repeating-characters/",
+            tc: "O(N)",
+            sc: "O(K) where K is unique chars",
+            intuition: "Use a sliding window bounded by [left, right]. Keep track of char index in a map/array. When duplicate appears, jump the 'left' pointer directly past previous occurrence.",
+            code: `int lengthOfLongestSubstring(string s) {
+    vector<int> m(256, -1);
+    int left = 0, maxLen = 0;
+    for (int right = 0; right < s.length(); right++) {
+        if (m[s[right]] != -1) left = max(left, m[s[right]] + 1);
+        m[s[right]] = right;
+        maxLen = max(maxLen, right - left + 1);
+    }
+    return maxLen;
+}`
+          }
+        ]
+      },
+      {
+        module: "dsa",
+        topic: "Trees & Binary Search Trees (BST)",
+        description: "Heavy focus on recursion, LCA, dynamic paths, and structural conversions.",
+        problems: [
+          {
+            id: "dsa-3",
+            title: "Binary Tree Maximum Path Sum",
+            diff: "Hard",
+            company: "Atlassian, Uber, Cred",
+            leetcode: "https://leetcode.com/problems/binary-tree-maximum-path-sum/",
+            tc: "O(N)",
+            sc: "O(H) where H is tree height",
+            intuition: "At each node, compute max gain from left & right subtrees. Node can form a path through itself (left + right + val) OR return max single branch path to parent. Handle negative numbers by taking max(0, branchMax).",
+            code: `int maxPath = INT_MIN;
+int maxGain(TreeNode* node) {
+    if (!node) return 0;
+    int leftG = max(maxGain(node->left), 0);
+    int rightG = max(maxGain(node->right), 0);
+    int priceNewPath = node->val + leftG + rightG;
+    maxPath = max(maxPath, priceNewPath);
+    return node->val + max(leftG, rightG);
+}
+int maxPathSum(TreeNode* root) {
+    maxGain(root);
+    return maxPath;
+}`
+          },
+          {
+            id: "dsa-4",
+            title: "Lowest Common Ancestor (LCA) of Binary Tree",
+            diff: "Medium",
+            company: "Amazon, Adobe, Salesforce",
+            leetcode: "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/",
+            tc: "O(N)",
+            sc: "O(H)",
+            intuition: "Recursive post-order traversal. If node matches p or q, return node. If left & right subtrees both return non-null, current node is the LCA.",
+            code: `TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+    if (!root || root == p || root == q) return root;
+    TreeNode* left = lowestCommonAncestor(root->left, p, q);
+    TreeNode* right = lowestCommonAncestor(root->right, p, q);
+    if (left && right) return root;
+    return left ? left : right;
+}`
+          }
+        ]
+      },
+      {
+        module: "dsa",
+        topic: "Dynamic Programming (DP) & Graphs",
+        description: "Distinguishes ₹12 LPA offers from ₹25+ LPA offers in final technical rounds.",
+        problems: [
+          {
+            id: "dsa-5",
+            title: "Word Break Problem",
+            diff: "Medium",
+            company: "Google, Walmart, Swiggy",
+            leetcode: "https://leetcode.com/problems/word-break/",
+            tc: "O(N^3)",
+            sc: "O(N)",
+            intuition: "dp[i] stores whether substring s[0...i-1] can be segmented into dictionary words. Check all split points j < i.",
+            code: `bool wordBreak(string s, vector<string>& wordDict) {
+    unordered_set<string> dict(wordDict.begin(), wordDict.end());
+    vector<bool> dp(s.length() + 1, false);
+    dp[0] = true;
+    for (int i = 1; i <= s.length(); i++) {
+        for (int j = 0; j < i; j++) {
+            if (dp[j] && dict.count(s.substr(j, i - j))) {
+                dp[i] = true;
+                break;
+            }
+        }
+    }
+    return dp[s.length()];
+}`
+          },
+          {
+            id: "dsa-6",
+            title: "Course Schedule II (Topological Sort)",
+            diff: "Medium",
+            company: "Amazon, Directi, PhonePe",
+            leetcode: "https://leetcode.com/problems/course-schedule-ii/",
+            tc: "O(V + E)",
+            sc: "O(V + E)",
+            intuition: "Kahn's Algorithm using Queue (Indegree). Nodes with indegree=0 enter queue. Process queue, decrement indegree of neighbors. If processed nodes != V, cycle exists.",
+            code: `vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+    vector<vector<int>> adj(numCourses);
+    vector<int> inDegree(numCourses, 0), res;
+    for (auto& p : prerequisites) {
+        adj[p[1]].push_back(p[0]);
+        inDegree[p[0]]++;
+    }
+    queue<int> q;
+    for (int i = 0; i < numCourses; i++) if (inDegree[i] == 0) q.push(i);
+    while (!q.empty()) {
+        int u = q.front(); q.pop();
+        res.push_back(u);
+        for (int v : adj[u]) {
+            if (--inDegree[v] == 0) q.push(v);
+        }
+    }
+    return res.size() == numCourses ? res : vector<int>();
+}`
+          }
+        ]
+      },
+      {
+        module: "lld",
+        topic: "Low Level Design (LLD) & Design Patterns",
+        description: "Crucial for SDE-1 interviews at startups and top-tier product firms.",
+        problems: [
+          {
+            id: "lld-1",
+            title: "Design Rate Limiter (Token Bucket / Sliding Window)",
+            diff: "Hard",
+            company: "Uber, Stripe, Razorpay",
+            leetcode: "LLD Architecture Problem",
+            tc: "O(1) per check",
+            sc: "O(U) unique users",
+            intuition: "Discuss Token Bucket vs Sliding Window Logs. Token Bucket maintains capacity & refill rate. Lock per client/key for thread safety (or Redis script).",
+            code: `// Token Bucket Concept Strategy
+class TokenBucketRateLimiter {
+private:
+    const long capacity;
+    const double refillRate; // tokens per sec
+    double tokens;
+    long lastRefillTimestamp;
+
+public:
+    TokenBucketRateLimiter(long cap, double rate) : capacity(cap), refillRate(rate), tokens(cap) {
+        lastRefillTimestamp = currentTimeMillis();
+    }
+
+    synchronized bool allowRequest() {
+        refill();
+        if (tokens >= 1.0) {
+            tokens -= 1.0;
+            return true; // Allowed
+        }
+        return false; // Rate limited
+    }
+
+private:
+    void refill() {
+        long now = currentTimeMillis();
+        double tokensToAdd = (now - lastRefillTimestamp) * (refillRate / 1000.0);
+        tokens = min((double)capacity, tokens + tokensToAdd);
+        lastRefillTimestamp = now;
+    }
+};`
+          },
+          {
+            id: "lld-2",
+            title: "Design Thread-Safe LRU Cache",
+            diff: "Medium",
+            company: "Salesforce, Atlassian, Google",
+            leetcode: "https://leetcode.com/problems/lru-cache/",
+            tc: "O(1) get/put",
+            sc: "O(Capacity)",
+            intuition: "Doubly Linked List + Hash Map. Doubly Linked List keeps track of usage order (head = recent, tail = oldest). Hash Map gives O(1) node lookup. Wrap with Mutex for thread safety.",
+            code: `class LRUCache {
+    int cap;
+    list<pair<int, int>> cache; // {key, val}
+    unordered_map<int, list<pair<int, int>>::iterator> m;
+public:
+    LRUCache(int capacity) : cap(capacity) {}
+    
+    int get(int key) {
+        if (!m.count(key)) return -1;
+        cache.splice(cache.begin(), cache, m[key]); // Move to front
+        return m[key]->second;
+    }
+    
+    void put(int key, int value) {
+        if (m.count(key)) {
+            m[key]->second = value;
+            cache.splice(cache.begin(), cache, m[key]);
+            return;
+        }
+        if (cache.size() == cap) {
+            m.erase(cache.back().first);
+            cache.pop_back();
+        }
+        cache.push_front({key, value});
+        m[key] = cache.begin();
+    }
+};`
+          }
+        ]
+      },
+      {
+        module: "core",
+        topic: "Core CS Subjects (OS, DBMS, Computer Networks)",
+        description: "Zero-tolerance area in tech rounds. Clear answers expected.",
+        problems: [
+          {
+            id: "core-1",
+            title: "SQL vs NoSQL & Indexing Mechanics (B+ Trees)",
+            diff: "Medium",
+            company: "All Product Companies",
+            leetcode: "Core Theory Qs",
+            tc: "O(log N) B-Tree lookup",
+            sc: "Disk IO Bound",
+            intuition: "Explain that B+ Trees store data pointers only at leaf nodes, enabling sequential disk scans and lower tree height. Highlight ACID vs BASE properties for SQL vs NoSQL.",
+            code: `=== TOP INTERVIEW QUESTIONS & ANSWERS ===
+
+Q1: Why are B+ Trees preferred over Binary Search Trees for DB Indexing?
+Ans: 
+1. Fan-out is high (thousands of keys per node), keeping tree depth low (3-4 levels for millions of rows), minimizing costly Disk I/O.
+2. Leaf nodes are linked sequentially, making RANGE queries extremely fast.
+
+Q2: What is the difference between Clustered & Non-Clustered Index?
+- Clustered Index: Determines the physical order of data on disk. Only 1 per table (Primary Key).
+- Non-Clustered Index: Separate structure containing key + pointer to actual row. Multiple per table.`
+          },
+          {
+            id: "core-2",
+            title: "OS: Process vs Threads, Virtual Memory & Deadlocks",
+            diff: "Medium",
+            company: "Amazon, Cisco, Qualcomm",
+            leetcode: "Core Theory Qs",
+            tc: "Theoretical Concept",
+            sc: "N/A",
+            intuition: "Must be able to write thread execution code / deadlock Banker's algorithm or explain Coffman conditions without hesitation.",
+            code: `=== 4 COFFMAN CONDITIONS FOR DEADLOCK ===
+1. Mutual Exclusion: Non-sharable resource access.
+2. Hold & Wait: Process holding a resource requests others.
+3. No Preemption: Resources cannot be forcibly taken away.
+4. Circular Wait: Process A waits for B, B waits for A.
+
+=== VIRTUAL MEMORY & PAGE FAULTS ===
+- Virtual Memory decouples physical RAM from logical process address space using Page Tables.
+- Page Fault occurs when virtual address requested is not present in physical RAM (Page table entry invalid -> triggers Disk I/O to fetch page).`
+          }
+        ]
+      }
+    ];
+
+    // Solved Storage
+    let solvedSet = new Set(JSON.parse(localStorage.getItem('solved_crack_sheet') || '[]'));
+
+    function saveSolved() {
+      localStorage.setItem('solved_crack_sheet', JSON.stringify([...solvedSet]));
+      updateProgress();
+    }
+
+    function toggleSolved(id) {
+      if (solvedSet.has(id)) {
+        solvedSet.delete(id);
+      } else {
+        solvedSet.add(id);
+      }
+      saveSolved();
+    }
+
+    function updateProgress() {
+      let total = 0;
+      sheetData.forEach(mod => total += mod.problems.length);
+      const solved = solvedSet.size;
+      
+      document.getElementById('solved-count').innerText = solved;
+      document.getElementById('total-count').innerText = total;
+      
+      const percent = total > 0 ? (solved / total) * 100 : 0;
+      document.getElementById('progress-bar').style.width = percent + '%';
+    }
+
+    let activeModuleFilter = 'all';
+
+    function filterModule(mod) {
+      activeModuleFilter = mod;
+      document.querySelectorAll('.module-tab').forEach(btn => {
+        btn.classList.remove('bg-indigo-600', 'text-white', 'shadow-lg');
+        btn.classList.add('bg-slate-800', 'text-slate-400');
+      });
+      event.target.classList.add('bg-indigo-600', 'text-white', 'shadow-lg');
+      event.target.classList.remove('bg-slate-800', 'text-slate-400');
+      renderSheet();
+    }
+
+    function renderSheet() {
+      const container = document.getElementById('sheet-container');
+      container.innerHTML = '';
+
+      const searchVal = document.getElementById('search-input').value.toLowerCase();
+      const diffVal = document.getElementById('diff-filter').value;
+
+      sheetData.forEach(section => {
+        if (activeModuleFilter !== 'all' && section.module !== activeModuleFilter) return;
+
+        // Filter problems in this topic
+        const filteredProblems = section.problems.filter(p => {
+          const matchesSearch = p.title.toLowerCase().includes(searchVal) || p.company.toLowerCase().includes(searchVal) || section.topic.toLowerCase().includes(searchVal);
+          const matchesDiff = diffVal === 'all' || p.diff === diffVal;
+          return matchesSearch && matchesDiff;
+        });
+
+        if (filteredProblems.length === 0) return;
+
+        // Section UI Card
+        const sectionEl = document.createElement('div');
+        sectionEl.className = 'glass-card rounded-2xl p-6 border border-slate-800';
+
+        let problemsRows = '';
+        filteredProblems.forEach(p => {
+          const isSolved = solvedSet.has(p.id);
+          const diffColor = p.diff === 'Easy' ? 'text-emerald-400 bg-emerald-500/10 border-emerald-500/30' : 
+                            p.diff === 'Medium' ? 'text-amber-400 bg-amber-500/10 border-amber-500/30' : 
+                            'text-rose-400 bg-rose-500/10 border-rose-500/30';
+
+          problemsRows += `
+            <div class="problem-row flex flex-col sm:flex-row items-start sm:items-center justify-between p-3.5 rounded-xl border border-slate-800/60 mb-2.5 transition-all gap-3">
+              <div class="flex items-center space-x-3 w-full sm:w-auto">
+                <input type="checkbox" onchange="toggleSolved('${p.id}')" ${isSolved ? 'checked' : ''} class="solved-checkbox w-4 h-4 rounded border-slate-700 bg-slate-900 cursor-pointer">
+                <label class="cursor-pointer">
+                  <span class="title-text font-bold text-sm text-slate-200 block">${p.title}</span>
+                  <span class="text-[11px] text-slate-500"><i class="fa-solid fa-building mr-1"></i>${p.company}</span>
+                </label>
+              </div>
+
+              <div class="flex items-center justify-between sm:justify-end space-x-3 w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-800">
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${diffColor}">${p.diff}</span>
+                <a href="${p.leetcode}" target="_blank" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-all">
+                  <span>Practice</span>
+                  <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                </a>
+                <button onclick="openModal('${p.id}')" class="px-3 py-1 bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-300 border border-indigo-500/30 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-all">
+                  <i class="fa-solid fa-lightbulb"></i>
+                  <span>Solution</span>
+                </button>
+              </div>
+            </div>
+          `;
+        });
+
+        sectionEl.innerHTML = `
+          <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+            <div>
+              <h3 class="font-extrabold text-base sm:text-lg text-white">${section.topic}</h3>
+              <p class="text-xs text-slate-400 font-medium">${section.description}</p>
+            </div>
+            <span class="px-3 py-1 bg-slate-800 rounded-lg text-xs font-bold text-slate-400">${filteredProblems.length} Problems</span>
+          </div>
+          <div>${problemsRows}</div>
+        `;
+
+        container.appendChild(sectionEl);
+      });
+
+      if (container.children.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-16 text-slate-500">
+            <i class="fa-solid fa-magnifying-glass text-3xl mb-3 block"></i>
+            <p class="text-sm font-semibold">No interview problems match your filters.</p>
+          </div>
+        `;
+      }
+    }
+
+    // Modal Handling
+    function openModal(id) {
+      let foundProblem = null;
+      sheetData.forEach(section => {
+        section.problems.forEach(p => {
+          if (p.id === id) foundProblem = p;
+        });
+      });
+
+      if (!foundProblem) return;
+
+      document.getElementById('modal-title').innerText = foundProblem.title;
+      document.getElementById('modal-company').innerText = "Asked in: " + foundProblem.company;
+      document.getElementById('modal-diff').innerText = foundProblem.diff;
+      document.getElementById('modal-diff').className = `px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
+        foundProblem.diff === 'Easy' ? 'bg-emerald-500/20 text-emerald-400' :
+        foundProblem.diff === 'Medium' ? 'bg-amber-500/20 text-amber-400' :
+        'bg-rose-500/20 text-rose-400'
+      }`;
+
+      document.getElementById('modal-intuition').innerText = foundProblem.intuition;
+      document.getElementById('modal-tc').innerText = foundProblem.tc;
+      document.getElementById('modal-sc').innerText = foundProblem.sc;
+      document.getElementById('modal-code').innerText = foundProblem.code;
+
+      document.getElementById('solution-modal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('solution-modal').classList.add('hidden');
+    }
+
+    // Init
+    updateProgress();
+    renderSheet();
+  </script>
+</body>
+</html>

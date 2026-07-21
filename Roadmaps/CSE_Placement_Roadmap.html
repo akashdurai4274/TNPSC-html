@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Final-Year CSE Placement Roadmap</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #0f172a;
+      color: #f8fafc;
+    }
+    .glass-card {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-card:hover {
+      border-color: rgba(99, 102, 241, 0.4);
+      box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.2);
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .accent-gradient {
+      background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    }
+    .tab-btn.active {
+      background: #6366f1;
+      color: #ffffff;
+      box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.39);
+    }
+    /* Custom Checkbox Styling */
+    .task-checkbox:checked + label {
+      text-decoration: line-through;
+      color: #64748b;
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-12">
+
+  <!-- Header Section -->
+  <header class="border-b border-slate-800 bg-slate-900/50 sticky top-0 z-50 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <div class="p-2.5 accent-gradient rounded-xl shadow-lg">
+          <i class="fa-solid fa-graduation-cap text-xl text-white"></i>
+        </div>
+        <div>
+          <h1 class="font-extrabold text-xl sm:text-2xl tracking-tight">CSE Placement Blueprint</h1>
+          <p class="text-xs text-slate-400 font-medium">6-Month Zero-to-Offer Strategy</p>
+        </div>
+      </div>
+      <div class="hidden sm:flex items-center space-x-2 bg-slate-800/80 px-3 py-1.5 rounded-full border border-slate-700/50">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span class="text-xs font-semibold text-slate-300">2026 Hiring Trends Compliant</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+
+    <!-- Hero Section -->
+    <div class="relative overflow-hidden rounded-3xl p-8 sm:p-10 mb-10 accent-gradient shadow-2xl">
+      <div class="absolute -right-10 -bottom-10 w-80 h-80 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="relative z-10 max-w-3xl">
+        <span class="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-bold text-white mb-4 uppercase tracking-wider">Zero to Hero Guide</span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-4">
+          Complete Placement Preparation Strategy
+        </h2>
+        <p class="text-indigo-100 text-sm sm:text-base leading-relaxed mb-6">
+          Tailored for final-year Computer Science engineering students starting from the basics. Focus on high-yield DSA patterns, core CS concepts, modern AI-integrated full-stack projects, and strategic job applications.
+        </p>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
+          <div class="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/10 text-center">
+            <span class="block text-2xl font-black text-white">6</span>
+            <span class="text-xs text-indigo-100 font-medium">Months Timeline</span>
+          </div>
+          <div class="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/10 text-center">
+            <span class="block text-2xl font-black text-white">150+</span>
+            <span class="text-xs text-indigo-100 font-medium">DSA Problems</span>
+          </div>
+          <div class="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/10 text-center">
+            <span class="block text-2xl font-black text-white">3</span>
+            <span class="text-xs text-indigo-100 font-medium">Core Subjects</span>
+          </div>
+          <div class="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/10 text-center">
+            <span class="block text-2xl font-black text-white">2</span>
+            <span class="text-xs text-indigo-100 font-medium">Full-Stack Projects</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="flex overflow-x-auto space-x-2 border-b border-slate-800 pb-4 mb-8 no-scrollbar">
+      <button onclick="switchTab('roadmap')" id="tab-roadmap" class="tab-btn active px-5 py-2.5 rounded-xl font-bold text-sm whitespace-nowrap transition-all duration-200 flex items-center space-x-2">
+        <i class="fa-solid fa-route"></i>
+        <span>6-Month Roadmap</span>
+      </button>
+      <button onclick="switchTab('dsa')" id="tab-dsa" class="tab-btn text-slate-400 hover:text-white px-5 py-2.5 rounded-xl font-bold text-sm whitespace-nowrap transition-all duration-200 flex items-center space-x-2">
+        <i class="fa-solid fa-code"></i>
+        <span>DSA Patterns</span>
+      </button>
+      <button onclick="switchTab('projects')" id="tab-projects" class="tab-btn text-slate-400 hover:text-white px-5 py-2.5 rounded-xl font-bold text-sm whitespace-nowrap transition-all duration-200 flex items-center space-x-2">
+        <i class="fa-solid fa-laptop-code"></i>
+        <span>Modern Projects</span>
+      </button>
+      <button onclick="switchTab('checklist')" id="tab-checklist" class="tab-btn text-slate-400 hover:text-white px-5 py-2.5 rounded-xl font-bold text-sm whitespace-nowrap transition-all duration-200 flex items-center space-x-2">
+        <i class="fa-solid fa-list-check"></i>
+        <span>Action Checklist</span>
+      </button>
+    </div>
+
+    <!-- TAB 1: ROADMAP -->
+    <div id="view-roadmap" class="tab-content block space-y-6">
+      
+      <!-- Timeline Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- Phase 1 -->
+        <div class="glass-card rounded-2xl p-6 transition-all duration-300 relative overflow-hidden flex flex-col justify-between">
+          <div class="absolute top-0 right-0 px-4 py-1.5 bg-indigo-500/20 border-b border-l border-indigo-500/30 text-indigo-400 font-bold text-xs rounded-bl-xl">
+            Weeks 1 - 3
+          </div>
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mb-4">
+              <i class="fa-solid fa-terminal text-xl"></i>
+            </div>
+            <span class="text-xs font-bold text-indigo-400 uppercase tracking-wider">Phase 01</span>
+            <h3 class="text-xl font-bold text-white mb-2">Core Foundation</h3>
+            <p class="text-slate-400 text-sm mb-4">Master one primary programming language and set up your development environment.</p>
+            <ul class="space-y-2 text-sm text-slate-300 mb-6">
+              <li class="flex items-start space-x-2">
+                <i class="fa-solid fa-check text-indigo-400 text-xs mt-1"></i>
+                <span>Choose C++, Java, or Python (Stick to ONE).</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <i class="fa-solid fa-check text-indigo-400 text-xs mt-1"></i>
+                <span>Pointers, Memory, Loops, & Exception Handling.</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <i class="fa-solid fa-check text-indigo-400 text-xs mt-1"></i>
+                <span>OOPs: Encapsulation, Abstraction, Polymorphism.</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <i class="fa-solid fa-check text-indigo-400 text-xs mt-1"></i>
+                <span>Git/GitHub basics (Commit, Push, PRs).</span>
+              </li>
+            </ul>
+          </div>
+          <div class="pt-4 border-t border-slate-800 text-xs text-slate-500 font-medium">
+            Goal: Write bug-free basic code without looking up syntax.
+          </div>
+        </div>
+
+        <!-- Phase 2 -->
+        <div class="glass-card rounded-2xl p-6 transition-all duration-300 relative overflow-hidden flex flex-col justify-between">
+          <div class="absolute top-0 right-0 px-4 py-1.5 bg-purple-500/20 border-b border-l border-purple-500/30 text-purple-400 font-bold text-xs rounded-bl-xl">
+            Months 1 - 3
+          </div>
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-4">
+              <i class="fa-solid fa-network-wired text-xl"></i>
+            </div>
+            <span class="text-xs font-bold text-purple-400 uppercase tracking-wider">Phase 02</span>
+            <h3 class="text-xl font-bold text-white mb-2">DSA & Problem Solving</h3>
+            <p class="text-slate-400 text-sm mb-4">Crack Online Assessments (OAs) by solving 150+ structured pattern problems.</p>
+            <ul class="space-y-2 text-sm text-slate-300 mb-6">
+              <li class="flex items-start space-x-2">
+                <i class="fa-solid fa-check text-purple-400 text-xs mt-1"></i>
+                <span>Arrays, Strings, Two Pointers, Sliding Window.</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <i class="fa-solid fa-check text-purple-400 text-xs mt-1"></i>
+                <span>Recursion, Backtracking, Stacks & Queues.</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <i class="fa-solid fa-check text-purple-400 text-xs mt-1"></i>
+                <span>Trees (BFS/DFS), BST, & Graphs.</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <i class="fa-solid fa-check text-purple-400 text-xs mt-1"></i>
+                <span>Dynamic Programming & Greedy Patterns.</span>
+              </li>
+            </ul>
+          </div>
+          <div class="pt-4 border-t border-slate-800 text-xs text-slate-500 font-medium">
+            Target: 2 problems/day on LeetCode/GeeksforGeeks.
+          </div>
+        </div>
+
+        <!-- Phase 3 -->
+        <div class="glass-card rounded-2xl p-6 transition-all duration-300 relative overflow-hidden flex flex-col justify-between">
+          <div class="absolute top-0 right-0 px-4 py-1.5 bg-pink-500/20 border-b border-l border-pink-500/30 text-pink-400 font-bold text-xs rounded-bl-xl">
+            Months 3 - 4
+          </div>
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-pink-500/10 border border-pink-500/30 flex items-center justify-center text-pink-400 mb-4">
+              <i class="fa-solid fa-database text-xl"></i>
+            </div>
+            <span class="text-xs font-bold text-pink-400 uppercase tracking-wider">Phase 03</span>
+            <h3 class="text-xl font-bold text-white mb-2">CS Fundamentals</h3>
+            <p class="text-slate-400 text-sm mb-4">Clear technical interviews by mastering core computer science subjects.</p>
+            <ul class="space-y-2 text-sm text-slate-300 mb-6">
+              <li class="flex items-start space-x-2">
+                <i class="fa-solid fa-check text-pink-400 text-xs mt-1"></i>
+                <span><b>DBMS:</b> SQL Queries, Joins, Indexing, ACID.</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <i class="fa-solid fa-check text-pink-400 text-xs mt-1"></i>
+                <span><b>OS:</b> Threads, Deadlocks, Virtual Memory.</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <i class="fa-solid fa-check text-pink-400 text-xs mt-1"></i>
+                <span><b>CN:</b> OSI Model, TCP/IP, HTTP/S, DNS.</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <i class="fa-solid fa-check text-pink-400 text-xs mt-1"></i>
+                <span><b>Aptitude:</b> Quantitative & Logical Drills.</span>
+              </li>
+            </ul>
+          </div>
+          <div class="pt-4 border-t border-slate-800 text-xs text-slate-500 font-medium">
+            Goal: Explain OS/DBMS concepts orally with clarity.
+          </div>
+        </div>
+
+        <!-- Phase 4 -->
+        <div class="glass-card rounded-2xl p-6 transition-all duration-300 relative overflow-hidden flex flex-col justify-between">
+          <div class="absolute top-0 right-0 px-4 py-1.5 bg-emerald-500/20 border-b border-l border-emerald-500/30 text-emerald-400 font-bold text-xs rounded-bl-xl">
+            Months 4 - 5
+          </div>
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-4">
+              <i class="fa-solid fa-layer-group text-xl"></i>
+            </div>
+            <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Phase 04</span>
+            <h3 class="text-xl font-bold text-white mb-2">Modern Web & AI Stack</h3>
+            <p class="text-slate-400 text-sm mb-4">Build industry-grade projects that set your resume apart from the competition.</p>
+            <ul class="space-y-2 text-sm text-slate-300 mb-6">
+              <li class="flex items-start space-x-2">
+                <i class="fa-solid fa-check text-emerald-400 text-xs mt-1"></i>
+                <span>MERN Stack (React, Node.js, Express, Mongo) or Python/FastAPI.</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <i class="fa-solid fa-check text-emerald-400 text-xs mt-1"></i>
+                <span>REST APIs & Auth (JWT / OAuth2).</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <i class="fa-solid fa-check text-emerald-400 text-xs mt-1"></i>
+                <span>Integrate LLM APIs / AI Workflows (RAG).</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <i class="fa-solid fa-check text-emerald-400 text-xs mt-1"></i>
+                <span>Deployment on Vercel / Render / AWS.</span>
+              </li>
+            </ul>
+          </div>
+          <div class="pt-4 border-t border-slate-800 text-xs text-slate-500 font-medium">
+            Goal: 2 deployed projects with GitHub source code.
+          </div>
+        </div>
+
+        <!-- Phase 5 -->
+        <div class="glass-card rounded-2xl p-6 transition-all duration-300 relative overflow-hidden flex flex-col justify-between col-span-1 md:col-span-2 lg:col-span-2">
+          <div class="absolute top-0 right-0 px-4 py-1.5 bg-amber-500/20 border-b border-l border-amber-500/30 text-amber-400 font-bold text-xs rounded-bl-xl">
+            Months 5 - 6
+          </div>
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 mb-4">
+              <i class="fa-solid fa-paper-plane text-xl"></i>
+            </div>
+            <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">Phase 05</span>
+            <h3 class="text-xl font-bold text-white mb-2">Resume, Mocks & Applications</h3>
+            <p class="text-slate-400 text-sm mb-4">Execute high-conversion job search strategies on-campus and off-campus.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 text-sm text-slate-300">
+              <ul class="space-y-2">
+                <li class="flex items-start space-x-2">
+                  <i class="fa-solid fa-check text-amber-400 text-xs mt-1"></i>
+                  <span>Single-page LaTeX Resume (Jake's Resume template).</span>
+                </li>
+                <li class="flex items-start space-x-2">
+                  <i class="fa-solid fa-check text-amber-400 text-xs mt-1"></i>
+                  <span>Mock Technical & HR Interviews on Pramp.</span>
+                </li>
+              </ul>
+              <ul class="space-y-2">
+                <li class="flex items-start space-x-2">
+                  <i class="fa-solid fa-check text-amber-400 text-xs mt-1"></i>
+                  <span>Targeted LinkedIn Outreach & Referral Messaging.</span>
+                </li>
+                <li class="flex items-start space-x-2">
+                  <i class="fa-solid fa-check text-amber-400 text-xs mt-1"></i>
+                  <span>Company-specific PYQ practice (Service & Product).</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="pt-4 border-t border-slate-800 text-xs text-slate-500 font-medium flex justify-between items-center">
+            <span>Goal: Secure interview calls & land offers.</span>
+            <span class="text-amber-400 font-bold">Final Goal</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB 2: DSA PATTERNS -->
+    <div id="view-dsa" class="tab-content hidden space-y-6">
+      <div class="glass-card rounded-2xl p-6">
+        <h3 class="text-xl font-bold text-white mb-2">Essential DSA Patterns (150 Problem Strategy)</h3>
+        <p class="text-slate-400 text-sm mb-6">Instead of solving 500 random problems, master these fundamental patterns that repeat across technical interviews.</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <div class="bg-slate-900/60 rounded-xl p-5 border border-slate-800">
+            <div class="flex items-center space-x-3 mb-3">
+              <span class="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-sm">1</span>
+              <h4 class="font-bold text-white">Two Pointers & Sliding Window</h4>
+            </div>
+            <p class="text-xs text-slate-400 mb-3">Used for array/string searching, sub-segment processing, and dynamic window sizes.</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-2.5 py-1 bg-slate-800 text-slate-300 rounded-md text-xs border border-slate-700">Pair with Target Sum</span>
+              <span class="px-2.5 py-1 bg-slate-800 text-slate-300 rounded-md text-xs border border-slate-700">Container With Most Water</span>
+              <span class="px-2.5 py-1 bg-slate-800 text-slate-300 rounded-md text-xs border border-slate-700">Longest Substring Without Repeating</span>
+            </div>
+          </div>
+
+          <div class="bg-slate-900/60 rounded-xl p-5 border border-slate-800">
+            <div class="flex items-center space-x-3 mb-3">
+              <span class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-sm">2</span>
+              <h4 class="font-bold text-white">Fast & Slow Pointers (Floyd's Cycle)</h4>
+            </div>
+            <p class="text-xs text-slate-400 mb-3">Crucial for linked list manipulation, cycle detection, and finding midpoints.</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-2.5 py-1 bg-slate-800 text-slate-300 rounded-md text-xs border border-slate-700">Linked List Cycle</span>
+              <span class="px-2.5 py-1 bg-slate-800 text-slate-300 rounded-md text-xs border border-slate-700">Middle of Linked List</span>
+              <span class="px-2.5 py-1 bg-slate-800 text-slate-300 rounded-md text-xs border border-slate-700">Happy Number</span>
+            </div>
+          </div>
+
+          <div class="bg-slate-900/60 rounded-xl p-5 border border-slate-800">
+            <div class="flex items-center space-x-3 mb-3">
+              <span class="w-8 h-8 rounded-lg bg-pink-500/20 text-pink-400 flex items-center justify-center font-bold text-sm">3</span>
+              <h4 class="font-bold text-white">BFS & DFS Traversals</h4>
+            </div>
+            <p class="text-xs text-slate-400 mb-3">Core strategy for Trees, Binary Search Trees, and Graph search spaces.</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-2.5 py-1 bg-slate-800 text-slate-300 rounded-md text-xs border border-slate-700">Level Order Traversal</span>
+              <span class="px-2.5 py-1 bg-slate-800 text-slate-300 rounded-md text-xs border border-slate-700">Number of Islands</span>
+              <span class="px-2.5 py-1 bg-slate-800 text-slate-300 rounded-md text-xs border border-slate-700">Clone Graph</span>
+            </div>
+          </div>
+
+          <div class="bg-slate-900/60 rounded-xl p-5 border border-slate-800">
+            <div class="flex items-center space-x-3 mb-3">
+              <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-sm">4</span>
+              <h4 class="font-bold text-white">Dynamic Programming (0/1 Knapsack & DP)</h4>
+            </div>
+            <p class="text-xs text-slate-400 mb-3">Optimization over subproblems. Start with recursion + memoization, then bottom-up.</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-2.5 py-1 bg-slate-800 text-slate-300 rounded-md text-xs border border-slate-700">Climbing Stairs</span>
+              <span class="px-2.5 py-1 bg-slate-800 text-slate-300 rounded-md text-xs border border-slate-700">Coin Change</span>
+              <span class="px-2.5 py-1 bg-slate-800 text-slate-300 rounded-md text-xs border border-slate-700">Longest Common Subsequence</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: PROJECTS -->
+    <div id="view-projects" class="tab-content hidden space-y-6">
+      <div class="glass-card rounded-2xl p-6">
+        <h3 class="text-xl font-bold text-white mb-2">Resume-Ready Project Ideas (2026 Ready)</h3>
+        <p class="text-slate-400 text-sm mb-6">Avoid basic projects like "Todo Apps" or "Weather Apps". Recruiters look for full-stack functionality + real utility.</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- Project 1 -->
+          <div class="bg-slate-900/60 rounded-2xl p-6 border border-slate-800 flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start mb-3">
+                <span class="px-3 py-1 bg-indigo-500/20 text-indigo-400 font-bold text-xs rounded-full border border-indigo-500/30">AI + Full Stack</span>
+                <i class="fa-solid fa-robot text-slate-600 text-xl"></i>
+              </div>
+              <h4 class="text-lg font-bold text-white mb-2">AI Document Search & Summarizer (RAG System)</h4>
+              <p class="text-slate-400 text-sm mb-4">Allow users to upload PDFs and ask natural language questions using Retrieval-Augmented Generation.</p>
+              <div class="space-y-2 mb-6">
+                <div class="text-xs text-slate-300"><b class="text-slate-400">Stack:</b> React, FastAPI/Node.js, LangChain, OpenAI/Gemini API, Pinecone/FAISS</div>
+                <div class="text-xs text-slate-300"><b class="text-slate-400">Key Feature:</b> Semantic vector search, PDF parsing, real-time streaming response</div>
+              </div>
+            </div>
+            <a href="https://github.com" target="_blank" class="inline-flex items-center justify-center space-x-2 w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-medium text-xs rounded-xl transition-all">
+              <i class="fa-brands fa-github"></i>
+              <span>Search GitHub Inspiration</span>
+            </a>
+          </div>
+
+          <!-- Project 2 -->
+          <div class="bg-slate-900/60 rounded-2xl p-6 border border-slate-800 flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start mb-3">
+                <span class="px-3 py-1 bg-purple-500/20 text-purple-400 font-bold text-xs rounded-full border border-purple-500/30">Web Systems</span>
+                <i class="fa-solid fa-code text-slate-600 text-xl"></i>
+              </div>
+              <h4 class="text-lg font-bold text-white mb-2">Real-Time Collaborative Code Editor</h4>
+              <p class="text-slate-400 text-sm mb-4">A web-based code editor where multiple users can write and compile code together live.</p>
+              <div class="space-y-2 mb-6">
+                <div class="text-xs text-slate-300"><b class="text-slate-400">Stack:</b> React, Node.js, WebSockets (Socket.io), Judge0 API, Docker</div>
+                <div class="text-xs text-slate-300"><b class="text-slate-400">Key Feature:</b> Real-time synchronization, multi-language code execution, video/chat integration</div>
+              </div>
+            </div>
+            <a href="https://github.com" target="_blank" class="inline-flex items-center justify-center space-x-2 w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-medium text-xs rounded-xl transition-all">
+              <i class="fa-brands fa-github"></i>
+              <span>Search GitHub Inspiration</span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: CHECKLIST -->
+    <div id="view-checklist" class="tab-content hidden space-y-6">
+      <div class="glass-card rounded-2xl p-6">
+        <h3 class="text-xl font-bold text-white mb-2">Interactive Readiness Checklist</h3>
+        <p class="text-slate-400 text-sm mb-6">Track your ongoing progress as you check off placement preparation milestones.</p>
+
+        <div class="space-y-4">
+          
+          <div class="bg-slate-900/60 rounded-xl p-4 border border-slate-800 flex items-center space-x-4">
+            <input type="checkbox" id="c1" class="task-checkbox w-5 h-5 rounded border-slate-700 text-indigo-600 focus:ring-indigo-500 bg-slate-800">
+            <label for="c1" class="text-sm font-medium text-slate-200 cursor-pointer">Master 1 language syntax & basic OOPs concepts thoroughly</label>
+          </div>
+
+          <div class="bg-slate-900/60 rounded-xl p-4 border border-slate-800 flex items-center space-x-4">
+            <input type="checkbox" id="c2" class="task-checkbox w-5 h-5 rounded border-slate-700 text-indigo-600 focus:ring-indigo-500 bg-slate-800">
+            <label for="c2" class="text-sm font-medium text-slate-200 cursor-pointer">Complete 100+ LeetCode problems (Focus on Easy & Medium)</label>
+          </div>
+
+          <div class="bg-slate-900/60 rounded-xl p-4 border border-slate-800 flex items-center space-x-4">
+            <input type="checkbox" id="c3" class="task-checkbox w-5 h-5 rounded border-slate-700 text-indigo-600 focus:ring-indigo-500 bg-slate-800">
+            <label for="c3" class="text-sm font-medium text-slate-200 cursor-pointer">Revise top 30 SQL Queries (Joins, Subqueries, Aggregations)</label>
+          </div>
+
+          <div class="bg-slate-900/60 rounded-xl p-4 border border-slate-800 flex items-center space-x-4">
+            <input type="checkbox" id="c4" class="task-checkbox w-5 h-5 rounded border-slate-700 text-indigo-600 focus:ring-indigo-500 bg-slate-800">
+            <label for="c4" class="text-sm font-medium text-slate-200 cursor-pointer">Build and deploy 1 Full-Stack Project with GitHub link live</label>
+          </div>
+
+          <div class="bg-slate-900/60 rounded-xl p-4 border border-slate-800 flex items-center space-x-4">
+            <input type="checkbox" id="c5" class="task-checkbox w-5 h-5 rounded border-slate-700 text-indigo-600 focus:ring-indigo-500 bg-slate-800">
+            <label for="c5" class="text-sm font-medium text-slate-200 cursor-pointer">Format single-page resume using LaTeX (Jake's Resume template)</label>
+          </div>
+
+          <div class="bg-slate-900/60 rounded-xl p-4 border border-slate-800 flex items-center space-x-4">
+            <input type="checkbox" id="c6" class="task-checkbox w-5 h-5 rounded border-slate-700 text-indigo-600 focus:ring-indigo-500 bg-slate-800">
+            <label for="c6" class="text-sm font-medium text-slate-200 cursor-pointer">Complete 3 mock interviews (Technical + HR communication)</label>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    function switchTab(tabName) {
+      // Hide all contents
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      
+      // Deactivate all buttons
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active', 'bg-indigo-600', 'text-white');
+        btn.classList.add('text-slate-400');
+      });
+
+      // Show selected content
+      document.getElementById('view-' + tabName).classList.remove('hidden');
+
+      // Activate selected button
+      const activeBtn = document.getElementById('tab-' + tabName);
+      activeBtn.classList.add('active');
+      activeBtn.classList.remove('text-slate-400');
+    }
+  </script>
+</body>
+</html>
